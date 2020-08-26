@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/lessonspage.dart';
+import 'package:hanzishu/reviewpage.dart';
+import 'package:hanzishu/mepage.dart';
 
 void main() => runApp(MyApp());
 
@@ -21,11 +24,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
+  final List<Widget> _children =
+  [
+    LessonsPage(),
+    ReviewPage(),
+    MePage()
+  ];
+
+  onTappedBar(int index)
+  {
+    setState(() => _currentIndex = index);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
+      body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        onTap: onTappedBar,
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,
         backgroundColor: colorScheme.surface,
@@ -33,10 +51,6 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedItemColor: colorScheme.onSurface.withOpacity(.60),
         selectedLabelStyle: textTheme.caption,
         unselectedLabelStyle: textTheme.caption,
-        onTap: (value) {
-          // Respond to item press.
-          setState(() => _currentIndex = value);
-        },
         items: [
           BottomNavigationBarItem(
             title: Text('Lessons'),
