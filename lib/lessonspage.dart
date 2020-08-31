@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/lessonpage.dart';
+//import 'package:hanzishu/lessonpage.dart';
+import 'package:hanzishu/imagebutton.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -7,9 +8,9 @@ class LessonsPage extends StatefulWidget {
 }
 
 class _LessonsPageState extends State<LessonsPage> {
-  _openLessonPage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
-  }
+  //_openLessonPage(BuildContext context) {
+  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,7 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       body: Center
         (
-        //child: Text("This is Lessons Page."),
-        child: RaisedButton(
-          textColor: Colors.deepPurple, // TODO: use style
-          color: Colors.greenAccent,
-          child: Text('Lesson 1'),
-          onPressed: () => _openLessonPage(context)
-        )
+          child: OpenHelper.getImageButton(context, 1),
       ),
     );
   }

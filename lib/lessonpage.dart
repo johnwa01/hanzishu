@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/treepage.dart';
 
 class LessonPage extends StatefulWidget {
+  final int lessonNumber;
+  LessonPage({this.lessonNumber});
+
   @override
   _LessonPageState createState() => _LessonPageState();
 }
