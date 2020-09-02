@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/imagebutton.dart';
 import 'package:hanzishu/treepage.dart';
 
 class LessonPage extends StatefulWidget {
@@ -25,13 +26,42 @@ class _LessonPageState extends State<LessonPage> {
       body: Center
         (
         //child: Text("This is Lesson Page."),
-          child: RaisedButton(
-              textColor: Colors.deepPurple, // TODO: use style
-              color: Colors.greenAccent,
-              child: Text('Tree Page'),
-              onPressed: () => _openTreePage(context)
-          )
+          child: getLessonSections(context, widget.lessonNumber),
       ),
+    );
+  }
+
+  Widget getLessonSections(BuildContext context, int lessonNumber) {
+    return Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(30),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", true),
+              ],
+            ),
+            padding: EdgeInsets.all(30),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", true),
+              ],
+            ),
+            padding: EdgeInsets.all(30),
+          ),
+          Container(
+            child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
+            padding: EdgeInsets.all(30),
+          ),
+        ]
     );
   }
 }

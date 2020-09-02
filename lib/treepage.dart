@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 class TreePage extends StatefulWidget {
+  final int lessonNumber;
+  TreePage({this.lessonNumber});
+
   @override
   _TreePageState createState() => _TreePageState();
 }
