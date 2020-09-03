@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/lessonspage.dart';
-import 'package:hanzishu/reviewpage.dart';
-import 'package:hanzishu/mepage.dart';
-import 'package:hanzishu/theme.dart';
+import 'package:hanzishu/ui/lessonspage.dart';
+import 'package:hanzishu/ui/reviewpage.dart';
+import 'package:hanzishu/ui/mepage.dart';
+import 'package:hanzishu/ui/theme.dart';
 
 void main() => runApp(MyApp());
 

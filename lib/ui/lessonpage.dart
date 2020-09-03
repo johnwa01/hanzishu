@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/imagebutton.dart';
-import 'package:hanzishu/treepage.dart';
+import 'package:hanzishu/ui/imagebutton.dart';
+import 'package:hanzishu/ui/treepage.dart';
+import 'package:hanzishu/utility.dart';
 
 class LessonPage extends StatefulWidget {
   final int lessonNumber;
@@ -18,15 +19,15 @@ class _LessonPageState extends State<LessonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold
-    (
-        appBar: AppBar
+      (
+      appBar: AppBar
         (
-          title: Text("Lesson Page"),
-        ),
+        title: Text("Lesson Page"),
+      ),
       body: Center
         (
         //child: Text("This is Lesson Page."),
-          child: getLessonSections(context, widget.lessonNumber),
+        child: getLessonSections(context, widget.lessonNumber),
       ),
     );
   }
@@ -41,8 +42,8 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
-                OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", true),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", LessonSection.FullCharacterTree),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/characterlist.png", LessonSection.Characters),
               ],
             ),
             padding: EdgeInsets.all(30),
@@ -51,14 +52,14 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
-                OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", true),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/breakout.png", LessonSection.Assembling),
+                OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", LessonSection.Conversation),
               ],
             ),
             padding: EdgeInsets.all(30),
           ),
           Container(
-            child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", true),
+            child: OpenHelper.getImageButton(context, lessonNumber, "assets/quiz.png", LessonSection.Quiz),
             padding: EdgeInsets.all(30),
           ),
         ]
