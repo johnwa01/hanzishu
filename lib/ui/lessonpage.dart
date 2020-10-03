@@ -46,7 +46,7 @@ class _LessonPageState extends State<LessonPage> {
                 OpenHelper.getImageButton(context, lessonNumber, "assets/characterlist.png", LessonSection.Characters),
               ],
             ),
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(20),
           ),
           Container(
             child: Row(
@@ -56,11 +56,11 @@ class _LessonPageState extends State<LessonPage> {
                 OpenHelper.getImageButton(context, lessonNumber, "assets/conversations.png", LessonSection.Conversation),
               ],
             ),
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(20),
           ),
           Container(
             child: OpenHelper.getImageButton(context, lessonNumber, "assets/quiz.png", LessonSection.Quiz),
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(20),
           ),
         ]
     );

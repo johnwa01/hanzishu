@@ -3,8 +3,28 @@ import 'package:hanzishu/ui/lessonspage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/ui/theme.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/phrasemanager.dart';
+import 'package:hanzishu/engine/sentencemanager.dart';
+import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/levelmanager.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  init();
+  runApp(MyApp());
+}
+
+void init() {
+  theLessonManager = LessonManager();
+  theZiManager = ZiManager();
+  thePhraseManager = PhraseManager();
+  theSentenceManager = SentenceManager();
+  theLevelManager = LevelManager();
+
+  LessonManager.populateLessonsInfo();
+}
 
 class MyApp extends StatelessWidget {
   @override
