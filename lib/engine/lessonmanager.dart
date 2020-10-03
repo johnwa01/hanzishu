@@ -5,6 +5,7 @@ import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 
 class LessonManager {
   static final LessonManager _lessonManager = LessonManager._internal();
@@ -110,10 +111,10 @@ class LessonManager {
   static void populateLessonsInfo() {
     populateLessonsList();
     theSentenceManager.populateSubcharsAndComponents();
-    //populateConvCharsAndCharsList();
-    //populateComps();
-    //populateConvCharsIds();
-    //populateCharsIds();
+    populateConvCharsAndCharsList();
+    populateComps();
+    populateConvCharsIds();
+    populateCharsIds();
     //theLessonsInitialized = true;
   }
 
@@ -127,16 +128,18 @@ class LessonManager {
     for (var j = 1; j <= (theLessonList.length - 1); j++) {
       for (var k in theLessonList[j].sentenceList) {
         for (var eachChar in theSentenceList[k].conv.runes) {
-          if (!specialChar(eachChar) && !charExists(j, eachChar))
+          var char = String.fromCharCode(eachChar);
+          if (!specialChar(char) && !charExists(j, char))
           {
-            theLessonList[j].convChars += eachChar.toString();
+            theLessonList[j].convChars += char; // String.fromCharCode(eachChar); //eachChar.toString();
           }
         }
 
-        for (var eachChar in theSentenceList[k].chars.runes) {
-          if (!specialChar(eachChar) && !charExists(j, eachChar))
+        for (var eachChar in theSentenceList[k].chars.str.runes) {
+          var char = String.fromCharCode(eachChar);
+          if (!specialChar(char) && !charExists(j, char))
           {
-            theLessonList[j].chars += eachChar.toString();
+            theLessonList[j].chars += char; //String.fromCharCode(eachChar);   //eachChar.toString();
           }
         }
       }
@@ -151,7 +154,7 @@ class LessonManager {
           {
             // check the parent of this non-character
             // they are not real parents, but the parent in Hanzishu hirarchy
-            var compZi = theZiManager.getZi(id: eachComp);
+            var compZi = theZiManager.getZi(eachComp);
             //if (compZi.parentId != theRootNonCharId) {
               if (!compExists(j, compZi.parentId)) {
                 theLessonList[j].comps.add(compZi.parentId);
@@ -166,7 +169,7 @@ class LessonManager {
     }
   }
 
-  static bool charExists(int lessonId, int char) {
+  static bool charExists(int lessonId, String char) {
     for (var i = 1; i <= lessonId; i++) {
       if (charExistsInLesson(i, char)) {
         return true;
@@ -180,8 +183,8 @@ class LessonManager {
     return charExistsInLessonById(lessonId, ziId) || compExistsInLesson(lessonId, ziId);
   }
 
-  static bool charExistsInLesson(int lessonId, int char) {
-    return theLessonList[lessonId].convChars.runes.contains(char) || theLessonList[lessonId].chars.runes.contains(char);
+  static bool charExistsInLesson(int lessonId, String char) {
+    return theLessonList[lessonId].convChars.contains(char) || theLessonList[lessonId].chars.contains(char);
   }
 
   // was charExistsInLesson before. changed to ziIdExistsInLesson
@@ -236,14 +239,15 @@ class LessonManager {
     return theLessonList[lessonId].comps.contains(comp);
   }
 
-  static bool specialChar(int char) {
+  static bool specialChar(String char) {
     return char == '！' || char == '?' || char == '。' || char == '，';
   }
 
   static void populateConvCharsIds() {
     for (var lesson in theLessonList) {
       for (var ch in lesson.convChars.runes) {
-        var id = theZiManager.findIdFromChar(ch);
+        var char = String.fromCharCode(ch);
+        var id = ZiManager.findIdFromChar(char);
         if (id != 10000) {
           lesson.convCharsIds.add(id);
         }
@@ -254,7 +258,8 @@ class LessonManager {
   static void populateCharsIds() {
     for (var lesson in theLessonList) {
       for (var ch in lesson.chars.runes) {
-        var id = theZiManager.findIdFromChar(ch);
+        var char = String.fromCharCode(ch);
+        var id = ZiManager.findIdFromChar(char);
           if (id != 10000) {
           lesson.charsIds.add(id);
         }

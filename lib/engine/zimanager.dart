@@ -38,9 +38,9 @@ class ZiManager {
     return theZiList.length;
   }
 
-  Zi getZiByChar(int char) {
+  Zi getZiByChar(String char) {
     for (var zi in theZiList) {
-      if (zi.char.runes.length == 1 && zi.char.runes.first == char) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
+      if (zi.char.runes.length == 1 && zi.char.runes.first == char.runes.first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
         return zi;
       }
     }
@@ -48,9 +48,9 @@ class ZiManager {
     return null;
   }
 
-  static int findIdFromChar(int char) {
+  static int findIdFromChar(String char) {
     for (var eachZi in theZiList) {
-      if (eachZi.char.runes.length == 1 && eachZi.char.runes.first == char) {
+      if (eachZi.char.runes.length == 1 && eachZi.char.runes.first == char.runes.first) {
         return eachZi.id;
       }
     }

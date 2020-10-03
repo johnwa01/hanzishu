@@ -304,3 +304,13 @@ extension UIColor {
   }
 }
 */
+
+class MyString {
+  String str = '';
+  MyString(this.str);
+}
+
+class PrimitiveWrapper {
+  var value;
+  PrimitiveWrapper(this.value);
+}

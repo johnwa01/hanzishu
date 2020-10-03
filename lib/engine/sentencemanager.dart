@@ -3,6 +3,7 @@ import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/utility.dart';
 
 class SentenceManager {
   static final SentenceManager _sentenceManager = SentenceManager._internal();
@@ -20,7 +21,7 @@ class SentenceManager {
     return theSentenceList.length;
   }
 
-  void addToCollection(Zi zi, String subchars, List<int>comps) {
+  void addToCollection(Zi zi, MyString subchars, List<int>comps) {
     if (zi.type == "h" || zi.type == "j") {
       addToSubchars(zi.char, subchars);
     }
@@ -44,10 +45,10 @@ class SentenceManager {
     }
   }
 
-  void addToSubchars(String char, String subchars)
+  void addToSubchars(String char, MyString subchars)
   {
-    if (!subchars.contains(char)) {
-      subchars += char;
+    if (!subchars.str.contains(char)) {
+      subchars.str += char;
     }
   }
 
@@ -69,18 +70,20 @@ class SentenceManager {
 
   void pupluateSubcharsAndComponentsA(int sentenceId) {
     var senten = theSentenceList[sentenceId];
+    senten.chars = MyString('');
     populateSubcharsAndComponentsB(senten.conv, senten.chars, senten.comps);
   }
 
   // use rune in this kind of situations
-  void populateSubcharsAndComponentsB(String chars, String subchars, List<int> comps) {
-    chars.runes.forEach((int char) {
+  void populateSubcharsAndComponentsB(String chars, MyString subchars, List<int> comps) {
+    chars.runes.forEach((int eachChar) {
       //for (var char in chars) {
+      var char = String.fromCharCode(eachChar);
       populateSubcharsAndComponentsC(char, subchars, comps);
     });
   }
 
-  void populateSubcharsAndComponentsC(int /*was Character*/ char, String subchars, List<int> comps) {
+  void populateSubcharsAndComponentsC(String /*was Character*/ char, MyString subchars, List<int> comps) {
     if (!LessonManager.specialChar(char))
     {
       var zi = theZiManager.getZiByChar(char);
@@ -91,7 +94,7 @@ class SentenceManager {
     }
   }
 
-  void populateSubcharsAndComponentsD(int recurLevel, int indexInLevel, Zi zi, String subchars, List<int> comps) {
+  void populateSubcharsAndComponentsD(int recurLevel, int indexInLevel, Zi zi, MyString subchars, List<int> comps) {
     theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
 
     if (zi.type == "h")

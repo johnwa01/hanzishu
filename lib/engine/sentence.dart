@@ -1,9 +1,11 @@
+import 'package:hanzishu/utility.dart';
+
 class Sentence {
   int id;
   String conv;
   String trans;
   int lessonId;
-  String chars;
+  MyString chars;
   List<int> comps; //TODO: this field is required?
 
   Sentence(
@@ -11,7 +13,7 @@ class Sentence {
     String conv,
     String trans,
     int lessonId,
-    String chars,
+    MyString chars,
     List<int> comps
   ) {
   this.id = id;
