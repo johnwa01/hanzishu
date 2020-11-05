@@ -1,6 +1,9 @@
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
+import 'package:flutter/material.dart';
+import 'dart:math';
+import 'dart:ui';
 
 enum HittestState {
   hanzishuLesson,
@@ -98,6 +101,14 @@ enum ButtonTag {
   AnnotateZiBase = 10000  // base number for annotate zi
 }
 */
+
+
+class CharType {
+  static const BasicChar = "j";
+  static const BasicNonchar = "f";
+  static const CompositChar = "h";
+  static const Phrase = "p";
+}
 
 class ButtonTag {
   static const LessonBase = 0;
@@ -269,13 +280,24 @@ class Utility {
     var navigationZiId = fromId;
     Zi navigationZi;
     do {
-        GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLesson);
+        GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLessonId);
         navigationZi = theZiManager.getZi(navigationZiId);
         navigationZiId = navigationZi.parentId;
         if (navigationZiId == toId) {
           thePreviousCenterZiId = navigationZi.id;
         }
     } while (navigationZiId != toId);
+  }
+
+  static double getScreenWidth(BuildContext context) {
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
+    //var height = screenSize.height;
+    double screenWidth = screenSize.width; //401; //TODO
+    thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
+
+    return screenWidth;
   }
 }
 
@@ -313,4 +335,35 @@ class MyString {
 class PrimitiveWrapper {
   var value;
   PrimitiveWrapper(this.value);
+}
+
+/*
+/// The material design primary color swatches, excluding grey.
+static const List<MaterialColor> primaries = <MaterialColor>[
+  red,
+  pink,
+  purple,
+  deepPurple,
+  indigo,
+  blue,
+  lightBlue,
+  cyan,
+  teal,
+  green,
+  lightGreen,
+  lime,
+  yellow,
+  amber,
+  orange,
+  deepOrange,
+  brown,
+  // The grey swatch is intentionally omitted because when picking a color
+  // randomly from this list to colorize an application, picking grey suddenly
+  // makes the app look disabled.
+  blueGrey,
+];
+*/
+
+double xYLength(double xy) {
+  return xy;
 }

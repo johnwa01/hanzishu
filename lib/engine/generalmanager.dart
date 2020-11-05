@@ -6,9 +6,9 @@ import 'package:hanzishu/engine/lessonmanager.dart';
 
 class GeneralManager {
   // TODO: change parameter to lessonId only
-  static bool hasZiCompleted(int ziId, HittestState hittestState, String lessonName) {
+  static bool hasZiCompleted(int ziId, HittestState hittestState, int lessonId/*String lessonName*/) {
     if (hittestState == HittestState.hanzishuLesson || hittestState == HittestState.ziAndSidingShuLesson || hittestState == HittestState.quizShuLesson) {
-      var lessonId = theLessonManager.getLessonNumber(lessonName);
+      //var lessonId = theLessonManager.getLessonNumber(lessonName);
       return hasZiCompletedForLesson(ziId, hittestState, lessonId);
     }
 
@@ -27,9 +27,9 @@ class GeneralManager {
     return hasZiCompletedForLesson(ziId, hittestState, internalLessonId);
   }
 
-  static void checkAndSetHasAllChildrenCompleted(int ziId, HittestState hittestState, String currentLesson) {
+  static void checkAndSetHasAllChildrenCompleted(int ziId, HittestState hittestState, int lessonId/*String currentLesson*/) {
     if (hittestState == HittestState.hanzishuLesson || hittestState == HittestState.ziAndSidingShuLesson || hittestState == HittestState.quizShuLesson) {
-      var lessonId = theLessonManager.getLessonNumber(name: currentLesson);
+      //var lessonId = theLessonManager.getLessonNumber(name: currentLesson);
       checkAndSetHasAllChildrenCompletedInLesson(ziId, hittestState, lessonId);
     }
     else {

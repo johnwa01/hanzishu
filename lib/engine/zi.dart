@@ -56,6 +56,10 @@ class Zi {
   bool isNonChar() {
     return type.contains('b');
   }
+
+  bool isStrokeOrNonChar() {
+    return type.contains('b') || type.contains('s');
+  }
 }
 //var x = Zi(99324,"x","y","z", false, [0.1], ["z"],"u", [3],0,0,"",0,"f", 0);
 //  Zi(3,"三","sān","three", false, [], ["170","170","170"],"u", [131,259,459],2,0,"pictograph of three fingers",0,"j", 0),

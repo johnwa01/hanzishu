@@ -6,36 +6,36 @@ import 'package:hanzishu/ui/characterlistpage.dart';
 import 'package:hanzishu/utility.dart';
 
 class OpenHelper {
-  static openPage(BuildContext context, int lessonNumber, LessonSection lessonSection) {
+  static openPage(BuildContext context, int lessonId, LessonSection lessonSection) {
     if (lessonSection == LessonSection.None) {
-      openLessonPage(context, lessonNumber);
+      openLessonPage(context, lessonId);
     }
     else {
-      openLessonSectionPage(context, lessonNumber, lessonSection);
+      openLessonSectionPage(context, lessonId, lessonSection);
     }
   }
 
-  static openLessonPage(BuildContext context, int lessonNumber) {
+  static openLessonPage(BuildContext context, int lessonId) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LessonPage(lessonNumber: lessonNumber)));
+        MaterialPageRoute(builder: (context) => LessonPage(/*lessonId-TODO?*/)));
   }
 
-  static openLessonSectionPage(BuildContext context, int lessonNumber, LessonSection lessonSection) {
+  static openLessonSectionPage(BuildContext context, int lessonId, LessonSection lessonSection) {
     switch (lessonSection) {
       case LessonSection.FullCharacterTree:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonNumber: lessonNumber)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
       case LessonSection.Characters:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CharacterListPage(lessonNumber: lessonNumber)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CharacterListPage(lessonId: lessonId)));
         break;
       case LessonSection.Assembling:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonNumber: lessonNumber)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
       case LessonSection.Conversation:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonNumber: lessonNumber)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
       case LessonSection.Quiz:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonNumber: lessonNumber)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
     }
   }

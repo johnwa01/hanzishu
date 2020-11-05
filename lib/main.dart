@@ -10,6 +10,7 @@ import 'package:hanzishu/engine/sentencemanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 void main() {
   init();
@@ -22,6 +23,7 @@ void init() {
   thePhraseManager = PhraseManager();
   theSentenceManager = SentenceManager();
   theLevelManager = LevelManager();
+  thePositionManager = PositionManager();
 
   LessonManager.populateLessonsInfo();
 }

@@ -5,6 +5,7 @@ var theZiManager = null;
 var thePhraseManager = null;
 var theSentenceManager = null;
 var theLevelManager = null;
+var thePositionManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?
@@ -15,6 +16,9 @@ var theRangeUptoLessonNumberForCurrentLevel = 1;
 var theRangeFromLessonNumberForCurrentLevel = 1;
 
 var theCurrentLevel = 1;
-var theCurrentLesson = "none";
+// NOTE: Use theCurrentLessonId whenever possible
+var theCurrentLesson = "None"; // to be removed
+var theCurrentLessonId = 1;
 
+var theCurrentCenterZiId = 1;
 var thePreviousCenterZiId = 0;

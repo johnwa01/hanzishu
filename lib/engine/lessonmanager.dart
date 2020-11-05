@@ -6,10 +6,11 @@ import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 class LessonManager {
   static final LessonManager _lessonManager = LessonManager._internal();
-  String theCurrentLesson = "none";
+  //String theCurrentLesson = "none";
   int theLatestEnabledLesson = 1; // will be overwritten by value from storage
   static String theBeginnerLesson = "beginnerLesson";
 
@@ -195,19 +196,19 @@ class LessonManager {
   static bool isZiInTreePathOfZisInLesson(int ziId, int lessonId) {
     var lesson = theLessonList[lessonId];
     for (var idB in lesson.charsIds) {
-      if (theZiManager.isZiAInTreePathOfZiB(ziIdA: ziId, ziIdB: idB)) {
+      if (theZiManager.isZiAInTreePathOfZiB(ziId, idB)) {
         return true;
       }
     }
 
     for (var idB in lesson.convCharsIds) {
-      if (theZiManager.isZiAInTreePathOfZiB(ziIdA: ziId, ziIdB: idB)) {
+      if (theZiManager.isZiAInTreePathOfZiB(ziId, idB)) {
         return true;
       }
     }
 
     for (var idB in lesson.comps) {
-      if (theZiManager.isZiAInTreePathOfZiB(ziIdA: ziId, ziIdB: idB)) {
+      if (theZiManager.isZiAInTreePathOfZiB(ziId, idB)) {
         return true;
       }
     }
@@ -317,4 +318,56 @@ class LessonManager {
     }
   }
   */
+  List<int> getRealGroupMembers(int id) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var currentLesson = theLessonList[theCurrentLessonId];
+    // check cache first
+    var groupMembers = currentLesson.getRealGroupMembers(id);
+
+    if (groupMembers == null) {
+      groupMembers = theZiManager.getRealGroupMembers(id);
+    }
+
+    currentLesson.addToRealGroupMembersMap(id, groupMembers);
+
+    return groupMembers;
+  }
+
+  PositionAndSize getCenterPositionAndSize() {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var currentLesson = theLessonList[theCurrentLessonId];
+    // check cache first
+    var positionAndSize = currentLesson.getCenterPosisionAndSize();
+
+    if (positionAndSize == null) {
+      positionAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
+      currentLesson.setCenterPositionAndSize(positionAndSize);
+    }
+
+    return positionAndSize;
+  }
+
+  /*
+  // To be called only after another call to getPositionAndSize(ziId, totalSideNumberOfZis)
+  PositionAndSize getPositionAndSizeFromCache(int ziId) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var currentLesson = theLessonList[theCurrentLessonId];
+    // get from cache
+    return currentLesson.getPositionAndSize(ziId);
+  }
+  */
+
+  PositionAndSize getPositionAndSize(int ziId, NumberOfZis totalSideNumberOfZis) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var currentLesson = theLessonList[theCurrentLessonId];
+    // check cache first
+    var positionAndSize = currentLesson.getPositionAndSize(ziId);
+
+    if (positionAndSize == null) {
+      positionAndSize = thePositionManager.getPositionAndSize(ziId, totalSideNumberOfZis);
+      currentLesson.addToSidePositions(ziId, positionAndSize);
+    }
+
+    return positionAndSize;
+  }
 }

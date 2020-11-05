@@ -2,6 +2,9 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
+import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/phraselist.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 class Lesson {
   int id;
@@ -16,6 +19,10 @@ class Lesson {
   String topicTitle;
   List<int> topicParagraphList;
   List<int> phraseIds;
+  bool newItemListCreated = false;
+  List<int> newItemList = [];
+  List<int> newItemTypeStartPosition = [0, 0, 0, 0];
+
   Map<int, bool> componentLearnedDictLesson = Map();
   Map<int, bool> fullCharLearnedDictLesson = Map();
   Map<int, bool> quizLearnedDictLesson = Map();
@@ -28,6 +35,11 @@ class Lesson {
   int numberOfNewChars = 0;
   int numberOfNewAnalysisChars = 0;
   int numberOfQuizQuestions = 0;
+  bool treeMapCreated = false;
+  Map<int, List<int>> treeMap = Map();
+  Map<int, PositionAndSize> sidePositions = Map();
+  Map<int, List<int>> realGroupMembersMap  = Map();
+  PositionAndSize centerPositionAndSize = null;
 
   Lesson(
       int id,
@@ -177,21 +189,21 @@ class Lesson {
 
   // check whether a zi's children are all completed - for one lesson only
   bool checkAndSetHasAllChildrenCompleted(int ziId, HittestState hittestState) {
-    if (GeneralManager.hasZiCompleted(ziId, hittestState, theCurrentLesson)) {
+    if (GeneralManager.hasZiCompleted(ziId, hittestState, theCurrentLessonId)) {
       return true;
     }
 
-    var zi = theZiManager.getZi(id: ziId);
+    var zi = theZiManager.getZi(ziId);
     var groupMembers = zi.groupMembers;
 
     var showZi = true;
     for (var memberZiId in groupMembers) {
       showZi = true;
       // Note: the id here is the member variable id of lesson
-      showZi = theZiManager.showZiForLesson(ziId: memberZiId, lessonId: id);
+      showZi = theZiManager.showZiForLessonId(memberZiId, id);
 
       if (showZi == true) {
-        if (!GeneralManager.hasZiCompleted(memberZiId, hittestState, theCurrentLesson)) {
+        if (!GeneralManager.hasZiCompleted(memberZiId, hittestState, theCurrentLessonId)) {
           return false;
         }
       }
@@ -209,7 +221,7 @@ class Lesson {
   }
 
   void setLatestSectionToNext(LessonSection lessonSection) {
-    var lessonId = theLessonManager.getLessonNumber(name: theLessonManager.theCurrentLesson);
+    var lessonId = theLessonManager.getLessonNumber(theLessonManager.theCurrentLesson);
     var lesson = theLessonList[lessonId];
     switch (lessonSection) {
       case LessonSection.FullCharacterTree:
@@ -271,5 +283,156 @@ class Lesson {
       lessonCompleted = true;
       theLessonManager.theLatestEnabledLesson += 1;
     }
+  }
+
+  void populateOneGroupOfChars(List<int> charIds, String type) {
+    for (int charId in charIds) {
+      var zi = theZiManager.getZi(charId);
+      if (theZiManager.containSameSubType(zi.type, type)) {
+        newItemList.add(charId);
+      }
+    }
+  }
+
+  void populateNonchars(List<int> noncharIds) {
+    for (int charId in noncharIds) {
+        newItemList.add(charId);
+    }
+  }
+
+  void populatePhrases(List<int> phraseIds) {
+    for (int phraseId in phraseIds) {
+      newItemList.add(phraseId);
+    }
+  }
+
+  // basic chars, basic nonchars, chars and phrases
+  void populateNewItemList() {
+    if (!newItemListCreated) {
+      newItemList.add(0); // seed the first to meet ListView.separated requirement
+      newItemTypeStartPosition[0] = newItemList.length - 1;
+      // basic chars
+      populateOneGroupOfChars(charsIds, CharType.BasicChar);
+      populateOneGroupOfChars(convCharsIds, CharType.BasicChar);
+      newItemTypeStartPosition[1] = newItemList.length - 1;
+
+      // basic non-chars
+      populateNonchars(comps);
+      newItemTypeStartPosition[2] = newItemList.length - 1;
+
+      // chars
+      populateOneGroupOfChars(charsIds, CharType.CompositChar);
+      populateOneGroupOfChars(convCharsIds, CharType.CompositChar);
+      newItemTypeStartPosition[3] = newItemList.length - 1;
+
+      // phrases
+      populatePhrases(phraseIds);
+
+      newItemListCreated = true;
+    }
+  }
+
+  String getItemChar(int index) {
+    if (index <= newItemTypeStartPosition[3]) {
+      return theZiList[newItemList[index]].char;
+    }
+    else {
+      return thePhraseList[newItemList[index]].chars;
+    }
+  }
+
+  String getItemPinyin(int index) {
+    if (index <= newItemTypeStartPosition[3]) {
+      return theZiList[newItemList[index]].pinyin;
+    }
+    else {
+      return thePhraseList[newItemList[index]].pinyin;
+    }
+  }
+
+  String getItemMeaning(int index) {
+    if (index <= newItemTypeStartPosition[3]) {
+      return theZiList[newItemList[index]].meaning;
+    }
+    else {
+      return thePhraseList[newItemList[index]].meaning;
+    }
+  }
+
+  String getItemString(int index) {
+    String str = "";
+    if (index == 0) {
+      return " ";
+    }
+    else if (index <= newItemTypeStartPosition[3]) {
+      var zi = theZiList[newItemList[index]];
+      str += zi.char;
+      str += "  [";
+      str += zi.pinyin;
+      str += "] ";
+      str += zi.meaning;
+    }
+    else {
+      var phrase = thePhraseList[newItemList[index]];
+      str += phrase.chars;
+      str += "  [";
+      str += phrase.pinyin;
+      str += "] ";
+      str += phrase.meaning;
+    }
+
+    return str;
+  }
+
+  void initCache() {
+    centerPositionAndSize = null;
+    realGroupMembersMap.clear();
+    sidePositions.clear();
+  }
+
+  PositionAndSize getCenterPosisionAndSize() {
+    return centerPositionAndSize;
+  }
+
+  void setCenterPositionAndSize(positionAndSize) {
+    centerPositionAndSize = positionAndSize;
+  }
+
+  PositionAndSize getPositionAndSize(int ziId) {
+    return sidePositions[ziId];
+  }
+
+  void addToSidePositions(int ziId, PositionAndSize positionAndSize) {
+    sidePositions[ziId] = positionAndSize;
+  }
+
+  List<int> getRealGroupMembers(int centerZiId) {
+    return realGroupMembersMap[centerZiId];
+  }
+
+  void addToRealGroupMembersMap(int centerZiId, List<int> realGroupMembers) {
+    realGroupMembersMap[centerZiId] = realGroupMembers;
+  }
+
+  void addToTreeMap(int ziId, List<int> lessonGroupMembers) {
+    treeMap[ziId] = lessonGroupMembers;
+  }
+
+  void populateTreeMap(int ziId) {
+    if (treeMapCreated) {
+      return;
+    }
+
+    var lessonGroupMembers = theZiManager.getRealGroupMembers(ziId);
+
+    if (lessonGroupMembers.length > 0) {
+      for (int ziMember in lessonGroupMembers) {
+        populateTreeMap(ziMember);
+      }
+
+      addToTreeMap(ziId, lessonGroupMembers);
+    }
+
+    treeMapCreated = true;
   }
 }

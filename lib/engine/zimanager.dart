@@ -128,14 +128,14 @@ class ZiManager {
     var showZi = false;
     for (var memberZiId in groupMembers) {
       showZi = false;
-      if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
-        showZi = showZiForLesson(memberZiId, theLessonManager.theCurrentLesson);
-      }
-      else {
-        var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
-        var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
-        showZi = showZiForLessons(memberZiId, internalStartLesson, internalLesson);
-      }
+      //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
+        showZi = showZiForLessonId(memberZiId, theCurrentLessonId);
+      //}
+      //else {
+      //  var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
+      //  var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
+      //  showZi = showZiForLessons(memberZiId, internalStartLesson, internalLesson);
+      //}
 
       if (showZi) {
         lessonGroupMembers.add(memberZiId);
@@ -196,7 +196,7 @@ class ZiManager {
         return true;
       }
       else {
-        var lessonZi = theZiManager.getZi(id: pathZiIdB);
+        var lessonZi = theZiManager.getZi(pathZiIdB);
         pathZiIdB = lessonZi.parentId;
       }
     }
@@ -204,8 +204,8 @@ class ZiManager {
     return false;
   }
 
-  static int getParentZiId(int ziId) {
-    var zi = theZiManager.getZi(id: ziId);
+  int getParentZiId(int ziId) {
+    var zi = getZi(ziId);
     return zi.parentId;
   }
 
