@@ -6,6 +6,9 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/treepainter.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/engine/texttospeech.dart';
+//import 'package:flutter_tts/flutter_tts.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class TreePage extends StatefulWidget {
   final int lessonId;
@@ -18,7 +21,7 @@ class TreePage extends StatefulWidget {
 class _TreePageState extends State<TreePage> {
   int centerZiId;
   double screenWidth;
-  //double percentage;
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +29,6 @@ class _TreePageState extends State<TreePage> {
 
     setState(() {
       centerZiId = theCurrentCenterZiId;
-      //percentage = 0.0;
     });
   }
 
@@ -72,13 +74,15 @@ class _TreePageState extends State<TreePage> {
 
   List<Widget> createHittestButtons() {
     List<Widget> buttons = [];
+    TextToSpeech.speak();
 
     thePositionManager.resetPositionIndex();
     var realGroupMembers = theLessonManager.getRealGroupMembers(centerZiId);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
-      var button = FlatButton(
+      var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
+      var button = Tooltip(message: memberPinyinAndMeaning, preferBelow: false, child: FlatButton(
           child: Text('', style: TextStyle(fontSize: 20.0),),
           color: Colors.white,
           textColor: Colors.blueAccent,
@@ -86,7 +90,7 @@ class _TreePageState extends State<TreePage> {
             setState(() {
               centerZiId = memberZiId;
             });
-          });
+          }));
 
       var positionAndSize = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
       var posi = Positioned(
@@ -101,8 +105,9 @@ class _TreePageState extends State<TreePage> {
     }
 
     if (centerZiId != 1 ) {
+      var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
       var parentId = theZiManager.getParentZiId(centerZiId);
-      var butt = FlatButton(
+      var butt = Tooltip(message: pinyinAndMeaning, preferBelow: false, child: FlatButton(
           child: Text('', style: TextStyle(fontSize: 20.0),),
           color: Colors.white,
           textColor: Colors.blueAccent,
@@ -110,7 +115,7 @@ class _TreePageState extends State<TreePage> {
             setState(() {
               centerZiId = parentId;
             });
-          });
+          }));
       var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiCenter = Positioned(
           top: posiAndSize.transY,

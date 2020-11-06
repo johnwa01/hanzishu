@@ -518,4 +518,8 @@ class ZiManager {
       return 0;
     }
   }
+
+  String getPinyinAndMeaning(int ziId) {
+    return theZiList[ziId].getPinyinAndMeaning();
+  }
 }
