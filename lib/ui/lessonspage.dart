@@ -25,8 +25,8 @@ class _LessonsPageState extends State<LessonsPage> {
       body: Center
         (
         child: ListView.builder(
-          itemCount: lessons.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemCount/*itemExtent*/: lessons.length,
+          itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
             int lessonCount = 1;
 
             // assume last row has two items

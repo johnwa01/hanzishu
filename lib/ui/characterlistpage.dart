@@ -34,7 +34,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
 
     return ListView.separated(
       itemCount: lesson.newItemList.length,
-      separatorBuilder: (BuildContext context, int index) {
+      separatorBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
         if (index == lesson.newItemTypeStartPosition[0]) {
           return Text("Basic Characters");
         }
@@ -49,10 +49,10 @@ class _CharacterListPageState extends State<CharacterListPage> {
         }
         return Divider();
       },
-      itemBuilder: (BuildContext context, int index) {
+      itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
         return ListTile(
-          //title: Text('item $index'),
-          //title: Text(theLessonList[index].chars),
+                 //title: Text('item $index'),
+                 //title: Text(theLessonList[index].chars),
           title: Text(lesson.getItemString(index)),
         );
       },
