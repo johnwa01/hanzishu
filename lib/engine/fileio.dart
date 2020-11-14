@@ -1,99 +1,61 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 import 'dart:io';
-import 'dart:convert'; //to convert json to maps and vice versa
-import 'package:path_provider/path_provider.dart'; //add path provider dart plugin on pubspec.yaml file
 
-/*
-void main() {
-  runApp(new MaterialApp(
-    home: new Home(),
-  ));
-}
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
-class Home extends StatefulWidget {
-  @override
-  State createState() => new HomeState();
-}
+class CounterStorage {
+  Future<String> get _localPath async {
+    final directory = await getApplicationDocumentsDirectory();
 
-class HomeState extends State<Home> {
-
-  TextEditingController keyInputController = new TextEditingController();
-  TextEditingController valueInputController = new TextEditingController();
-
-  File jsonFile;
-  Directory dir;
-  String fileName = "myJSONHanzishuFile.json";
-  bool fileExists = false;
-  Map<String, String> fileContent;
-
-  @override
-  void initState() {
-    super.initState();
-    /*to store files temporary we use getTemporaryDirectory() but we need
-    permanent storage so we use getApplicationDocumentsDirectory() */
-    getApplicationDocumentsDirectory().then((Directory directory) {
-      dir = directory;
-      jsonFile = new File(dir.path + "/" + fileName);
-      fileExists = jsonFile.existsSync();
-      if (fileExists) this.setState(() => fileContent = JSON.decode(jsonFile.readAsStringSync()));
-    });
+    return directory.path;
   }
 
-  @override
-  void dispose() {
-    keyInputController.dispose();
-    valueInputController.dispose();
-    super.dispose();
+  Future<File> get _localFile async {
+    final path = await _localPath;
+    return File('$path/counter3.txt');
   }
 
-  void createFile(Map<String, String> content, Directory dir, String fileName) {
-    print("Creating file!");
-    File file = new File(dir.path + "/" + fileName);
-    file.createSync();
-    fileExists = true;
-    file.writeAsStringSync(JSON.encode(content));
-  }
+  Future<int> readCounter() async {
+    try {
+      final file = await _localFile;
 
-  void writeToFile(String key, String value) {
-    print("Writing to file!");
-    Map<String, String> content = {key: value};
-    if (fileExists) {
-      print("File exists");
-      Map<String, String> jsonFileContent = json.decode(jsonFile.readAsStringSync());
-      jsonFileContent.addAll(content);
-      jsonFile.writeAsStringSync(JSON.encode(jsonFileContent));
-    } else {
-      print("File does not exist!");
-      createFile(content, dir, fileName);
+      // Read the file
+      String contents = await file.readAsString();
+
+      return int.parse(contents);
+    } catch (e) {
+      // If encountering an error, return 0
+      return 0;
     }
-    this.setState(() => fileContent = JSON.decode(jsonFile.readAsStringSync()));
-    print(fileContent);
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: new Text("JSON Tutorial"),),
-      body: new Column(
-        children: <Widget>[
-          new Padding(padding: new EdgeInsets.only(top: 10.0)),
-          new Text("File content: ", style: new TextStyle(fontWeight: FontWeight.bold),),
-          new Text(fileContent.toString()),
-          new Padding(padding: new EdgeInsets.only(top: 10.0)),
-          new Text("Add to JSON file: "),
-          new TextField(
-            controller: keyInputController,
-          ),
-          new TextField(
-            controller: valueInputController,
-          ),
-          new Padding(padding: new EdgeInsets.only(top: 20.0)),
-          new RaisedButton(
-            child: new Text("Add key, value pair"),
-            onPressed: () => writeToFile(keyInputController.text, valueInputController.text),
-          )
-        ],
-      ),
-    );
+  Future<String> readString() async {
+    try {
+      final file = await _localFile;
+
+      // Read the file
+      String contents = await file.readAsString();
+
+      return contents;
+    } catch (e) {
+      // If encountering an error, return 0
+      return null;
+    }
   }
-}*/
+
+  Future<File> writeCounter(int counter) async {
+    final file = await _localFile;
+
+    // Write the file
+    return file.writeAsString('$counter');
+  }
+
+  Future<File> writeString(String content) async {
+    final file = await _localFile;
+
+    // Write the file
+    return file.writeAsString(content);
+  }
+}

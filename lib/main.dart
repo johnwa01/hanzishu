@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/mepage.dart';
@@ -12,21 +15,14 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
+import 'package:hanzishu/engine/fileio.dart';
+import 'package:hanzishu/engine/storagehandler.dart';
+//import 'package:json_annotation/json_annotation.dart';
+
 void main() {
-  init();
   runApp(MyApp());
 }
 
-void init() {
-  theLessonManager = LessonManager();
-  theZiManager = ZiManager();
-  thePhraseManager = PhraseManager();
-  theSentenceManager = SentenceManager();
-  theLevelManager = LevelManager();
-  thePositionManager = PositionManager();
-
-  LessonManager.populateLessonsInfo();
-}
 
 class MyApp extends StatelessWidget {
   @override
@@ -34,18 +30,59 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: _buildShrineTheme(),
       title: 'Hanzishu',
-      home: MyHomePage(),
+      home: MyHomePage(fileIO: CounterStorage()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
+  final CounterStorage fileIO;
+  MyHomePage({Key key, @required this.fileIO}) : super(key: key);
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
+  String _str;
+  //int _counter;
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+
+    theStorageHandler.initStorage();
+    //TODO: for write to storage part of code
+    //var str = theStorageHandler.putStorageToJson();
+    //widget.fileIO.writeString(str);
+
+    widget.fileIO.readString().then((String value) {
+      if(value != null) {
+        var storage = theStorageHandler.getStorageFromJson(value);
+        if (storage != null) {
+          theStorageHandler.setStorage(storage);
+        }
+        //setState(() {
+        //  _str = value;
+        //});
+      }
+    });
+  }
+
+  init() {
+    theLessonManager = LessonManager();
+    theZiManager = ZiManager();
+    thePhraseManager = PhraseManager();
+    theSentenceManager = SentenceManager();
+    theLevelManager = LevelManager();
+    thePositionManager = PositionManager();
+    theStorageHandler = StorageHandler();
+
+    LessonManager.populateLessonsInfo();
+    //theStorageHandler.readFromFile();
+  }
 
   final List<Widget> _children =
   [
