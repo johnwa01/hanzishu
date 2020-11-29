@@ -17,6 +17,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
+import 'package:hanzishu/engine/quizmanager.dart';
 //import 'package:json_annotation/json_annotation.dart';
 
 void main() {
@@ -79,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theLevelManager = LevelManager();
     thePositionManager = PositionManager();
     theStorageHandler = StorageHandler();
+    theQuizManager = QuizManager();
 
     LessonManager.populateLessonsInfo();
     //theStorageHandler.readFromFile();

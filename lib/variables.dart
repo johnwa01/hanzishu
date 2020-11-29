@@ -8,6 +8,7 @@ var theSentenceManager = null;
 var theLevelManager = null;
 var thePositionManager = null;
 var theStorageHandler = null;
+var theQuizManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?

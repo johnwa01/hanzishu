@@ -114,7 +114,7 @@ class _TreePageState extends State<TreePage> {
           overlayEntry.remove();
           overlayEntry = null;
         }
-        TextToSpeech.speak();
+        TextToSpeech.speak("'你好'");  //TODO
         var meaning = theZiManager.getPinyinAndMeaning(currentZiId);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
@@ -140,7 +140,7 @@ class _TreePageState extends State<TreePage> {
 
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
-    TextToSpeech.speak();
+    TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
     var realGroupMembers = theLessonManager.getRealGroupMembers(centerZiId);

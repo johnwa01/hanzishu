@@ -3,6 +3,7 @@ import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/ui/treepage.dart';
 import 'package:hanzishu/ui/characterlistpage.dart';
+import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/utility.dart';
 
 class OpenHelper {
@@ -35,7 +36,7 @@ class OpenHelper {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
       case LessonSection.Quiz:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizPage(lessonId: lessonId)));
         break;
     }
   }

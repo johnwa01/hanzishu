@@ -1,8 +1,8 @@
 import 'package:flutter_tts/flutter_tts.dart';
 
 class TextToSpeech {
-  static speak() async {
+  static speak(String str) async {
     FlutterTts flutterTts = FlutterTts();
-    flutterTts.speak('你好'/*'Hello World'*/);
+    flutterTts.speak(str/*'你好''Hello World'*/);
   }
 }
