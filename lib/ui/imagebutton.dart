@@ -18,7 +18,7 @@ class OpenHelper {
 
   static openLessonPage(BuildContext context, int lessonId) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LessonPage(/*lessonId-TODO?*/)));
+        MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId)));
   }
 
   static openLessonSectionPage(BuildContext context, int lessonId, LessonSection lessonSection) {

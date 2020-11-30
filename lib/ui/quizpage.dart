@@ -20,17 +20,24 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   AnswerPosition answerPosition;
-  QuizCategory currentCategory;
-  QuizType currentType;
-  List<String> currentValues;
-  List<int> currentValuesNonCharIds;
+  int lessonId;
+
+  //QuizCategory currentCategory;
+  //QuizType currentType;
+  //List<String> currentValues;
+  //List<int> currentValuesNonCharIds;
   int index;
   //bool soundIconPressed;
 
-  _openTreePage(BuildContext context) {
-    Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => QuizPage()));
-  }
+  //_openTreePage(BuildContext context) {
+  //_QuizPageState(BuildContext context) {
+  //  Navigator.of(context).push(
+  //      MaterialPageRoute(builder: (context) => QuizPage()));
+  //}
+
+  //_QuizPageState(int lessonId) {
+  //  this.lessonId = lessonId;
+  //}
 
   @override
   void initState() {
@@ -39,7 +46,7 @@ class _QuizPageState extends State<QuizPage> {
     //TODO
     //theStatisticsManager.initLessonQuizResults();
     theQuizManager.initValues();
-    index = theQuizManager.getFirstIndex(1); //TODO: lessonId
+    index = theQuizManager.getFirstIndex(widget.lessonId); //TODO: lessonId
 
     setState(() {
       answerPosition = AnswerPosition.none;
@@ -52,12 +59,14 @@ class _QuizPageState extends State<QuizPage> {
       index = theQuizManager.getNextIndexForCurrentType();
     }
 
+    QuizType currentType = theQuizManager.getCurrentType();
     if (answerPosition == AnswerPosition.continueNext ||
         answerPosition == AnswerPosition.none) {
-      currentValues = theQuizManager.getUpdatedValues(
+        // get values ready
+        theQuizManager.getUpdatedValues(
           index, theQuizManager.getCurrentCategory() == QuizCategory.meaning);
-      currentValuesNonCharIds = theQuizManager.getCurrentValuesNonCharIds();
-      currentCategory = theQuizManager.getCurrentCategory();
+        theQuizManager.getCurrentValuesNonCharIds();
+      //currentCategory = theQuizManager.getCurrentCategory();
       currentType = theQuizManager.getCurrentType();
     }
 
@@ -123,10 +132,12 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getQuestion(BuildContext context) {
-    if (currentCategory == QuizCategory.meaning) { // short button
+    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning) { // short button
       return getZiContainer(AnswerPosition.center);
     }
     else {
+      var currentValues = theQuizManager.getCurrentValues();
+
       return Container(
         height: 180.0,
         child: IconButton(
@@ -147,6 +158,8 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getAnswers(BuildContext context) {
+    var currentCategory = theQuizManager.getCurrentCategory();
+    var currentType = theQuizManager.getCurrentType();
     if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.sound &&
         (answerPosition == AnswerPosition.soundIcon || answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB ||
         answerPosition == AnswerPosition.positionC))) {
@@ -185,6 +198,7 @@ class _QuizPageState extends State<QuizPage> {
 
   int getNoncharId(AnswerPosition position) {
     int noncharId;
+    var currentValuesNonCharIds = theQuizManager.getCurrentValuesNonCharIds();
 
     switch(position) {
       case AnswerPosition.center: {
@@ -215,6 +229,7 @@ class _QuizPageState extends State<QuizPage> {
 
   String getValue(AnswerPosition position) {
     var value;
+    var currentValues = theQuizManager.getCurrentValues();
 
     switch(position) {
       case AnswerPosition.center:
@@ -247,6 +262,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
     var fontSize = 30.0;
+    var currentType = theQuizManager.getCurrentType();
     if (position == AnswerPosition.center &&
         (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars)) {
       fontSize = 60.0;

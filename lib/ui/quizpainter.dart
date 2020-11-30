@@ -35,7 +35,7 @@ class QuizPainter extends BasePainter {
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-    
+
     //TODO: why its members are null?
     //var posiSize = PositionAndSize(100.0, 40.0, 35.0, 35.0, 15.0, 2.0);
 

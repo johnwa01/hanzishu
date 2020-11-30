@@ -51,12 +51,12 @@ class LessonAndIndex {
 }
 
 class QuizManager {
-  static String theChoiceA = "choiceA";
-  static String theChoiceB = "choiceB";
-  static String theChoiceC = "choiceC";
-  static String thePinyinA = "pinyinA";
-  static String thePinyinB = "pinyinB";
-  static String thePinyinC = "pinyinC";
+  //static String theChoiceA = "choiceA";
+  //static String theChoiceB = "choiceB";
+  //static String theChoiceC = "choiceC";
+  //static String thePinyinA = "pinyinA";
+  //static String thePinyinB = "pinyinB";
+  //static String thePinyinC = "pinyinC";
 
   var minUpperRange = 5; // 0 based, so 5+1=6
   var currentLesson = 0;
@@ -547,6 +547,7 @@ class QuizManager {
     return currentValuesNonCharIds;
   }
 
+  /*
   static bool isAMeaningQuizAnswer(String selectionName) {
     return (selectionName == theChoiceA || selectionName == theChoiceB ||
       selectionName == theChoiceC);
@@ -556,6 +557,7 @@ class QuizManager {
     return (selectionName == thePinyinA ||
       selectionName == thePinyinB || selectionName == thePinyinC);
   }
+*/
 
   static int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
     var chosen = true;

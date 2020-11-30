@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/ui/treepage.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
 
 class LessonPage extends StatefulWidget {
   final int lessonId;
@@ -12,12 +13,15 @@ class LessonPage extends StatefulWidget {
 }
 
 class _LessonPageState extends State<LessonPage> {
-  _openTreePage(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage()));
-  }
+  //_openTreePage(BuildContext context) {
+  //_LessonPageState(BuildContext context) {
+  //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage()));
+  //}
 
   @override
   Widget build(BuildContext context) {
+    theCurrentLessonId = widget.lessonId;
+
     return Scaffold
       (
       appBar: AppBar
