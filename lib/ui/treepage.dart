@@ -55,24 +55,36 @@ class _TreePageState extends State<TreePage> {
         title: Text("Tree Page"),
       ),
       body: Container(
-        //height: 200.0,
-        //width: 200.0,
-        child: CustomPaint(
-          foregroundPainter: TreePainter(
+        child: WillPopScope(   // just for removing overlay on detecting back arrow
+          //height: 200.0,
+          //width: 200.0,
+          child: CustomPaint(
+            foregroundPainter: TreePainter(
               lineColor: Colors.amber,
               completeColor: Colors.blueAccent,
               centerId: centerZiId,
               //completePercent: percentage,
               width: screenWidth
-          ),
-          child: Center(
-            child: Stack(
+            ),
+            child: Center(
+              child: Stack(
                 children: createHittestButtons(context)
+              ),
             ),
           ),
+            onWillPop: _onWillPop
         ),
       ),
     );
+  }
+
+  Future<bool>_onWillPop() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+
+    return Future.value(true);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
@@ -147,7 +159,7 @@ class _TreePageState extends State<TreePage> {
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
-      var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
+      //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
@@ -156,7 +168,7 @@ class _TreePageState extends State<TreePage> {
     }
 
     if (centerZiId != 1 ) {
-      var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
+      //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       var posiAndSize = theLessonManager.getCenterPositionAndSize();
 

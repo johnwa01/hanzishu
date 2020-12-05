@@ -13,6 +13,8 @@ class LessonManager {
   //String theCurrentLesson = "none";
   int theLatestEnabledLesson = 1; // will be overwritten by value from storage
   static String theBeginnerLesson = "beginnerLesson";
+  //static var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
+  //static var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
 
   factory LessonManager() {
     return _lessonManager;
@@ -28,7 +30,7 @@ class LessonManager {
   }
 
   LessonSection getLatestSection() {
-    var lessonId = getLessonNumber(theCurrentLesson);
+    var lessonId = theCurrentLessonId; //getLessonNumber(theCurrentLesson);
     var lesson = theLessonList[lessonId];
     return lesson.getLatestSection();
   }
@@ -75,20 +77,21 @@ class LessonManager {
     return 0;
   }
 
-  /*
   static double getNextYPosition(double currentY) {
-    var maxComponents = 0.0;
+    var maxComponents = 0;
     for (var i = 0; i <= (theCurrentZiComponents.length - 1); i++) {
       if (theCurrentZiComponents[i] > maxComponents) {
         maxComponents = theCurrentZiComponents[i];
       }
     }
 
-    var nextYPosition = currentY + (theAnalyzeZiYSize + theAnalyzeZiYGap) * maxComponents;
+    var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
+    var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
+    var nextYPosition = currentY + (analyzeZiYSize + analyzeZiYGap) * maxComponents;
 
     return nextYPosition;
   }
-
+ /*
   static double getNextXPosition(double urrentX) {
     var maxComponents = 0;
     for (var i = 0; i <= (theCurrentZiComponents.count - 1); i++) {
@@ -345,6 +348,13 @@ class LessonManager {
     }
 
     return positionAndSize;
+  }
+
+  Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var lesson = theLessonList[lessonId];
+
+    return lesson.breakoutPositions;
   }
 
   /*

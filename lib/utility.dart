@@ -222,8 +222,12 @@ class ScreenManager {
 // adjusted length according to iPhone 8 Plus length which is used in
 // my initial design, they are screen width=414.0 and screen height=736.0
 // Only use screen width as reference and don't use screen height.
-double XYLength(double length){
-  return ScreenManager.screenWidth / 414.0 * length;
+//double XYLength(double length){
+//  return ScreenManager.screenWidth / 414.0 * length;
+//}
+
+double xYLength(double xy) {
+  return xy;
 }
 
 class Utility {
@@ -364,6 +368,3 @@ static const List<MaterialColor> primaries = <MaterialColor>[
 ];
 */
 
-double xYLength(double xy) {
-  return xy;
-}

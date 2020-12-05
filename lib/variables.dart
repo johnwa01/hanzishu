@@ -20,7 +20,7 @@ var theRangeFromLessonNumberForCurrentLevel = 1;
 
 var theCurrentLevel = 1;
 // NOTE: Use theCurrentLessonId whenever possible
-var theCurrentLesson = "None"; // to be removed
+//var theCurrentLesson = "None"; // to be removed
 var theCurrentLessonId = 1;
 
 var theCurrentCenterZiId = 1;

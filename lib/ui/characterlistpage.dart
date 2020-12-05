@@ -18,17 +18,17 @@ class _CharacterListPageState extends State<CharacterListPage> {
       (
       appBar: AppBar
         (
-        title: Text("Character List Page"),
+        title: Text("CharacterList Page"),
       ),
       body: Center
         (
-        child: callFunc(), //child: Text("This is Character List Page."),
+        child: getCharacterListWizard(), //child: Text("This is Character List Page."),
       ),
     );
 
   }
 
-  Widget callFunc() {
+  Widget getCharacterListWizard() {
     var lesson = theLessonList[theCurrentLessonId];
     lesson.populateNewItemList();
 

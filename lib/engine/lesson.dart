@@ -4,6 +4,7 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/data/phraselist.dart';
+import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class Lesson {
@@ -40,6 +41,7 @@ class Lesson {
   Map<int, PositionAndSize> sidePositions = Map();
   Map<int, List<int>> realGroupMembersMap  = Map();
   PositionAndSize centerPositionAndSize = null;
+  Map<int, PositionAndSize> breakoutPositions = Map();
 
   Lesson(
       int id,
@@ -87,7 +89,7 @@ class Lesson {
     if (convChars.length > 0) {
       for (var i = 0; i <= convCharsIds.length - 1; i++) {
         var ziId = convCharsIds[i];
-        var zi = theZiManager.getZi(id: ziId);
+        var zi = theZiManager.getZi(ziId);
         if (zi != null && zi.type == "h") {
           numberOfNewAnalysisChars += 1;
         }
@@ -221,7 +223,7 @@ class Lesson {
   }
 
   void setLatestSectionToNext(LessonSection lessonSection) {
-    var lessonId = theLessonManager.getLessonNumber(theLessonManager.theCurrentLesson);
+    var lessonId = theCurrentLessonId; //theLessonManager.getLessonNumber(theLessonManager.theCurrentLesson);
     var lesson = theLessonList[lessonId];
     switch (lessonSection) {
       case LessonSection.FullCharacterTree:
@@ -382,6 +384,10 @@ class Lesson {
     }
 
     return str;
+  }
+
+  String getSentence(int index) {
+    return theSentenceList[sentenceList[index]].conv;
   }
 
   void initCache() {

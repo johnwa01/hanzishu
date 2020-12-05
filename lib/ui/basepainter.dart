@@ -93,6 +93,18 @@ class BasePainter extends CustomPainter{
     canvas.drawPath(path5b, paint4);
   }
 
+  void drawLine(double x1, double y1, double x2, double y2, MaterialColor ofColor, double widthOfLine ) {
+    var paint = Paint();
+
+    paint.color = ofColor; //Colors.amber;
+    paint.strokeWidth = widthOfLine; //5;
+    canvas.drawLine(
+        Offset(x1, y1),
+        Offset(x2, y2),
+        paint
+    );
+  }
+
   void drawShape(Path path, MaterialColor ofColor, double widthOfLine) {
     var paint = Paint();
     paint.color = ofColor;

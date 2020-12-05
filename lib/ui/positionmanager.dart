@@ -34,12 +34,12 @@ class PositionAndSize {
     double height,
     double charFontSize,
     double lineWidth) {
-      transX = transX;
-      transY = transY;
-      width = width;
-      height = height;
-      charFontSize = charFontSize;
-      lineWidth = lineWidth;
+      this.transX = transX;
+      this.transY = transY;
+      this.width = width;
+      this.height = height;
+      this.charFontSize = charFontSize;
+      this.lineWidth = lineWidth;
   }
 }
 
@@ -66,8 +66,8 @@ class PositionManager
   static int theBigMaximumNumber = 8;
   //var theTotalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
   var theCurrentSideIndexOfZis = NumberOfZis(0, 0, 0, 0);
-  static var topEdgeSize = XYLength(35.0);
-  static var theLeftEdgeSize = XYLength(4.0);
+  static var topEdgeSize = xYLength(35.0);
+  static var theLeftEdgeSize = xYLength(4.0);
   static var theFrameHeightToWidthRatio = 1.2;
 
   var frameWidth = 0.0;
@@ -147,7 +147,7 @@ class PositionManager
     return frameWidth * CharFontSizes[charFontSizeIndex];
   }
 
-  static List<double> theZiLineWidth = [
+  static List<double> ZiLineWidth = [
     0.069,
     0.069,  //5.0,
     0.069,  //4.0,
@@ -161,7 +161,7 @@ class PositionManager
 
   double getZiLineWidth(int ziLineWidthIndex) {
     var ziSize = getZiSize(ziLineWidthIndex);
-    return ziSize * theZiLineWidth[ziLineWidthIndex];
+    return ziSize * ZiLineWidth[ziLineWidthIndex];
   }
 
   void resetPositionIndex() {
