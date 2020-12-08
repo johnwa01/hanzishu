@@ -7,6 +7,7 @@ import 'package:hanzishu/ui/quizpainter.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/statisticsmanager.dart';
 
 class QuizPage extends StatefulWidget {
   final int lessonId;
@@ -48,6 +49,8 @@ class _QuizPageState extends State<QuizPage> {
     theQuizManager.initValues();
     index = theQuizManager.getFirstIndex(widget.lessonId); //TODO: lessonId
 
+    theStatisticsManager.initLessonQuizResults();
+
     setState(() {
       answerPosition = AnswerPosition.none;
     });
@@ -71,6 +74,9 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     if (currentType == QuizType.none) {
+      // Completed the quiz. Save the quiz results and go back to lesson page.
+      theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
+
       Navigator.of(context).pop();
       //OpenHelper.openLessonPage(context, 1/*lessonId*/);
     }
@@ -312,6 +318,7 @@ class _QuizPageState extends State<QuizPage> {
     if (noncharId != 0) {// nonchar case
       return InkWell(
         onTap: () {
+          theStatisticsManager.trackTimeAndTap();
           setPositionState(position);
           //theQuizManager.setAnswered(true);
           },
@@ -338,9 +345,14 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getContinue(BuildContext context) {
     if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
-      var result = "Correct! ";
+      var result; // = "Correct! ";
       if (answerPosition != theQuizManager.getCorrectAnswerPosition()) {
+        theStatisticsManager.incrementLessonQuizResult(false);
         result = "Incorrect. ";
+      }
+      else {
+        theStatisticsManager.incrementLessonQuizResult(true);
+        result = "Correct! ";
       }
 
       result += "Continue";

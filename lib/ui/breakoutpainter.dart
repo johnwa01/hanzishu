@@ -22,6 +22,8 @@ class YPositionWrapper {
 class BreakoutPainter extends BasePainter {
   static var lessonLeftEdge = xYLength(10.0);
 
+  int breakoutIndex;
+
   Color lineColor;
   Color completeColor;
   int lessonId;
@@ -44,6 +46,8 @@ class BreakoutPainter extends BasePainter {
   }
 
   Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
+    breakoutIndex = 0;
+
     breakoutPositions = theLessonManager.getBreakoutPositions(lessonId);
     isBreakoutPositionsOnly = true;
 
@@ -107,7 +111,8 @@ class BreakoutPainter extends BasePainter {
         (theCurrentZiComponents[recurLevel]);
 
     if (isBreakoutPositionsOnly) {
-      breakoutPositions[id] = posiSize2;
+      breakoutIndex += 1;
+      breakoutPositions[Utility.getUniqueNumberFromId(breakoutIndex, id)] = posiSize2;
     }
     else {
       var withPinyin = false;

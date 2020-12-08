@@ -56,22 +56,34 @@ class _BreakoutPageState extends State<BreakoutPage> {
       body: Container(
         //height: 200.0,
         //width: 200.0,
-        child: CustomPaint(
-          foregroundPainter: BreakoutPainter(
-              lineColor: Colors.amber,
-              completeColor: Colors.blueAccent,
-              lessonId: widget.lessonId,
-              //completePercent: percentage,
-              screenWidth: screenWidth
-          ),
-          child: Center(
-            child: Stack(
-                children: createHittestButtons(context)
+        child: WillPopScope(   // just for removing overlay on detecting back arrow
+          child: CustomPaint(
+            foregroundPainter: BreakoutPainter(
+                lineColor: Colors.amber,
+                completeColor: Colors.blueAccent,
+                lessonId: widget.lessonId,
+                //completePercent: percentage,
+                screenWidth: screenWidth
+            ),
+            child: Center(
+              child: Stack(
+                  children: createHittestButtons(context)
+              ),
             ),
           ),
+            onWillPop: _onWillPop
         ),
       ),
     );
+  }
+
+  Future<bool>_onWillPop() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+
+    return Future.value(true);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
@@ -95,7 +107,9 @@ class _BreakoutPageState extends State<BreakoutPage> {
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedButton(int id, PositionAndSize posiAndSize) {
+  Positioned getPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+    var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
@@ -141,8 +155,8 @@ class _BreakoutPageState extends State<BreakoutPage> {
       breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
     }
 
-    breakoutPositions.forEach((k,v) =>
-      buttons.add(getPositionedButton(k, v)));
+    breakoutPositions.forEach((uniqueNumber, position) =>
+      buttons.add(getPositionedButton(uniqueNumber, position)));
 
     return buttons;
   }

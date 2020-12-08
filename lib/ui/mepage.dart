@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/ui/reviewpage.dart';
+import 'package:hanzishu/ui/quizresultpage.dart';
+import 'package:hanzishu/engine/statisticsmanager.dart';
+import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/ui/studytimepage.dart';
+import 'package:hanzishu/ui/tapcountpage.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -16,8 +22,66 @@ class _MePageState extends State<MePage> {
       ),
       body: Center
         (
-        child: Text("This is Me Page."),
+        child: getMeListView(context),
       ),
     );
   }
+
+      Widget getMeListView(BuildContext context) {
+        return ListView(
+          children: <Widget>[
+            //Text(
+            //  "XXXXXXXXXXXXXXX",
+            //  textDirection: TextDirection.rtl,
+            //  textAlign: TextAlign.center,
+            //),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text("Study Time", textDirection: TextDirection.ltr),
+              trailing: Icon(Icons.location_city),
+              onTap: () {
+                theStatisticsManager.trackTimeAndTap();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => StudyTimePage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text("Tap Count", textDirection: TextDirection.ltr),
+              trailing: Icon(Icons.location_city),
+              onTap: () {
+                theStatisticsManager.trackTimeAndTap();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TapCountPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text("Quiz Results", textDirection: TextDirection.ltr),
+              trailing: Icon(Icons.location_city),
+              //subtitle: Text(
+              //  "XXXXXXXXXX",
+              //  textDirection: TextDirection.rtl,
+              //),
+              onTap: () {
+                theStatisticsManager.trackTimeAndTap();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => QuizResultPage(),
+                  ),
+                );
+              },
+            ),
+          ],
+        );
+      }
 }

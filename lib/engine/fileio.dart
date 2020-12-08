@@ -14,7 +14,7 @@ class CounterStorage {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/counter3.txt');
+    return File('$path/counter4.txt');
   }
 
   Future<int> readCounter() async {
@@ -27,6 +27,7 @@ class CounterStorage {
       return int.parse(contents);
     } catch (e) {
       // If encountering an error, return 0
+      // Note: For first ever run or has never saved before, the file would not be created yet.
       return 0;
     }
   }

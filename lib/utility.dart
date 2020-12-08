@@ -154,6 +154,7 @@ class ScreenManager {
 
   static var screenWidth = 375; //UIScreen.main.bounds.width
   static var screenHeight = 600; //UIScreen.main.bounds.height
+
   //static var iconAreaHeight = XYLength(CGFloat(55.0))
   //static var statusBarHeight = XYLength(CGFloat(30.0))
 
@@ -231,6 +232,8 @@ double xYLength(double xy) {
 }
 
 class Utility {
+  static var baseNumber = 10000;
+
   static void speakChars(String chars, String lang) {
   // skip the special root char
     //TODO
@@ -302,6 +305,14 @@ class Utility {
     thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
 
     return screenWidth;
+  }
+
+  static int getUniqueNumberFromId(int breakoutIndex, int id) {
+    return breakoutIndex * baseNumber + id;
+  }
+
+  static int getIdFromUniqueNumber(int uniqueNumber) {
+    return uniqueNumber % baseNumber;
   }
 }
 

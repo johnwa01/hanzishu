@@ -27,8 +27,14 @@ class Statistics {
   Statistics({
     this.dateString,
     this.studyTime,
-    this.tapCount,
+    this.tapCount
   });
+
+  init() {
+    dateString = '';
+    studyTime = 0.0;
+    tapCount = 0;
+  }
 
   factory Statistics.fromJson(Map<String, dynamic> json) => Statistics(
     dateString: json["dateString"],
@@ -103,6 +109,46 @@ class StorageHandler {
     return storage.lessonQuizResults;
   }
 
+  LessonQuizResult getLessonQuizResult(int index) {
+    var results = getLessonQuizResults();
+    if (results != null) {
+      if (index <= results.length - 1) {
+        return results[index];
+      }
+    }
+
+    return null;
+  }
+
+  int getLessonQuizResultLength () {
+    var results = getLessonQuizResults();
+    if (results != null) {
+      return results.length;
+    }
+
+    return 0;
+  }
+
+  int getStudyTimeAndTapCountLength () {
+    var array = getStatisticsArray();
+    if (array != null) {
+      return array.length;
+    }
+
+    return 0;
+  }
+
+  Statistics getStudyTimeAndTapCount(int index) {
+    var statistics = getStatisticsArray();
+    if (statistics != null) {
+      if (index <= statistics.length - 1) {
+        return statistics[index];
+      }
+    }
+
+    return null;
+  }
+
   bool existStatisticsForDateString(String dateString) {
     var arrayCount = storage.statisticsArray.length;
     if (arrayCount > 0) {
@@ -127,7 +173,13 @@ class StorageHandler {
   }
 
   appendLessonQuizResult(LessonQuizResult lessonQuizResult) {
-    storage.lessonQuizResults.add(lessonQuizResult);
+    var result = LessonQuizResult();
+    result.dateString = lessonQuizResult.dateString;
+    result.lessonId = lessonQuizResult.lessonId;
+    result.cor = lessonQuizResult.cor;
+    result.answ = lessonQuizResult.answ;
+
+    storage.lessonQuizResults.add(result);
   }
 
   addOrUpdateStatistics(Statistics statistics) {
@@ -155,5 +207,11 @@ class StorageHandler {
 
   String putStorageToJson() {
     return json.encode(_$StorageToJson(storage));
+  }
+
+  SaveToFile() {
+    var str = theStorageHandler.putStorageToJson();
+
+    theFileIOFile.writeString(str);
   }
 }

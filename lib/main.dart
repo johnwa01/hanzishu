@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
@@ -18,7 +19,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
-//import 'package:json_annotation/json_annotation.dart';
+import 'package:hanzishu/engine/statisticsmanager.dart';
 
 void main() {
   runApp(MyApp());
@@ -54,10 +55,14 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     init();
 
+    theFileIOFile = widget.fileIO;
+
     theStorageHandler.initStorage();
     //TODO: for write to storage part of code
     //var str = theStorageHandler.putStorageToJson();
     //widget.fileIO.writeString(str);
+
+    //widget.fileIO.writeCounter(1);
 
     widget.fileIO.readString().then((String value) {
       if(value != null) {
@@ -81,9 +86,15 @@ class _MyHomePageState extends State<MyHomePage> {
     thePositionManager = PositionManager();
     theStorageHandler = StorageHandler();
     theQuizManager = QuizManager();
+    theStatisticsManager = StatisticsManager();
+
+    theStatisticsManager.init(0,
+        0.0,
+        0,
+        '',
+        null);
 
     LessonManager.populateLessonsInfo();
-    //theStorageHandler.readFromFile();
   }
 
   final List<Widget> _children =
@@ -95,6 +106,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   onTappedBar(int index)
   {
+    theStatisticsManager.trackTimeAndTap();
     setState(() => _currentIndex = index);
   }
 

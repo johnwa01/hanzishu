@@ -9,6 +9,7 @@ var theLevelManager = null;
 var thePositionManager = null;
 var theStorageHandler = null;
 var theQuizManager = null;
+var theStatisticsManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?
@@ -27,3 +28,5 @@ var theCurrentCenterZiId = 1;
 var thePreviousCenterZiId = 0;
 
 Directory theStorageFileDirectory = null;
+
+var theFileIOFile;
