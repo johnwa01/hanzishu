@@ -20,6 +20,7 @@ import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
+import 'package:hanzishu/ui/reviewselectionpage.dart';
 
 void main() {
   runApp(MyApp());
@@ -100,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children =
   [
     LessonsPage(),
-    ReviewPage(),
+    ReviewSelectionPage(),
     MePage()
   ];
 
