@@ -9,7 +9,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
-class TreePainter extends BasePainter {
+class ReviewPainter extends BasePainter {
   Color lineColor;
   Color completeColor;
   int centerId;
@@ -19,9 +19,14 @@ class TreePainter extends BasePainter {
   double screenWidth;
   //double frameWidth;
 
-  TreePainter({
-    this.lineColor, this.completeColor, this.centerId, /*this.completePercent,*/ this.width
-  });
+  ReviewPainter(Color lineColor, Color completeColor, int centerId, double width, int startLessonId, int endLessonId) {
+    this.lineColor = lineColor;
+    this.completeColor = completeColor;
+    this.centerId = centerId; /*this.completePercent,*/
+    this.width = width;
+    this.reviewStartLessonId = startLessonId;
+    this.reviewEndLessonId = endLessonId;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -31,12 +36,14 @@ class TreePainter extends BasePainter {
     drawFrameWithColors(
         getFrameWidth(), BasePainter.FrameLeftEdgeSize, BasePainter.FrameTopEdgePosition, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
-    drawZiGroup(centerId, theCurrentLessonId, theCurrentLessonId);
+    drawZiGroup(centerId, reviewStartLessonId, reviewEndLessonId);
   }
 
   double getFrameWidth() {
     return width - 10.0;
   }
+
+
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {

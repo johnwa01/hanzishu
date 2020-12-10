@@ -119,7 +119,7 @@ class ZiManager {
   }
 
   // consider the case for each lesson
-  List<int> getRealGroupMembers(int id) {
+  List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId) {
     var zi = getZi(id);
     var groupMembers = zi.groupMembers;
 
@@ -129,12 +129,12 @@ class ZiManager {
     for (var memberZiId in groupMembers) {
       showZi = false;
       //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
-        showZi = showZiForLessonId(memberZiId, theCurrentLessonId);
+        //showZi = showZiForLessonId(memberZiId, theCurrentLessonId);
       //}
       //else {
       //  var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
       //  var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
-      //  showZi = showZiForLessons(memberZiId, internalStartLesson, internalLesson);
+        showZi = showZiForLessons(memberZiId, internalStartLessonId, internalEndLessonId);
       //}
 
       if (showZi) {

@@ -136,4 +136,36 @@ class LevelManager {
     theRangeUptoLessonNumberForCurrentLevel = theLevelList[theCurrentLevel - 1].numberOfLessons;
   }
   */
+
+  static int getStartInternalLessonId(int selectedReviewLevelStartingId, int selectedReviewLevelEndingId, int selectedReviewLessonStartingId, int selectedReviewLessonEndingId) {
+    var lessonId = 0;
+    for (var i = 1; i < selectedReviewLevelStartingId; i++) {
+      lessonId += theNumberOfLessonsInLevels[i - 1];
+    }
+
+    if (selectedReviewLevelStartingId == selectedReviewLevelEndingId) {
+      lessonId += selectedReviewLessonStartingId;
+    }
+    else {
+      lessonId += 1; // default the first one
+    }
+
+    return lessonId;
+  }
+
+  static int getEndInternalLessonId(int selectedReviewLevelStartingId, int selectedReviewLevelEndingId, int selectedReviewLessonStartingId, int selectedReviewLessonEndingId) {
+    var lessonId = 0;
+    for (var i = 1; i < selectedReviewLevelEndingId; i++) {
+      lessonId += theNumberOfLessonsInLevels[i - 1];
+    }
+
+    if (selectedReviewLevelStartingId == selectedReviewLevelEndingId) {
+      lessonId += selectedReviewLessonEndingId;
+    }
+    else {
+      lessonId += theNumberOfLessonsInLevels[selectedReviewLevelEndingId - 1]; // default the whole level
+    }
+
+    return lessonId;
+  }
 }

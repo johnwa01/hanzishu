@@ -429,7 +429,7 @@ class Lesson {
       return;
     }
 
-    var lessonGroupMembers = theZiManager.getRealGroupMembers(ziId);
+    var lessonGroupMembers = theZiManager.getRealGroupMembers(ziId, id, id);
 
     if (lessonGroupMembers.length > 0) {
       for (int ziMember in lessonGroupMembers) {

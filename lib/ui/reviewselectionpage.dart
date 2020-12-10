@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
+import 'package:hanzishu/engine/levelmanager.dart';
 
 class ReviewLevel {
   int id;
@@ -197,10 +198,10 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
     _selectedReviewLevelEnding = _dropdownMenuItemsLevelEnding[0].value;
 
     //_dropdownMenuItemsLessonStarting = buildDropdownMenuItemsLesson(_reviewLessonsStarting);
-    //_selectedReviewLessonStarting = _dropdownMenuItemsLessonStarting[0].value;
+    //_selectedReviewLessonStarting.id = 0; // = _dropdownMenuItemsLessonStarting[0].value;
 
     //_dropdownMenuItemsLessonEnding = buildDropdownMenuItemsLesson(_reviewLessonsEnding);
-    //_selectedReviewLessonEnding = _dropdownMenuItemsLessonEnding[0].value;
+    //_selectedReviewLessonEnding.id = 0; // = _dropdownMenuItemsLessonEnding[0].value;
 
     super.initState();
   }
@@ -392,11 +393,21 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
         color: Colors.blueAccent,
         textColor: Colors.white,
         onPressed: () {
+          var startLessonId = 0;
+          var endLessonId = 0;
+          if (_selectedReviewLessonStarting != null && _selectedReviewLessonStarting.id != null) {
+            startLessonId = _selectedReviewLessonStarting.id;
+          }
+          if (_selectedReviewLessonEnding != null && _selectedReviewLessonEnding.id != null) {
+            endLessonId = _selectedReviewLessonEnding.id;
+          }
+          var startInternalLessonId = LevelManager.getStartInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
+          var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
           theStatisticsManager.trackTimeAndTap();
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ReviewPage(),
+              builder: (context) => ReviewPage(startLessonId: startInternalLessonId, endLessonId: endInternalLessonId),
             ),
           );
         },

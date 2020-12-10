@@ -328,7 +328,7 @@ class LessonManager {
     var groupMembers = currentLesson.getRealGroupMembers(id);
 
     if (groupMembers == null) {
-      groupMembers = theZiManager.getRealGroupMembers(id);
+      groupMembers = theZiManager.getRealGroupMembers(id, theCurrentLessonId, theCurrentLessonId);
     }
 
     currentLesson.addToRealGroupMembersMap(id, groupMembers);
