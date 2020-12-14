@@ -33,9 +33,12 @@ class ReviewPainter extends BasePainter {
     this.canvas = canvas;
 
     thePositionManager.setFrameWidth(getFrameWidth());
-    drawFrameWithColors(
-        getFrameWidth(), BasePainter.FrameLeftEdgeSize, BasePainter.FrameTopEdgePosition, Colors.cyan,
-        Colors.lime, BasePainter.FrameLineWidth);
+    if (centerId != 1) {
+      drawFrameWithColors(
+          getFrameWidth(), BasePainter.FrameLeftEdgeSize,
+          BasePainter.FrameTopEdgePosition, Colors.cyan,
+          Colors.lime, BasePainter.FrameLineWidth);
+    }
     drawZiGroup(centerId, reviewStartLessonId, reviewEndLessonId);
   }
 

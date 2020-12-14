@@ -314,7 +314,12 @@ class Utility {
   static int getIdFromUniqueNumber(int uniqueNumber) {
     return uniqueNumber % baseNumber;
   }
+
+  static bool isRootZiId(int rootZiId) {
+    return rootZiId >= 731 && rootZiId <= 755;
+  }
 }
+
 
 //TODO: check - this is not used anymore I think.
 /*

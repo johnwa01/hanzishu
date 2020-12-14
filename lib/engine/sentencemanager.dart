@@ -4,6 +4,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/utility.dart';
 
 class SentenceManager {
   static final SentenceManager _sentenceManager = SentenceManager._internal();
@@ -116,7 +117,9 @@ class SentenceManager {
       if (zi.parentId != 0 && zi.parentId != 1) {
         var parentRecurLevel = recurLevel + 1;
         var ziParent = theZiManager.getZi(zi.parentId);
-        populateSubcharsAndComponentsD(parentRecurLevel, 0, ziParent, subchars, comps);
+        if(!Utility.isRootZiId(ziParent.id)) {
+          populateSubcharsAndComponentsD(parentRecurLevel, 0, ziParent, subchars, comps);
+        }
       }
     }
 
@@ -124,7 +127,7 @@ class SentenceManager {
     // most of the root parents are included in the components, but not all
 
     if (recurLevel != 0) {
-      // we only want subchars, not the top level char
+      // we only want subchars, not the top level char and root level char (731 to 755).
       addToCollection(zi, subchars, comps);
     }
   }

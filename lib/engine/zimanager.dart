@@ -4,6 +4,8 @@ import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+//import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 class NumberOfZis {
   int left;
@@ -118,6 +120,11 @@ class ZiManager {
     return numberOfZis;
   }
 
+  List<int> getGroupMembers(int id) {
+    var zi = getZi(id);
+    return zi.groupMembers;
+  }
+
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId) {
     var zi = getZi(id);
@@ -191,7 +198,7 @@ class ZiManager {
   bool isZiAInTreePathOfZiB(int ziIdA, int ziIdB) {
     var pathZiIdB = ziIdB;
 
-    while (pathZiIdB != 0) {
+    while (pathZiIdB != 0 /*&& (PositionManager.isRootZiId(ziIdA) || (!PositionManager.isRootZiId(ziIdA) && !PositionManager.isRootZiId(pathZiIdB)))*/) {
       if (pathZiIdB == ziIdA) {
         return true;
       }

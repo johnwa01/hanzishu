@@ -278,13 +278,29 @@ class BasePainter extends CustomPainter{
 
     // get its real members
     //var groupMembers = theLessonManager.getRealGroupMembers(id);
-    var groupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
+    var groupMembers;
+    //if (id == 1) {
+    //  groupMembers = theZiManager.getGroupMembers(id);
+    //}
+    //else {
+      groupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
+    //}
 
     theTotalSideNumberOfZis = theZiManager.getNumberOfZis(groupMembers);
 
-    for (var memberZiId in groupMembers) {
+    for (var index = 0; index < groupMembers.length; index++) {
+      var memberZiId = groupMembers[index];
+
+      var posiSize2;
       //var posiSize2 = theLessonManager.getPositionAndSize(memberZiId, theTotalSideNumberOfZis/*, isCreationList: false*/);
-      var posiSize2 = thePositionManager.getPositionAndSize(memberZiId, theTotalSideNumberOfZis/*, isCreationList: false*/);
+      if (id == 1) {
+        var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
+        posiSize2 = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
+      }
+      else {
+        posiSize2 = thePositionManager.getPositionAndSize(
+            memberZiId, theTotalSideNumberOfZis /*, isCreationList: false*/);
+      }
       var memberZiLearned = GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
 
       var isSingleColor = false;

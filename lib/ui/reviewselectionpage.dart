@@ -18,14 +18,14 @@ class ReviewLevel {
     ReviewLevel(4, 'Unit 4'),
   ];*/
 
-  static populateInitialLevels() {
+  static populateInitialLevels(String str) {
     var length = theLevelList.length;
     if (levels[0] == null) {
       //var levels = List<ReviewLevel>(length);
       for (var index = 0; index <= length - 1; index++) {
         var level;
         if (index == 0) {
-          level = ReviewLevel(index, 'Starting Unit');
+          level = ReviewLevel(index, str);
         }
         else {
           level = ReviewLevel(index, 'Unit ' + index.toString());
@@ -40,7 +40,7 @@ class ReviewLevel {
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
   static List<ReviewLevel> getReviewLevelsStarting(int levelSelectedEndingId) {
     if (levelSelectedEndingId == 0) {
-      populateInitialLevels();
+      populateInitialLevels("Starting Level");
       return levels;
     }
     else {
@@ -55,7 +55,7 @@ class ReviewLevel {
 
   static List<ReviewLevel> getReviewLevelsEnding(int levelSelectedStartingId) {
     if (levelSelectedStartingId == 0) {
-      populateInitialLevels();
+      populateInitialLevels("Ending Level");
       return levels;
     }
     else {
@@ -101,13 +101,13 @@ class ReviewLesson {
     ReviewLesson(5, 'Lesson 5'),
   ];*/
 
-  static populateMaximumLessons() {
+  static populateMaximumLessons(String str) {
     var length = getMaximumLessons() + 1;
     if (lessons[0] == null) {
       for (var index = 0; index < length; index++) {
         var lesson;
         if (index == 0) {
-          lesson = ReviewLesson(index, 'Starting Lesson');
+          lesson = ReviewLesson(index, str);
         }
         else {
           lesson = ReviewLesson(index, 'Lesson ' + index.toString());
@@ -120,7 +120,7 @@ class ReviewLesson {
 
   static List<ReviewLesson> getReviewLessonsStarting(int selectedLevel, int lessonSelectedEndingId) {
     if (lessonSelectedEndingId == 0) {
-      populateMaximumLessons();
+      populateMaximumLessons("Starting Lesson");
       // get real lessons for the level
       var length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
       var startingLessons = List<ReviewLesson>(length);
@@ -142,7 +142,7 @@ class ReviewLesson {
 
   static List<ReviewLesson> getReviewLessonsEnding(int selectedLevel, int lessonSelectedStartingId) {
     if (lessonSelectedStartingId == 0) {
-      populateMaximumLessons();
+      populateMaximumLessons("Ending Lesson");
       // get real lessons for the level
       var length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
       var endingLessons = List<ReviewLesson>(length);

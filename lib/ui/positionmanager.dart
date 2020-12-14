@@ -238,6 +238,59 @@ class PositionManager
     return Rect.fromLTWH(x, y, width, height);
   }
 
+  static int NotARootZiId = 10000;
+
+  int getRootZiDisplayIndex(int rootZiId) {
+    if (rootZiId >= 731 && rootZiId <= 749) {
+      return rootZiId - 731;
+    }
+    else if(rootZiId > 749 && rootZiId <= 755) {
+      return rootZiId - 731 + 1;
+    }
+    else {
+      return NotARootZiId;
+    }
+  }
+
+  bool rootIndexHasZi(int i, List<int>realGroupMembers) {
+    var ziId = 0;
+    if (i >=0 && i < 19) {
+      ziId = 731 + i;
+      return realGroupMembers.contains(ziId);
+    }
+    else if (i == 19) {
+      return false;
+    }
+    else if (i >= 20 && i <= 25) {
+      ziId = 731 + i - 1;
+      return realGroupMembers.contains(ziId);
+    }
+  }
+
+  PositionAndSize getReviewRootPositionAndSize(int index) {
+    var posi = PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+    posi.width = getZiSize(ZiOrCharSize.sideSmallSize) / 1.3;
+    posi.height = getZiSize(ZiOrCharSize.sideSmallSize) / 1.3;
+    posi.charFontSize = getCharFontSize(ZiOrCharSize.sideSmallSize) / 1.3;
+    posi.lineWidth = getZiLineWidth(ZiOrCharSize.sideSmallSize) / 1.3;
+
+    if (index >=0 && index < 10) {
+      posi.transY = 150.0;
+      posi.transX = 10.0 + 40.0 * index;
+    }
+    else if (index >= 10 && index < 19) {
+      posi.transY = 215.0;
+      posi.transX = 10.0 + 10.0 + (index - 10) * 40.0;
+    }
+    else if (index >= 19 && index < 26) {
+      posi.transY = 280.0;
+      posi.transX = 10.0 + 10.0 + 30.0 + (index - 19) * 40.0;
+    }
+
+    return posi;
+  }
+
   PositionAndSize getPositionAndSizeHelper(String side, int order, int totalNumber) {
     var posi = PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 

@@ -120,27 +120,36 @@ class _ReviewPageState extends State<ReviewPage> {
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
+  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool withAction) {
+    MaterialColor buttonColor = Colors.cyan;
+    if (centerZiId != 1) {
+      buttonColor = Colors.yellow; // cannot be Colors.white since it's not a MaterialColor
+    }
+
     var butt = FlatButton(
-      color: Colors.white,
+      color: buttonColor, //Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
+        if (withAction) {
+          if (overlayEntry != null) {
+            overlayEntry.remove();
+            overlayEntry = null;
+          }
+          setState(() {
+            centerZiId = newCenterZiId;
+          });
         }
-        setState(() {
-          centerZiId = newCenterZiId;
-        });
       },
       onLongPress: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
+        if (withAction) {
+          if (overlayEntry != null) {
+            overlayEntry.remove();
+            overlayEntry = null;
+          }
+          TextToSpeech.speak("'你好'"); //TODO
+          var meaning = theZiManager.getPinyinAndMeaning(currentZiId);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
-        TextToSpeech.speak("'你好'");  //TODO
-        var meaning = theZiManager.getPinyinAndMeaning(currentZiId);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
       //child: GestureDetector(
       //TODO: couldn't make onLongPressUp work
@@ -173,12 +182,34 @@ class _ReviewPageState extends State<ReviewPage> {
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
       //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
-      var positionAndSize = thePositionManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
+      var positionAndSize;
+      if (centerZiId == 1) {
+        var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
+        positionAndSize = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
+      }
+      else {
+        positionAndSize = thePositionManager.getPositionAndSize(
+            memberZiId, totalSideNumberOfZis);
+      }
 
-      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
+      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, true);
 
       thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
+    }
+
+    if (centerZiId == 1) {
+      for (var i = 0; i < 26; i++) {
+        var indexHasZi = thePositionManager.rootIndexHasZi(i, realGroupMembers);
+        if (!indexHasZi) { // draw an empty box
+          var positionAndSize = thePositionManager.getReviewRootPositionAndSize(
+              i);
+          var posi = getPositionedButton(positionAndSize, 0, 0, false);
+
+          //thePositionManager.updatePositionIndex(memberZiId);
+          buttons.add(posi);
+        }
+      }
     }
 
     if (centerZiId != 1 ) {
@@ -186,7 +217,7 @@ class _ReviewPageState extends State<ReviewPage> {
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
+      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, true);
 
       buttons.add(posiCenter);
     }
