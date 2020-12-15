@@ -522,7 +522,7 @@ class PositionManager
       else {
         var extraYHeight = 0.0;
         if (order >= theMediumMaximumNumber) {
-          extraYHeight = theFrameHeightY / 14.0 /*6.8*/ + sideZiSize * 1.5;
+          extraYHeight = theFrameHeightY / 10.0 /*6.8*/ + sideZiSize * 1.5;   //14.0
         }
         else {
           extraYHeight = theFrameHeightY / 4.4 /*3.5*/  + sideZiSize * 1.5; // 1/12 + 1/6

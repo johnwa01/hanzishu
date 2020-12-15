@@ -32,6 +32,8 @@ class ReviewPainter extends BasePainter {
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
 
+    isFromReviewPage = true;
+
     thePositionManager.setFrameWidth(getFrameWidth());
     if (centerId != 1) {
       drawFrameWithColors(

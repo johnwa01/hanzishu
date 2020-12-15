@@ -315,7 +315,7 @@ class Utility {
     return uniqueNumber % baseNumber;
   }
 
-  static bool isRootZiId(int rootZiId) {
+  static bool isPseudoRootZiId(int rootZiId) {
     return rootZiId >= 731 && rootZiId <= 755;
   }
 }

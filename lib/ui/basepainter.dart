@@ -14,9 +14,11 @@ class BasePainter extends CustomPainter{
   static double FrameLineWidth = 1.0;
 
   int theCreatedNumber = 0;
-  var theTotalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
+  var totalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
   var theDefaultTransparentFillColor = Colors
       .cyan; //UIColor(red: 0.7294, green: 0.9882, blue: 0.8941, alpha: 0.5);
+
+  bool isFromReviewPage = false;
 
   Color lineColor;
   Color completeColor;
@@ -236,16 +238,16 @@ class BasePainter extends CustomPainter{
       MaterialColor centerColor, MaterialColor sideColor, double widthOfLine) {
     var x1 = leftEdge;
     double width1 = width / 3.0;
-    var x2 = x1 + width1;
-    var x3 = x2 + width1;
-    var x4 = x3 + width1;
+    var x2 = x1 + width1 * 0.9;
+    var x3 = x2 + width1 * 1.2;
+    var x4 = x3 + width1 * 0.9;
 
     double height = width * FrameHeightToWidthRaitio;
     var y1 = topEdge;
     var height1 = height / 3.01;
-    var y2 = y1 + height1;
-    var y3 = y2 + height1;
-    var y4 = y3 + height1;
+    var y2 = y1 + height1 * 0.9;
+    var y3 = y2 + height1 * 1.2;
+    var y4 = y3 + height1 * 0.9;
 
     List<double> list1 = [x1, y1, x4, y1, x3, y2, x2, y2, x1, y1];
     drawOnePartialFrameWithColors(list1);
@@ -285,21 +287,21 @@ class BasePainter extends CustomPainter{
     //else {
       groupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
     //}
-
-    theTotalSideNumberOfZis = theZiManager.getNumberOfZis(groupMembers);
+    totalSideNumberOfZis = theZiManager.getNumberOfZis(groupMembers);
 
     for (var index = 0; index < groupMembers.length; index++) {
       var memberZiId = groupMembers[index];
 
       var posiSize2;
       //var posiSize2 = theLessonManager.getPositionAndSize(memberZiId, theTotalSideNumberOfZis/*, isCreationList: false*/);
-      if (id == 1) {
+      if (id == 1 && isFromReviewPage) {
         var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
         posiSize2 = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
       }
       else {
-        posiSize2 = thePositionManager.getPositionAndSize(
-            memberZiId, theTotalSideNumberOfZis /*, isCreationList: false*/);
+        posiSize2 = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
+        //posiSize2 = thePositionManager.getPositionAndSize(
+        //    memberZiId, totalSideNumberOfZis /*, isCreationList: false*/);
       }
       var memberZiLearned = GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
 

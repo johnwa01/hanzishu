@@ -27,6 +27,8 @@ class TreePainter extends BasePainter {
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
 
+    isFromReviewPage = false;
+
     thePositionManager.setFrameWidth(getFrameWidth());
     drawFrameWithColors(
         getFrameWidth(), BasePainter.FrameLeftEdgeSize, BasePainter.FrameTopEdgePosition, Colors.cyan,

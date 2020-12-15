@@ -219,6 +219,42 @@ class LessonManager {
     return false;
   }
 
+  // the members direct child of id 731 to 755.
+  static  List<int> getRootMembersForLesson(int lessonId) {
+    List<int> rootMembers = [];
+    int rootId = 0;
+
+    var lesson = theLessonList[lessonId];
+    for (var idB in lesson.charsIds) {
+      rootId = 0;
+      if ((rootId = theZiManager.getRootMember(idB)) != 0) {
+        if (!rootMembers.contains(rootId)) {
+          rootMembers.add(rootId);
+        }
+      }
+    }
+
+    for (var idB in lesson.convCharsIds) {
+      rootId = 0;
+      if ((rootId = theZiManager.getRootMember(idB)) != 0) {
+        if (!rootMembers.contains(rootId)) {
+          rootMembers.add(rootId);
+        }
+      }
+    }
+
+    for (var idB in lesson.comps) {
+      rootId = 0;
+      if ((rootId = theZiManager.getRootMember(idB)) != 0) {
+        if (!rootMembers.contains(rootId)) {
+          rootMembers.add(rootId);
+        }
+      }
+    }
+
+    return rootMembers;
+  }
+
   static bool isZiInTreePathOfZisInLessons(int ziId, int startLessonId, int endLessonId) {
     for (var lessonId = startLessonId; lessonId <= endLessonId; lessonId++) {
       if (isZiInTreePathOfZisInLesson(ziId, lessonId)) {
@@ -321,19 +357,24 @@ class LessonManager {
     }
   }
   */
-  List<int> getRealGroupMembers(int id) {
-    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
-    var currentLesson = theLessonList[theCurrentLessonId];
-    // check cache first
-    var groupMembers = currentLesson.getRealGroupMembers(id);
 
+
+  List<int> getRealGroupMembersFromCache(int id, int lessonId) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    var lesson = theLessonList[lessonId];
+    // check cache first
+    return lesson.getRealGroupMembers(id); // change name to FromCache
+
+    /*
     if (groupMembers == null) {
       groupMembers = theZiManager.getRealGroupMembers(id, theCurrentLessonId, theCurrentLessonId);
     }
+    */
+  }
 
-    currentLesson.addToRealGroupMembersMap(id, groupMembers);
-
-    return groupMembers;
+  addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId) {
+    var lesson = theLessonList[lessonId];
+    lesson.addToRealGroupMembersMap(id, groupMembers);   // change name to Cache
   }
 
   PositionAndSize getCenterPositionAndSize() {

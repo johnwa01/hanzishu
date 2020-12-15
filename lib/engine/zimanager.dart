@@ -127,6 +127,10 @@ class ZiManager {
 
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId) {
+    if (id == 1 && internalStartLessonId == internalEndLessonId) {
+      return LessonManager.getRootMembersForLesson(internalStartLessonId);
+    }
+
     var zi = getZi(id);
     var groupMembers = zi.groupMembers;
 
@@ -149,6 +153,11 @@ class ZiManager {
       }
     }
 
+    //TODO: same to internalEndLessonId's memory of internalEndLesson.getRealGroupMembers(id); addToRealGroupMembersMap(id, groupMembers);
+    // at the beginning of this function, call get, at here, call add.
+    // But not sure what to do about review and lesson mode which would use the same lesson memory. Refresh every time?
+    //List<int> getRealGroupMembersFromCache(int id, int lessonId)
+    //addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId)
     return lessonGroupMembers;
   }
 
@@ -209,6 +218,28 @@ class ZiManager {
     }
 
     return false;
+  }
+
+  // assume ziId isn't a rootMember itself
+  int getRootMember(int ziId) {
+    var pathZiId = ziId;
+
+    while (pathZiId != 0 ) {
+        var lessonZi = theZiManager.getZi(pathZiId);
+        if (lessonZi != null) {
+          if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
+            return pathZiId;
+          }
+          else {
+            pathZiId = lessonZi.parentId;
+          }
+        }
+        else {
+          return 0;
+        }
+    }
+
+    return 0;
   }
 
   int getParentZiId(int ziId) {

@@ -29,6 +29,7 @@ class _TreePageState extends State<TreePage> {
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateTreeMap(1);
+    theCurrentCenterZiId = 1;
 
     setState(() {
       centerZiId = theCurrentCenterZiId;
@@ -119,6 +120,9 @@ class _TreePageState extends State<TreePage> {
         }
         setState(() {
           centerZiId = newCenterZiId;
+          if (Utility.isPseudoRootZiId(centerZiId)) {
+            centerZiId = 1;   // skip the pseudo layer for treepage.
+          }
         });
       },
       onLongPress: () {
@@ -155,7 +159,7 @@ class _TreePageState extends State<TreePage> {
     TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
-    var realGroupMembers = theLessonManager.getRealGroupMembers(centerZiId);
+    var realGroupMembers = theZiManager.getRealGroupMembers(centerZiId, theCurrentLessonId, theCurrentLessonId);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -164,6 +168,7 @@ class _TreePageState extends State<TreePage> {
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
 
+      thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
     }
 

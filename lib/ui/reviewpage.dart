@@ -31,7 +31,8 @@ class _ReviewPageState extends State<ReviewPage> {
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateReviewMap(1);
-
+    
+    theCurrentCenterZiId = 1;
     setState(() {
       centerZiId = theCurrentCenterZiId;
     });

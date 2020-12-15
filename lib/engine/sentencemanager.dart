@@ -117,7 +117,7 @@ class SentenceManager {
       if (zi.parentId != 0 && zi.parentId != 1) {
         var parentRecurLevel = recurLevel + 1;
         var ziParent = theZiManager.getZi(zi.parentId);
-        if(!Utility.isRootZiId(ziParent.id)) {
+        if(!Utility.isPseudoRootZiId(ziParent.id)) {
           populateSubcharsAndComponentsD(parentRecurLevel, 0, ziParent, subchars, comps);
         }
       }
