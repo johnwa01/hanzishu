@@ -242,6 +242,30 @@ class ZiManager {
     return 0;
   }
 
+  // get the rest zi id of the given part
+  int getPartialZiId(int centerZiId, int memberZiId) {
+    var zi = getZi(memberZiId);
+    if (zi.type == "h") {
+      var composites = zi.bodyComposites;
+
+      List<int> compositesIds = [];
+      for (var i = 0; i < composites.length; i++) {
+        compositesIds.add(Utility.StringToInt(composites[i]));
+      }
+
+      if (compositesIds.length == 2) { // only handle the 2 case for now
+        if (compositesIds[0] == centerZiId) {
+          return compositesIds[1];
+        }
+        else {
+          return compositesIds[0];
+        }
+      }
+    }
+
+    return memberZiId;
+  }
+
   int getParentZiId(int ziId) {
     var zi = getZi(ziId);
     return zi.parentId;

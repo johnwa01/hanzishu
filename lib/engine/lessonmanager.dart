@@ -322,75 +322,6 @@ class LessonManager {
     lesson.setLessonCompleted();
   }
 
-  /*
-  static void UpdateRangeUptoLessonNumber(String theRangeOperation) {
-    if (theRangeOperation == theRangeUptoLessonPlus) {
-      theRangeUptoLessonNumberForCurrentLevel += 1;
-      if (theRangeUptoLessonNumberForCurrentLevel > theLevelList[theCurrentLevel - 1].numberOfLessons) {
-        theRangeUptoLessonNumberForCurrentLevel = theRangeFromLessonNumberForCurrentLevel;
-      }
-    }
-    else if (theRangeOperation == theRangeUptoLessonMinus) {
-      theRangeUptoLessonNumberForCurrentLevel -= 1;
-      if (theRangeUptoLessonNumberForCurrentLevel == 0) {
-        theRangeUptoLessonNumberForCurrentLevel = theLevelList[theCurrentLevel - 1].numberOfLessons;
-      }
-    }
-  }
-
-  static void UpdateRangeFromLessonNumber(String theRangeOperation) {
-    if (theRangeOperation == theRangeFromLessonPlus) {
-      theRangeFromLessonNumberForCurrentLevel += 1;
-      if (theRangeFromLessonNumberForCurrentLevel > theLevelList[theCurrentLevel - 1].numberOfLessons) {
-        theRangeFromLessonNumberForCurrentLevel = 1;
-      }
-    }
-    else if (theRangeOperation == theRangeFromLessonMinus) {
-      theRangeFromLessonNumberForCurrentLevel -= 1;
-      if (theRangeFromLessonNumberForCurrentLevel == 0) {
-        theRangeFromLessonNumberForCurrentLevel = theLevelList[theCurrentLevel - 1].numberOfLessons;
-      }
-    }
-
-    if (theRangeUptoLessonNumberForCurrentLevel < theRangeFromLessonNumberForCurrentLevel) {
-      theRangeUptoLessonNumberForCurrentLevel = theRangeFromLessonNumberForCurrentLevel;
-    }
-  }
-  */
-
-
-  List<int> getRealGroupMembersFromCache(int id, int lessonId) {
-    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
-    var lesson = theLessonList[lessonId];
-    // check cache first
-    return lesson.getRealGroupMembers(id); // change name to FromCache
-
-    /*
-    if (groupMembers == null) {
-      groupMembers = theZiManager.getRealGroupMembers(id, theCurrentLessonId, theCurrentLessonId);
-    }
-    */
-  }
-
-  addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId) {
-    var lesson = theLessonList[lessonId];
-    lesson.addToRealGroupMembersMap(id, groupMembers);   // change name to Cache
-  }
-
-  PositionAndSize getCenterPositionAndSize() {
-    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
-    var currentLesson = theLessonList[theCurrentLessonId];
-    // check cache first
-    var positionAndSize = currentLesson.getCenterPosisionAndSize();
-
-    if (positionAndSize == null) {
-      positionAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-      currentLesson.setCenterPositionAndSize(positionAndSize);
-    }
-
-    return positionAndSize;
-  }
-
   Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
     // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
     var lesson = theLessonList[lessonId];
@@ -398,27 +329,4 @@ class LessonManager {
     return lesson.breakoutPositions;
   }
 
-  /*
-  // To be called only after another call to getPositionAndSize(ziId, totalSideNumberOfZis)
-  PositionAndSize getPositionAndSizeFromCache(int ziId) {
-    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
-    var currentLesson = theLessonList[theCurrentLessonId];
-    // get from cache
-    return currentLesson.getPositionAndSize(ziId);
-  }
-  */
-
-  PositionAndSize getPositionAndSize(int ziId, NumberOfZis totalSideNumberOfZis) {
-    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
-    var currentLesson = theLessonList[theCurrentLessonId];
-    // check cache first
-    var positionAndSize = currentLesson.getPositionAndSize(ziId);
-
-    if (positionAndSize == null) {
-      positionAndSize = thePositionManager.getPositionAndSize(ziId, totalSideNumberOfZis);
-      currentLesson.addToSidePositions(ziId, positionAndSize);
-    }
-
-    return positionAndSize;
-  }
 }

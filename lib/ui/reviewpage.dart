@@ -8,6 +8,7 @@ import 'package:hanzishu/ui/reviewpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/ui/basepainter.dart';
 
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -16,6 +17,10 @@ class ReviewPage extends StatefulWidget {
   //final int lessonId;
   final int startLessonId;
   final int endLessonId;
+  Map<int, PositionAndSize> sidePositionsCache = Map();
+  Map<int, List<int>>realGroupMembersCache = Map();
+  PositionAndSize centerPositionAndSizeCache;
+
   ReviewPage({this.startLessonId, this.endLessonId});
 
   @override
@@ -31,7 +36,7 @@ class _ReviewPageState extends State<ReviewPage> {
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateReviewMap(1);
-    
+
     theCurrentCenterZiId = 1;
     setState(() {
       centerZiId = theCurrentCenterZiId;
@@ -68,7 +73,10 @@ class _ReviewPageState extends State<ReviewPage> {
                   centerZiId,
                   screenWidth,
                   widget.startLessonId,
-                  widget.endLessonId
+                  widget.endLessonId,
+                  widget.sidePositionsCache,
+                  widget.realGroupMembersCache,
+                  widget.centerPositionAndSizeCache
                 /*
                   lineColor: colors.amber,
                   completeColor: Colors.blueAccent,
@@ -122,13 +130,13 @@ class _ReviewPageState extends State<ReviewPage> {
   }
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool withAction) {
-    MaterialColor buttonColor = Colors.cyan;
-    if (centerZiId != 1) {
-      buttonColor = Colors.yellow; // cannot be Colors.white since it's not a MaterialColor
-    }
+    //MaterialColor buttonColor = Colors.cyan;
+    //if (centerZiId != 1) {
+    //  buttonColor = Colors.blueGrey; //Colors.yellow; // cannot be Colors.white since it's not a MaterialColor
+    //}
 
     var butt = FlatButton(
-      color: buttonColor, //Colors.white,
+      color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
       onPressed: () {
         if (withAction) {
@@ -178,7 +186,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
     thePositionManager.resetPositionIndex();
 
-    var realGroupMembers = theZiManager.getRealGroupMembers(centerZiId, widget.startLessonId, widget.endLessonId);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, widget.startLessonId, widget.endLessonId, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -189,8 +197,8 @@ class _ReviewPageState extends State<ReviewPage> {
         positionAndSize = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
       }
       else {
-        positionAndSize = thePositionManager.getPositionAndSize(
-            memberZiId, totalSideNumberOfZis);
+        positionAndSize = BasePainter.getPositionAndSize(
+            memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
       }
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, true);

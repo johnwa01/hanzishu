@@ -10,22 +10,18 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class ReviewPainter extends BasePainter {
-  Color lineColor;
-  Color completeColor;
-  int centerId;
-  //double completePercent;
-  double width;
-  //Size canvasSize;
   double screenWidth;
-  //double frameWidth;
 
-  ReviewPainter(Color lineColor, Color completeColor, int centerId, double width, int startLessonId, int endLessonId) {
+  ReviewPainter(Color lineColor, Color completeColor, int centerId, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
     this.width = width;
     this.reviewStartLessonId = startLessonId;
     this.reviewEndLessonId = endLessonId;
+    this.sidePositionsCache = sidePositionsCache;
+    this.realGroupMembersCache = realGroupMembersCache;
+    this.centerPositionAndSizeCache = centerPositionAndSizeCache;
   }
 
   @override

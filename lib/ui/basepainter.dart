@@ -6,6 +6,7 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 class BasePainter extends CustomPainter{
   static double FrameHeightToWidthRaitio = 1.2;
@@ -22,15 +23,19 @@ class BasePainter extends CustomPainter{
 
   Color lineColor;
   Color completeColor;
-  double completePercent;
   double width;
+  int centerId;
 
   int reviewStartLessonId;
   int reviewEndLessonId;
 
   var canvas;
 
-  BasePainter({this.lineColor,this.completeColor,this.completePercent,this.width});
+  Map<int, PositionAndSize> sidePositionsCache; // = Map();
+  Map<int, List<int>> realGroupMembersCache; // = Map();
+  PositionAndSize centerPositionAndSizeCache;
+
+  BasePainter({this.lineColor, this.completeColor, this.centerId, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
   @override
   void paint(Canvas canvas, Size size) {
     /*
@@ -269,7 +274,7 @@ class BasePainter extends CustomPainter{
     var ziColor = Colors.brown;
 
     // one center zi first
-    var posiSize = theLessonManager.getCenterPositionAndSize(); //thePositionManager.getPositionAndSizeHelper("m", 1, BigMaximumNumber/*, isCreationList: true*/);
+    var posiSize = getCenterPositionAndSize(centerPositionAndSizeCache); //thePositionManager.getPositionAndSizeHelper("m", 1, BigMaximumNumber/*, isCreationList: true*/);
 
     var withPinyin = true;
 
@@ -287,6 +292,9 @@ class BasePainter extends CustomPainter{
     //else {
       groupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
     //}
+
+    //var phraseZis = theLessonManager.getPhraseZis(id, internalStartLessonId, internalEndLessonId);
+    //TODO: including phraseZis
     totalSideNumberOfZis = theZiManager.getNumberOfZis(groupMembers);
 
     for (var index = 0; index < groupMembers.length; index++) {
@@ -299,7 +307,8 @@ class BasePainter extends CustomPainter{
         posiSize2 = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
       }
       else {
-        posiSize2 = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
+        posiSize2 = getPositionAndSize(memberZiId, totalSideNumberOfZis, sidePositionsCache);
+        //posiSize2 = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
         //posiSize2 = thePositionManager.getPositionAndSize(
         //    memberZiId, totalSideNumberOfZis /*, isCreationList: false*/);
       }
@@ -314,19 +323,82 @@ class BasePainter extends CustomPainter{
         frameFillColor = theDefaultTransparentFillColor;
       }
 
-      drawRootZi(memberZiId, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor);
+      // check if its a composite zi and return partial zi
+      var partialZiId = theZiManager.getPartialZiId(id, memberZiId);
+      drawRootZi(partialZiId, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor);
 
       thePositionManager.updatePositionIndex(memberZiId);
     }
+
+    /*
+    for (var pIndex = 0; pIndex < phraseZis.length; pIndex++) {
+      var ziId = phraseZis[pIndex];
+      var posiSize2 = theLessonManager.getPositionAndSize(ziId, totalSideNumberOfZis);
+      drawRootZi(ziId, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor);
+
+      thePositionManager.updatePositionIndex(ziId);
+    }
+    */
 
     GeneralManager.checkAndSetHasAllChildrenCompleted(id, theHittestState, theCurrentLessonId);
 
     // skip the center zi for id == 1, which is the default empty root zi.
     // the Chinese character zi "-" has an id of 170.
+    //TODO：add checking to not display center pseudo root zi for treepage mode - !isFromReviewPage
     if (id > 1) {
       var rootZiLearned = GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
       drawRootZi(id, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, ziColor, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, rootZiLearned, withPinyin, Colors.cyan /*TODO*/);
     }
+  }
+
+  static addToSidePositionsCache(int ziId, PositionAndSize positionAndSize, Map<int, PositionAndSize> sidePositions) {
+    sidePositions[ziId] = positionAndSize;
+  }
+
+  static PositionAndSize getPositionAndSizeFromCache(int ziId, Map<int, PositionAndSize> sidePositions) {
+    return sidePositions[ziId];
+  }
+
+  static PositionAndSize getPositionAndSize(int ziId, NumberOfZis totalSideNumberOfZis, Map<int, PositionAndSize> sidePositions) {
+    // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
+    //var currentLesson = theLessonList[theCurrentLessonId];
+    // check cache first
+    var positionAndSize = getPositionAndSizeFromCache(ziId, sidePositions);
+
+    if (positionAndSize == null) {
+      positionAndSize = thePositionManager.getPositionAndSize(ziId, totalSideNumberOfZis);
+      addToSidePositionsCache(ziId, positionAndSize, sidePositions);
+    }
+
+    return positionAndSize;
+  }
+
+
+  static List<int> getRealGroupMembersFromCache(int id, Map<int, List<int>>realGroupMembersCache) {
+    return realGroupMembersCache[id];
+  }
+
+  static addToRealGroupMembersCache(int id, List<int> realGroupMembers, Map<int, List<int>>realGroupMembersCache) {
+    realGroupMembersCache[id] = realGroupMembers;
+  }
+
+  static List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
+    var realGroupMembers = getRealGroupMembersFromCache(id, realGroupMembersCache);
+
+    if (realGroupMembers == null) {
+      realGroupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
+      addToRealGroupMembersCache(id, realGroupMembers, realGroupMembersCache);
+    }
+
+    return realGroupMembers;
+  }
+
+  static PositionAndSize getCenterPositionAndSize(PositionAndSize centerPositionAndSizeCache) {
+    if (centerPositionAndSizeCache == null) {
+      centerPositionAndSizeCache = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
+    }
+
+    return centerPositionAndSizeCache;
   }
 
   @override

@@ -10,18 +10,18 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class TreePainter extends BasePainter {
-  Color lineColor;
-  Color completeColor;
-  int centerId;
-  //double completePercent;
-  double width;
-  //Size canvasSize;
-  double screenWidth;
-  //double frameWidth;
 
-  TreePainter({
-    this.lineColor, this.completeColor, this.centerId, /*this.completePercent,*/ this.width
-  });
+  double screenWidth;
+
+  TreePainter(Color lineColor, Color completeColor, int centerId, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache) {
+    this.lineColor = lineColor;
+    this.completeColor = completeColor;
+    this.centerId = centerId;
+    this.width = width;
+    this.sidePositionsCache = sidePositionsCache;
+    this.realGroupMembersCache = realGroupMembersCache;
+    this.centerPositionAndSizeCache = centerPositionAndSizeCache;
+  }
 
   @override
   void paint(Canvas canvas, Size size) {

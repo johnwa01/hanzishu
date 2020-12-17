@@ -8,12 +8,17 @@ import 'package:hanzishu/ui/treepainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/ui/basepainter.dart';
 
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
 class TreePage extends StatefulWidget {
   final int lessonId;
+  Map<int, PositionAndSize> sidePositionsCache = Map();
+  Map<int, List<int>>realGroupMembersCache = Map();
+  PositionAndSize centerPositionAndSizeCache; // = PositionAndSize(0,0,0,0,0,0);
+
   TreePage({this.lessonId});
 
   @override
@@ -61,11 +66,13 @@ class _TreePageState extends State<TreePage> {
           //width: 200.0,
           child: CustomPaint(
             foregroundPainter: TreePainter(
-              lineColor: Colors.amber,
-              completeColor: Colors.blueAccent,
-              centerId: centerZiId,
-              //completePercent: percentage,
-              width: screenWidth
+              Colors.amber, //lineColor: Colors.amber,
+              Colors.blueAccent, //completeColor: Colors.blueAccent,
+              centerZiId, //centerId: centerZiId,
+              screenWidth, //width: screenWidth,
+              widget.sidePositionsCache,
+              widget.realGroupMembersCache,
+              widget.centerPositionAndSizeCache //sidePositions: widget.sidePositions
             ),
             child: Center(
               child: Stack(
@@ -159,12 +166,12 @@ class _TreePageState extends State<TreePage> {
     TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
-    var realGroupMembers = theZiManager.getRealGroupMembers(centerZiId, theCurrentLessonId, theCurrentLessonId);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
       //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
-      var positionAndSize = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
+      var positionAndSize = BasePainter.getPositionAndSize(memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
 
@@ -175,7 +182,7 @@ class _TreePageState extends State<TreePage> {
     if (centerZiId != 1 ) {
       //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
-      var posiAndSize = theLessonManager.getCenterPositionAndSize();
+      var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
 
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
 

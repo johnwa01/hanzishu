@@ -38,8 +38,8 @@ class Lesson {
   int numberOfQuizQuestions = 0;
   bool treeMapCreated = false;
   Map<int, List<int>> treeMap = Map();
-  Map<int, PositionAndSize> sidePositions = Map();
-  Map<int, List<int>> realGroupMembersMap  = Map();
+  //Map<int, PositionAndSize> sidePositions = Map();
+  //Map<int, List<int>> realGroupMembersMap  = Map();
   PositionAndSize centerPositionAndSize = null;
   Map<int, PositionAndSize> breakoutPositions = Map();
 
@@ -392,8 +392,8 @@ class Lesson {
 
   void initCache() {
     centerPositionAndSize = null;
-    realGroupMembersMap.clear();
-    sidePositions.clear();
+    //realGroupMembersMap.clear();
+    //sidePositions.clear();
   }
 
   PositionAndSize getCenterPosisionAndSize() {
@@ -402,43 +402,5 @@ class Lesson {
 
   void setCenterPositionAndSize(positionAndSize) {
     centerPositionAndSize = positionAndSize;
-  }
-
-  PositionAndSize getPositionAndSize(int ziId) {
-    return sidePositions[ziId];
-  }
-
-  void addToSidePositions(int ziId, PositionAndSize positionAndSize) {
-    sidePositions[ziId] = positionAndSize;
-  }
-
-  List<int> getRealGroupMembers(int centerZiId) {
-    return realGroupMembersMap[centerZiId];
-  }
-
-  void addToRealGroupMembersMap(int centerZiId, List<int> realGroupMembers) {
-    realGroupMembersMap[centerZiId] = realGroupMembers;
-  }
-
-  void addToTreeMap(int ziId, List<int> lessonGroupMembers) {
-    treeMap[ziId] = lessonGroupMembers;
-  }
-
-  void populateTreeMap(int ziId) {
-    if (treeMapCreated) {
-      return;
-    }
-
-    var lessonGroupMembers = theZiManager.getRealGroupMembers(ziId, id, id);
-
-    if (lessonGroupMembers.length > 0) {
-      for (int ziMember in lessonGroupMembers) {
-        populateTreeMap(ziMember);
-      }
-
-      addToTreeMap(ziId, lessonGroupMembers);
-    }
-
-    treeMapCreated = true;
   }
 }
