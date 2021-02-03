@@ -1,6 +1,7 @@
 import 'package:hanzishu/utility.dart';
 import 'dart:io';
 
+//TODO: create theManagers
 var theLessonManager = null;
 var theZiManager = null;
 var thePhraseManager = null;
@@ -19,14 +20,27 @@ var theHittestState = HittestState.hanzishuFullZiMode;
 var theRangeUptoLessonNumberForCurrentLevel = 1;
 var theRangeFromLessonNumberForCurrentLevel = 1;
 
+//TODO: create theRuntimeStates
 var theCurrentLevel = 1;
 // NOTE: Use theCurrentLessonId whenever possible
-//var theCurrentLesson = "None"; // to be removed
+//var theCurrentLesson = "None";  // to be removed
 var theCurrentLessonId = 1;
-
 var theCurrentCenterZiId = 1;
 var thePreviousCenterZiId = 0;
+
+//TODO: move to theConfig
+var theIsPartialZiMode = true;
 
 Directory theStorageFileDirectory = null;
 
 var theFileIOFile;
+
+class theConst {
+  static var starCharId = 756;
+  static var starChar = '*';
+  static var atChar = '@';
+}
+
+class theConfig {  // can change by runtime
+  static bool withSoundAndExplains = true;
+}

@@ -316,7 +316,19 @@ class Utility {
   }
 
   static bool isPseudoRootZiId(int rootZiId) {
-    return rootZiId >= 731 && rootZiId <= 755;
+    return (rootZiId >= 741 && rootZiId <= 749) || (rootZiId == 751) /*|| (rootZiId == 756)*/;
+  }
+
+  static bool isPseudoRootZiIdPlusStar(int rootZiId) {
+    return isPseudoRootZiId(rootZiId) || (rootZiId == theConst.starCharId);
+  }
+
+  static bool isPseudoNonCharRootZiId(int rootZiId) {
+    return (rootZiId >= 731 && rootZiId <= 740) || (rootZiId == 750) || (rootZiId >= 752 && rootZiId <= 755);
+  }
+
+  static bool isPseudoNonCharRootZiIdPlusStar(int rootZiId) {
+    return isPseudoNonCharRootZiId(rootZiId) || (rootZiId == theConst.starCharId);
   }
 }
 

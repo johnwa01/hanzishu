@@ -31,7 +31,7 @@ class TreePainter extends BasePainter {
 
     thePositionManager.setFrameWidth(getFrameWidth());
     drawFrameWithColors(
-        getFrameWidth(), BasePainter.FrameLeftEdgeSize, BasePainter.FrameTopEdgePosition, Colors.cyan,
+        getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
     drawZiGroup(centerId, theCurrentLessonId, theCurrentLessonId);
   }

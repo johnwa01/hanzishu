@@ -7,6 +7,8 @@ import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 
 class OpenHelper {
   static openPage(BuildContext context, int lessonId, LessonSection lessonSection) {
@@ -45,6 +47,7 @@ class OpenHelper {
 
   static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection) {
     final colorScheme = Theme.of(context).colorScheme;
+    var lesson = theLessonManager.getLesson(lessonNumber);
 
     return SizedBox(
       width: 110,
@@ -58,13 +61,13 @@ class OpenHelper {
                 height: 100.0,
               ),
               Text(
-                "Hello",
+                lesson.titleTranslation, //"Hello",
                 style: TextStyle(fontSize: 11.0, fontFamily: "Raleway"),
               ),
             ]
         ),
         onPressed: () => openPage(context, lessonNumber, lessonSection),
-        textColor: Colors.white,
+        textColor: Colors.blueAccent, //Colors.white,
         color: colorScheme.primary,
         //color: Color(0xFF226597),
         shape: OutlineInputBorder(

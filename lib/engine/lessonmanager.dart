@@ -243,6 +243,19 @@ class LessonManager {
       }
     }
 
+    if (lesson.comps.length > 0) {
+      rootMembers.add(theConst.starCharId);  // the * member
+    }
+
+    return rootMembers;
+  }
+
+  static  List<int> getRootNonCharMembersForLesson(int lessonId) {
+    List<int> rootMembers = [];
+    int rootId = 0;
+
+    var lesson = theLessonList[lessonId];
+
     for (var idB in lesson.comps) {
       rootId = 0;
       if ((rootId = theZiManager.getRootMember(idB)) != 0) {

@@ -66,14 +66,74 @@ class PositionManager
   static int theBigMaximumNumber = 8;
   //var theTotalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
   var theCurrentSideIndexOfZis = NumberOfZis(0, 0, 0, 0);
-  static var topEdgeSize = xYLength(35.0);
-  static var theLeftEdgeSize = xYLength(4.0);
-  static var theFrameHeightToWidthRatio = 1.2;
+  static double FrameTopEdgeSize = xYLength(35.0);
+  static double FrameLeftEdgeSize = xYLength(4.0);
+  static double FrameHeightToWidthRatio = 1.2;
 
   var frameWidth = 0.0;
   var theFrameHeightY = 0.0; // = theFrameWidth * theFrameHeightToWidthRatio
 
   init() {}
+
+  double getFrameXPosition(int index) {
+    var x1 = FrameLeftEdgeSize;
+    double width1 = frameWidth / 3.0;
+    if (index == 1) {
+      return width1;
+    }
+    var x2 = x1 + width1 * 0.9;
+    if (index == 2) {
+      return x2;
+    }
+    var x3 = x2 + width1 * 1.2;
+    if (index == 3) {
+      return x3;
+    }
+    var x4 = x3 + width1 * 0.9;
+    if (index == 4) {
+      return x4;
+    }
+  }
+
+  double getFrameYPosition(int index) {
+    double height = frameWidth * FrameHeightToWidthRatio;
+    var y1 = FrameTopEdgeSize;
+    var height1 = height / 3.01;
+    if (index == 1) {
+      return y1;
+    }
+    var y2 = y1 + height1 * 0.9;
+    if (index == 2) {
+      return y2;
+    }
+    var y3 = y2 + height1 * 1.2;
+    if (index == 3) {
+      return y3;
+    }
+    var y4 = y3 + height1 * 0.9;
+    if (index == 4) {
+      return y4;
+    }
+  }
+
+  PositionAndSize getCenterSpeechPosi() {
+    // speech icon
+    var xPosi2 = getFrameXPosition(2);
+    var yPosi2 = getFrameYPosition(2);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi2 + charFontSize * 0.1, yPosi2 + charFontSize * 0.2,
+        charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
+  }
+
+  PositionAndSize getCenterBihuaPosi() {
+    // Bihua icon
+    var xPosi3 = getFrameXPosition(3);
+    var yPosi3 = getFrameYPosition(3);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi3 - charFontSize * 0.35,  yPosi3 - charFontSize * 0.35, charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
+  }
 
   PositionAndSize getPositionAndSize(int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {
     var currentDisplayOrder = 0;
@@ -109,14 +169,14 @@ class PositionManager
 
   void setFrameWidth(double width) {
     frameWidth = width;
-    theFrameHeightY = frameWidth * theFrameHeightToWidthRatio;
+    theFrameHeightY = frameWidth * FrameHeightToWidthRatio;
   }
 
   // Stay matching to ZiOrCharSize enum
   // non-characters or strokes
   static List<double> ZiSizes = [
     0.04,
-    0.18,
+    0.18 * 1.1,    //1.3,
     0.14,
     0.12,
     0.1,
@@ -133,7 +193,7 @@ class PositionManager
   // standard chars
   static List<double> CharFontSizes =  [
     1.1 * 0.04,
-    1.1 * 0.18,
+    1.1 * 0.18 * 1.1,    //1.3,
     1.1 * 0.14,
     1.1 * 0.12,
     1.1 * 0.1,
@@ -149,7 +209,7 @@ class PositionManager
 
   static List<double> ZiLineWidth = [
     0.069,
-    0.069,  //5.0,
+    0.069 * 1.1,    //1.3,  //5.0,
     0.069,  //4.0,
     0.069,  //3.75,
     0.069,  //3.5,
@@ -267,6 +327,7 @@ class PositionManager
     }
   }
 
+  /*
   PositionAndSize getReviewRootPositionAndSize(int index) {
     var posi = PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
@@ -290,6 +351,7 @@ class PositionManager
 
     return posi;
   }
+   */
 
   PositionAndSize getPositionAndSizeHelper(String side, int order, int totalNumber) {
     var posi = PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
@@ -329,16 +391,16 @@ class PositionManager
       posi.height = sideZiSize;
     }
 
-    var xMiddle = frameWidth / 2.0 + theLeftEdgeSize;
-    var yMiddle = xMiddle * theFrameHeightToWidthRatio + topEdgeSize; /*theTopEdgeSize*/
+    var xMiddle = frameWidth / 2.0 + FrameLeftEdgeSize;
+    var yMiddle = xMiddle * FrameHeightToWidthRatio + FrameTopEdgeSize; /*theTopEdgeSize*/
     var xMiddleToLine = frameWidth / 6.0;
-    var yMiddleToLine = xMiddle * theFrameHeightToWidthRatio / 6.0;
+    var yMiddleToLine = xMiddle * FrameHeightToWidthRatio / 6.0;
 
     if (side == "m")
     {
       posi.transX = xMiddle - (getZiSize(ZiOrCharSize.centerSize) / 2.0);
       // note: 1.4 to make the center char to show a little bit higher than middle
-      posi.transY = yMiddle - (getZiSize(ZiOrCharSize.centerSize) / 1.4);
+      posi.transY = yMiddle - (getZiSize(ZiOrCharSize.centerSize) / 2.0);
     }
     else if (side == "l")
     {

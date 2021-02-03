@@ -31,12 +31,13 @@ class ReviewPainter extends BasePainter {
     isFromReviewPage = true;
 
     thePositionManager.setFrameWidth(getFrameWidth());
-    if (centerId != 1) {
+    //if (centerId != 1) {
       drawFrameWithColors(
-          getFrameWidth(), BasePainter.FrameLeftEdgeSize,
-          BasePainter.FrameTopEdgePosition, Colors.cyan,
+          getFrameWidth(), PositionManager.FrameLeftEdgeSize,
+          PositionManager.FrameTopEdgeSize, Colors.cyan,
           Colors.lime, BasePainter.FrameLineWidth);
-    }
+    //}
+    //?theCurrentCenterZiId = centerId;
     drawZiGroup(centerId, reviewStartLessonId, reviewEndLessonId);
   }
 

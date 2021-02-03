@@ -127,8 +127,13 @@ class ZiManager {
 
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId) {
-    if (id == 1 && internalStartLessonId == internalEndLessonId) {
-      return LessonManager.getRootMembersForLesson(internalStartLessonId);
+    if (internalStartLessonId == internalEndLessonId) {
+      if (id == 1) {
+        return LessonManager.getRootMembersForLesson(internalStartLessonId);
+      }
+      else if (id == theConst.starCharId) {
+        return LessonManager.getRootNonCharMembersForLesson(internalStartLessonId);
+      }
     }
 
     var zi = getZi(id);
@@ -227,7 +232,7 @@ class ZiManager {
     while (pathZiId != 0 ) {
         var lessonZi = theZiManager.getZi(pathZiId);
         if (lessonZi != null) {
-          if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
+          if (Utility.isPseudoRootZiId(lessonZi.parentId) || Utility.isPseudoNonCharRootZiId(lessonZi.parentId)) {
             return pathZiId;
           }
           else {

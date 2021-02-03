@@ -116,6 +116,56 @@ class _TreePageState extends State<TreePage> {
     overlayState.insert(overlayEntry);
   }
 
+  Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
+
+        var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(zi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
+
+        var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(zi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
     var butt = FlatButton(
       color: Colors.white,
@@ -129,6 +179,9 @@ class _TreePageState extends State<TreePage> {
           centerZiId = newCenterZiId;
           if (Utility.isPseudoRootZiId(centerZiId)) {
             centerZiId = 1;   // skip the pseudo layer for treepage.
+          }
+          else if (Utility.isPseudoNonCharRootZiId(centerZiId)) {
+            centerZiId = theConst.starCharId;   // skip the pseudo layer for treepage.
           }
         });
       },
@@ -163,7 +216,7 @@ class _TreePageState extends State<TreePage> {
 
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
-    TextToSpeech.speak('你好');
+    //TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
     var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
@@ -183,10 +236,18 @@ class _TreePageState extends State<TreePage> {
       //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
-
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
-
       buttons.add(posiCenter);
+
+      // draw speech icon
+      var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
+      var speechPosiCenter = getPositionedSpeechButton(posiAndSizeSpeech, centerZiId);
+      buttons.add(speechPosiCenter);
+
+      // draw bihua icon
+      var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
+      var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, centerZiId);
+      buttons.add(drawBihuaPosiCenter);
     }
 
     return buttons;

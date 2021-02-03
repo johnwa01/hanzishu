@@ -180,6 +180,56 @@ class _ReviewPageState extends State<ReviewPage> {
     return posiCenter;
   }
 
+  Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
+
+        var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(zi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
+
+        var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(zi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
     TextToSpeech.speak('你好');
@@ -192,14 +242,14 @@ class _ReviewPageState extends State<ReviewPage> {
       var memberZiId = realGroupMembers[i];
       //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize;
-      if (centerZiId == 1) {
-        var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
-        positionAndSize = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
-      }
-      else {
+      //if (centerZiId == 1) {
+        //var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
+        //positionAndSize = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
+      //}
+      //else {
         positionAndSize = BasePainter.getPositionAndSize(
             memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
-      }
+      //}
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, true);
 
@@ -207,6 +257,7 @@ class _ReviewPageState extends State<ReviewPage> {
       buttons.add(posi);
     }
 
+    /*
     if (centerZiId == 1) {
       for (var i = 0; i < 26; i++) {
         var indexHasZi = thePositionManager.rootIndexHasZi(i, realGroupMembers);
@@ -220,8 +271,8 @@ class _ReviewPageState extends State<ReviewPage> {
         }
       }
     }
-
-    if (centerZiId != 1 ) {
+    */
+    //if (centerZiId != 1 ) {
       //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
@@ -229,7 +280,17 @@ class _ReviewPageState extends State<ReviewPage> {
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, true);
 
       buttons.add(posiCenter);
-    }
+    //}
+
+    // draw speech icon
+    var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
+    var speechPosiCenter = getPositionedSpeechButton(posiAndSizeSpeech, centerZiId);
+    buttons.add(speechPosiCenter);
+
+    // draw bihua icon
+    var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
+    var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, centerZiId);
+    buttons.add(drawBihuaPosiCenter);
 
     return buttons;
   }
