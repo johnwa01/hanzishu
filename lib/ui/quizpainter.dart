@@ -39,7 +39,7 @@ class QuizPainter extends BasePainter {
     //TODO: why its members are null?
     //var posiSize = PositionAndSize(100.0, 40.0, 35.0, 35.0, 15.0, 2.0);
 
-    drawRootZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ Colors.cyan/*ziColor*/, /*isSingleColor:*/ true, 2.0,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/true, /*withPinyin*/false, Colors.cyan /*TODO*/);
+    drawRootZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ Colors.cyan/*ziColor*/, /*isSingleColor:*/ true, 2.0,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/true, /*withPinyin*/false, Colors.cyan /*TODO*/, false);
     // drawZiGroup(centerId);
   }
 

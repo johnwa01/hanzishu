@@ -161,7 +161,7 @@ Zi(155,"六","liù","six", false, [], ["110","8"],"b", [],110,0,"pictograph of a
 Zi(156,"乙","yǐ","second", false, [], ["113"],"l", [433],755,0,"pictograph of umbilical cord",0,"j", 0),
 Zi(157,"九","jiǔ","nine", false, [], ["13","112"],"l", [],744,0,"pictograph of nine parts of an arm",0,"j", 0),
 Zi(158,"小","xiǎo","small", false, [], ["24","13","19"],"r", [159,392,405,418],746,0,"a thing [24] being divided (八)",0,"j", 0),
-Zi(159,"尔","ěr","you; this; that", false, [], ["114","158"],"u", [160],158,0,"separated (八) from other arrows [114]",0,"h", 0),
+Zi(159,"尔","ěr","you; this; that", false, [], ["114","158"],"u", [160],158,0,"arrow [114] looks small (小)",0,"h", 0),
 Zi(160,"你","nǐ","you", false, [], ["116","159"],"l", [723],159,0,"you (尔) man [116]",0,"h", 0),
 Zi(161,"了","liǎo","finish; conclude; settle", false, [], ["39","24"],"b", [],743,0,"pictograph of a baby being dressed already",0,"j", 0),
 Zi(162,"子","zǐ","son; child", false, [], ["39","24","170"],"b", [163,251,354,478],743,0,"pictograph of a baby with body dressed",0,"j", 0),

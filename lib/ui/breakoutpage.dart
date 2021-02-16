@@ -123,11 +123,9 @@ class _BreakoutPageState extends State<BreakoutPage> {
         //});
       },
       onLongPress: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
-        TextToSpeech.speak("'你好'");  //TODO
+        var zi = theZiManager.getZi(id);
+        TextToSpeech.speak(zi.char);
+
         var meaning = theZiManager.getPinyinAndMeaning(id);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
@@ -147,7 +145,6 @@ class _BreakoutPageState extends State<BreakoutPage> {
 
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
-    TextToSpeech.speak('你好');
 
     var breakoutPositions = theLessonManager.getBreakoutPositions(widget.lessonId);
     if (breakoutPositions.length == 0) {

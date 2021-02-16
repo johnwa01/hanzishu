@@ -10,22 +10,24 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class TreePainter extends BasePainter {
-
   double screenWidth;
+  Animation<double> _animation;
 
-  TreePainter(Color lineColor, Color completeColor, int centerId, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache) {
+  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId;
+    this.shouldDrawCenter = shouldDrawCenter;
     this.width = width;
     this.sidePositionsCache = sidePositionsCache;
     this.realGroupMembersCache = realGroupMembersCache;
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
+    //this._progress = _progress;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    this.canvas = canvas;
+    super.paint(canvas, size);
 
     isFromReviewPage = false;
 
@@ -34,6 +36,11 @@ class TreePainter extends BasePainter {
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
     drawZiGroup(centerId, theCurrentLessonId, theCurrentLessonId);
+  }
+
+  void drawCenterZi() {
+    var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
+    drawRootZi(3, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, false);
   }
 
   double getFrameWidth() {

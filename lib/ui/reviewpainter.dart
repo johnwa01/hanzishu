@@ -11,11 +11,13 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 class ReviewPainter extends BasePainter {
   double screenWidth;
+  Animation<double> _animation;
 
-  ReviewPainter(Color lineColor, Color completeColor, int centerId, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache) {
+  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
+    this.shouldDrawCenter = shouldDrawCenter;
     this.width = width;
     this.reviewStartLessonId = startLessonId;
     this.reviewEndLessonId = endLessonId;

@@ -22,9 +22,19 @@ import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/ui/reviewselectionpage.dart';
 
+import 'package:hanzishu/ui/animatedpathpainter.dart'; // TODO: temp
+
+
 void main() {
   runApp(MyApp());
 }
+
+
+//void main() => runApp(
+//  new MaterialApp(
+//    home: new AnimatedPathDemo(),
+//  ),
+//);
 
 
 class MyApp extends StatelessWidget {

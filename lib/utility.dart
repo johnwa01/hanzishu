@@ -365,8 +365,18 @@ class MyString {
 }
 
 class PrimitiveWrapper {
-  var value;
-  PrimitiveWrapper(this.value);
+  double value;
+  PrimitiveWrapper(double value) {
+    this.value = value;
+  }
+}
+
+class YPositionWrapper {
+  double yPosi;
+
+  YPositionWrapper(double yPosi) {
+    this.yPosi = yPosi;
+  }
 }
 
 /*

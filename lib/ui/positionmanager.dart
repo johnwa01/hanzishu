@@ -79,7 +79,7 @@ class PositionManager
     var x1 = FrameLeftEdgeSize;
     double width1 = frameWidth / 3.0;
     if (index == 1) {
-      return width1;
+      return x1;
     }
     var x2 = x1 + width1 * 0.9;
     if (index == 2) {
@@ -116,6 +116,16 @@ class PositionManager
     }
   }
 
+  PositionAndSize getCenterZiPosi() {
+    // speech icon
+    var xPosi2 = getFrameXPosition(2);
+    var yPosi2 = getFrameYPosition(2);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi2 + charFontSize * 0.35, yPosi2 + charFontSize * 0.7,
+        charFontSize , charFontSize, 0.0, 0.0);
+  }
+
   PositionAndSize getCenterSpeechPosi() {
     // speech icon
     var xPosi2 = getFrameXPosition(2);
@@ -133,6 +143,16 @@ class PositionManager
     var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
 
     return PositionAndSize(xPosi3 - charFontSize * 0.35,  yPosi3 - charFontSize * 0.35, charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
+  }
+
+  PositionAndSize getHintPosi() {
+    // speech icon
+    var xPosi1 = getFrameXPosition(1);
+    var yPosi4 = getFrameYPosition(4);
+    var charFontSize = getCharFontSize(ZiOrCharSize.defaultSize);
+
+    return PositionAndSize(xPosi1, yPosi4 + charFontSize * 0.5,
+        charFontSize, charFontSize, 0.0, 0.0);
   }
 
   PositionAndSize getPositionAndSize(int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {

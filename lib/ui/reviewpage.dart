@@ -9,6 +9,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
+import 'package:hanzishu/ui/animatedpathpainter.dart';
 
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -27,20 +28,46 @@ class ReviewPage extends StatefulWidget {
   _ReviewPageState createState() => _ReviewPageState();
 }
 
-class _ReviewPageState extends State<ReviewPage> {
+class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateMixin {
   int centerZiId;
+  bool shouldDrawCenter;
   double screenWidth;
   OverlayEntry overlayEntry;
+
+  AnimationController _controller;
+
+  void _startAnimation() {
+    _controller.stop();
+    _controller.reset();
+    _controller.forward(from: 0.0);
+  }
+
+  void _clearAnimation() {
+    _controller.stop();
+    _controller.reset();
+  }
 
   @override
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateReviewMap(1);
 
+    _controller = new AnimationController(
+      duration: Duration(seconds: 4),
+      vsync: this,
+    );
+
     theCurrentCenterZiId = 1;
     setState(() {
       centerZiId = theCurrentCenterZiId;
+      shouldDrawCenter = true;
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   /*
@@ -56,6 +83,8 @@ class _ReviewPageState extends State<ReviewPage> {
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
 
+    var posi = thePositionManager.getCenterZiPosi();
+
     return Scaffold
       (
       appBar: AppBar
@@ -66,32 +95,39 @@ class _ReviewPageState extends State<ReviewPage> {
         child: WillPopScope(   // just for removing overlay on detecting back arrow
           //height: 200.0,
           //width: 200.0,
-            child: CustomPaint(
-              foregroundPainter: ReviewPainter(
-                  Colors.amber,
-                  Colors.blueAccent,
-                  centerZiId,
-                  screenWidth,
-                  widget.startLessonId,
-                  widget.endLessonId,
-                  widget.sidePositionsCache,
-                  widget.realGroupMembersCache,
-                  widget.centerPositionAndSizeCache
-                /*
-                  lineColor: colors.amber,
-                  completeColor: Colors.blueAccent,
-                  centerId: centerZiId,
-                  //completePercent: percentage,
-                  width: screenWidth,
-                  startLessonId: widget.startLessonId,
-                  endLessonId: widget.endLessonId
-                 */
-              ),
-              child: Center(
-                child: Stack(
-                    children: createHittestButtons(context)
+          child: new Stack(
+              children: <Widget>[
+                new Positioned(
+                  child: CustomPaint(
+                    foregroundPainter: ReviewPainter(
+                      Colors.amber,
+                      Colors.blueAccent,
+                      centerZiId,
+                      shouldDrawCenter,
+                      screenWidth,
+                      widget.startLessonId,
+                      widget.endLessonId,
+                      widget.sidePositionsCache,
+                      widget.realGroupMembersCache,
+                      widget.centerPositionAndSizeCache
+                    ),
+                    child: Center(
+                      child: Stack(
+                          children: createHittestButtons(context)
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                new Positioned(
+                  top: posi.transY, //240,
+                  left: posi.transX, //160,
+                  height: posi.height, //80,
+                  width: posi.width, //80,
+                  child: new CustomPaint(
+                    foregroundPainter: new AnimatedPathPainter(_controller),
+                  ),
+                ),
+              ],
             ),
             onWillPop: _onWillPop
         ),
@@ -144,29 +180,36 @@ class _ReviewPageState extends State<ReviewPage> {
             overlayEntry.remove();
             overlayEntry = null;
           }
+
+          _clearAnimation();
+
           setState(() {
             centerZiId = newCenterZiId;
+            shouldDrawCenter = true;
           });
+
+          var zi = theZiManager.getZi(currentZiId);
+          TextToSpeech.speak(zi.char);
         }
       },
       onLongPress: () {
         if (withAction) {
-          if (overlayEntry != null) {
-            overlayEntry.remove();
-            overlayEntry = null;
-          }
-          TextToSpeech.speak("'你好'"); //TODO
-          var meaning = theZiManager.getPinyinAndMeaning(currentZiId);
+          //if (overlayEntry != null) {
+          //  overlayEntry.remove();
+          //  overlayEntry = null;
+          //}
+
+
+          var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+
+          var zi = theZiManager.getZi(partialZiId);
+          TextToSpeech.speak(zi.char);
+
+          var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
       },
-      //child: GestureDetector(
-      //TODO: couldn't make onLongPressUp work
-      //onLongPressUp: () {
-      //TextToSpeech.speak();
-      //},
       child: Text('', style: TextStyle(fontSize: 20.0),),
-      //),
     );
 
     var posiCenter = Positioned(
@@ -213,6 +256,12 @@ class _ReviewPageState extends State<ReviewPage> {
           overlayEntry = null;
         }
 
+        setState(() {
+          shouldDrawCenter = false;
+        });
+
+        _startAnimation();
+
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);
       },
@@ -232,7 +281,7 @@ class _ReviewPageState extends State<ReviewPage> {
 
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
-    TextToSpeech.speak('你好');
+    //TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
 

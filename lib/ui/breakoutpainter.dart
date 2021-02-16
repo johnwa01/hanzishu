@@ -11,6 +11,7 @@ import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
+//TODO: replace it with PrimitiveWrapper
 class YPositionWrapper {
   double yPosi;
 
@@ -43,6 +44,7 @@ class BreakoutPainter extends BasePainter {
 
     isBreakoutPositionsOnly = false;
     displayCharacterDecomposing(lessonId);
+    //displayLessonCharacterAssemingbling(lessonId);  //TODO: not working yet
   }
 
   Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
@@ -116,9 +118,7 @@ class BreakoutPainter extends BasePainter {
     }
     else {
       var withPinyin = false;
-      //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.lessonConversation) {
-      //  withPinyin = true;
-      //}
+
       drawRootZi(
           id,
           posiSize2.transX,
@@ -133,7 +133,8 @@ class BreakoutPainter extends BasePainter {
           /*hasRootZiLearned:*/
           false,
           withPinyin,
-          Colors.blue);
+          Colors.blue,
+          true);
     }
 
     theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
@@ -150,6 +151,113 @@ class BreakoutPainter extends BasePainter {
         }
       }
     }
+  }
+
+  displayLessonCharacterAssemingbling(int lessonId) {
+    displayCharacterAssembling(lessonId);
+  }
+
+  displayCharacterAssembling(int id) {
+    var lesson = theLessonList[id];
+
+    var numberOfNewAnalysisChars = lesson.getNumberOfNewAnalysisChars();
+    var sharedTitleLength = xYLength(120.0);
+    var contentLength = numberOfNewAnalysisChars * xYLength(180.0) + sharedTitleLength;
+
+    var yPositionWrapper = YPositionWrapper(xYLength(50.0));
+
+    for (var i = 0; i <= (lesson.convCharsIds.length - 1); i++) {
+      drawLine(xYLength(10.0), yPositionWrapper.yPosi + xYLength(30.0), xYLength(600.0), yPositionWrapper.yPosi + xYLength(30.0), Colors.amber, 1);
+      var ziId = lesson.convCharsIds[i];
+      if (theZiManager.isHechenZi(ziId)) {
+        displayOneCharAssembling(yPositionWrapper, ziId, 0);
+      }
+    }
+
+    LessonManager.SetSectionCompleted(id, LessonSection.Assembling);
+  }
+
+  displayOneCharAssembling(YPositionWrapper yPositionWrapper, int ziId, int maxRecurLevel) {
+    //theAreDrawingAnalyzeComponents = true;
+    LessonManager.clearComponentsStructure();
+    //var transX = xPosi;
+
+    drawZiAndComponentsAssembly(0, 0, ziId, lessonLeftEdge, yPositionWrapper.yPosi, 0);
+
+    yPositionWrapper.yPosi += xYLength(30.0);
+    yPositionWrapper.yPosi = LessonManager.getNextYPosition(yPositionWrapper.yPosi);
+    //theAreDrawingAnalyzeComponents = false;
+  }
+
+  // maxRecurLevel == 0 means no limit
+  drawZiAndComponentsAssembly(int recurLevel, int indexInLevel, int id, double transX, double transY, int maxRecurLevel) {
+    var posiSize2 = PositionAndSize(transX, transY, PositionManager.ZiSizes[ZiOrCharSize.assembleDissembleSize], PositionManager.ZiSizes[ZiOrCharSize.assembleDissembleSize], PositionManager.CharFontSizes[ZiOrCharSize.assembleDissembleSize], PositionManager.ZiLineWidth[ZiOrCharSize.assembleDissembleSize]);
+
+    var withPinyin = false;
+
+    theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
+
+    var originalTransY = posiSize2.transY;
+
+    var zi = theZiManager.getZi(id);
+    if (zi.type == "h")
+    {
+      //theIsInSidingArea = true
+      var newRecurLevel = recurLevel + 1;
+      //if (maxRecurLevel == 0 || newRecurLevel < maxRecurLevel) {
+        var components = theZiManager.getZiComponents(id);
+        var count = components.length;
+        if (count > 0) {
+          for (var i = 0; i <= (count-1); i++) {
+            drawZiAndComponentsAssembly(newRecurLevel, i, components[i], transX, posiSize2.transY, maxRecurLevel);
+          }
+        }
+      //}
+    }
+
+    var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
+    var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
+
+    // align on right side
+    var deepestLevel = 3;
+    if (maxRecurLevel != 0) {
+      deepestLevel = maxRecurLevel;
+    }
+    var currentTransX = transX + xYLength(100.0) * (deepestLevel - recurLevel);
+
+    if (recurLevel > 0) {
+      var currentZiComponentMinusOne = theCurrentZiComponents[recurLevel-1];
+      if (recurLevel == 1) {
+        // Since the final zi shows on the bottom, therefore add one unit of y space
+        currentZiComponentMinusOne = currentZiComponentMinusOne + 1;
+      }
+      drawLine(currentTransX + 40.0, currentTransX + 85.0, transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * theCurrentZiComponents[recurLevel], transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * currentZiComponentMinusOne, Colors.amber, 1);
+    }
+
+    var currentZiComponent = theCurrentZiComponents[recurLevel];
+    if (recurLevel == 0) {
+      // Since the final zi shows on the bottom, therefore add one unit of y space
+      currentZiComponent = currentZiComponent + 1;
+    }
+
+    drawRootZi(
+        id,
+        posiSize2.transX,
+        posiSize2.transY,
+        posiSize2.width,
+        posiSize2.height,
+        posiSize2.charFontSize,
+        Colors.brown, /*isSingleColor:*/
+        false,
+        posiSize2.lineWidth, /*createFrame:*/
+        true,
+        /*hasRootZiLearned:*/
+        false,
+        withPinyin,
+        Colors.blue,
+        true);
+
+    drawRootZi(id, currentTransX, originalTransY + (analyzeZiYSize + analyzeZiYGap) * currentZiComponent, posiSize2.width, posiSize2.height, posiSize2.charFontSize, Colors.brown, false, posiSize2.lineWidth, true, false, withPinyin, Colors.blue, true);
   }
 
   @override

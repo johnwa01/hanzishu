@@ -9,9 +9,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
-
-//import 'package:flutter_tts/flutter_tts.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/animatedpathpainter.dart';
 
 class TreePage extends StatefulWidget {
   final int lessonId;
@@ -25,20 +23,49 @@ class TreePage extends StatefulWidget {
   _TreePageState createState() => _TreePageState();
 }
 
-class _TreePageState extends State<TreePage> {
+class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin {
+  AnimationController _controller;
+  TreePainter treePainter;
+
+  void _startAnimation() {
+  _controller.stop();
+  _controller.reset();
+  _controller.forward(from: 0.0);
+  }
+
+  void _clearAnimation() {
+    _controller.stop();
+    _controller.reset();
+  }
+
+  double _progress = 0.0;
+
   int centerZiId;
+  bool shouldDrawCenter;
   double screenWidth;
   OverlayEntry overlayEntry;
 
   @override
   void initState() {
     super.initState();
-    //theLessonList[theCurrentLessonId].populateTreeMap(1);
+
+    _controller = new AnimationController(
+      duration: Duration(seconds: 4),
+      vsync: this,
+    );
+
     theCurrentCenterZiId = 1;
 
     setState(() {
       centerZiId = theCurrentCenterZiId;
+      shouldDrawCenter = true;
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   /*
@@ -53,6 +80,18 @@ class _TreePageState extends State<TreePage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
+    treePainter = new TreePainter(
+      Colors.amber, //lineColor: Colors.amber,
+      Colors.blueAccent, //completeColor: Colors.blueAccent,
+      centerZiId, //centerId: centerZiId,
+      shouldDrawCenter,
+      screenWidth, //width: screenWidth,
+      widget.sidePositionsCache,
+      widget.realGroupMembersCache,
+      widget.centerPositionAndSizeCache, //sidePositions: widget.sidePositions
+    );
+
+    var posi = thePositionManager.getCenterZiPosi();
 
     return Scaffold
       (
@@ -64,25 +103,33 @@ class _TreePageState extends State<TreePage> {
         child: WillPopScope(   // just for removing overlay on detecting back arrow
           //height: 200.0,
           //width: 200.0,
+          child: new Stack(
+            children: <Widget>[
+              new Positioned(
           child: CustomPaint(
-            foregroundPainter: TreePainter(
-              Colors.amber, //lineColor: Colors.amber,
-              Colors.blueAccent, //completeColor: Colors.blueAccent,
-              centerZiId, //centerId: centerZiId,
-              screenWidth, //width: screenWidth,
-              widget.sidePositionsCache,
-              widget.realGroupMembersCache,
-              widget.centerPositionAndSizeCache //sidePositions: widget.sidePositions
-            ),
+            foregroundPainter: treePainter,
             child: Center(
               child: Stack(
                 children: createHittestButtons(context)
               ),
             ),
           ),
+              ),
+              new Positioned(
+                top: posi.transY, //240,
+                left: posi.transX, //160,
+                height: posi.height, //80,
+                width: posi.width, //80,
+                //child: SizedBox(
+                  child: new CustomPaint(
+                    /*painter*/foregroundPainter: new AnimatedPathPainter(_controller),
+                  ),
+              ),
+            ],
+          ),
             onWillPop: _onWillPop
         ),
-      ),
+      )
     );
   }
 
@@ -149,6 +196,12 @@ class _TreePageState extends State<TreePage> {
           overlayEntry = null;
         }
 
+        setState(() {
+          shouldDrawCenter = false;
+        });
+
+        _startAnimation();
+
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);
       },
@@ -175,6 +228,9 @@ class _TreePageState extends State<TreePage> {
           overlayEntry.remove();
           overlayEntry = null;
         }
+
+        _clearAnimation();
+
         setState(() {
           centerZiId = newCenterZiId;
           if (Utility.isPseudoRootZiId(centerZiId)) {
@@ -183,24 +239,26 @@ class _TreePageState extends State<TreePage> {
           else if (Utility.isPseudoNonCharRootZiId(centerZiId)) {
             centerZiId = theConst.starCharId;   // skip the pseudo layer for treepage.
           }
+          shouldDrawCenter = true;
         });
+
+        var zi = theZiManager.getZi(currentZiId);
+        TextToSpeech.speak(zi.char);
       },
       onLongPress: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
-        TextToSpeech.speak("'你好'");  //TODO
-        var meaning = theZiManager.getPinyinAndMeaning(currentZiId);
+        //if (overlayEntry != null) {
+        //  overlayEntry.remove();
+        //  overlayEntry = null;
+        //}
+
+        var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+        var zi = theZiManager.getZi(partialZiId);
+        TextToSpeech.speak(zi.char);
+
+        var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
-      //child: GestureDetector(
-      //TODO: couldn't make onLongPressUp work
-      //onLongPressUp: () {
-      //TextToSpeech.speak();
-      //},
       child: Text('', style: TextStyle(fontSize: 20.0),),
-      //),
     );
 
     var posiCenter = Positioned(
