@@ -121,5 +121,5 @@ Sentence(114, "最近到哪旅游了？", "Where have you traveled recently?", 4
 Sentence(115, "西湖和黄山。", "West Lake and Yellow Mountain.", 49, null, []),
 Sentence(116, "什么是四大发明？", "What is the four great inventions?", 50, null, []),
 Sentence(117, "造纸，指南针，火药，印刷术。", "Paper making, compass, gunpowder, printing", 50, null, []),
-  Sentence(118, "您好！", "Hello!", 1, null, []),
+  Sentence(118, "您好！", "Hello!", 3, null, []),
 ];

@@ -8,6 +8,7 @@ import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
+import 'dart:async';
 
 class QuizPage extends StatefulWidget {
   final int lessonId;
@@ -22,27 +23,14 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   AnswerPosition answerPosition;
   int lessonId;
-
-  //QuizCategory currentCategory;
-  //QuizType currentType;
-  //List<String> currentValues;
-  //List<int> currentValuesNonCharIds;
   int index;
-  //bool soundIconPressed;
-
-  //_openTreePage(BuildContext context) {
-  //_QuizPageState(BuildContext context) {
-  //  Navigator.of(context).push(
-  //      MaterialPageRoute(builder: (context) => QuizPage()));
-  //}
-
-  //_QuizPageState(int lessonId) {
-  //  this.lessonId = lessonId;
-  //}
+  double _progressValue;
+  int totalMeaningAndSoundQuestions;
 
   @override
   void initState() {
     super.initState();
+    _progressValue = 0.0;
 
     //TODO
     //theStatisticsManager.initLessonQuizResults();
@@ -51,6 +39,8 @@ class _QuizPageState extends State<QuizPage> {
 
     theStatisticsManager.initLessonQuizResults();
 
+    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(widget.lessonId) * 2;
+
     setState(() {
       answerPosition = AnswerPosition.none;
     });
@@ -58,9 +48,9 @@ class _QuizPageState extends State<QuizPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (answerPosition == AnswerPosition.continueNext) {
-      index = theQuizManager.getNextIndexForCurrentType();
-    }
+    //if (answerPosition == AnswerPosition.continueNext) {
+    //  index = theQuizManager.getNextIndexForCurrentType();
+    //}
 
     QuizType currentType = theQuizManager.getCurrentType();
     if (answerPosition == AnswerPosition.continueNext ||
@@ -71,28 +61,30 @@ class _QuizPageState extends State<QuizPage> {
         theQuizManager.getCurrentValuesNonCharIds();
       //currentCategory = theQuizManager.getCurrentCategory();
       currentType = theQuizManager.getCurrentType();
+
+      var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+      _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
     }
 
     if (currentType == QuizType.none) {
       // Completed the quiz. Save the quiz results and go back to lesson page.
       theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
 
-      Navigator.of(context).pop();
-      //OpenHelper.openLessonPage(context, 1/*lessonId*/);
+      // Navigator.of(context).pop(); Note: let showCompletedDialog() to pop back together.
     }
 
-    return Scaffold
-      (
-      appBar: AppBar
+      return Scaffold
         (
-        title: Text("Quiz Page"),
-      ),
-      body: Center
-        (
-        //child: Text("This is Lesson Page."),
-        child: getQuizWizard(context /*, widget.lessonId*/),
-      ),
-    );
+        appBar: AppBar
+          (
+          title: Text("Quiz"),
+        ),
+        body: Center
+          (
+          //child: Text("This is Lesson Page."),
+          child: getQuizWizard(context /*, widget.lessonId*/),
+        ),
+      );
   }
 
   Widget getQuizWizard(BuildContext context) {
@@ -102,7 +94,7 @@ class _QuizPageState extends State<QuizPage> {
             //       padding: EdgeInsets.all(30),
           ),
           Container( // x and progress bard
-            child: getProgressBar(context),
+            child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
             padding: EdgeInsets.all(30),
           ),
           Container(
@@ -110,11 +102,11 @@ class _QuizPageState extends State<QuizPage> {
             //padding: EdgeInsets.all(20),
           ),
           Container(
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(20), //
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(40), //10
           ),
           Container(
             child: getContinue(context),
@@ -139,19 +131,20 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getQuestion(BuildContext context) {
     if (theQuizManager.getCurrentCategory() == QuizCategory.meaning) { // short button
-      return getZiContainer(AnswerPosition.center);
+      return getZiContainer(AnswerPosition.center, false);
     }
     else {
       var currentValues = theQuizManager.getCurrentValues();
 
       return Container(
-        height: 180.0,
+        height: xYLength(150.0), //180
+          width: xYLength(150.0),
         child: IconButton(
             icon: Icon(
                 Icons.volume_up,
-                size: 150.0
+                size: xYLength(150.0)    // 150
             ),
-            color: Colors.green,
+            color: Colors.cyan, //Colors.green,
             onPressed: () {
               TextToSpeech.speak(currentValues[0]);
               setState(() {
@@ -172,12 +165,16 @@ class _QuizPageState extends State<QuizPage> {
       if (currentCategory ==
           QuizCategory.meaning || currentType == QuizType.phrases ||
           currentType == QuizType.conversations) { // phrases and sentences
-        return Column(
+        return IntrinsicWidth(
+          child: Column(
+            //textDirection: TextDirection.ltr,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               getText(AnswerPosition.positionA),
               getText(AnswerPosition.positionB),
               getText(AnswerPosition.positionC),
             ]
+          ),
         );
       }
       else {
@@ -185,9 +182,9 @@ class _QuizPageState extends State<QuizPage> {
         return Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
-              getZiContainer(AnswerPosition.positionA),
-              getZiContainer(AnswerPosition.positionB),
-              getZiContainer(AnswerPosition.positionC),
+              getZiContainer(AnswerPosition.positionA, true),
+              getZiContainer(AnswerPosition.positionB, true),
+              getZiContainer(AnswerPosition.positionC, true),
             ]
         );
       }
@@ -267,28 +264,48 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
-    var fontSize = 30.0;
+    var fontSize = xYLength(35.0); // 30.0
     var currentType = theQuizManager.getCurrentType();
-    if (position == AnswerPosition.center &&
-        (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars)) {
-      fontSize = 60.0;
+
+    if (currentType == QuizType.conversations) {
+      fontSize = xYLength(25);
     }
 
-    var color = Colors.blueAccent;
+    if (position == AnswerPosition.center) {
+      if (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars) {
+        fontSize = xYLength(120.0); //60.0;
+      }
+      else {
+        fontSize = xYLength(50);
+      }
+    }
+
+    var backgroundColor = Colors.white;  // make it a non-material color first
+    backgroundColor = Colors.blueAccent;
     if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
+      //backgroundColor = Colors.blueAccent;
       if (position == theQuizManager.getCorrectAnswerPosition()) {
-        color = Colors.greenAccent;
+        backgroundColor = Colors.greenAccent;
       }
       else if (position == answerPosition) {
-        color = Colors.redAccent;
+        backgroundColor = Colors.redAccent;
       }
+    }
+
+    if (position == AnswerPosition.center) {
+      backgroundColor = Colors.white;
+    }
+
+    var textColor = Colors.white;
+    if (position == AnswerPosition.center) {
+      textColor = Colors.cyan; //Colors.blueAccent;
     }
 
     return Container(
       child: FlatButton(
         child: Text(value, style: TextStyle(fontSize: fontSize),),
-        color: color, //Colors.blueAccent,
-        textColor: Colors.white,
+        color: backgroundColor, //color,
+        textColor: textColor, //Colors.white,
         onPressed: () {
           setPositionState(position);
         },
@@ -297,24 +314,31 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget getZiContainer(AnswerPosition position) {
-    var size = 80.0;
+  Widget getZiContainer(AnswerPosition position, bool withNonCharFrame) {
+    var size = xYLength(55.0); //35
     if (position == AnswerPosition.center) {
-      size = 150.0;
+      size = xYLength(120.0);
     }
 
     var noncharId = getNoncharId(position);
 
-    var color = Colors.blueAccent;
-    if (answerPosition != AnswerPosition.none) {
+    //var backgroundColor = Colors.white;  // make it a non-material color first
+    var backgroundColor = Colors.blueAccent;
+    if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
+      //backgroundColor = Colors.blueAccent;
       if (position == theQuizManager.getCorrectAnswerPosition()) {
-        color = Colors.greenAccent;
+        backgroundColor = Colors.greenAccent;
       }
       else if (position == answerPosition) {
-        color = Colors.redAccent;
+        backgroundColor = Colors.redAccent;
       }
     }
 
+    var lineColor = Colors.grey; //Colors.amber;  //TODO: want to be white like other text, but white is not a MaterialColor
+    if (position == AnswerPosition.center) {
+      lineColor = Colors.cyan;
+    }
+    
     if (noncharId != 0) {// nonchar case
       return InkWell(
         onTap: () {
@@ -328,9 +352,10 @@ class _QuizPageState extends State<QuizPage> {
           // child: FlatButton(
           child: CustomPaint(
             foregroundPainter: QuizPainter(
-              lineColor: Colors.amber,
-              completeColor: color, //Colors.blueAccent,
-              centerId: noncharId //*centerZiId*/,
+              lineColor: lineColor, //lineColor, //Colors.amber,
+              completeColor: backgroundColor, //color, //Colors.blueAccent,
+              centerId: noncharId,
+              withNonCharFrame: withNonCharFrame,//*centerZiId*/,
               //width: 150.0 /*screenWidth*/
             ),
           ),
@@ -357,18 +382,93 @@ class _QuizPageState extends State<QuizPage> {
 
       result += "Continue";
 
+      //_updateProgress();
+
       return Container(
           child: FlatButton(
-            child: Text(result, style: TextStyle(fontSize: 20.0),),
+            child: Text(result, style: TextStyle(fontSize: xYLength(25.0)),),
             color: Colors.blueAccent,
             textColor: Colors.white,
             onPressed: () {
               setState(() {
-                  setPositionState(AnswerPosition.continueNext);
+                setPositionState(AnswerPosition.continueNext);
+
+                //if (answerPosition == AnswerPosition.continueNext) {
+                  // prepare for next one
+                  // Could be done in Build(), but Build won't allow showCompletedDialog() there.
+                  index = theQuizManager.getNextIndexForCurrentType();
+                //}
+                if (theQuizManager.getCurrentType() == QuizType.none) {
+                  showCompletedDialog(context);
+                }
               });
             },
           ),
       );
     }
   }
+
+  showCompletedDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop(); // out this dialog
+        Navigator.of(context).pop(); // to the lesson page
+      },
+    );
+
+    var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+    var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
+    var corStr = correctPercent.toStringAsFixed(1);
+
+    String title;
+    String content;
+
+    if (correctPercent >= 70.0) {
+      title = "Congratulation!";
+      content = "You have passed this quiz with a score of " + corStr + "!";
+    }
+    else {
+      title = "Good effort!";
+      content = "You have achieved a score of " + corStr + ". You can come back at any time to reach 70.";
+    }
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  /*
+  //NOTE: setState within the Timer so that this function will be called repeatedly.
+  void _updateProgress() {
+    const oneSec = const Duration(seconds: 5);
+    new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
+      //setState(() {
+           _progressValue += 0.2;
+        // we "finish" downloading here
+        if (_progressValue.toStringAsFixed(1) == '1.0') {
+          //_loading = false;
+          //t.cancel();
+          //_progressValue: 0.0;
+          return;
+        }
+      //});
+    });
+  }
+  */
 }

@@ -51,7 +51,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       (
       appBar: AppBar
         (
-        title: Text("Breakout Page"),
+        title: Text("Character Break Out"),
       ),
       body: Container(
         //height: 200.0,

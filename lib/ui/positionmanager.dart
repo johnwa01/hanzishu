@@ -75,6 +75,10 @@ class PositionManager
 
   init() {}
 
+  static PositionAndSize copyPositionAndSize(PositionAndSize posi) {
+    return PositionAndSize(posi.transX, posi.transY, posi.width, posi.height, posi.charFontSize, posi.lineWidth);
+  }
+
   double getFrameXPosition(int index) {
     var x1 = FrameLeftEdgeSize;
     double width1 = frameWidth / 3.0;
@@ -136,6 +140,15 @@ class PositionManager
         charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
   }
 
+  PositionAndSize getMeaningPosi() {
+    // Bihua icon
+    var xPosi2 = getFrameXPosition(2);
+    var yPosi3 = getFrameYPosition(3);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi2 + charFontSize * 0.35,  yPosi3 - charFontSize * 0.4, charFontSize * 0.27, charFontSize * 0.27, 0.0, 0.0);
+  }
+
   PositionAndSize getCenterBihuaPosi() {
     // Bihua icon
     var xPosi3 = getFrameXPosition(3);
@@ -151,8 +164,28 @@ class PositionManager
     var yPosi4 = getFrameYPosition(4);
     var charFontSize = getCharFontSize(ZiOrCharSize.defaultSize);
 
-    return PositionAndSize(xPosi1, yPosi4 + charFontSize * 0.5,
+    return PositionAndSize(xPosi1, yPosi4 + charFontSize,
         charFontSize, charFontSize, 0.0, 0.0);
+  }
+
+  PositionAndSize getNewCharIconPosi() {
+    // speech icon
+    var xPosi2 = getFrameXPosition(2);
+    var yPosi3 = getFrameYPosition(3);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi2 + charFontSize * 0.05, yPosi3 - charFontSize * 0.4,
+        charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
+  }
+
+  PositionAndSize getNavigationPosi() {
+    // speech icon
+    var xPosi1 = getFrameXPosition(1);
+    var yPosi1 = getFrameYPosition(1);
+    var charFontSize = getCharFontSize(ZiOrCharSize.conversationSize);
+
+    return PositionAndSize(xPosi1, yPosi1 - charFontSize,
+        charFontSize, charFontSize, charFontSize, 2.0);
   }
 
   PositionAndSize getPositionAndSize(int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {
@@ -702,5 +735,35 @@ class PositionManager
     }
 
     return posi;
+  }
+
+  static Map<int, PositionAndSize> getNavigationPathPosi(int ziId, bool isFromReviewPage) {
+    var posi = thePositionManager.getNavigationPosi();
+    Map<int, PositionAndSize> naviMap = Map();
+    getOneNaviationPathPosi(0, ziId, posi, isFromReviewPage, naviMap);
+
+    return naviMap;
+  }
+
+  static getOneNaviationPathPosi(int recurLevel, int id, PositionAndSize posi, bool isFromReviewPage, Map<int, PositionAndSize> naviMap) {
+    var zi = theZiManager.getZi(id);
+    if (zi.id != 1) // till hit root
+        {
+      var newRecurLevel = recurLevel + 1;
+      var parentId = zi.parentId;
+
+      getOneNaviationPathPosi(newRecurLevel, parentId, posi, isFromReviewPage, naviMap);
+    }
+
+    // for lesson, skip those pseudo ones.
+    if (isFromReviewPage || !Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id)) {
+      if (zi.id != 1) {
+        posi.transX += xYLength(18.0); // 23.0
+
+        posi.transX += xYLength(36.0); //15.0
+      }
+
+      naviMap[id] = copyPositionAndSize(posi);
+    }
   }
 }

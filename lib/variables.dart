@@ -15,7 +15,7 @@ var theStatisticsManager = null;
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?
 var theNumberOfLessonsInLevels = [7, 13, 15, 15];
-var theHittestState = HittestState.hanzishuFullZiMode;
+//var theHittestState = HittestState.hanzishuFullZiMode;
 
 var theRangeUptoLessonNumberForCurrentLevel = 1;
 var theRangeFromLessonNumberForCurrentLevel = 1;
@@ -38,6 +38,7 @@ var theFileIOFile;
 class theConst {
   static var starCharId = 756;
   static var starChar = '*';
+  static var atCharId = 1;
   static var atChar = '@';
 }
 

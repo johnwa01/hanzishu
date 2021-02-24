@@ -20,6 +20,8 @@ class BasePainter extends CustomPainter{
 
   List<double> iconSpeechStrokes = [4.0, 0.25, 0.5, 8.0, 0.25,0.25, 8.0, 0.5, 0.25, 8.0, 0.75, 0.0, 8.0, 0.75, 1.0, 8.0, 0.5, 0.75, 8.0, 0.25, 0.75, 8.0, 0.25, 0.5];
   List<double> iconPenStrokes = [4.0, 0.375, 0.125, 8.0, 1.0, 0.75, 8.0, 0.75, 1, 8.0, 0.125, 0.375, 8.0, 0.125, 0.125, 8.0, 0.375, 0.125, 8.0, 0.125, 0.375];
+  List<double> iconZiLearnedStrokes = [4.0, 0.125, 0.5, 8.0, 0.375, 0.75, 8.0, 0.875, 0.25];
+  List<double> iconNewCharStrokes = [4.0, 0.0, 0.5, 8.0, 0.75, 0.25, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5];
 
   bool isFromReviewPage = false;
 
@@ -37,6 +39,8 @@ class BasePainter extends CustomPainter{
   Map<int, PositionAndSize> sidePositionsCache; // = Map();
   Map<int, List<int>> realGroupMembersCache; // = Map();
   PositionAndSize centerPositionAndSizeCache;
+  Map<int, bool> allLearnedZis;
+  Map<int, bool> newInLesson;
 
   bool isReviewCenterPseudoZi = false;
   bool isReviewCenterPseudoNonCharZi = false;
@@ -245,8 +249,8 @@ class BasePainter extends CustomPainter{
     var firstMeaning = Utility.getFirstMeaning(char);
     var displayMeaning = firstMeaning;
 
-    if (trim && firstMeaning.length > 10) {
-      displayMeaning = firstMeaning.substring(0, 7);
+    if (trim && firstMeaning.length > 8) {
+      displayMeaning = firstMeaning.substring(0, 5);
       displayMeaning += "...";
     }
 
@@ -313,8 +317,18 @@ class BasePainter extends CustomPainter{
       displayTextForPinyin(id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800], true);
     }
 
+    if (theConfig.withSoundAndExplains && hasRootZiLearned) {
+      DisplayIcon(
+          iconZiLearnedStrokes,
+          transX + charFontSize * 0.9,
+          transY - charFontSize * 0.45,
+          widthX * 0.27,
+          heightY * 0.27,
+          Colors.amber,
+          3.0);
+    }
+
     // TODO: if createFrame, add to data structure for hittest buttons.
-    // TODO: pinyin etc
   }
 
   /*
@@ -393,18 +407,12 @@ class BasePainter extends CustomPainter{
   }
 
   void displayCenterZiRelated(int id, double charFontSize) {
-    var xPosi2 = thePositionManager.getFrameXPosition(2);
-    var yPosi3 = thePositionManager.getFrameYPosition(3);
-
+    var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
-    displayTextForMeaning(id, xPosi2 + charFontSize * 0.1, yPosi3 - charFontSize * 0.4, charFontSize * 0.27, Colors.blue[800], true);
-    //Timer(Duration(seconds: 3), () {
-      //print("Yeah, this line is printed after 3 seconds");
-    //await Future.delayed(const Duration(milliseconds: 5000));
-      //displayTextForMeaning(id, xPosi2 + charFontSize * 0.1, yPosi3 - charFontSize * 0.4, charFontSize * 0.3, Colors.white);
-    //});
+    displayTextForMeaning(id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
+
     DisplayIcon(iconSpeechStrokes, posiAndSizeSpeech.transX, posiAndSizeSpeech.transY, posiAndSizeSpeech.width, posiAndSizeSpeech.height, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
     if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
       DisplayIcon(
@@ -413,6 +421,18 @@ class BasePainter extends CustomPainter{
           posiAndSizeBihua.transY,
           posiAndSizeBihua.width,
           posiAndSizeBihua.height,
+          Colors.amber /*MaterialColor ofColor*/,
+          2.0 /*ziLineWidth*/);
+    }
+
+    if (!isFromReviewPage && isCharNewInLesson(id)) {
+      var posiNewChar = thePositionManager.getNewCharIconPosi();
+      DisplayIcon(
+          iconNewCharStrokes,
+          posiNewChar.transX,
+          posiNewChar.transY,
+          posiNewChar.width,
+          posiNewChar.height,
           Colors.amber /*MaterialColor ofColor*/,
           2.0 /*ziLineWidth*/);
     }
@@ -430,6 +450,8 @@ class BasePainter extends CustomPainter{
 
     theCurrentCenterZiId = id;
     theCreatedNumber = 0;
+
+    bool allMemberZiLearned = true;
 
     thePositionManager.resetPositionIndex();
 
@@ -459,7 +481,8 @@ class BasePainter extends CustomPainter{
         //posiSize2 = thePositionManager.getPositionAndSize(
         //    memberZiId, totalSideNumberOfZis /*, isCreationList: false*/);
       //}
-      var memberZiLearned = GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
+      var memberZiLearned = doesZiExistInLearnedMap(memberZiId); //GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
+      allMemberZiLearned = allMemberZiLearned && memberZiLearned;
 
       var isSingleColor = false;
       if (theCurrentCenterZiId == 1) { // the root graph
@@ -472,7 +495,8 @@ class BasePainter extends CustomPainter{
 
       // check if its a composite zi and return partial zi
       var partialZiId = memberZiId;
-      if (theIsPartialZiMode) {
+      //id = 155 ->六  [In the tree, treat it as a basic one. but in word list etc, still keep as multiple component char.
+      if (theIsPartialZiMode && memberZiId != 155) {
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
       drawRootZi(partialZiId, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
@@ -490,13 +514,19 @@ class BasePainter extends CustomPainter{
     }
     */
 
-    GeneralManager.checkAndSetHasAllChildrenCompleted(id, theHittestState, theCurrentLessonId);
+    var centerZiAndChildrenLearned = doesZiExistInLearnedMap(id); //GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
+    //GeneralManager.checkAndSetHasAllChildrenCompleted(id, theHittestState, theCurrentLessonId);
+    if (!centerZiAndChildrenLearned && allMemberZiLearned) {
+      centerZiAndChildrenLearned = true;
+      setCenterZiLearned(id);
+    }
 
     // skip the center zi for id == 1, which is the default empty root zi.
     // the Chinese character zi "-" has an id of 170.
     //TODO：add checking to not display center pseudo root zi for treepage mode - !isFromReviewPage
     if (id > 1) {
-      var rootZiLearned = GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
+      //var rootZiLearned = GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
+
       if (isFromReviewPage && Utility.isPseudoRootZiIdPlusStar(id)) {
         isReviewCenterPseudoZi = true;
       }
@@ -515,7 +545,7 @@ class BasePainter extends CustomPainter{
             true,
             posiSize.lineWidth, /*createFrame:*/
             true,
-            rootZiLearned,
+            centerZiAndChildrenLearned,
             withPinyin,
             Colors.cyan /*TODO*/,
             shouldDrawCenter);
@@ -523,6 +553,10 @@ class BasePainter extends CustomPainter{
       if (theConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && (id != theConst.starCharId) ) {
         displayCenterZiRelated(id, posiSize.charFontSize);
       }
+
+      // draw navigation path
+      displayNavigationPath(id);
+
       isReviewCenterPseudoZi = false;
       isReviewCenterPseudoNonCharZi = false;
     }
@@ -531,6 +565,14 @@ class BasePainter extends CustomPainter{
   //void drawCenterZiRelated(int id, double transX, double transY, double charFontSize) {
   //  displayTextForMeaning(id, transX, transY, charFontSize);
   //}
+
+  bool doesZiExistInLearnedMap(int id) {
+    return allLearnedZis.containsKey(id);
+  }
+
+  setCenterZiLearned(int id) {
+    allLearnedZis[id] = true;
+  }
 
   static addToSidePositionsCache(int ziId, PositionAndSize positionAndSize, Map<int, PositionAndSize> sidePositions) {
     sidePositions[ziId] = positionAndSize;
@@ -570,7 +612,7 @@ class BasePainter extends CustomPainter{
     if (realGroupMembers == null) {
       // hardcode for lesson 2's number to have a sequential display order
       if (id == 1 && internalStartLessonId == 2 && internalEndLessonId == internalStartLessonId) {
-        realGroupMembers = [2, 3, 170, 153, 154, 8, 110, 7, 10, 157];
+        realGroupMembers = [2, 3, 170, 153, 154, 7, 155, 8, 10, 157];
       }
       else {
         realGroupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
@@ -659,6 +701,71 @@ class BasePainter extends CustomPainter{
     if (indexStart != null) {
       xPosi.value = xPosi.value + xYLength(20.0);
     }
+  }
+
+  bool isCharNewInLesson(int id) {
+    if (newInLesson.containsKey(id)) {
+      return newInLesson[id];
+    }
+    else {
+      var lesson = theLessonList[theCurrentLessonId];
+      var isNew = lesson.isCharNewInLesson(id);
+      newInLesson[id] = isNew;
+      return isNew;
+    }
+  }
+
+  displayNavigationPath(int ziId) {
+    var posi = thePositionManager.getNavigationPosi();
+    displayOneNaviationPathChar(0, ziId, posi);
+  }
+
+  displayOneNaviationPathChar(int recurLevel, int id, PositionAndSize posi) {
+
+      var withPinyin = false;
+
+      var zi = theZiManager.getZi(id);
+      if (zi.id != 1) // till hit root
+        {
+        var newRecurLevel = recurLevel + 1;
+        var parentId = zi.parentId;
+
+        displayOneNaviationPathChar(newRecurLevel, parentId, posi);
+      }
+
+      // for lesson, skip those pseudo ones.
+      if (isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))) {
+        if (zi.id != 1) {
+          posi.transX += xYLength(18.0); // 23.0
+          displayTextWithValue(
+              " -> ", posi.transX, posi.transY - posi.charFontSize * 0.3,
+              posi.charFontSize, Colors.brown);
+          posi.transX += xYLength(36.0); //15.0
+        }
+
+        var frameFillColor = Colors.yellow;
+        var createFrame = false;
+        if (recurLevel != 0) {
+          frameFillColor = theDefaultTransparentFillColor;
+          createFrame = true;
+        }
+
+        drawRootZi(
+            id,
+            posi.transX,
+            posi.transY,
+            posi.width,
+            posi.height,
+            posi.charFontSize,
+            Colors.brown,
+            false,
+            posi.lineWidth,
+            createFrame,
+            false,
+            withPinyin,
+            frameFillColor,
+            true);
+      }
   }
 
   @override

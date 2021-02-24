@@ -18,7 +18,7 @@ class _MePageState extends State<MePage> {
       (
       appBar: AppBar
         (
-        title: Text("Me Page"),
+        title: Text("Me"),
       ),
       body: Center
         (

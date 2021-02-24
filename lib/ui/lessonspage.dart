@@ -20,7 +20,7 @@ class _LessonsPageState extends State<LessonsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Lessons Page"),
+        title: Text("Hanzishu"), // "Lessons Page"
       ),
       body: Center
         (
@@ -87,13 +87,13 @@ class _LessonsPageState extends State<LessonsPage> {
 
   List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount) {
     List<Widget> sections = [];
-    sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", LessonSection.None)));
+    sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", LessonSection.None, true)));
 
     if (lessonCount >= 2) {
-      sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 1, "assets/conversations.png", LessonSection.None)));
+      sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 1, "assets/conversations.png", LessonSection.None, true)));
 
       if (lessonCount >= 3) {
-        sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 2, "assets/charactertree.png", LessonSection.None)));
+        sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 2, "assets/charactertree.png", LessonSection.None, true)));
       }
     }
 

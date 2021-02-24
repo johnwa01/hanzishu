@@ -18,7 +18,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
       (
       appBar: AppBar
         (
-        title: Text("CharacterList Page"),
+        title: Text("Character List"),
       ),
       body: Center
         (

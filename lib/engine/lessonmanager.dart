@@ -159,14 +159,17 @@ class LessonManager {
             // check the parent of this non-character
             // they are not real parents, but the parent in Hanzishu hirarchy
             var compZi = theZiManager.getZi(eachComp);
-            //if (compZi.parentId != theRootNonCharId) {
-              if (!compExists(j, compZi.parentId)) {
+
+            if (!compExists(j, compZi.parentId)) {
+              if (!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isAtChar(compZi.parentId)) {
                 theLessonList[j].comps.add(compZi.parentId);
               }
-            //}
+            }
 
             // add the non-char itself
-            theLessonList[j].comps.add(eachComp);
+            if (!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isAtChar(eachComp)) {
+              theLessonList[j].comps.add(eachComp);
+            }
           }
         }
       }

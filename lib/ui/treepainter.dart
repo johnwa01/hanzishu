@@ -13,7 +13,7 @@ class TreePainter extends BasePainter {
   double screenWidth;
   Animation<double> _animation;
 
-  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache) {
+  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId;
@@ -22,6 +22,8 @@ class TreePainter extends BasePainter {
     this.sidePositionsCache = sidePositionsCache;
     this.realGroupMembersCache = realGroupMembersCache;
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
+    this.allLearnedZis = allLearnedZis;
+    this.newInLesson = newInLesson;
     //this._progress = _progress;
   }
 

@@ -35,6 +35,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   OverlayEntry overlayEntry;
 
   AnimationController _controller;
+  Map<int, bool> allLearnedZis = Map();
 
   void _startAnimation() {
     _controller.stop();
@@ -89,7 +90,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       (
       appBar: AppBar
         (
-        title: Text("Review Page"),
+        title: Text("Review"),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
@@ -109,7 +110,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
                       widget.endLessonId,
                       widget.sidePositionsCache,
                       widget.realGroupMembersCache,
-                      widget.centerPositionAndSizeCache
+                      widget.centerPositionAndSizeCache,
+                      allLearnedZis,
                     ),
                     child: Center(
                       child: Stack(
@@ -165,49 +167,34 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool withAction) {
-    //MaterialColor buttonColor = Colors.cyan;
-    //if (centerZiId != 1) {
-    //  buttonColor = Colors.blueGrey; //Colors.yellow; // cannot be Colors.white since it's not a MaterialColor
-    //}
-
+  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
     var butt = FlatButton(
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (withAction) {
-          if (overlayEntry != null) {
-            overlayEntry.remove();
-            overlayEntry = null;
-          }
-
-          _clearAnimation();
-
-          setState(() {
-            centerZiId = newCenterZiId;
-            shouldDrawCenter = true;
-          });
-
-          var zi = theZiManager.getZi(currentZiId);
-          TextToSpeech.speak(zi.char);
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
         }
+
+        _clearAnimation();
+
+        setState(() {
+          centerZiId = newCenterZiId;
+          shouldDrawCenter = true;
+        });
+
+        var zi = theZiManager.getZi(currentZiId);
+        TextToSpeech.speak(zi.char);
       },
       onLongPress: () {
-        if (withAction) {
-          //if (overlayEntry != null) {
-          //  overlayEntry.remove();
-          //  overlayEntry = null;
-          //}
+        var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
 
+        var zi = theZiManager.getZi(partialZiId);
+        TextToSpeech.speak(zi.char);
 
-          var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
-
-          var zi = theZiManager.getZi(partialZiId);
-          TextToSpeech.speak(zi.char);
-
-          var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
-        }
+        var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -300,7 +287,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
             memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
       //}
 
-      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, true);
+      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
 
       thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
@@ -326,7 +313,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, true);
+      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
 
       buttons.add(posiCenter);
     //}
@@ -341,6 +328,17 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, centerZiId);
     buttons.add(drawBihuaPosiCenter);
 
+    CreateNavigationHitttestButtons(centerZiId, true, buttons);
+
     return buttons;
+  }
+
+  CreateNavigationHitttestButtons(int centerZiId, bool isFromReviewPage, List<Widget> buttons) {
+    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviewPage);
+
+    for (var id in naviMap.keys) {
+      var posi = getPositionedButton(naviMap[id], id, id);
+      buttons.add(posi);
+    }
   }
 }

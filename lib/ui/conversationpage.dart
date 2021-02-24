@@ -18,7 +18,7 @@ class _ConversationPageState extends State<ConversationPage> {
       (
       appBar: AppBar
         (
-        title: Text("Conversation Page"),
+        title: Text("Conversation"),
       ),
       body: Center
         (

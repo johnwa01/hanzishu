@@ -24,12 +24,12 @@ class Lesson {
   List<int> newItemList = [];
   List<int> newItemTypeStartPosition = [0, 0, 0, 0];
 
-  Map<int, bool> componentLearnedDictLesson = Map();
-  Map<int, bool> fullCharLearnedDictLesson = Map();
-  Map<int, bool> quizLearnedDictLesson = Map();
-  Map<int, bool> componentLearnedDictReview = Map();
-  Map<int, bool> fullCharLearnedDictReview = Map();
-  Map<int, bool> quizLearnedDictReview = Map();
+  //Map<int, bool> componentLearnedDictLesson = Map();
+  //Map<int, bool> fullCharLearnedDictLesson = Map();
+  //Map<int, bool> quizLearnedDictLesson = Map();
+  //Map<int, bool> componentLearnedDictReview = Map();
+  //Map<int, bool> fullCharLearnedDictReview = Map();
+  //Map<int, bool> quizLearnedDictReview = Map();
   List<bool> sectionsCompleted = [false, false, false,false,false, false, false];
   bool lessonCompleted = false;
   LessonSection latestSection = LessonSection.FullCharacterTree;
@@ -127,6 +127,7 @@ class Lesson {
     this.latestSection = latestSection;
   }
 
+  /*
   bool hasZiCompleted(int ziId, HittestState hittestState) {
     //lesson mode
     if (hittestState == HittestState.ziAndSidingShuLesson) {
@@ -213,6 +214,7 @@ class Lesson {
 
     return true;
   }
+  */
 
   void SetSectionCompleted(LessonSection lessonSection) {
     if (sectionsCompleted[lessonSection.index] == false) {
@@ -402,5 +404,9 @@ class Lesson {
 
   void setCenterPositionAndSize(positionAndSize) {
     centerPositionAndSize = positionAndSize;
+  }
+
+  bool isCharNewInLesson(int id) {
+     return convCharsIds.contains(id) || charsIds.contains(id) || comps.contains(id);
   }
 }

@@ -49,6 +49,10 @@ class StatisticsManager {
     }
   }
 
+  LessonQuizResult getLessonQuizResult() {
+    return lessonQuizResult;
+  }
+
   incrementTapCount() {
     tapCount += 1;
   }

@@ -13,7 +13,7 @@ class ReviewPainter extends BasePainter {
   double screenWidth;
   Animation<double> _animation;
 
-  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache) {
+  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -24,6 +24,7 @@ class ReviewPainter extends BasePainter {
     this.sidePositionsCache = sidePositionsCache;
     this.realGroupMembersCache = realGroupMembersCache;
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
+    this.allLearnedZis = allLearnedZis;
   }
 
   @override

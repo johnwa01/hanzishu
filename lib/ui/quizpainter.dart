@@ -28,8 +28,10 @@ class QuizPainter extends BasePainter {
   double screenWidth;
   //double frameWidth;
 
+  bool withNonCharFrame;
+
   QuizPainter({
-    this.lineColor, this.completeColor, this.centerId, /*this.completePercent, this.width*/
+    this.lineColor, this.completeColor, this.centerId, this.withNonCharFrame/*this.completePercent, this.width*/
   });
 
   @override
@@ -39,7 +41,15 @@ class QuizPainter extends BasePainter {
     //TODO: why its members are null?
     //var posiSize = PositionAndSize(100.0, 40.0, 35.0, 35.0, 15.0, 2.0);
 
-    drawRootZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ Colors.cyan/*ziColor*/, /*isSingleColor:*/ true, 2.0,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/true, /*withPinyin*/false, Colors.cyan /*TODO*/, false);
+    if (withNonCharFrame) {
+      var paint1 = Paint()
+        ..color = this.completeColor   //Color(0xff638965)
+        ..style = PaintingStyle.fill;
+      //a rectangle
+      canvas.drawRect(Offset(0, 0) & Size(size.width, size.height), paint1);
+    }
+
+    drawRootZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ this.lineColor /*ziColor*/, /*isSingleColor:*/ true, size.width * 0.05,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/false, /*withPinyin*/false, Colors.cyan /*TODO*/, true);
     // drawZiGroup(centerId);
   }
 

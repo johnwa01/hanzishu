@@ -45,13 +45,38 @@ class OpenHelper {
     }
   }
 
-  static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection) {
+  static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson) {
     final colorScheme = Theme.of(context).colorScheme;
     var lesson = theLessonManager.getLesson(lessonNumber);
 
+    String lessonOrSectionName = "";
+
+    if (isLesson) {
+      lessonOrSectionName = lesson.titleTranslation;
+    }
+    else {
+      switch (lessonSection) {
+        case LessonSection.FullCharacterTree:
+          lessonOrSectionName = "Character Tree";
+          break;
+        case LessonSection.Characters:
+          lessonOrSectionName = "Character List";
+          break;
+        case LessonSection.Assembling:
+          lessonOrSectionName = "Character Break Out";
+          break;
+        case LessonSection.Conversation:
+          lessonOrSectionName = "Conversation";
+          break;
+        case LessonSection.Quiz:
+          lessonOrSectionName = "Quiz";
+          break;
+      }
+    }
+
     return SizedBox(
       width: 110,
-      height: 120,
+      height: 130,
       child: FlatButton(
         child: Column(
             children: [
@@ -61,8 +86,8 @@ class OpenHelper {
                 height: 100.0,
               ),
               Text(
-                lesson.titleTranslation, //"Hello",
-                style: TextStyle(fontSize: 11.0, fontFamily: "Raleway"),
+                lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
               ),
             ]
         ),

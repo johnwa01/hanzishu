@@ -5,6 +5,7 @@ import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 
 class GeneralManager {
+  /*
   // TODO: change parameter to lessonId only
   static bool hasZiCompleted(int ziId, HittestState hittestState, int lessonId/*String lessonName*/) {
     if (hittestState == HittestState.hanzishuLesson || hittestState == HittestState.ziAndSidingShuLesson || hittestState == HittestState.quizShuLesson) {
@@ -79,6 +80,7 @@ class GeneralManager {
       LessonManager.SetSectionCompleted(lessonId, lessonSection);
     }
   }
+  */
 
   static void initFromStorage() {
     // read from storage about status/setting

@@ -26,6 +26,10 @@ class TreePage extends StatefulWidget {
 class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin {
   AnimationController _controller;
   TreePainter treePainter;
+  Map<int, bool> allLearnedZis = Map();
+  Map<int, bool> newInLesson = Map();
+  int previousZiId = 0;
+  bool showedNoOverlay = false;
 
   void _startAnimation() {
   _controller.stop();
@@ -89,6 +93,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       widget.sidePositionsCache,
       widget.realGroupMembersCache,
       widget.centerPositionAndSizeCache, //sidePositions: widget.sidePositions
+      allLearnedZis,
+      newInLesson,
     );
 
     var posi = thePositionManager.getCenterZiPosi();
@@ -97,7 +103,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       (
       appBar: AppBar
         (
-        title: Text("Tree Page"),
+        title: Text("Character Tree"),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
@@ -246,17 +252,25 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         TextToSpeech.speak(zi.char);
       },
       onLongPress: () {
-        //if (overlayEntry != null) {
-        //  overlayEntry.remove();
-        //  overlayEntry = null;
-        //}
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
 
         var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 
-        var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        if (previousZiId != currentZiId || showedNoOverlay) {
+          var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+          showedNoOverlay = false;
+        }
+        else if (!showedNoOverlay) {
+          showedNoOverlay = true;
+        }
+
+        previousZiId = currentZiId;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -308,6 +322,17 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       buttons.add(drawBihuaPosiCenter);
     }
 
+    CreateNavigationHitttestButtons(centerZiId, false, buttons);
+
     return buttons;
+  }
+
+  CreateNavigationHitttestButtons(int centerZiId, bool isFromReviePage, List<Widget> buttons) {
+    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviePage);
+
+    for (var id in naviMap.keys) {
+      var posi = getPositionedButton(naviMap[id], id, id);
+      buttons.add(posi);
+    }
   }
 }

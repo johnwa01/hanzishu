@@ -143,6 +143,12 @@ class QuizManager {
     return index;
   }
 
+  int getTotalQuestions(int lessonId) {
+    var lesson = theLessonList[lessonId];
+
+    return lesson.convCharsIds.length + lesson.charsIds.length + lesson.comps.length + lesson.phraseIds.length + lesson.sentenceList.length;
+  }
+
   // zis, phrases or conversations
   int getIdByIndexInLesson(QuizType type, LessonAndIndex lessonIdAndIndex) {
     var id = 0;

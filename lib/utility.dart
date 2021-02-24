@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
 
+/*
 enum HittestState {
   hanzishuLesson,
   quizShu,
@@ -34,6 +35,7 @@ enum HittestState {
   meTerminology,
   lessonNewQuiz
 }
+*/
 
 enum CornerRadius {
   none,
@@ -266,6 +268,8 @@ class Utility {
     //return int(str);
   }
 
+  //TODO: missing an actual check below in case we need this function.
+  // and should move to basepainter.dart
   static void checkAndSetSkipLevelZiCompletion(int fromId, int toId)
   {
     if (fromId == toId) {
@@ -287,7 +291,7 @@ class Utility {
     var navigationZiId = fromId;
     Zi navigationZi;
     do {
-        GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLessonId);
+        //TODO: do the actual check. GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLessonId);
         navigationZi = theZiManager.getZi(navigationZiId);
         navigationZiId = navigationZi.parentId;
         if (navigationZiId == toId) {
@@ -330,6 +334,14 @@ class Utility {
   static bool isPseudoNonCharRootZiIdPlusStar(int rootZiId) {
     return isPseudoNonCharRootZiId(rootZiId) || (rootZiId == theConst.starCharId);
   }
+
+  static bool isStarChar(int rootZiId) {
+    return (rootZiId == theConst.starCharId);
+  }
+
+  static bool isAtChar(int rootZiId) {
+    return (rootZiId == theConst.atCharId);
+  }
 }
 
 
@@ -371,6 +383,7 @@ class PrimitiveWrapper {
   }
 }
 
+//TODO: merge to the above one
 class YPositionWrapper {
   double yPosi;
 
