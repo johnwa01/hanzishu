@@ -133,7 +133,7 @@ class LessonManager {
       for (var k in theLessonList[j].sentenceList) {
         for (var eachChar in theSentenceList[k].conv.runes) {
           var char = String.fromCharCode(eachChar);
-          if (!specialChar(char) && !charExists(j, char))
+          if (!Utility.specialChar(char) && !charExists(j, char))
           {
             theLessonList[j].convChars += char; // String.fromCharCode(eachChar); //eachChar.toString();
           }
@@ -141,7 +141,7 @@ class LessonManager {
 
         for (var eachChar in theSentenceList[k].chars.str.runes) {
           var char = String.fromCharCode(eachChar);
-          if (!specialChar(char) && !charExists(j, char))
+          if (!Utility.specialChar(char) && !charExists(j, char))
           {
             theLessonList[j].chars += char; //String.fromCharCode(eachChar);   //eachChar.toString();
           }
@@ -293,10 +293,6 @@ class LessonManager {
 
   static bool compExistsInLesson(int lessonId, int comp) {
     return theLessonList[lessonId].comps.contains(comp);
-  }
-
-  static bool specialChar(String char) {
-    return char == '！' || char == '?' || char == '。' || char == '，';
   }
 
   static void populateConvCharsIds() {

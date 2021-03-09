@@ -414,6 +414,7 @@ class BasePainter extends CustomPainter{
     displayTextForMeaning(id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
     DisplayIcon(iconSpeechStrokes, posiAndSizeSpeech.transX, posiAndSizeSpeech.transY, posiAndSizeSpeech.width, posiAndSizeSpeech.height, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+
     if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
       DisplayIcon(
           iconPenStrokes,

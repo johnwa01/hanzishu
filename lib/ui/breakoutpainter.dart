@@ -153,6 +153,7 @@ class BreakoutPainter extends BasePainter {
     }
   }
 
+  // this is not working yet and not needing for now
   displayLessonCharacterAssemingbling(int lessonId) {
     displayCharacterAssembling(lessonId);
   }

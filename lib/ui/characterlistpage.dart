@@ -12,6 +12,16 @@ class CharacterListPage extends StatefulWidget {
 }
 
 class _CharacterListPageState extends State<CharacterListPage> {
+  var lesson;
+
+  @override
+  void initState() {
+    super.initState();
+
+    lesson = theLessonList[theCurrentLessonId];
+    lesson.populateNewItemList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold

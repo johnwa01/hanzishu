@@ -19,7 +19,7 @@ class _StudyTimePageState extends State<StudyTimePage> {
       (
       appBar: AppBar
         (
-        title: Text("StudyTime Page"),
+        title: Text("Study Time"),
       ),
       body: Center
         (

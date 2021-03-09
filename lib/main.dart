@@ -5,6 +5,7 @@ import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
+import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/ui/theme.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
@@ -112,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     ReviewSelectionPage(),
+    DictionaryPage(),
     MePage()
   ];
 
@@ -143,6 +145,10 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             title: Text('Review'),
+            icon: Icon(Icons.location_on),
+          ),
+          BottomNavigationBarItem(
+            title: Text('Dictionary'),
             icon: Icon(Icons.location_on),
           ),
           BottomNavigationBarItem(

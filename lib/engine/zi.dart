@@ -62,6 +62,10 @@ class Zi {
   }
 
   String getPinyinAndMeaning() {
+    return formatPinyinAndMeaning(pinyin, meaning);
+  }
+
+  static String formatPinyinAndMeaning(String pinyin, String meaning) {
     String str = '[';
     str += pinyin;
     str += '] ';

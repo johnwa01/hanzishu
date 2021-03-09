@@ -431,7 +431,7 @@ class _QuizPageState extends State<QuizPage> {
     }
     else {
       title = "Good effort!";
-      content = "You have achieved a score of " + corStr + ". You can come back at any time to reach 70.";
+      content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     }
 
 

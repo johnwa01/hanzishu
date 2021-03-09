@@ -16,4 +16,13 @@ class Phrase {
       this.meaning = meaning;
       this.hint = hint;
   }
+
+  String getPinyinAndMeaning() {
+    String str = '[';
+    str += pinyin;
+    str += '] ';
+    str += meaning;
+
+    return str;
+  }
 }

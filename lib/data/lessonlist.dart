@@ -6,7 +6,7 @@ var theLessonList = [
   Lesson(1, "你好", "Hello", <int>[], "", [], "", [], [], "Chinese Characters", [], []),
   Lesson(2, "一", "One", [], "", [], "", [], [], "Strokes", [], []),
   Lesson(3, "再见", "Bye", [],  "", [], "",  [], [], "Chinese Characters", [], [0,20]),
-  Lesson(4, "多大", "How old", [],  "", [], "",  [], [], "Basic Characters", [], [3]),
+  Lesson(4, "多大", "How old", [],  "", [], "",  [], [], "Basic Characters", [], [3, 115]),
   Lesson(5, "明白", "Understand", [],  "", [], "",  [], [], "Pianpang", [], [4]),
   Lesson(6, "爱", "Love", [],  "", [], "",  [], [], "", [], [82,83]),
   Lesson(7, "完了", "Finished", [],  "", [], "",  [], [], "", [], []),

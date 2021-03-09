@@ -4,6 +4,7 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'package:hanzishu/engine/lessonmanager.dart';
 
 /*
 enum HittestState {
@@ -341,6 +342,27 @@ class Utility {
 
   static bool isAtChar(int rootZiId) {
     return (rootZiId == theConst.atCharId);
+  }
+
+  static bool specialChar(String char) {
+    return char == '！' || char == '？' || char == '。' || char == '，' ||
+        char == '!' || char == '?' || char == '.' || char == ',';
+  }
+
+  static int findSeparationCount(String convWithSeparation, int startingPosi) {
+    int count = 1;
+
+    for (int i = startingPosi + 1; i < convWithSeparation.length; i++) {
+      var oneChar = convWithSeparation[i];
+      if ((oneChar != "|") && (oneChar != "｜") && !specialChar(oneChar)) {
+        count++;
+      }
+      else {
+        break;
+      }
+    }
+
+    return count;
   }
 }
 

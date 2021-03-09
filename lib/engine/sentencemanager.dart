@@ -85,7 +85,7 @@ class SentenceManager {
   }
 
   void populateSubcharsAndComponentsC(String /*was Character*/ char, MyString subchars, List<int> comps) {
-    if (!LessonManager.specialChar(char))
+    if (!Utility.specialChar(char))
     {
       var zi = theZiManager.getZiByChar(char);
       if (zi != null)

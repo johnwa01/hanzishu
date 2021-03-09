@@ -19,7 +19,7 @@ class _TapCountPageState extends State<TapCountPage> {
       (
       appBar: AppBar
         (
-        title: Text("TapCount Page"),
+        title: Text("Tap Count"),
       ),
       body: Center
         (
