@@ -12,7 +12,7 @@ class _LessonsPageState extends State<LessonsPage> {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
   //}
   // starting lesson number in each row
-  final List<int> lessons = <int>[1, 2, 3, 5, 6, 8, 9, 11, 13, 16, 18, 19, 21, 22, 24, 26, 29, 31, 32, 34, 36, 37, 39, 41, 44, 46, 47, 49];
+  final List<int> lessons = <int>[1, 2, 3, 5, 6, 8, 9, 11, 13, 16, 18, 19, 21, 22, 24, 26, 29, 31, 32, 34, 36, 37, 39, 41, 44, 46, 47, 49, 50, 53, 56, 59];
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +31,19 @@ class _LessonsPageState extends State<LessonsPage> {
 
             // assume last row has two items
             if (index == lessons.length - 1) {
-              lessonCount = 2;
+              lessonCount = 3;  // have to specify the number of last row
             }
             else if (index < lessons.length - 1) {
               lessonCount = lessons[index + 1] - lessons[index];
             }
 
             int level = 1;
-            if (index == 4 || index == 11 || index == 19 || index == 27) {
+            if (index == 4 || index == 11 || index == 19 || index == 27 || index == 28) {
               if (index == 4) {level = 1;}
               else if (index == 11) { level = 2;}
               else if (index == 19) { level = 3;}
               else if (index == 27) { level = 4;}
+              else if (index == 28) { level = 5;}
 
               return getButtonRowWithLevelEnd(context, lessons[index], lessonCount, level);
             }

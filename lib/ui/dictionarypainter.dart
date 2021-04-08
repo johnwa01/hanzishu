@@ -44,14 +44,14 @@ class DictionaryPainter extends BasePainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("First Characters Table (首字表)", 10.0, 5.0, 20.0, Colors.blueGrey);
-      displayTextWithValue("Help", 350, 5.0, 20.0, Colors.lightBlue);
+      displayTextWithValue("首字表", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue(""/*Help*/, 350, 5.0, 20.0, Colors.lightBlue);
 
       DisplayFirstZis();
     }
     else if (this.dicStage == DictionaryStage.searchingzis) {
       DisplayNavigationPath(DictionaryStage.searchingzis);
-      displayTextWithValue("Character Searching Table (检字表)", 10.0, 40.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("检字表", 10.0, 40.0, 20.0, Colors.blueGrey); //Character Searching Table
       DisplaySearchingZis(firstZiIndex);
     }
     else if (this.dicStage == DictionaryStage.detailedzi) {
@@ -84,7 +84,7 @@ class DictionaryPainter extends BasePainter {
     }
     else if (stage == DictionaryStage.help) {
       var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
-      displayTextWithValue("Help", 70.0, 5.0, 25.0, Colors.blueAccent);
+      displayTextWithValue(""/*Help*/, 70.0, 5.0, 25.0, Colors.blueAccent);
     }
 
     if (stage == DictionaryStage.detailedzi) {

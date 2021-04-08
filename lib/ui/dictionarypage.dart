@@ -86,7 +86,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Dictionary"),
+        title: Text("字典"),
       ),
       body: Container(
         //height: 200.0,

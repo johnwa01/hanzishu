@@ -14,7 +14,7 @@ var theStatisticsManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?
-var theNumberOfLessonsInLevels = [7, 13, 15, 15];
+var theNumberOfLessonsInLevels = [7, 13, 15, 14, 1];
 //var theHittestState = HittestState.hanzishuFullZiMode;
 
 var theRangeUptoLessonNumberForCurrentLevel = 1;

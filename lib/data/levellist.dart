@@ -6,5 +6,6 @@ var theLevelList = [
   Level(1, theNumberOfLessonsInLevels[0], false),
   Level(2, theNumberOfLessonsInLevels[1], false),
   Level(3, theNumberOfLessonsInLevels[2], false),
-  Level(4, theNumberOfLessonsInLevels[3], false)
+  Level(4, theNumberOfLessonsInLevels[3], false),
+  Level(4, theNumberOfLessonsInLevels[4], false)
 ];
