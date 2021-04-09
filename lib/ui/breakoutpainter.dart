@@ -41,7 +41,6 @@ class BreakoutPainter extends BasePainter {
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
     //this.width = size.width;
-
     isBreakoutPositionsOnly = false;
     displayCharacterDecomposing(lessonId);
     //displayLessonCharacterAssemingbling(lessonId);  //TODO: not working yet

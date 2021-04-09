@@ -21,15 +21,25 @@ class _BreakoutPageState extends State<BreakoutPage> {
   //int centerZiId;
   double screenWidth;
   OverlayEntry overlayEntry;
+  ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateBreakoutMap(1);
-
+    _scrollController = ScrollController()
+      ..addListener(() {
+        //print("offset = ${_scrollController.offset}");
+    });
     //setState(() {
       //centerZiId = theCurrentCenterZiId;
     //});
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // it is a good practice to dispose the controller
+    super.dispose();
   }
 
   /*
@@ -47,6 +57,8 @@ class _BreakoutPageState extends State<BreakoutPage> {
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
+    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+
     return Scaffold
       (
       appBar: AppBar
@@ -54,9 +66,10 @@ class _BreakoutPageState extends State<BreakoutPage> {
         title: Text("Character Break Out"),
       ),
       body: Container(
-        //height: 200.0,
-        //width: 200.0,
-        child: WillPopScope(   // just for removing overlay on detecting back arrow
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          scrollDirection: Axis.vertical,
+          child: WillPopScope(   // just for removing overlay on detecting back arrow
           child: CustomPaint(
             foregroundPainter: BreakoutPainter(
                 lineColor: Colors.amber,
@@ -65,14 +78,19 @@ class _BreakoutPageState extends State<BreakoutPage> {
                 //completePercent: percentage,
                 screenWidth: screenWidth
             ),
+            size: new Size(screenWidth, painterHeight),
+
             child: Center(
               child: Stack(
                   children: createHittestButtons(context)
               ),
             ),
+
           ),
             onWillPop: _onWillPop
+          ),
         ),
+
       ),
     );
   }
@@ -123,11 +141,12 @@ class _BreakoutPageState extends State<BreakoutPage> {
         //});
       },
       onLongPress: () {
+        var scrollOffset = _scrollController.offset;
         var zi = theZiManager.getZi(id);
         TextToSpeech.speak(zi.char);
 
         var meaning = theZiManager.getPinyinAndMeaning(id);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -151,6 +170,9 @@ class _BreakoutPageState extends State<BreakoutPage> {
       var painter = BreakoutPainter();
       breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
     }
+
+    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>
       buttons.add(getPositionedButton(uniqueNumber, position)));
