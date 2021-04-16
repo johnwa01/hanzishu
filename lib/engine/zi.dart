@@ -65,6 +65,10 @@ class Zi {
     return formatPinyinAndMeaning(pinyin, meaning);
   }
 
+  bool isBasicZi() {
+    return type.contains('b') || type.contains('j');
+  }
+
   static String formatPinyinAndMeaning(String pinyin, String meaning) {
     String str = '[';
     str += pinyin;

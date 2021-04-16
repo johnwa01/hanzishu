@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'dart:async';
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
@@ -30,11 +31,20 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   Map<int, bool> newInLesson = Map();
   int previousZiId = 0;
   bool showedNoOverlay = false;
+  int compoundZiComponentNum = 0;
+  List<int> compoundZiAllComponents = [];
+  var compoundZiAnimationTimer;
 
   void _startAnimation() {
-  _controller.stop();
-  _controller.reset();
-  _controller.forward(from: 0.0);
+    _controller.stop();
+    _controller.reset();
+    _controller.forward(from: 0.0).whenComplete(() {
+      setState(() {
+        _controller.stop();
+        _controller.reset();     // when complete, clean the animation drawing.
+        shouldDrawCenter = true; // trigger redraw of the screen with regular center zi.
+      });
+    });
   }
 
   void _clearAnimation() {
@@ -63,6 +73,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     setState(() {
       centerZiId = theCurrentCenterZiId;
       shouldDrawCenter = true;
+      compoundZiComponentNum = 0;
     });
   }
 
@@ -70,6 +81,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   void dispose() {
     _controller.dispose();
     super.dispose();
+
+    resetCompoundZiAnimation();
   }
 
   /*
@@ -81,8 +94,46 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   }
   */
 
+  void resetCompoundZiAnimation() {
+    // re-init
+    compoundZiComponentNum = 0;
+    if (compoundZiAllComponents.length > 0) {
+      compoundZiAllComponents.clear(); //removeRange(0, compList.length - 1);
+    }
+
+    if (compoundZiAnimationTimer != null) {
+      compoundZiAnimationTimer.cancel();
+      compoundZiAnimationTimer = null;
+    }
+  }
+
+  List<int> getAllZiComponents(int id) {
+    if (compoundZiAllComponents.length == 0) {
+       theZiManager.getAllZiComponents(id, compoundZiAllComponents);
+    }
+
+    return compoundZiAllComponents;
+  }
+
   @override
   Widget build(BuildContext context) {
+    int compoundZiCurrentComponentId = 0;
+    int compoundZiTotalComponentNum = 0;
+
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      var compList = getAllZiComponents(centerZiId);
+      compoundZiTotalComponentNum = compList.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        compoundZiCurrentComponentId = centerZiId;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
+      }
+    }
+
     screenWidth = Utility.getScreenWidth(context);
     treePainter = new TreePainter(
       Colors.amber, //lineColor: Colors.amber,
@@ -95,9 +146,14 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       widget.centerPositionAndSizeCache, //sidePositions: widget.sidePositions
       allLearnedZis,
       newInLesson,
+        compoundZiCurrentComponentId
     );
 
     var posi = thePositionManager.getCenterZiPosi();
+
+    if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
+      compoundZiAnimation();
+    }
 
     return Scaffold
       (
@@ -112,14 +168,14 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           child: new Stack(
             children: <Widget>[
               new Positioned(
-          child: CustomPaint(
-            foregroundPainter: treePainter,
-            child: Center(
-              child: Stack(
-                children: createHittestButtons(context)
-              ),
-            ),
-          ),
+                child: CustomPaint(
+                  foregroundPainter: treePainter,
+                  child: Center(
+                    child: Stack(
+                      children: createHittestButtons(context)
+                    ),
+                  ),
+                ),
               ),
               new Positioned(
                 top: posi.transY, //240,
@@ -128,7 +184,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
                 width: posi.width, //80,
                 //child: SizedBox(
                   child: new CustomPaint(
-                    /*painter*/foregroundPainter: new AnimatedPathPainter(_controller),
+                    foregroundPainter: new AnimatedPathPainter(_controller),
                   ),
               ),
             ],
@@ -177,6 +233,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           overlayEntry = null;
         }
 
+        //resetCompoundZiAnimation();
+
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);
       },
@@ -202,11 +260,18 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           overlayEntry = null;
         }
 
+        resetCompoundZiAnimation();
+
         setState(() {
           shouldDrawCenter = false;
         });
 
-        _startAnimation();
+        if (theZiManager.isBasicZi(ziId)) {
+          _startAnimation();
+        }
+        else {
+          compoundZiAnimation();
+        }
 
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);
@@ -225,6 +290,17 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return posiCenter;
   }
 
+
+  //NOTE: setState within the Timer so that it'll trigger this function to be called repeatedly.
+  void  compoundZiAnimation() {
+    const oneSec = const Duration(seconds: 1);
+    compoundZiAnimationTimer = new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
+      setState(() {
+        compoundZiComponentNum += 1;
+      });
+    });
+  }
+
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
     var butt = FlatButton(
       color: Colors.white,
@@ -236,6 +312,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         }
 
         _clearAnimation();
+        resetCompoundZiAnimation();
 
         setState(() {
           centerZiId = newCenterZiId;

@@ -36,6 +36,11 @@ class ZiManager {
     return theZiList[id];
   }
 
+  bool isBasicZi(int id) {
+    var zi = getZi(id);
+    return zi.isBasicZi();
+  }
+
   int getZiListLength() {
     return theZiList.length;
   }
@@ -276,7 +281,7 @@ class ZiManager {
     return zi.parentId;
   }
 
-  List<int>getZiComponents(int id) {
+  List<int> getZiComponents(int id) {
     List<int> components = [];
     var zi = theZiManager.getZi(id);
 
@@ -312,6 +317,20 @@ class ZiManager {
     }
 
     return components;
+  }
+
+  void getAllZiComponents(int id, List<int> allComponents) {
+    List<int> ziComponents = getZiComponents(id);
+    for (var i = 0; i < ziComponents.length; i++) {
+      var compId = ziComponents[i];
+      var zi = getZi(compId);
+      if (zi.isBasicZi()) {
+        allComponents.add(compId);
+      }
+      else {
+        getAllZiComponents(compId, allComponents);
+      }
+    }
   }
 
   static int getCharById(int ziId)  {
@@ -546,7 +565,7 @@ class ZiManager {
           }
         }
       }
-      else {// new com ma separated zi ids for components and strokes
+      else {// new comma separated zi ids for components and strokes
         if (ziCombined.count > 2 ||     // cann't have non-root char in this case. has to display the whole char with all the components
           ziCombined.count == 1) {     // invalide case
           return 0;

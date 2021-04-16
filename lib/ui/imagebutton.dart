@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/ui/treepage.dart';
-import 'package:hanzishu/ui/characterlistpage.dart';
+//import 'package:hanzishu/ui/characterlistpage.dart';
+import 'package:hanzishu/ui/listofzipage.dart';
+import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
@@ -31,7 +33,7 @@ class OpenHelper {
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage(lessonId: lessonId)));
         break;
       case LessonSection.Characters:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => CharacterListPage(lessonId: lessonId)));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListOfZiPage(lessonId: lessonId)));
         break;
       case LessonSection.Assembling:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => BreakoutPage(lessonId: lessonId)));

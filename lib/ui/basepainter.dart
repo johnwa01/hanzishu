@@ -41,6 +41,7 @@ class BasePainter extends CustomPainter{
   PositionAndSize centerPositionAndSizeCache;
   Map<int, bool> allLearnedZis;
   Map<int, bool> newInLesson;
+  int compoundZiCurrentComponentId;
 
   bool isReviewCenterPseudoZi = false;
   bool isReviewCenterPseudoNonCharZi = false;
@@ -294,7 +295,7 @@ class BasePainter extends CustomPainter{
     //TODO: thePopupTipIndex += 1;
     if (shouldDrawChar) {
       var zi = theZiManager.getZi(id);
-      if (zi.isStrokeOrNonChar() /*&& !isReviewCenterPseudoZi &&
+      if (zi.isStrokeOrNonChar() && zi.char != '*' /*&& !isReviewCenterPseudoZi &&
           !isReviewCenterPseudoNonCharZi*/) {
         buildBaseZi(
             id,
@@ -329,6 +330,12 @@ class BasePainter extends CustomPainter{
     }
 
     // TODO: if createFrame, add to data structure for hittest buttons.
+  }
+
+  // currently used for compound zi animation
+  void drawCenterZi(int ziId) {
+    var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
+    drawRootZi(ziId, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
   }
 
   /*
@@ -415,7 +422,7 @@ class BasePainter extends CustomPainter{
 
     DisplayIcon(iconSpeechStrokes, posiAndSizeSpeech.transX, posiAndSizeSpeech.transY, posiAndSizeSpeech.width, posiAndSizeSpeech.height, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
 
-    if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
+    //if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
       DisplayIcon(
           iconPenStrokes,
           posiAndSizeBihua.transX,
@@ -424,7 +431,7 @@ class BasePainter extends CustomPainter{
           posiAndSizeBihua.height,
           Colors.amber /*MaterialColor ofColor*/,
           2.0 /*ziLineWidth*/);
-    }
+    //}
 
     if (!isFromReviewPage && isCharNewInLesson(id)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();

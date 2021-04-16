@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'dart:async';
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
@@ -37,10 +38,20 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   AnimationController _controller;
   Map<int, bool> allLearnedZis = Map();
 
+  int compoundZiComponentNum = 0;
+  List<int> compoundZiAllComponents = [];
+  var compoundZiAnimationTimer;
+
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
-    _controller.forward(from: 0.0);
+    _controller.forward(from: 0.0).whenComplete(() {
+      setState(() {
+        _controller.stop();
+        _controller.reset();     // when complete, clean the animation drawing.
+        shouldDrawCenter = true; // let it redraw the screen with regular center zi.
+      });
+    });
   }
 
   void _clearAnimation() {
@@ -62,6 +73,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     setState(() {
       centerZiId = theCurrentCenterZiId;
       shouldDrawCenter = true;
+      compoundZiComponentNum = 0;
     });
   }
 
@@ -69,6 +81,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   void dispose() {
     _controller.dispose();
     super.dispose();
+
+    resetCompoundZiAnimation();
   }
 
   /*
@@ -80,11 +94,52 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   }
   */
 
+  void resetCompoundZiAnimation() {
+    // re-init
+    compoundZiComponentNum = 0;
+    if (compoundZiAllComponents.length > 0) {
+      compoundZiAllComponents.clear(); //removeRange(0, compList.length - 1);
+    }
+
+    if (compoundZiAnimationTimer != null) {
+      compoundZiAnimationTimer.cancel();
+      compoundZiAnimationTimer = null;
+    }
+  }
+
+  List<int> getAllZiComponents(int id) {
+    if (compoundZiAllComponents.length == 0) {
+      theZiManager.getAllZiComponents(id, compoundZiAllComponents);
+    }
+
+    return compoundZiAllComponents;
+  }
+
   @override
   Widget build(BuildContext context) {
-    screenWidth = Utility.getScreenWidth(context);
+    int compoundZiCurrentComponentId = 0;
+    int compoundZiTotalComponentNum = 0;
 
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      var compList = getAllZiComponents(centerZiId);
+      compoundZiTotalComponentNum = compList.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        compoundZiCurrentComponentId = centerZiId;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
+      }
+    }
+
+    screenWidth = Utility.getScreenWidth(context);
     var posi = thePositionManager.getCenterZiPosi();
+
+    if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
+      compoundZiAnimation();
+    }
 
     return Scaffold
       (
@@ -112,6 +167,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
                       widget.realGroupMembersCache,
                       widget.centerPositionAndSizeCache,
                       allLearnedZis,
+                        compoundZiCurrentComponentId,
                     ),
                     child: Center(
                       child: Stack(
@@ -146,6 +202,16 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     return Future.value(true);
   }
 
+  //NOTE: setState within the Timer so that it'll trigger this function to be called repeatedly.
+  void  compoundZiAnimation() {
+    const oneSec = const Duration(seconds: 1);
+    compoundZiAnimationTimer = new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
+      setState(() {
+        compoundZiComponentNum += 1;
+      });
+    });
+  }
+
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
     if (overlayEntry != null) {
       overlayEntry.remove();
@@ -178,6 +244,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         }
 
         _clearAnimation();
+        resetCompoundZiAnimation();
 
         setState(() {
           centerZiId = newCenterZiId;
@@ -243,11 +310,18 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
           overlayEntry = null;
         }
 
+        resetCompoundZiAnimation();
+
         setState(() {
           shouldDrawCenter = false;
         });
 
-        _startAnimation();
+        if (theZiManager.isBasicZi(ziId)) {
+          _startAnimation();
+        }
+        else {
+          compoundZiAnimation();
+        }
 
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);

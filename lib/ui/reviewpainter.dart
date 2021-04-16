@@ -13,7 +13,7 @@ class ReviewPainter extends BasePainter {
   double screenWidth;
   Animation<double> _animation;
 
-  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis) {
+  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -25,6 +25,7 @@ class ReviewPainter extends BasePainter {
     this.realGroupMembersCache = realGroupMembersCache;
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
     this.allLearnedZis = allLearnedZis;
+    this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
   }
 
   @override
@@ -42,6 +43,11 @@ class ReviewPainter extends BasePainter {
     //}
     //?theCurrentCenterZiId = centerId;
     drawZiGroup(centerId, reviewStartLessonId, reviewEndLessonId);
+
+    if (compoundZiCurrentComponentId > 0) {
+      // for compound zi animation action only
+      drawCenterZi(compoundZiCurrentComponentId);
+    }
   }
 
   double getFrameWidth() {

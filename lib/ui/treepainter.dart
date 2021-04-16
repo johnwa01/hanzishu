@@ -13,7 +13,7 @@ class TreePainter extends BasePainter {
   double screenWidth;
   Animation<double> _animation;
 
-  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson) {
+  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson, int compoundZiCurrentComponentId) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId;
@@ -24,6 +24,7 @@ class TreePainter extends BasePainter {
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
     this.allLearnedZis = allLearnedZis;
     this.newInLesson = newInLesson;
+    this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
     //this._progress = _progress;
   }
 
@@ -38,11 +39,11 @@ class TreePainter extends BasePainter {
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
     drawZiGroup(centerId, theCurrentLessonId, theCurrentLessonId);
-  }
 
-  void drawCenterZi() {
-    var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-    drawRootZi(3, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, false);
+    if (compoundZiCurrentComponentId > 0) {
+      // for compound zi animation action only
+      drawCenterZi(compoundZiCurrentComponentId);
+    }
   }
 
   double getFrameWidth() {

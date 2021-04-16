@@ -10,7 +10,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
-import 'package:hanzishu/ui/animatedpathpainter.dart';
+//import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';

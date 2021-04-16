@@ -28,7 +28,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
       (
       appBar: AppBar
         (
-        title: Text("Character List"),
+        title: Text("List of Zi"),
       ),
       body: Center
         (
@@ -44,7 +44,7 @@ class _CharacterListPageState extends State<CharacterListPage> {
 
     return ListView.separated(
       itemCount: lesson.newItemList.length,
-      separatorBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+      separatorBuilder: (BuildContext context, int index) {
         if (index == lesson.newItemTypeStartPosition[0]) {
           return Text("Basic Characters");
         }
@@ -59,8 +59,9 @@ class _CharacterListPageState extends State<CharacterListPage> {
         }
         return Divider();
       },
-      itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+      itemBuilder: (BuildContext context, int index) {
         return ListTile(
+          //leading: FlutterLogo(size: 72.0),
                  //title: Text('item $index'),
                  //title: Text(theLessonList[index].chars),
           title: Text(lesson.getItemString(index)),
