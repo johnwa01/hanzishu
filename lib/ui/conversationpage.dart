@@ -37,7 +37,7 @@ class _ConversationPageState extends State<ConversationPage> {
     super.initState();
 
     lesson = theLessonList[theCurrentLessonId];
-    lesson.populateNewItemList();
+    //lesson.populateNewItemList();
   }
 
 

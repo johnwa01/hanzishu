@@ -3,6 +3,8 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/zilist.dart';
 
+//replaced by listofzipage.dart. Keep this as a ListView example.
+/*
 class CharacterListPage extends StatefulWidget {
   final int lessonId;
   CharacterListPage({this.lessonId});
@@ -70,3 +72,4 @@ class _CharacterListPageState extends State<CharacterListPage> {
     );
   }
 }
+*/

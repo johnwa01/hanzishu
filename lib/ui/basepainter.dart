@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/data/phraselist.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'package:hanzishu/engine/lesson.dart';
@@ -280,7 +281,10 @@ class BasePainter extends CustomPainter{
     TextSpan span = TextSpan(style: TextStyle(color: color/*Colors.blue[800]*/, fontSize: charFontSize/*, fontFamily: 'Roboto'*/), text: char);
     //TextPainter tp = TextPainter(span, TextDirection.ltr);
     var tp = TextPainter(text: span, textDirection: TextDirection.ltr);
-    tp.layout();
+    tp.layout(
+      minWidth: 0,
+      maxWidth: this.width - transX,
+    );
     tp.paint(canvas, Offset(transX, transY));
   }
 
@@ -445,7 +449,8 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     }
 
-    DisplayHint(id);
+    var posi = thePositionManager.getHintPosi();
+    DisplayHint(id, false, posi);
   }
 
   void drawZiGroup(int id, int internalStartLessonId, int internalEndLessonId) {
@@ -639,9 +644,14 @@ class BasePainter extends CustomPainter{
     return centerPositionAndSizeCache;
   }
 
-  DisplayHint(int id) {
-    var zi = theZiManager.getZi(id);
-    var posi = thePositionManager.getHintPosi();
+  DisplayHint(int id, bool isPhrase, PositionAndSize posi) {
+    var ziOrPhraseHint;
+    if (isPhrase) {
+      ziOrPhraseHint = thePhraseList[id].hint;
+    }
+    else {
+      ziOrPhraseHint = theZiManager.getZi(id).origin;
+    }
 
     displayTextWithValue("Hint: ", posi.transX, posi.transY,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
@@ -650,7 +660,7 @@ class BasePainter extends CustomPainter{
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
     xPosi.value += xYLength(45.0);
 
-    DisplayHintHelper(zi.origin, xPosi, posi);
+    DisplayHintHelper(ziOrPhraseHint, xPosi, posi);
   }
 
   DisplayHintHelper(String hint, PrimitiveWrapper xPosi, PositionAndSize posi) {

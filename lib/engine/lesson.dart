@@ -289,6 +289,8 @@ class Lesson {
     }
   }
 
+  // this section was used by characterlistpage.dart before, but that file is no longer active.
+  /*
   void populateOneGroupOfChars(List<int> charIds, String type) {
     for (int charId in charIds) {
       var zi = theZiManager.getZi(charId);
@@ -387,6 +389,7 @@ class Lesson {
 
     return str;
   }
+*/
 
   String getSentence(int index) {
     return theSentenceList[sentenceList[index]].conv;

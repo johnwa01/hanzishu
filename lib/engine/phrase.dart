@@ -1,3 +1,6 @@
+import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/variables.dart';
+
 class Phrase {
   int id;
   String chars;
@@ -15,6 +18,21 @@ class Phrase {
       this.pinyin = pinyin;
       this.meaning = meaning;
       this.hint = hint;
+  }
+
+  String getPinyin() {
+    if (pinyin.length != 0) {
+      return pinyin;
+    }
+    else {
+      String pinyin = "";
+      chars.runes.forEach((int rune) {
+        var char = new String.fromCharCode(rune);
+        var zi = theZiManager.getZiByChar(char);
+        pinyin += zi.pinyin;
+      });
+      return pinyin;
+    }
   }
 
   String getPinyinAndMeaning() {

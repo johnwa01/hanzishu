@@ -69,7 +69,7 @@ class BreakoutPainter extends BasePainter {
       if (!isBreakoutPositionsOnly) {
         drawLine(xYLength(10.0), yPositionWrapper.yPosi - xYLength(20.0),
             xYLength(600.0), yPositionWrapper.yPosi - xYLength(20.0),
-            Colors.amber, 2);
+            Colors.amber, 1);
       }
       var ziId = lesson.convCharsIds[i];
       var zi = theZiManager.getZi(ziId);
