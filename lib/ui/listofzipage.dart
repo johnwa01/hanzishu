@@ -22,6 +22,7 @@ class ListOfZiPage extends StatefulWidget {
 class _ListOfZiPageState extends State<ListOfZiPage> {
   double screenWidth;
   ScrollController _scrollController;
+  PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
 
   @override
   void initState() {
@@ -44,7 +45,6 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
-    var painterHeight = MediaQuery.of(context).size.height + 2000.0;  // add some buffer at the end
     var listOfZiPainter = ListOfZiPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
@@ -54,7 +54,10 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     );
 
     List<SpeechIconInfo> listOfSpeechIconInfo = List<SpeechIconInfo>();
-    listOfZiPainter.displayAllZi(widget.lessonId, true, listOfSpeechIconInfo);
+    // get iconinfo only
+    listOfZiPainter.displayAllZi(widget.lessonId, true, listOfSpeechIconInfo, contentLength);
+
+    //contentLength = MediaQuery.of(context).size.height; this is inaccurate
 
     return Scaffold
       (
@@ -68,7 +71,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
           scrollDirection: Axis.vertical,
             child: CustomPaint(
                 foregroundPainter: listOfZiPainter,
-                size: new Size(screenWidth, painterHeight),
+                size: new Size(screenWidth, contentLength.value),
 
                 child: Center(
                   child: Stack(
@@ -114,8 +117,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
   List<Widget> createHittestButtons(BuildContext context, List<SpeechIconInfo> listOfSpeechIconInfo) {
     List<Widget> buttons = [];
 
-    var painterHeight = MediaQuery.of(context).size.height + 2000.0;  // add some buffer at the end
-    buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite size error
+    buttons.add (Container(height: contentLength.value, width: screenWidth));  // workaround to avoid infinite size error
 
     for (var i = 0; i < listOfSpeechIconInfo.length; i++) {
         buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));

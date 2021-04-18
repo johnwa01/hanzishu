@@ -39,6 +39,7 @@ class BreakoutPainter extends BasePainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    width = screenWidth;
     this.canvas = canvas;
     //this.width = size.width;
     isBreakoutPositionsOnly = false;

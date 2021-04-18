@@ -48,10 +48,11 @@ class ListOfZiPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
-    displayAllZi(lessonId, false, null);
+    PrimitiveWrapper contentLength; // not used
+    displayAllZi(lessonId, false, null, contentLength);
   }
 
-  displayAllZi(int lessonId, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
+  displayAllZi(int lessonId, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo, PrimitiveWrapper contentLength) {
     var lesson = theLessonList[lessonId];
     int length = 0;
     var yPositionWrapper = PrimitiveWrapper(xYLength(0.0));  //170.0
@@ -179,6 +180,11 @@ class ListOfZiPainter extends BasePainter {
             yPositionWrapper.value, Colors.grey, 1);
       }
     }
+
+    if (isInfoOnly) {
+      contentLength.value = yPositionWrapper.value;
+    }
+
   }
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {

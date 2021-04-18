@@ -47,7 +47,8 @@ class BasePainter extends CustomPainter{
   bool isReviewCenterPseudoZi = false;
   bool isReviewCenterPseudoNonCharZi = false;
 
-  BasePainter({this.lineColor, this.completeColor, this.centerId, this.shouldDrawCenter, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
+  //BasePainter({this.lineColor, this.completeColor, this.centerId, this.shouldDrawCenter, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
+
   @override
   void paint(Canvas canvas, Size size) {
     this.  canvas = canvas;
