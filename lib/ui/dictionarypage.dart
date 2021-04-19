@@ -283,7 +283,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           shouldDrawCenter = true;
         });
       },
-      child: Text('Help', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0),),
     );
 
     var posiCenter = Positioned(
@@ -334,10 +334,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     thePositionManager.resetPositionIndex();
 
     if (dicStage == DictionaryStage.firstzis) {
-      // help first
-      //displayTextWithValue("Help", 350, 5.0, 20.0, Colors.lightBlue);
-      var helpPosiAndSize = PositionAndSize(
-          350, 5.0, 25.0, 25.0, 0.0, 0.0);
+      // help button first
+      var helpPosiAndSize = PositionAndSize(screenWidth - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       var helpPosi = getHelpPositionedButton(helpPosiAndSize);
       buttons.add(helpPosi);
 
