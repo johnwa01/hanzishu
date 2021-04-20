@@ -238,7 +238,7 @@ class Utility {
   static var baseNumber = 10000;
 
   static void speakChars(String chars, String lang) {
-  // skip the special root char
+    // skip the special root char
     //TODO
     /*
     if (chars != "~") {
@@ -258,8 +258,7 @@ class Utility {
   }
 
   //TODO: rename to StringToDouble when everything has been tested
-  static double StringToFloat(String str)
-  {
+  static double StringToFloat(String str) {
     return double.parse(str);
     //return CGFloat(NumberFormatter().number(from: str));
   }
@@ -271,8 +270,7 @@ class Utility {
 
   //TODO: missing an actual check below in case we need this function.
   // and should move to basepainter.dart
-  static void checkAndSetSkipLevelZiCompletion(int fromId, int toId)
-  {
+  static void checkAndSetSkipLevelZiCompletion(int fromId, int toId) {
     if (fromId == toId) {
       return;
     }
@@ -292,12 +290,12 @@ class Utility {
     var navigationZiId = fromId;
     Zi navigationZi;
     do {
-        //TODO: do the actual check. GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLessonId);
-        navigationZi = theZiManager.getZi(navigationZiId);
-        navigationZiId = navigationZi.parentId;
-        if (navigationZiId == toId) {
-          thePreviousCenterZiId = navigationZi.id;
-        }
+      //TODO: do the actual check. GeneralManager.checkAndSetHasAllChildrenCompleted(navigationZiId, theHittestState, theCurrentLessonId);
+      navigationZi = theZiManager.getZi(navigationZiId);
+      navigationZiId = navigationZi.parentId;
+      if (navigationZiId == toId) {
+        thePreviousCenterZiId = navigationZi.id;
+      }
     } while (navigationZiId != toId);
   }
 
@@ -321,7 +319,8 @@ class Utility {
   }
 
   static bool isPseudoRootZiId(int rootZiId) {
-    return (rootZiId >= 741 && rootZiId <= 749) || (rootZiId == 751) /*|| (rootZiId == 756)*/;
+    return (rootZiId >= 741 && rootZiId <= 749) ||
+        (rootZiId == 751) /*|| (rootZiId == 756)*/;
   }
 
   static bool isPseudoRootZiIdPlusStar(int rootZiId) {
@@ -329,11 +328,13 @@ class Utility {
   }
 
   static bool isPseudoNonCharRootZiId(int rootZiId) {
-    return (rootZiId >= 731 && rootZiId <= 740) || (rootZiId == 750) || (rootZiId >= 752 && rootZiId <= 755);
+    return (rootZiId >= 731 && rootZiId <= 740) || (rootZiId == 750) ||
+        (rootZiId >= 752 && rootZiId <= 755);
   }
 
   static bool isPseudoNonCharRootZiIdPlusStar(int rootZiId) {
-    return isPseudoNonCharRootZiId(rootZiId) || (rootZiId == theConst.starCharId);
+    return isPseudoNonCharRootZiId(rootZiId) ||
+        (rootZiId == theConst.starCharId);
   }
 
   static bool isStarChar(int rootZiId) {
@@ -363,6 +364,14 @@ class Utility {
     }
 
     return count;
+  }
+
+  // a workaround through global variable to remove Dic overlayentry
+  static removeDicOverlayEntry() {
+    if (theDicOverlayEntry != null) {
+      theDicOverlayEntry.remove();
+      theDicOverlayEntry = null;
+    }
   }
 }
 

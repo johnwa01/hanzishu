@@ -7,6 +7,7 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
@@ -15,6 +16,7 @@ enum DictionaryStage {
   firstzis,
   searchingzis,
   detailedzi,
+  search,
   help,
   chineseHelp
 }
@@ -45,6 +47,11 @@ class DictionaryPainter extends BasePainter {
 
     if (this.dicStage == DictionaryStage.firstzis) {
       displayTextWithValue("首字表", 10.0, 5.0, 20.0, Colors.blueGrey);
+
+      // below should match dictionaryPage
+      var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
+
       // below should match dictionaryPage
       var helpPosiAndSize = PositionAndSize(width - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width / 2.0, Colors.lightBlue);
@@ -71,10 +78,13 @@ class DictionaryPainter extends BasePainter {
     displayTextWithValue("Steps to find a zi:", 10.0, 50.0, 25.0, Colors.blueAccent);
 
     displayTextWithValue("1. From 'First Zi Table', starting from the fifth 'first zi', find the 'first zi' that this zi contains.", 10.0, 95.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   1a. If the zi's 'first zi' is '' and it contains other 'first zi', choose the other as 'first zi'.", 10.0, 145.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   1b. If you can't find a 'first zi', use the first stroke of the zi to match it to one of the five 'first zi' at the beginning of the table.", 10.0, 195.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("2. Click the 'first zi' to go to 'Searching Zi Table'.", 10.0, 265.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("3. From the 'Searching Zi Table', find/click the zi you are looking for.", 10.0, 315.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("   Ex: For zi '好'， find '女' as its 'first zi'. ", 10.0, 140.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("1a. If the zi's 'first zi' is '' and it contains other 'first zi', choose the other as 'first zi'.", 10.0, 165.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("   Ex: For zi '听'， (skip '口' and) find '斤' as its 'first zi'. ", 10.0, 215.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("1b. If you can't find a 'first zi', use the first stroke of the zi to match it to one of the five 'first zi' at the beginning of the table.", 10.0, 265.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("   Ex: For zi '长'， find '一' as its 'first zi'. ", 10.0, 330.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("2. Click the 'first zi' to go to 'Searching Zi Table'.", 10.0, 355.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("3. From the 'Searching Zi Table', find/click the zi you are looking for.", 10.0, 405.0, 20.0, Colors.blueAccent);
   }
 
   DisplayNavigationPath(DictionaryStage stage) {
@@ -82,12 +92,21 @@ class DictionaryPainter extends BasePainter {
     displayTextWithValue("@", 10.0, 5.0, 25.0, Colors.blueAccent);
     displayTextWithValue("->", 35.0, 5.0, 25.0, Colors.blueAccent);
 
-    if (stage == DictionaryStage.searchingzis) {
-      var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
-      displayTextWithValue(theSearchingZiList[searchingId].char, 70.0, 5.0, 25.0, Colors.blueAccent);
+    if (stage == DictionaryStage.searchingzis || stage == DictionaryStage.detailedzi) {
+      // TODO: this line should be called in page so that it'll persist the firstZiIndex value
+      //if (firstZiIndex == -1) {
+      //  firstZiIndex = Dictionary.getFirstZiIndexByPickingZiIndex(searchingZiIndex);
+      //}
+
+      if (firstZiIndex >= 0) {
+        var searchingZiIndex = theFirstZiList[firstZiIndex].searchingZiId;
+        displayTextWithValue(
+            theSearchingZiList[searchingZiIndex].char, 70.0, 5.0, 25.0,
+            Colors.blueAccent);
+      }
     }
     else if (stage == DictionaryStage.help) {
-      var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
+      //var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
       displayTextWithValue("Help", 70.0, 5.0, 25.0, Colors.blueAccent);
     }
 

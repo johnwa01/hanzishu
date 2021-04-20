@@ -3,6 +3,7 @@ import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/utility.dart';
 
 class ReviewLevel {
   int id;
@@ -234,6 +235,8 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    Utility.removeDicOverlayEntry();
+
     return Scaffold
       (
       appBar: AppBar

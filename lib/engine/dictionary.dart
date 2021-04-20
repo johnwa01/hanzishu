@@ -1,3 +1,4 @@
+import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
 
 class FirstZi {
@@ -35,5 +36,19 @@ class SearchingZi {
       this.meaning = meaning;
       this.fullZiId = fullZiId;
       this.strokeCount = strokeCount;
+  }
+}
+
+class Dictionary {
+  // find the array index of a first zi in theFirstZiList
+  static int getFirstZiIndexByPickingZiIndex(searchingZiIndex) {
+    for (var i = theFirstZiList.length - 1; i >= 0; i--) {
+      var oneFirstZi = theFirstZiList[i];
+      if (oneFirstZi.searchingZiId < searchingZiIndex && oneFirstZi.char.length == 1) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 }

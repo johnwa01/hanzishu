@@ -3,6 +3,7 @@ import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/studytimepage.dart';
 import 'package:hanzishu/ui/tapcountpage.dart';
 
@@ -14,6 +15,8 @@ class MePage extends StatefulWidget {
 class _MePageState extends State<MePage> {
   @override
   Widget build(BuildContext context) {
+    Utility.removeDicOverlayEntry();
+
     return Scaffold
       (
       appBar: AppBar

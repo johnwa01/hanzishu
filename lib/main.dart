@@ -6,6 +6,7 @@ import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
+import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/ui/theme.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
@@ -113,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     ReviewSelectionPage(),
-    DictionaryPage(),
+    DictionaryPage(DictionaryStage.firstzis, 0),
     MePage()
   ];
 
