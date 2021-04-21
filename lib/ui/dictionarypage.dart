@@ -20,17 +20,17 @@ class DictionaryPage extends StatefulWidget {
   //final int lessonId;
   //final int startLessonId;
   //final int endLessonId;
-  DictionaryStage dictionaryStage;
-  int currentZiIndex;
+  //DictionaryStage dictionaryStage;
+  //int currentZiIndex;
 
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
-  DictionaryPage(DictionaryStage dicStage, int ziIndex) {
-    dictionaryStage = dicStage;
-    currentZiIndex = ziIndex;
-  }
+  //DictionaryPage(DictionaryStage dicStage, int ziIndex) {
+  //  dictionaryStage = dicStage;
+  //  currentZiIndex = ziIndex;
+  //}
   //DictionaryPage({this.startLessonId, this.endLessonId});
 
   @override
@@ -73,24 +73,12 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     _editController.addListener(processEditInput);
     _editController.text = "";
 
-    /*
-    _editController.addListener(() {
-      final String text = _editController.text.toLowerCase();
-      _editController.value = _editController.value.copyWith(
-        text: text,
-        selection:
-        TextSelection(baseOffset: text.length, extentOffset: text.length),
-        composing: TextRange.empty,
-      );
-    });
-     */
-
     theCurrentCenterZiId = 1;
     setState(() {
       searchingZiIndex = 0;
       shouldDrawCenter = true;
-      dicStage = widget.dictionaryStage;
-      firstZiIndex = widget.currentZiIndex; // different meaning for different stage //TODO: should make it one meaning only
+      dicStage = DictionaryStage.firstzis;
+      firstZiIndex = 0;
     });
   }
 
@@ -300,10 +288,12 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           if (dicStage == DictionaryStage.firstzis) {
             this.firstZiIndex = ziIndex;
             dicStage = DictionaryStage.searchingzis;
+            _editController.text = "";
           }
           else if (dicStage == DictionaryStage.searchingzis) {
             this.searchingZiIndex = ziIndex;
             dicStage = DictionaryStage.detailedzi;
+            _editController.text = "";
           }
 
           shouldDrawCenter = true;
@@ -356,6 +346,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         setState(() {
           dicStage = newDicStage;
           shouldDrawCenter = true;
+          _editController.text = "";
         });
       },
       onLongPress: () {
@@ -384,6 +375,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
         setState(() {
           dicStage = DictionaryStage.firstzis;
+          _editController.text = "";
         });
       },
       child: Text('@ ->', style: TextStyle(fontSize: 25.0),),
@@ -428,6 +420,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         setState(() {
           dicStage = DictionaryStage.help;
           shouldDrawCenter = true;
+          _editController.text = "";
         });
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),

@@ -114,7 +114,7 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     ReviewSelectionPage(),
-    DictionaryPage(DictionaryStage.firstzis, 0),
+    DictionaryPage(),
     MePage()
   ];
 
