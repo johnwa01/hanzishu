@@ -13,8 +13,8 @@ var theQuizManager = null;
 var theStatisticsManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
-var theTotalBeginnerLessons = 50; //TODO: to lessonmanager?
-var theNumberOfLessonsInLevels = [7, 13, 15, 14, 1];
+var theTotalBeginnerLessons = 60; //TODO: to lessonmanager?
+var theNumberOfLessonsInLevels = [9, 7, 5, 5, 7, 5, 5, 6, 4, 7];
 //var theHittestState = HittestState.hanzishuFullZiMode;
 
 var theRangeUptoLessonNumberForCurrentLevel = 1;
