@@ -22,9 +22,11 @@ import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
-import 'package:hanzishu/ui/reviewselectionpage.dart';
+//import 'package:hanzishu/ui/reviewselectionpage.dart';
+import 'package:hanzishu/ui/toolspage.dart';
 
 import 'package:hanzishu/ui/animatedpathpainter.dart'; // TODO: temp
+import 'package:hanzishu/engine/inputzimanager.dart';
 
 
 void main() {
@@ -100,6 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theStorageHandler = StorageHandler();
     theQuizManager = QuizManager();
     theStatisticsManager = StatisticsManager();
+    theInputZiManager = InputZiManager();
 
     theStatisticsManager.init(0,
         0.0,
@@ -113,7 +116,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children =
   [
     LessonsPage(),
-    ReviewSelectionPage(),
+    //ReviewSelectionPage(),
+    ToolsPage(),
     DictionaryPage(),
     MePage()
   ];
@@ -145,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.favorite),
           ),
           BottomNavigationBarItem(
-            title: Text('Review'),
+            title: Text('Tools'),
             icon: Icon(Icons.location_on),
           ),
           BottomNavigationBarItem(
