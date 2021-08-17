@@ -49,3 +49,7 @@ class theConst {
 class theConfig {  // can change by runtime
   static bool withSoundAndExplains = true;
 }
+
+List<String> theDefaultZiCandidates = ['的', '人', '大', '一', '十', '力', '八'];
+//seems hard to pass the value from page to painter
+List<String> theCurrentZiCandidates = theDefaultZiCandidates;

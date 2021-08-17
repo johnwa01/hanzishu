@@ -72,7 +72,29 @@ class InputZiManager {
     return candidates;
   }
 
-  static String getZiCandidatesHelper(int start, int end) {
+  /*
+  static List<String> convertInputZiListToStringList(List<InputZi> typingCandidates) {
+    List<String> candidates = [];
+
+    for (var i = 0; i < typingCandidates.length; i++) {
+      candidates.add(typingCandidates[i].zi);
+    }
+
+    return candidates;
+  }
+  */
+
+  static List<String> convertZiListToStringList(List<InputZi> typingCandidates){
+    List<String> candidates = new List<String>(typingCandidates.length);
+
+    for (var i = 0; i < typingCandidates.length; i++) {
+      candidates[i] = typingCandidates[i].zi;
+    }
+
+    return candidates;
+  }
+
+  static List<String> getZiCandidatesHelper(int start, int end) {
     typingCandidates.clear();
     for (var i = start; i <= end; i++) {
       var oneInputZi = theInputZiList[i];
@@ -82,12 +104,13 @@ class InputZiManager {
       //}
     }
 
-    return convertListToString(typingCandidates);
+    return convertZiListToStringList(typingCandidates);
+    //return convertInputZiListToStringList(typingCandidates);
   }
 
   // the only public method for this feature
   // current input as input, and a string as the output
-  static String getZiCandidates(String input) {
+  static List<String> getZiCandidates(String input) {
     var first = findFirst(input);
     if (first != -1) {
       var last = findLast(first, input);
@@ -96,12 +119,20 @@ class InputZiManager {
       }
     }
 
-    return "";
+    return null;
   }
 
   static InputZi getFirstZiCandidate() {
     if (typingCandidates.length > 0) {
       return typingCandidates[0];
+    }
+
+    return null;
+  }
+
+  static InputZi getZiCandidateByIndex(int index) {
+    if (typingCandidates.length > index) {
+      return typingCandidates[index];
     }
 
     return null;

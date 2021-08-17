@@ -1,70 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
+import 'package:hanzishu/ui/inputzipainter.dart';
+import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
 import 'dart:core';
 
 class InputZiPage extends StatefulWidget {
-  InputZiPage({Key key, this.title}) : super(key: key);
-
-  final String title;
+  InputZiPage();
 
   @override
-  _InputZiPageState createState() => _InputZiPageState();
+  _InputZiPageState createState() => new _InputZiPageState();
 }
 
 class _InputZiPageState extends State<InputZiPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Input zi',
-            ),
-            SizedBox(
-              width: double.infinity,
-              height: 300,
-              child: KeyboardListener(),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class KeyboardListener extends StatefulWidget {
-  KeyboardListener();
-
-  @override
-  _KeyboardListenerState createState() => new _KeyboardListenerState();
-}
-
-class _KeyboardListenerState extends State<KeyboardListener> {
+  double screenWidth;
   TextEditingController _controller = new TextEditingController();
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   //String previousText = "";
   bool justCompletedPosting = false;
+  List<String> ziCandidates = null;
+
+
+  int updateCounter = 0;
 
   @override
   initState() {
     super.initState();
     
     _controller.addListener(handleKeyInput);
+
+    setState(() {
+      updateCounter =0;
+    });
   }
 
-  String getInputText() {
+  String getInputTextByIndex(int index) {
     //var startComposing = _controller.value.composing.start;
     //var endComposing = _controller.value.composing.end;
     var newInputText = _controller.value.text.substring(0, previousStartComposing);
-    var firstZiCandidate = InputZiManager.getFirstZiCandidate();
-    if (firstZiCandidate != null) {
-      var firstZiStr = firstZiCandidate.zi; //inputKeyLetter;
-      newInputText += firstZiStr;
+    var ziCandidate = InputZiManager.getZiCandidateByIndex(index);
+    if (ziCandidate != null) {
+      var ziStr = ziCandidate.zi; //inputKeyLetter;
+      newInputText += ziStr;
     }
 
     if(previousEndComposing + 1 <= _controller.value.text.length) {
@@ -89,6 +69,18 @@ class _KeyboardListenerState extends State<KeyboardListener> {
     //str += inputKeyLetter;
 
     return str;
+  }
+
+  bool isALetter(String value) {
+    if(value.length > 0) {
+      var charCodeUnits = value[0].codeUnits;
+
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 97 && charCodeUnits[0] <= 122 ) {  // value is between a and z
+        return true;
+      }
+    }
+
+    return false;
   }
 
   void handleKeyInput() {
@@ -118,47 +110,50 @@ class _KeyboardListenerState extends State<KeyboardListener> {
       }
     }
 
+    var lett = isALetter(latestInputKeyLetter);
+
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      //var newText = getInputText('好');
-      var newText = getInputText();
-      _controller.clearComposing();
-      previousStartComposing = -1;
-      previousEndComposing = -1;
-      justCompletedPosting = true;
-
-      //now reset controller which will notify the listeners right away
-      _controller.text = newText;
-      //_controller.text += st; //'好';
-
-      // set cursor at the end of the text.
-      var tst = _controller.selection;
-      var tstStart = tst.start;
-
-      //TextSelection txtSel = new TextSelection(2, 2,  );
-
-      // why have to focus the cursor every time?
-      // why start from beginning every time?
-      //_controller.selection.start = 2;
-      //_controller.selection.end = 2;
-
+      setTextBySelectionIndex(0);
+      setState(() {
+        updateCounter += 1;
+      });
     }
-    else if (latestInputKeyLetter != "") {
+    else if (isALetter(latestInputKeyLetter)) {
       var composingText = getFullComposingText(latestInputKeyLetter);
-      var ziCandidates = InputZiManager.getZiCandidates(composingText);
+      theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
 
       previousStartComposing = _controller.value.composing.start;
       previousEndComposing = _controller.value.composing.end;
+
+      setState(() {
+        updateCounter += 1;
+      });
     }
 
     //previousText = _controller.text;
   }
 
+  void setTextBySelectionIndex(int selectionIndex) {
+    var newText = getInputTextByIndex(selectionIndex);
+    _controller.clearComposing();
+    previousStartComposing = -1;
+    previousEndComposing = -1;
+    justCompletedPosting = true;
+
+    //now reset controller which will notify the listeners right away
+    _controller.text = newText;
+    //_controller.text += st; //'好';
+    //Note: set cursor to the end of of the current editing
+    _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+
+    // reset the candidate. might set to global ini value
+    theCurrentZiCandidates = theDefaultZiCandidates;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return /*RawKeyboardListener(
-      focusNode: _textNode,
-      onKey: (key) => handleKey(key.data),
-      child:*/ TextField(
+    /*
+    return TextField(
         controller: _controller,
         decoration: InputDecoration(
           border: OutlineInputBorder(),
@@ -166,6 +161,100 @@ class _KeyboardListenerState extends State<KeyboardListener> {
         ),
         //focusNode: _textNode,
       );
-    //);
+      */
+
+    screenWidth = Utility.getScreenWidth(context);
+
+    var inputZiPainter = InputZiPainter(
+        lineColor: Colors.amber,
+        completeColor: Colors.blueAccent,
+        lessonId: 1, /*TODO: temp*/
+        //completePercent: percentage,
+        screenWidth: 350 /*TODO: temp*/
+    );
+
+    //List<String> listOfCandidates;
+
+    return Scaffold
+      (
+      appBar: AppBar
+        (
+        title: Text("Input Zi"),
+        ),
+      body: Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisSize:  MainAxisSize.max,
+        children: <Widget>[
+          //Spacer(),
+
+          SizedBox(
+              width: double.infinity,
+              //height: 50,
+              child: TextField(
+                controller: _controller,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Full Name',
+                ),
+              ),//focusNode: _textNode,
+            ),
+          //),
+
+          SizedBox(
+            width: double.infinity,
+            height: 40,
+            child:  CustomPaint(
+              foregroundPainter: inputZiPainter,
+              //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
+
+              child: Center(
+                child: Stack(
+                  children: createHittestButtons(context, theCurrentZiCandidates),
+                ),
+              ),
+            ),
+          )
+        ]
+      ),
+    );
+  }
+
+  Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
+    var butt = FlatButton(
+      color: Colors.white,
+      textColor: Colors.blueAccent,
+      onPressed: () {
+        setTextBySelectionIndex(candidateIndex);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: 0.0,
+        left: xPosi.value,
+        height: 40.0, //posiAndSize.height,
+        width: 40.0 * zi.length, //posiAndSize.width,
+        child: butt
+    );
+
+    xPosi.value += (40.0 * zi.length + 30.0);
+
+    return posiCenter;
+  }
+
+  List<Widget> createHittestButtons(BuildContext context, List<String> ziCandidates) {
+    List<Widget> buttons = [];
+
+    buttons.add (Container(height: 80.0 /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
+
+    PrimitiveWrapper xPosi = PrimitiveWrapper(0.0);
+
+    if (ziCandidates != null) {
+      for (var i = 0; i < ziCandidates.length; i++) {
+        buttons.add(getZiCandidateButton(xPosi, i, ziCandidates[i]));
+      }
+    }
+
+    return buttons;
   }
 }
