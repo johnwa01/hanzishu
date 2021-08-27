@@ -3,6 +3,8 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/data/inputzilist.dart';
 import 'dart:math';
 
+import 'package:hanzishu/variables.dart';
+
 
 class InputZiManager {
   static List<InputZi> typingCandidates = [];
@@ -29,15 +31,6 @@ class InputZiManager {
 
     return -1;
   }
-
-  /*
-  // should be a sorted queue
-  static List<InputZi> sortZiRange(int start, int end) {
-    // list index etc.
-    // the manager will control the insert and delete of members from the list.
-    // list.insert(int index, E element).
-  }
-  */
 
   static updateCandidates(InputZi inputZi, List<InputZi> candidates ) {
     var activeCandidatesLength = min(maxTypingCandidates, candidates.length);
@@ -71,18 +64,6 @@ class InputZiManager {
 
     return candidates;
   }
-
-  /*
-  static List<String> convertInputZiListToStringList(List<InputZi> typingCandidates) {
-    List<String> candidates = [];
-
-    for (var i = 0; i < typingCandidates.length; i++) {
-      candidates.add(typingCandidates[i].zi);
-    }
-
-    return candidates;
-  }
-  */
 
   static List<String> convertZiListToStringList(List<InputZi> typingCandidates){
     List<String> candidates = new List<String>(typingCandidates.length);
@@ -130,9 +111,9 @@ class InputZiManager {
     return null;
   }
 
-  static InputZi getZiCandidateByIndex(int index) {
-    if (typingCandidates.length > index) {
-      return typingCandidates[index];
+  static String getCandidateZiString(int index) {
+    if (theCurrentZiCandidates.length > index) {
+      return theCurrentZiCandidates[index];
     }
 
     return null;

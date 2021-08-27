@@ -19,7 +19,7 @@ class _InputZiPageState extends State<InputZiPage> {
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
-  //String previousText = "";
+  String previousText = "";
   bool justCompletedPosting = false;
   List<String> ziCandidates = null;
 
@@ -37,23 +37,30 @@ class _InputZiPageState extends State<InputZiPage> {
     });
   }
 
-  String getInputTextByIndex(int index) {
-    //var startComposing = _controller.value.composing.start;
-    //var endComposing = _controller.value.composing.end;
-    var newInputText = _controller.value.text.substring(0, previousStartComposing);
-    var ziCandidate = InputZiManager.getZiCandidateByIndex(index);
-    if (ziCandidate != null) {
-      var ziStr = ziCandidate.zi; //inputKeyLetter;
-      newInputText += ziStr;
+  String getInputText(int index) {
+    var newInputText = "";
+    var composingString = "";
+
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      if (previousStartComposing != -1) {
+        newInputText = _controller.value.text.substring(0, previousStartComposing);
+      }
+      else {
+        newInputText = _controller.value.text;
+      }
     }
 
-    if(previousEndComposing + 1 <= _controller.value.text.length) {
+    var candidateZiString = InputZiManager.getCandidateZiString(index);
+    if (candidateZiString != null) {
+      newInputText += candidateZiString;
+    }
+
+    if(previousEndComposing != -1 && (previousEndComposing + 1) <= _controller.value.text.length) {
       newInputText += _controller.value.text.substring(
           previousEndComposing + 1, _controller.value.text.length);
     }
 
     return newInputText;
-    //return _controller.value.composing.textBefore(_controller.value.text) + str + _controller.value.composing.textAfter(_controller.value.text);
   }
 
   String getFullComposingText(String inputKeyLetter) {
@@ -64,9 +71,6 @@ class _InputZiPageState extends State<InputZiPage> {
     if (endComposing > startComposing) {
       str = _controller.value.text.substring(startComposing, endComposing);
     }
-
-    // seems no need for this value, just use composing string directly.
-    //str += inputKeyLetter;
 
     return str;
   }
@@ -83,23 +87,67 @@ class _InputZiPageState extends State<InputZiPage> {
     return false;
   }
 
+  void setTextBySelectionIndex(int selectionIndex) {
+    var newText = getInputText(selectionIndex);
+
+    previousStartComposing = -1;
+    previousEndComposing = -1;
+    previousText = newText;
+    justCompletedPosting = true;
+
+    // reset the candidate. might set to global ini value
+    theCurrentZiCandidates = theDefaultZiCandidates;
+
+    _controller.clearComposing();
+
+    //now reset controller which will notify the listeners right away
+    _controller.text = newText;
+
+    //_controller.text += st; //'好';
+    //Note: set cursor to the end of of the current editing
+    _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+  }
+
   void handleKeyInput() {
-    //if (previousText.length == _controller.text.length && previousText == _controller.text) {
-      // it just tells us the new value with the composing result. nothing to do.
-    //  return;
-    //}
+    handleKeyInputHelper(0);
+  }
 
-    if (justCompletedPosting) {
-      justCompletedPosting = false;
-      return;
-    }
-
+  void handleKeyInputHelper(int selectionIndex) {
     print('Second text field: ${_controller.text}');
-    // get text[composing.end] value, which is inputKeyLetter
     String latestInputKeyLetter = "";
 
+    /*
     if (_controller.value.composing.end > 0) {
-      // composing can be in the middle positiob of the text
+      // composing can be in the middle position of the text
+      latestInputKeyLetter = _controller.text[_controller.value.composing
+        .end - 1];
+    }
+    else {
+      // this is as early as the place to check this. ex: notified with controller text update but without real change.
+      if (justCompletedPosting) {
+        if (_controller.text == previousText) {
+          return;
+        }
+      }
+
+      var len = _controller.text.length;
+      if (len > 0) {
+        latestInputKeyLetter = _controller.text[len - 1];
+      }
+    }
+    */
+
+    // this is as early as the place to check this. ex: notified with controller text update but without real change.
+    if (justCompletedPosting && _controller.text == previousText) {
+        if (_controller.value.composing.end > 0) {
+          // TODO: work around for now. for some reason, the controller puts back the preivous value to the composing.
+          _controller.clearComposing();
+        }
+        return;
+    }
+
+    if (_controller.value.composing.end > 0) {
+      // composing can be in the middle position of the text
       latestInputKeyLetter = _controller.text[_controller.value.composing
         .end - 1];
     }
@@ -110,70 +158,37 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
 
-    var lett = isALetter(latestInputKeyLetter);
-
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      setTextBySelectionIndex(0);
-      setState(() {
-        updateCounter += 1;
-      });
+      if (!justCompletedPosting) {
+        setTextBySelectionIndex(selectionIndex);
+      }
     }
     else if (isALetter(latestInputKeyLetter)) {
+      // reset the completed flag. reset only at this time.
+      justCompletedPosting = false;
+
       var composingText = getFullComposingText(latestInputKeyLetter);
       theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
+      if (theCurrentZiCandidates == null) {
+        List<String> composingList =  [composingText];
+        theCurrentZiCandidates = composingList;
+      }
 
       previousStartComposing = _controller.value.composing.start;
       previousEndComposing = _controller.value.composing.end;
-
-      setState(() {
-        updateCounter += 1;
-      });
     }
-
-    //previousText = _controller.text;
-  }
-
-  void setTextBySelectionIndex(int selectionIndex) {
-    var newText = getInputTextByIndex(selectionIndex);
-    _controller.clearComposing();
-    previousStartComposing = -1;
-    previousEndComposing = -1;
-    justCompletedPosting = true;
-
-    //now reset controller which will notify the listeners right away
-    _controller.text = newText;
-    //_controller.text += st; //'好';
-    //Note: set cursor to the end of of the current editing
-    _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
-
-    // reset the candidate. might set to global ini value
-    theCurrentZiCandidates = theDefaultZiCandidates;
   }
 
   @override
   Widget build(BuildContext context) {
-    /*
-    return TextField(
-        controller: _controller,
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Full Name',
-        ),
-        //focusNode: _textNode,
-      );
-      */
-
     screenWidth = Utility.getScreenWidth(context);
 
     var inputZiPainter = InputZiPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
         lessonId: 1, /*TODO: temp*/
-        //completePercent: percentage,
         screenWidth: 350 /*TODO: temp*/
     );
-
-    //List<String> listOfCandidates;
 
     return Scaffold
       (
@@ -232,12 +247,12 @@ class _InputZiPageState extends State<InputZiPage> {
     var posiCenter = Positioned(
         top: 0.0,
         left: xPosi.value,
-        height: 40.0, //posiAndSize.height,
-        width: 40.0 * zi.length, //posiAndSize.width,
+        height: 30.0, //posiAndSize.height,
+        width: 30.0 * zi.length, //posiAndSize.width,
         child: butt
     );
 
-    xPosi.value += (40.0 * zi.length + 30.0);
+    xPosi.value += (30.0 * zi.length + 30.0);
 
     return posiCenter;
   }

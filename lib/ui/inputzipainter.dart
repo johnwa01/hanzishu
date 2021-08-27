@@ -59,7 +59,7 @@ class InputZiPainter extends BasePainter {
 
       for (int i = 0; i < theCurrentZiCandidates.length; i++) {
         displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0);
-        x += (40.0 * theCurrentZiCandidates[i].length + 30.0);
+        x += (30.0 * theCurrentZiCandidates[i].length + 30.0);
       }
     }
     /*
