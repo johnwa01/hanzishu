@@ -149,7 +149,7 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.favorite),
           ),
           BottomNavigationBarItem(
-            title: Text('Tools'),
+            title: Text('Typing'),
             icon: Icon(Icons.location_on),
           ),
           BottomNavigationBarItem(

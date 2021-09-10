@@ -51,5 +51,6 @@ class theConfig {  // can change by runtime
 }
 
 List<String> theDefaultZiCandidates = ['的', '人', '大', '一', '十', '力', '他'];
+//List<String> theDefaultZiCandidates = ['的', '人', '大', '一', '十', '力'];
 //seems hard to pass the value from page to painter
 List<String> theCurrentZiCandidates = theDefaultZiCandidates;

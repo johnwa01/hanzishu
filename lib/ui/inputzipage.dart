@@ -87,6 +87,30 @@ class _InputZiPageState extends State<InputZiPage> {
     return false;
   }
 
+  bool isNumberOneToSeven(String value) {
+    if(value.length > 0) {
+      var charCodeUnits = value[0].codeUnits;
+
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between a and z
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  int getZeroBasedNumber(String value) {
+    if(value.length > 0) {
+      var charCodeUnits = value[0].codeUnits;
+
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between a and z
+        return charCodeUnits[0] - 49;
+      }
+    }
+
+    return -1;
+  }
+
   void setTextBySelectionIndex(int selectionIndex) {
     var newText = getInputText(selectionIndex);
 
@@ -140,7 +164,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // this is as early as the place to check this. ex: notified with controller text update but without real change.
     if (justCompletedPosting && _controller.text == previousText) {
         if (_controller.value.composing.end > 0) {
-          // TODO: work around for now. for some reason, the controller puts back the preivous value to the composing.
+          // TODO: work around for now. for some reason, the controller puts back the previous value to the composing.
           _controller.clearComposing();
         }
         return;
@@ -161,6 +185,11 @@ class _InputZiPageState extends State<InputZiPage> {
     if (latestInputKeyLetter == " " /*32*/) { // space key
       if (!justCompletedPosting) {
         setTextBySelectionIndex(selectionIndex);
+      }
+    }
+    else if (isNumberOneToSeven(latestInputKeyLetter)) {
+      if (!justCompletedPosting) {
+        setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
       }
     }
     else if (isALetter(latestInputKeyLetter)) {
@@ -203,14 +232,39 @@ class _InputZiPageState extends State<InputZiPage> {
           //Spacer(),
 
           SizedBox(
+            //width: double.infinity,
+            //height: 30,
+            child: Align(
+              alignment: Alignment.topRight,
+              child: TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: const TextStyle(fontSize: 20),
+                ),
+                onPressed: () {},
+                child: const Text('Help'),
+              ),
+            ),
+            //TODO: put a help button at the right end
+          ),
+
+          SizedBox(
               width: double.infinity,
-              //height: 50,
+              //height: 120,
               child: TextField(
                 controller: _controller,
+                focusNode: _textNode,
+                autofocus: true,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Full Name',
+                  labelText: '', //'Full Name',
                 ),
+                style: TextStyle(
+                  fontSize: 35,
+                  height: 1.5
+                ),
+                maxLines: 3,
+                //expands: true,
+                keyboardType: TextInputType.multiline,
               ),//focusNode: _textNode,
             ),
           //),
@@ -252,7 +306,7 @@ class _InputZiPageState extends State<InputZiPage> {
         child: butt
     );
 
-    xPosi.value += (30.0 * zi.length + 30.0);
+    xPosi.value += (30.0 * zi.length + 25.0);
 
     return posiCenter;
   }

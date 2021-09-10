@@ -6,7 +6,6 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/studytimepage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
-import 'package:hanzishu/ui/reviewselectionpage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -22,7 +21,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Tools"),
+        title: Text("Typing"),
       ),
       body: Center
         (
@@ -34,20 +33,6 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget getMeListView(BuildContext context) {
     return ListView(
       children: <Widget>[
-        ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Review", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
-          onTap: () {
-            theStatisticsManager.trackTimeAndTap();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReviewSelectionPage(),
-              ),
-            );
-          },
-        ),
         ListTile(
           leading: Icon(Icons.location_city),
           title: Text("Input Zi", textDirection: TextDirection.ltr),

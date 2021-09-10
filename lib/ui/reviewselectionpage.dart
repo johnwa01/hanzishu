@@ -41,7 +41,7 @@ class ReviewLevel {
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
   static List<ReviewLevel> getReviewLevelsStarting(int levelSelectedEndingId) {
     if (levelSelectedEndingId == 0) {
-      populateInitialLevels("Starting Level");
+      populateInitialLevels("Starting Unit");
       return levels;
     }
     else {
@@ -56,7 +56,7 @@ class ReviewLevel {
 
   static List<ReviewLevel> getReviewLevelsEnding(int levelSelectedStartingId) {
     if (levelSelectedStartingId == 0) {
-      populateInitialLevels("Ending Level");
+      populateInitialLevels("Ending Unit");
       return levels;
     }
     else {

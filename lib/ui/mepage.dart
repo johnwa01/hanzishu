@@ -6,6 +6,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/studytimepage.dart';
 import 'package:hanzishu/ui/tapcountpage.dart';
+import 'package:hanzishu/ui/reviewselectionpage.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -38,6 +39,20 @@ class _MePageState extends State<MePage> {
             //  textDirection: TextDirection.rtl,
             //  textAlign: TextAlign.center,
             //),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text("Review of Lessons", textDirection: TextDirection.ltr),
+              trailing: Icon(Icons.location_city),
+              onTap: () {
+                theStatisticsManager.trackTimeAndTap();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ReviewSelectionPage(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               leading: Icon(Icons.location_city),
               title: Text("Study Time", textDirection: TextDirection.ltr),
