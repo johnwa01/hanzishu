@@ -149,7 +149,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       (
       appBar: AppBar
         (
-        title: Text("字典"),
+        title: Text("Dictionary"),
         ),
       body: getContainer(),
       );
@@ -185,7 +185,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(10),
-            child: Text("Type a zi to search (ex: '好'):",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
+            child: Text("Type a zi to search (ex: '好') using Hanzishu Input method:",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
           ),
           Container(
             padding: const EdgeInsets.all(10),

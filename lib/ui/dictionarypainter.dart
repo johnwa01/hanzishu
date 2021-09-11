@@ -46,7 +46,7 @@ class DictionaryPainter extends BasePainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("首字表", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("First Zi Table (首字表)", 10.0, 5.0, 20.0, Colors.blueGrey);
 
       // below should match dictionaryPage
       var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
@@ -60,7 +60,8 @@ class DictionaryPainter extends BasePainter {
     }
     else if (this.dicStage == DictionaryStage.searchingzis) {
       DisplayNavigationPath(DictionaryStage.searchingzis);
-      displayTextWithValue("检字表", 10.0, 40.0, 20.0, Colors.blueGrey); //Character Searching Table
+      // seems no need to show this line of text
+      //displayTextWithValue("Zi Picking Table (检字表)", 10.0, 40.0, 20.0, Colors.blueGrey); //Character Searching Table
       DisplaySearchingZis(firstZiIndex);
     }
     else if (this.dicStage == DictionaryStage.detailedzi) {
@@ -81,10 +82,11 @@ class DictionaryPainter extends BasePainter {
     displayTextWithValue("   Ex: For zi '好'， find '女' as its 'first zi'. ", 10.0, 140.0, 20.0, Colors.blueAccent);
     displayTextWithValue("1a. If the zi's 'first zi' is '' and it contains other 'first zi', choose the other as 'first zi'.", 10.0, 165.0, 20.0, Colors.blueAccent);
     displayTextWithValue("   Ex: For zi '听'， (skip '口' and) find '斤' as its 'first zi'. ", 10.0, 215.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("1b. If you can't find a 'first zi', use the first stroke of the zi to match it to one of the five 'first zi' at the beginning of the table.", 10.0, 265.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   Ex: For zi '长'， find '一' as its 'first zi'. ", 10.0, 330.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("2. Click the 'first zi' to go to 'Searching Zi Table'.", 10.0, 355.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("3. From the 'Searching Zi Table', find/click the zi you are looking for.", 10.0, 405.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("1b. If you can't find a 'first zi', use the first stroke of the zi to match it to one of the five single stroke 'first zi' at the beginning of the table.", 10.0, 265.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("    Note that all the turning strokes match to '乙'.", 10.0, 330.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("   Ex: For zi '长'， find '一' as its 'first zi'. ", 10.0, 380.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("2. Click the 'first zi' to go to 'Searching Zi Table'.", 10.0, 420.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("3. From the 'Searching Zi Table', find/click the zi you are looking for.", 10.0, 470.0, 20.0, Colors.blueAccent);
   }
 
   DisplayNavigationPath(DictionaryStage stage) {
@@ -151,6 +153,8 @@ class DictionaryPainter extends BasePainter {
 
   DisplayFirstZis() {
     double fontSize;
+    var textColor;
+    String charStr;
 
     for (var j = 0; j < 16; j++) {
       for (var i = 0; i < 12 /*realGroupMembers.length*/; i++) {
@@ -164,7 +168,15 @@ class DictionaryPainter extends BasePainter {
           fontSize = 20.0;
         }
 
-        displayTextWithValue(theFirstZiList[firstZiId].char, 20.0 + i * 30.0, 60.0 + j * 30.0 - 25.0 * 0.25, fontSize, Colors.blueAccent);
+        charStr = theFirstZiList[firstZiId].char;
+        if (charStr[0] == "[") {
+          textColor = Colors.redAccent;
+        }
+        else {
+          textColor = Colors.blueAccent;
+        }
+
+        displayTextWithValue(charStr, 20.0 + i * 30.0, 60.0 + j * 30.0 - 25.0 * 0.25, fontSize, textColor);
       }
     }
   }
@@ -174,16 +186,62 @@ class DictionaryPainter extends BasePainter {
     var length = getSearchingZiCount(firstZiIndex);
     var searchingZiId = theFirstZiList[firstZiIndex].searchingZiId;
 
+    int columnCount = 8;
+    double fontSize = 45.0;
+    double rowStartPosition = 85.0;
+
+    if (length > 40 && length <= 80) {
+      columnCount = 9;
+      fontSize = 40.0;
+      rowStartPosition = 80.0;
+    }
+    else if (length > 80 && length <= 120) {
+      columnCount = 10;
+      fontSize = 35.0;
+      rowStartPosition = 75.0;
+    }
+    else if (length > 120 && length <= 135) {
+      columnCount = 11;
+      fontSize = 30.0;
+      rowStartPosition = 70.0;
+    }
+    else if (length > 135) {
+      columnCount = 12;
+      fontSize = 28.0;
+      rowStartPosition = 65.0;
+    }
+
+    int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
+    int newCharCount = 0;
+    int previousNetStrokeCount = 0;
+    int currentNetStrokeCount = 0;
+    double strokeIndexFontSize = 20.0;
+    int minCharsForStrokeIndex = 15;
+    String strokeIndexStr;
+
     var count = 0;
     for (var j = 0; j < 16; j++) {
-      for (var i = 0; i < 12; i++) {
+      for (var i = 0; i < columnCount; i++) {  //12
         //int firstZiId = j * 12 + i;
         var searchingZi = theSearchingZiList[searchingZiId];
-        displayTextWithValue(searchingZi.char, 20.0 + i * 30.0, 90.0 + j * 30.0 - 25.0 * 0.25, 25.0, Colors.blueAccent);
-        searchingZiId++;
-        count++;
-        if (count >= length) {
-          return;
+        currentNetStrokeCount = searchingZi.strokeCount - baseStrokeCount;
+
+        if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
+          strokeIndexStr = "[" + currentNetStrokeCount.toString() + "]";
+          displayTextWithValue(strokeIndexStr, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, strokeIndexFontSize, Colors.brown);
+          newCharCount = 0;
+          previousNetStrokeCount = currentNetStrokeCount;
+        }
+        else {
+          //displayTextWithValue(searchingZi.char, 20.0 + i * 30.0, 90.0 + j * 30.0 - 25.0 * 0.25, 25.0, Colors.blueAccent);
+          displayTextWithValue(searchingZi.char, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, fontSize, Colors.blueAccent);
+          newCharCount++;
+          previousNetStrokeCount = currentNetStrokeCount;
+          searchingZiId++;
+          count++;
+          if (count >= length) {
+            return;
+          }
         }
       }
     }
