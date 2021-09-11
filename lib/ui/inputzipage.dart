@@ -22,6 +22,7 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousText = "";
   bool justCompletedPosting = false;
   List<String> ziCandidates = null;
+  bool isCurrentlyUnderChoiceSelection = false;
 
 
   int updateCounter = 0;
@@ -46,7 +47,14 @@ class _InputZiPageState extends State<InputZiPage> {
         newInputText = _controller.value.text.substring(0, previousStartComposing);
       }
       else {
-        newInputText = _controller.value.text;
+        var str = _controller.value.text;
+        // check if last letter is a choice number, in this case, not a real input and need to be removed
+        if (isNumberOneToSeven(str[_controller.value.text.length - 1]) || str[_controller.value.text.length - 1] == " ") {
+          newInputText = _controller.value.text.substring(0, _controller.value.text.length - 1);
+        }
+        else {
+          newInputText = _controller.value.text;
+        }
       }
     }
 
@@ -137,6 +145,10 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputHelper(int selectionIndex) {
+    if (isCurrentlyUnderChoiceSelection) {
+      return;
+    }
+
     print('Second text field: ${_controller.text}');
     String latestInputKeyLetter = "";
 
@@ -183,14 +195,14 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      if (!justCompletedPosting) {
+      //if (!justCompletedPosting) {
         setTextBySelectionIndex(selectionIndex);
-      }
+      //4}
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
-      if (!justCompletedPosting) {
+      //if (!justCompletedPosting) {
         setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
-      }
+      //}
     }
     else if (isALetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
@@ -293,7 +305,10 @@ class _InputZiPageState extends State<InputZiPage> {
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
+        // this lock mechanism seems working fine, but not sure ...
+        isCurrentlyUnderChoiceSelection = true;
         setTextBySelectionIndex(candidateIndex);
+        isCurrentlyUnderChoiceSelection = false;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );

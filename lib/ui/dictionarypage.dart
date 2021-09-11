@@ -185,7 +185,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           Container(
             alignment: Alignment.topLeft,
             padding: const EdgeInsets.all(10),
-            child: Text("Type a zi to search (ex: '好') using Hanzishu Input method:",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
+            child: Text("Type a zi to search (ex: '好') using Hanzishu Input method:[Note: not yet implemented.]",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
           ),
           Container(
             padding: const EdgeInsets.all(10),
@@ -559,25 +559,52 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     else if (dicStage == DictionaryStage.searchingzis) {
       var length = DictionaryPainter.getSearchingZiCount(firstZiIndex);
       var searchingZiId = theFirstZiList[firstZiIndex].searchingZiId;
+      PrimitiveWrapper actualColumnCount = new PrimitiveWrapper(0);
+      PositionAndSize startPosition = new PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+      DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
+
+      int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
+      int newCharCount = 0;
+      int previousNetStrokeCount = 0;
+      int currentNetStrokeCount = 0;
 
       var count = 0;
       for (var j = 0; j < 16; j++) {
-        for (var i = 0; i < 12; i++) {
-          var positionAndSize = PositionAndSize(
-              20.0 + i * 30.0, 90.0 + j * 30.0, 27.0, 27.0, 0.0, 0.0);
+        for (var i = 0; i < actualColumnCount.value; i++) {
+          var searchingZi = theSearchingZiList[searchingZiId];
+          currentNetStrokeCount = searchingZi.strokeCount - baseStrokeCount;
 
-          var posi = getPositionedButton(
-              positionAndSize, searchingZiId);
+          if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= DictionaryPainter.minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
+            newCharCount = 0;
+            previousNetStrokeCount = currentNetStrokeCount;
+          }
+          else {
+            //displayTextWithValue(searchingZi.char, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, fontSize, Colors.blueAccent);
+            var positionAndSize = PositionAndSize(
+                startPosition.transX + i * startPosition.width,
+                startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/,
+                startPosition.width,
+                startPosition.height,
+                startPosition.charFontSize,
+                startPosition.lineWidth);
 
-          //thePositionManager.updatePositionIndex(168 /*memberZiId*/);
-          buttons.add(posi);
+            var posi = getPositionedButton(
+                positionAndSize, searchingZiId);
 
-          searchingZiId++;
-          count++;
+            //thePositionManager.updatePositionIndex(168 /*memberZiId*/);
+            buttons.add(posi);
+            newCharCount++;
+            previousNetStrokeCount = currentNetStrokeCount;
 
-          if (count > length) {
-            CreateNavigationHitttestButtons(DictionaryStage.searchingzis, buttons);
-            return buttons; // stop the loop
+            searchingZiId++;
+            count++;
+
+            if (count > length) {
+              CreateNavigationHitttestButtons(
+                  DictionaryStage.searchingzis, buttons);
+              return buttons; // stop the loop
+            }
           }
         }
       }

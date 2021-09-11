@@ -407,9 +407,19 @@ class MyString {
   MyString(this.str);
 }
 
+/*
 class PrimitiveWrapper {
   double value;
   PrimitiveWrapper(double value) {
+    this.value = value;
+  }
+}
+*/
+
+// for int and double
+class PrimitiveWrapper {
+  var value;
+  PrimitiveWrapper(var value) {
     this.value = value;
   }
 }

@@ -11,6 +11,7 @@ import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
+import 'package:hanzishu/utility.dart';
 
 enum DictionaryStage {
   firstzis,
@@ -30,6 +31,7 @@ class DictionaryPainter extends BasePainter {
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
+  static int minCharsForStrokeIndex = 15;
 
   DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex) {
     this.lineColor = lineColor;
@@ -155,6 +157,7 @@ class DictionaryPainter extends BasePainter {
     double fontSize;
     var textColor;
     String charStr;
+    double yPosi;
 
     for (var j = 0; j < 16; j++) {
       for (var i = 0; i < 12 /*realGroupMembers.length*/; i++) {
@@ -171,70 +174,87 @@ class DictionaryPainter extends BasePainter {
         charStr = theFirstZiList[firstZiId].char;
         if (charStr[0] == "[") {
           textColor = Colors.redAccent;
+          yPosi = 60.0 + j * (25.0 + 5.0) /*- 25.0 * 0.25*/;
         }
         else {
           textColor = Colors.blueAccent;
+          yPosi =  60.0 + j * (25.0 + 5.0) - 25.0 * 0.25;
         }
 
-        displayTextWithValue(charStr, 20.0 + i * 30.0, 60.0 + j * 30.0 - 25.0 * 0.25, fontSize, textColor);
+        displayTextWithValue(charStr, 20.0 + i * (25.0 + 5.0), yPosi, fontSize, textColor);
       }
     }
+  }
+
+  static void getSearchingParameters(int numberOfZi, PrimitiveWrapper actualColumnCount, PositionAndSize startPosition) {
+    int columnCount = 8;
+    double fontSize = 45.0;
+    double rowStartPosition = 85.0;
+    double xStartPosition = 12.0;
+
+    if (numberOfZi > 40 && numberOfZi <= 80) {
+      columnCount = 9;
+      fontSize = 40.0;
+      rowStartPosition = 80.0;
+    }
+    else if (numberOfZi > 80 && numberOfZi <= 120) {
+      columnCount = 10;
+      fontSize = 35.0;
+      rowStartPosition = 75.0;
+    }
+    else if (numberOfZi > 120 && numberOfZi <= 135) {
+      columnCount = 11;
+      fontSize = 30.0;
+      rowStartPosition = 70.0;
+    }
+    else if (numberOfZi > 135) {
+      columnCount = 12;
+      fontSize = 28.0;
+      rowStartPosition = 65.0;
+    }
+
+    actualColumnCount.value = columnCount;
+    startPosition.transX = xStartPosition;
+    startPosition.transY = rowStartPosition;
+    startPosition.width = fontSize + 5.0;
+    startPosition.height = fontSize + 5.0;
+    startPosition.charFontSize = fontSize;
+    startPosition.lineWidth = 1.0;
   }
 
   // Note: searchingZis display uses firstZiIndex as input to show all the zis belonging to the firstZiIndex.
   DisplaySearchingZis(int firstZiIndex) {
     var length = getSearchingZiCount(firstZiIndex);
     var searchingZiId = theFirstZiList[firstZiIndex].searchingZiId;
+    PrimitiveWrapper actualColumnCount = new PrimitiveWrapper(0);
+    PositionAndSize startPosition = new PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    int columnCount = 8;
-    double fontSize = 45.0;
-    double rowStartPosition = 85.0;
-
-    if (length > 40 && length <= 80) {
-      columnCount = 9;
-      fontSize = 40.0;
-      rowStartPosition = 80.0;
-    }
-    else if (length > 80 && length <= 120) {
-      columnCount = 10;
-      fontSize = 35.0;
-      rowStartPosition = 75.0;
-    }
-    else if (length > 120 && length <= 135) {
-      columnCount = 11;
-      fontSize = 30.0;
-      rowStartPosition = 70.0;
-    }
-    else if (length > 135) {
-      columnCount = 12;
-      fontSize = 28.0;
-      rowStartPosition = 65.0;
-    }
+    DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
 
     int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
     int newCharCount = 0;
     int previousNetStrokeCount = 0;
     int currentNetStrokeCount = 0;
     double strokeIndexFontSize = 20.0;
-    int minCharsForStrokeIndex = 15;
+
     String strokeIndexStr;
 
     var count = 0;
     for (var j = 0; j < 16; j++) {
-      for (var i = 0; i < columnCount; i++) {  //12
+      for (var i = 0; i < actualColumnCount.value; i++) {  //12
         //int firstZiId = j * 12 + i;
         var searchingZi = theSearchingZiList[searchingZiId];
         currentNetStrokeCount = searchingZi.strokeCount - baseStrokeCount;
 
         if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
           strokeIndexStr = "[" + currentNetStrokeCount.toString() + "]";
-          displayTextWithValue(strokeIndexStr, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, strokeIndexFontSize, Colors.brown);
+          displayTextWithValue(strokeIndexStr, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/, strokeIndexFontSize, Colors.brown);
           newCharCount = 0;
           previousNetStrokeCount = currentNetStrokeCount;
         }
         else {
           //displayTextWithValue(searchingZi.char, 20.0 + i * 30.0, 90.0 + j * 30.0 - 25.0 * 0.25, 25.0, Colors.blueAccent);
-          displayTextWithValue(searchingZi.char, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, fontSize, Colors.blueAccent);
+          displayTextWithValue(searchingZi.char, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height - startPosition.charFontSize * 0.25, startPosition.charFontSize, Colors.blueAccent);
           newCharCount++;
           previousNetStrokeCount = currentNetStrokeCount;
           searchingZiId++;

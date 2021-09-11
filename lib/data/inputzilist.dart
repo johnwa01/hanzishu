@@ -1,5 +1,6 @@
 import 'package:hanzishu/engine/inputzi.dart';
 
+
 var theInputZiList=[
   InputZi("aaa", 11288,"鞋", "xie2"),
   InputZi("aag", 12107,"牲", "sheng1"),
@@ -3840,21 +3841,19 @@ var theInputZiList=[
 
 
 /*
-import 'package:hanzishu/engine/inputzi.dart';
-
 var theInputZiList = [
-  InputZi("ac", 11, "丌"),
-  InputZi("apa", 2, "开"),
-  InputZi("apau", 7, "无"),
-  InputZi("apaue", 4, "专"),
-  InputZi("apauf", 12, "丐"),
-  InputZi("apnp", 6, "互"),
-  InputZi("axo", 10, "扎"),
-  InputZi("bx",8, "厷"),
-  InputZi("ci", 3, "尤"),
-  InputZi("dcde", 5, "瓦"),
-  InputZi("de", 1, "节"),
-  InputZi("dfg", 9, "戉"),
+  InputZi("ac", 11, "丌", "aa"),
+  InputZi("apa", 2, "开", "bb"),
+  InputZi("apau", 7, "无", "cc"),
+  InputZi("apaue", 4, "专", "dd"),
+  InputZi("apauf", 12, "丐", "ee"),
+  InputZi("apnp", 6, "互", "ff"),
+  InputZi("axo", 10, "扎", "gg"),
+  InputZi("bx",8, "厷", "hh"),
+  InputZi("ci", 3, "尤", "ii"),
+  InputZi("dcde", 5, "瓦", "jj"),
+  InputZi("de", 1, "节", "kk"),
+  InputZi("dfg", 9, "戉", "ll"),
 ];
 */
 
