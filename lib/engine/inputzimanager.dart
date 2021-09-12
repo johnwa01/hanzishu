@@ -22,10 +22,16 @@ class InputZiManager {
   }
 
   static int findLast(int firstIndex, String input) {
-    for (var i = firstIndex; i < theInputZiList.length; i++) {
+    var len = theInputZiList.length;
+
+    for (var i = firstIndex; i < len; i++) {
       var oneInputZi = theInputZiList[i];
+
       if (!oneInputZi.doubleByteCode.startsWith(input)) {
         return i - 1;
+      }
+      else if (i == len - 1) { // same and the last one in the list (for 'y')
+        return len - 1;
       }
     }
 
