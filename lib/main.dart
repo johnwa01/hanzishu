@@ -27,7 +27,7 @@ import 'package:hanzishu/ui/toolspage.dart';
 
 import 'package:hanzishu/ui/animatedpathpainter.dart'; // TODO: temp
 import 'package:hanzishu/engine/inputzimanager.dart';
-
+import 'package:hanzishu/engine/componentmanager.dart';
 
 void main() {
   runApp(MyApp());
@@ -103,6 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theQuizManager = QuizManager();
     theStatisticsManager = StatisticsManager();
     theInputZiManager = InputZiManager();
+    theComponentManager = ComponentManager();
 
     theStatisticsManager.init(0,
         0.0,

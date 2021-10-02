@@ -6,6 +6,8 @@ import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
@@ -201,16 +203,14 @@ class BasePainter extends CustomPainter{
     canvas.drawPath(path, paint);
   }
 
-  static Path createZiPathScaled(int id, double widthX, double heightY) {
-    var zi = theZiManager.getZi(id);
-    var ziStrokes = zi.strokes;
-    var pathZi = createZiPathBase(ziStrokes);
+  static Path createZiPathScaled(List<double>strokes, double widthX, double heightY) {
+    var pathZi = createZiPathBase(strokes);
     return transformZiPathScale(pathZi, widthX, heightY);
   }
 
-  void buildBaseZi(int id, double transX, double transY, double widthX, double heightY, MaterialColor ofColor, /*int hitTestId, int recursiveLevel,*/ bool isSingleColor, double ziLineWidth)
+  void buildBaseZi(List<double> strokes, double transX, double transY, double widthX, double heightY, MaterialColor ofColor, /*int hitTestId, int recursiveLevel,*/ bool isSingleColor, double ziLineWidth)
   {
-    var pathZiScaled = createZiPathScaled(id, widthX, heightY);
+    var pathZiScaled = createZiPathScaled(strokes, widthX, heightY);
 
     var pathZiTransformed = transformZiPath(pathZiScaled, transX, transY);
 
@@ -228,6 +228,13 @@ class BasePainter extends CustomPainter{
   void displayText(int id, double transX, double transY, double charFontSize, Color color) {
     var zi = theZiManager.getZi(id);
     var char = zi.char;
+
+    displayTextWithValue(char, transX, transY, charFontSize, color);
+  }
+
+  void displayComponentText(int id, double transX, double transY, double charFontSize, Color color) {
+    var component = theComponentManager.getComponent(id);
+    var char = component.charOrNameOfNonchar;
 
     displayTextWithValue(char, transX, transY, charFontSize, color);
   }
@@ -302,8 +309,10 @@ class BasePainter extends CustomPainter{
       var zi = theZiManager.getZi(id);
       if (zi.isStrokeOrNonChar() && zi.char != '*' /*&& !isReviewCenterPseudoZi &&
           !isReviewCenterPseudoNonCharZi*/) {
+        var strokes = theZiManager.getZi(id).strokes;
+
         buildBaseZi(
-            id,
+            strokes,
             transX,
             transY,
             widthX,
@@ -335,6 +344,29 @@ class BasePainter extends CustomPainter{
     }
 
     // TODO: if createFrame, add to data structure for hittest buttons.
+  }
+
+  void drawComponentZi(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
+    var comp = theComponentManager.getComponent(id);
+
+    if (!comp.isChar) {
+      var strokes = comp.strokes;
+      buildBaseZi(
+            strokes,
+            transX,
+            transY,
+            widthX,
+            heightY,
+            ofColor, /*int hitTestId,*/
+            isSingleColor,
+            ziLineWidth);
+    }
+    else {
+        double textTransYAdjusted = textTransYAdjust(transY, heightY);
+        displayComponentText(
+            id, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
+    }
   }
 
   // currently used for compound zi animation

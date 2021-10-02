@@ -59,7 +59,8 @@ class AnimatedPathPainter extends CustomPainter {
   AnimatedPathPainter(this._animation) : super(repaint: _animation);
 
   Path _createAnyPath(Size size) {
-    return BasePainter.createZiPathScaled(theCurrentCenterZiId, size.width, size.height);
+    var strokes = theZiManager.getZi(theCurrentCenterZiId).strokes;
+    return BasePainter.createZiPathScaled(strokes, size.width, size.height);
     /*
     return Path()
       ..moveTo(size.height / 4, size.height / 4)

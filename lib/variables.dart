@@ -12,6 +12,7 @@ var theStorageHandler = null;
 var theQuizManager = null;
 var theStatisticsManager = null;
 var theInputZiManager = null;
+var theComponentManager = null;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 60; //TODO: to lessonmanager?
