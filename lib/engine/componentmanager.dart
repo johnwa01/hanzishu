@@ -5,12 +5,14 @@ import 'package:hanzishu/data/componentlist.dart';
 
 
 class ComponentManager {
-  var currentQuestionType = QuestionType.ComponentGroup; // starting with 1, 0 for no more
-   int currentIndex = 1;
+  var currentQuestionType = QuestionType
+      .ComponentGroup; // starting with 1, 0 for no more
+  int currentIndex = 1;
   AnswerPosition correctAnswerPosition;
 
   initValues() {
-    currentQuestionType = QuestionType.ComponentGroup; // starting with 1, 0 for no more
+    currentQuestionType =
+        QuestionType.ComponentGroup; // starting with 1, 0 for no more
   }
 
   int getTotalQuestions(QuestionType questionType) {
@@ -19,10 +21,10 @@ class ComponentManager {
       total = theComponentGroupList.length;
     }
     else if (questionType == QuestionType.ComponentInGroup) {
-      total = theLeadComponentList.length;
+      total = theComponentInGroupList.length;
     }
     else if (questionType == QuestionType.Component) {
-      total = theLeadComponentList.length;
+      total = theRandomComponentList.length;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       total = theExpandedComponentList.length;
@@ -40,7 +42,7 @@ class ComponentManager {
   }
 
   initCurrentIndex() {
-    this.currentIndex = 0;  // skip the 0 which is a placeholder one
+    this.currentIndex = 0; // skip the 0 which is a placeholder one
   }
 
   //List<String> getCurrentValues() {
@@ -49,8 +51,9 @@ class ComponentManager {
 
   //TODO: a nicer way to compare a range
   bool isGroupOrIndividualAnswerType(AnswerPosition answerPosition) {
-    if (answerPosition == AnswerPosition.none || answerPosition == AnswerPosition.continueNext) {
-          return false;
+    if (answerPosition == AnswerPosition.none ||
+        answerPosition == AnswerPosition.continueNext) {
+      return false;
     }
 
     return true;
@@ -67,10 +70,10 @@ class ComponentManager {
         answerPosition == AnswerPosition.groupPosition4 ||
         answerPosition == AnswerPosition.groupPosition5 ||
         answerPosition == AnswerPosition.groupPosition6) {
-          return AnswerType.GroupNumber;
+      return AnswerType.GroupNumber;
     }
     else {
-          return AnswerType.IndividualNumber;
+      return AnswerType.IndividualNumber;
     }
   }
 
@@ -78,27 +81,33 @@ class ComponentManager {
     AnswerPosition posi = AnswerPosition.none;
 
     switch (index) {
-        case 1: {
+      case 1:
+        {
           posi = AnswerPosition.groupPosition1;
         }
         break;
-        case 2: {
+      case 2:
+        {
           posi = AnswerPosition.groupPosition2;
         }
         break;
-        case 3: {
+      case 3:
+        {
           posi = AnswerPosition.groupPosition3;
         }
         break;
-        case 4: {
+      case 4:
+        {
           posi = AnswerPosition.groupPosition4;
         }
         break;
-        case 5: {
+      case 5:
+        {
           posi = AnswerPosition.groupPosition5;
         }
         break;
-        case 6: {
+      case 6:
+        {
           posi = AnswerPosition.groupPosition6;
         }
         break;
@@ -110,41 +119,91 @@ class ComponentManager {
   AnswerPosition getPositionByGroupAndIndex(int groupNumber, int indexNumber) {
     AnswerPosition posi = AnswerPosition.none;
     if (groupNumber == 1) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual11; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual12; }
-      else if (indexNumber == 3) { posi = AnswerPosition.individual13; }
-      else if (indexNumber == 4) { posi = AnswerPosition.individual14; }
-      else if (indexNumber == 5) { posi = AnswerPosition.individual15; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual11;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual12;
+      }
+      else if (indexNumber == 3) {
+        posi = AnswerPosition.individual13;
+      }
+      else if (indexNumber == 4) {
+        posi = AnswerPosition.individual14;
+      }
+      else if (indexNumber == 5) {
+        posi = AnswerPosition.individual15;
+      }
     }
     else if (groupNumber == 2) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual21; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual22; }
-      else if (indexNumber == 3) { posi = AnswerPosition.individual23; }
-      else if (indexNumber == 4) { posi = AnswerPosition.individual24; }
-      else if (indexNumber == 5) { posi = AnswerPosition.individual25; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual21;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual22;
+      }
+      else if (indexNumber == 3) {
+        posi = AnswerPosition.individual23;
+      }
+      else if (indexNumber == 4) {
+        posi = AnswerPosition.individual24;
+      }
+      else if (indexNumber == 5) {
+        posi = AnswerPosition.individual25;
+      }
     }
     else if (groupNumber == 3) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual31; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual32; }
-      else if (indexNumber == 3) { posi = AnswerPosition.individual33; }
-      else if (indexNumber == 4) { posi = AnswerPosition.individual34; }
-      else if (indexNumber == 5) { posi = AnswerPosition.individual35; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual31;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual32;
+      }
+      else if (indexNumber == 3) {
+        posi = AnswerPosition.individual33;
+      }
+      else if (indexNumber == 4) {
+        posi = AnswerPosition.individual34;
+      }
+      else if (indexNumber == 5) {
+        posi = AnswerPosition.individual35;
+      }
     }
     else if (groupNumber == 4) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual41; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual42; }
-      else if (indexNumber == 3) { posi = AnswerPosition.individual43; }
-      else if (indexNumber == 4) { posi = AnswerPosition.individual44; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual41;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual42;
+      }
+      else if (indexNumber == 3) {
+        posi = AnswerPosition.individual43;
+      }
+      else if (indexNumber == 4) {
+        posi = AnswerPosition.individual44;
+      }
     }
     else if (groupNumber == 5) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual51; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual52; }
-      else if (indexNumber == 3) { posi = AnswerPosition.individual53; }
-      else if (indexNumber == 4) { posi = AnswerPosition.individual54; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual51;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual52;
+      }
+      else if (indexNumber == 3) {
+        posi = AnswerPosition.individual53;
+      }
+      else if (indexNumber == 4) {
+        posi = AnswerPosition.individual54;
+      }
     }
     else if (groupNumber == 6) {
-      if (indexNumber == 1) { posi = AnswerPosition.individual61; }
-      else if (indexNumber == 2) { posi = AnswerPosition.individual62; }
+      if (indexNumber == 1) {
+        posi = AnswerPosition.individual61;
+      }
+      else if (indexNumber == 2) {
+        posi = AnswerPosition.individual62;
+      }
     }
 
     return posi;
@@ -155,7 +214,8 @@ class ComponentManager {
   }
 
   AnswerPosition getCorrectAnswerPosition() {
-    if (correctAnswerPosition != null && correctAnswerPosition != AnswerPosition.none) {
+    if (correctAnswerPosition != null &&
+        correctAnswerPosition != AnswerPosition.none) {
       return correctAnswerPosition;
     }
 
@@ -164,16 +224,19 @@ class ComponentManager {
       correctAnswerPosition = GetPositionByGroup(group.id);
     }
     else if (currentQuestionType == QuestionType.Component) {
-      var comp = theLeadComponentList[currentIndex];
-      correctAnswerPosition = getPositionByGroupAndIndex(comp.groupNumber, comp.indexInGroup);
+      var comp = theRandomComponentList[currentIndex];
+      correctAnswerPosition =
+          getPositionByGroupAndIndex(comp.groupNumber, comp.indexInGroup);
     }
     else if (currentQuestionType == QuestionType.ComponentInGroup) {
       var compInGroup = theComponentInGroupList[currentIndex];
-      correctAnswerPosition = getPositionByGroupAndIndex(compInGroup.groupNumber, compInGroup.indexInGroup);
+      correctAnswerPosition = getPositionByGroupAndIndex(
+          compInGroup.groupNumber, compInGroup.indexInGroup);
     }
     else if (currentQuestionType == QuestionType.ExpandedComponent) {
       var expandedComp = theExpandedComponentList[currentIndex];
-      correctAnswerPosition = getPositionByGroupAndIndex(expandedComp.groupNumber, expandedComp.indexInGroup);
+      correctAnswerPosition = getPositionByGroupAndIndex(
+          expandedComp.groupNumber, expandedComp.indexInGroup);
     }
 
     return correctAnswerPosition;
@@ -215,14 +278,17 @@ class ComponentManager {
   }
 
   String getCurrentComponentValue() {
+    var comp;
+
     if (currentQuestionType == QuestionType.Component) {
-      return theLeadComponentList[currentIndex].charOrNameOfNonchar;
+      comp = getComponentFromRandomComponentList(currentIndex);
     }
     else { // ComponentInGroup
-      var comp = getComponentFromComponentInGroup(currentIndex);
-      if (comp != null) {
-        return comp.charOrNameOfNonchar;
-      }
+      comp = getComponentFromComponentInGroup(currentIndex);
+    }
+
+    if (comp != null) {
+      return comp.charOrNameOfNonchar;
     }
 
     return '';
@@ -233,17 +299,19 @@ class ComponentManager {
   }
 
   int getCurrentComponentId() {
+    var comp;
     if (currentQuestionType == QuestionType.Component) {
-      return theLeadComponentList[currentIndex].id;
+      comp = getComponentFromRandomComponentList(currentIndex);
     }
     else { // ComponentInGroup
-      var  comp = getComponentFromComponentInGroup(currentIndex);
-      if (comp != null) {
-        return comp.id;
-      }
-      else {
-        return -1;
-      }
+      comp = getComponentFromComponentInGroup(currentIndex);
+    }
+
+    if (comp != null) {
+      return comp.id;
+    }
+    else {
+      return -1;
     }
   }
 
@@ -253,7 +321,8 @@ class ComponentManager {
 
     for (int i = 0; i < leng; i++) {
       comp = theLeadComponentList[i];
-      if (comp.groupNumber == groupNumber && comp.indexInGroup == indexInGroup) {
+      if (comp.groupNumber == groupNumber &&
+          comp.indexInGroup == indexInGroup) {
         return comp;
       }
     }
@@ -268,18 +337,301 @@ class ComponentManager {
     return getComponentByGroupAndIndex(groupNumber, indexInGroup);
   }
 
+  Component getComponentFromRandomComponentList(int index) {
+    var comp = theRandomComponentList[index];
+    var groupNumber = comp.groupNumber;
+    var indexInGroup = comp.indexInGroup;
+    return getComponentByGroupAndIndex(groupNumber, indexInGroup);
+  }
+
   bool isCurrentComponentChar() {
     bool isChar = false;
+    var comp;
     if (currentQuestionType == QuestionType.Component) {
-      isChar = theLeadComponentList[currentIndex].isChar;
+      comp = getComponentFromRandomComponentList(currentIndex);
     }
-    else {   // ComponentInGroup
-      var comp = getComponentFromComponentInGroup(currentIndex);
-      if (comp != null) {
-        isChar = comp.isChar;
-      }
+    else { // ComponentInGroup
+      comp = getComponentFromComponentInGroup(currentIndex);
+    }
+
+    if (comp != null) {
+      isChar = comp.isChar;
     }
 
     return isChar;
+  }
+
+  // the component index is 0, indicating to show the group image only
+  bool isHeaderOfComponentInGroup() {
+    if (currentQuestionType == QuestionType.ComponentInGroup) {
+      if (theComponentInGroupList[currentIndex].indexInGroup == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // the group index is 0, indicating to show the image for whole groups
+  bool isHeaderOfGroups() {
+    if (currentQuestionType == QuestionType.ComponentGroup) {
+      if (theComponentGroupList[currentIndex].id == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  bool isHeaderOfRandomComponents() {
+    if (currentQuestionType == QuestionType.Component) {
+      if (theRandomComponentList[currentIndex].groupNumber == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  bool isHeaderOfExpandedComponents() {
+    if (currentQuestionType == QuestionType.ExpandedComponent) {
+      if (theExpandedComponentList[currentIndex].groupNumber == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  int getCurrentGroupNumberOfComponentInGroup(AnswerPosition position) {
+    int groupNumber = -1;
+    if (position == AnswerPosition.individual11 ||
+        position == AnswerPosition.individual12 ||
+        position == AnswerPosition.individual13 ||
+        position == AnswerPosition.individual14 ||
+        position == AnswerPosition.individual15) {
+      groupNumber = 1;
+    }
+    else if (position == AnswerPosition.individual21 ||
+        position == AnswerPosition.individual22 ||
+        position == AnswerPosition.individual23 ||
+        position == AnswerPosition.individual24 ||
+        position == AnswerPosition.individual25) {
+      groupNumber = 2;
+    }
+    else if (position == AnswerPosition.individual31 ||
+        position == AnswerPosition.individual32 ||
+        position == AnswerPosition.individual33 ||
+        position == AnswerPosition.individual34 ||
+        position == AnswerPosition.individual35) {
+      groupNumber = 3;
+    }
+    else if (position == AnswerPosition.individual41 ||
+        position == AnswerPosition.individual42 ||
+        position == AnswerPosition.individual43 ||
+        position == AnswerPosition.individual44) {
+      groupNumber = 4;
+    }
+    else if (position == AnswerPosition.individual51 ||
+        position == AnswerPosition.individual52 ||
+        position == AnswerPosition.individual53 ||
+        position == AnswerPosition.individual54) {
+      groupNumber = 5;
+    }
+    else if (position == AnswerPosition.individual61 ||
+        position == AnswerPosition.individual62) {
+      groupNumber = 6;
+    }
+
+    return groupNumber;
+  }
+
+  bool isPositionAtRightGroup(AnswerPosition position) {
+    if (currentQuestionType == QuestionType.ComponentInGroup) {
+      var groupNumber = getCurrentGroupNumberOfComponentInGroup(position);
+
+      if (theComponentInGroupList[currentIndex].groupNumber != groupNumber) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+// TODO: Move to manager
+  String getAnswerDisplayValue(AnswerPosition position) {
+    if (position == AnswerPosition.none) {
+      return "";
+    }
+
+    var value;
+    //var currentValues = theComponentManager.getCurrentValues();
+
+    switch (position) {
+      case AnswerPosition.center:
+        {
+          value = getCurrentComponentValue(); //"好"; //currentValues[0];
+        }
+        break;
+      case AnswerPosition.groupPosition1:
+        {
+          value = "Group 1";
+        }
+        break;
+      case AnswerPosition.groupPosition2:
+        {
+          value = "Group 2";
+        }
+        break;
+      case AnswerPosition.groupPosition3:
+        {
+          value = "Group 3";
+        }
+        break;
+      case AnswerPosition.groupPosition4:
+        {
+          value = "Group 4";
+        }
+        break;
+      case AnswerPosition.groupPosition5:
+        {
+          value = "Group 5";
+        }
+        break;
+      case AnswerPosition.groupPosition6:
+        {
+          value = "Group 6";
+        }
+        break;
+      case AnswerPosition.individual11:
+        {
+          value = "11";
+        }
+        break;
+      case AnswerPosition.individual12:
+        {
+          value = "12";
+        }
+        break;
+      case AnswerPosition.individual13:
+        {
+          value = "13";
+        }
+        break;
+      case AnswerPosition.individual14:
+        {
+          value = "14";
+        }
+        break;
+      case AnswerPosition.individual15:
+        {
+          value = "15";
+        }
+        break;
+      case AnswerPosition.individual21:
+        {
+          value = "21";
+        }
+        break;
+      case AnswerPosition.individual22:
+        {
+          value = "22";
+        }
+        break;
+      case AnswerPosition.individual23:
+        {
+          value = "23";
+        }
+        break;
+      case AnswerPosition.individual24:
+        {
+          value = "24";
+        }
+        break;
+      case AnswerPosition.individual25:
+        {
+          value = "25";
+        }
+        break;
+      case AnswerPosition.individual31:
+        {
+          value = "31";
+        }
+        break;
+      case AnswerPosition.individual32:
+        {
+          value = "32";
+        }
+        break;
+      case AnswerPosition.individual33:
+        {
+          value = "33";
+        }
+        break;
+      case AnswerPosition.individual34:
+        {
+          value = "34";
+        }
+        break;
+      case AnswerPosition.individual35:
+        {
+          value = "35";
+        }
+        break;
+      case AnswerPosition.individual41:
+        {
+          value = "41";
+        }
+        break;
+      case AnswerPosition.individual42:
+        {
+          value = "42";
+        }
+        break;
+      case AnswerPosition.individual43:
+        {
+          value = "43";
+        }
+        break;
+      case AnswerPosition.individual44:
+        {
+          value = "44";
+        }
+        break;
+      case AnswerPosition.individual51:
+        {
+          value = "51";
+        }
+        break;
+      case AnswerPosition.individual52:
+        {
+          value = "52";
+        }
+        break;
+      case AnswerPosition.individual53:
+        {
+          value = "53";
+        }
+        break;
+      case AnswerPosition.individual54:
+        {
+          value = "54";
+        }
+        break;
+      case AnswerPosition.individual61:
+        {
+          value = "61";
+        }
+        break;
+      case AnswerPosition.individual62:
+        {
+          value = "62";
+        }
+        break;
+      default:
+        value = '';
+    }
+
+    return value;
   }
 }

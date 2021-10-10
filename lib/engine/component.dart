@@ -109,6 +109,7 @@ class Component {
   bool isLeadComponent;
   int groupNumber;
   int indexInGroup;
+  String image;
   String strokesString;
   List<double> strokes;
 
@@ -121,6 +122,7 @@ class Component {
     bool isLeadComponent,
     int groupNumber,
     int indexInGroup,
+        String image,
         String strokesString,
       List<double> strokes)
   {
@@ -131,6 +133,7 @@ class Component {
       this.isLeadComponent = isLeadComponent;
       this.groupNumber = groupNumber;
       this.indexInGroup = indexInGroup;
+      this.image = image;
       this.strokesString = strokesString;
       this.strokes = strokes;
   }

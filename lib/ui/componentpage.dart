@@ -79,7 +79,7 @@ class _ComponentPageState extends State<ComponentPage> {
       (
       appBar: AppBar
         (
-        title: Text("Memorize leading component"),
+        title: Text("Memorize lead components"),
       ),
       body: Center
         (
@@ -103,9 +103,9 @@ class _ComponentPageState extends State<ComponentPage> {
             child: getQuestion(context),
             padding: EdgeInsets.all(10),
           ),
-          Container(
-            padding: EdgeInsets.all(10), //
-          ),
+          //Container(
+          //  padding: EdgeInsets.all(10), //
+          //),
           getAnswers(context),
           Container(
             child: getContinue(context),
@@ -117,17 +117,138 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getAnswers(BuildContext context) {
     if (this.questionType == QuestionType.ComponentGroup) {
-      return Container(
-        child: getGroupAnswers(context),
-        padding: EdgeInsets.all(20), //10
-      );
+      if (theComponentManager.isHeaderOfGroups()) {
+        // just return an empty Widget
+        //return Container(
+        //  padding: EdgeInsets.all(40), //10
+        //);
+        return getHeaderOfGroups();
+      }
+      else {
+        return Container(
+          child: getGroupAnswers(context),
+          padding: EdgeInsets.all(20), //10
+        );
+      }
     }
-    else if(this.questionType == QuestionType.Component  || this.questionType == QuestionType.ComponentInGroup  ||this.questionType == QuestionType.ExpandedComponent) {
-      return Container(
-        child: getIndividualAnswers(context),
-        padding: EdgeInsets.all(20),
-      );
+    else if(this.questionType == QuestionType.Component  || this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup || this.questionType == QuestionType.ExpandedComponent) {
+      if (this.questionType == QuestionType.ComponentInGroup && theComponentManager.isHeaderOfComponentInGroup()) {
+        if (currentIndex == 0) {
+          // only for the first time
+          return getHeaderOfComponentInGroup();
+        }
+        else {
+          // just return an empty Widget
+          return Container(
+            padding: EdgeInsets.all(40), //10
+          );
+        }
+      }
+      else if (this.questionType == QuestionType.Component && theComponentManager.isHeaderOfRandomComponents()) {
+        // just return an empty Widget
+        return Container(
+          padding: EdgeInsets.all(40), //10
+        );
+      }
+      //else if (this.questionType == QuestionType.ExpandedComponent && theComponentManager.isHeaderOfExpandedComponents()) {
+        // just return an empty Widget
+      //  return Container(
+      //    padding: EdgeInsets.all(40), //10
+      //  );
+      //}
+      else {
+        return Container(
+          child: getIndividualAnswers(context),
+          padding: EdgeInsets.all(20),
+        );
+      }
     }
+  }
+
+  /*
+  Widget getHeaderOfExpandedComponents() {
+    return Column(
+        children: <Widget>[
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(width: 20),
+                Flexible (
+                  child: Text(
+                      'Each lead component has some expanded components associated to it. Those expanded components look more or less similar to their corresponding lead component and share the same keyboard key. It is important to get more and more familiar with them over the time of actual typing.',
+                      style: TextStyle(fontSize: 20)
+                  ),
+                )
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+        ]
+    );
+  }
+*/
+  
+  Widget getHeaderOfGroups() {
+    return Column(
+        children: <Widget>[
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(width: 20),
+              Flexible (
+                child: Text(
+                  'Note: The lead components are divided into six groups and mapped to the keyboard.',
+                  style: TextStyle(fontSize: 20)
+                ),
+              )
+            ]
+          ),
+          Row(
+            children: <Widget>[
+              SizedBox(height: 40),
+            ]
+          ),
+        ]
+    );
+  }
+
+  Widget getHeaderOfComponentInGroup() {
+    return Column(
+        children: <Widget>[
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(width: 20),
+                Flexible (
+                  child: Text(
+                    'Note: A component ID contains two digits. The first digit is the group number it belongs to, and the second digit is the index within the group, starting from middle to side.',
+                    style: TextStyle(fontSize: 20)
+                  ),
+                )
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+        ]
+    );
   }
 
   /*
@@ -157,30 +278,82 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getQuestion(BuildContext context) {
-    if (questionType == QuestionType.Component || questionType == QuestionType.ComponentInGroup) {
-      return getZiContainer(/*AnswerPosition.center, */ false);
+    if (questionType == QuestionType.Component) {
+      //if (theComponentManager.isHeaderOfRandomComponents()) {
+        return getQuestionImage();
+      //}
+      //else {
+      //  return getZiContainer(/*AnswerPosition.center, */ false);
+      //}
+    }  // TODO: combine with the above
+    else if (questionType == QuestionType.ComponentInGroup) {
+      //if (theComponentManager.isHeaderOfComponentInGroup()) {
+        return getQuestionImage();
+      //}
+      //else {
+      //  return getZiContainer(/*AnswerPosition.center, */ false);
+      //}
     }
-    else if (questionType == QuestionType.ComponentGroup || questionType == QuestionType.ExpandedComponent) {
+    else if (questionType == QuestionType.ComponentGroup) {
       return getQuestionImage();
+    }
+    else if (questionType == QuestionType.ExpandedComponent) {
+      //if(theComponentManager.isHeaderOfExpandedComponents()) {
+      //  return getHeaderOfExpandedComponents();
+      //}
+      //else {
+        return getQuestionImage();
+      //}
     }
   }
 
   Widget getQuestionImage() {
     String imagePath;
+    double imageWidth = 400.0;
+    double imageHeight = 150.0;
 
     if (questionType == QuestionType.ComponentGroup) {
-      imagePath = 'assets/' + theComponentGroupList[currentIndex].imageName;
+      imagePath = 'assets/typing/' + theComponentGroupList[currentIndex].imageName;
+      imageHeight = 200.0;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      imagePath = 'assets/' + theExpandedComponentList[currentIndex].imageName;
+      imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
+      imageWidth = 180.0;
+      imageHeight = 160.0;
+    }
+    else if (questionType == QuestionType.ComponentInGroup) {
+      var groupNumberOfcomponentInGroup = theComponentInGroupList[currentIndex].groupNumber;
+      var imageName;
+      if (theComponentManager.isHeaderOfComponentInGroup()) {
+        imageName = theComponentGroupWithIdList[groupNumberOfcomponentInGroup - 1].imageName;
+      }
+      else {
+        var indexOfComponentInGroup = theComponentInGroupList[currentIndex].indexInGroup;
+        var component = theComponentManager.getComponentByGroupAndIndex(groupNumberOfcomponentInGroup, indexOfComponentInGroup);
+        imageName = component.image;
+      }
+      imagePath = 'assets/typing/' + imageName;
+    }
+    else if (questionType == QuestionType.Component) { // for the header only
+      var imageName;
+      if (theComponentManager.isHeaderOfRandomComponents()) {
+         imageName = 'GG6.png';
+         imageHeight = 250.0;
+      }
+      else {
+        var componentInGroup = theRandomComponentList[currentIndex];
+        var component = theComponentManager.getComponentByGroupAndIndex(componentInGroup.groupNumber, componentInGroup.indexInGroup);
+        imageName = component.image;
+      }
+      imagePath = 'assets/typing/' + imageName;
     }
 
     return Container(
         alignment: Alignment.center,
         child: Image.asset(
             imagePath,
-            width: 200,
-            height: 200
+            width: imageWidth,
+            height: imageHeight
         )
     );
   }
@@ -188,14 +361,27 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getGroupAnswers(BuildContext context) {
     return Column(
         children: <Widget>[
-              Row(
-                textDirection: TextDirection.ltr,
-                children: <Widget>[
-                  Expanded(child: getText(AnswerPosition.groupPosition1)),
-                  SizedBox(width: 20),
-                  Expanded(child: getText(AnswerPosition.groupPosition2)),
-                ],
-              ),
+            Row(
+              children: <Widget>[
+                Text(
+                  'Which group is it?',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                ),
+              ]
+            ),
+            Row(
+              children: <Widget>[
+                SizedBox(height: 20),
+              ]
+            ),
+            Row(
+              textDirection: TextDirection.ltr,
+              children: <Widget>[
+                Expanded(child: getText(AnswerPosition.groupPosition1)),
+                SizedBox(width: 20),
+                Expanded(child: getText(AnswerPosition.groupPosition2)),
+              ],
+            ),
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
@@ -217,8 +403,44 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
+    String question = 'Which is its ID?';
+    double size = 20.0;
+
+    if (questionType == QuestionType.ExpandedComponent) {
+      var hint = theExpandedComponentList[currentIndex].hint;
+      question = "Guess their lead component & choose its ID. (Hint: " + hint + ")";
+      size = 18.0;
+
+      if (theComponentManager.isHeaderOfExpandedComponents()) {
+        return Flexible (
+          child: Text(
+              'Note: Each lead component (in red) has some expanded components associated to it. Those expanded components look more or less similar to their corresponding lead component and share the same keyboard key. It is important to get more and more familiar with them over the time of actual typing.',
+              style: TextStyle(fontSize: size)
+          ),
+        );
+      }
+      else {
+
+      }
+    }
+
     return Column(
         children: <Widget>[
+          Row(
+              children: <Widget>[
+                Flexible (
+                  child: Text(
+                    question,
+                    style: TextStyle(fontSize: size, fontWeight: FontWeight.bold)
+                  ),
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 20),
+              ]
+          ),
           Row(
               textDirection: TextDirection.ltr,
               //mainAxisSize: MainAxisSize.max,
@@ -352,192 +574,17 @@ class _ComponentPageState extends State<ComponentPage> {
     //return noncharId;
   }
 
-  String getAnswerDisplayValue(AnswerPosition position) {
-    if (position == AnswerPosition.none) {
-      return "";
-    }
-
-    var value;
-    //var currentValues = theComponentManager.getCurrentValues();
-
-    switch(position) {
-      case AnswerPosition.center:
-        {
-          value = theComponentManager.getCurrentComponentValue(); //"好"; //currentValues[0];
-        }
-        break;
-      case AnswerPosition.groupPosition1:
-        {
-          value = "Group 1";
-        }
-        break;
-      case AnswerPosition.groupPosition2:
-        {
-          value = "Group 2";
-        }
-        break;
-      case AnswerPosition.groupPosition3:
-        {
-          value = "Group 3";
-        }
-        break;
-      case AnswerPosition.groupPosition4:
-        {
-          value = "Group 4";
-        }
-        break;
-      case AnswerPosition.groupPosition5:
-        {
-          value = "Group 5";
-        }
-        break;
-      case AnswerPosition.groupPosition6:
-        {
-          value = "Group 6";
-        }
-        break;
-      case AnswerPosition.individual11:
-        {
-          value = "11";
-        }
-        break;
-      case AnswerPosition.individual12:
-        {
-          value = "12";
-        }
-        break;
-      case AnswerPosition.individual13:
-        {
-          value = "13";
-        }
-        break;
-      case AnswerPosition.individual14:
-        {
-          value = "14";
-        }
-        break;
-      case AnswerPosition.individual15:
-        {
-          value = "15";
-        }
-        break;
-      case AnswerPosition.individual21:
-        {
-          value = "21";
-        }
-        break;
-      case AnswerPosition.individual22:
-        {
-          value = "22";
-        }
-        break;
-      case AnswerPosition.individual23:
-        {
-          value = "23";
-        }
-        break;
-      case AnswerPosition.individual24:
-        {
-          value = "24";
-        }
-        break;
-      case AnswerPosition.individual25:
-        {
-          value = "25";
-        }
-        break;
-      case AnswerPosition.individual31:
-        {
-          value = "31";
-        }
-        break;
-      case AnswerPosition.individual32:
-        {
-          value = "32";
-        }
-        break;
-      case AnswerPosition.individual33:
-        {
-          value = "33";
-        }
-        break;
-      case AnswerPosition.individual34:
-        {
-          value = "34";
-        }
-        break;
-      case AnswerPosition.individual35:
-        {
-          value = "35";
-        }
-        break;
-      case AnswerPosition.individual41:
-        {
-          value = "41";
-        }
-        break;
-      case AnswerPosition.individual42:
-        {
-          value = "42";
-        }
-        break;
-      case AnswerPosition.individual43:
-        {
-          value = "43";
-        }
-        break;
-      case AnswerPosition.individual44:
-        {
-          value = "44";
-        }
-        break;
-      case AnswerPosition.individual51:
-        {
-          value = "51";
-        }
-        break;
-      case AnswerPosition.individual52:
-        {
-          value = "52";
-        }
-        break;
-      case AnswerPosition.individual53:
-        {
-          value = "53";
-        }
-        break;
-      case AnswerPosition.individual54:
-        {
-          value = "54";
-        }
-        break;
-      case AnswerPosition.individual61:
-        {
-          value = "61";
-        }
-        break;
-      case AnswerPosition.individual62:
-        {
-          value = "62";
-        }
-        break;
-      default:
-        value = '';
-    }
-
-    return value;
-  }
-
   Widget getText(AnswerPosition position) {
-    var answerDisplayValue = getAnswerDisplayValue(position);
+    var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
     var fontSize = xYLength(20.0); // 30.0
     var currentType = theComponentManager.getCurrentType();
 
     var backgroundColor = Colors.white;  // make it a non-material color first
     backgroundColor = Colors.blueAccent;
+
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
       //backgroundColor = Colors.blueAccent;
-      var answerType = theComponentManager.getAnswerType(answeredPosition);
+      //var answerType = theComponentManager.getAnswerType(answeredPosition);
       if (position == theComponentManager.getCorrectAnswerPosition()) {
         backgroundColor = Colors.greenAccent;
       }
@@ -555,23 +602,45 @@ class _ComponentPageState extends State<ComponentPage> {
       fontSize = xYLength(100.0);
     }
 
+    // actually no effect if no pressed action since the background will be white in that case.
+    bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
+    if (position != AnswerPosition.center && position != AnswerPosition.none && !isPositionAtRightGroup) {
+      backgroundColor = Colors.grey;
+    }
+
     var textColor = Colors.white;
 
     if (position == AnswerPosition.center) {
       textColor = Colors.cyan; //Colors.blueAccent;
     }
 
-    return Container(
-      child: FlatButton(
-        child: Text(answerDisplayValue, style: TextStyle(fontSize: fontSize),),
-        color: backgroundColor, //color,
-        textColor: textColor, //Colors.white,
-        onPressed: () {
-          setPositionState(position);
-        },
-      ),
-      //padding: EdgeInsets.all(20),
-    );
+    //if (isPositionEnabled) {
+      return Container(
+        child: FlatButton(
+          child: Text(
+            answerDisplayValue, style: TextStyle(fontSize: fontSize),),
+          color: backgroundColor, //color,
+          textColor: textColor, //Colors.white,
+          onPressed: () {
+            setPositionState(position);
+          },
+        ),
+        //padding: EdgeInsets.all(20),
+      );
+    //}
+    /*
+    else {
+      return Container(
+        child: FlatButton(
+          child: Text(
+            answerDisplayValue, style: TextStyle(fontSize: fontSize),),
+          color: backgroundColor, //color,
+          textColor: textColor, //Colors.white,
+        ),
+        //padding: EdgeInsets.all(20),
+      );
+    }
+    */
   }
 
   // is only used in question in InputZi, therefore only used in center position.
@@ -636,16 +705,32 @@ class _ComponentPageState extends State<ComponentPage> {
 
 
   Widget getContinue(BuildContext context) {
-    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
-      var result; // = "Correct! ";
-      //var answerType = theComponentManager.getAnswerType(answeredPosition);
-      if (answeredPosition != theComponentManager.getCorrectAnswerPosition()) {
-        //TODO: theStatisticsManager.incrementLessonQuizResult(false);
-        result = "Incorrect. ";
+    bool isHeaderOfComponentInGroup = theComponentManager.isHeaderOfComponentInGroup();
+    bool isHeaderOfGroups = theComponentManager.isHeaderOfGroups();
+    bool isHeaderOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
+    bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
+
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
+      var result = ""; // = "Correct! ";
+      if (isHeaderOfComponentInGroup  || isHeaderOfRandomComponents) {
+        result = "Remember ID. ";
+      }
+      else if (isHeaderOfGroups) {
+        result = "Remember Group #. ";
+      }
+      else if (isHeaderOfExpandedComponents) {
       }
       else {
-        //TODO: theStatisticsManager.incrementLessonQuizResult(true);
-        result = "Correct! ";
+        //var answerType = theComponentManager.getAnswerType(answeredPosition);
+        if (answeredPosition !=
+            theComponentManager.getCorrectAnswerPosition()) {
+          //TODO: theStatisticsManager.incrementLessonQuizResult(false);
+          result = "Incorrect. ";
+        }
+        else {
+          //TODO: theStatisticsManager.incrementLessonQuizResult(true);
+          result = "Correct! ";
+        }
       }
 
       result += "Continue";
@@ -654,8 +739,8 @@ class _ComponentPageState extends State<ComponentPage> {
 
       return Container(
         child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: xYLength(25.0)),),
-          color: Colors.blueAccent,
+          child: Text(result, style: TextStyle(fontSize: xYLength(20.0)),),
+          color: Colors.blueAccent, // Colors.brown,
           textColor: Colors.white,
           onPressed: () {
             setState(() {

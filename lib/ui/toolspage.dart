@@ -52,7 +52,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           leading: Icon(Icons.location_city),
-          title: Text("Memorize Leading Components in Groups", textDirection: TextDirection.ltr),
+          title: Text("Memorize Lead Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -67,7 +67,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           leading: Icon(Icons.location_city),
-          title: Text("Memorize Leading Components", textDirection: TextDirection.ltr),
+          title: Text("Memorize Lead Components again", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -82,7 +82,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           leading: Icon(Icons.location_city),
-          title: Text("Get familiar with expanded Components", textDirection: TextDirection.ltr),
+          title: Text("Know Expanded Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
