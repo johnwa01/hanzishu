@@ -1,5 +1,12 @@
 import 'package:hanzishu/utility.dart';
 
+enum TypingType {
+  ThreeOrMoreComponents,
+  TwoComponents,
+  OneComponent,
+  FreeTyping
+}
+
 class InputZi {
   String doubleByteCode;
   int usageFrequency;
@@ -17,5 +24,21 @@ class InputZi {
     this.usageFrequency = usageFrequency;
     this.zi = zi;
     this.pinyin = pinyin;
+  }
+}
+
+class ZiWithComponentsAndStrokes {
+  String zi;
+  List<String> componentCodes;
+  String comment;
+
+  ZiWithComponentsAndStrokes(
+      String zi,
+      List<String> componentCodes,
+      String comment
+      ) {
+    this.zi = zi;
+    this.componentCodes = componentCodes;
+    this.comment = comment;
   }
 }

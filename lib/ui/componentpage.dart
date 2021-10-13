@@ -56,6 +56,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
   @override
   Widget build(BuildContext context) {
+    // Need to do this every time
     questionType = widget.questionType; //theComponentManager.getCurrentType();
     theComponentManager.setCurrentType(questionType);
     if (answeredPosition == AnswerPosition.continueNext ||
@@ -208,7 +209,7 @@ class _ComponentPageState extends State<ComponentPage> {
               SizedBox(width: 20),
               Flexible (
                 child: Text(
-                  'Note: The lead components are divided into six groups and mapped to the keyboard.',
+                  'Note: The lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
                   style: TextStyle(fontSize: 20)
                 ),
               )
@@ -313,7 +314,8 @@ class _ComponentPageState extends State<ComponentPage> {
     double imageHeight = 150.0;
 
     if (questionType == QuestionType.ComponentGroup) {
-      imagePath = 'assets/typing/' + theComponentGroupList[currentIndex].imageName;
+      var index = theComponentGroupListInRealExercise[currentIndex];
+      imagePath = 'assets/typing/' + theComponentGroupList[index].imageName;
       imageHeight = 200.0;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
@@ -713,7 +715,7 @@ class _ComponentPageState extends State<ComponentPage> {
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
       if (isHeaderOfComponentInGroup  || isHeaderOfRandomComponents) {
-        result = "Remember ID. ";
+        result = "Remember IDs. ";
       }
       else if (isHeaderOfGroups) {
         result = "Remember Group #. ";
@@ -746,7 +748,6 @@ class _ComponentPageState extends State<ComponentPage> {
             setState(() {
               setPositionState(AnswerPosition.continueNext);
 
-              //if (answerPosition == AnswerPosition.continueNext) {
               // prepare for next one
               // Could be done in Build(), but Build won't allow showCompletedDialog() there.
               currentIndex = theComponentManager.getNextIndex();
@@ -780,14 +781,15 @@ class _ComponentPageState extends State<ComponentPage> {
     String title;
     String content;
 
-    if (correctPercent >= 70.0) {
-      title = "Congratulation!";
-      content = "You have passed this quiz with a score of " + corStr + "!";
-    }
-    else {
-      title = "Good effort!";
-      content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
-    }
+    //if (correctPercent >= 70.0) {
+    //  title = "Congratulation!";
+    //  content = "You have passed this quiz with a score of " + corStr + "!";
+    //}
+    //else {
+      title = "Good job!";
+      content = "You have completed this exercise and can move on to the next one.";
+      //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
+    //}
 
 
     // set up the AlertDialog

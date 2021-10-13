@@ -1,19 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
+import 'package:hanzishu/ui/inputzicomponentpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'dart:core';
 
 class InputZiPage extends StatefulWidget {
-  InputZiPage();
-
+  final TypingType typingType;
+  InputZiPage({this.typingType});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
 
 class _InputZiPageState extends State<InputZiPage> {
+  TypingType typingType;
+  int currentIndex;
+  BuildContext currentBuildContext;
+  double _progressValue;
+  int totalQuestions;
   double screenWidth;
   TextEditingController _controller = new TextEditingController();
   FocusNode _textNode = new FocusNode();
@@ -30,11 +37,14 @@ class _InputZiPageState extends State<InputZiPage> {
   @override
   initState() {
     super.initState();
-    
+
     _controller.addListener(handleKeyInput);
+    _progressValue = 0.0;
+    totalQuestions = theInputZiManager.getTotal(widget.typingType);
 
     setState(() {
       updateCounter =0;
+      currentIndex = 0;
     });
   }
 
@@ -145,6 +155,21 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputHelper(int selectionIndex) {
+    // for guarded typing
+    if (typingType != TypingType.FreeTyping) {
+      //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
+      if (theInputZiManager.doesTypingResultContainTheZi(typingType, currentIndex, _controller.text)) {
+        setState(() {
+          if ((currentIndex + 1) == theInputZiManager.getTotal(typingType)) {
+              showCompletedDialog(currentBuildContext);
+          }
+          currentIndex++;
+        });
+
+        return;
+      }
+    }
+
     if (isCurrentlyUnderChoiceSelection) {
       return;
     }
@@ -222,13 +247,27 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
+    int maxNumberOfLines;
+    if (typingType == TypingType.FreeTyping) {
+      maxNumberOfLines = 3;
+    }
+    else {
+      maxNumberOfLines = 1;
+      _progressValue = currentIndex/totalQuestions;
+    }
+
+    currentBuildContext = context;
+
+    typingType = widget.typingType; //theComponentManager.getCurrentType();
+    theInputZiManager.setCurrentType(typingType);
+
     screenWidth = Utility.getScreenWidth(context);
 
     var inputZiPainter = InputZiPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
         lessonId: 1, /*TODO: temp*/
-        screenWidth: 350 /*TODO: temp*/
+        screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
     return Scaffold
@@ -242,23 +281,8 @@ class _InputZiPageState extends State<InputZiPage> {
         //mainAxisSize:  MainAxisSize.max,
         children: <Widget>[
           //Spacer(),
-
-          SizedBox(
-            //width: double.infinity,
-            //height: 30,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: const TextStyle(fontSize: 20),
-                ),
-                onPressed: () {},
-                child: const Text('Help'),
-              ),
-            ),
-            //TODO: put a help button at the right end
-          ),
-
+          getHelpOrProgressIndicator(),
+          getComponentRelated(),
           SizedBox(
               width: double.infinity,
               //height: 120,
@@ -274,13 +298,12 @@ class _InputZiPageState extends State<InputZiPage> {
                   fontSize: 35,
                   height: 1.5
                 ),
-                maxLines: 3,
+                maxLines: maxNumberOfLines,
                 //expands: true,
                 keyboardType: TextInputType.multiline,
               ),//focusNode: _textNode,
             ),
           //),
-
           SizedBox(
             width: double.infinity,
             height: 40,
@@ -296,6 +319,60 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
           )
         ]
+      ),
+    );
+  }
+
+  Widget getHelpOrProgressIndicator() {
+    if (typingType == TypingType.FreeTyping) {
+      return SizedBox(
+        //width: double.infinity,
+        //height: 30,
+        child: Align(
+          alignment: Alignment.topRight,
+          child: TextButton(
+            style: TextButton.styleFrom(
+              textStyle: const TextStyle(fontSize: 20),
+            ),
+            onPressed: () {},
+            child: const Text('Help'),
+          ),
+        ),
+        //TODO: put a help button at the right end
+      );
+    }
+    else {
+      return Container( // x and progress bard
+        child: LinearProgressIndicator(value: _progressValue),
+        //getProgressBar(context),
+        padding: EdgeInsets.all(10),
+      );
+    }
+  }
+
+  Widget getComponentRelated() {
+    // an empty box
+    if (typingType == TypingType.FreeTyping) {
+      return SizedBox(
+        width: double.infinity,
+        height: 0,
+      );
+    }
+
+    var inputZiComponentPainter = InputZiComponentPainter(
+        lineColor: Colors.amber,
+        completeColor: Colors.blueAccent,
+        currentIndex: currentIndex, /*TODO: temp*/
+        screenWidth: screenWidth, //350, /*TODO: temp*/
+        typingType: typingType
+    );
+
+    return SizedBox(
+      width: double.infinity,
+      height: 155,
+      child:  CustomPaint(
+        foregroundPainter: inputZiComponentPainter,
+        //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
       ),
     );
   }
@@ -340,5 +417,46 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return buttons;
+  }
+
+  showCompletedDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop(); // out this dialog
+        Navigator.of(context).pop(); // to the lesson page
+      },
+    );
+
+    String title;
+    String content;
+
+    if (typingType == TypingType.OneComponent) {
+      title = "Congratulation!";
+      content = "You have completed all the training sessions! You can now start your own typing.";
+    }
+    else {
+      title = "Good job!";
+      content = "You have completed this session and can move on to the next one now.";
+    }
+
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }

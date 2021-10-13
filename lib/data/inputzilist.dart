@@ -1,5 +1,43 @@
 import 'package:hanzishu/engine/inputzi.dart';
+var theZiWithOneComponentList=[
+  ZiWithComponentsAndStrokes("一", ["Ga", "Ga"], "The component, the first/only stroke."),
+  ZiWithComponentsAndStrokes("二", ["Fa", "Ga", "Ga"], "The component, 1st & 2nd strokes, no 3rd/last stroke. Top before bottom."),
+  ZiWithComponentsAndStrokes("人", ["Ea", "Ta", "Ha"], "The component, 1st & 2nd strokes, no 3rd/last one. Left before right."),
+  ZiWithComponentsAndStrokes("大", ["Ea", "Ga", "Ta", "Ha"], "The comopnent, 1st, 2nd & 3rd strokes."),
+  ZiWithComponentsAndStrokes("不", ["Ga", "Ga", "Ya", "Ha"], "The component, 1st, 2nd & 3rd strokes."),
+  ZiWithComponentsAndStrokes("了", ["Ja", "Ba", "Ya"], "The component, 1st and 2nd strokes, no 3rd/last one."),
+  ZiWithComponentsAndStrokes("我", ["Wa", "Ta", "Ga", "Ta"], "The component, 1st, 2nd & 3rd/last strokes."),
+  ZiWithComponentsAndStrokes("见", ["Ua", "Ya", "Ba", "Ba"], "The component, 1st, 2nd & 3rd/last strokes. Top before bottom."),
+  ZiWithComponentsAndStrokes("气", ["Fa", "Ta", "Ga", "Ba"], "The component, 1st, 2nd & 3rd strokes. Top before bottom."),
+  ZiWithComponentsAndStrokes("下", ["Ga", "Ga", "Ya", "Ha"], "The component, 1st, 2nd & 3rd/last strokes."),
+];
 
+var theZiWithTwoComponentList=[
+  ZiWithComponentsAndStrokes("明", ["Oa", "Qa", "Ga", "Ga"], "Two components, last stroke of 1st component, last stroke of 2nd component."),
+  ZiWithComponentsAndStrokes("好", ["Wa", "Ja", "Ga", "Ga"], "Two components, two strokes. Left before right. 1st component is 女."),
+  ZiWithComponentsAndStrokes("多", ["Na", "Na", "Ha", "Ha"], "Two components, two strokes. Top before bottom. 1st component is 夕."),
+  ZiWithComponentsAndStrokes("岁", ["Ya", "Na", "Ya", "Ha"], "Two components, two strokes. Top before bottom. 1st component is 山."),
+  ZiWithComponentsAndStrokes("六", ["Ha", "Ra", "Ga", "Ha"], "Two components, two strokes. Top before bottom. 2nd component is 八."),
+  ZiWithComponentsAndStrokes("老", ["Aa", "Sa", "Ta", "Ba"], "Two components, two strokes. Top before bottom. 2nd component is 匕."),
+  ZiWithComponentsAndStrokes("再", ["Ga", "Aa", "Ga", "Ga"], "一 is the 1st component. Don't separate strokes that are crossed through each other."),
+  ZiWithComponentsAndStrokes("们", ["Ta", "Ua", "Ya", "Ba"], "Two components, two strokes. Left before right. 2nd component is 门."),
+  ZiWithComponentsAndStrokes("对", ["Na", "Ja", "Ha", "Ha"], "Two components, two strokes. Left before right. 1st component is 又."),
+  ZiWithComponentsAndStrokes("关", ["Ha", "Ea", "Ga", "Ha"], "Take component as big as possible. 2nd component is 大."),
+  ZiWithComponentsAndStrokes("系", ["Ta", "Ma", "Ta", "Ha"], "The 1st stroke itself is a component. Ok to separate touching strokes."),
+];
+
+var theZiWithThreeOrMoreComponentList=[
+  ZiWithComponentsAndStrokes("你", ["Ta", "Ta", "Ya"], "3 components. Left before right, then top before bottom."),
+  ZiWithComponentsAndStrokes("谢", ["Ha", "Oa", "Ja"], "3 components. Left, middle, right."),
+  ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "3 components. Top, middle, middle, bottom."),
+  ZiWithComponentsAndStrokes("师", ["Ya", "Ga", "Ua"], "3 components. Left before right, then top before bottom."),
+  ZiWithComponentsAndStrokes("您", ["Ta", "Ta", "Ya", "Ha"], "4 components. Top before bottom, then left before right, then top before bottom."),
+  ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "3 components. Outside before inside, then top before bottom."),
+  ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "3 components. Top, middle, bottom."),
+  ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "3 components. Top, middle, bottom."),
+  ZiWithComponentsAndStrokes("起", ["Aa", "Ya", "Sa"], "3 components. Left before right, then top before bottom."),
+  ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "3 components. Left before right, then top before bottom."),
+];
 
 var theInputZiList=[
   InputZi("aaa", 11288,"鞋", "xie2"),
@@ -1778,7 +1816,6 @@ var theInputZiList=[
   InputZi("jao", 13938,"插", "cha1"),
   InputZi("jararu", 977,"攒", "cuan2/zan3"),
   InputZi("jba", 3233,"垫", "dian4"),
-  InputZi("jbb", 2128528,"了", "le/liao3/liao4"),
   InputZi("jbb", 2833,"拙", "zhuo2/zhuo1"),
   InputZi("jbbg", 640640,"子", "zi3/zi"),
   InputZi("jbbh", 62285,"承", "cheng2"),
@@ -1795,6 +1832,7 @@ var theInputZiList=[
   InputZi("jbv", 80705,"势", "shi4"),
   InputZi("jbv", 10477,"抛", "pao1"),
   InputZi("jbw", 520,"抠", "kou1"),
+  InputZi("jby", 2128528,"了", "le/liao3/liao4"),
   InputZi("jcg", 4236,"鸦", "ya1"),
   InputZi("jcg", 1473,"笃", "du3"),
   InputZi("jcgt", 26509,"扬", "yang2"),
@@ -2535,7 +2573,6 @@ var theInputZiList=[
   InputZi("mrv", 22820,"纷", "fen1"),
   InputZi("mrw", 0,"夋", ""),
   InputZi("msa", 26148,"毕", "bi4"),
-  InputZi("msgb", 200645,"比", "bi3/bi4"),
   InputZi("msgb", 69045,"纪", "ji4"),
   InputZi("msgb", 24890,"纯", "chun2"),
   InputZi("msgns", 3588,"毙", "bi4"),
@@ -2957,6 +2994,7 @@ var theInputZiList=[
   InputZi("ssbh", 27961,"忘", "wang4"),
   InputZi("ssbh", 7938,"忌", "ji4"),
   InputZi("ssfr", 144,"巽", "xun4"),
+  InputZi("ssgb", 200645,"比", "bi3/bi4"),
   InputZi("stb", 1388,"匕", "bi1/bi3"),
   InputZi("stbh", 174963,"必", "bi4"),
   InputZi("swbb", 1747,"氓", "mang2/meng2"),
@@ -3602,7 +3640,7 @@ var theInputZiList=[
   InputZi("wxgg", 35188,"妇", "fu4"),
   InputZi("wybb", 13868,"氏", "shi4"),
   InputZi("wybh", 46,"戢", "ji2"),
-  InputZi("wygh", 1690048,"我", "wo3"),
+  InputZi("wtgt", 1690048,"我", "wo3"),
   InputZi("wyhy", 78648,"划", "hua2/hua4"),
   InputZi("wyhy", 48600,"刘", "liu2"),
   InputZi("wyhy", 241,"刈", "yi4"),

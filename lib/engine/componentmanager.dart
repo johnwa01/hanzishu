@@ -18,7 +18,7 @@ class ComponentManager {
   int getTotalQuestions(QuestionType questionType) {
     int total;
     if (questionType == QuestionType.ComponentGroup) {
-      total = theComponentGroupList.length;
+      total = theComponentGroupListInRealExercise.length;
     }
     else if (questionType == QuestionType.ComponentInGroup) {
       total = theComponentInGroupList.length;
@@ -220,7 +220,8 @@ class ComponentManager {
     }
 
     if (currentQuestionType == QuestionType.ComponentGroup) {
-      var group = theComponentGroupList[currentIndex];
+      var index = theComponentGroupListInRealExercise[currentIndex];
+      var group = theComponentGroupList[index];
       correctAnswerPosition = GetPositionByGroup(group.id);
     }
     else if (currentQuestionType == QuestionType.Component) {
@@ -250,22 +251,6 @@ class ComponentManager {
     //TODO
     return 0;
   }
-
-  /*
-  int getMaximumNumberForQuestionType(QuestionType questionType) {
-    if (questionType == QuestionType.ComponentGroup) {
-      return theComponentGroupList.length;
-    }
-    else if (questionType == QuestionType.LeadingComponent) {
-      return theLeadComponentList.length;
-    }
-    else if (questionType == QuestionType.ExpandedComponent) {
-      return theExpandedComponentList.length;
-    }
-
-    return -1;
-  }
-*/
 
   // of the current question type
   int getNextIndex() {
@@ -313,6 +298,20 @@ class ComponentManager {
     else {
       return -1;
     }
+  }
+
+  int getComponentIdByCode(String code) {
+    var leng = theLeadComponentList.length;
+    var comp;
+
+    for (int i = 0; i < leng; i++) {
+      comp = theLeadComponentList[i];
+      if (comp.doubleByteName == code) {
+        return i;
+      }
+    }
+
+    return -1;
   }
 
   Component getComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
@@ -375,7 +374,8 @@ class ComponentManager {
   // the group index is 0, indicating to show the image for whole groups
   bool isHeaderOfGroups() {
     if (currentQuestionType == QuestionType.ComponentGroup) {
-      if (theComponentGroupList[currentIndex].id == 0) {
+      var index = theComponentGroupListInRealExercise[currentIndex];
+      if (theComponentGroupList[index].id == 0) {
         return true;
       }
     }

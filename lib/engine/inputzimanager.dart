@@ -9,6 +9,7 @@ import 'package:hanzishu/variables.dart';
 class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static int maxTypingCandidates = 20;
+  TypingType typingType;
 
   static int findFirst(String input) {
     for (var i = 0; i < theInputZiList.length; i++) {
@@ -19,6 +20,10 @@ class InputZiManager {
     }
 
     return -1;
+  }
+
+  setCurrentType(TypingType typingType) {
+    this.typingType = typingType;
   }
 
   static int findLast(int firstIndex, String input) {
@@ -123,5 +128,52 @@ class InputZiManager {
     }
 
     return null;
+  }
+
+  ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index) {
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      return theZiWithThreeOrMoreComponentList[index];
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      return theZiWithTwoComponentList[index];
+    }
+    else if (typingType == TypingType.OneComponent) {
+      return theZiWithOneComponentList[index];
+    }
+
+    return null;
+  }
+
+  bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult) {
+    bool result = false;
+    var zi;
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      zi = theZiWithThreeOrMoreComponentList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      zi = theZiWithTwoComponentList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.OneComponent) {
+      zi = theZiWithOneComponentList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+
+    return result;
+  }
+
+  int getTotal(TypingType typingType) {
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      return theZiWithThreeOrMoreComponentList.length;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      return theZiWithTwoComponentList.length;
+    }
+    else if (typingType == TypingType.OneComponent) {
+      return theZiWithOneComponentList.length;
+    }
+
+    return -1;
   }
 }

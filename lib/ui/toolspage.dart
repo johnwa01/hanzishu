@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/studytimepage.dart';
@@ -23,7 +24,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Typing"),
+        title: Text("Typing Chinese Characters"),
       ),
       body: Center
         (
@@ -36,8 +37,11 @@ class _ToolsPageState extends State<ToolsPage> {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Memorize Lead Component Groups", textDirection: TextDirection.ltr),
+          title: Text("Learn Hanzishu Method", textDirection: TextDirection.ltr),
+        ),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("        Memorize Lead Component Groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -49,10 +53,9 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
-
         ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Memorize Lead Components", textDirection: TextDirection.ltr),
+          //leading: Icon(Icons.location_city),
+          title: Text("        Memorize Lead Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -66,8 +69,8 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
 
         ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Memorize Lead Components again", textDirection: TextDirection.ltr),
+          //leading: Icon(Icons.location_city),
+          title: Text("        Re-memorize Lead Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -81,8 +84,8 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
 
         ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Know Expanded Components", textDirection: TextDirection.ltr),
+          //leading: Icon(Icons.location_city),
+          title: Text("        Know Expanded Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -94,18 +97,64 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
-
-
         ListTile(
-          leading: Icon(Icons.location_city),
-          title: Text("Input Zi", textDirection: TextDirection.ltr),
+          title: Text("Guided Typing of Chinese Characters", textDirection: TextDirection.ltr),
+        ),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("        Ones with one component", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.OneComponent), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("        Ones with two components", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("        Ones with 3 or more components", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        //ListTile(
+        //  title: Text("At your own:", textDirection: TextDirection.ltr),
+        //),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("Typing", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping), //InputZiPage(),
               ),
             );
           },

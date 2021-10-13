@@ -101,6 +101,24 @@ class ComponentCollection {
   }
 }
 
+/*
+class FullComponentCollection {
+  int id;
+  String letter;
+  String imageName;
+
+  FullComponentCollection(
+    int id,
+    String letter,
+    String imageName)
+  {
+      this.id = id;
+      this.letter = letter;
+      this.imageName = imageName;
+  }
+}
+*/
+
 class Component {
   int id;
   String doubleByteName;
