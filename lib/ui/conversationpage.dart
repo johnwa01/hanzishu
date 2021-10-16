@@ -153,7 +153,8 @@ class _ConversationPageState extends State<ConversationPage> {
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
       },
-      child: Text("", style: TextStyle(fontSize: 32.0),),
+      child:
+        Text("", style: TextStyle(fontSize: 32.0),),
       // Note: cannot put char here directly since the gap would be too big.
     );
 

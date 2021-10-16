@@ -329,6 +329,21 @@ class ComponentManager {
     return null;
   }
 
+  ComponentCollection getFullExpandedComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
+    var leng = theFullExpandedComponentList.length;
+    var comp;
+
+    for (int i = 0; i < leng; i++) {
+      comp = theFullExpandedComponentList[i];
+      if (comp.groupNumber == groupNumber &&
+          comp.indexInGroup == indexInGroup) {
+        return comp;
+      }
+    }
+
+    return null;
+  }
+
   Component getComponentFromComponentInGroup(int index) {
     var compInGroup = theComponentInGroupList[index];
     var groupNumber = compInGroup.groupNumber;

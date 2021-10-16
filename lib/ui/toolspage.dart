@@ -24,7 +24,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Typing Chinese Characters"),
+        title: Text("Hanzishu Component Input Method"),
       ),
       body: Center
         (
@@ -130,7 +130,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Ones with 3 or more components", textDirection: TextDirection.ltr),
+          title: Text("        Ones with three or more components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();

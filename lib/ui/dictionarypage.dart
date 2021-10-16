@@ -149,7 +149,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       (
       appBar: AppBar
         (
-        title: Text("Dictionary"),
+        title: Text("Hanzishu One Tap Dictionary"),  //汉字树一触字典
         ),
       body: getContainer(),
       );
@@ -165,6 +165,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
 
   Widget getContainer() {
+    //Note: Search is disabled right now. Dictinary should be a simpler form than search/typing.
     if (dicStage == DictionaryStage.search) {
       return Column(
         children:<Widget>[

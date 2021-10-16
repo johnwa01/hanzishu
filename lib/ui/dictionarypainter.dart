@@ -48,11 +48,11 @@ class DictionaryPainter extends BasePainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("First Zi Table (首字表)", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("First Character Table (首字表)", 10.0, 5.0, 20.0, Colors.blueGrey);
 
       // below should match dictionaryPage
-      var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
-      displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
+      //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
 
       // below should match dictionaryPage
       var helpPosiAndSize = PositionAndSize(width - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
@@ -78,17 +78,19 @@ class DictionaryPainter extends BasePainter {
   }
 
   DisplayHelp() {
-    displayTextWithValue("Steps to find a zi:", 10.0, 50.0, 25.0, Colors.blueAccent);
+    //TODO: Need to implement in a different way so that the text will show naturally.
+    double fontSize = 18.0;
+    displayTextWithValue("Steps to find a Chinese character:", 10.0, 40.0, 20.0, Colors.blueAccent);
 
-    displayTextWithValue("1. From 'First Zi Table', starting from the fifth 'first zi', find the 'first zi' that this zi contains.", 10.0, 95.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   Ex: For zi '好'， find '女' as its 'first zi'. ", 10.0, 140.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("1a. If the zi's 'first zi' is '' and it contains other 'first zi', choose the other as 'first zi'.", 10.0, 165.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   Ex: For zi '听'， (skip '口' and) find '斤' as its 'first zi'. ", 10.0, 215.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("1b. If you can't find a 'first zi', use the first stroke of the zi to match it to one of the five single stroke 'first zi' at the beginning of the table.", 10.0, 265.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("    Note that all the turning strokes match to '乙'.", 10.0, 330.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("   Ex: For zi '长'， find '一' as its 'first zi'. ", 10.0, 380.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("2. Click the 'first zi' to go to 'Searching Zi Table'.", 10.0, 420.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("3. From the 'Searching Zi Table', find/click the zi you are looking for.", 10.0, 470.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("1. From the First Character Table (首字表), starting from the 6th position, tap the 1st First Character that this character contains. Ex: For Character '你'， tap '小' which is the only/1st First Character it contains.", 10.0, 68.0, fontSize, Colors.blueAccent);
+
+    displayTextWithValue("1a. If the character's 1st First Character is '口' and it also contains other First Character(s), tap the next First Character. Ex: For character '听'， skip '口' and tap '斤'.", 10.0, 190.0, fontSize, Colors.blueAccent);
+
+    //TODO: need a simple match chart to show na, shu gou, di, etc.
+    displayTextWithValue("1b. If the character doesn't contain any First Character, tap a stroke in the table (before 6th position) that matches the first stroke of the character. Note that all the turning strokes match to '乙'. Ex: For character '长'， tap stroke '一'.", 10.0, 300.0, fontSize, Colors.blueAccent);
+
+    displayTextWithValue("2. With ONE TAP above, you will see the character you are looking for among the list. Otherwise, the dictionary doesn't support this character.", 10.0, 421.0, fontSize, Colors.blueAccent);
+    displayTextWithValue("3. You can then choose the character to see its detailed info.", 10.0, 493.0, fontSize, Colors.blueAccent);
   }
 
   DisplayNavigationPath(DictionaryStage stage) {

@@ -210,7 +210,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   'Note: The lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  style: TextStyle(fontSize: 20)
+                  style: TextStyle(fontSize: 18)
                 ),
               )
             ]

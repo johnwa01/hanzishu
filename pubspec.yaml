@@ -61,6 +61,7 @@ flutter:
      - assets/breakout.png
      - assets/conversations.png
      - assets/quiz.png
+     - assets/typing/C00.png
      - assets/typing/C11.png
      - assets/typing/C12.png
      - assets/typing/C13.png
@@ -111,6 +112,31 @@ flutter:
      - assets/typing/E54.png
      - assets/typing/E61.png
      - assets/typing/E62.png
+     - assets/typing/EF11.png
+     - assets/typing/EF12.png
+     - assets/typing/EF13.png
+     - assets/typing/EF14.png
+     - assets/typing/EF15.png
+     - assets/typing/EF21.png
+     - assets/typing/EF22.png
+     - assets/typing/EF23.png
+     - assets/typing/EF24.png
+     - assets/typing/EF25.png
+     - assets/typing/EF31.png
+     - assets/typing/EF32.png
+     - assets/typing/EF33.png
+     - assets/typing/EF34.png
+     - assets/typing/EF35.png
+     - assets/typing/EF41.png
+     - assets/typing/EF42.png
+     - assets/typing/EF43.png
+     - assets/typing/EF44.png
+     - assets/typing/EF51.png
+     - assets/typing/EF52.png
+     - assets/typing/EF53.png
+     - assets/typing/EF54.png
+     - assets/typing/EF61.png
+     - assets/typing/EF62.png
      - assets/typing/G1.png
      - assets/typing/G2.png
      - assets/typing/G3.png

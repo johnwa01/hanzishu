@@ -4,6 +4,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzicomponentpainter.dart';
+import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'dart:core';
@@ -274,7 +275,7 @@ class _InputZiPageState extends State<InputZiPage> {
       (
       appBar: AppBar
         (
-        title: Text("Input Zi"),
+        title: Text("Hanzishu Component Input Method"),
         ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -334,7 +335,14 @@ class _InputZiPageState extends State<InputZiPage> {
             style: TextButton.styleFrom(
               textStyle: const TextStyle(fontSize: 20),
             ),
-            onPressed: () {},
+            onPressed: () {
+              //theStatisticsManager.trackTimeAndTap();
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => InputZiHelpPage(),
+                ),
+              );},
             child: const Text('Help'),
           ),
         ),
