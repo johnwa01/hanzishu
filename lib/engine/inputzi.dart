@@ -30,15 +30,15 @@ class InputZi {
 class ZiWithComponentsAndStrokes {
   String zi;
   List<String> componentCodes;
-  String comment;
+  String hintImage;
 
   ZiWithComponentsAndStrokes(
       String zi,
       List<String> componentCodes,
-      String comment
+      String hintImage
       ) {
     this.zi = zi;
     this.componentCodes = componentCodes;
-    this.comment = comment;
+    this.hintImage = hintImage;
   }
 }

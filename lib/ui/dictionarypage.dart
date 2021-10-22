@@ -13,6 +13,7 @@ import 'package:hanzishu/ui/basepainter.dart';
 //import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
+import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 
@@ -46,6 +47,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   double screenWidth;
   DictionaryStage dicStage;
   OverlayEntry overlayEntry;
+  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(0.0, 0.0, "");
 
   AnimationController _controller;
   Map<int, bool> allLearnedZis = Map();
@@ -74,6 +76,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     _editController.text = "";
 
     theCurrentCenterZiId = 1;
+
     setState(() {
       searchingZiIndex = 0;
       shouldDrawCenter = true;
@@ -166,6 +169,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   Widget getContainer() {
     //Note: Search is disabled right now. Dictinary should be a simpler form than search/typing.
+    /*
     if (dicStage == DictionaryStage.search) {
       return Column(
         children:<Widget>[
@@ -202,29 +206,77 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         ]
       );
     }
-    else {
-      return Container(
-        child: WillPopScope(
-            child: CustomPaint(
-              foregroundPainter: DictionaryPainter(
-                  Colors.amber,
-                  //lessonId: widget.lessonId,
-                  screenWidth,
-                  //screenWidth: screenWidth,
-                  dicStage,
-                  firstZiIndex,
-                  searchingZiIndex
-              ),
-              child: Center(
-                child: Stack(
-                    children: displayCharsAndCreateHittestButtons(context)
-                ),
-              ),
-            ),
-            onWillPop: _onWillPop
-        ),
+    */
+    /*
+    else if (dicStage == DictionaryStage.firstzis) {
+      return Column(
+          mainAxisSize: MainAxisSize.min,
+        children:<Widget>[
+          Row(
+              children:<Widget>[
+                Text("First Character Table (首字表)",
+                            style: TextStyle(color:Colors.blueAccent,
+                                fontSize:20),
+                            textAlign: TextAlign.left),
+                getHelpButton(),
+              ]
+          ),
+
+          getWillPopScope(),
+        ]
       );
     }
+    */
+    //else {
+      return Container(
+        child: getWillPopScope(),
+      );
+    //}
+  }
+
+  /*
+  Widget getHelpButton() {
+    return Align(
+      alignment: Alignment.topRight,
+      child: TextButton(
+        style: TextButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 20),
+        ),
+        onPressed: () {
+          //theStatisticsManager.trackTimeAndTap();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DictionaryHelpPage(),
+            ),
+          );},
+        child: const Text('Help'),
+      ),
+    );
+  }
+  */
+
+  Widget getWillPopScope() {
+    return WillPopScope(
+        child: CustomPaint(
+          foregroundPainter: DictionaryPainter(
+              Colors.amber,
+              //lessonId: widget.lessonId,
+              screenWidth,
+              //screenWidth: screenWidth,
+              dicStage,
+              firstZiIndex,
+              searchingZiIndex,
+              context
+          ),
+          child: Center(
+            child: Stack(
+                children: displayCharsAndCreateHittestButtons(context)
+            ),
+          ),
+        ),
+        onWillPop: _onWillPop
+    );
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
@@ -234,17 +286,28 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     }
 
     OverlayState overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(
-        builder: (context) =>Positioned(
-            top: posiY,
-            left: posiX,
-            child: FlatButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              onPressed: () {},
-            )
-        ));
+    if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
+      overlayEntry = OverlayEntry(
+          builder: (context) =>
+              Positioned(
+                  top: posiY,
+                  left: posiX,
+                  child: FlatButton(
+                    child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+                    color: Colors.blueAccent,
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  )
+              ));
+      previousPositionAndMeaning.x = posiX;
+      previousPositionAndMeaning.y = posiY;
+      previousPositionAndMeaning.meaning = meaning;
+    }
+    else {
+      previousPositionAndMeaning.x = 0.0;
+      previousPositionAndMeaning.y = 0.0;
+      previousPositionAndMeaning.meaning = "";
+    }
 
     // workaround for removal of overlay during AppBar switch
     theDicOverlayEntry = overlayEntry;
@@ -418,11 +481,18 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           overlayEntry = null;
         }
 
-        setState(() {
-          dicStage = DictionaryStage.help;
-          shouldDrawCenter = true;
-          _editController.text = "";
-        });
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DictionaryHelpPage(),
+          ),
+        );
+
+        //setState(() {
+        //  dicStage = DictionaryStage.help;
+        //  shouldDrawCenter = true;
+        //  _editController.text = "";
+        //});
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -438,6 +508,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     return posiCenter;
   }
 
+  /* no longer used
   getSearchPositionedButton(posiAndSize) {
     var butt = FlatButton(
       onPressed: () {
@@ -474,6 +545,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     return posiCenter;
   }
+  */
 
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
@@ -530,8 +602,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     if (dicStage == DictionaryStage.firstzis) {
       // search button first
       var searchPosiAndSize = PositionAndSize(screenWidth - 140.0, 5.0, 40.0, 40.0, 0.0, 0.0);
-      var searchPosi = getSearchPositionedButton(searchPosiAndSize);
-      buttons.add(searchPosi);
+      //var searchPosi = getSearchPositionedButton(searchPosiAndSize);
+      //buttons.add(searchPosi);
 
       // help button next
       var helpPosiAndSize = PositionAndSize(screenWidth - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);

@@ -56,6 +56,10 @@ class _ComponentPageState extends State<ComponentPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentIndex < 0) {
+      return Container(width: 0.0, height: 0.0);
+    }
+
     // Need to do this every time
     questionType = widget.questionType; //theComponentManager.getCurrentType();
     theComponentManager.setCurrentType(questionType);
@@ -237,7 +241,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'Note: A component ID contains two digits. The first digit is the group number it belongs to, and the second digit is the index within the group, starting from middle to side.',
+                    'Note: A Component Number contains two digits. The first digit is the Group Number, and the second digit is the Internal Number within the group.',
                     style: TextStyle(fontSize: 20)
                   ),
                 )
@@ -410,13 +414,13 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (questionType == QuestionType.ExpandedComponent) {
       var hint = theExpandedComponentList[currentIndex].hint;
-      question = "Guess their lead component & choose its ID. (Hint: " + hint + ")";
+      question = "Guess their Lead Component & choose its Component Number. (Hint: " + hint + ")";
       size = 18.0;
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
-              'Note: Each lead component (in red) has some expanded components associated to it. Those expanded components look more or less similar to their corresponding lead component and share the same keyboard key. It is important to get more and more familiar with them over the time of actual typing.',
+              'Note: Each Lead Component (in red) has some Expanded Components associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and share the same keyboard key. It is important to get more and more familiar with them over the time of actual typing.',
               style: TextStyle(fontSize: size)
           ),
         );
@@ -715,10 +719,10 @@ class _ComponentPageState extends State<ComponentPage> {
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
       if (isHeaderOfComponentInGroup  || isHeaderOfRandomComponents) {
-        result = "Remember IDs. ";
+        result = "Remember Component Numbers, then ";
       }
       else if (isHeaderOfGroups) {
-        result = "Remember Group #. ";
+        result = "Remember Group Numbers, then ";
       }
       else if (isHeaderOfExpandedComponents) {
       }
@@ -727,7 +731,7 @@ class _ComponentPageState extends State<ComponentPage> {
         if (answeredPosition !=
             theComponentManager.getCorrectAnswerPosition()) {
           //TODO: theStatisticsManager.incrementLessonQuizResult(false);
-          result = "Incorrect. ";
+          result = "Incorrect.";
         }
         else {
           //TODO: theStatisticsManager.incrementLessonQuizResult(true);
@@ -735,13 +739,13 @@ class _ComponentPageState extends State<ComponentPage> {
         }
       }
 
-      result += "Continue";
+      result += "continue";
 
       //_updateProgress();
 
       return Container(
         child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: xYLength(20.0)),),
+          child: Text(result, style: TextStyle(fontSize: xYLength(18.0)),),
           color: Colors.blueAccent, // Colors.brown,
           textColor: Colors.white,
           onPressed: () {

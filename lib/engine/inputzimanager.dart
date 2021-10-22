@@ -144,6 +144,23 @@ class InputZiManager {
     return null;
   }
 
+  /*
+  String getImageName(TypingType typingType, int index) {
+    var zi;
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      zi = theZiWithThreeOrMoreComponentList[index];
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      zi = theZiWithTwoComponentList[index];
+    }
+    else if (typingType == TypingType.OneComponent) {
+      zi = theZiWithOneComponentList[index];
+    }
+
+    return zi.comment;
+  }
+*/
+
   bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult) {
     bool result = false;
     var zi;

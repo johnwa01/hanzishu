@@ -150,4 +150,6 @@ Phrase(142, "西单", "", "Xidan", "west (西) single (单) "),
   Phrase(144, "旅店", "", "hotel", "travel (旅) store (店) "),
   Phrase(145, "房间", "", "room", "house (房) space (间) "),
   Phrase(146, "两个", "", "two", "two（两) piece (个) "),
+  //Phrase(147, "小心", "", "Be careful", "small（小) heart (心) "),
+  //Phrase(148, "子女", "", "Children", "son（子) & daughter (女) "),
 ];

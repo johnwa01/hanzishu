@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
@@ -36,8 +37,24 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget getMeListView(BuildContext context) {
     return ListView(
       children: <Widget>[
+        /*
         ListTile(
-          title: Text("Learn Hanzishu Method", textDirection: TextDirection.ltr),
+          //leading: Icon(Icons.location_city),
+          title: Text("Introduction", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiHelpPage(),
+              ),
+            );
+          },
+        ),
+        */
+        ListTile(
+          title: Text("Exercise Components to Keyboard Mapping", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
@@ -98,7 +115,7 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("Guided Typing of Chinese Characters", textDirection: TextDirection.ltr),
+          title: Text("Start Guided Typing", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),

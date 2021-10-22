@@ -118,8 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     //ReviewSelectionPage(),
-    ToolsPage(),
     DictionaryPage(),
+    ToolsPage(),
     MePage()
   ];
 
@@ -150,11 +150,11 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.favorite),
           ),
           BottomNavigationBarItem(
-            title: Text('Typing'),
+            title: Text('Dictionary'),
             icon: Icon(Icons.location_on),
           ),
           BottomNavigationBarItem(
-            title: Text('Dictionary'),
+            title: Text('Typing'),
             icon: Icon(Icons.location_on),
           ),
           BottomNavigationBarItem(

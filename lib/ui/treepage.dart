@@ -334,7 +334,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           overlayEntry = null;
         }
 
-        var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+        var partialZiId = currentZiId;
+        if (theCurrentCenterZiId != currentZiId) {
+          partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+        }
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 

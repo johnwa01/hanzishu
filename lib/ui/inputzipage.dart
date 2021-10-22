@@ -7,6 +7,7 @@ import 'package:hanzishu/ui/inputzicomponentpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+
 import 'dart:core';
 
 class InputZiPage extends StatefulWidget {
@@ -31,7 +32,9 @@ class _InputZiPageState extends State<InputZiPage> {
   bool justCompletedPosting = false;
   List<String> ziCandidates = null;
   bool isCurrentlyUnderChoiceSelection = false;
-
+  OverlayEntry overlayEntry;
+  TypingType previousOverlayType = TypingType.FreeTyping;
+  int previousOverlayIndex = 0;
 
   int updateCounter = 0;
 
@@ -47,6 +50,22 @@ class _InputZiPageState extends State<InputZiPage> {
       updateCounter =0;
       currentIndex = 0;
     });
+  }
+
+  Future<bool>_onWillPop() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+
+    return Future.value(true);
+  }
+
+  initOverlay() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
   }
 
   String getInputText(int index) {
@@ -80,6 +99,38 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return newInputText;
+  }
+
+  showOverlay(BuildContext context, TypingType type, int index) {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+
+    if (!(previousOverlayType == type && previousOverlayIndex == index)) {
+        var imageName = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex).hintImage;
+
+        OverlayState overlayState = Overlay.of(context);
+        overlayEntry = OverlayEntry(
+            builder: (context) =>
+                Positioned(
+                  top: 85.0, //posiY,
+                  left: 0.0, //posiX,
+                  child: Image.asset(
+                    "assets/typingexercise/" + imageName,
+                    width: 410.0,
+                    height: 100.0,
+                    //fit: BoxFit.fitWidth,
+                  ),
+                ));
+        overlayState.insert(overlayEntry);
+        previousOverlayType = type;
+        previousOverlayIndex = index;
+      }
+      else {
+        previousOverlayType = TypingType.FreeTyping;
+        previousOverlayIndex = 0;
+      }
   }
 
   String getFullComposingText(String inputKeyLetter) {
@@ -248,6 +299,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
+    //To be sure
+    initOverlay();
+
     int maxNumberOfLines;
     if (typingType == TypingType.FreeTyping) {
       maxNumberOfLines = 3;
@@ -361,12 +415,89 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getComponentRelated() {
     // an empty box
     if (typingType == TypingType.FreeTyping) {
-      return SizedBox(
+      return Container(width:0.0, height: 0.0);
+        /*SizedBox(
         width: double.infinity,
         height: 0,
-      );
+      );*/
     }
 
+    String instruction;
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      instruction = "Type the given character. Input the components of the character in sequence through keyboard.";
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      instruction = "Type the given character. Input its two components first, then the last stroke from the 1st as well as the 2nd component.";
+    }
+    else if (typingType == TypingType.OneComponent) {
+      instruction = "Type the given character. Input its only component first, then up to 3 make-up strokes: 1st, 2nd, and last stroke.";
+    }
+
+    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
+
+    var fontSize = 18.0;
+
+
+    return WillPopScope(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+
+          SizedBox(height: fontSize),
+          Flexible(
+            child: Text(
+                instruction,
+              style: TextStyle(fontSize: fontSize),
+              textAlign: TextAlign.left
+            ),
+          ),
+          SizedBox(height: fontSize),
+
+          Row(
+              children: <Widget>[
+                Flexible(
+                  child: Text(
+                      "Please type: ",
+                      style: TextStyle(fontSize: fontSize),
+                      textAlign: TextAlign.left
+                  ),
+                ),
+                SizedBox(width: fontSize),
+                Flexible(
+                  child: Text(
+                      zi.zi,
+                      style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                      textAlign: TextAlign.left
+                  ),
+                ),
+                SizedBox(width: fontSize * 3.0),
+                FlatButton(
+                  color: Colors.white,
+                  textColor: Colors.blueAccent,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    if (overlayEntry != null) {
+                        overlayEntry.remove();
+                        overlayEntry = null;
+                    }
+
+                    showOverlay(context, typingType, currentIndex);
+                  },
+                  child: Text(
+                    "Hint",
+                    style: TextStyle(fontSize: fontSize),
+                    textAlign: TextAlign.left
+                  ),
+                ),
+              ]
+          ),
+
+        ]
+      ),
+      onWillPop: _onWillPop
+    );
+
+    /*
     var inputZiComponentPainter = InputZiComponentPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
@@ -383,6 +514,7 @@ class _InputZiPageState extends State<InputZiPage> {
         //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
       ),
     );
+    */
   }
 
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
@@ -440,7 +572,7 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
-    if (typingType == TypingType.OneComponent) {
+    if (typingType == TypingType.ThreeOrMoreComponents) {
       title = "Congratulation!";
       content = "You have completed all the training sessions! You can now start your own typing.";
     }

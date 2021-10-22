@@ -156,6 +156,10 @@ flutter:
      - assets/typing/GN5.png
      - assets/typing/GN6.png
      - assets/typing/EF33.png
+     - assets/typing/FullComponents.png
+     - assets/typing/Strokes.png
+     - assets/typingexercise/yi.png
+     - assets/typingexercise/jian.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

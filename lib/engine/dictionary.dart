@@ -52,3 +52,18 @@ class Dictionary {
     return -1;
   }
 }
+
+class PositionAndMeaning {
+  double x;
+  double y;
+  String meaning;
+
+  PositionAndMeaning(
+      double x,
+      double y,
+      String meaning) {
+    this.x = x;
+    this.y = y;
+    this.meaning = meaning;
+  }
+}

@@ -49,10 +49,10 @@ class InputZiComponentPainter extends BasePainter {
       instruction = "Type the given character. Input the components of the character in sequence through keyboard.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Its two components first, then the last stroke from the 1st as well as the 2nd component.";
+      instruction = "Type the given character. Input its two components first, then the last stroke from the 1st as well as the 2nd component.";
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Its only component first, then its 1st, 2nd, and last stroke.";
+      instruction = "Type the given character. Input its only component first, then up to 3 make-up strokes: 1st, 2nd, and last stroke.";
     }
 
     double x = 5.0;
@@ -62,7 +62,7 @@ class InputZiComponentPainter extends BasePainter {
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
     var length = zi.componentCodes.length;
 
-    y += 80.0;
+    y += 100.0;
     String text = "Please type: ";
 
     displayTextWithValue(text, x, y, 20.0, Colors.blue);
@@ -78,8 +78,8 @@ class InputZiComponentPainter extends BasePainter {
       x += 30.0;
     }
 
-    y += 25.0;
-    displayTextWithValue("Note:" + zi.comment, 5.0, y, 20.0, Colors.blue);
+    y += 15.0;
+    //displayTextWithValue("Note:" + zi.comment, 5.0, y, 20.0, Colors.blue);
   }
 
   displayOneComponent(String componentCode, double x, double y, Size size, double fontSize) {

@@ -61,7 +61,7 @@ class ListOfZiPainter extends BasePainter {
     if (length > 0) {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
-        displayTextWithValue("Basic Zi", lessonLeftEdge, yPositionWrapper.value,
+        displayTextWithValue("Basic Character", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.blue);
       }
@@ -101,7 +101,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Basic Non-zi", lessonLeftEdge, yPositionWrapper.value,
+            "Basic Non-character", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.blue);
       }
@@ -123,7 +123,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Zi", lessonLeftEdge, yPositionWrapper.value,
+            "Character", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.blue);
       }
@@ -164,7 +164,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Zi Groups", lessonLeftEdge, yPositionWrapper.value,
+            "Character Groups", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.blue);
       }

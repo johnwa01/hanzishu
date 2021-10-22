@@ -12,6 +12,7 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/ui/dictionaryhelppage.dart';
 
 enum DictionaryStage {
   firstzis,
@@ -28,12 +29,13 @@ class DictionaryPainter extends BasePainter {
   DictionaryStage dicStage;
   int firstZiIndex;  // different meaning for different stage
   int searchingZiIndex;
+  BuildContext context;
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
   static int minCharsForStrokeIndex = 15;
 
-  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex) {
+  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context) {
     this.lineColor = lineColor;
     this.width = width;
     //this.screenWidth,
@@ -41,6 +43,7 @@ class DictionaryPainter extends BasePainter {
 
     this.firstZiIndex = firstZiIndex;
     this.searchingZiIndex = searchingZiIndex;
+    this.context = context;
   }
 
   @override
@@ -48,7 +51,7 @@ class DictionaryPainter extends BasePainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("First Character Table (首字表)", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("Basic Character Table", 10.0, 5.0, 20.0, Colors.blueGrey);
 
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
@@ -72,11 +75,12 @@ class DictionaryPainter extends BasePainter {
       DisplayDetailedZi(searchingZiIndex);
     }
     else if (this.dicStage == DictionaryStage.help) {
-      DisplayNavigationPath(DictionaryStage.help);
-      DisplayHelp();
+ //     DisplayNavigationPath(DictionaryStage.help);
+ //     DisplayHelp();
     }
   }
 
+/*
   DisplayHelp() {
     //TODO: Need to implement in a different way so that the text will show naturally.
     double fontSize = 18.0;
@@ -87,11 +91,12 @@ class DictionaryPainter extends BasePainter {
     displayTextWithValue("1a. If the character's 1st First Character is '口' and it also contains other First Character(s), tap the next First Character. Ex: For character '听'， skip '口' and tap '斤'.", 10.0, 190.0, fontSize, Colors.blueAccent);
 
     //TODO: need a simple match chart to show na, shu gou, di, etc.
-    displayTextWithValue("1b. If the character doesn't contain any First Character, tap a stroke in the table (before 6th position) that matches the first stroke of the character. Note that all the turning strokes match to '乙'. Ex: For character '长'， tap stroke '一'.", 10.0, 300.0, fontSize, Colors.blueAccent);
+    displayTextWithValue("1b. If the character doesn't contain any First Character, tap a stroke in the table before the 6th position that matches the first stroke of the character. Note that all the turning strokes match to '乙'. Ex: For character '长'， tap stroke '一'.", 10.0, 300.0, fontSize, Colors.blueAccent);
 
-    displayTextWithValue("2. With ONE TAP above, you will see the character you are looking for among the list. Otherwise, the dictionary doesn't support this character.", 10.0, 421.0, fontSize, Colors.blueAccent);
+    displayTextWithValue("2. With ONE TAP above, you will see the character you are looking for in a list. Otherwise, the dictionary doesn't support this character.", 10.0, 421.0, fontSize, Colors.blueAccent);
     displayTextWithValue("3. You can then choose the character to see its detailed info.", 10.0, 493.0, fontSize, Colors.blueAccent);
   }
+*/
 
   DisplayNavigationPath(DictionaryStage stage) {
 
