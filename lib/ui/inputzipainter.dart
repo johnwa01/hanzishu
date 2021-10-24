@@ -11,6 +11,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
+import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/utility.dart';
 
 class SpeechIconInfo {
@@ -57,7 +58,8 @@ class InputZiPainter extends BasePainter {
     if (theCurrentZiCandidates != null) {
       double x = 0.0;
 
-      for (int i = 0; i < theCurrentZiCandidates.length; i++) {
+      var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
+      for (int i = 0; i < activeCandidatesLength; i++) {
         displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0);
         x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
       }

@@ -144,16 +144,16 @@ class _ComponentPageState extends State<ComponentPage> {
         }
         else {
           // just return an empty Widget
-          return Container(
-            padding: EdgeInsets.all(40), //10
-          );
+          return Container(width: 0.0, height: 0.0);
+            //padding: EdgeInsets.all(20), //10
+          //);
         }
       }
       else if (this.questionType == QuestionType.Component && theComponentManager.isHeaderOfRandomComponents()) {
         // just return an empty Widget
-        return Container(
-          padding: EdgeInsets.all(40), //10
-        );
+        return Container(width:0.0, height: 0.0);
+          //padding: EdgeInsets.all(20), //10
+        //);
       }
       //else if (this.questionType == QuestionType.ExpandedComponent && theComponentManager.isHeaderOfExpandedComponents()) {
         // just return an empty Widget
@@ -213,7 +213,7 @@ class _ComponentPageState extends State<ComponentPage> {
               SizedBox(width: 20),
               Flexible (
                 child: Text(
-                  'Note: The lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
+                  'Note: The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -409,8 +409,8 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    String question = 'Which is its ID?';
-    double size = 20.0;
+    String question = 'Which is their Lead Component Number?';
+    double size = 18.0;
 
     if (questionType == QuestionType.ExpandedComponent) {
       var hint = theExpandedComponentList[currentIndex].hint;
@@ -420,7 +420,7 @@ class _ComponentPageState extends State<ComponentPage> {
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
-              'Note: Each Lead Component (in red) has some Expanded Components associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and share the same keyboard key. It is important to get more and more familiar with them over the time of actual typing.',
+              'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
               style: TextStyle(fontSize: size)
           ),
         );
@@ -444,7 +444,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 15),
               ]
           ),
           Row(
@@ -475,7 +475,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
         Row(
           children: <Widget>[
-            SizedBox(height: 15),
+            SizedBox(height: 10),
           ]
         ),
         Row(
@@ -506,7 +506,7 @@ class _ComponentPageState extends State<ComponentPage> {
         ),
           Row(
               children: <Widget>[
-                SizedBox(height: 15),
+                SizedBox(height: 10),
               ]
           ),
         Row(
@@ -722,9 +722,10 @@ class _ComponentPageState extends State<ComponentPage> {
         result = "Remember Component Numbers, then ";
       }
       else if (isHeaderOfGroups) {
-        result = "Remember Group Numbers, then ";
+        result = "Distinguish Group Numbers, then ";
       }
       else if (isHeaderOfExpandedComponents) {
+        result = "Please read above, then ";
       }
       else {
         //var answerType = theComponentManager.getAnswerType(answeredPosition);

@@ -119,7 +119,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   child: Image.asset(
                     "assets/typingexercise/" + imageName,
                     width: 410.0,
-                    height: 100.0,
+                    height: 140.0,
                     //fit: BoxFit.fitWidth,
                   ),
                 ));
@@ -207,6 +207,10 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputHelper(int selectionIndex) {
+    if (currentIndex < 0) {
+      return;
+    }
+
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
       //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
@@ -215,7 +219,7 @@ class _InputZiPageState extends State<InputZiPage> {
           if ((currentIndex + 1) == theInputZiManager.getTotal(typingType)) {
               showCompletedDialog(currentBuildContext);
           }
-          currentIndex++;
+          currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex);
         });
 
         return;
@@ -299,6 +303,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (currentIndex < 0) {
+      return Container(width:0.0, height: 0.0);
+    }
+
     //To be sure
     initOverlay();
 
@@ -413,6 +421,10 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getComponentRelated() {
+    if (currentIndex < 0) {
+      return Container(width:0.0, height: 0.0);
+    }
+
     // an empty box
     if (typingType == TypingType.FreeTyping) {
       return Container(width:0.0, height: 0.0);
@@ -424,13 +436,13 @@ class _InputZiPageState extends State<InputZiPage> {
 
     String instruction;
     if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = "Type the given character. Input the components of the character in sequence through keyboard.";
+      instruction = "Type the given character. Break the character into components and input them in sequence through keyboard until you make a selection.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Input its two components first, then the last stroke from the 1st as well as the 2nd component.";
+      instruction = "Type the given character. Break the character into 2 components and input them first, then two strokes (the last stroke of the components).";
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Input its only component first, then up to 3 make-up strokes: 1st, 2nd, and last stroke.";
+      instruction = "Type the given character. Input its only component first, then up to 3 strokes (1st, 2nd, and last stroke) until you make a selection.";
     }
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
@@ -572,7 +584,7 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
-    if (typingType == TypingType.ThreeOrMoreComponents) {
+    if (typingType == TypingType.OneComponent) {
       title = "Congratulation!";
       content = "You have completed all the training sessions! You can now start your own typing.";
     }

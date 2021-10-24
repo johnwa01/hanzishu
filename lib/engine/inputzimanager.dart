@@ -8,7 +8,7 @@ import 'package:hanzishu/variables.dart';
 
 class InputZiManager {
   static List<InputZi> typingCandidates = [];
-  static int maxTypingCandidates = 20;
+  static int maxTypingCandidates = 7; //20;
   TypingType typingType;
 
   static int findFirst(String input) {
@@ -161,8 +161,35 @@ class InputZiManager {
   }
 */
 
+  int getNextIndex(TypingType typingType, int currentIndex) {
+    currentIndex++;
+
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      if (currentIndex >= theZiWithThreeOrMoreComponentList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      if (currentIndex >= theZiWithTwoComponentList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.OneComponent) {
+      if (currentIndex >= theZiWithOneComponentList.length) {
+        currentIndex = -1;
+      }
+    }
+
+    return currentIndex;
+  }
+
   bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult) {
     bool result = false;
+
+    if (currentIndex < 0) {
+      return false;
+    }
+
     var zi;
     if (typingType == TypingType.ThreeOrMoreComponents) {
       zi = theZiWithThreeOrMoreComponentList[currentIndex];

@@ -115,18 +115,18 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("Start Guided Typing", textDirection: TextDirection.ltr),
+          title: Text("Practice typing of characters with hints", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Ones with one component", textDirection: TextDirection.ltr),
+          title: Text("        Ones with three or more components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.OneComponent), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
               ),
             );
           },
@@ -147,14 +147,14 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Ones with three or more components", textDirection: TextDirection.ltr),
+          title: Text("        Ones with one component", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.OneComponent), //InputZiPage(),
               ),
             );
           },

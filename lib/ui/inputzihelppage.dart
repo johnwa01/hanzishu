@@ -192,7 +192,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "a. If the character has only 1 component, type the component first, then you can type up to 3 make-up strokes: first, second, and last stroke.",
+                "a. If the character has only 1 component, type the component first, then you can type up to 3 strokes: first, second, and last stroke.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -214,7 +214,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "b. If the character has 2 components, type them first, then you can type make-up strokes: last stroke of each of the two components.",
+                "b. If the character has 2 components, type them first, then you can type two strokes: last stroke of each of the two components.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),

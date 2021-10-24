@@ -52,7 +52,7 @@ class InputZiComponentPainter extends BasePainter {
       instruction = "Type the given character. Input its two components first, then the last stroke from the 1st as well as the 2nd component.";
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Input its only component first, then up to 3 make-up strokes: 1st, 2nd, and last stroke.";
+      instruction = "Type the given character. Input its only component first, then up to 3 strokes: 1st, 2nd, and last stroke.";
     }
 
     double x = 5.0;
