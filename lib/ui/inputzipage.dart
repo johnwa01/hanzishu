@@ -333,11 +333,22 @@ class _InputZiPageState extends State<InputZiPage> {
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
+    var title = 'Hanzishu Component Input Method';
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      title = 'Characters with 3 or more components';
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      title = 'Characters with 2 components';
+    }
+    else if (typingType == TypingType.OneComponent) {
+      title = 'Characters with 1 component';
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Component Input Method"),
+        title: Text(title),
         ),
       body: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -439,7 +450,7 @@ class _InputZiPageState extends State<InputZiPage> {
       instruction = "Type the given character. Break the character into components and input them in sequence through keyboard until you make a selection.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Break the character into 2 components and input them first, then two strokes (the last stroke of the components).";
+      instruction = "Type the given character. Break the character into 2 components. Input them in sequence first, then the last stroke of the 1st & 2nd component.";
     }
     else if (typingType == TypingType.OneComponent) {
       instruction = "Type the given character. Input its only component first, then up to 3 strokes (1st, 2nd, and last stroke) until you make a selection.";

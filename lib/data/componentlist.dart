@@ -135,7 +135,7 @@ var theRandomComponentList = [
 ];
 
 var theExpandedComponentList = [
-  ComponentCollection(0, "EF33.png", 0, 0, "Explaination Text"),
+  ComponentCollection(0, "EF33Sample.png", 0, 0, "Explaination Text"),
   ComponentCollection(1, "E33.png", 3, 3, "number of horizontal lines"),
   ComponentCollection(2, "E13.png", 1, 3, "which common shape"),
   ComponentCollection(3, "E23.png", 2, 3, "which common shape"),

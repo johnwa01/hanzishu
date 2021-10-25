@@ -80,11 +80,25 @@ class _ComponentPageState extends State<ComponentPage> {
       //theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
     }
 
+    var title = '';
+    if (questionType == QuestionType.ComponentGroup) {
+      title = 'Memorize Lead Component Groups';
+    }
+    else if (questionType == QuestionType.ComponentInGroup) {
+      title = 'Memorize Lead Components';
+    }
+    else if (questionType == QuestionType.Component) {
+      title = 'Re-memorize Lead Components';
+    }
+    else if (questionType == QuestionType.ExpandedComponent) {
+      title = 'Know Expanded Components';
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text("Memorize lead components"),
+        title: Text(title),
       ),
       body: Center
         (
@@ -213,7 +227,8 @@ class _ComponentPageState extends State<ComponentPage> {
               SizedBox(width: 20),
               Flexible (
                 child: Text(
-                  'Note: The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
+                  //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
+                  'The above keyboard layout shows six groups of Lead Components of Chinese characters mapped to it, with left and right side of the keyboard in different colors.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -241,7 +256,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'Note: A Component Number contains two digits. The first digit is the Group Number, and the second digit is the Internal Number within the group.',
+                    'A Component Number contains two digits. The first digit is the Group Number that we learned in last exercise, and the second digit is the Internal Number within the group.',
                     style: TextStyle(fontSize: 20)
                   ),
                 )
@@ -409,18 +424,19 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    String question = 'Which is their Lead Component Number?';
+    String question = "Which is the number of the above Lead Component?";
     double size = 18.0;
 
     if (questionType == QuestionType.ExpandedComponent) {
       var hint = theExpandedComponentList[currentIndex].hint;
-      question = "Guess their Lead Component & choose its Component Number. (Hint: " + hint + ")";
+      question = "Guess their Lead Component & choose its Component Number below. (Hint: " + hint + ")";
       size = 18.0;
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
-              'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
+              //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
+              "The above keyboard key shows the Lead Component '三'（33) and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '王'), guess or remember its Lead Component and number (ex: '三', 33）, then type the SAME key.",
               style: TextStyle(fontSize: size)
           ),
         );
@@ -722,7 +738,7 @@ class _ComponentPageState extends State<ComponentPage> {
         result = "Remember Component Numbers, then ";
       }
       else if (isHeaderOfGroups) {
-        result = "Distinguish Group Numbers, then ";
+        result = "Remember Group Numbers, then ";
       }
       else if (isHeaderOfExpandedComponents) {
         result = "Please read above, then ";
