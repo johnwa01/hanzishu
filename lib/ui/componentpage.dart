@@ -321,9 +321,46 @@ class _ComponentPageState extends State<ComponentPage> {
       //if(theComponentManager.isHeaderOfExpandedComponents()) {
       //  return getHeaderOfExpandedComponents();
       //}
-      //else {
+      if (currentIndex != 0 && theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
+        return Row(
+          children: <Widget>[
+            Container(
+              child: getResultReminderImage(context), // only used by Expanded
+              //padding: EdgeInsets.all(10),
+            ),
+            getQuestionImage(),
+          ]
+        );
+      }
+      else {
         return getQuestionImage();
-      //}
+      }
+    }
+  }
+
+  Widget getResultReminderImage(BuildContext context) {
+    String imagePath;
+    double imageWidth = 180.0;
+    double imageHeight = 160.0;
+
+    if (currentIndex > 0 && questionType == QuestionType.ExpandedComponent) {
+      var compCollection = theExpandedComponentList[currentIndex];
+      var comp = theComponentManager.getComponentByGroupAndIndex(compCollection.groupNumber, compCollection.indexInGroup);
+
+      imagePath =
+          'assets/typing/' + comp.image;
+
+      return Container(
+          alignment: Alignment.topRight, //topLeft,
+          child: Image.asset(
+              imagePath,
+              width: imageWidth,
+              height: imageHeight
+          )
+      );
+    }
+    else {
+      return Container(width: 0.0, height: 0.0);
     }
   }
 
