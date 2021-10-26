@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzicomponentpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
@@ -33,8 +34,9 @@ class _InputZiPageState extends State<InputZiPage> {
   List<String> ziCandidates = null;
   bool isCurrentlyUnderChoiceSelection = false;
   OverlayEntry overlayEntry;
-  TypingType previousOverlayType = TypingType.FreeTyping;
-  int previousOverlayIndex = 0;
+  //TypingType previousOverlayType = TypingType.FreeTyping;
+  //int previousOverlayIndex = 0;
+  var previousOverlayParameters = InputZiOverlayParameters(TypingType.FreeTyping, 0, false, '');
 
   int updateCounter = 0;
 
@@ -101,14 +103,34 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
-  showOverlay(BuildContext context, TypingType type, int index) {
+  showOverlay(BuildContext context, InputZiOverlayParameters overlayParameters/*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
     }
 
-    if (!(previousOverlayType == type && previousOverlayIndex == index)) {
-        var imageName = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex).hintImage;
+    //if (!(previousOverlayType == type && previousOverlayIndex == index)) {
+    if (!overlayParameters.isEqual(previousOverlayParameters)) {
+        var imageName;
+        var fullPath;
+        if (overlayParameters.isFullComponents) {
+            if (overlayParameters.fullComponentsLetter == 'Z') {
+              imageName = "GG4.png";
+            }
+            else {
+              var pair = ComponentManager.getGroupAndIndexFromLetter(
+                  overlayParameters.fullComponentsLetter);
+              var fullExpandedComponent = theComponentManager.getFullExpandedComponentByGroupAndIndex(pair.groupNumber, pair.indexInGroup);
+              imageName = fullExpandedComponent.imageName;
+            }
+            fullPath = "assets/typing/" + imageName;
+        }
+        else {
+          imageName = theInputZiManager
+              .getZiWithComponentsAndStrokes(typingType, currentIndex)
+              .hintImage;
+          fullPath = "assets/typingexercise/" + imageName;
+        }
 
         OverlayState overlayState = Overlay.of(context);
         overlayEntry = OverlayEntry(
@@ -117,19 +139,19 @@ class _InputZiPageState extends State<InputZiPage> {
                   top: 85.0, //posiY,
                   left: 0.0, //posiX,
                   child: Image.asset(
-                    "assets/typingexercise/" + imageName,
+                    fullPath,
                     width: 410.0,
                     height: 140.0,
                     //fit: BoxFit.fitWidth,
                   ),
                 ));
         overlayState.insert(overlayEntry);
-        previousOverlayType = type;
-        previousOverlayIndex = index;
+        //previousOverlayType = type;
+        //previousOverlayIndex = index;
+        previousOverlayParameters.assign(overlayParameters);
       }
       else {
-        previousOverlayType = TypingType.FreeTyping;
-        previousOverlayIndex = 0;
+        previousOverlayParameters.init();
       }
   }
 
@@ -143,18 +165,6 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return str;
-  }
-
-  bool isALetter(String value) {
-    if(value.length > 0) {
-      var charCodeUnits = value[0].codeUnits;
-
-      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 97 && charCodeUnits[0] <= 122 ) {  // value is between a and z
-        return true;
-      }
-    }
-
-    return false;
   }
 
   bool isNumberOneToSeven(String value) {
@@ -280,12 +290,16 @@ class _InputZiPageState extends State<InputZiPage> {
         setTextBySelectionIndex(selectionIndex);
       //4}
     }
+    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
+      var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
+      showOverlay(context, overlayParameters);
+    }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       //if (!justCompletedPosting) {
         setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
       //}
     }
-    else if (isALetter(latestInputKeyLetter)) {
+    else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
       justCompletedPosting = false;
 
@@ -504,7 +518,8 @@ class _InputZiPageState extends State<InputZiPage> {
                         overlayEntry = null;
                     }
 
-                    showOverlay(context, typingType, currentIndex);
+                    var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, false, '');
+                    showOverlay(context, overlayParameters);
                   },
                   child: Text(
                     "Hint",

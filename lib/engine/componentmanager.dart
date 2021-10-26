@@ -59,6 +59,141 @@ class ComponentManager {
     return true;
   }
 
+  static GroupAndIndexPair getGroupAndIndexFromLetter(String letter) {
+    var pair;
+
+    switch (letter) {
+      case "A":
+        {
+          pair = GroupAndIndexPair(3, 5);
+        }
+        break;
+      case "B":
+        {
+          pair = GroupAndIndexPair(5, 1);;
+        }
+        break;
+      case "C":
+        {
+          pair = GroupAndIndexPair(5, 3);
+        }
+        break;
+      case "D":
+        {
+          pair = GroupAndIndexPair(3, 3);
+        }
+        break;
+      case "E":
+        {
+          pair = GroupAndIndexPair(1, 3);
+        }
+        break;
+      case "F":
+        {
+          pair = GroupAndIndexPair(3, 2);
+        }
+        break;
+      case "G":
+        {
+          pair = GroupAndIndexPair(3, 1);
+        }
+        break;
+      case "H":
+        {
+          pair = GroupAndIndexPair(4, 1);
+        }
+        break;
+      case "I":
+        {
+          pair = GroupAndIndexPair(2, 3);
+        }
+        break;
+      case "J":
+        {
+          pair = GroupAndIndexPair(4, 2);
+        }
+        break;
+      case "K":
+        {
+          pair = GroupAndIndexPair(4, 3);
+        }
+        break;
+      case "L":
+        {
+          pair = GroupAndIndexPair(4, 4);
+        }
+        break;
+      case "M":
+        {
+          pair = GroupAndIndexPair(6, 2);
+        }
+        break;
+      case "N":
+        {
+          pair = GroupAndIndexPair(6, 1);
+        }
+        break;
+      case "O":
+        {
+          pair = GroupAndIndexPair(2, 4);
+        }
+        break;
+      case "P":
+        {
+          pair = GroupAndIndexPair(2, 5);
+        }
+        break;
+      case "Q":
+        {
+          pair = GroupAndIndexPair(1, 5);
+        }
+        break;
+      case "R":
+        {
+          pair = GroupAndIndexPair(1, 2);
+        }
+        break;
+      case "S":
+        {
+          pair = GroupAndIndexPair(3, 4);
+        }
+        break;
+      case "T":
+        {
+          pair = GroupAndIndexPair(1, 1);
+        }
+        break;
+      case "U":
+        {
+          pair = GroupAndIndexPair(2, 2);
+        }
+        break;
+      case "V":
+        {
+          pair = GroupAndIndexPair(5, 2);
+        }
+        break;
+      case "W":
+        {
+          pair = GroupAndIndexPair(1, 4);
+        }
+        break;
+      case "X":
+        {
+          pair = GroupAndIndexPair(5, 4);
+        }
+        break;
+      case "Y":
+        {
+          pair = GroupAndIndexPair(2, 1);
+        }
+        break;
+      // not expect Z
+    }
+
+    return pair;
+  }
+
 
   AnswerType getAnswerType(AnswerPosition answerPosition) {
     if (answerPosition == AnswerPosition.continueNext) {

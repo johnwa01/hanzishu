@@ -101,6 +101,16 @@ class ComponentCollection {
   }
 }
 
+class GroupAndIndexPair {
+  int groupNumber;
+  int indexInGroup;
+
+  GroupAndIndexPair(int groupNumber, int indexInGroup) {
+    this.groupNumber = groupNumber;
+    this.indexInGroup = indexInGroup;
+  }
+}
+
 /*
 class FullComponentCollection {
   int id;

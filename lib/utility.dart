@@ -350,6 +350,30 @@ class Utility {
         char == '!' || char == '?' || char == '.' || char == ',';
   }
 
+  static bool isALowerCaseLetter(String value) {
+    if(value.length > 0) {
+      var charCodeUnits = value[0].codeUnits;
+
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 97 && charCodeUnits[0] <= 122 ) {  // value is between a and z
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  static bool isAUpperCaseLetter(String value) {
+    if(value.length > 0) {
+      var charCodeUnits = value[0].codeUnits;
+
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 65 && charCodeUnits[0] <= 90 ) {  // value is between a and z
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   static int findSeparationCount(String convWithSeparation, int startingPosi) {
     int count = 1;
 
@@ -374,7 +398,6 @@ class Utility {
     }
   }
 }
-
 
 //TODO: check - this is not used anymore I think.
 /*
