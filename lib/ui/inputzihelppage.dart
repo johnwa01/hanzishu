@@ -317,6 +317,14 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
             width: 400.0,
             height: 250.0),
           ),
+          SizedBox(height: fontSize),
+          Flexible(
+            child: Text(
+                "Note 4: You can double click the context in the editing field to copy / paste it to other applications.",
+                style: TextStyle(fontSize: fontSize),
+                textAlign: TextAlign.left
+            ),
+          ),
           //     SizedBox(height: 18),
         ]
     );
