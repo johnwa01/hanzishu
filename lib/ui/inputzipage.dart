@@ -81,7 +81,7 @@ class _InputZiPageState extends State<InputZiPage> {
       else {
         var str = _controller.value.text;
         // check if last letter is a choice number, in this case, not a real input and need to be removed
-        if (isNumberOneToSeven(str[_controller.value.text.length - 1]) || str[_controller.value.text.length - 1] == " ") {
+        if (isNumberOneToSeven(str[_controller.value.text.length - 1]) || str[_controller.value.text.length - 1] == " " || Utility.isAUpperCaseLetter(str[_controller.value.text.length - 1])) {
           newInputText = _controller.value.text.substring(0, _controller.value.text.length - 1);
         }
         else {
@@ -171,7 +171,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if(value.length > 0) {
       var charCodeUnits = value[0].codeUnits;
 
-      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between a and z
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between 1 and 7
         return true;
       }
     }
@@ -293,6 +293,9 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
+      _controller.text = _controller.text.substring(0, _controller.text.length - 1);
+      //Note: set cursor to the end of of the current editing
+      _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       //if (!justCompletedPosting) {
