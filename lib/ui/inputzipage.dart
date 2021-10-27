@@ -32,13 +32,15 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousText = "";
   bool justCompletedPosting = false;
   List<String> ziCandidates = null;
-  bool isCurrentlyUnderChoiceSelection = false;
+  bool isCurrentlyUnderChoiceSelection = false;  //TODO: not sure if this is reliable
+
   OverlayEntry overlayEntry;
   //TypingType previousOverlayType = TypingType.FreeTyping;
   //int previousOverlayIndex = 0;
   var previousOverlayParameters = InputZiOverlayParameters(TypingType.FreeTyping, 0, false, '');
 
   int updateCounter = 0;
+
 
   @override
   initState() {
@@ -287,24 +289,38 @@ class _InputZiPageState extends State<InputZiPage> {
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
       //if (!justCompletedPosting) {
-        setTextBySelectionIndex(selectionIndex);
+      if (_controller.text != previousText) {
+        initOverlay();
+      }
+      setTextBySelectionIndex(selectionIndex);
       //4}
     }
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
+      // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
+      previousText = _controller.text.substring(0, _controller.text.length - 1);
       _controller.text = _controller.text.substring(0, _controller.text.length - 1);
       //Note: set cursor to the end of of the current editing
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+
+      //isCurrentlyUnderOverlayDisplaySession = false;
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       //if (!justCompletedPosting) {
-        setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
+      if (_controller.text != previousText) {
+        initOverlay();
+      }
+      setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
       //}
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
       justCompletedPosting = false;
+
+      if (_controller.text != previousText) {
+        initOverlay();
+      }
 
       var composingText = getFullComposingText(latestInputKeyLetter);
       theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
