@@ -29,8 +29,10 @@ class _InputZiPageState extends State<InputZiPage> {
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
+  int previousEndSelection = -1;
   String previousText = "";
   bool justCompletedPosting = false;
+  bool justCompletedFullCompDisplay = false;
   List<String> ziCandidates = null;
   bool isCurrentlyUnderChoiceSelection = false;  //TODO: not sure if this is reliable
 
@@ -71,40 +73,6 @@ class _InputZiPageState extends State<InputZiPage> {
       overlayEntry = null;
     }
   }
-/*
-  String getInputText(int index) {
-    var newInputText = "";
-    var composingString = "";
-
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
-      if (previousStartComposing != -1) {
-        newInputText = _controller.value.text.substring(0, previousStartComposing);
-      }
-      else {
-        var str = _controller.value.text;
-        // check if last letter is a choice number, in this case, not a real input and need to be removed
-        if (isNumberOneToSeven(str[_controller.value.text.length - 1]) || str[_controller.value.text.length - 1] == " " || Utility.isAUpperCaseLetter(str[_controller.value.text.length - 1])) {
-          newInputText = _controller.value.text.substring(0, _controller.value.text.length - 1);
-        }
-        else {
-          newInputText = _controller.value.text;
-        }
-      }
-    }
-
-    var candidateZiString = InputZiManager.getCandidateZiString(index);
-    if (candidateZiString != null) {
-      newInputText += candidateZiString;
-    }
-
-    if(previousEndComposing != -1 && (previousEndComposing + 1) <= _controller.value.text.length) {
-      newInputText += _controller.value.text.substring(
-          previousEndComposing + 1, _controller.value.text.length);
-    }
-
-    return newInputText;
-  }
-*/
 
   // consider the case that the input letter might be in the middle of the input
   String getLatestInputLetter() {
@@ -132,6 +100,7 @@ class _InputZiPageState extends State<InputZiPage> {
       return '';
     }
   }
+
 
   String getInputTextBeforeComposingAndSelectionStart() {
     var newInputText = "";
@@ -180,19 +149,6 @@ class _InputZiPageState extends State<InputZiPage> {
   String getInputText(int index) {
     var newInputText = "";
 
-    /*
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
-      if (_controller.value.composing.start != -1) {
-        newInputText += _controller.value.text.substring(0, _controller.value.composing.start);
-      }
-      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
-        newInputText += _controller.value.text.substring(0, previousStartComposing);
-      }
-      else {
-        newInputText = _controller.value.text;
-      }
-    }
-    */
     newInputText = getInputTextBeforeComposingAndSelectionStart();
 
     var length = newInputText.length;
@@ -211,13 +167,33 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
+
+  String getInputTextWithoutUpperCaseLetter(String upperCaseLetter) {
+    var inputTextWithoutUpperCaseLetter = "";
+
+    var str = _controller.value.text;
+    var index = str.indexOf(upperCaseLetter);
+
+    if (index == -1) {
+      inputTextWithoutUpperCaseLetter = str;
+    }
+    else {
+      inputTextWithoutUpperCaseLetter = str.substring(0, index);
+
+      if (index < str.length) {
+        inputTextWithoutUpperCaseLetter += str.substring(index + 1, str.length);
+      }
+    }
+
+    return inputTextWithoutUpperCaseLetter;
+  }
+
   showOverlay(BuildContext context, InputZiOverlayParameters overlayParameters/*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
     }
 
-    //if (!(previousOverlayType == type && previousOverlayIndex == index)) {
     if (!overlayParameters.isEqual(previousOverlayParameters)) {
         var imageName;
         var fullPath;
@@ -299,16 +275,39 @@ class _InputZiPageState extends State<InputZiPage> {
     return -1;
   }
 
-  void setTextBySelectionIndex(int selectionIndex) {
+  int getCursorPosition(bool isFromCharList) {
+    var selectionPosi;
+    if (_controller.value.selection.end != -1) {
+      selectionPosi = _controller.value.selection.end;
+      if (isFromCharList) {
+        selectionPosi++;
+      }
+    }
+    else if (previousEndSelection != -1) {
+      selectionPosi = previousEndSelection;
+      if (isFromCharList) {
+        selectionPosi++;
+      }
+    }
+    else {
+      selectionPosi = _controller.value.text.length;
+    }
+
+    return selectionPosi;
+  }
+
+  void setTextByChosenZiIndex(int selectionIndex, bool isFromCharList) {
     var newText = getInputText(selectionIndex);
 
     previousStartComposing = -1;
     previousEndComposing = -1;
     previousText = newText;
-    justCompletedPosting = true;
+        justCompletedPosting = true;
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
+
+    previousEndSelection = _controller.value.selection.end;
 
     _controller.clearComposing();
 
@@ -316,8 +315,12 @@ class _InputZiPageState extends State<InputZiPage> {
     _controller.text = newText;
 
     //_controller.text += st; //'好';
-    //Note: set cursor to the end of of the current editing
-    _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+    //Note: set cursor to the right position of the current editing specifically
+    // otherwise it'll set at the beginning
+
+    var selectionPosi = getCursorPosition(isFromCharList);
+
+    _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
   }
 
   void handleKeyInput() {
@@ -373,7 +376,7 @@ class _InputZiPageState extends State<InputZiPage> {
     */
 
     // this is as early as the place to check this. ex: notified with controller text update but without real change.
-    if (justCompletedPosting && _controller.text == previousText) {
+    if ((justCompletedPosting || justCompletedFullCompDisplay) && _controller.text == previousText) {
         if (_controller.value.composing.end > 0) {
           // TODO: work around for now. for some reason, the controller puts back the previous value to the composing.
           _controller.clearComposing();
@@ -382,50 +385,41 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     latestInputKeyLetter = getLatestInputLetter();
-    /*
-    if (_controller.value.composing.end > 0) {
-      // composing can be in the middle position of the text
-      latestInputKeyLetter = _controller.text[_controller.value.composing
-        .end - 1];
-    }
-    else {
-      var len = _controller.text.length;
-      if (len > 0) {
-        latestInputKeyLetter = _controller.text[len - 1];
-      }
-    }
-    */
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
       //if (!justCompletedPosting) {
       if (_controller.text != previousText) {
         initOverlay();
       }
-      setTextBySelectionIndex(selectionIndex);
-      //4}
+      setTextByChosenZiIndex(selectionIndex, false);
     }
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
-      // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
-      previousText = _controller.text.substring(0, _controller.text.length - 1);
-      _controller.text = _controller.text.substring(0, _controller.text.length - 1);
-      //Note: set cursor to the end of of the current editing
-      _controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
 
-      //isCurrentlyUnderOverlayDisplaySession = false;
+      justCompletedFullCompDisplay = true;
+      previousEndSelection = _controller.selection.end;
+      // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
+      previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
+      // actually set the current value, although use previousText parameter
+      _controller.text = previousText; //_controller.text.substring(0, _controller.text.length - 1);
+      // Note: not sure why it notifies twice, one with updated value and one with old value. Therefore it pretty much does twice in order to finish one cycle.
+
+      var selectionPosi = getCursorPosition(false);
+      _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       //if (!justCompletedPosting) {
       if (_controller.text != previousText) {
         initOverlay();
       }
-      setTextBySelectionIndex(getZeroBasedNumber(latestInputKeyLetter));
+      setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
       //}
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
       justCompletedPosting = false;
+      justCompletedFullCompDisplay = false;
 
       if (_controller.text != previousText) {
         initOverlay();
@@ -442,6 +436,7 @@ class _InputZiPageState extends State<InputZiPage> {
       previousEndComposing = _controller.value.composing.end;
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -690,7 +685,7 @@ class _InputZiPageState extends State<InputZiPage> {
       onPressed: () {
         // this lock mechanism seems working fine, but not sure ...
         isCurrentlyUnderChoiceSelection = true;
-        setTextBySelectionIndex(candidateIndex);
+        setTextByChosenZiIndex(candidateIndex, true);
         isCurrentlyUnderChoiceSelection = false;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
