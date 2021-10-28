@@ -71,7 +71,7 @@ class _InputZiPageState extends State<InputZiPage> {
       overlayEntry = null;
     }
   }
-
+/*
   String getInputText(int index) {
     var newInputText = "";
     var composingString = "";
@@ -101,6 +101,112 @@ class _InputZiPageState extends State<InputZiPage> {
       newInputText += _controller.value.text.substring(
           previousEndComposing + 1, _controller.value.text.length);
     }
+
+    return newInputText;
+  }
+*/
+
+  // consider the case that the input letter might be in the middle of the input
+  String getLatestInputLetter() {
+    var newInputText = "";
+
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      if (_controller.value.composing.start != -1) {
+        newInputText += _controller.value.text.substring(0, _controller.value.composing.end);
+      }
+      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
+        newInputText += _controller.value.text.substring(0, previousEndComposing + 1);
+      }
+      else if (_controller.value.selection.start != -1) {
+        newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
+      }
+      else {
+        newInputText = _controller.value.text;
+      }
+    }
+
+    if (newInputText.length > 0) {
+      return newInputText[newInputText.length - 1];
+    }
+    else {
+      return '';
+    }
+  }
+
+  String getInputTextBeforeComposingAndSelectionStart() {
+    var newInputText = "";
+
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      if (_controller.value.composing.start != -1) {
+        newInputText += _controller.value.text.substring(0, _controller.value.composing.start);
+      }
+      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
+        newInputText += _controller.value.text.substring(0, previousStartComposing);
+      }
+      else if (_controller.value.selection.start != -1) {
+        newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
+      }
+      else {
+        newInputText = _controller.value.text;
+      }
+    }
+
+    return newInputText;
+  }
+
+  String getInputTextAfterComposingAndSelectionEnd() {
+    var newInputText = "";
+
+    if (_controller.value.composing.end != -1 &&
+        _controller.value.composing.end <= _controller.value.text.length) {
+      newInputText = _controller.value.text.substring(
+          _controller.value.composing.end, _controller.value.text.length);
+    }
+    else if (previousEndComposing != -1 &&
+        (previousEndComposing + 1) <= _controller.value.text.length) {
+      newInputText = _controller.value.text.substring(
+          previousEndComposing + 1, _controller.value.text.length);
+    }
+    else if (_controller.value.selection.end != -1 &&
+        (_controller.value.selection.end + 1) <=
+            _controller.value.text.length) {
+      newInputText = _controller.value.text.substring(
+          _controller.value.selection.end, _controller.value.text.length);
+    }
+
+    return newInputText;
+  }
+
+  String getInputText(int index) {
+    var newInputText = "";
+
+    /*
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      if (_controller.value.composing.start != -1) {
+        newInputText += _controller.value.text.substring(0, _controller.value.composing.start);
+      }
+      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
+        newInputText += _controller.value.text.substring(0, previousStartComposing);
+      }
+      else {
+        newInputText = _controller.value.text;
+      }
+    }
+    */
+    newInputText = getInputTextBeforeComposingAndSelectionStart();
+
+    var length = newInputText.length;
+    // check if last letter is a choice number, in this case, not a real input and need to be removed
+    if (length > 0 && (isNumberOneToSeven(newInputText[length - 1]) || newInputText[length - 1] == " " || Utility.isAUpperCaseLetter(newInputText[length - 1]))) {
+      newInputText = newInputText.substring(0, length - 1);
+    }
+
+    var candidateZiString = InputZiManager.getCandidateZiString(index);
+    if (candidateZiString != null) {
+      newInputText += candidateZiString;
+    }
+
+    newInputText += getInputTextAfterComposingAndSelectionEnd();
 
     return newInputText;
   }
@@ -275,6 +381,8 @@ class _InputZiPageState extends State<InputZiPage> {
         return;
     }
 
+    latestInputKeyLetter = getLatestInputLetter();
+    /*
     if (_controller.value.composing.end > 0) {
       // composing can be in the middle position of the text
       latestInputKeyLetter = _controller.text[_controller.value.composing
@@ -286,6 +394,7 @@ class _InputZiPageState extends State<InputZiPage> {
         latestInputKeyLetter = _controller.text[len - 1];
       }
     }
+    */
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
       //if (!justCompletedPosting) {
