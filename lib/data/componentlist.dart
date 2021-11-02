@@ -2,36 +2,42 @@ import 'package:hanzishu/engine/component.dart';
 
 
 var theComponentList = [
-  Component(0, "Ta", "撇", false, true, 1, 1, "C11.png", "nmdc", [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92]),
-  Component(1, "Ra", "八", true, true, 1, 2, "C12.png", "nmdc", []),
-  Component(2, "Ea", "人", true, true, 1, 3, "C13.png", "nmdc", []),
-  Component(3, "Wa", "艾字底", false, true, 1, 4, "C14.png", "nmdc", [4.0,0.75,0.05,8.0,0.6,0.475,8.0,0.5,0.65,8.0,0.325,0.85,8.0,0.025,0.975,4.0,0.2,0.05,8.0,0.325,0.375,8.0,0.5,0.65,8.0,0.725,0.825,8.0,0.925,0.925]),
-  Component(4, "Qa", "周字框", false, true, 1, 5, "C15.png", "nmdc", [4.0,0.075,0.9375,8.0,0.1125,0.9,8.0,0.1625,0.8,8.0,0.2,0.65,8.0,0.2125,0.075,8.0,0.9,0.075,8.0,0.9,0.875,8.0,0.875,0.9,8.0,0.85,0.925,8.0,0.75,0.9875]),
-  Component(5, "Ya", "竖", false, true, 2, 1, "C21.png", "nmdc", [4.0,0.5,0.0,8.0,0.5,1.0]),
-  Component(6, "Ua", "上三框", false, true, 2, 2, "C22.png", "nmdc", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
-  Component(7, "Ia", "口", true, true, 2, 3, "C23.png", "nmdc", []),
-  Component(8, "Oa", "日", true, true, 2, 4, "C24.png", "nmdc", []),
-  Component(90, "Pa", "田", true, true, 2, 5, "C25.png", "nmdc", []),
-  Component(10, "Ga", "一", true, true, 3, 1, "C31.png", "nmdc", []),
-  Component(11, "Fa", "二", true, true, 3, 2, "C32.png", "nmdc", []),
-  Component(12, "Da", "三", true, true, 3, 3, "C33.png", "nmdc", []),
-  Component(13, "Sa", "七", true, true, 3, 4, "C34.png", "nmdc", []),
-  Component(14, "Aa", "十", true, true, 3, 5, "C35.png", "nmdc", []),
-  Component(15, "Ha", "点", false, true, 4, 1, "C41.png", "nmdc", [4.0,0.425,0.2,8.0,0.6,0.35]),
-  Component(16, "Ja", "丁", true, true, 4, 2, "C42.png", "nmdc", []),
-  Component(17, "Ka", "厂", true, true, 4, 3, "C43.png", "nmdc", []),
-  Component(18, "La", "木", true, true, 4, 4,  "C44.png", "nmdc",[]),
-  Component(19, "Ba", "乙", true, true, 5, 1, "C51.png", "nmdc", []),
-  Component(20, "Va", "刀", true, true, 5, 2, "C52.png", "nmdc", []),
-  Component(21, "Ca", "弓", true, true, 5, 3, "C53.png", "nmdc", []),
-  Component(22, "Xa", "雪字底", false, true, 5, 4, "C54.png", "nmdc", [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875]),
-  Component(23, "Na", "又", true, true, 6, 1, "C61.png", "nmdc", []),
-  Component(24, "Ma", "厶", false, true, 6, 2, "C62.png", "nmdc", [4.0,0.7,0.075,8.0,0.65,0.25,8.0,0.625,0.35,8.0,0.575,0.45,8.0,0.5375,0.55,8.0,0.5,0.65,8.0,0.45,0.725,8.0,0.375,0.825,8.0,0.85,0.725,4.0,0.725,0.4125,8.0,0.7625,0.55,8.0,0.8125,0.65,8.0,0.85,0.725,8.0,0.9,0.875]),
+  Component(0, "Ta", "撇", false, "nmdc", [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92]),
+  Component(1, "Ra", "八", true, "nmdc", []),
+  Component(2, "Ea", "人", true, "nmdc", []),
+  ];
+
+var theLeadComponentList = [
+  LeadComponent(0, "Ta", "撇", false, true, 1, 1, "C11.png", "nmdc", [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92]),
+  LeadComponent(1, "Ra", "八", true, true, 1, 2, "C12.png", "nmdc", []),
+  LeadComponent(2, "Ea", "人", true, true, 1, 3, "C13.png", "nmdc", []),
+  LeadComponent(3, "Wa", "艾字底", false, true, 1, 4, "C14.png", "nmdc", [4.0,0.75,0.05,8.0,0.6,0.475,8.0,0.5,0.65,8.0,0.325,0.85,8.0,0.025,0.975,4.0,0.2,0.05,8.0,0.325,0.375,8.0,0.5,0.65,8.0,0.725,0.825,8.0,0.925,0.925]),
+  LeadComponent(4, "Qa", "周字框", false, true, 1, 5, "C15.png", "nmdc", [4.0,0.075,0.9375,8.0,0.1125,0.9,8.0,0.1625,0.8,8.0,0.2,0.65,8.0,0.2125,0.075,8.0,0.9,0.075,8.0,0.9,0.875,8.0,0.875,0.9,8.0,0.85,0.925,8.0,0.75,0.9875]),
+  LeadComponent(5, "Ya", "竖", false, true, 2, 1, "C21.png", "nmdc", [4.0,0.5,0.0,8.0,0.5,1.0]),
+  LeadComponent(6, "Ua", "上三框", false, true, 2, 2, "C22.png", "nmdc", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
+  LeadComponent(7, "Ia", "口", true, true, 2, 3, "C23.png", "nmdc", []),
+  LeadComponent(8, "Oa", "日", true, true, 2, 4, "C24.png", "nmdc", []),
+  LeadComponent(90, "Pa", "田", true, true, 2, 5, "C25.png", "nmdc", []),
+  LeadComponent(10, "Ga", "一", true, true, 3, 1, "C31.png", "nmdc", []),
+  LeadComponent(11, "Fa", "二", true, true, 3, 2, "C32.png", "nmdc", []),
+  LeadComponent(12, "Da", "三", true, true, 3, 3, "C33.png", "nmdc", []),
+  LeadComponent(13, "Sa", "七", true, true, 3, 4, "C34.png", "nmdc", []),
+  LeadComponent(14, "Aa", "十", true, true, 3, 5, "C35.png", "nmdc", []),
+  LeadComponent(15, "Ha", "点", false, true, 4, 1, "C41.png", "nmdc", [4.0,0.425,0.2,8.0,0.6,0.35]),
+  LeadComponent(16, "Ja", "丁", true, true, 4, 2, "C42.png", "nmdc", []),
+  LeadComponent(17, "Ka", "厂", true, true, 4, 3, "C43.png", "nmdc", []),
+  LeadComponent(18, "La", "木", true, true, 4, 4,  "C44.png", "nmdc",[]),
+  LeadComponent(19, "Ba", "乙", true, true, 5, 1, "C51.png", "nmdc", []),
+  LeadComponent(20, "Va", "刀", true, true, 5, 2, "C52.png", "nmdc", []),
+  LeadComponent(21, "Ca", "弓", true, true, 5, 3, "C53.png", "nmdc", []),
+  LeadComponent(22, "Xa", "雪字底", false, true, 5, 4, "C54.png", "nmdc", [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875]),
+  LeadComponent(23, "Na", "又", true, true, 6, 1, "C61.png", "nmdc", []),
+  LeadComponent(24, "Ma", "厶", false, true, 6, 2, "C62.png", "nmdc", [4.0,0.7,0.075,8.0,0.65,0.25,8.0,0.625,0.35,8.0,0.575,0.45,8.0,0.5375,0.55,8.0,0.5,0.65,8.0,0.45,0.725,8.0,0.375,0.825,8.0,0.85,0.725,4.0,0.725,0.4125,8.0,0.7625,0.55,8.0,0.8125,0.65,8.0,0.85,0.725,8.0,0.9,0.875]),
 ];
 
 // TODO: To be created in run time.
 // We call lead component just component, and other components expanded components.
-var theLeadComponentList  = theComponentList;
+//var theLeadComponentList  = theComponentList;
 
 var theComponentGroupList = [
   ComponentGroup(0, "GG5.png"),
