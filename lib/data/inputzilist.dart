@@ -1,44 +1,4 @@
 import 'package:hanzishu/engine/inputzi.dart';
-var theZiWithOneComponentList=[
-  ZiWithComponentsAndStrokes("一", ["Ga", "Ga"], "456.png"),
-  ZiWithComponentsAndStrokes("二", ["Fa", "Ga", "Ga"], "451.png"),
-  ZiWithComponentsAndStrokes("人", ["Ea", "Ta", "Ha"], "452.png"),
-  ZiWithComponentsAndStrokes("大", ["Ea", "Ga", "Ta", "Ha"], "453.png"),
-  ZiWithComponentsAndStrokes("不", ["Ga", "Ga", "Ya", "Ha"], "455.png"),
-  ZiWithComponentsAndStrokes("了", ["Ja", "Ba", "Ya"], "454.png"),
-  ZiWithComponentsAndStrokes("我", ["Wa", "Ta", "Ga", "Ta"], "457.png"),
-  ZiWithComponentsAndStrokes("见", ["Ua", "Ya", "Ba", "Ba"], "450.png"),
-  ZiWithComponentsAndStrokes("气", ["Fa", "Ta", "Ga", "Ba"], "458.png"),
-  ZiWithComponentsAndStrokes("下", ["Ga", "Ga", "Ya", "Ha"], "459.png"),
-  ZiWithComponentsAndStrokes("下", ["Ga", "Ga", "Ya", "Ha"], "460.png"),
-];
-
-var theZiWithTwoComponentList=[
-  ZiWithComponentsAndStrokes("明", ["Oa", "Qa", "Ga", "Ga"], "461.png"),
-  ZiWithComponentsAndStrokes("好", ["Wa", "Ja", "Ga", "Ga"], "462.png"),
-  ZiWithComponentsAndStrokes("多", ["Na", "Na", "Ha", "Ha"], "463.png"),
-  ZiWithComponentsAndStrokes("岁", ["Ya", "Na", "Ya", "Ha"], "464.png"),
-  ZiWithComponentsAndStrokes("六", ["Ha", "Ra", "Ga", "Ha"], "465.png"),
-  ZiWithComponentsAndStrokes("老", ["Aa", "Sa", "Ta", "Ba"], "466.png"),
-  ZiWithComponentsAndStrokes("再", ["Ga", "Aa", "Ga", "Ga"], "467.png"),
-  ZiWithComponentsAndStrokes("们", ["Ta", "Ua", "Ya", "Ba"], "468.png"),
-  ZiWithComponentsAndStrokes("对", ["Na", "Ja", "Ha", "Ha"], "469.png"),
-  ZiWithComponentsAndStrokes("关", ["Ha", "Ea", "Ga", "Ha"], "470.png"),
-  ZiWithComponentsAndStrokes("系", ["Ta", "Ma", "Ta", "Ha"], "471.png"),
-];
-
-var theZiWithThreeOrMoreComponentList=[
-  ZiWithComponentsAndStrokes("你", ["Ta", "Ta", "Ya"], "490.png"),
-  ZiWithComponentsAndStrokes("谢", ["Ha", "Oa", "Ja"], "491.png"),
-  ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "492.png"),
-  ZiWithComponentsAndStrokes("师", ["Ya", "Ga", "Ua"], "493.png"),
-  ZiWithComponentsAndStrokes("您", ["Ta", "Ta", "Ya", "Ha"], "494.png"),
-  ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "495.png"),
-  ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "496.png"),
-  ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "497.png"),
-  ZiWithComponentsAndStrokes("起", ["Aa", "Ya", "Sa"], "498.png"),
-  ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "499.png"),
-];
 
 var theInputZiList=[
   InputZi("aaa", 11288,"鞋", "xie2"),
