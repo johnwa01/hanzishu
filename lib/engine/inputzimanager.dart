@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/data/inputzilist.dart';
+import 'package:hanzishu/data/componentlist.dart';
 import 'dart:math';
 
 import 'package:hanzishu/variables.dart';

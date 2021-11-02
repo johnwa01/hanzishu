@@ -414,7 +414,7 @@ class ComponentManager {
     return '';
   }
 
-  Component getComponent(int id) {
+  LeadComponent getComponent(int id) {
     return theLeadComponentList[id];
   }
 
@@ -449,7 +449,7 @@ class ComponentManager {
     return -1;
   }
 
-  Component getComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
+  LeadComponent getComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
     var leng = theLeadComponentList.length;
     var comp;
 
@@ -479,14 +479,14 @@ class ComponentManager {
     return null;
   }
 
-  Component getComponentFromComponentInGroup(int index) {
+  LeadComponent getComponentFromComponentInGroup(int index) {
     var compInGroup = theComponentInGroupList[index];
     var groupNumber = compInGroup.groupNumber;
     var indexInGroup = compInGroup.indexInGroup;
     return getComponentByGroupAndIndex(groupNumber, indexInGroup);
   }
 
-  Component getComponentFromRandomComponentList(int index) {
+  LeadComponent getComponentFromRandomComponentList(int index) {
     var comp = theRandomComponentList[index];
     var groupNumber = comp.groupNumber;
     var indexInGroup = comp.indexInGroup;

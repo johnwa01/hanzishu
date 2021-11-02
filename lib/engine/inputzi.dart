@@ -27,22 +27,6 @@ class InputZi {
   }
 }
 
-class ZiWithComponentsAndStrokes {
-  String zi;
-  List<String> componentCodes;
-  String hintImage;
-
-  ZiWithComponentsAndStrokes(
-      String zi,
-      List<String> componentCodes,
-      String hintImage
-      ) {
-    this.zi = zi;
-    this.componentCodes = componentCodes;
-    this.hintImage = hintImage;
-  }
-}
-
 class InputZiOverlayParameters {
     TypingType type;
     int index;

@@ -129,9 +129,9 @@ class FullComponentCollection {
 }
 */
 
-class Component {
+class LeadComponent {
   int id;
-  String doubleByteName;
+  String doubleByteCode;
   String charOrNameOfNonchar;
   bool isChar;
   bool isLeadComponent;
@@ -142,9 +142,9 @@ class Component {
   List<double> strokes;
 
 
-  Component(
+  LeadComponent(
       int id,
-    String doubleByteName,
+    String doubleByteCode,
     String charOrNameOfNonchar,
     bool isChar,
     bool isLeadComponent,
@@ -155,7 +155,7 @@ class Component {
       List<double> strokes)
   {
       this.id = id;
-      this.doubleByteName = doubleByteName;
+      this.doubleByteCode = doubleByteCode;
       this.charOrNameOfNonchar = charOrNameOfNonchar;
       this.isChar = isChar;
       this.isLeadComponent = isLeadComponent;
@@ -166,3 +166,45 @@ class Component {
       this.strokes = strokes;
   }
 }
+
+class Component {
+  String doubleByteCode;
+  String charOrNameOfNonchar;
+  bool isChar;
+  String xiangXinImage;
+  String strokesString;
+  List<double> strokes;
+
+  Component(
+      String doubleByteCode,
+      String charOrNameOfNonchar,
+      bool isChar,
+      String xiangXinImag,
+      String strokesString,
+      List<double> strokes)
+  {
+    this.doubleByteCode= doubleByteCode;
+    this.charOrNameOfNonchar = charOrNameOfNonchar;
+    this.isChar = isChar;
+    this.xiangXinImage = xiangXinImage;
+    this.strokesString = strokesString;
+    this.strokes = strokes;
+  }
+}
+
+class ZiWithComponentsAndStrokes {
+  String zi;
+  List<String> componentCodes;
+  String hintImage;
+
+  ZiWithComponentsAndStrokes(
+      String zi,
+      List<String> componentCodes,
+      String hintImage
+      ) {
+    this.zi = zi;
+    this.componentCodes = componentCodes;
+    this.hintImage = hintImage;
+  }
+}
+
