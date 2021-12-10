@@ -414,8 +414,19 @@ class ComponentManager {
     return '';
   }
 
-  LeadComponent getComponent(int id) {
+  LeadComponent getLeadComponent(int id) {
     return theLeadComponentList[id];
+  }
+
+  Component getComponent(String doubleByteCode) {
+    //TODO: do a binary search
+    for (var i = 0; i < theComponentList.length; i++) {
+      if (theComponentList[i].doubleByteCode == doubleByteCode) {
+        return theComponentList[i];
+      }
+    }
+
+    return null;
   }
 
   int getCurrentComponentId() {

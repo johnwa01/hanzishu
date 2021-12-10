@@ -232,12 +232,14 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(char, transX, transY, charFontSize, color);
   }
 
+  /*
   void displayComponentText(int id, double transX, double transY, double charFontSize, Color color) {
     var component = theComponentManager.getComponent(id);
     var char = component.charOrNameOfNonchar;
 
     displayTextWithValue(char, transX, transY, charFontSize, color);
   }
+*/
 
   void displayTextForPinyin(int id, double transX, double transY, double charFontSize, Color color, bool trim) {
     var zi = theZiManager.getZi(id);
@@ -346,12 +348,13 @@ class BasePainter extends CustomPainter{
     // TODO: if createFrame, add to data structure for hittest buttons.
   }
 
-  void drawComponentZi(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  void drawLeadComponentZi(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    var comp = theComponentManager.getComponent(id);
+    var  comp = theComponentManager.getLeadComponent(id);
+    var  char = comp.charOrNameOfNonchar;
+    var  strokes = comp.strokes;
 
     if (!comp.isChar) {
-      var strokes = comp.strokes;
       buildBaseZi(
             strokes,
             transX,
@@ -363,9 +366,38 @@ class BasePainter extends CustomPainter{
             ziLineWidth);
     }
     else {
+        //TODO: next line not used
         double textTransYAdjusted = textTransYAdjust(transY, heightY);
-        displayComponentText(
-            id, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
+
+        displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800]);
+        //displayComponentText(
+        //    id, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
+    }
+  }
+
+  void drawComponentZi(String doubleByteCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
+    var  comp = theComponentManager.getComponent(doubleByteCode);
+
+    if (comp != null) {
+      var char = comp.charOrNameOfNonchar;
+      var strokes = comp.strokes;
+
+      if (!comp.isChar) {
+        buildBaseZi(
+            strokes,
+            transX,
+            transY,
+            widthX,
+            heightY,
+            ofColor, /*int hitTestId,*/
+            isSingleColor,
+            ziLineWidth);
+      }
+      else {
+        displayTextWithValue(
+            char, transX, transY, charFontSize, Colors.blue[800]);
+      }
     }
   }
 

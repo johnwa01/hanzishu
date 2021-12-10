@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
@@ -59,15 +60,38 @@ class InputZiPainter extends BasePainter {
       double x = 0.0;
 
       var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
+
+      if (activeCandidatesLength > 6) {  // TODO: for testing, leave 7 for test
+        activeCandidatesLength = 6;
+      }
       for (int i = 0; i < activeCandidatesLength; i++) {
         displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0);
         x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
       }
+
+
+      //TODO: for testing only
+      /*
+      if (globalTestDoubleByteCode.length == 2) {
+        if (theComponentManager.getComponent(globalTestDoubleByteCode) != null) {
+          drawComponentZi(
+              globalTestDoubleByteCode,
+              x,
+              0.0,
+              60.0,
+              60.0,
+              60.0, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/
+              this.lineColor /*ziColor*/, /*isSingleColor:*/
+              true,
+              60.0 * 0.05);
+        }
+      }
+      */
     }
     /*
     displayOneCandidate("好", 0.0, 0.0, 30.0);
     */
-  }
+    }
 
   displayOneCandidate(String candidate, double x, double y, double fontSize) {
     displayTextWithValue(candidate, x, y, fontSize, Colors.blue);

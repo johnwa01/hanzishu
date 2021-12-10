@@ -49,7 +49,7 @@ class ComponentPainter extends BasePainter {
       canvas.drawRect(Offset(0, 0) & Size(size.width, size.height), paint1);
     }
 
-    drawComponentZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ this.lineColor /*ziColor*/, /*isSingleColor:*/ true, size.width * 0.05);
+    drawLeadComponentZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ this.lineColor /*ziColor*/, /*isSingleColor:*/ true, size.width * 0.05);
     // drawZiGroup(centerId);
   }
 

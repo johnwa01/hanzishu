@@ -34,7 +34,7 @@ class _InputZiPageState extends State<InputZiPage> {
   bool justCompletedPosting = false;
   bool justCompletedFullCompDisplay = false;
   List<String> ziCandidates = null;
-  bool isCurrentlyUnderChoiceSelection = false;  //TODO: not sure if this is reliable
+  //bool isCurrentlyUnderChoiceSelection = false;  //TODO: not sure if this is reliable
 
   OverlayEntry overlayEntry;
   //TypingType previousOverlayType = TypingType.FreeTyping;
@@ -279,17 +279,27 @@ class _InputZiPageState extends State<InputZiPage> {
     var selectionPosi;
     if (_controller.value.selection.end != -1) {
       selectionPosi = _controller.value.selection.end;
+      if (_controller.value.composing.end != -1) {
+        selectionPosi -= (_controller.value.composing.end - _controller.value.composing.start);
+      }
       if (isFromCharList) {
         selectionPosi++;
       }
     }
     else if (previousEndSelection != -1) {
       selectionPosi = previousEndSelection;
+      if (previousEndComposing != -1) {
+        selectionPosi -= (previousEndComposing - previousStartComposing);
+      }
       if (isFromCharList) {
         selectionPosi++;
       }
     }
     else {
+      selectionPosi = _controller.value.text.length;
+    }
+
+    if (selectionPosi < 0 || selectionPosi > _controller.value.text.length) {
       selectionPosi = _controller.value.text.length;
     }
 
@@ -299,8 +309,8 @@ class _InputZiPageState extends State<InputZiPage> {
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharList) {
     var newText = getInputText(selectionIndex);
 
-    previousStartComposing = -1;
-    previousEndComposing = -1;
+ //   previousStartComposing = -1;
+ //   previousEndComposing = -1;
     previousText = newText;
         justCompletedPosting = true;
 
@@ -319,8 +329,14 @@ class _InputZiPageState extends State<InputZiPage> {
     // otherwise it'll set at the beginning
 
     var selectionPosi = getCursorPosition(isFromCharList);
+    var textPosition = TextPosition(offset: selectionPosi);
+    _controller.selection = TextSelection.fromPosition(textPosition);
 
-    _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
+    previousStartComposing = -1;
+    previousEndComposing = -1;
+
+    //restart a typing cycle
+    InputZiManager.previousFirstPositionList.clear();
   }
 
   void handleKeyInput() {
@@ -331,6 +347,9 @@ class _InputZiPageState extends State<InputZiPage> {
     if (currentIndex < 0) {
       return;
     }
+
+    //TODO: temp test code
+    //globalTestDoubleByteCode = _controller.text;
 
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
@@ -347,9 +366,11 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
 
+    /* NOTE: this method will fail accationally, therefore can't be used for real.
     if (isCurrentlyUnderChoiceSelection) {
       return;
     }
+  */
 
     print('Second text field: ${_controller.text}');
     String latestInputKeyLetter = "";
@@ -427,6 +448,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
       var composingText = getFullComposingText(latestInputKeyLetter);
       theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
+      InputZiManager.updateFirstCandidate(theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
+
       if (theCurrentZiCandidates == null) {
         List<String> composingList =  [composingText];
         theCurrentZiCandidates = composingList;
@@ -684,9 +707,9 @@ class _InputZiPageState extends State<InputZiPage> {
       textColor: Colors.blueAccent,
       onPressed: () {
         // this lock mechanism seems working fine, but not sure ...
-        isCurrentlyUnderChoiceSelection = true;
+        //isCurrentlyUnderChoiceSelection = true;
         setTextByChosenZiIndex(candidateIndex, true);
-        isCurrentlyUnderChoiceSelection = false;
+        //isCurrentlyUnderChoiceSelection = false;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );

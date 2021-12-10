@@ -234,7 +234,7 @@ var theZiWithThreeOrMoreComponentList=[
 
 
 var theComponentList = [
-  Component("Aa", "", true, "", "", []),
+  Component("Aa", "", false, "", "", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
   Component("Ab", "", true, "", "", []),
   Component("Ac", "", true, "", "", []),
   Component("Ad", "", true, "", "", []),

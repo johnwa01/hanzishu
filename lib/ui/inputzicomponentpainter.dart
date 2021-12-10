@@ -84,7 +84,7 @@ class InputZiComponentPainter extends BasePainter {
 
   displayOneComponent(String componentCode, double x, double y, Size size, double fontSize) {
     var componentId = theComponentManager.getComponentIdByCode(componentCode);
-    drawComponentZi(componentId, x, y, 20.0, 30.0, 30.0, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ Colors.blue /*ziColor*/, /*isSingleColor:*/ true, 2.5);
+    drawLeadComponentZi(componentId, x, y, 20.0, 30.0, 30.0, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ Colors.blue /*ziColor*/, /*isSingleColor:*/ true, 2.5);
   }
 
   @override

@@ -10,6 +10,7 @@ import 'package:hanzishu/variables.dart';
 
 class InputZiManager {
   static List<InputZi> typingCandidates = [];
+  static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
   TypingType typingType;
 
@@ -45,7 +46,18 @@ class InputZiManager {
     return -1;
   }
 
-  static updateCandidates(InputZi inputZi, List<InputZi> candidates ) {
+  // if a candidate is in the last letter, it can not be pushed out by a longer code.
+  static canUpdate(int currentInputCodeLength, int newCandidateCodeLength, int activeCandidateCodeLength) {
+    bool canUpdate = true;
+
+    if (activeCandidateCodeLength == currentInputCodeLength && newCandidateCodeLength > activeCandidateCodeLength) {
+      canUpdate = false;
+    }
+
+    return canUpdate;
+  }
+
+  static updateCandidates(InputZi inputZi, List<InputZi> candidates, int currentInputCodeLength ) {
     var activeCandidatesLength = min(maxTypingCandidates, candidates.length);
 
     if (activeCandidatesLength == 0) {
@@ -55,10 +67,12 @@ class InputZiManager {
 
     // never check the member after the maxTypingCandidates
     for (var i = 0; i < activeCandidatesLength; i++) {
+      if (canUpdate(currentInputCodeLength, inputZi.doubleByteCode.length, candidates[i].doubleByteCode.length)) {
         if (inputZi.usageFrequency > candidates[i].usageFrequency) {
           candidates.insert(i, inputZi);
           return;
         }
+      }
     }
 
     if (activeCandidatesLength < maxTypingCandidates) {
@@ -88,13 +102,13 @@ class InputZiManager {
     return candidates;
   }
 
-  static List<String> getZiCandidatesHelper(int start, int end) {
+  static List<String> getZiCandidatesHelper(int start, int end, int currentInputCodeLength) {
     typingCandidates.clear();
     for (var i = start; i <= end; i++) {
       var oneInputZi = theInputZiList[i];
       //if (typingCandidates.length == 0 || oneInputZi.usageFrequency > typingCandidates[typingCandidates.length-1].usageFrequency) {
         //loop through the candidates from smallest to the biggest
-        updateCandidates(oneInputZi, typingCandidates);
+        updateCandidates(oneInputZi, typingCandidates, currentInputCodeLength);
       //}
     }
 
@@ -106,10 +120,11 @@ class InputZiManager {
   // current input as input, and a string as the output
   static List<String> getZiCandidates(String input) {
     var first = findFirst(input);
+    var currentInputCodeLength = input.length;
     if (first != -1) {
       var last = findLast(first, input);
       if (last != -1) {
-        return getZiCandidatesHelper(first, last);
+        return getZiCandidatesHelper(first, last, currentInputCodeLength);
       }
     }
 
@@ -130,6 +145,61 @@ class InputZiManager {
     }
 
     return null;
+  }
+
+  static candidateExistsInFirstPositionList(String oneZi, List<String> previousFirstPositionList) {
+    for (var i = 0; i < previousFirstPositionList.length; i++) {
+      if (oneZi == previousFirstPositionList[i]) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  static addNewFirstToPreviousFirstList(String oneZi, List<String> previousFirstPositionList) {
+    for (var i = 0; i < previousFirstPositionList.length; i++) {
+      if (oneZi == previousFirstPositionList[i]) {
+        return;
+      }
+    }
+
+    previousFirstPositionList.add(oneZi);
+  }
+
+  static pushANeverFirstToFirst(List<String> currentCandidatesToUpdate, List<String> previousFirstPositionList) {
+    for (var i = 0; i < currentCandidatesToUpdate.length; i++) {
+      if (!candidateExistsInFirstPositionList(currentCandidatesToUpdate[i], previousFirstPositionList)) {
+        if (i == 0) {
+          return;
+        }
+
+        // push the value of position i into 0 (first) position
+        var inputZi = currentCandidatesToUpdate[i];
+        // from i to 1, shift the value of (j-1) to j.
+        for (var j = i; j > 0; j--) {
+          currentCandidatesToUpdate[j] = currentCandidatesToUpdate[j - 1];
+        }
+
+        currentCandidatesToUpdate[0] = inputZi;
+
+        return;
+      }
+    }
+  }
+
+  // replace the first candidate if it's already displayed as the first earlier
+  static updateFirstCandidate(List<String> currentCandidatesToUpdate, List<String> previousFirstPositionList) {
+    if (currentCandidatesToUpdate == null || currentCandidatesToUpdate.length <= 1) {
+      return;
+    }
+
+    if (candidateExistsInFirstPositionList(currentCandidatesToUpdate[0], previousFirstPositionList)) {
+      pushANeverFirstToFirst(currentCandidatesToUpdate, previousFirstPositionList);
+    }
+
+    // push the new first into the firstPostion list
+    addNewFirstToPreviousFirstList(currentCandidatesToUpdate[0], previousFirstPositionList);
   }
 
   ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index) {
