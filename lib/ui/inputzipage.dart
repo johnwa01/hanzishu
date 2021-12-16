@@ -30,6 +30,8 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
+  String initialControllerTextValue = "";
+  bool itsTheFirstTime = true;
   String previousText = "";
   bool justCompletedPosting = false;
   bool justCompletedFullCompDisplay = false;
@@ -79,15 +81,20 @@ class _InputZiPageState extends State<InputZiPage> {
     var newInputText = "";
 
     if (_controller.value.text != null && _controller.value.text.length != 0) {
-      if (_controller.value.composing.start != -1) {
-        newInputText += _controller.value.text.substring(0, _controller.value.composing.end);
-      }
-      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
-        newInputText += _controller.value.text.substring(0, previousEndComposing + 1);
-      }
-      else if (_controller.value.selection.start != -1) {
+      if (_controller.value.selection.start != -1) {
         newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
       }
+      else if (_controller.value.composing.end != -1) {
+        //Note: composing start/end includes the one letter just typed if no composing letters shown in the screen,
+        // but includes it if no letters shown in screen, this inconsistency is hard to manage in code.
+        // Found the selection.start is more reliable for this purpose. should check other usage as well.
+        newInputText += _controller.value.text.substring(0, _controller.value.composing.end);
+      }
+      else if (previousEndComposing != -1) {  // in case the current _controller doesn't contain composing info
+        //TODO: verify adding 1 here. Since it was an old value not updated in current input?
+        newInputText += _controller.value.text.substring(0, previousEndComposing + 1);
+      }
+
       else {
         newInputText = _controller.value.text;
       }
@@ -101,7 +108,6 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-
   String getInputTextBeforeComposingAndSelectionStart() {
     var newInputText = "";
 
@@ -112,6 +118,8 @@ class _InputZiPageState extends State<InputZiPage> {
       else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
         newInputText += _controller.value.text.substring(0, previousStartComposing);
       }
+      // for this purpose, should use composing since selection.start might be same value as selection.end.
+      // TODO: delete this else if.
       else if (_controller.value.selection.start != -1) {
         newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
       }
@@ -126,22 +134,25 @@ class _InputZiPageState extends State<InputZiPage> {
   String getInputTextAfterComposingAndSelectionEnd() {
     var newInputText = "";
 
-    if (_controller.value.composing.end != -1 &&
-        _controller.value.composing.end <= _controller.value.text.length) {
+    if (_controller.value.selection.end != -1 &&
+    (_controller.value.selection.end + 1) <= _controller.value.text.length) {
       newInputText = _controller.value.text.substring(
-          _controller.value.composing.end, _controller.value.text.length);
+      _controller.value.selection.end, _controller.value.text.length);
+    }
+    else if (_controller.value.composing.end != -1 &&
+        _controller.value.composing.end + 1 < _controller.value.text.length) {
+      // Note: The composing.end varies when there are composing letters shown in screen or not.
+      // Use selection.end to be reliable.
+      newInputText = _controller.value.text.substring(
+          _controller.value.composing.end + 1, _controller.value.text.length);
     }
     else if (previousEndComposing != -1 &&
         (previousEndComposing + 1) <= _controller.value.text.length) {
       newInputText = _controller.value.text.substring(
           previousEndComposing + 1, _controller.value.text.length);
     }
-    else if (_controller.value.selection.end != -1 &&
-        (_controller.value.selection.end + 1) <=
-            _controller.value.text.length) {
-      newInputText = _controller.value.text.substring(
-          _controller.value.selection.end, _controller.value.text.length);
-    }
+
+
 
     return newInputText;
   }
@@ -307,6 +318,11 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharList) {
+    //TODO: temp
+    //if (justCompletedPosting) {
+    //  return;
+    //}
+
     var newText = getInputText(selectionIndex);
 
  //   previousStartComposing = -1;
@@ -319,10 +335,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
     previousEndSelection = _controller.value.selection.end;
 
+    //TODO: not a safe way, need a better method.
+    //justClearedComposing = true;
     _controller.clearComposing();
+    //justClearedComposing = false;
 
     //now reset controller which will notify the listeners right away
     _controller.text = newText;
+    //justClearedComposing = false;
 
     //_controller.text += st; //'好';
     //Note: set cursor to the right position of the current editing specifically
@@ -344,12 +364,21 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputHelper(int selectionIndex) {
+    // Note: For each event, the system might send message multiple times.
+    // This logic filters out the extra top level calls to this function, as well as the
+    // calls triggered by code below but before the controller text is changed.
+    // After controller text is changed, the dup-avoid logic is managed by separate code later.
+    if (_controller.text == initialControllerTextValue) {
+      return;
+    }
+    else if (itsTheFirstTime) {
+      initialControllerTextValue = _controller.text;
+      itsTheFirstTime = false;
+    }
+
     if (currentIndex < 0) {
       return;
     }
-
-    //TODO: temp test code
-    //globalTestDoubleByteCode = _controller.text;
 
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
@@ -366,49 +395,18 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
 
-    /* NOTE: this method will fail accationally, therefore can't be used for real.
-    if (isCurrentlyUnderChoiceSelection) {
-      return;
-    }
-  */
-
     print('Second text field: ${_controller.text}');
     String latestInputKeyLetter = "";
 
-    /*
-    if (_controller.value.composing.end > 0) {
-      // composing can be in the middle position of the text
-      latestInputKeyLetter = _controller.text[_controller.value.composing
-        .end - 1];
-    }
-    else {
-      // this is as early as the place to check this. ex: notified with controller text update but without real change.
-      if (justCompletedPosting) {
-        if (_controller.text == previousText) {
-          return;
-        }
-      }
-
-      var len = _controller.text.length;
-      if (len > 0) {
-        latestInputKeyLetter = _controller.text[len - 1];
-      }
-    }
-    */
-
     // this is as early as the place to check this. ex: notified with controller text update but without real change.
+    // use two conditions so that new typing can continue. if only use justCompletedPosting, all code would be blocked.
     if ((justCompletedPosting || justCompletedFullCompDisplay) && _controller.text == previousText) {
-        if (_controller.value.composing.end > 0) {
-          // TODO: work around for now. for some reason, the controller puts back the previous value to the composing.
-          _controller.clearComposing();
-        }
         return;
     }
 
     latestInputKeyLetter = getLatestInputLetter();
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      //if (!justCompletedPosting) {
       if (_controller.text != previousText) {
         initOverlay();
       }
@@ -424,18 +422,14 @@ class _InputZiPageState extends State<InputZiPage> {
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
       // actually set the current value, although use previousText parameter
       _controller.text = previousText; //_controller.text.substring(0, _controller.text.length - 1);
-      // Note: not sure why it notifies twice, one with updated value and one with old value. Therefore it pretty much does twice in order to finish one cycle.
-
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
-      //if (!justCompletedPosting) {
       if (_controller.text != previousText) {
         initOverlay();
       }
       setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
-      //}
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
@@ -457,9 +451,17 @@ class _InputZiPageState extends State<InputZiPage> {
 
       previousStartComposing = _controller.value.composing.start;
       previousEndComposing = _controller.value.composing.end;
+
+      // prepare for next input
+      // only init when a lower case letter is set to make sure the value lasts long enough.
+      initInitialControllerTextValue();
     }
   }
 
+  initInitialControllerTextValue() {
+    itsTheFirstTime = true;
+    initialControllerTextValue = "";
+  }
 
   @override
   Widget build(BuildContext context) {

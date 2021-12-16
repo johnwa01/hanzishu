@@ -168,7 +168,7 @@ class InputZiManager {
   }
 
   static pushANeverFirstToFirst(List<String> currentCandidatesToUpdate, List<String> previousFirstPositionList) {
-    for (var i = 0; i < currentCandidatesToUpdate.length; i++) {
+    for (var i = 0; i < maxTypingCandidates && i < currentCandidatesToUpdate.length; i++) {
       if (!candidateExistsInFirstPositionList(currentCandidatesToUpdate[i], previousFirstPositionList)) {
         if (i == 0) {
           return;
