@@ -54,7 +54,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         */
         ListTile(
-          title: Text("Exercise Components to Keyboard Mapping", textDirection: TextDirection.ltr),
+          title: Text("Components to Keyboard Mapping", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
@@ -115,11 +115,11 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("Practice typing of characters with hints", textDirection: TextDirection.ltr),
+          title: Text("Guided typing of characters", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("         Characters with 3 or more components", textDirection: TextDirection.ltr),
+          title: Text("         with three or more components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -133,7 +133,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Characters with 2 components", textDirection: TextDirection.ltr),
+          title: Text("        with two components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -147,7 +147,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Characters with 1 component", textDirection: TextDirection.ltr),
+          title: Text("        with one component", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();

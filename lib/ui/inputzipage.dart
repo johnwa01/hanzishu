@@ -463,6 +463,11 @@ class _InputZiPageState extends State<InputZiPage> {
     initialControllerTextValue = "";
   }
 
+  setInitialControllerTextValue() {
+    itsTheFirstTime = false;
+    initialControllerTextValue = _controller.text;
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentIndex < 0) {
@@ -710,6 +715,7 @@ class _InputZiPageState extends State<InputZiPage> {
       onPressed: () {
         // this lock mechanism seems working fine, but not sure ...
         //isCurrentlyUnderChoiceSelection = true;
+        setInitialControllerTextValue();
         setTextByChosenZiIndex(candidateIndex, true);
         //isCurrentlyUnderChoiceSelection = false;
       },
