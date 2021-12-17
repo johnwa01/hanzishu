@@ -30,13 +30,12 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
-  String initialControllerTextValue = "";
+  String initialControllerTextValue = "unlikelyIniStr876";
   bool itsTheFirstTime = true;
   String previousText = "";
   bool justCompletedPosting = false;
   bool justCompletedFullCompDisplay = false;
   List<String> ziCandidates = null;
-  //bool isCurrentlyUnderChoiceSelection = false;  //TODO: not sure if this is reliable
 
   OverlayEntry overlayEntry;
   //TypingType previousOverlayType = TypingType.FreeTyping;
@@ -119,7 +118,7 @@ class _InputZiPageState extends State<InputZiPage> {
         newInputText += _controller.value.text.substring(0, previousStartComposing);
       }
       // for this purpose, should use composing since selection.start might be same value as selection.end.
-      // TODO: delete this else if.
+      // There are cases that both composing are unavailable
       else if (_controller.value.selection.start != -1) {
         newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
       }
@@ -142,7 +141,7 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (_controller.value.composing.end != -1 &&
         _controller.value.composing.end + 1 < _controller.value.text.length) {
       // Note: The composing.end varies when there are composing letters shown in screen or not.
-      // Use selection.end to be reliable.
+      // Use selection.end to be reliable. use composing as fallback just in case.
       newInputText = _controller.value.text.substring(
           _controller.value.composing.end + 1, _controller.value.text.length);
     }
@@ -318,15 +317,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharList) {
-    //TODO: temp
-    //if (justCompletedPosting) {
-    //  return;
-    //}
-
     var newText = getInputText(selectionIndex);
 
- //   previousStartComposing = -1;
- //   previousEndComposing = -1;
     previousText = newText;
         justCompletedPosting = true;
 
@@ -335,14 +327,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
     previousEndSelection = _controller.value.selection.end;
 
-    //TODO: not a safe way, need a better method.
-    //justClearedComposing = true;
     _controller.clearComposing();
-    //justClearedComposing = false;
 
     //now reset controller which will notify the listeners right away
     _controller.text = newText;
-    //justClearedComposing = false;
 
     //_controller.text += st; //'好';
     //Note: set cursor to the right position of the current editing specifically
