@@ -34,13 +34,14 @@ var theLeadComponentList = [
 //var theLeadComponentList  = theComponentList;
 
 var theComponentGroupList = [
-  ComponentGroup(0, "GG5.png"),
-  ComponentGroup(1, "G1.png"),
-  ComponentGroup(2, "G2.png"),
-  ComponentGroup(3, "G3.png"),
-  ComponentGroup(4, "G4.png"),
-  ComponentGroup(5, "G5.png"),
-  ComponentGroup(6, "G6.png"),
+  ComponentGroup(0, "GG6.png"),
+  ComponentGroup(1, "GG5.png"),
+  ComponentGroup(2, "G1.png"),
+  ComponentGroup(3, "G2.png"),
+  ComponentGroup(4, "G3.png"),
+  ComponentGroup(5, "G4.png"),
+  ComponentGroup(6, "G5.png"),
+  ComponentGroup(7, "G6.png"),
 ];
 
 var theComponentGroupListInRealExercise = [
@@ -51,12 +52,13 @@ var theComponentGroupListInRealExercise = [
   4,
   5,
   6,
-  3,
-  5,
-  1,
-  6,
+  7,
   4,
-  2
+  6,
+  2,
+  7,
+  5,
+  3
 ];
 
 var theComponentGroupWithIdList = [

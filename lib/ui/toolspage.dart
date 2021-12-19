@@ -25,7 +25,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Component Input Method"),
+        title: Text("Hanzishu Typing Method"),
       ),
       body: Center
         (
@@ -54,11 +54,11 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         */
         ListTile(
-          title: Text("Components to Keyboard Mapping", textDirection: TextDirection.ltr),
+          title: Text("Learn components to keyboard mapping", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize Lead Component Groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize Lead Component groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();

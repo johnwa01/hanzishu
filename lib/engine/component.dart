@@ -45,6 +45,7 @@ enum AnswerPosition {
   individual52,
   individual53,
   individual54,
+  individual55,
   individual61,
   individual62,
   continueNext

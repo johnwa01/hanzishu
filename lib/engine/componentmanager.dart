@@ -216,32 +216,32 @@ class ComponentManager {
     AnswerPosition posi = AnswerPosition.none;
 
     switch (index) {
-      case 1:
+      case 2:
         {
           posi = AnswerPosition.groupPosition1;
         }
         break;
-      case 2:
+      case 3:
         {
           posi = AnswerPosition.groupPosition2;
         }
         break;
-      case 3:
+      case 4:
         {
           posi = AnswerPosition.groupPosition3;
         }
         break;
-      case 4:
+      case 5:
         {
           posi = AnswerPosition.groupPosition4;
         }
         break;
-      case 5:
+      case 6:
         {
           posi = AnswerPosition.groupPosition5;
         }
         break;
-      case 6:
+      case 7:
         {
           posi = AnswerPosition.groupPosition6;
         }
@@ -330,6 +330,9 @@ class ComponentManager {
       }
       else if (indexNumber == 4) {
         posi = AnswerPosition.individual54;
+      }
+      else if (indexNumber == 5) {
+        posi = AnswerPosition.individual55;
       }
     }
     else if (groupNumber == 6) {
@@ -533,10 +536,22 @@ class ComponentManager {
   }
 
   // the group index is 0, indicating to show the image for whole groups
-  bool isHeaderOfGroups() {
+  bool isFirstHeaderOfGroups() {
     if (currentQuestionType == QuestionType.ComponentGroup) {
       var index = theComponentGroupListInRealExercise[currentIndex];
       if (theComponentGroupList[index].id == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // the group index is 0, indicating to show the image for whole groups
+  bool isSecondHeaderOfGroups() {
+    if (currentQuestionType == QuestionType.ComponentGroup) {
+      var index = theComponentGroupListInRealExercise[currentIndex];
+      if (theComponentGroupList[index].id == 1) {
         return true;
       }
     }
@@ -596,7 +611,8 @@ class ComponentManager {
     else if (position == AnswerPosition.individual51 ||
         position == AnswerPosition.individual52 ||
         position == AnswerPosition.individual53 ||
-        position == AnswerPosition.individual54) {
+        position == AnswerPosition.individual54 ||
+        position == AnswerPosition.individual55) {
       groupNumber = 5;
     }
     else if (position == AnswerPosition.individual61 ||
@@ -777,6 +793,11 @@ class ComponentManager {
       case AnswerPosition.individual54:
         {
           value = "54";
+        }
+        break;
+      case AnswerPosition.individual55:
+        {
+          value = "55";
         }
         break;
       case AnswerPosition.individual61:

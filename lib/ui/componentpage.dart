@@ -136,12 +136,11 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getAnswers(BuildContext context) {
     if (this.questionType == QuestionType.ComponentGroup) {
-      if (theComponentManager.isHeaderOfGroups()) {
-        // just return an empty Widget
-        //return Container(
-        //  padding: EdgeInsets.all(40), //10
-        //);
-        return getHeaderOfGroups();
+      if (theComponentManager.isFirstHeaderOfGroups()) {
+        return getFirstHeaderOfGroups();
+      }
+      else if (theComponentManager.isSecondHeaderOfGroups()) {
+        return getSecondHeaderOfGroups();
       }
       else {
         return Container(
@@ -213,8 +212,36 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 */
-  
-  Widget getHeaderOfGroups() {
+
+  Widget getFirstHeaderOfGroups() {
+    return Column(
+        children: <Widget>[
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(width: 20),
+                Flexible (
+                  child: Text(
+                      'The above is the Hanzishu keyboard for typing Chinese characters. It uses the standard English keyboard. Each letter key except Z hosts one Lead Component of the Chinese characters. Besides letters, we also use two-digit numbers to refer keys. You can choose either way.',
+                      style: TextStyle(fontSize: 18)
+                  ),
+                )
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 40),
+              ]
+          ),
+        ]
+    );
+  }
+
+  Widget getSecondHeaderOfGroups() {
     return Column(
         children: <Widget>[
           Row(
@@ -228,7 +255,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'The above keyboard layout shows six groups of Lead Components of Chinese characters mapped to it, with left and right side of the keyboard in different colors.',
+                  'To previous keyboard contains above six groups of keys/Lead Components according to their shape characteristics.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -243,6 +270,7 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+
   Widget getHeaderOfComponentInGroup() {
     return Column(
         children: <Widget>[
@@ -256,7 +284,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'A Component Number contains two digits. The first digit is the Group Number that we learned in last exercise, and the second digit is the Internal Number within the group.',
+                    'Use a letter or a two-digit number to refer a key, where the first digit is the key group number that we learned in last exercise, and the second digit is the key index within the group.',
                     style: TextStyle(fontSize: 20)
                   ),
                 )
@@ -407,11 +435,14 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     return Container(
+        //color: Colors.grey,
+        //padding: EdgeInsets.all(1.0),
         alignment: Alignment.center,
         child: Image.asset(
             imagePath,
             width: imageWidth,
-            height: imageHeight
+            height: imageHeight,
+            //fit: BoxFit.fitWidth,
         )
     );
   }
@@ -422,7 +453,7 @@ class _ComponentPageState extends State<ComponentPage> {
             Row(
               children: <Widget>[
                 Text(
-                  'Which group is it?',
+                  'Which key/Lead Component group is it?',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
                 ),
               ]
@@ -461,19 +492,19 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    String question = "Which is the number of the above Lead Component?";
+    String question = "Which key is the above Lead Component located?";
     double size = 18.0;
 
     if (questionType == QuestionType.ExpandedComponent) {
       var hint = theExpandedComponentList[currentIndex].hint;
-      question = "Guess their Lead Component & choose its Component Number below. (Hint: " + hint + ")";
+      question = "Guess their Lead Component & choose its corresponding key below. (Hint: " + hint + ")";
       size = 18.0;
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
               //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
-              "The above keyboard key shows the Lead Component '三'（33) and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '王'), guess or remember its Lead Component and number (ex: '三', 33）, then type the SAME key.",
+              "The above keyboard key shows the Lead Component '三'（33) and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '王'), guess or remember its Lead Component and corresponding key (ex: '三' -> D/33）, then type the SAME key.",
               style: TextStyle(fontSize: size)
           ),
         );
@@ -505,30 +536,30 @@ class _ComponentPageState extends State<ComponentPage> {
               //mainAxisSize: MainAxisSize.max,
               //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Expanded(child: getText(AnswerPosition.individual15)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual15)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual14)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual14)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual13)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual13)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual12)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual12)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual11)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual11)),
                 SizedBox(width: 10),
-                Expanded(child: getText(AnswerPosition.individual21)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual21)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual22)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual22)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual23)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual23)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual24)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual24)),
                 SizedBox(width: 5),
-                Expanded(child: getText(AnswerPosition.individual25)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual25)),
               ]
           ),
         Row(
           children: <Widget>[
-            SizedBox(height: 10),
+            SizedBox(height: 5),
           ]
         ),
         Row(
@@ -536,30 +567,30 @@ class _ComponentPageState extends State<ComponentPage> {
             //mainAxisSize: MainAxisSize.max,
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Expanded(child: getText(AnswerPosition.individual35)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual35)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual34)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual34)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual33)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual33)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual32)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual32)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual31)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual31)),
               SizedBox(width: 10),
-              Expanded(child: getText(AnswerPosition.individual41)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual41)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual42)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual42)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual43)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual43)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual44)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual44)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.none)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
             ]
         ),
           Row(
               children: <Widget>[
-                SizedBox(height: 10),
+                SizedBox(height: 5),
               ]
           ),
         Row(
@@ -567,25 +598,25 @@ class _ComponentPageState extends State<ComponentPage> {
             //mainAxisSize: MainAxisSize.max,
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Expanded(child: getText(AnswerPosition.none)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual55)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual54)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual54)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual53)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual53)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual52)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual52)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual51)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual51)),
               SizedBox(width: 10),
-              Expanded(child: getText(AnswerPosition.individual61)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual61)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.individual62)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual62)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.none)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.none)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
               SizedBox(width: 5),
-              Expanded(child: getText(AnswerPosition.none)),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
             ]
         )
       ]
@@ -633,6 +664,59 @@ class _ComponentPageState extends State<ComponentPage> {
     //return noncharId;
   }
 
+  Widget getOneKeyboardAnswer(AnswerPosition position)
+  {
+    var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
+    var currentType = theComponentManager.getCurrentType();
+
+    var backgroundColor = Colors.white;  // make it a non-material color first
+    // default without a color frame
+    //backgroundColor = Colors.blueAccent;
+    // actually no effect if no pressed action since the background will be white in that case.
+    bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
+    if (currentType == QuestionType.ComponentInGroup) {
+      if (!(position != AnswerPosition.center && position != AnswerPosition.none && !isPositionAtRightGroup)) {
+        backgroundColor = Colors.blueAccent; //Colors.grey;
+      }
+    }
+
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
+      if (position == theComponentManager.getCorrectAnswerPosition()) {
+        backgroundColor = Colors.greenAccent;
+      }
+      else if (position == answeredPosition) {
+        backgroundColor = Colors.redAccent;
+      }
+    }
+
+    if (position == AnswerPosition.none) {
+      backgroundColor = Colors.white;
+    }
+
+    // not used condition
+    if (position == AnswerPosition.center) {
+      backgroundColor = Colors.white;
+    }
+
+    return FlatButton(
+      color: backgroundColor,
+      //textColor: Colors.blueAccent,
+      padding: EdgeInsets.all(1.0), //EdgeInsets.zero,
+      onPressed: () {
+          setPositionState(position);
+      },
+      child: Image.asset(
+        //TODO: temp folder and name
+        "assets/letters/L" + answerDisplayValue + ".png", //+ image,
+        width: 30.0,
+        height: 40.0,
+        fit: BoxFit.fitWidth,
+      ),
+    );
+  }
+
+  // Mostly replaced by getOneKeyboardAnswer
+  // One center usage left
   Widget getText(AnswerPosition position) {
     var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
     var fontSize = xYLength(20.0); // 30.0
@@ -673,8 +757,7 @@ class _ComponentPageState extends State<ComponentPage> {
       textColor = Colors.cyan; //Colors.blueAccent;
     }
 
-    //if (isPositionEnabled) {
-      return Container(
+    return Container(
         child: FlatButton(
           child: Text(
             answerDisplayValue, style: TextStyle(fontSize: fontSize),),
@@ -683,23 +766,8 @@ class _ComponentPageState extends State<ComponentPage> {
           onPressed: () {
             setPositionState(position);
           },
-        ),
-        //padding: EdgeInsets.all(20),
-      );
-    //}
-    /*
-    else {
-      return Container(
-        child: FlatButton(
-          child: Text(
-            answerDisplayValue, style: TextStyle(fontSize: fontSize),),
-          color: backgroundColor, //color,
-          textColor: textColor, //Colors.white,
-        ),
-        //padding: EdgeInsets.all(20),
-      );
-    }
-    */
+        )
+    );
   }
 
   // is only used in question in InputZi, therefore only used in center position.
@@ -765,17 +833,24 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getContinue(BuildContext context) {
     bool isHeaderOfComponentInGroup = theComponentManager.isHeaderOfComponentInGroup();
-    bool isHeaderOfGroups = theComponentManager.isHeaderOfGroups();
+    bool isFirstHeaderOfGroups = theComponentManager.isFirstHeaderOfGroups();
+    bool isSecondHeaderOfGroups = theComponentManager.isSecondHeaderOfGroups();
     bool isHeaderOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
     bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
 
-    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
-      if (isHeaderOfComponentInGroup  || isHeaderOfRandomComponents) {
-        result = "Remember Component Numbers, then ";
+      if (isHeaderOfComponentInGroup) {
+        result = "Remember Lead Components' keys (by letters or numbers) in the group, then ";
       }
-      else if (isHeaderOfGroups) {
-        result = "Remember Group Numbers, then ";
+      else if (isHeaderOfRandomComponents) {
+        result = "Remember Lead Components' keys (by letters or numbers), then ";
+      }
+      else if (isFirstHeaderOfGroups) {
+        result = "Let us ";
+      }
+      else if (isSecondHeaderOfGroups) {
+        result = "Distinguish six groups, then ";
       }
       else if (isHeaderOfExpandedComponents) {
         result = "Please read above, then ";
@@ -785,15 +860,15 @@ class _ComponentPageState extends State<ComponentPage> {
         if (answeredPosition !=
             theComponentManager.getCorrectAnswerPosition()) {
           //TODO: theStatisticsManager.incrementLessonQuizResult(false);
-          result = "Incorrect.";
+          result = "Incorrect, ";
         }
         else {
           //TODO: theStatisticsManager.incrementLessonQuizResult(true);
-          result = "Correct! ";
+          result = "Correct, ";
         }
       }
 
-      result += "continue";
+      result += "continue ...";
 
       //_updateProgress();
 

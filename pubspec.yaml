@@ -61,6 +61,32 @@ flutter:
      - assets/breakout.png
      - assets/conversations.png
      - assets/quiz.png
+     - assets/letters/L11.png
+     - assets/letters/L12.png
+     - assets/letters/L13.png
+     - assets/letters/L14.png
+     - assets/letters/L15.png
+     - assets/letters/L21.png
+     - assets/letters/L22.png
+     - assets/letters/L23.png
+     - assets/letters/L24.png
+     - assets/letters/L25.png
+     - assets/letters/L31.png
+     - assets/letters/L32.png
+     - assets/letters/L33.png
+     - assets/letters/L34.png
+     - assets/letters/L35.png
+     - assets/letters/L41.png
+     - assets/letters/L42.png
+     - assets/letters/L43.png
+     - assets/letters/L44.png
+     - assets/letters/L51.png
+     - assets/letters/L52.png
+     - assets/letters/L53.png
+     - assets/letters/L54.png
+     - assets/letters/L55.png
+     - assets/letters/L61.png
+     - assets/letters/L62.png
      - assets/typing/C00.png
      - assets/typing/C11.png
      - assets/typing/C12.png
