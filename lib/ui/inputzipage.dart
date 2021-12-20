@@ -605,7 +605,7 @@ class _InputZiPageState extends State<InputZiPage> {
       instruction = "Type the given character. Break the character into components and input them in sequence through keyboard until you make a selection.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Break the character into 2 components. Input them in sequence first, then the last stroke of the 1st & 2nd component.";
+      instruction = "Type the given character. Break the character into 2 components. Input them in sequence first, then the last stroke from each of two components.";
     }
     else if (typingType == TypingType.OneComponent) {
       instruction = "Type the given character. Input its only component first, then up to 3 strokes (1st, 2nd, and last stroke) until you make a selection.";

@@ -163,6 +163,8 @@ flutter:
      - assets/typing/EF54.png
      - assets/typing/EF61.png
      - assets/typing/EF62.png
+     - assets/typing/EF24Sample.png
+     - assets/typing/EF33Sample.png
      - assets/typing/G1.png
      - assets/typing/G2.png
      - assets/typing/G3.png
@@ -206,6 +208,8 @@ flutter:
      - assets/typingexercise/469.png
      - assets/typingexercise/470.png
      - assets/typingexercise/471.png
+     - assets/typingexercise/488.png
+     - assets/typingexercise/489.png
      - assets/typingexercise/490.png
      - assets/typingexercise/491.png
      - assets/typingexercise/492.png
@@ -216,7 +220,6 @@ flutter:
      - assets/typingexercise/497.png
      - assets/typingexercise/498.png
      - assets/typingexercise/499.png
-     - assets/typing/EF33Sample.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

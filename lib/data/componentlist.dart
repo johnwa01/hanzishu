@@ -137,8 +137,8 @@ var theRandomComponentList = [
 ];
 
 var theExpandedComponentList = [
-  ComponentCollection(0, "EF33Sample.png", 0, 0, "Explaination Text"),
-  ComponentCollection(1, "E33.png", 3, 3, "number of horizontal lines"),
+  ComponentCollection(0, "EF24Sample.png", 0, 0, "Explaination Text"),
+  ComponentCollection(1, "E24.png", 2, 4, "square with horizontal line"),
   ComponentCollection(2, "E13.png", 1, 3, "which common shape"),
   ComponentCollection(3, "E23.png", 2, 3, "which common shape"),
   ComponentCollection(4, "E53.png", 5, 3, "contains a stroke with a few turnings"),
@@ -156,7 +156,7 @@ var theExpandedComponentList = [
   ComponentCollection(16, "E52.png", 5, 2, "overall looking of the shape"),
   ComponentCollection(17, "E61.png", 6, 1, "which common shape"),
   ComponentCollection(18, "E12.png", 1, 2, "separate/go left and right"),
-  ComponentCollection(19, "E24.png", 2, 4, "square with horizontal line"),
+  ComponentCollection(19, "E33.png", 2, 4, "number of horizontal lines"),
   ComponentCollection(20, "E32.png", 3, 2, "number of horizontal lines"),
   ComponentCollection(21, "E51.png", 5, 1, "all but two first strokes are turning strokes"),
   ComponentCollection(22, "E54.png", 5, 4, "which common shape"),
@@ -204,10 +204,10 @@ var theZiWithOneComponentList=[
   ZiWithComponentsAndStrokes("见", ["Ua", "Ya", "Ba", "Ba"], "450.png"),
   ZiWithComponentsAndStrokes("气", ["Fa", "Ta", "Ga", "Ba"], "458.png"),
   ZiWithComponentsAndStrokes("下", ["Ga", "Ga", "Ya", "Ha"], "459.png"),
-  ZiWithComponentsAndStrokes("下", ["Ga", "Ga", "Ya", "Ha"], "460.png"),
 ];
 
 var theZiWithTwoComponentList=[
+  ZiWithComponentsAndStrokes("双", ["Na", "Na", "Ha", "Ha"], "460.png"),
   ZiWithComponentsAndStrokes("明", ["Oa", "Qa", "Ga", "Ga"], "461.png"),
   ZiWithComponentsAndStrokes("好", ["Wa", "Ja", "Ga", "Ga"], "462.png"),
   ZiWithComponentsAndStrokes("多", ["Na", "Na", "Ha", "Ha"], "463.png"),
@@ -222,16 +222,18 @@ var theZiWithTwoComponentList=[
 ];
 
 var theZiWithThreeOrMoreComponentList=[
+  ZiWithComponentsAndStrokes("晶", ["Ia", "Ia", "Ia"], "489.png"),
+  ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "495.png"),
+  ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "497.png"),
   ZiWithComponentsAndStrokes("你", ["Ta", "Ta", "Ya"], "490.png"),
   ZiWithComponentsAndStrokes("谢", ["Ha", "Oa", "Ja"], "491.png"),
   ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "492.png"),
   ZiWithComponentsAndStrokes("师", ["Ya", "Ga", "Ua"], "493.png"),
   ZiWithComponentsAndStrokes("您", ["Ta", "Ta", "Ya", "Ha"], "494.png"),
-  ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "495.png"),
   ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "496.png"),
-  ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "497.png"),
   ZiWithComponentsAndStrokes("起", ["Aa", "Ya", "Sa"], "498.png"),
   ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "499.png"),
+  ZiWithComponentsAndStrokes("会", ["Ea", "Ga", "Ma"], "488.png"),
 ];
 
 
