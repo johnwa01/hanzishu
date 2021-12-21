@@ -54,11 +54,25 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         */
         ListTile(
-          title: Text("Learn components to keyboard mapping", textDirection: TextDirection.ltr),
+          //leading: Icon(Icons.location_city),
+          title: Text("Introduction", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          title: Text("Memorize components to keyboard mapping", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize Lead Component groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize component groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -72,7 +86,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize Lead Components", textDirection: TextDirection.ltr),
+          title: Text("        Memorize components in groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -87,7 +101,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Re-memorize Lead Components", textDirection: TextDirection.ltr),
+          title: Text("        Memorize components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -99,41 +113,9 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
-
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Know Expanded Components", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
-          onTap: () {
-            theStatisticsManager.trackTimeAndTap();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ComponentPage(questionType: QuestionType.ExpandedComponent),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          title: Text("Guided typing of characters", textDirection: TextDirection.ltr),
-        ),
-        ListTile(
-          //leading: Icon(Icons.location_city),
-          title: Text("         with three or more components", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
-          onTap: () {
-            theStatisticsManager.trackTimeAndTap();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          //leading: Icon(Icons.location_city),
-          title: Text("        with two components", textDirection: TextDirection.ltr),
+          title: Text("Guided typing", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
@@ -147,7 +129,25 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        with one component", textDirection: TextDirection.ltr),
+          title: Text("Be familiar with expanded components", textDirection: TextDirection.ltr),
+          trailing: Icon(Icons.location_city),
+          onTap: () {
+            theStatisticsManager.trackTimeAndTap();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComponentPage(questionType: QuestionType.ExpandedComponent),
+              ),
+            );
+          },
+        ),
+        //ListTile(
+        //  title: Text("Guided typing of characters", textDirection: TextDirection.ltr),
+        //),
+
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text("Guided typing", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
