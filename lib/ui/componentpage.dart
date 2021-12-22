@@ -226,7 +226,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'The above is the Hanzishu keyboard for typing Chinese characters. It uses the standard English keyboard. Each letter key except Z hosts one Lead Component of the Chinese characters. Besides letters, we also use two-digit numbers to refer keys. You can choose either way.',
+                      'The above is the Hanzishu component mappig to keyboard. Since we will use the standard English keyboard, you would not see the components in actual keyboard. The keyboard shows this way to help you memorize the mapping. When you need to type a component, you type the corresponding letter key. This whole session help you memorize the mapping. ',
                       style: TextStyle(fontSize: 18)
                   ),
                 )
@@ -255,7 +255,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'To previous keyboard contains above six groups of keys/Lead Components according to their shape characteristics.',
+                  'For easier memorization, the keys/lead components are divided into six groups according to the first stroke of the components.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -284,7 +284,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'Use a letter or a two-digit number to refer a key, where the first digit is the key group number that we learned in last exercise, and the second digit is the key index within the group.',
+                    'Each lead component maps to a key. We need to remember which component maps to which key in order to type the component.',
                     style: TextStyle(fontSize: 20)
                   ),
                 )
@@ -453,7 +453,7 @@ class _ComponentPageState extends State<ComponentPage> {
             Row(
               children: <Widget>[
                 Text(
-                  'Which key/Lead Component group is it?',
+                  'Which key group does the above map to?',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
                 ),
               ]
@@ -466,25 +466,26 @@ class _ComponentPageState extends State<ComponentPage> {
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-                Expanded(child: getText(AnswerPosition.groupPosition1)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition1)),
+                //Expanded(child: getText(AnswerPosition.groupPosition1)),
                 SizedBox(width: 20),
-                Expanded(child: getText(AnswerPosition.groupPosition2)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition2)),
               ],
             ),
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-                Expanded(child: getText(AnswerPosition.groupPosition3)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
                 SizedBox(width: 20),
-                Expanded(child: getText(AnswerPosition.groupPosition4)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition4)),
               ],
             ),
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-                Expanded(child: getText(AnswerPosition.groupPosition5)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
                 SizedBox(width: 20),
-                Expanded(child: getText(AnswerPosition.groupPosition6)),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition6)),
               ],
             ),
         ]
@@ -492,7 +493,7 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    String question = "Which key is the above Lead Component located?";
+    String question = "Which key does it map to?";
     double size = 18.0;
 
     if (questionType == QuestionType.ExpandedComponent) {
@@ -504,7 +505,7 @@ class _ComponentPageState extends State<ComponentPage> {
         return Flexible (
           child: Text(
               //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
-              "The above keyboard key shows the Lead Component '日'（key letter 'O'/number 24) and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '目'), guess or remember its Lead Component and corresponding key (ex: '日' -> key letter 'O'/number 24）, then type the SAME key.",
+              "The above keyboard key shows the Lead Component '日'（key letter 'O') and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '目'), guess or remember its Lead Component and corresponding key (ex: '日' -> key letter 'O'）, then type the SAME key.",
               style: TextStyle(fontSize: size)
           ),
         );
@@ -559,7 +560,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
         Row(
           children: <Widget>[
-            SizedBox(height: 5),
+            SizedBox(height: 4),
           ]
         ),
         Row(
@@ -590,7 +591,7 @@ class _ComponentPageState extends State<ComponentPage> {
         ),
           Row(
               children: <Widget>[
-                SizedBox(height: 5),
+                SizedBox(height: 4),
               ]
           ),
         Row(
@@ -680,7 +681,9 @@ class _ComponentPageState extends State<ComponentPage> {
       }
     }
 
+    bool isAGroupAnswerType = false;
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
+      isAGroupAnswerType = theComponentManager.isAGroupAnswerType(answeredPosition);
       if (position == theComponentManager.getCorrectAnswerPosition()) {
         backgroundColor = Colors.greenAccent;
       }
@@ -698,6 +701,13 @@ class _ComponentPageState extends State<ComponentPage> {
       backgroundColor = Colors.white;
     }
 
+    var width = 35.0;
+    var height = 36.0;
+    if (isAGroupAnswerType) {
+      width = 150.0;
+      height = 43.0;
+    }
+
     return FlatButton(
       color: backgroundColor,
       //textColor: Colors.blueAccent,
@@ -708,8 +718,8 @@ class _ComponentPageState extends State<ComponentPage> {
       child: Image.asset(
         //TODO: temp folder and name
         "assets/letters/L" + answerDisplayValue + ".png", //+ image,
-        width: 35.0,
-        height: 45.0,
+        width: width,
+        height: height,
         fit: BoxFit.fitWidth,
       ),
     );
@@ -841,16 +851,16 @@ class _ComponentPageState extends State<ComponentPage> {
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
       if (isHeaderOfComponentInGroup) {
-        result = "Remember Lead Components' keys (by letters or numbers) in the group, then ";
+        result = "Remember the above Lead Components' keys in the group, then ";
       }
       else if (isHeaderOfRandomComponents) {
-        result = "Remember Lead Components' keys (by letters or numbers), then ";
+        result = "Remember Lead Components' keys, then ";
       }
       else if (isFirstHeaderOfGroups) {
         result = "Let us ";
       }
       else if (isSecondHeaderOfGroups) {
-        result = "Distinguish six groups, then ";
+        result = "Be able to distinguish the six groups, then ";
       }
       else if (isHeaderOfExpandedComponents) {
         result = "Please read above, then ";

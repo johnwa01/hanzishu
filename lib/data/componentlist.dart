@@ -53,6 +53,7 @@ var theComponentGroupListInRealExercise = [
   5,
   6,
   7,
+  1,
   4,
   6,
   2,

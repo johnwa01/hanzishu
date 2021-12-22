@@ -59,6 +59,7 @@ class _InputZiPageState extends State<InputZiPage> {
     });
   }
 
+  // make sure overlay will be removed when moving back to the parent page.
   Future<bool>_onWillPop() {
     if (overlayEntry != null) {
       overlayEntry.remove();

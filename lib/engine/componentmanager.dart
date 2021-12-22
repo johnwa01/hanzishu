@@ -59,6 +59,19 @@ class ComponentManager {
     return true;
   }
 
+  bool isAGroupAnswerType(AnswerPosition answerPosition) {
+    if (answerPosition == AnswerPosition.groupPosition1 ||
+        answerPosition == AnswerPosition.groupPosition2 ||
+        answerPosition == AnswerPosition.groupPosition3 ||
+        answerPosition == AnswerPosition.groupPosition4 ||
+        answerPosition == AnswerPosition.groupPosition5 ||
+        answerPosition == AnswerPosition.groupPosition6) {
+      return true;
+    }
+
+    return false;
+  }
+
   static GroupAndIndexPair getGroupAndIndexFromLetter(String letter) {
     var pair;
 
@@ -652,32 +665,32 @@ class ComponentManager {
         break;
       case AnswerPosition.groupPosition1:
         {
-          value = "Group 1";
+          value = "G1";
         }
         break;
       case AnswerPosition.groupPosition2:
         {
-          value = "Group 2";
+          value = "G2";
         }
         break;
       case AnswerPosition.groupPosition3:
         {
-          value = "Group 3";
+          value = "G3";
         }
         break;
       case AnswerPosition.groupPosition4:
         {
-          value = "Group 4";
+          value = "G4";
         }
         break;
       case AnswerPosition.groupPosition5:
         {
-          value = "Group 5";
+          value = "G5";
         }
         break;
       case AnswerPosition.groupPosition6:
         {
-          value = "Group 6";
+          value = "G6";
         }
         break;
       case AnswerPosition.individual11:
