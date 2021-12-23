@@ -192,14 +192,14 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "a. If the character has only 1 component, type the component first, then you can type up to 3 strokes: first, second, and last stroke.",
+                "a. If the character has only 1 component, after typing the component first, if you don't see your character, you can continue to type up to 3 make-up strokes: first, second, and last stroke of the character.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
           ),
           Flexible(
             child: Text(
-                "All the turning strokes map to '乙' as shown below:",
+                "All the fold strokes map to component '乙'/key 'b' as shown below:",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -214,7 +214,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "b. If the character has 2 components, type them first, then you can type two strokes: last stroke of each of the two components.",
+                "b. If the character has 2 components, after typing the two components, if you don't see your character, you can continue to type two make-up strokes: last stroke of each of the two components of the character.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -222,15 +222,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "c. If the character has 3 or more components, type all of the components in sequence.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "3. You can pick the desired character whenever you see it from the list below typing field.",
+                "3. You can pick the desired character whenever you see it from the list below typing field. You can also use Space key to pick the first character in the list.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -248,7 +240,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-              "Note 2: The Lead Components and keyboard mapping are shown below. You can click them to see their Expanded Components associated to them. To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key.",
+              "Note 2: The components and keyboard mapping are shown below. You can click them to see their expanded components associated to them. To type a component or its expanded component, simply type the corresponding keyboard key.",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,
@@ -303,24 +295,24 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               ]
           ),
           SizedBox(height: fontSize),
+          //Flexible(
+          //  child: Text(
+          //      "Note 3: Full component mapping:",
+          //      style: TextStyle(fontSize: fontSize),
+          //      textAlign: TextAlign.left
+          //  ),
+          //),
+          //Container(
+          //  alignment: Alignment.center,
+          //  child: Image.asset(
+          //  "assets/typing/FullComponents.png",
+          //  width: 400.0,
+          //  height: 250.0),
+          //),
+          //SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "Note 3: Full component mapping:",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-            "assets/typing/FullComponents.png",
-            width: 400.0,
-            height: 250.0),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "Note 4: You can double click the context in the editing field to copy / paste it to other applications.",
+                "Note 3: You can double click the context in the editing field to copy / paste it to other applications.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),

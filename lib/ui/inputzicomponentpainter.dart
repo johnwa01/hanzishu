@@ -14,7 +14,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
-
+//NOTE: Right now NOT used by InputZiPage.
 class InputZiComponentPainter extends BasePainter {
   static var lessonLeftEdge = xYLength(10.0);
 
@@ -46,13 +46,13 @@ class InputZiComponentPainter extends BasePainter {
   displayComponents(Size size) {
     String instruction;
     if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = "Type the given character. Input the components of the character in sequence through keyboard.";
+      instruction = "Type the given character. Use hint as needed.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Input its two components first, then the last stroke from the 1st as well as the 2nd component.";
+      instruction = "Type the given character. Use hint as needed.";
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Input its only component first, then up to 3 strokes: 1st, 2nd, and last stroke.";
+      instruction = "Type the given character. Use hint as needed.";
     }
 
     double x = 5.0;

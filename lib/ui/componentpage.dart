@@ -82,16 +82,16 @@ class _ComponentPageState extends State<ComponentPage> {
 
     var title = '';
     if (questionType == QuestionType.ComponentGroup) {
-      title = 'Memorize Lead Component Groups';
+      title = 'Memorize component groups';
     }
     else if (questionType == QuestionType.ComponentInGroup) {
-      title = 'Memorize Lead Components';
+      title = 'Memorize components in groups';
     }
     else if (questionType == QuestionType.Component) {
-      title = 'Re-memorize Lead Components';
+      title = 'Memorize components';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Know Expanded Components';
+      title = 'Be familiar with the expanded components';
     }
 
     return Scaffold
@@ -226,7 +226,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'The above is the Hanzishu component mappig to keyboard. Since we will use the standard English keyboard, you would not see the components in actual keyboard. The keyboard shows this way to help you memorize the mapping. When you need to type a component, you type the corresponding letter key. This whole session help you memorize the mapping. ',
+                      'You use the above chart as a reference in your introduction typing. Since we use standard English keyboard which would not show the components, we need to memorize them. This is the first of the three exercises to help you memorize which component maps to which key.',
                       style: TextStyle(fontSize: 18)
                   ),
                 )
@@ -255,7 +255,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'For easier memorization, the keys/lead components are divided into six groups according to the first stroke of the components.',
+                  'For easier memorization, the key/component pairs are divided into six groups according to the first stroke of the components.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -284,7 +284,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'Each lead component maps to a key. We need to remember which component maps to which key in order to type the component.',
+                    'Each component maps to a key. We need to remember which component maps to which key in order to type the component through keyboard.',
                     style: TextStyle(fontSize: 20)
                   ),
                 )
@@ -498,14 +498,14 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (questionType == QuestionType.ExpandedComponent) {
       var hint = theExpandedComponentList[currentIndex].hint;
-      question = "Guess their Lead Component & choose its corresponding key below. (Hint: " + hint + ")";
+      question = "Guess which component that the above are expanded from & choose the component's corresponding key below. (Hint: " + hint + ")";
       size = 18.0;
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
               //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
-              "The above keyboard key shows the Lead Component '日'（key letter 'O') and its Expanded Components, whose shapes look more or less similar to their Lead Component. To type an Expanded Component (ex: '目'), guess or remember its Lead Component and corresponding key (ex: '日' -> key letter 'O'）, then type the SAME key.",
+              "The above chart shows the component '日'（key letter 'O') and its expanded components, whose shapes look more or less similar to the component '日'. To type an expanded component (ex: '自'), guess or remember its component (ex: '日') and corresponding key (ex: key letter 'O'）, then type the SAME key.",
               style: TextStyle(fontSize: size)
           ),
         );
@@ -851,10 +851,10 @@ class _ComponentPageState extends State<ComponentPage> {
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
       if (isHeaderOfComponentInGroup) {
-        result = "Remember the above Lead Components' keys in the group, then ";
+        result = "Remember the keys of the above components in this group, then ";
       }
       else if (isHeaderOfRandomComponents) {
-        result = "Remember Lead Components' keys, then ";
+        result = "Remember the keys of the above components, then ";
       }
       else if (isFirstHeaderOfGroups) {
         result = "Let us ";
@@ -929,8 +929,23 @@ class _ComponentPageState extends State<ComponentPage> {
     //  content = "You have passed this quiz with a score of " + corStr + "!";
     //}
     //else {
-      title = "Good job!";
-      content = "You have completed this exercise and can move on to the next one.";
+
+      if (questionType == QuestionType.ComponentGroup) {
+        title = "Good job!";
+        content = "Nice! You know the component groups now! Move on to the next exercise to memorize components in each group ...";
+      }
+      if (questionType == QuestionType.ComponentInGroup) {
+        title = "Great!";
+        content = "You can recognize components from a group now! Move on to the next exercise to review those components...";
+      }
+      if (questionType == QuestionType.Component) {
+        title = "Excellent!";
+        content = "You know the components now! Move on to the next guided typing to try it out...";
+      }
+      if (questionType == QuestionType.ExpandedComponent) {
+        title = "WOW!";
+        content = "You even know the expanded components now! Move on to the last guided typing to try it out...";
+     }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
 

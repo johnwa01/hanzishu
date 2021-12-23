@@ -8,6 +8,7 @@ import 'package:hanzishu/ui/inputzicomponentpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/data/componentlist.dart';
 
 import 'dart:core';
 
@@ -457,6 +458,67 @@ class _InputZiPageState extends State<InputZiPage> {
     initialControllerTextValue = _controller.text;
   }
 
+  Widget getIntroductionPage() {
+    return Scaffold
+      (
+      appBar: AppBar
+        (
+        title: Text("Introduction"),
+      ),
+      body: Column(
+          children: <Widget>[
+            Flexible(
+              child: Text(
+                  "Hanzishu typing is fast and easy!\n\nFirst, you break a Chinese character into components, then type the components in sequence, just like the way you type letters of an English word.\n",
+                  style: TextStyle(fontSize: 15.0),
+                  textAlign: TextAlign.left
+              ),
+            ),
+            Flexible(
+              child: Text(
+                "Hanzishu typing uses standard English keyboard. The following chart shows a conceptional mapping of components to keys. Use this chart as a reference before you remember them.\n",
+                  style: TextStyle(fontSize: 15.0),
+                textAlign: TextAlign.left
+              ),
+            ),
+            Flexible(
+              child: Image.asset(
+                "assets/typing/" + theZiWithThreeOrMoreComponentList[0].hintImage,
+                width: 350.0,
+                height: 150.0,
+                fit: BoxFit.fitWidth
+              ),
+            ),
+            Flexible(
+              child: Text(
+                  "For example: To type character '品'，first, you break it into three components '口', '口', and '口'; find the corresponding keyboard keys 'i', 'i' and 'i'. Then, type 'iii' in the editing field and choose '品' from the list of characters below the editing field. Can also type space key to choose the first one from the list. The Hanzishu typing code will convert letters 'iii' into '品' in editing field.",
+                  style: TextStyle(fontSize: 15.0),
+                  textAlign: TextAlign.left
+              ),
+            ),
+            SizedBox(
+              //width: double.infinity,
+              //height: 30,
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                    textStyle: const TextStyle(fontSize: 15.0),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = 1;
+                    });
+                  },
+                  child: const Text('Sounds good! Let me try a few ...'),
+                ),
+              ),
+            )
+          ]
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (currentIndex < 0) {
@@ -498,6 +560,10 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.OneComponent) {
       title = 'Characters with 1 component';
+    }
+
+    if (typingType == TypingType.ThreeOrMoreComponents && currentIndex == 0) {
+      return getIntroductionPage();
     }
 
     return Scaffold
@@ -582,9 +648,57 @@ class _InputZiPageState extends State<InputZiPage> {
       return Container( // x and progress bard
         child: LinearProgressIndicator(value: _progressValue),
         //getProgressBar(context),
-        padding: EdgeInsets.all(10),
+        padding: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 2.0), //EdgeInsets.all(10),
       );
     }
+  }
+
+  Widget getComponentAndMapping() {
+    var fontSize = 15.0;
+    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
+
+    return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Flexible(
+            child: Image.asset(
+              "assets/typing/" + theZiWithThreeOrMoreComponentList[0].hintImage,
+              width: 300.0,
+              height: 100.0,
+              fit: BoxFit.fitHeight,  // make sure it doesn't overflow the height.
+            )
+          ),
+
+          Row(
+              children: <Widget>[
+                SizedBox(
+                  child: Text(
+                      "Type: ",
+                      style: TextStyle(fontSize: fontSize),
+                      textAlign: TextAlign.left
+                  ),
+                ),
+                SizedBox(width: fontSize),
+                SizedBox(
+                  child: Text(
+                      zi.zi,
+                      style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                      textAlign: TextAlign.left
+                  ),
+                ),
+                SizedBox(width: fontSize),
+                SizedBox(
+                  child: Text(
+                      "Hint: " + theZiWithThreeOrMoreComponentList[currentIndex].hintText ,
+                      style: TextStyle(fontSize: fontSize),
+                      textAlign: TextAlign.center   //left
+                  ),
+                ),
+              ]
+          ),
+
+        ]
+    );
   }
 
   Widget getComponentRelated() {
@@ -601,21 +715,24 @@ class _InputZiPageState extends State<InputZiPage> {
       );*/
     }
 
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      return getComponentAndMapping();
+    }
+
     String instruction;
     if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = "Type the given character. Break the character into components and input them in sequence through keyboard until you make a selection.";
+      instruction = "Type the given character. Use hint as needed.";
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Break the character into 2 components. Input them in sequence first, then the last stroke from each of two components.";
+      instruction = "Type the given character. Use hint as needed.";
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Input its only component first, then up to 3 strokes (1st, 2nd, and last stroke) until you make a selection.";
+      instruction = "Type the given character. Use hint as needed.";
     }
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
 
     var fontSize = 18.0;
-
 
     return WillPopScope(
       child: Column(
@@ -636,7 +753,7 @@ class _InputZiPageState extends State<InputZiPage> {
               children: <Widget>[
                 Flexible(
                   child: Text(
-                      "Please type: ",
+                      "Type: ",
                       style: TextStyle(fontSize: fontSize),
                       textAlign: TextAlign.left
                   ),
@@ -753,15 +870,18 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
-    if (typingType == TypingType.OneComponent) {
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+    title = "Amazing!";
+    content = "You did great and can move on to the next session now to memorize the component mapping.";
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      title = "Wonderful!";
+      content = "You have learnt the method well! You just need to get yourself familiar with the expanded components in the next session.";
+    }
+    else if (typingType == TypingType.OneComponent) {
       title = "Congratulation!";
-      content = "You have completed all the training sessions! You can now start your own typing.";
+      content = "You have completed all the training sessions! You can now start your own free typing.";
     }
-    else {
-      title = "Good job!";
-      content = "You have completed this session and can move on to the next one now.";
-    }
-
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(

@@ -197,15 +197,18 @@ class ZiWithComponentsAndStrokes {
   String zi;
   List<String> componentCodes;
   String hintImage;
+  String hintText;
 
   ZiWithComponentsAndStrokes(
       String zi,
       List<String> componentCodes,
-      String hintImage
+      String hintImage,
+      String hintText
       ) {
     this.zi = zi;
     this.componentCodes = componentCodes;
     this.hintImage = hintImage;
+    this.hintText = hintText;
   }
 }
 
