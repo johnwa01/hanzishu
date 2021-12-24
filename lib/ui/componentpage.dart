@@ -120,15 +120,18 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
           Container(
             child: getQuestion(context),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(2),
           ),
           //Container(
           //  padding: EdgeInsets.all(10), //
           //),
           getAnswers(context),
           Container(
+            padding: EdgeInsets.only(top: 15.0), //
+          ),
+          Container(
             child: getContinue(context),
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(10),
           ),
         ]
     );
@@ -145,7 +148,7 @@ class _ComponentPageState extends State<ComponentPage> {
       else {
         return Container(
           child: getGroupAnswers(context),
-          padding: EdgeInsets.all(20), //10
+         // padding: EdgeInsets.all(5), //20
         );
       }
     }
@@ -454,7 +457,7 @@ class _ComponentPageState extends State<ComponentPage> {
               children: <Widget>[
                 Text(
                   'Which key group does the above map to?',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)
+                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)
                 ),
               ]
             ),
@@ -466,25 +469,28 @@ class _ComponentPageState extends State<ComponentPage> {
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
+                SizedBox(width: 20),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition1)),
                 //Expanded(child: getText(AnswerPosition.groupPosition1)),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition2)),
               ],
             ),
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
                 SizedBox(width: 20),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
+                SizedBox(width: 10),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition4)),
               ],
             ),
             Row(
               textDirection: TextDirection.ltr,
               children: <Widget>[
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
                 SizedBox(width: 20),
+                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
+                SizedBox(width: 10),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition6)),
               ],
             ),
@@ -681,9 +687,9 @@ class _ComponentPageState extends State<ComponentPage> {
       }
     }
 
-    bool isAGroupAnswerType = false;
+    bool isAGroupAnswerType = theComponentManager.isAGroupAnswerType(position);
+
     if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
-      isAGroupAnswerType = theComponentManager.isAGroupAnswerType(answeredPosition);
       if (position == theComponentManager.getCorrectAnswerPosition()) {
         backgroundColor = Colors.greenAccent;
       }
@@ -705,7 +711,7 @@ class _ComponentPageState extends State<ComponentPage> {
     var height = 36.0;
     if (isAGroupAnswerType) {
       width = 150.0;
-      height = 43.0;
+      height = 40.0;
     }
 
     return FlatButton(

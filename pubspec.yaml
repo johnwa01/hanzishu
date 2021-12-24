@@ -61,6 +61,32 @@ flutter:
      - assets/breakout.png
      - assets/conversations.png
      - assets/quiz.png
+     - assets/components/LC11.png
+     - assets/components/LC12.png
+     - assets/components/LC13.png
+     - assets/components/LC14.png
+     - assets/components/LC15.png
+     - assets/components/LC21.png
+     - assets/components/LC22.png
+     - assets/components/LC23.png
+     - assets/components/LC24.png
+     - assets/components/LC25.png
+     - assets/components/LC31.png
+     - assets/components/LC32.png
+     - assets/components/LC33.png
+     - assets/components/LC34.png
+     - assets/components/LC35.png
+     - assets/components/LC41.png
+     - assets/components/LC42.png
+     - assets/components/LC43.png
+     - assets/components/LC44.png
+     - assets/components/LC51.png
+     - assets/components/LC52.png
+     - assets/components/LC53.png
+     - assets/components/LC54.png
+     - assets/components/LC55.png
+     - assets/components/LC61.png
+     - assets/components/LC62.png
      - assets/letters/L11.png
      - assets/letters/L12.png
      - assets/letters/L13.png
@@ -226,6 +252,26 @@ flutter:
      - assets/typingexercise/497.png
      - assets/typingexercise/498.png
      - assets/typingexercise/499.png
+     - assets/typingexercise/500.png
+     - assets/typingexercise/501.png
+     - assets/typingexercise/502.png
+     - assets/typingexercise/503.png
+     - assets/typingexercise/504.png
+     - assets/typingexercise/505.png
+     - assets/typingexercise/506.png
+     - assets/typingexercise/507.png
+     - assets/typingexercise/508.png
+     - assets/typingexercise/509.png
+     - assets/typingexercise/510.png
+     - assets/typingexercise/511.png
+     - assets/typingexercise/512.png
+     - assets/typingexercise/513.png
+     - assets/typingexercise/514.png
+     - assets/typingexercise/515.png
+     - assets/typingexercise/516.png
+     - assets/typingexercise/517.png
+     - assets/typingexercise/518.png
+     - assets/typingexercise/519.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

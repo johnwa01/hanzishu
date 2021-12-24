@@ -136,9 +136,9 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
         showOverlay(context, keyGroup, keyIndex);
       },
       child: Image.asset(
-        "assets/typing/" + image,
+        "assets/components/L" + image,
         width: 30.0,
-        height: 30.0,
+        height: 55.0,
         fit: BoxFit.fitWidth,
       ),
     );
@@ -256,7 +256,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 Flexible(child: getOneKeyboardButton(1, 3)),
                 Flexible(child: getOneKeyboardButton(1, 2)),
                 Flexible(child: getOneKeyboardButton(1, 1)),
-                SizedBox(width: fontSize + 2),
+                SizedBox(width: fontSize),
                 Flexible(child: getOneKeyboardButton(2, 1)),
                 Flexible(child: getOneKeyboardButton(2, 2)),
                 Flexible(child: getOneKeyboardButton(2, 3)),
@@ -271,7 +271,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 Flexible(child: getOneKeyboardButton(3, 3)),
                 Flexible(child: getOneKeyboardButton(3, 2)),
                 Flexible(child: getOneKeyboardButton(3, 1)),
-                SizedBox(width: fontSize + 2),
+                SizedBox(width: fontSize),
                 Flexible(child: getOneKeyboardButton(4, 1)),
                 Flexible(child: getOneKeyboardButton(4, 2)),
                 Flexible(child: getOneKeyboardButton(4, 3)),
@@ -286,7 +286,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 Flexible(child: getOneKeyboardButton(5, 3)),
                 Flexible(child: getOneKeyboardButton(5, 2)),
                 Flexible(child: getOneKeyboardButton(5, 1)),
-                SizedBox(width: fontSize + 2),
+                SizedBox(width: fontSize),
                 Flexible(child: getOneKeyboardButton(6, 1)),
                 Flexible(child: getOneKeyboardButton(6, 2)),
                 Flexible(child: getOneKeyboardButton(0, 0)),

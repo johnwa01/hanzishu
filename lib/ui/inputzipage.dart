@@ -232,12 +232,12 @@ class _InputZiPageState extends State<InputZiPage> {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 85.0, //posiY,
+                  top: 65.0, //85.0, //posiY,
                   left: 0.0, //posiX,
                   child: Image.asset(
                     fullPath,
-                    width: 410.0,
-                    height: 140.0,
+                    width: 350.0,
+                    height: 70.0,
                     //fit: BoxFit.fitWidth,
                   ),
                 ));
@@ -720,25 +720,25 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     String instruction;
+
     if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = "Type the given character. Use hint as needed.";
+      instruction = theZiWithThreeOrMoreComponentList[currentIndex].hintText;
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = "Type the given character. Use hint as needed.";
+      instruction = theZiWithTwoComponentList[currentIndex].hintText;
     }
     else if (typingType == TypingType.OneComponent) {
-      instruction = "Type the given character. Use hint as needed.";
+      instruction = theZiWithOneComponentList[currentIndex].hintText;
     }
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
 
-    var fontSize = 18.0;
+    var fontSize = 15.0;
 
     return WillPopScope(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
@@ -747,7 +747,7 @@ class _InputZiPageState extends State<InputZiPage> {
               textAlign: TextAlign.left
             ),
           ),
-          SizedBox(height: fontSize),
+          //SizedBox(height: fontSize),
 
           Row(
               children: <Widget>[
@@ -766,7 +766,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: fontSize * 3.0),
+                SizedBox(width: 200.0),
                 FlatButton(
                   color: Colors.white,
                   textColor: Colors.blueAccent,
@@ -783,7 +783,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   child: Text(
                     "Hint",
                     style: TextStyle(fontSize: fontSize),
-                    textAlign: TextAlign.left
+                    textAlign: TextAlign.center
                   ),
                 ),
               ]
