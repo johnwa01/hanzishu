@@ -76,6 +76,33 @@ class OpenHelper {
       }
     }
 
+    return
+      InkWell(
+        child: Column(
+            children: [
+              //Container(
+                //decoration: BoxDecoration(
+                //  color: Colors.transparent,
+                //  border: Border.all(color: Colors.blue, width: 1.0),
+                //  borderRadius: BorderRadius.circular(40),
+                //),
+                Ink.image(
+                  image: AssetImage(imagePath),
+                  width: 110.0,
+                  height: 110.0,
+                ),
+              //),
+              Text(
+                lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
+              ),
+            ]
+        ),
+
+        onTap: () => openPage(context, lessonNumber, lessonSection),
+    );
+
+    /*
     return SizedBox(
       width: 110,
       height: 130,
@@ -103,5 +130,6 @@ class OpenHelper {
             borderRadius: BorderRadius.circular(20.0)),
       ),
     );
+    */
   }
 }
