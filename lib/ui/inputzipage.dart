@@ -8,7 +8,7 @@ import 'package:hanzishu/ui/inputzicomponentpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/data/componentlist.dart';
+import 'package:hanzishu/data/componenttypinglist.dart';
 
 import 'dart:core';
 

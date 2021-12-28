@@ -10,7 +10,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
-import 'package:hanzishu/data/componentlist.dart';
+import 'package:hanzishu/data/componenttypinglist.dart';
 import 'dart:async';
 
 class ComponentPage extends StatefulWidget {
