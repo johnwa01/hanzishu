@@ -71,7 +71,7 @@ class InputZiPainter extends BasePainter {
 
 
       //TODO: for testing only
-      /*
+
       if (globalTestDoubleByteCode.length == 2) {
         if (theComponentManager.getComponent(globalTestDoubleByteCode) != null) {
           drawComponentZi(
@@ -86,7 +86,7 @@ class InputZiPainter extends BasePainter {
               60.0 * 0.05);
         }
       }
-      */
+
     }
     /*
     displayOneCandidate("好", 0.0, 0.0, 30.0);

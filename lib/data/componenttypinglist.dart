@@ -265,6 +265,6 @@ var theZiWithOneComponentList=[
   //example for fold strokes not in the table.
 ];
 
-var theComponentList = [
-  Component("Aa", "", false, "", "", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
-];
+//var theComponentList = [
+//  Component("Aa", "", false, "", "", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
+//];

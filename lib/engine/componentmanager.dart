@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
+import 'package:hanzishu/data/componentlist.dart';
 
 
 class ComponentManager {

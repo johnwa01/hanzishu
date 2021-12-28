@@ -370,6 +370,9 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
 
+    //TODO: temp testing for comp shapes
+    globalTestDoubleByteCode = _controller.text;
+
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
       //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
@@ -402,6 +405,8 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       setTextByChosenZiIndex(selectionIndex, false);
     }
+    //TODO: temp disable in order to test component shapes
+    /*
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
@@ -415,6 +420,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
+    */
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
         initOverlay();
