@@ -96,7 +96,7 @@ class _LessonsPageState extends State<LessonsPage> {
 
   List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount) {
     List<Widget> sections = [];
-    sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber, "assets/IMG_6606.PNG", LessonSection.None, true)));
+    sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", LessonSection.None, true)));
 
     if (lessonCount >= 2) {
       sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 1, "assets/conversations.png", LessonSection.None, true)));
