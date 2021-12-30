@@ -401,6 +401,25 @@ class BasePainter extends CustomPainter{
     }
   }
 
+  void drawStrokeZi(String strokeCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
+    var  stroke = theStrokeManager.getStroke(strokeCode);
+
+    if (stroke != null) {
+      var strokes = stroke.shape;
+      //  if (!comp.isChar) {
+      buildBaseZi(
+          strokes,
+          transX,
+          transY,
+          widthX,
+          heightY,
+          ofColor,
+          isSingleColor,
+          ziLineWidth);
+    }
+  }
+
   // currently used for compound zi animation
   void drawCenterZi(int ziId) {
     var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);

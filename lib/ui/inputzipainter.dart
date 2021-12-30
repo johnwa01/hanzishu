@@ -87,6 +87,21 @@ class InputZiPainter extends BasePainter {
         }
       }
 
+      if (globalTestDoubleByteCode.length == 1) {
+        if (theStrokeManager.getStroke(globalTestDoubleByteCode) != null) {
+          drawStrokeZi(
+              globalTestDoubleByteCode,
+              x,
+              0.0,
+              60.0,
+              60.0,
+              60.0, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/
+              this.lineColor /*ziColor*/, /*isSingleColor:*/
+              true,
+              60.0 * 0.05);
+        }
+      }
+
     }
     /*
     displayOneCandidate("好", 0.0, 0.0, 30.0);

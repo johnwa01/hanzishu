@@ -147,7 +147,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Guided typing", textDirection: TextDirection.ltr),
+          title: Text("Typing exercises", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             theStatisticsManager.trackTimeAndTap();
