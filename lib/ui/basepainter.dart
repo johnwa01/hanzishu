@@ -406,10 +406,10 @@ class BasePainter extends CustomPainter{
     var  stroke = theStrokeManager.getStroke(strokeCode);
 
     if (stroke != null) {
-      var strokes = stroke.shape;
+      var routes = stroke.routes;
       //  if (!comp.isChar) {
       buildBaseZi(
-          strokes,
+          routes,
           transX,
           transY,
           widthX,

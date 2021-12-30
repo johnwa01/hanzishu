@@ -143,21 +143,25 @@ class DictionaryPainter extends BasePainter {
 
     var detailedZi = theSearchingZiList[ziIndex];
 
-    displayTextWithValue(detailedZi.char, 100.0, 100.0,
+    displayTextWithValue(detailedZi.char, 100.0, 20.0,//100.0,
         thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 2,
         Colors.blue);
 
-    DisplayIcon(iconSpeechStrokes, 70.0, 358.0, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, 105.0, 350.0,
+    DisplayIcon(iconSpeechStrokes, 70.0, 278.0/*358.0*/, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+    displayTextWithValue(detailedZi.pinyin, 105.0, 270.0,//350.0,
         thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
         Colors.blue);
 
-    displayTextWithValue(detailedZi.meaning, 70.0, 390.0,
+    displayTextWithValue(detailedZi.meaning, 70.0, 310.0,//390.0,
         thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
         Colors.blue);
 
     // annotate
     // bihua or 2 assembly units for the zi
+  }
+
+  displayWholeStrokes() {
+
   }
 
   DisplayFirstZis() {

@@ -684,7 +684,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     }
     else if (dicStage == DictionaryStage.detailedzi) {
       // for speech icon
-      var positionAndSize = PositionAndSize(70.0, 358.0, 30.0, 30.0, 0.0, 0.0);
+      var positionAndSize = PositionAndSize(70.0, 278.0/*358.0*/, 30.0, 30.0, 0.0, 0.0);
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 
