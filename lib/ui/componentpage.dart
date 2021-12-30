@@ -229,7 +229,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'You use the above chart as a reference in your introduction typing. Since we use standard English keyboard which would not show the components, we need to memorize them. This is the first of the three exercises to help you memorize which component maps to which key.',
+                      'You used the above chart as a reference in your introduction typing. Since we use standard English keyboard which would not show the components, we need to memorize them. This is the first of the three exercises to help you memorize which component maps to which key.',
                       style: TextStyle(fontSize: 18)
                   ),
                 )
@@ -455,10 +455,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
             Row(
               children: <Widget>[
-                Text(
-                  'Which key group does the above map to?',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold)
-                ),
+                getAnswerQuestion()
               ]
             ),
             Row(
@@ -498,26 +495,49 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
-  Widget getIndividualAnswers(BuildContext context) {
-    String question = "Which key does it map to?";
+  Widget getAnswerQuestion() {
     double size = 18.0;
 
+    if (answeredPosition != AnswerPosition.continueNext) {
+      var questionSize = size;
+      if (questionType == QuestionType.ExpandedComponent) {
+        questionSize = size * 3.0;
+      }
+      return Container(width:0.0, height: questionSize);
+    }
+    else {
+      String question = "Which key does it map to?";
+
+      if (questionType == QuestionType.ExpandedComponent) {
+        var hint = theExpandedComponentList[currentIndex].hint;
+        question =
+            "Guess which component that the above are expanded from & choose the component's corresponding key below. (Hint: " +
+                hint + ")";
+      }
+      else if (questionType == QuestionType.ComponentGroup) {
+        question = "Which key group does the above map to?";
+      }
+
+      return Flexible(
+        child: Text(
+            question,
+            style: TextStyle(fontSize: size, fontWeight: FontWeight.bold)
+        ),
+      );
+    }
+  }
+
+  Widget getIndividualAnswers(BuildContext context) {
     if (questionType == QuestionType.ExpandedComponent) {
-      var hint = theExpandedComponentList[currentIndex].hint;
-      question = "Guess which component that the above are expanded from & choose the component's corresponding key below. (Hint: " + hint + ")";
-      size = 18.0;
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
         return Flexible (
           child: Text(
               //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
               "The above chart shows the component '日'（key letter 'O') and its expanded components, whose shapes look more or less similar to the component '日'. To type an expanded component (ex: '自'), guess or remember its component (ex: '日') and corresponding key (ex: key letter 'O'）, then type the SAME key.",
-              style: TextStyle(fontSize: size)
+              style: TextStyle(fontSize: 18.0)
           ),
         );
-      }
-      else {
-
       }
     }
 
@@ -525,12 +545,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                Flexible (
-                  child: Text(
-                    question,
-                    style: TextStyle(fontSize: size, fontWeight: FontWeight.bold)
-                  ),
-                ),
+                getAnswerQuestion(),
               ]
           ),
           Row(

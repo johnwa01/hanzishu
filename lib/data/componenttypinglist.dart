@@ -229,17 +229,9 @@ var theZiWithOneComponentList=[
   ZiWithComponentsAndStrokes("呆", ["Ia", "La"], "515.png", ""), //
   ZiWithComponentsAndStrokes("从", ["Ea", "Ea"], "516.png", ""),   //
   ZiWithComponentsAndStrokes("旦", ["Oa", "Ga"], "517.png", ""),  //
-  ZiWithComponentsAndStrokes("人", ["Ea"], "452.png", ""),
-  ZiWithComponentsAndStrokes("叮", ["Ia", "Ja"], "518.png", ""),
-  ZiWithComponentsAndStrokes("大", ["Ea"], "453.png", ""),
-  ZiWithComponentsAndStrokes("不", ["Ga"], "455.png", ""),
-  ZiWithComponentsAndStrokes("了", ["Ja"], "454.png", ""),
-  ZiWithComponentsAndStrokes("我", ["Wa"], "457.png", ""),
-  ZiWithComponentsAndStrokes("见", ["Ua"], "450.png", ""),
-  ZiWithComponentsAndStrokes("气", ["Fa"], "458.png", ""),
-  ZiWithComponentsAndStrokes("下", ["Ga"], "459.png", ""),
   ZiWithComponentsAndStrokes("旷", ["Oa", "Kb"], "519.png", "->"),
   ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "497.png", ""),
+  ZiWithComponentsAndStrokes("叮", ["Ia", "Ja"], "518.png", "Use makeup strokes as needed."),
   ZiWithComponentsAndStrokes("你", ["Ta", "Ta", "Ya"], "490.png", ""),
   ZiWithComponentsAndStrokes("谢", ["Ha", "Oa", "Ja"], "491.png", ""),
   ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "492.png", ""),
@@ -262,6 +254,16 @@ var theZiWithOneComponentList=[
   ZiWithComponentsAndStrokes("对", ["Na", "Ja"], "469.png", ""),
   ZiWithComponentsAndStrokes("关", ["Ha", "Ea"], "470.png", ""),
   ZiWithComponentsAndStrokes("系", ["Ta", "Ma"], "471.png", ""),
+  /*
+  ZiWithComponentsAndStrokes("人", ["Ea"], "452.png", ""),
+  ZiWithComponentsAndStrokes("大", ["Ea"], "453.png", ""),
+  ZiWithComponentsAndStrokes("不", ["Ga"], "455.png", ""),
+  ZiWithComponentsAndStrokes("了", ["Ja"], "454.png", ""),
+  ZiWithComponentsAndStrokes("我", ["Wa"], "457.png", ""),
+  ZiWithComponentsAndStrokes("见", ["Ua"], "450.png", ""),
+  ZiWithComponentsAndStrokes("气", ["Fa"], "458.png", ""),
+  ZiWithComponentsAndStrokes("下", ["Ga"], "459.png", ""),
+   */
   //example for fold strokes not in the table.
 ];
 

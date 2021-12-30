@@ -406,7 +406,7 @@ class _InputZiPageState extends State<InputZiPage> {
       setTextByChosenZiIndex(selectionIndex, false);
     }
     //TODO: temp disable in order to test component shapes
-    /*
+/*
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
@@ -420,7 +420,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
-    */
+*/
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
         initOverlay();
@@ -497,7 +497,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Text(
-                  "For example: To type character '品'，first, you break it into three components '口', '口', and '口'; find the corresponding keyboard keys 'i', 'i' and 'i'. Then, type 'iii' in the editing field and choose '品' from the list of characters below the editing field. Can also type space key to choose the first one from the list. The Hanzishu typing code will convert letters 'iii' into '品' in editing field.",
+                  "For example: To type character '品'，first, you break it into three components '口', '口', and '口'; find the corresponding keyboard keys 'i', 'i' and 'i'. Then, type 'iii' in the editing field and choose '品' from the list of characters below the editing field. You can also use space key to choose the first one from the list. The Hanzishu typing code will convert letters 'iii' into '品' in editing field.",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
@@ -516,7 +516,8 @@ class _InputZiPageState extends State<InputZiPage> {
                       currentIndex = 1;
                     });
                   },
-                  child: const Text('Sounds good! Let me try a few ...'),
+                  child: const Text('Sounds good! Let me try a few ...',
+                  style: TextStyle(color: Colors.blue)),
                 ),
               ),
             )
