@@ -11,6 +11,7 @@ import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
+/*
 //TODO: replace it with PrimitiveWrapper
 class YPositionWrapper {
   double yPosi;
@@ -19,6 +20,7 @@ class YPositionWrapper {
     this.yPosi = yPosi;
   }
 }
+*/
 
 class BreakoutPainter extends BasePainter {
   static var lessonLeftEdge = xYLength(10.0);

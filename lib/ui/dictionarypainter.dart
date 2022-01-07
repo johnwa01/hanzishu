@@ -13,6 +13,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
+import 'package:hanzishu/ui/breakoutpainter.dart';
 
 enum DictionaryStage {
   firstzis,
@@ -23,7 +24,7 @@ enum DictionaryStage {
   chineseHelp
 }
 
-class DictionaryPainter extends BasePainter {
+class DictionaryPainter extends BreakoutPainter {
   Color lineColor;
   double screenWidth;
   DictionaryStage dicStage;
@@ -51,7 +52,7 @@ class DictionaryPainter extends BasePainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("Basic Character Table", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("Basic Character Table[首字表]", 10.0, 5.0, 20.0, Colors.blueGrey);
 
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
@@ -156,8 +157,17 @@ class DictionaryPainter extends BasePainter {
         thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
         Colors.blue);
 
+    displayBreakoutChar(130);
     // annotate
     // bihua or 2 assembly units for the zi
+  }
+
+  displayBreakoutChar(int ziId) {
+    breakoutIndex = 0;
+    isBreakoutPositionsOnly = false;
+    breakoutPositions = theLessonManager.getBreakoutPositions(1);
+    var yPositionWrapper = YPositionWrapper(xYLength(400.0));  //170.0
+    displayOneCharDissembling(yPositionWrapper, ziId, 0);
   }
 
   displayWholeStrokes() {
@@ -255,10 +265,11 @@ class DictionaryPainter extends BasePainter {
       for (var i = 0; i < actualColumnCount.value; i++) {  //12
         //int firstZiId = j * 12 + i;
         var searchingZi = theSearchingZiList[searchingZiId];
-        currentNetStrokeCount = searchingZi.strokeCount - baseStrokeCount;
+        // Feel it makes it more complicated & confusion by subtracting baseStrokeCount.
+        currentNetStrokeCount = searchingZi.strokeCount; //- baseStrokeCount;
 
         if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
-          strokeIndexStr = "[" + currentNetStrokeCount.toString() + "]";
+          strokeIndexStr = "(" + currentNetStrokeCount.toString() + ")";
           displayTextWithValue(strokeIndexStr, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/, strokeIndexFontSize, Colors.brown);
           newCharCount = 0;
           previousNetStrokeCount = currentNetStrokeCount;
@@ -291,7 +302,8 @@ class DictionaryPainter extends BasePainter {
       searchingZiCount = nextSearchingZiId - searchingZiId;
     }
     else {  // last firstZi entry
-      searchingZiCount = totalSearchingZiCount + 1 - searchingZiId;
+      // the total count includes the first non-zi one
+      searchingZiCount = totalSearchingZiCount - searchingZiId;
     }
 
     return searchingZiCount;

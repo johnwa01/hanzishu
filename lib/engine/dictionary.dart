@@ -19,23 +19,36 @@ class SearchingZi {
   int id;
   String pinyin;
   String meaning;
-  int fullZiId;
   int strokeCount;
+  List<String> composit;
+  String soundComponent;
+  int soundLevel;
+  String image;
+  String hint;
 
   SearchingZi(
       String char,
       int id,
       String pinyin,
       String meaning,
-      int fullZiId,
       int strokeCount,
+      List<String> composit,
+      String soundComponent,
+      int soundLevel,
+      String image,
+      String hint
     ) {
       this.char = char;
       this.id = id;
       this.pinyin = pinyin;
       this.meaning = meaning;
-      this.fullZiId = fullZiId;
       this.strokeCount = strokeCount;
+      this.composit = composit;
+      this.soundComponent = soundComponent;
+      this.soundLevel = soundLevel;
+      this.image = image;
+      this.hint = hint;
+
   }
 }
 

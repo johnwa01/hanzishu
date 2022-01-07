@@ -673,7 +673,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
             searchingZiId++;
             count++;
 
-            if (count > length) {
+            if (count >= length) {
               CreateNavigationHitttestButtons(
                   DictionaryStage.searchingzis, buttons);
               return buttons; // stop the loop

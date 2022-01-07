@@ -96,13 +96,31 @@ class _LessonsPageState extends State<LessonsPage> {
 
   List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount) {
     List<Widget> sections = [];
-    sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber, "assets/charactertree.png", LessonSection.None, true)));
+    var realNumber = lessonNumber;
+    var modNumber = realNumber % 10;
+    var path = "assets/lessons/L" + modNumber.toString() + ".png";
+    //if (modNumber == 9) {
+    //  path = "assets/IMG_6606.PNG";
+    //}
+    sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true)));
 
     if (lessonCount >= 2) {
-      sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 1, "assets/conversations.png", LessonSection.None, true)));
+      realNumber++;
+      modNumber = realNumber % 10;
+      var path = "assets/lessons/L" + modNumber.toString() + ".png";
+      //if (modNumber == 9) {
+      //  path = "assets/IMG_6606.PNG";
+      //}
+      sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true)));
 
       if (lessonCount >= 3) {
-        sections.add(Container(child: OpenHelper.getImageButton(context, lessonNumber + 2, "assets/charactertree.png", LessonSection.None, true)));
+        realNumber++;
+        modNumber = realNumber % 10;
+        var path = "assets/lessons/L" + modNumber.toString() + ".png";
+        //if (modNumber == 9) {
+        //  path = "assets/IMG_6606.PNG";
+        //}
+        sections.add(Container(child: OpenHelper.getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true)));
       }
     }
 
