@@ -689,10 +689,74 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       buttons.add(posi);
 
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
+      createBreakoutHittestButtons(context, buttons);
     }
     else if (dicStage == DictionaryStage.help) {
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
     }
+
+    return buttons;
+  }
+
+  Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+    var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+
+    var butt = FlatButton(
+      color: Colors.white,
+      textColor: Colors.blueAccent,
+      onPressed: () {
+        if (overlayEntry != null) {
+          overlayEntry.remove();
+          overlayEntry = null;
+        }
+        //setState(() {
+        //centerZiId = newCenterZiId;
+        //});
+      },
+      onLongPress: () {
+        //var scrollOffset = _scrollController.offset;
+        var zi = theZiManager.getZi(id);
+        TextToSpeech.speak(zi.char);
+
+        var meaning = theZiManager.getPinyinAndMeaning(id);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, meaning);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  List<Widget> createBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
+
+    var breakoutPositions = theLessonManager.getBreakoutPositions(1/*TODO*/);
+    if (breakoutPositions.length == 0) {
+      var painter = DictionaryPainter(
+        Colors.amber,
+        //lessonId: widget.lessonId,
+        screenWidth,
+        //screenWidth: screenWidth,
+        dicStage,
+        firstZiIndex,
+        searchingZiIndex,
+        context
+        );
+      breakoutPositions = painter.getBreakoutPositions(1/*widget.lessonId*/);
+    }
+
+    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
+
+    breakoutPositions.forEach((uniqueNumber, position) =>
+        buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
     return buttons;
   }

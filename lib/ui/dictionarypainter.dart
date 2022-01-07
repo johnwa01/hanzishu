@@ -157,14 +157,14 @@ class DictionaryPainter extends BreakoutPainter {
         thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
         Colors.blue);
 
-    displayBreakoutChar(130);
+    displayCharBreakout(130, false);
     // annotate
     // bihua or 2 assembly units for the zi
   }
 
-  displayBreakoutChar(int ziId) {
+  displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
-    isBreakoutPositionsOnly = false;
+    isBreakoutPositionsOnly = isGetPositionOnly;
     breakoutPositions = theLessonManager.getBreakoutPositions(1);
     var yPositionWrapper = YPositionWrapper(xYLength(400.0));  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, 0);
@@ -172,6 +172,17 @@ class DictionaryPainter extends BreakoutPainter {
 
   displayWholeStrokes() {
 
+  }
+
+  Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
+    breakoutIndex = 0;
+
+    breakoutPositions = theLessonManager.getBreakoutPositions(lessonId);
+    isBreakoutPositionsOnly = true;
+
+    //displayCharacterDecomposing(lessonId);
+    displayCharBreakout(130, true);
+    return breakoutPositions;
   }
 
   DisplayFirstZis() {
