@@ -15,8 +15,8 @@ class FirstZi {
 }
 
 class SearchingZi {
-  String char;
   int id;
+  String char;
   String pinyin;
   String meaning;
   int strokeCount;
@@ -27,8 +27,8 @@ class SearchingZi {
   String hint;
 
   SearchingZi(
-      String char,
       int id,
+      String char,
       String pinyin,
       String meaning,
       int strokeCount,
@@ -38,8 +38,8 @@ class SearchingZi {
       String image,
       String hint
     ) {
-      this.char = char;
       this.id = id;
+      this.char = char;
       this.pinyin = pinyin;
       this.meaning = meaning;
       this.strokeCount = strokeCount;
@@ -48,7 +48,6 @@ class SearchingZi {
       this.soundLevel = soundLevel;
       this.image = image;
       this.hint = hint;
-
   }
 }
 

@@ -143,6 +143,7 @@ class BreakoutPainter extends BasePainter {
 
     var zi = theZiManager.getZi(id);
     if (zi.type == "h")
+    //if (zi.bodyComposites.length >= 2) // could use this if the data is correct/updated
     {
       var newRecurLevel = recurLevel + 1;
       var components = theZiManager.getZiComponents(id);
