@@ -16,6 +16,7 @@ import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 
 class DictionaryPage extends StatefulWidget {
   //final int lessonId;
@@ -700,6 +701,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+    var listType = Utility.getListType(uniqueNumber, id);
 
     var butt = FlatButton(
       color: Colors.white,
@@ -715,11 +717,13 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       },
       onLongPress: () {
         //var scrollOffset = _scrollController.offset;
-        var zi = theZiManager.getZi(id);
-        TextToSpeech.speak(zi.char);
-
-        var meaning = theZiManager.getPinyinAndMeaning(id);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, meaning);
+        //var zi = theZiManager.getZi(id);
+        //var searchingZi = DictionaryManager.getSearchingZi(id);
+        var char = ZiManager.getOneChar(id, listType);
+        TextToSpeech.speak(char);
+        var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
+        //var meaning = theZiManager.getPinyinAndMeaning(id);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -737,8 +741,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   List<Widget> createBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
 
-    var breakoutPositions = theLessonManager.getBreakoutPositions(1/*TODO*/);
-    if (breakoutPositions.length == 0) {
+    //var breakoutPositions = //theLessonManager.getBreakoutPositions(1/*TODO*/);
+    //if (breakoutPositions.length == 0) {
       var painter = DictionaryPainter(
         Colors.amber,
         //lessonId: widget.lessonId,
@@ -749,8 +753,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         searchingZiIndex,
         context
         );
-      breakoutPositions = painter.getBreakoutPositions(1/*widget.lessonId*/);
-    }
+      var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
+    //}
 
     var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error

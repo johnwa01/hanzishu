@@ -223,6 +223,7 @@ class ListOfZiPainter extends BasePainter {
       if (!isInfoOnly) {
         drawRootZi(
             id,
+            ZiListType.zi,
             transX,
             transY,
             thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),

@@ -11,7 +11,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
-
+import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class BasePainter extends CustomPainter{
   static double FrameLineWidth = 1.0;
@@ -225,21 +225,21 @@ class BasePainter extends CustomPainter{
     createSubZi(ofColor, ziLineWidth, pathZiTransformed);
   }
 
-  void displayText(int id, double transX, double transY, double charFontSize, Color color) {
-    var zi = theZiManager.getZi(id);
-    var char = zi.char;
+  void displayText(int id, ZiListType listType, double transX, double transY, double charFontSize, Color color) {
+    var char;
+    if (listType == ZiListType.zi) {
+      var zi = theZiManager.getZi(id);
+      char = zi.char;
+    }
+    else if (listType == ZiListType.searching) {
+      char = DictionaryManager.getChar(id);
+    }
+    else {
+      return;
+    }
 
     displayTextWithValue(char, transX, transY, charFontSize, color);
   }
-
-  /*
-  void displayComponentText(int id, double transX, double transY, double charFontSize, Color color) {
-    var component = theComponentManager.getComponent(id);
-    var char = component.charOrNameOfNonchar;
-
-    displayTextWithValue(char, transX, transY, charFontSize, color);
-  }
-*/
 
   void displayTextForPinyin(int id, double transX, double transY, double charFontSize, Color color, bool trim) {
     var zi = theZiManager.getZi(id);
@@ -302,17 +302,39 @@ class BasePainter extends CustomPainter{
     return transY - heightY / 2.0;
   }
 
-  void drawRootZi(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth, bool createFrame, bool hasRootZiLearned, bool withPinyin, MaterialColor frameFillColor, bool shouldDrawChar)
+  List<double> getStrokes(int id, ZiListType listType) {
+    List<double> strokes = null;
+
+    if (listType == ZiListType.component) {
+      var comp = ComponentManager.getComponent(id);
+      if (comp != null) {
+        strokes = comp.strokes;
+      }
+    }
+    else if(listType == ZiListType.zi) {
+      var zi = theZiManager.getZi(id);
+      if (zi.isStrokeOrNonChar() && zi.char != '*') {
+        strokes = theZiManager
+            .getZi(id)
+            .strokes;
+      }
+    }
+
+    return strokes;
+  }
+
+  void drawRootZi(int id, ZiListType listType, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth, bool createFrame, bool hasRootZiLearned, bool withPinyin, MaterialColor frameFillColor, bool shouldDrawChar)
   {
     // has the index global so that each displayed char has a unique index regardless whether it has popup or not; it's init to 1 whenever a center zi in the tree is changed
 
     //TODO: thePopupTipIndex += 1;
     if (shouldDrawChar) {
-      var zi = theZiManager.getZi(id);
-      if (zi.isStrokeOrNonChar() && zi.char != '*' /*&& !isReviewCenterPseudoZi &&
-          !isReviewCenterPseudoNonCharZi*/) {
-        var strokes = theZiManager.getZi(id).strokes;
-
+      var strokes = getStrokes(id, listType);
+      //var zi = theZiManager.getZi(id);
+      //if (zi.isStrokeOrNonChar() && zi.char != '*' /*&& !isReviewCenterPseudoZi &&
+      //    !isReviewCenterPseudoNonCharZi*/) {
+      //  var strokes = theZiManager.getZi(id).strokes;
+      if (strokes != null) {
         buildBaseZi(
             strokes,
             transX,
@@ -326,7 +348,7 @@ class BasePainter extends CustomPainter{
       else {
         double textTransYAdjusted = textTransYAdjust(transY, heightY);
         displayText(
-            id, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
+            id, listType, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
       }
     }
 
@@ -377,7 +399,7 @@ class BasePainter extends CustomPainter{
 
   void drawComponentZi(String doubleByteCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    var  comp = theComponentManager.getComponent(doubleByteCode);
+    var  comp = theComponentManager.getComponentByCode(doubleByteCode);
 
     if (comp != null) {
       var char = comp.charOrNameOfNonchar;
@@ -423,7 +445,7 @@ class BasePainter extends CustomPainter{
   // currently used for compound zi animation
   void drawCenterZi(int ziId) {
     var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-    drawRootZi(ziId, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
+    drawRootZi(ziId, ZiListType.zi, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
   }
 
   /*
@@ -596,7 +618,7 @@ class BasePainter extends CustomPainter{
       if (theIsPartialZiMode && memberZiId != 155) {
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
-      drawRootZi(partialZiId, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
+      drawRootZi(partialZiId, ZiListType.zi, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
 
       thePositionManager.updatePositionIndex(memberZiId);
     }
@@ -633,6 +655,7 @@ class BasePainter extends CustomPainter{
 
       drawRootZi(
             id,
+            ZiListType.zi,
             posiSize.transX,
             posiSize.transY,
             posiSize.width,
@@ -773,7 +796,7 @@ class BasePainter extends CustomPainter{
             displayTextWithValue('(', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
             xPosi.value = xPosi.value + xYLength(9.0);
 
-            drawRootZi(id, xPosi.value, posi.transY, xYLength(30.0), xYLength(30.0), thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, xYLength(2.0), false, false, false, Colors.blue, true);
+            drawRootZi(id, ZiListType.zi, xPosi.value, posi.transY, xYLength(30.0), xYLength(30.0), thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, xYLength(2.0), false, false, false, Colors.blue, true);
             xPosi.value = xPosi.value + xYLength(25.0);
             displayTextWithValue(')', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
             //DisplayText(theLessonsTextTag, xPosi.value, yPosi, ScreenManager.screenWidth - xYLength(10.0), theAnswerTextHeight, ")", theDefaultSize, UIColor.black);
@@ -854,6 +877,7 @@ class BasePainter extends CustomPainter{
 
         drawRootZi(
             id,
+            ZiListType.zi,
             posi.transX,
             posi.transY,
             posi.width,

@@ -8,6 +8,7 @@ import 'package:hanzishu/ui/breakoutpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 
 class BreakoutPage extends StatefulWidget {
   final int lessonId;
@@ -125,8 +126,9 @@ class _BreakoutPageState extends State<BreakoutPage> {
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+  Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+    var listType = Utility.getListType(uniqueNumber,id);
 
     var butt = FlatButton(
       color: Colors.white,
@@ -145,7 +147,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
         var zi = theZiManager.getZi(id);
         TextToSpeech.speak(zi.char);
 
-        var meaning = theZiManager.getPinyinAndMeaning(id);
+        var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
@@ -175,7 +177,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>
-      buttons.add(getPositionedButton(uniqueNumber, position)));
+      buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
     return buttons;
   }

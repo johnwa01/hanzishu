@@ -29,6 +29,7 @@ import 'package:hanzishu/ui/animatedpathpainter.dart'; // TODO: temp
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 
 void main() {
   runApp(MyApp());
@@ -106,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theInputZiManager = InputZiManager();
     theComponentManager = ComponentManager();
     theStrokeManager = StrokeManager();
+    theDictionaryManager = DictionaryManager();
 
     theStatisticsManager.init(0,
         0.0,

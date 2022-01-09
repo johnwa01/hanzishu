@@ -36,6 +36,8 @@ class DictionaryPainter extends BreakoutPainter {
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
   static int minCharsForStrokeIndex = 15;
 
+  Map<int, PositionAndSize> dicBreakoutPositions = Map();
+
   DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context) {
     this.lineColor = lineColor;
     this.width = width;
@@ -157,31 +159,35 @@ class DictionaryPainter extends BreakoutPainter {
         thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
         Colors.blue);
 
-    displayCharBreakout(130, false);
+    // actual display
+    bool isGetPositionOnly = false;
+    displayCharBreakout(ziIndex, isGetPositionOnly);
     // annotate
     // bihua or 2 assembly units for the zi
   }
 
+
   displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
-    breakoutPositions = theLessonManager.getBreakoutPositions(1);
     var yPositionWrapper = YPositionWrapper(xYLength(400.0));  //170.0
-    displayOneCharDissembling(yPositionWrapper, ziId, 0);
+    displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
   }
 
   displayWholeStrokes() {
 
   }
 
-  Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
+  Map<int, PositionAndSize> getDicBreakoutPositions(int ziId) {
     breakoutIndex = 0;
 
-    breakoutPositions = theLessonManager.getBreakoutPositions(lessonId);
+    // give it a space, which will be filled up by a run of displayCharBreakout later with no show
+    breakoutPositions = dicBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
     isBreakoutPositionsOnly = true;
 
     //displayCharacterDecomposing(lessonId);
-    displayCharBreakout(130, true);
+    // true - calculate position only, no display
+    displayCharBreakout(ziId, true);
     return breakoutPositions;
   }
 

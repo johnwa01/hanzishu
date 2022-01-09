@@ -49,7 +49,7 @@ class QuizPainter extends BasePainter {
       canvas.drawRect(Offset(0, 0) & Size(size.width, size.height), paint1);
     }
 
-    drawRootZi(centerId, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ this.lineColor /*ziColor*/, /*isSingleColor:*/ true, size.width * 0.05,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/false, /*withPinyin*/false, Colors.cyan /*TODO*/, true);
+    drawRootZi(centerId, ZiListType.zi, 0.0, 0.0, size.width, size.height, size.width, /*posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize,*/ this.lineColor /*ziColor*/, /*isSingleColor:*/ true, size.width * 0.05,/*posiSize.lineWidth,*/ /*createFrame:*/ true, /*rootZiLearned*/false, /*withPinyin*/false, Colors.cyan /*TODO*/, true);
     // drawZiGroup(centerId);
   }
 

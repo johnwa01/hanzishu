@@ -4,8 +4,16 @@ import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
-//import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
+
+enum ZiListType {
+  zi,
+  searching,
+  component
+}
 
 class NumberOfZis {
   int left;
@@ -21,6 +29,16 @@ class NumberOfZis {
     this.right = right;
     this.upper = upper;
     this.bottom = bottom;
+  }
+}
+
+class IdAndListTypePair {
+  int id;
+  ZiListType listType;
+
+  IdAndListTypePair(int id, ZiListType listType) {
+    this.id = id;
+    this.listType = listType;
   }
 }
 
@@ -605,7 +623,31 @@ class ZiManager {
     }
   }
 
-  String getPinyinAndMeaning(int ziId) {
+  static String getPinyinAndMeaning(int ziId) {
     return theZiList[ziId].getPinyinAndMeaning();
+  }
+
+  static String getOnePinyinAndMeaning(int id, ZiListType listType) {
+    if (listType == ZiListType.zi) {
+      return ZiManager.getPinyinAndMeaning(id);
+    }
+    else if (listType == ZiListType.searching) {
+      return DictionaryManager.getPinyinAndMeaning(id);
+    }
+    else {
+      return ComponentManager.getPinyinAndMeanging(id);
+    }
+  }
+
+  static String getOneChar(int id, ZiListType listType) {
+    if (listType == ZiListType.zi) {
+      return theZiManager.getZi(id).char;
+    }
+    else if (listType == ZiListType.searching) {
+      return DictionaryManager.getChar(id);
+    }
+    else {
+      return ComponentManager.getComponent(id).charOrNameOfNonchar;
+    }
   }
 }

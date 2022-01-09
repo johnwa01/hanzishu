@@ -435,10 +435,35 @@ class ComponentManager {
     return theLeadComponentList[id];
   }
 
-  Component getComponent(String doubleByteCode) {
+  int getComponentIdByCode(String code) {
+    var leng = theComponentList.length;
+    var comp;
+
+    // TODO: binary search
+    for (int i = 0; i < leng; i++) {
+      comp = theComponentList[i];
+      if (comp.doubleByteCode == code) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  static Component getComponent(int id) {
+    return theComponentList[id];
+  }
+
+  static String getPinyinAndMeanging(int id) {
+    //get comp
+    // return Zi.formatPinyinAndMeaning(comp.pinyin, comp.meaning);
+    return "not defined yet";
+  }
+
+  Component getComponentByCode(String code) {
     //TODO: do a binary search
     for (var i = 0; i < theComponentList.length; i++) {
-      if (theComponentList[i].doubleByteCode == doubleByteCode) {
+      if (theComponentList[i].doubleByteCode == code) {
         return theComponentList[i];
       }
     }
@@ -463,13 +488,13 @@ class ComponentManager {
     }
   }
 
-  int getComponentIdByCode(String code) {
+  int getLeadComponentIdByCode(String code) {
     var leng = theLeadComponentList.length;
     var comp;
 
     for (int i = 0; i < leng; i++) {
       comp = theLeadComponentList[i];
-      if (comp.doubleByteName == code) {
+      if (comp.doubleByteCode == code) {
         return i;
       }
     }

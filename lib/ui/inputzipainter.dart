@@ -73,7 +73,7 @@ class InputZiPainter extends BasePainter {
       //TODO: for testing only
 
       if (globalTestDoubleByteCode.length == 2) {
-        if (theComponentManager.getComponent(globalTestDoubleByteCode) != null) {
+        if (theComponentManager.getComponentByCode(globalTestDoubleByteCode) != null) {
           drawComponentZi(
               globalTestDoubleByteCode,
               x,

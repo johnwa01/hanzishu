@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 
 /*
 enum HittestState {
@@ -236,6 +237,8 @@ double xYLength(double xy) {
 
 class Utility {
   static var baseNumber = 10000;
+  static var componentBaseNumber = 9000;
+  static var searchingBaseNumber = 4600;
 
   static void speakChars(String chars, String lang) {
     // skip the special root char
@@ -310,12 +313,35 @@ class Utility {
     return screenWidth;
   }
 
-  static int getUniqueNumberFromId(int breakoutIndex, int id) {
-    return breakoutIndex * baseNumber + id;
+  static int getUniqueNumberFromId(int breakoutIndex, int id, ZiListType listType) {
+    if (listType == ZiListType.zi) {
+      return breakoutIndex * baseNumber + id;
+    }
+    if (listType == ZiListType.searching) {
+      return breakoutIndex * baseNumber + searchingBaseNumber + id;
+    }
+    else if (listType == ZiListType.component) {
+      return breakoutIndex * baseNumber + componentBaseNumber + id;
+    }
   }
 
   static int getIdFromUniqueNumber(int uniqueNumber) {
-    return uniqueNumber % baseNumber;
+    return uniqueNumber % baseNumber % searchingBaseNumber % componentBaseNumber;
+  }
+
+  static ZiListType getListType(int uniqueNumber, int id) {
+    var base = uniqueNumber - id;
+    var baseMod = base % baseNumber;
+
+    if (baseMod < searchingBaseNumber) {
+      return ZiListType.zi;
+    }
+    else if (baseMod >= searchingBaseNumber && baseMod < componentBaseNumber) {
+      return ZiListType.searching;
+    }
+    else {
+      return ZiListType.component;
+    }
   }
 
   static bool isPseudoRootZiId(int rootZiId) {
