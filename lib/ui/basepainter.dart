@@ -307,17 +307,20 @@ class BasePainter extends CustomPainter{
 
     if (listType == ZiListType.component) {
       var comp = ComponentManager.getComponent(id);
-      if (comp != null) {
+      if (comp != null && !comp.isChar) {
         strokes = comp.strokes;
       }
     }
-    else if(listType == ZiListType.zi) {
+    else if (listType == ZiListType.zi) {
       var zi = theZiManager.getZi(id);
       if (zi.isStrokeOrNonChar() && zi.char != '*') {
         strokes = theZiManager
             .getZi(id)
             .strokes;
       }
+    }
+    else if (listType == ZiListType.stroke) {
+
     }
 
     return strokes;
@@ -399,13 +402,13 @@ class BasePainter extends CustomPainter{
 
   void drawComponentZi(String doubleByteCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    var  comp = theComponentManager.getComponentByCode(doubleByteCode);
+    var  comp = ComponentManager.getComponentByCode(doubleByteCode);
 
     if (comp != null) {
       var char = comp.charOrNameOfNonchar;
       var strokes = comp.strokes;
-//TEMP: all uses strokes for testing purpose
-    //  if (!comp.isChar) {
+//TEMP: all uses strokes for testing purpose - just comment out the else part.
+      if (!comp.isChar) {
         buildBaseZi(
             strokes,
             transX,
@@ -415,27 +418,49 @@ class BasePainter extends CustomPainter{
             ofColor, /*int hitTestId,*/
             isSingleColor,
             ziLineWidth);
-      //}
-      //else {
-      //  displayTextWithValue(
-      //      char, transX, transY, charFontSize, Colors.blue[800]);
-      //}
+      }
+      else {
+        displayTextWithValue(
+            char, transX, transY, charFontSize, Colors.blue[800]);
+      }
+    }
+  }
+
+  void drawComponentZiList(List<String> components, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth) {
+    for (int i = 0; i < components.length; i++) {
+      drawComponentZi(components[i], transX + widthX * i, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
     }
   }
 
   void drawStrokeZi(String strokeCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    var  stroke = theStrokeManager.getStroke(strokeCode);
+    var  stroke = theStrokeManager.getStrokeByCode(strokeCode);
 
     if (stroke != null) {
       var routes = stroke.routes;
-      //  if (!comp.isChar) {
       buildBaseZi(
           routes,
           transX,
           transY,
           widthX,
           heightY,
+          ofColor,
+          isSingleColor,
+          ziLineWidth);
+    }
+  }
+
+  // strokeString is a series of strokeCodes.
+  void drawStrokeZiList(String strokeString, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
+    for (int i = 0; i < strokeString.length; i++) {
+      drawStrokeZi(
+          strokeString[i],
+          transX + widthX * i,
+          transY,
+          widthX,
+          heightY,
+          charFontSize,
           ofColor,
           isSingleColor,
           ziLineWidth);

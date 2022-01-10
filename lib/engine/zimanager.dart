@@ -12,7 +12,8 @@ import 'package:hanzishu/engine/componentmanager.dart';
 enum ZiListType {
   zi,
   searching,
-  component
+  component,
+  stroke
 }
 
 class NumberOfZis {

@@ -4,7 +4,6 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/zi.dart';
-//import 'package:hanzishu/engine/componentmanager.dart';
 
 class DictionaryManager {
   static String getChar(int id) {
@@ -47,5 +46,31 @@ class DictionaryManager {
     }
 
     return composits;
+  }
+
+  // iterate function to get all the basic components
+  static getAllComponents(int ziId, List<String> components) {
+    var zi = theSearchingZiList[ziId];
+
+    // Check whether it's single component char or multiple component char
+    if (zi.composit.length == 1)
+    {
+      components.add(zi.composit[0]);
+      return;
+    }
+
+    var oneItem;
+    var subId;
+    for (int i = 0; i < zi.composit.length; i++) {
+      oneItem = zi.composit[i];
+      if (oneItem.codeUnitAt(0) >= '0'.codeUnitAt(0) && oneItem.codeUnitAt(0) <= '9'.codeUnitAt(0))
+      {
+        subId = Utility.StringToInt(oneItem);
+        getAllComponents(subId, components);
+      }
+      else {
+        components.add(oneItem);
+      }
+    }
   }
 }

@@ -460,7 +460,7 @@ class ComponentManager {
     return "not defined yet";
   }
 
-  Component getComponentByCode(String code) {
+  static Component getComponentByCode(String code) {
     //TODO: do a binary search
     for (var i = 0; i < theComponentList.length; i++) {
       if (theComponentList[i].doubleByteCode == code) {

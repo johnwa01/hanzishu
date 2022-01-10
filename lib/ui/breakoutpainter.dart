@@ -11,17 +11,6 @@ import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
-/*
-//TODO: replace it with PrimitiveWrapper
-class YPositionWrapper {
-  double yPosi;
-
-  YPositionWrapper(double yPosi) {
-    this.yPosi = yPosi;
-  }
-}
-*/
-
 class BreakoutPainter extends BasePainter {
   static var lessonLeftEdge = xYLength(10.0);
 
@@ -46,7 +35,6 @@ class BreakoutPainter extends BasePainter {
     //this.width = size.width;
     isBreakoutPositionsOnly = false;
     displayCharacterDecomposing(lessonId);
-    //displayLessonCharacterAssemingbling(lessonId);  //TODO: not working yet
   }
 
   Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
@@ -143,18 +131,15 @@ class BreakoutPainter extends BasePainter {
     theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
 
     var composits = getComposits(id, listType);
-    //var zi = theZiManager.getZi(id);
-    //if (zi.type == "h")
+
     if (composits != null && composits.length > 0)
     {
       var newRecurLevel = recurLevel + 1;
-      //var components = theZiManager.getZiComponents(id);
-      //var count = components.length;
-      //if (count > 0) {
-        for (var i = 0; i < composits.length; i++) {
-          drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + xYLength(100.0), transY); // transY is the original value
-        }
-      //}
+
+      for (var i = 0; i < composits.length; i++) {
+        drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + xYLength(100.0), transY); // transY is the original value
+      }
+
     }
   }
 

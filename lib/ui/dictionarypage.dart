@@ -19,21 +19,9 @@ import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class DictionaryPage extends StatefulWidget {
-  //final int lessonId;
-  //final int startLessonId;
-  //final int endLessonId;
-  //DictionaryStage dictionaryStage;
-  //int currentZiIndex;
-
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
-
-  //DictionaryPage(DictionaryStage dicStage, int ziIndex) {
-  //  dictionaryStage = dicStage;
-  //  currentZiIndex = ziIndex;
-  //}
-  //DictionaryPage({this.startLessonId, this.endLessonId});
 
   @override
   _DictionaryPageState createState() => _DictionaryPageState();
@@ -638,20 +626,20 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
       DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
 
-      int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
+      //int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
       int newCharCount = 0;
-      int previousNetStrokeCount = 0;
-      int currentNetStrokeCount = 0;
+      int previousStrokeCount = 0;
+      int currentStrokeCount = 0;
 
       var count = 0;
       for (var j = 0; j < 16; j++) {
         for (var i = 0; i < actualColumnCount.value; i++) {
           var searchingZi = theSearchingZiList[searchingZiId];
-          currentNetStrokeCount = searchingZi.strokeCount - baseStrokeCount;
+          currentStrokeCount = searchingZi.strokeCount;
 
-          if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= DictionaryPainter.minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
+          if ((previousStrokeCount == 0 && currentStrokeCount != previousStrokeCount) || (newCharCount >= DictionaryPainter.minCharsForStrokeIndex && currentStrokeCount != previousStrokeCount)) {
             newCharCount = 0;
-            previousNetStrokeCount = currentNetStrokeCount;
+            previousStrokeCount = currentStrokeCount;
           }
           else {
             //displayTextWithValue(searchingZi.char, 12.0 + i * (fontSize + 5.0), rowStartPosition + j * (fontSize + 5.0) - fontSize * 0.25, fontSize, Colors.blueAccent);
@@ -669,7 +657,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
             //thePositionManager.updatePositionIndex(168 /*memberZiId*/);
             buttons.add(posi);
             newCharCount++;
-            previousNetStrokeCount = currentNetStrokeCount;
+            previousStrokeCount = currentStrokeCount;
 
             searchingZiId++;
             count++;
@@ -684,8 +672,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       }
     }
     else if (dicStage == DictionaryStage.detailedzi) {
-      // for speech icon
-      var positionAndSize = PositionAndSize(70.0, 278.0/*358.0*/, 30.0, 30.0, 0.0, 0.0);
+      // for speech icon. Need to match the DictionaryPainter yPosi.
+      var positionAndSize = PositionAndSize(70.0, 230.0, 30.0, 30.0, 0.0, 0.0);
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 

@@ -12,8 +12,9 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/ui/dictionaryhelppage.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/breakoutpainter.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 
 enum DictionaryStage {
   firstzis,
@@ -147,17 +148,20 @@ class DictionaryPainter extends BreakoutPainter {
     var detailedZi = theSearchingZiList[ziIndex];
 
     displayTextWithValue(detailedZi.char, 100.0, 20.0,//100.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 2,
+        thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.5,
         Colors.blue);
 
-    DisplayIcon(iconSpeechStrokes, 70.0, 278.0/*358.0*/, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, 105.0, 270.0,//350.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
+    //Need to match the yPosi in DictionaryPage.
+    DisplayIcon(iconSpeechStrokes, 70.0, 230.0, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+    displayTextWithValue(detailedZi.pinyin, 105.0, 230.0,
+        thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize),
         Colors.blue);
 
-    displayTextWithValue(detailedZi.meaning, 70.0, 310.0,//390.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.newCharsSize),
+    displayTextWithValue(detailedZi.meaning, 70.0, 270.0,
+        thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), // newCharsSize
         Colors.blue);
+
+    displayComponentsOrStrokes(ziIndex, 340.0);
 
     // actual display
     bool isGetPositionOnly = false;
@@ -166,6 +170,35 @@ class DictionaryPainter extends BreakoutPainter {
     // bihua or 2 assembly units for the zi
   }
 
+  displayComponentsOrStrokes(int id, double yPosi) {
+    var comps = List<String>();
+    DictionaryManager.getAllComponents(id, comps);
+    if (comps.length == 1) {
+      var comp = ComponentManager.getComponentByCode(comps[0]);
+      drawStrokeZiList(
+          comp.strokesString,
+          20.0,
+          yPosi,
+          40.0,
+          40.0,
+          40.0,
+          this.lineColor,
+          true,
+          40.0 * 0.05);
+    }
+    else {
+      drawComponentZiList(
+          comps,
+          20.0,
+          yPosi,
+          40.0,
+          40.0,
+          40.0,
+          this.lineColor,
+          true,
+          40.0 * 0.05);
+    }
+  }
 
   displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
@@ -185,8 +218,6 @@ class DictionaryPainter extends BreakoutPainter {
     breakoutPositions = dicBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
     isBreakoutPositionsOnly = true;
 
-    //displayCharacterDecomposing(lessonId);
-    // true - calculate position only, no display
     displayCharBreakout(ziId, true);
     return breakoutPositions;
   }
@@ -269,10 +300,10 @@ class DictionaryPainter extends BreakoutPainter {
 
     DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
 
-    int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
+    //int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
     int newCharCount = 0;
-    int previousNetStrokeCount = 0;
-    int currentNetStrokeCount = 0;
+    int previousStrokeCount = 0;
+    int currentStrokeCount = 0;
     double strokeIndexFontSize = 20.0;
 
     String strokeIndexStr;
@@ -283,19 +314,19 @@ class DictionaryPainter extends BreakoutPainter {
         //int firstZiId = j * 12 + i;
         var searchingZi = theSearchingZiList[searchingZiId];
         // Feel it makes it more complicated & confusion by subtracting baseStrokeCount.
-        currentNetStrokeCount = searchingZi.strokeCount; //- baseStrokeCount;
+        currentStrokeCount = searchingZi.strokeCount;
 
-        if ((previousNetStrokeCount == 0 && currentNetStrokeCount != previousNetStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentNetStrokeCount != previousNetStrokeCount)) {
-          strokeIndexStr = "(" + currentNetStrokeCount.toString() + ")";
+        if ((previousStrokeCount == 0 && currentStrokeCount != previousStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentStrokeCount != previousStrokeCount)) {
+          strokeIndexStr = "(" + currentStrokeCount.toString() + ")";
           displayTextWithValue(strokeIndexStr, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/, strokeIndexFontSize, Colors.brown);
           newCharCount = 0;
-          previousNetStrokeCount = currentNetStrokeCount;
+          previousStrokeCount = currentStrokeCount;
         }
         else {
           //displayTextWithValue(searchingZi.char, 20.0 + i * 30.0, 90.0 + j * 30.0 - 25.0 * 0.25, 25.0, Colors.blueAccent);
           displayTextWithValue(searchingZi.char, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height - startPosition.charFontSize * 0.25, startPosition.charFontSize, Colors.blueAccent);
           newCharCount++;
-          previousNetStrokeCount = currentNetStrokeCount;
+          previousStrokeCount = currentStrokeCount;
           searchingZiId++;
           count++;
           if (count >= length) {

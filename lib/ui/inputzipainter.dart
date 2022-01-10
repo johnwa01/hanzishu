@@ -10,7 +10,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
-import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/utility.dart';
@@ -69,11 +69,10 @@ class InputZiPainter extends BasePainter {
         x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
       }
 
-
       //TODO: for testing only
 
       if (globalTestDoubleByteCode.length == 2) {
-        if (theComponentManager.getComponentByCode(globalTestDoubleByteCode) != null) {
+        if (ComponentManager.getComponentByCode(globalTestDoubleByteCode) != null) {
           drawComponentZi(
               globalTestDoubleByteCode,
               x,
@@ -88,7 +87,7 @@ class InputZiPainter extends BasePainter {
       }
 
       if (globalTestDoubleByteCode.length == 1) {
-        if (theStrokeManager.getStroke(globalTestDoubleByteCode) != null) {
+        if (theStrokeManager.getStrokeByCode(globalTestDoubleByteCode) != null) {
           drawStrokeZi(
               globalTestDoubleByteCode,
               x,

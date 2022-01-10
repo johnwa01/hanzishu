@@ -267,8 +267,11 @@ class Utility {
   }
 
   static int StringToInt(String str) {
-    return int.parse(str);
-    //return int(str);
+    if (str != null && str.length > 0) {
+      return int.parse(str);
+    }
+
+    return -1;
   }
 
   //TODO: missing an actual check below in case we need this function.
