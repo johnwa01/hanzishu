@@ -32,6 +32,7 @@ class DictionaryPainter extends BreakoutPainter {
   int firstZiIndex;  // different meaning for different stage
   int searchingZiIndex;
   BuildContext context;
+  int compoundZiCurrentComponentId;
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
@@ -39,7 +40,7 @@ class DictionaryPainter extends BreakoutPainter {
 
   Map<int, PositionAndSize> dicBreakoutPositions = Map();
 
-  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context) {
+  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId) {
     this.lineColor = lineColor;
     this.width = width;
     //this.screenWidth,
@@ -48,6 +49,7 @@ class DictionaryPainter extends BreakoutPainter {
     this.firstZiIndex = firstZiIndex;
     this.searchingZiIndex = searchingZiIndex;
     this.context = context;
+    this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
   }
 
   @override
@@ -147,9 +149,27 @@ class DictionaryPainter extends BreakoutPainter {
 
     var detailedZi = theSearchingZiList[ziIndex];
 
-    displayTextWithValue(detailedZi.char, 100.0, 20.0,//100.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.5,
-        Colors.blue);
+    var posi = PositionManager.getDicAnimatedZiPositionAndSize();
+
+    if (compoundZiCurrentComponentId > 0) {
+      // for compound zi animation action only
+      //compoundZiCurrentComponentId
+
+      //displayTextWithValue(
+      //    detailedZi.char, posi.transX, posi.transY, posi.charFontSize, Colors.blue);
+      drawComponentZiById(compoundZiCurrentComponentId, posi.transX, posi.transY, posi.charFontSize, posi.charFontSize, posi.charFontSize, Colors.blue, false, posi.lineWidth);
+    }
+
+    // Note: same position as button action in page.
+    var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize();
+    DisplayIcon(
+        iconPenStrokes,
+        posiAndSizeBihua.transX,
+        posiAndSizeBihua.transY,
+        posiAndSizeBihua.width,
+        posiAndSizeBihua.height,
+        Colors.amber,
+        2.0);
 
     //Need to match the yPosi in DictionaryPage.
     DisplayIcon(iconSpeechStrokes, 70.0, 230.0, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);

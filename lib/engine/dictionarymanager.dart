@@ -3,7 +3,9 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/zi.dart';
+import 'package:hanzishu/data/componentlist.dart';
 
 class DictionaryManager {
   static String getChar(int id) {
@@ -17,6 +19,20 @@ class DictionaryManager {
   static String getPinyinAndMeaning(int id) {
     var searchingZi = getSearchingZi(id);
     return Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
+  }
+
+  static List<double> getSingleComponentSearchingZiStrokes(int id) {
+    // for zi with single component only
+    var zi = theSearchingZiList[id];
+
+    // Check whether it's single component char or multiple component char
+    if (zi.composit.length == 1) {
+      var code = zi.composit[0];
+      var compId = ComponentManager.getComponentIdByCode(code);
+      return theComponentList[compId].strokes;
+    }
+
+    return null;
   }
 
   List<IdAndListTypePair> getComposits(int id) {
@@ -39,13 +55,35 @@ class DictionaryManager {
         composits.add(pair);
       }
       else {
-        var compId = theComponentManager.getComponentIdByCode(oneItem);
+        var compId = ComponentManager.getComponentIdByCode(oneItem);
         var pair = IdAndListTypePair(compId, ZiListType.component);
         composits.add(pair);
       }
     }
 
     return composits;
+  }
+
+  static bool isCompoundZi(int id) {
+    var zi = theSearchingZiList[id];
+
+    // Check whether it's single or combined word
+    if (zi.composit.length >= 2)
+    {
+      return true;
+    }
+
+    return false;
+  }
+
+  static getComponentIdsFromCodes(List<String>codes, List<int>ids) {
+    var code;
+    var id;
+    for (int i = 0; i < codes.length; i++) {
+      code = codes[i];
+      id = ComponentManager.getComponentIdByCode(code);
+      ids.add(id);
+    }
   }
 
   // iterate function to get all the basic components

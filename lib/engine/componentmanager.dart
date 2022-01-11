@@ -435,7 +435,7 @@ class ComponentManager {
     return theLeadComponentList[id];
   }
 
-  int getComponentIdByCode(String code) {
+  static int getComponentIdByCode(String code) {
     var leng = theComponentList.length;
     var comp;
 

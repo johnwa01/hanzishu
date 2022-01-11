@@ -55,11 +55,12 @@ Path extractPathUntilLength(
 
 class AnimatedPathPainter extends CustomPainter {
   final Animation<double> _animation;
+  List<double> strokes;
 
-  AnimatedPathPainter(this._animation) : super(repaint: _animation);
+  AnimatedPathPainter(this._animation, this.strokes) : super(repaint: _animation);
 
   Path _createAnyPath(Size size) {
-    var strokes = theZiManager.getZi(theCurrentCenterZiId).strokes;
+    //var strokes = theZiManager.getZi(theCurrentCenterZiId).strokes;
     return BasePainter.createZiPathScaled(strokes, size.width, size.height);
     /*
     return Path()

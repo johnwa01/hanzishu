@@ -149,8 +149,6 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         compoundZiCurrentComponentId
     );
 
-    var posi = thePositionManager.getCenterZiPosi();
-
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
       compoundZiAnimation();
     }
@@ -177,22 +175,33 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
                   ),
                 ),
               ),
-              new Positioned(
-                top: posi.transY, //240,
-                left: posi.transX, //160,
-                height: posi.height, //80,
-                width: posi.width, //80,
-                //child: SizedBox(
-                  child: new CustomPaint(
-                    foregroundPainter: new AnimatedPathPainter(_controller),
-                  ),
-              ),
+              getAnimatedPathPainter(),
             ],
           ),
             onWillPop: _onWillPop
         ),
       )
     );
+  }
+
+  Widget getAnimatedPathPainter() {
+    if (!theZiManager.isHechenZi(centerZiId)) {
+      var posi = thePositionManager.getCenterZiPosi();
+      var strokes = theZiManager.getZi(centerZiId).strokes;
+      return new Positioned(
+        top: posi.transY,
+        left: posi.transX,
+        height: posi.height,
+        width: posi.width,
+        child: new CustomPaint(
+          foregroundPainter: new AnimatedPathPainter(_controller, strokes),
+        ),
+      );
+    }
+    else {
+      // no need to create above.
+      return Container(width: 0.0, height: 0.0);
+    }
   }
 
   Future<bool>_onWillPop() {

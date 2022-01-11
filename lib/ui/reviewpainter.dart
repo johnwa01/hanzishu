@@ -46,7 +46,7 @@ class ReviewPainter extends BasePainter {
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId);
+      drawCenterZi(compoundZiCurrentComponentId, ZiListType.zi);
     }
   }
 

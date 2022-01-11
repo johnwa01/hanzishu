@@ -53,7 +53,7 @@ class BasePainter extends CustomPainter{
 
   @override
   void paint(Canvas canvas, Size size) {
-    this.  canvas = canvas;
+    this.canvas = canvas;
     /*
     Paint line = new Paint()
       ..color = lineColor
@@ -158,17 +158,19 @@ class BasePainter extends CustomPainter{
     var path = Path();
 
     var i = 0;
-    while (i < ziStrokes.length) {
-      if (ziStrokes[i] == 4.0)  // start
-      {
-        path.moveTo(ziStrokes[i+1], ziStrokes[i+2] * height);
-      }
-      else if (ziStrokes[i] == 8.0)  // end
-      {
-        path.lineTo(ziStrokes[i+1], ziStrokes[i+2] * height);
-      }
+    if (ziStrokes != null && ziStrokes.length > 0) {
+      while (i < ziStrokes.length) {
+        if (ziStrokes[i] == 4.0) // start
+            {
+          path.moveTo(ziStrokes[i + 1], ziStrokes[i + 2] * height);
+        }
+        else if (ziStrokes[i] == 8.0) // end
+            {
+          path.lineTo(ziStrokes[i + 1], ziStrokes[i + 2] * height);
+        }
 
-      i = i + 3;
+        i = i + 3;
+      }
     }
 /*
     var path5 = Path();
@@ -400,10 +402,20 @@ class BasePainter extends CustomPainter{
     }
   }
 
+  void drawComponentZiById(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
+    var comp = ComponentManager.getComponent(id);
+    drawComponentZiBase(comp, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
+  }
+
   void drawComponentZi(String doubleByteCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
     var  comp = ComponentManager.getComponentByCode(doubleByteCode);
+    drawComponentZiBase(comp, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
+  }
 
+  void drawComponentZiBase(Component comp, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  {
     if (comp != null) {
       var char = comp.charOrNameOfNonchar;
       var strokes = comp.strokes;
@@ -468,9 +480,9 @@ class BasePainter extends CustomPainter{
   }
 
   // currently used for compound zi animation
-  void drawCenterZi(int ziId) {
+  void drawCenterZi(int ziId, ZiListType listType) {
     var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-    drawRootZi(ziId, ZiListType.zi, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
+    drawRootZi(ziId, listType, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
   }
 
   /*

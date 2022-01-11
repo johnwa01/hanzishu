@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
+import 'dart:async';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/reviewpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
-import 'package:hanzishu/ui/basepainter.dart';
-//import 'package:hanzishu/ui/animatedpathpainter.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
@@ -28,8 +28,8 @@ class DictionaryPage extends StatefulWidget {
 }
 
 class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProviderStateMixin {
-  final TextEditingController _editController = TextEditingController();
-  //int ziIndex;
+  //final TextEditingController _editController = TextEditingController();
+  //int searchingZiIndex;
   int firstZiIndex;  // different meaning for different stage
   int searchingZiIndex;
   bool shouldDrawCenter;
@@ -39,12 +39,21 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(0.0, 0.0, "");
 
   AnimationController _controller;
-  Map<int, bool> allLearnedZis = Map();
+
+  int compoundZiComponentNum = 0;
+  List<int> compoundZiAllComponents = [];
+  var compoundZiAnimationTimer;
 
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
-    _controller.forward(from: 0.0);
+    _controller.forward(from: 0.0).whenComplete(() {
+      setState(() {
+        _controller.stop();
+        _controller.reset();     // when complete, clean the animation drawing.
+        shouldDrawCenter = true; // let it redraw the screen with regular center zi.
+      });
+    });
   }
 
   void _clearAnimation() {
@@ -61,54 +70,23 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       vsync: this,
     );
 
-    _editController.addListener(processEditInput);
-    _editController.text = "";
+    //_editController.addListener(processEditInput);
+    //_editController.text = "";
 
-    theCurrentCenterZiId = 1;
+    theCurrentCenterZiId = searchingZiIndex;
 
     setState(() {
-      searchingZiIndex = 0;
+      searchingZiIndex = searchingZiIndex;
       shouldDrawCenter = true;
+      compoundZiComponentNum = 0;
+
+      searchingZiIndex = 0;
       dicStage = DictionaryStage.firstzis;
       firstZiIndex = 0;
     });
   }
 
-  void processEditInput() {
- //   final String text = _editController.text.toLowerCase();
- //   final String text = _editController.text;
- //   _editController.value = _editController.value.copyWith(
-//       text: _editController.text,
- //     selection: TextSelection(baseOffset: text.length, extentOffset: text.length),
- //     composing: TextRange.empty,
- //   );
-
-    if (_editController.text.length > 0) {
-      var index = getSearchingListIndexFromChar(_editController.text);
-      if (index != -1) {
-        setState(() {
-          searchingZiIndex = index;
-          shouldDrawCenter = true;
-          dicStage = DictionaryStage.detailedzi;
-          firstZiIndex = Dictionary.getFirstZiIndexByPickingZiIndex(searchingZiIndex);
-        });
-      }
-      else {
-        // show error message
-        setState(() {
-          searchingZiIndex = -1;
-          shouldDrawCenter = true;
-          dicStage = DictionaryStage.search;
-        });
-      }
-    }
-    else {
-      setState(() {
-        searchingZiIndex = 99999;
-      });
-    }
-  }
-
+  // try to not use this due to the full search
   int getSearchingListIndexFromChar(String text) {
     for (var i = 0; i < theSearchingZiList.length; i++) {
       if (theSearchingZiList[i].char == text) {
@@ -122,20 +100,57 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   @override
   void dispose() {
     _controller.dispose();
-    _editController.dispose();
+    resetCompoundZiAnimation();
+    //_editController.dispose();
+
     super.dispose();
+  }
+
+  void resetCompoundZiAnimation() {
+    // re-init
+    compoundZiComponentNum = 0;
+    if (compoundZiAllComponents.length > 0) {
+      compoundZiAllComponents.clear(); //removeRange(0, compList.length - 1);
+    }
+
+    if (compoundZiAnimationTimer != null) {
+      compoundZiAnimationTimer.cancel();
+      compoundZiAnimationTimer = null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // reinit
- //   if (_editController != null) {
- //     _editController.text = "";
- //   }
+    int compoundZiCurrentComponentId = 0;
+    int compoundZiTotalComponentNum = 0;
+
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      List<String> componentCodes = List<String>();
+      if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
+        DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
+        DictionaryManager.getComponentIdsFromCodes(
+            componentCodes, compoundZiAllComponents);
+      }
+      //var compList = getAllZiComponents(searchingZiIndex);
+      compoundZiTotalComponentNum = compoundZiAllComponents.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        compoundZiCurrentComponentId = searchingZiIndex;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId = compoundZiAllComponents[compoundZiComponentNum - 1];
+      }
+    }
 
     screenWidth = Utility.getScreenWidth(context);
 
-    var posi = thePositionManager.getCenterZiPosi();
+    if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
+      compoundZiAnimation();
+    }
+
+    screenWidth = Utility.getScreenWidth(context);
 
     return Scaffold
       (
@@ -143,8 +158,37 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         (
         title: Text("Hanzishu One Tap Dictionary"),  //汉字树一触字典
         ),
-      body: getContainer(),
-      );
+      body: Container(
+        child: WillPopScope(
+          child: new Stack(
+            children: <Widget>[
+              new Positioned(
+                child: CustomPaint(
+                  foregroundPainter: DictionaryPainter(
+                    Colors.amber,
+                    //lessonId: widget.lessonId,
+                    screenWidth,
+                    //screenWidth: screenWidth,
+                    dicStage,
+                    firstZiIndex,
+                    searchingZiIndex,
+                    context,
+                    compoundZiCurrentComponentId
+                  ),
+                  child: Center(
+                    child: Stack(
+                      children: displayCharsAndCreateHittestButtons(context)
+                    ),
+                  ),
+                ),
+              ),
+              getAnimatedPathPainter(),
+            ]
+          ),
+          onWillPop: _onWillPop
+        )
+      ),
+    );
   }
 
   Future<bool>_onWillPop() {
@@ -156,72 +200,11 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     return Future.value(true);
   }
 
-  Widget getContainer() {
-    //Note: Search is disabled right now. Dictinary should be a simpler form than search/typing.
-    /*
-    if (dicStage == DictionaryStage.search) {
-      return Column(
-        children:<Widget>[
-          Container(
-            alignment: Alignment.topLeft,
-            //padding: const EdgeInsets.all(10),
-            child: Row(
-              children:<Widget>[
-                Container(
-                  child: getGoHomeButton(),
-                ),
-                Container(
-                  child: Text("Searching",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
-                ),
-              ]
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: const EdgeInsets.all(10),
-            child: Text("Type a zi to search (ex: '好') using Hanzishu Input method:[Note: not yet implemented.]",style: TextStyle(color:Colors.blueAccent,fontSize:20),),
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: TextFormField(
-              controller: _editController,
-              decoration: const InputDecoration(border: OutlineInputBorder()),
-            )
-          ),
-          Container(
-            padding: const EdgeInsets.all(10),
-            child: getSearchErrorMessage(),
-          )
-        ]
-      );
-    }
-    */
-    /*
-    else if (dicStage == DictionaryStage.firstzis) {
-      return Column(
-          mainAxisSize: MainAxisSize.min,
-        children:<Widget>[
-          Row(
-              children:<Widget>[
-                Text("First Character Table (首字表)",
-                            style: TextStyle(color:Colors.blueAccent,
-                                fontSize:20),
-                            textAlign: TextAlign.left),
-                getHelpButton(),
-              ]
-          ),
-
-          getWillPopScope(),
-        ]
-      );
-    }
-    */
-    //else {
-      return Container(
-        child: getWillPopScope(),
-      );
-    //}
-  }
+  //Widget getContainer() {
+  //    return Container(
+  //      child: getWillPopScope(),
+  //    );
+  //}
 
   /*
   Widget getHelpButton() {
@@ -245,27 +228,69 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
   */
 
+  /*
   Widget getWillPopScope() {
     return WillPopScope(
-        child: CustomPaint(
-          foregroundPainter: DictionaryPainter(
-              Colors.amber,
-              //lessonId: widget.lessonId,
-              screenWidth,
-              //screenWidth: screenWidth,
-              dicStage,
-              firstZiIndex,
-              searchingZiIndex,
-              context
-          ),
-          child: Center(
-            child: Stack(
-                children: displayCharsAndCreateHittestButtons(context)
+      child: new Stack(
+          children: <Widget>[
+            new Positioned(
+              child: CustomPaint(
+                foregroundPainter: DictionaryPainter(
+                  Colors.amber,
+                  //lessonId: widget.lessonId,
+                  screenWidth,
+                  //screenWidth: screenWidth,
+                  dicStage,
+                  firstZiIndex,
+                  searchingZiIndex,
+                  context,
+                    compoundZiCurrentComponentId
+                ),
+                child: Center(
+                  child: Stack(
+                    children: displayCharsAndCreateHittestButtons(context)
+                  ),
+                ),
+              ),
             ),
-          ),
+            getAnimatedPathPainter(),
+          ]
         ),
         onWillPop: _onWillPop
     );
+  }
+*/
+
+  Widget getAnimatedPathPainter() {
+    //Note: need to match the dictionarypainter's value
+    var posi = PositionManager.getDicAnimatedZiPositionAndSize();
+    //var strokes = DictionaryManager.getSearchingZi(searchingZiIndex).strokes;
+    if (searchingZiIndex > 0 && !DictionaryManager.isCompoundZi(searchingZiIndex)) {
+      var strokes = DictionaryManager.getSingleComponentSearchingZiStrokes(searchingZiIndex);
+      return new Positioned(
+        top: posi.transY + 25.0 * 2, // 25 is the navigation text height
+        left: posi.transX,
+        height: posi.height,
+        width: posi.width,
+        child: new CustomPaint(
+          foregroundPainter: new AnimatedPathPainter(_controller, strokes),
+        ),
+      );
+    }
+    else {
+      // no need to create this.
+      return Container(width: 0.0, height: 0.0);
+    }
+  }
+
+  //NOTE: setState within the Timer so that it'll trigger this function to be called repeatedly.
+  void  compoundZiAnimation() {
+    const oneSec = const Duration(seconds: 1);
+    compoundZiAnimationTimer = new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
+      setState(() {
+        compoundZiComponentNum += 1;
+      });
+    });
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
@@ -341,12 +366,12 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           if (dicStage == DictionaryStage.firstzis) {
             this.firstZiIndex = ziIndex;
             dicStage = DictionaryStage.searchingzis;
-            _editController.text = "";
+            //_editController.text = "";
           }
           else if (dicStage == DictionaryStage.searchingzis) {
             this.searchingZiIndex = ziIndex;
             dicStage = DictionaryStage.detailedzi;
-            _editController.text = "";
+            //_editController.text = "";
           }
 
           shouldDrawCenter = true;
@@ -399,7 +424,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         setState(() {
           dicStage = newDicStage;
           shouldDrawCenter = true;
-          _editController.text = "";
+          //_editController.text = "";
         });
       },
       onLongPress: () {
@@ -428,7 +453,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
         setState(() {
           dicStage = DictionaryStage.firstzis;
-          _editController.text = "";
+          //_editController.text = "";
         });
       },
       child: Text('@ ->', style: TextStyle(fontSize: 25.0),),
@@ -544,13 +569,22 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           overlayEntry = null;
         }
 
+        resetCompoundZiAnimation();
+
         setState(() {
           shouldDrawCenter = false;
         });
 
-        _startAnimation();
+        if (!DictionaryManager.isCompoundZi(ziId)) {
+          _startAnimation();
+        }
+        else {
+          // it actually just sets a clock and tell which component index to display.
+          // the real display of the component is done through the DictionaryPainter, animation painter is not involved.
+          compoundZiAnimation();
+        }
 
-        var zi = theZiManager.getZi(ziId);
+        var zi = DictionaryManager.getSearchingZi(ziId);
         TextToSpeech.speak(zi.char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
@@ -679,6 +713,10 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
       createBreakoutHittestButtons(context, buttons);
+
+      var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize();
+      var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, searchingZiIndex);
+      buttons.add(drawBihuaPosiCenter);
     }
     else if (dicStage == DictionaryStage.help) {
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
@@ -700,7 +738,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           overlayEntry = null;
         }
         //setState(() {
-        //centerZiId = newCenterZiId;
+        //searchingZiIndex = newCenterZiId;
         //});
       },
       onLongPress: () {
@@ -739,7 +777,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         dicStage,
         firstZiIndex,
         searchingZiIndex,
-        context
+        context,
+          0  //This is just to calculate the positions. compoundZiCurrentComponentId
         );
       var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}

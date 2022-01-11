@@ -11,7 +11,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 class TreePainter extends BasePainter {
   double screenWidth;
-  Animation<double> _animation;
+  //Animation<double> _animation; // not used ?
 
   TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson, int compoundZiCurrentComponentId) {
     this.lineColor = lineColor;
@@ -42,7 +42,7 @@ class TreePainter extends BasePainter {
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId);
+      drawCenterZi(compoundZiCurrentComponentId, ZiListType.zi);
     }
   }
 
