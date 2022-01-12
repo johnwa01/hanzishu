@@ -769,10 +769,10 @@ class PositionManager
 
   static PositionAndSize getDicAnimatedZiPositionAndSize() {
     var size = thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.5;
-    return PositionAndSize(100.0, 20.0, size, size, size, 1.0);
+    return PositionAndSize(100.0, 20.0, size, size, size, 8.0);
   }
 
   static PositionAndSize getDicAnimationBrushPositionAndSize() {
-    return PositionAndSize(270.0, 150.0, 30.0, 30.0, 0.0, 0.0);
+    return PositionAndSize(270.0, 150.0, 30.0, 30.0, 30.0, 2.0);
   }
 }

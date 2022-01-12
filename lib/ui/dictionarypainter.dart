@@ -33,6 +33,7 @@ class DictionaryPainter extends BreakoutPainter {
   int searchingZiIndex;
   BuildContext context;
   int compoundZiCurrentComponentId;
+  ZiListType ziListType;
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
@@ -40,7 +41,7 @@ class DictionaryPainter extends BreakoutPainter {
 
   Map<int, PositionAndSize> dicBreakoutPositions = Map();
 
-  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId) {
+  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter) {
     this.lineColor = lineColor;
     this.width = width;
     //this.screenWidth,
@@ -50,6 +51,8 @@ class DictionaryPainter extends BreakoutPainter {
     this.searchingZiIndex = searchingZiIndex;
     this.context = context;
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
+    this.ziListType = ziListType;
+    this.shouldDrawCenter = shouldDrawCenter;
   }
 
   @override
@@ -155,9 +158,16 @@ class DictionaryPainter extends BreakoutPainter {
       // for compound zi animation action only
       //compoundZiCurrentComponentId
 
-      //displayTextWithValue(
-      //    detailedZi.char, posi.transX, posi.transY, posi.charFontSize, Colors.blue);
-      drawComponentZiById(compoundZiCurrentComponentId, posi.transX, posi.transY, posi.charFontSize, posi.charFontSize, posi.charFontSize, Colors.blue, false, posi.lineWidth);
+      if (ziListType == ZiListType.searching) {
+        // in this case, compoundZiCurrentComponentId is actually the id of a searchingZi itself (not a component), that is, detailedZi.
+        if (shouldDrawCenter) {
+          var ziChar = DictionaryManager.getChar(compoundZiCurrentComponentId);
+          displayTextWithValue(ziChar, posi.transX, posi.transY, posi.charFontSize, Colors.blue);
+        }
+      }
+      else {
+        drawComponentZiById(compoundZiCurrentComponentId, posi.transX, posi.transY + 25.0, posi.charFontSize, posi.charFontSize, posi.charFontSize, Colors.blue, false, posi.lineWidth);
+      }
     }
 
     // Note: same position as button action in page.

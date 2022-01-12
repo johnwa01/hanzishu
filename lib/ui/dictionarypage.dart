@@ -43,6 +43,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
+  int compoundZiCurrentComponentId;
+  var currentZiListType = ZiListType.searching;
 
   void _startAnimation() {
     _controller.stop();
@@ -121,7 +123,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    int compoundZiCurrentComponentId = 0;
+    compoundZiCurrentComponentId = searchingZiIndex;
     int compoundZiTotalComponentNum = 0;
 
     // compound zi is animating.
@@ -136,11 +138,15 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       compoundZiTotalComponentNum = compoundZiAllComponents.length;
 
       if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        // after looping through the compoundZiAllComponents.
         compoundZiCurrentComponentId = searchingZiIndex;
+        currentZiListType = ZiListType.searching;
+        shouldDrawCenter = true;
         resetCompoundZiAnimation();
       }
       else {
         compoundZiCurrentComponentId = compoundZiAllComponents[compoundZiComponentNum - 1];
+        currentZiListType = ZiListType.component;
       }
     }
 
@@ -173,7 +179,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                     firstZiIndex,
                     searchingZiIndex,
                     context,
-                    compoundZiCurrentComponentId
+                    compoundZiCurrentComponentId,
+                    currentZiListType,
+                    shouldDrawCenter
                   ),
                   child: Center(
                     child: Stack(
@@ -778,7 +786,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         firstZiIndex,
         searchingZiIndex,
         context,
-          0  //This is just to calculate the positions. compoundZiCurrentComponentId
+          0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
+        currentZiListType,
+        shouldDrawCenter
         );
       var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}
