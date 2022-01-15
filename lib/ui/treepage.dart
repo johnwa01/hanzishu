@@ -208,6 +208,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -217,6 +218,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     OverlayState overlayState = Overlay.of(context);
@@ -240,6 +242,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         //resetCompoundZiAnimation();
@@ -267,6 +270,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         resetCompoundZiAnimation();
@@ -318,6 +322,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         _clearAnimation();
@@ -341,6 +346,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         var partialZiId = currentZiId;

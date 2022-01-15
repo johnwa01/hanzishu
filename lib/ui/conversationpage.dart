@@ -78,6 +78,7 @@ class _ConversationPageState extends State<ConversationPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -87,6 +88,7 @@ class _ConversationPageState extends State<ConversationPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     OverlayState overlayState = Overlay.of(context);
@@ -112,6 +114,7 @@ class _ConversationPageState extends State<ConversationPage> {
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         if (buttonType == ButtonType.sound) {

@@ -329,7 +329,13 @@ class Utility {
   }
 
   static int getIdFromUniqueNumber(int uniqueNumber) {
-    return uniqueNumber % baseNumber % searchingBaseNumber % componentBaseNumber;
+    var afterBaseNumber = uniqueNumber % baseNumber;
+    if (afterBaseNumber >= componentBaseNumber) {
+      return afterBaseNumber % componentBaseNumber;
+    }
+    else {
+      return afterBaseNumber % searchingBaseNumber;
+    }
   }
 
   static ZiListType getListType(int uniqueNumber, int id) {

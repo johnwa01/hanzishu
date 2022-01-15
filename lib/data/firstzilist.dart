@@ -187,3 +187,4 @@ var theFirstZiList = [
   FirstZi("鬼", 3708),
   FirstZi("黑", 3712),
 ];
+

@@ -123,6 +123,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    //Utility.removeDicOverlayEntry(); TODO: need this like some other builds?
+
     compoundZiCurrentComponentId = searchingZiIndex;
     int compoundZiTotalComponentNum = 0;
 
@@ -203,6 +205,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -305,6 +308,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     OverlayState overlayState = Overlay.of(context);
@@ -355,6 +359,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         _clearAnimation();
@@ -575,6 +580,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         resetCompoundZiAnimation();

@@ -208,6 +208,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -227,6 +228,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     OverlayState overlayState = Overlay.of(context);
@@ -252,6 +254,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         _clearAnimation();
@@ -294,6 +297,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         var zi = theZiManager.getZi(ziId);
@@ -319,6 +323,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         resetCompoundZiAnimation();

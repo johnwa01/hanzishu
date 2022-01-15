@@ -100,6 +100,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -109,6 +110,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     OverlayState overlayState = Overlay.of(context);
@@ -137,6 +139,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
         //setState(() {
           //centerZiId = newCenterZiId;

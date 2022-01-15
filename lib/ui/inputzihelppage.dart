@@ -74,6 +74,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     return Future.value(true);
@@ -83,6 +84,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
+      theDicOverlayEntry = null;
     }
 
     if (!(keyGroup == 0 && keyIndex == 0) && !(previousOverlayGroup == keyGroup && previousOverlayIndex == keyIndex)) {
@@ -131,6 +133,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
         if (overlayEntry != null) {
           overlayEntry.remove();
           overlayEntry = null;
+          theDicOverlayEntry = null;
         }
 
         showOverlay(context, keyGroup, keyIndex);

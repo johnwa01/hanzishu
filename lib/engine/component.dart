@@ -171,6 +171,7 @@ class LeadComponent {
 class Component {
   String doubleByteCode;
   String charOrNameOfNonchar;
+  String pinyin;
   String typingCode;
   bool isChar;
   String xiangXinImage;
@@ -180,6 +181,7 @@ class Component {
   Component(
       String doubleByteCode,
       String charOrNameOfNonchar,
+      String pinyin,
       String typingCode,
       bool isChar,
       String xiangXinImag,
@@ -188,6 +190,7 @@ class Component {
   {
     this.doubleByteCode= doubleByteCode;
     this.charOrNameOfNonchar = charOrNameOfNonchar;
+    this.pinyin = pinyin;
     this.typingCode = typingCode;
     this.isChar = isChar;
     this.xiangXinImage = xiangXinImage;
