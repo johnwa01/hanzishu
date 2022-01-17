@@ -13,6 +13,7 @@ import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
+import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/utility.dart';
 
 class SpeechIconInfo {
@@ -87,7 +88,7 @@ class InputZiPainter extends BasePainter {
       }
 
       if (globalTestDoubleByteCode.length == 1) {
-        if (theStrokeManager.getStrokeByCode(globalTestDoubleByteCode) != null) {
+        if (StrokeManager.getStrokeByCode(globalTestDoubleByteCode) != null) {
           drawStrokeZi(
               globalTestDoubleByteCode,
               x,

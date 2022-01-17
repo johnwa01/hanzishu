@@ -142,6 +142,13 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue("Help", 60.0, 5.0, 20.0, Colors.blueAccent);
   }
 
+  displayTypingCode(int searchingZiIndex, double yPosi) {
+    var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
+
+    displayTextWithValue(
+        typingCode, 20.0, yPosi, 25.0, Colors.blue[800]);
+  }
+
   DisplayDetailedZi(int ziIndex) {
     thePositionManager.setFrameWidth(getFrameWidth());
 
@@ -192,6 +199,8 @@ class DictionaryPainter extends BreakoutPainter {
         Colors.blue);
 
     displayComponentsOrStrokes(ziIndex, 340.0);
+
+    displayTypingCode(ziIndex, 370);
 
     // actual display
     bool isGetPositionOnly = false;

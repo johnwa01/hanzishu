@@ -176,6 +176,7 @@ class Component {
   bool isChar;
   String xiangXinImage;
   String strokesString;
+  String meaning;
   List<double> strokes;
 
   Component(
@@ -186,6 +187,7 @@ class Component {
       bool isChar,
       String xiangXinImag,
       String strokesString,
+      String meaning,
       List<double> strokes)
   {
     this.doubleByteCode= doubleByteCode;
@@ -195,6 +197,7 @@ class Component {
     this.isChar = isChar;
     this.xiangXinImage = xiangXinImage;
     this.strokesString = strokesString;
+    this.meaning = meaning;
     this.strokes = strokes;
   }
 }

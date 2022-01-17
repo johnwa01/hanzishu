@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:hanzishu/engine/component.dart';
-import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/data/componentlist.dart';
 
@@ -455,9 +455,12 @@ class ComponentManager {
   }
 
   static String getPinyinAndMeanging(int id) {
-    //get comp
-    // return Zi.formatPinyinAndMeaning(comp.pinyin, comp.meaning);
-    return "not defined yet";
+    var comp = getComponent(id);
+    var meaning = comp.meaning;
+    if (meaning.length == 0) {
+      meaning = "no meaning";
+    }
+    return Zi.formatPinyinAndMeaning(comp.pinyin, comp.meaning);
   }
 
   static Component getComponentByCode(String code) {

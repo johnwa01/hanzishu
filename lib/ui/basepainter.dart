@@ -7,6 +7,7 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
@@ -446,7 +447,7 @@ class BasePainter extends CustomPainter{
 
   void drawStrokeZi(String strokeCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    var  stroke = theStrokeManager.getStrokeByCode(strokeCode);
+    var  stroke = StrokeManager.getStrokeByCode(strokeCode);
 
     if (stroke != null) {
       var routes = stroke.routes;
