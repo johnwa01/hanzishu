@@ -144,9 +144,8 @@ class DictionaryPainter extends BreakoutPainter {
 
   displayTypingCode(int searchingZiIndex, double yPosi) {
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
-
     displayTextWithValue(
-        typingCode, 20.0, yPosi, 25.0, Colors.blue[800]);
+        "[Typing Code] " + typingCode, 10.0, yPosi, 20.0, Colors.blue[800]);
   }
 
   DisplayDetailedZi(int ziIndex) {
@@ -189,60 +188,58 @@ class DictionaryPainter extends BreakoutPainter {
         2.0);
 
     //Need to match the yPosi in DictionaryPage.
-    DisplayIcon(iconSpeechStrokes, 70.0, 230.0, 30.0, 30.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, 105.0, 230.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize),
-        Colors.blue);
+    displayTextWithValue("[Sound] ", 10.0, 210.0, 20.0, Colors.blue);
+    DisplayIcon(iconSpeechStrokes, 90.0, 210.0, 20.0, 20.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+    displayTextWithValue(detailedZi.pinyin, 115.0, 210.0, 20.0, Colors.blue);
 
-    displayTextWithValue(detailedZi.meaning, 70.0, 270.0,
-        thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), // newCharsSize
-        Colors.blue);
+    displayTextWithValue("[Meaning] " + detailedZi.meaning, 10.0, 250.0, 20.0, Colors.blue);
 
-    displayComponentsOrStrokes(ziIndex, 340.0);
+    displayComponentsOrStrokes(ziIndex, 290.0);
 
-    displayTypingCode(ziIndex, 370);
+    displayTypingCode(ziIndex, 330.0);
 
-    // actual display
+    displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
-    // annotate
-    // bihua or 2 assembly units for the zi
   }
 
   displayComponentsOrStrokes(int id, double yPosi) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(id, comps);
     if (comps.length == 1) {
+      displayTextWithValue("[Strokes] ", 10.0, yPosi, 20.0, Colors.blue);
       var comp = ComponentManager.getComponentByCode(comps[0]);
       drawStrokeZiList(
           comp.strokesString,
-          20.0,
+          130.0,
           yPosi,
-          40.0,
-          40.0,
-          40.0,
+          20.0,
+          20.0,
+          20.0,
           this.lineColor,
           true,
-          40.0 * 0.05);
+          20.0 * 0.05);
     }
     else {
+      displayTextWithValue("[Components] ", 10.0, yPosi, 20.0, Colors.blue);
       drawComponentZiList(
           comps,
-          20.0,
+          160.0,
           yPosi,
-          40.0,
-          40.0,
-          40.0,
+          20.0,
+          20.0,
+          20.0,
           this.lineColor,
           true,
-          40.0 * 0.05);
+          20.0 * 0.05);
     }
   }
 
   displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
-    var yPositionWrapper = YPositionWrapper(xYLength(400.0));  //170.0
+    //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
+    var yPositionWrapper = YPositionWrapper(xYLength(405.0));  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
   }
 

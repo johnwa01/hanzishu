@@ -234,7 +234,7 @@ class PositionManager
     0.12,
     0.1,
     0.06,
-    0.08,
+    0.06, // 0.08
     0.08,
     0.08
   ];
@@ -768,11 +768,11 @@ class PositionManager
   }
 
   static PositionAndSize getDicAnimatedZiPositionAndSize() {
-    var size = thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.5;
-    return PositionAndSize(100.0, 20.0, size, size, size, 8.0);
+    var size = thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.3;
+    return PositionAndSize(90.0, 20.0, size, size, size, 8.0);
   }
 
   static PositionAndSize getDicAnimationBrushPositionAndSize() {
-    return PositionAndSize(270.0, 150.0, 30.0, 30.0, 30.0, 2.0);
+    return PositionAndSize(235.0, 130.0, 25.0, 25.0, 25.0, 2.0);
   }
 }

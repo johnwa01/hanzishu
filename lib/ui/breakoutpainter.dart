@@ -78,7 +78,7 @@ class BreakoutPainter extends BasePainter {
     LessonManager.clearComponentsStructure();
     drawZiAndComponentsDissembling(0, 0, ziId, listType, lessonLeftEdge, yPositionWrapper.yPosi);
 
-    yPositionWrapper.yPosi += xYLength(30.0);
+    yPositionWrapper.yPosi += xYLength(20.0);
     yPositionWrapper.yPosi = LessonManager.getNextYPosition(yPositionWrapper.yPosi);
   }
 

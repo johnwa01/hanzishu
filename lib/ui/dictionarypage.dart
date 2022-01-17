@@ -721,7 +721,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     }
     else if (dicStage == DictionaryStage.detailedzi) {
       // for speech icon. Need to match the DictionaryPainter yPosi.
-      var positionAndSize = PositionAndSize(70.0, 230.0, 30.0, 30.0, 0.0, 0.0);
+      var positionAndSize = PositionAndSize(90.0, 210.0, 20.0, 20.0, 0.0, 0.0);
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 
