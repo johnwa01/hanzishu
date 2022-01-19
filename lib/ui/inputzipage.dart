@@ -380,7 +380,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
       //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
-      if (theInputZiManager.doesTypingResultContainTheZi(typingType, currentIndex, _controller.text)) {
+      if (theInputZiManager.doesTypingResultContainTheZi(typingType, currentIndex, _controller.text, lessonId)) {
         setState(() {
           if ((currentIndex + 1) == theInputZiManager.getTotal(typingType, lessonId)) {
               showCompletedDialog(currentBuildContext);
@@ -882,6 +882,10 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.OneComponent) {
       title = "Congratulation!";
       content = "You have completed all the training sessions! You can now start your own free typing.";
+    }
+    else if (typingType == TypingType.FromLessons) {
+      title = "Good job!";
+      content = "You have completed typing exercise for this lesson.";
     }
 
     // set up the AlertDialog

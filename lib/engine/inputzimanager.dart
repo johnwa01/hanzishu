@@ -231,7 +231,7 @@ class InputZiManager {
       instruction = theZiWithOneComponentList[currentIndex].hintText;
     }
     else if (typingType == TypingType.FromLessons) {
-      instruction = "Please type new characters from this lesson as instructed.";
+      instruction = "Please type new characters as instructed.";
     }
 
     return instruction;
@@ -306,7 +306,7 @@ class InputZiManager {
     return currentIndex;
   }
 
-  bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult) {
+  bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult, int lessonId) {
     bool result = false;
 
     if (currentIndex < 0) {
@@ -325,6 +325,10 @@ class InputZiManager {
     else if (typingType == TypingType.OneComponent) {
       zi = theZiWithOneComponentList[currentIndex];
       result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.FromLessons) {
+      zi = theLessonManager.getChar(lessonId, currentIndex);
+      result = typingResult.contains(zi.char);
     }
 
     return result;

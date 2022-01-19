@@ -239,7 +239,7 @@ class LessonManager {
       return theZiList[ziId];
     }
     else { // >=
-      var ziId = lesson.charsIds[currentIndex - lesson.convCharsIds.length - 1];
+      var ziId = lesson.charsIds[currentIndex - lesson.convCharsIds.length];
       return theZiList[ziId];
     }
   }
