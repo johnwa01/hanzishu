@@ -4,6 +4,7 @@ enum TypingType {
   ThreeOrMoreComponents,
   TwoComponents,
   OneComponent,
+  FromLessons,
   FreeTyping
 }
 

@@ -7,10 +7,10 @@ import 'package:hanzishu/ui/listofzipage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
-import 'package:hanzishu/ui/breakoutpage.dart';
+import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 
 class OpenHelper {
   static openPage(BuildContext context, int lessonId, LessonSection lessonSection) {
@@ -41,6 +41,9 @@ class OpenHelper {
       case LessonSection.Conversation:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(lessonId: lessonId)));
         break;
+      case LessonSection.Typing:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId)));
+        break;
       case LessonSection.Quiz:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizPage(lessonId: lessonId)));
         break;
@@ -69,6 +72,9 @@ class OpenHelper {
           break;
         case LessonSection.Conversation:
           lessonOrSectionName = "Conversation";
+          break;
+        case LessonSection.Typing:
+          lessonOrSectionName = "Typing";
           break;
         case LessonSection.Quiz:
           lessonOrSectionName = "Quiz";

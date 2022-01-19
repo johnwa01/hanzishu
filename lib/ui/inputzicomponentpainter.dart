@@ -59,7 +59,7 @@ class InputZiComponentPainter extends BasePainter {
     double y = 0.0;
     displayTextWithValue(instruction, x, y, 20.0, Colors.blue);
 
-    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
+    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, 0);
     var length = zi.componentCodes.length;
 
     y += 100.0;

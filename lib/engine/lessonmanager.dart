@@ -5,6 +5,7 @@ import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
@@ -220,6 +221,27 @@ class LessonManager {
     }
 
     return false;
+  }
+
+  int getTotalCharCount(int lessonId) {
+    var lesson = getLesson(lessonId);
+    return lesson.convCharsIds.length + lesson.charsIds.length;
+  }
+
+  Zi getChar(int lessonId, int currentIndex) {
+    var lesson = getLesson(lessonId);
+    if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
+      return null;
+    }
+
+    if (currentIndex < lesson.convCharsIds.length) {
+      var ziId = lesson.convCharsIds[currentIndex];
+      return theZiList[ziId];
+    }
+    else { // >=
+      var ziId = lesson.charsIds[currentIndex - lesson.convCharsIds.length - 1];
+      return theZiList[ziId];
+    }
   }
 
   // the members direct child of id 731 to 755.

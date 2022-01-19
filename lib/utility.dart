@@ -64,6 +64,7 @@ enum LessonSection {
   Decomposing,
   Assembling,
   Conversation,
+  Typing,
   Quiz,
   None
 }

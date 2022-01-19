@@ -122,7 +122,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents, lessonId: 0), //InputZiPage(),
               ),
             );
           },
@@ -154,7 +154,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.OneComponent), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.OneComponent, lessonId: 0), //InputZiPage(),
               ),
             );
           },
@@ -171,7 +171,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0), //InputZiPage(),
               ),
             );
           },

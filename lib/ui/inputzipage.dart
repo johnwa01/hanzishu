@@ -14,13 +14,15 @@ import 'dart:core';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
-  InputZiPage({this.typingType});
+  final int lessonId;
+  InputZiPage({this.typingType, this.lessonId});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
 
 class _InputZiPageState extends State<InputZiPage> {
   TypingType typingType;
+  int lessonId;
   int currentIndex;
   BuildContext currentBuildContext;
   double _progressValue;
@@ -52,7 +54,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     _controller.addListener(handleKeyInput);
     _progressValue = 0.0;
-    totalQuestions = theInputZiManager.getTotal(widget.typingType);
+    totalQuestions = theInputZiManager.getTotal(widget.typingType, widget.lessonId);
 
     setState(() {
       updateCounter =0;
@@ -223,9 +225,11 @@ class _InputZiPageState extends State<InputZiPage> {
         }
         else {
           imageName = theInputZiManager
-              .getZiWithComponentsAndStrokes(typingType, currentIndex)
+              .getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId)
               .hintImage;
-          fullPath = "assets/typingexercise/" + imageName;
+          if (imageName != null) {
+            fullPath = "assets/typingexercise/" + imageName;
+          }
         }
 
         OverlayState overlayState = Overlay.of(context);
@@ -378,10 +382,10 @@ class _InputZiPageState extends State<InputZiPage> {
       //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
       if (theInputZiManager.doesTypingResultContainTheZi(typingType, currentIndex, _controller.text)) {
         setState(() {
-          if ((currentIndex + 1) == theInputZiManager.getTotal(typingType)) {
+          if ((currentIndex + 1) == theInputZiManager.getTotal(typingType, lessonId)) {
               showCompletedDialog(currentBuildContext);
           }
-          currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex);
+          currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex, lessonId);
         });
 
         return;
@@ -406,7 +410,6 @@ class _InputZiPageState extends State<InputZiPage> {
       setTextByChosenZiIndex(selectionIndex, false);
     }
     //TODO: temp disable in order to test component shapes
-/*
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
       showOverlay(context, overlayParameters);
@@ -420,7 +423,6 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
-*/
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
         initOverlay();
@@ -528,6 +530,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
+    typingType = widget.typingType; //theComponentManager.getCurrentType();
+    lessonId = widget.lessonId;
     if (currentIndex < 0) {
       return Container(width:0.0, height: 0.0);
     }
@@ -546,15 +550,15 @@ class _InputZiPageState extends State<InputZiPage> {
 
     currentBuildContext = context;
 
-    typingType = widget.typingType; //theComponentManager.getCurrentType();
-    theInputZiManager.setCurrentType(typingType);
+    //   typingType = widget.typingType; //theComponentManager.getCurrentType();
+//    theInputZiManager.setCurrentType(typingType); //TODO: should pass as a parameter in painter?
 
     screenWidth = Utility.getScreenWidth(context);
 
     var inputZiPainter = InputZiPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
-        lessonId: 1, /*TODO: temp*/
+        lessonId: lessonId, /*TODO: temp*/
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
@@ -662,7 +666,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getComponentAndMapping() {
     var fontSize = 15.0;
-    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
+    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
 
     return Column(
         mainAxisSize: MainAxisSize.min,
@@ -726,19 +730,9 @@ class _InputZiPageState extends State<InputZiPage> {
       return getComponentAndMapping();
     }
 
-    String instruction;
+    String instruction  = InputZiManager.getIntroduction(typingType, currentIndex, lessonId);
 
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = theZiWithThreeOrMoreComponentList[currentIndex].hintText;
-    }
-    else if (typingType == TypingType.TwoComponents) {
-      instruction = theZiWithTwoComponentList[currentIndex].hintText;
-    }
-    else if (typingType == TypingType.OneComponent) {
-      instruction = theZiWithOneComponentList[currentIndex].hintText;
-    }
-
-    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex);
+    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
 
     var fontSize = 15.0;
 

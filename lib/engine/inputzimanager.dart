@@ -12,7 +12,7 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
-  TypingType typingType;
+//  TypingType typingType;
 
   static int findFirst(String input) {
     for (var i = 0; i < theInputZiList.length; i++) {
@@ -25,9 +25,10 @@ class InputZiManager {
     return -1;
   }
 
-  setCurrentType(TypingType typingType) {
-    this.typingType = typingType;
-  }
+  // function should pass parameter themselves
+//  setCurrentType(TypingType typingType) {
+//    this.typingType = typingType;
+//  }
 
   static int findLast(int firstIndex, String input) {
     var len = theInputZiList.length;
@@ -47,17 +48,20 @@ class InputZiManager {
   }
 
   // if a candidate is in the last letter, it can not be pushed out by a longer code.
-  static canUpdate(int currentInputCodeLength, int newCandidateCodeLength, int activeCandidateCodeLength) {
+  static canUpdate(int currentInputCodeLength, int newCandidateCodeLength,
+      int activeCandidateCodeLength) {
     bool canUpdate = true;
 
-    if (activeCandidateCodeLength == currentInputCodeLength && newCandidateCodeLength > activeCandidateCodeLength) {
+    if (activeCandidateCodeLength == currentInputCodeLength &&
+        newCandidateCodeLength > activeCandidateCodeLength) {
       canUpdate = false;
     }
 
     return canUpdate;
   }
 
-  static updateCandidates(InputZi inputZi, List<InputZi> candidates, int currentInputCodeLength ) {
+  static updateCandidates(InputZi inputZi, List<InputZi> candidates,
+      int currentInputCodeLength) {
     var activeCandidatesLength = min(maxTypingCandidates, candidates.length);
 
     if (activeCandidatesLength == 0) {
@@ -67,7 +71,8 @@ class InputZiManager {
 
     // never check the member after the maxTypingCandidates
     for (var i = 0; i < activeCandidatesLength; i++) {
-      if (canUpdate(currentInputCodeLength, inputZi.doubleByteCode.length, candidates[i].doubleByteCode.length)) {
+      if (canUpdate(currentInputCodeLength, inputZi.doubleByteCode.length,
+          candidates[i].doubleByteCode.length)) {
         if (inputZi.usageFrequency > candidates[i].usageFrequency) {
           candidates.insert(i, inputZi);
           return;
@@ -92,7 +97,8 @@ class InputZiManager {
     return candidates;
   }
 
-  static List<String> convertZiListToStringList(List<InputZi> typingCandidates){
+  static List<String> convertZiListToStringList(
+      List<InputZi> typingCandidates) {
     List<String> candidates = new List<String>(typingCandidates.length);
 
     for (var i = 0; i < typingCandidates.length; i++) {
@@ -102,13 +108,14 @@ class InputZiManager {
     return candidates;
   }
 
-  static List<String> getZiCandidatesHelper(int start, int end, int currentInputCodeLength) {
+  static List<String> getZiCandidatesHelper(int start, int end,
+      int currentInputCodeLength) {
     typingCandidates.clear();
     for (var i = start; i <= end; i++) {
       var oneInputZi = theInputZiList[i];
       //if (typingCandidates.length == 0 || oneInputZi.usageFrequency > typingCandidates[typingCandidates.length-1].usageFrequency) {
-        //loop through the candidates from smallest to the biggest
-        updateCandidates(oneInputZi, typingCandidates, currentInputCodeLength);
+      //loop through the candidates from smallest to the biggest
+      updateCandidates(oneInputZi, typingCandidates, currentInputCodeLength);
       //}
     }
 
@@ -147,7 +154,8 @@ class InputZiManager {
     return null;
   }
 
-  static candidateExistsInFirstPositionList(String oneZi, List<String> previousFirstPositionList) {
+  static candidateExistsInFirstPositionList(String oneZi,
+      List<String> previousFirstPositionList) {
     for (var i = 0; i < previousFirstPositionList.length; i++) {
       if (oneZi == previousFirstPositionList[i]) {
         return true;
@@ -157,7 +165,8 @@ class InputZiManager {
     return false;
   }
 
-  static addNewFirstToPreviousFirstList(String oneZi, List<String> previousFirstPositionList) {
+  static addNewFirstToPreviousFirstList(String oneZi,
+      List<String> previousFirstPositionList) {
     for (var i = 0; i < previousFirstPositionList.length; i++) {
       if (oneZi == previousFirstPositionList[i]) {
         return;
@@ -167,9 +176,12 @@ class InputZiManager {
     previousFirstPositionList.add(oneZi);
   }
 
-  static pushANeverFirstToFirst(List<String> currentCandidatesToUpdate, List<String> previousFirstPositionList) {
-    for (var i = 0; i < maxTypingCandidates && i < currentCandidatesToUpdate.length; i++) {
-      if (!candidateExistsInFirstPositionList(currentCandidatesToUpdate[i], previousFirstPositionList)) {
+  static pushANeverFirstToFirst(List<String> currentCandidatesToUpdate,
+      List<String> previousFirstPositionList) {
+    for (var i = 0; i < maxTypingCandidates &&
+        i < currentCandidatesToUpdate.length; i++) {
+      if (!candidateExistsInFirstPositionList(
+          currentCandidatesToUpdate[i], previousFirstPositionList)) {
         if (i == 0) {
           return;
         }
@@ -189,20 +201,43 @@ class InputZiManager {
   }
 
   // replace the first candidate if it's already displayed as the first earlier
-  static updateFirstCandidate(List<String> currentCandidatesToUpdate, List<String> previousFirstPositionList) {
-    if (currentCandidatesToUpdate == null || currentCandidatesToUpdate.length <= 1) {
+  static updateFirstCandidate(List<String> currentCandidatesToUpdate,
+      List<String> previousFirstPositionList) {
+    if (currentCandidatesToUpdate == null ||
+        currentCandidatesToUpdate.length <= 1) {
       return;
     }
 
-    if (candidateExistsInFirstPositionList(currentCandidatesToUpdate[0], previousFirstPositionList)) {
-      pushANeverFirstToFirst(currentCandidatesToUpdate, previousFirstPositionList);
+    if (candidateExistsInFirstPositionList(
+        currentCandidatesToUpdate[0], previousFirstPositionList)) {
+      pushANeverFirstToFirst(
+          currentCandidatesToUpdate, previousFirstPositionList);
     }
 
     // push the new first into the firstPostion list
-    addNewFirstToPreviousFirstList(currentCandidatesToUpdate[0], previousFirstPositionList);
+    addNewFirstToPreviousFirstList(
+        currentCandidatesToUpdate[0], previousFirstPositionList);
   }
 
-  ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index) {
+  static String getIntroduction(TypingType typingType, int currentIndex, int lessonId) {
+    String instruction;
+    if (typingType == TypingType.ThreeOrMoreComponents) {
+      instruction = theZiWithThreeOrMoreComponentList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      instruction = theZiWithTwoComponentList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.OneComponent) {
+      instruction = theZiWithOneComponentList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.FromLessons) {
+      instruction = "Please type new characters from this lesson as instructed.";
+    }
+
+    return instruction;
+  }
+
+  ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
     if (typingType == TypingType.ThreeOrMoreComponents) {
       return theZiWithThreeOrMoreComponentList[index];
     }
@@ -211,6 +246,15 @@ class InputZiManager {
     }
     else if (typingType == TypingType.OneComponent) {
       return theZiWithOneComponentList[index];
+    }
+    else if (typingType == TypingType.FromLessons) {
+      var zi = theLessonManager.getChar(lessonId, index);
+      return ZiWithComponentsAndStrokes(
+          zi.char,
+          [""],
+          "noimage",
+          "nohelpyet"
+      );
     }
 
     return null;
@@ -233,7 +277,7 @@ class InputZiManager {
   }
 */
 
-  int getNextIndex(TypingType typingType, int currentIndex) {
+  int getNextIndex(TypingType typingType, int currentIndex, int lessonId) {
     currentIndex++;
 
     if (typingType == TypingType.ThreeOrMoreComponents) {
@@ -248,6 +292,13 @@ class InputZiManager {
     }
     else if (typingType == TypingType.OneComponent) {
       if (currentIndex >= theZiWithOneComponentList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.FromLessons) {
+      //if (currentIndex >= theZiWithOneComponentList.length) {
+      var lesson = theLessonManager.getLesson(lessonId);
+      if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
         currentIndex = -1;
       }
     }
@@ -279,7 +330,7 @@ class InputZiManager {
     return result;
   }
 
-  int getTotal(TypingType typingType) {
+  int getTotal(TypingType typingType, int lessonId) {
     if (typingType == TypingType.ThreeOrMoreComponents) {
       return theZiWithThreeOrMoreComponentList.length;
     }
@@ -288,6 +339,10 @@ class InputZiManager {
     }
     else if (typingType == TypingType.OneComponent) {
       return theZiWithOneComponentList.length;
+    }
+    else if (typingType == TypingType.FromLessons) {
+      var lesson = theLessonManager.getLesson(lessonId);
+      return lesson.convCharsIds.length + lesson.charsIds.length;
     }
 
     return -1;
