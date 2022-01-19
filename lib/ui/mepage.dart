@@ -53,6 +53,7 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
+            /*
             ListTile(
               leading: Icon(Icons.location_city),
               title: Text("Study Time", textDirection: TextDirection.ltr),
@@ -81,6 +82,7 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
+            */
             ListTile(
               leading: Icon(Icons.location_city),
               title: Text("Quiz Results", textDirection: TextDirection.ltr),

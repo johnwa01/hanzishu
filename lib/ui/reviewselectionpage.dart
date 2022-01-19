@@ -11,28 +11,24 @@ class ReviewLevel {
 
   ReviewLevel(this.id, this.name);
 
-  static List<ReviewLevel> levels = List(theLevelList.length); /* = [
-    ReviewLevel(0, 'Ending Unit'),
-    ReviewLevel(1, 'Unit 1'),
-    ReviewLevel(2, 'Unit 2'),
-    ReviewLevel(3, 'Unit 3'),
-    ReviewLevel(4, 'Unit 4'),
-  ];*/
+  static List<ReviewLevel> startingLevels = List(theLevelList.length);
+  static List<ReviewLevel> endingLevels = List(theLevelList.length);
 
-  static populateInitialLevels(String str) {
+
+  static populateInitialLevels() {
     var length = theLevelList.length;
-    if (levels[0] == null) {
-      //var levels = List<ReviewLevel>(length);
+    if (startingLevels[0] == null && endingLevels[0] == null) {
       for (var index = 0; index <= length - 1; index++) {
         var level;
         if (index == 0) {
-          level = ReviewLevel(index, str);
+          startingLevels[index] = ReviewLevel(index, "Starting Unit");
+          endingLevels[index] = ReviewLevel(index, "Ending Unit");
         }
         else {
           level = ReviewLevel(index, 'Unit ' + index.toString());
+          startingLevels[index] = level;
+          endingLevels[index] = level;
         }
-
-        levels[index] = level;
       }
     }
   }
@@ -41,13 +37,13 @@ class ReviewLevel {
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
   static List<ReviewLevel> getReviewLevelsStarting(int levelSelectedEndingId) {
     if (levelSelectedEndingId == 0) {
-      populateInitialLevels("Starting Unit");
-      return levels;
+      populateInitialLevels();
+      return startingLevels;
     }
     else {
       var newStartingLevels = List<ReviewLevel>(levelSelectedEndingId+1);
       for (var index = 0; index <= levelSelectedEndingId; index++) {
-          newStartingLevels[index] = levels[index];
+          newStartingLevels[index] = startingLevels[index];
       }
 
       return newStartingLevels;
@@ -56,17 +52,17 @@ class ReviewLevel {
 
   static List<ReviewLevel> getReviewLevelsEnding(int levelSelectedStartingId) {
     if (levelSelectedStartingId == 0) {
-      populateInitialLevels("Ending Unit");
-      return levels;
+      populateInitialLevels();
+      return endingLevels;
     }
     else {
-      var length = levels.length;
+      var length = endingLevels.length;
 
       var newLength = length - levelSelectedStartingId + 1;
       var newEndingLevels = List<ReviewLevel>(newLength);
-      newEndingLevels[0] = levels[0];
+      newEndingLevels[0] = endingLevels[0];
       for (var index = 1; index <= newLength - 1; index++) {
-        newEndingLevels[index] = levels[levelSelectedStartingId + index - 1];
+        newEndingLevels[index] = endingLevels[levelSelectedStartingId + index - 1];
       }
 
       return newEndingLevels;
