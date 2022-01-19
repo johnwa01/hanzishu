@@ -762,7 +762,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         var char = ZiManager.getOneChar(id, listType);
         TextToSpeech.speak(char);
         var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
-        //var meaning = theZiManager.getPinyinAndMeaning(id);
+        //var meaning = ZiManager.getPinyinAndMeaning(id);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),

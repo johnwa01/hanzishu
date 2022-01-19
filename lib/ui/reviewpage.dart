@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
-import 'package:hanzishu/engine/lesson.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/reviewpainter.dart';
@@ -274,7 +274,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 
-        var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
+        var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
@@ -366,7 +366,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
-      //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
+      //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize;
       //if (centerZiId == 1) {
         //var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
@@ -399,7 +399,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     }
     */
     //if (centerZiId != 1 ) {
-      //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
+      //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);

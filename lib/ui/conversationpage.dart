@@ -125,7 +125,7 @@ class _ConversationPageState extends State<ConversationPage> {
           var zi = theZiManager.getZi(id);
           TextToSpeech.speak(zi.char);
 
-          var meaning = theZiManager.getPinyinAndMeaning(id);
+          var meaning = ZiManager.getPinyinAndMeaning(id);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
         else if (buttonType == ButtonType.phrase){
@@ -145,7 +145,7 @@ class _ConversationPageState extends State<ConversationPage> {
           var zi = theZiManager.getZi(id);
           TextToSpeech.speak(zi.char);
 
-          var meaning = theZiManager.getPinyinAndMeaning(id);
+          var meaning = ZiManager.getPinyinAndMeaning(id);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
         else if (buttonType == ButtonType.phrase){

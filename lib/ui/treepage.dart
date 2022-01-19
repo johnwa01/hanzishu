@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
-import 'package:hanzishu/engine/lesson.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/treepainter.dart';
@@ -357,7 +357,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         TextToSpeech.speak(zi.char);
 
         if (previousZiId != currentZiId || showedNoOverlay) {
-          var meaning = theZiManager.getPinyinAndMeaning(partialZiId);
+          var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
           showedNoOverlay = false;
         }
@@ -390,7 +390,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
-      //var memberPinyinAndMeaning = theZiManager.getPinyinAndMeaning(memberZiId);
+      //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize = BasePainter.getPositionAndSize(memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
@@ -400,7 +400,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     }
 
     if (centerZiId != 1 ) {
-      //var pinyinAndMeaning = theZiManager.getPinyinAndMeaning(centerZiId);
+      //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
