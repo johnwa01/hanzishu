@@ -189,7 +189,9 @@ class DictionaryPainter extends BreakoutPainter {
 
     displayTypingCode(ziIndex, 330.0);
 
-    displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
+    displayTextWithValue("[Hint] ", 10.0, 370.0, 20.0, Colors.blue); // pictograph image will show up here as well
+
+    displayTextWithValue("[Break out] ", 10.0, 385.0, 20.0, Colors.blue);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
   }
@@ -230,7 +232,7 @@ class DictionaryPainter extends BreakoutPainter {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
-    var yPositionWrapper = YPositionWrapper(xYLength(405.0));  //170.0
+    var yPositionWrapper = YPositionWrapper(xYLength(425.0));  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
   }
 
