@@ -231,8 +231,6 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
-    Utility.removeDicOverlayEntry();
-
     return Scaffold
       (
       appBar: AppBar

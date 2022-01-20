@@ -16,8 +16,6 @@ class MePage extends StatefulWidget {
 class _MePageState extends State<MePage> {
   @override
   Widget build(BuildContext context) {
-    Utility.removeDicOverlayEntry();
-
     return Scaffold
       (
       appBar: AppBar

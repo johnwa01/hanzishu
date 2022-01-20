@@ -16,15 +16,6 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/breakoutpainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
-enum DictionaryStage {
-  firstzis,
-  searchingzis,
-  detailedzi,
-  search,
-  help,
-  chineseHelp
-}
-
 class DictionaryPainter extends BreakoutPainter {
   Color lineColor;
   double screenWidth;

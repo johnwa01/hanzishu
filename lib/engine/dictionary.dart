@@ -1,6 +1,15 @@
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
 
+enum DictionaryStage {
+  firstzis,
+  searchingzis,
+  detailedzi,
+  search,
+  help,
+  chineseHelp
+}
+
 class FirstZi {
   String char;
   int searchingZiId;

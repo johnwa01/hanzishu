@@ -19,8 +19,6 @@ class ToolsPage extends StatefulWidget {
 class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
-    Utility.removeDicOverlayEntry();
-
     return Scaffold
       (
       appBar: AppBar

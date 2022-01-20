@@ -30,13 +30,14 @@ class DictionaryPage extends StatefulWidget {
 class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProviderStateMixin {
   //final TextEditingController _editController = TextEditingController();
   //int searchingZiIndex;
-  int firstZiIndex;  // different meaning for different stage
+  int firstZiIndex; // different meaning for different stage
   int searchingZiIndex;
   bool shouldDrawCenter;
   double screenWidth;
   DictionaryStage dicStage;
   OverlayEntry overlayEntry;
-  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(0.0, 0.0, "");
+  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
+      0.0, 0.0, "");
 
   AnimationController _controller;
 
@@ -52,8 +53,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     _controller.forward(from: 0.0).whenComplete(() {
       setState(() {
         _controller.stop();
-        _controller.reset();     // when complete, clean the animation drawing.
-        shouldDrawCenter = true; // let it redraw the screen with regular center zi.
+        _controller.reset(); // when complete, clean the animation drawing.
+        shouldDrawCenter =
+        true; // let it redraw the screen with regular center zi.
       });
     });
   }
@@ -61,6 +63,15 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   void _clearAnimation() {
     _controller.stop();
     _controller.reset();
+  }
+
+  void clearOverlayEntry() {
+    if(dicStage != DictionaryStage.firstzis) {
+      if (overlayEntry != null) {
+        overlayEntry.remove();
+        overlayEntry = null;
+      }
+    }
   }
 
   @override
@@ -123,8 +134,6 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    //Utility.removeDicOverlayEntry(); TODO: need this like some other builds?
-
     compoundZiCurrentComponentId = searchingZiIndex;
     int compoundZiTotalComponentNum = 0;
 
@@ -202,11 +211,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
 
   Future<bool>_onWillPop() {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    clearOverlayEntry();
 
     return Future.value(true);
   }
@@ -305,29 +310,27 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    clearOverlayEntry();
 
     OverlayState overlayState = Overlay.of(context);
     if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
-      overlayEntry = OverlayEntry(
-          builder: (context) =>
-              Positioned(
-                  top: posiY,
-                  left: posiX,
-                  child: FlatButton(
-                    child: Text(meaning, style: TextStyle(fontSize: 20.0),),
-                    color: Colors.blueAccent,
-                    textColor: Colors.white,
-                    onPressed: () {},
-                  )
-              ));
-      previousPositionAndMeaning.x = posiX;
-      previousPositionAndMeaning.y = posiY;
-      previousPositionAndMeaning.meaning = meaning;
+      if (dicStage != DictionaryStage.firstzis) {
+        overlayEntry = OverlayEntry(
+            builder: (context) =>
+                Positioned(
+                    top: posiY,
+                    left: posiX,
+                    child: FlatButton(
+                      child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+                      color: Colors.blueAccent,
+                      textColor: Colors.white,
+                      onPressed: () {},
+                    )
+                ));
+        previousPositionAndMeaning.x = posiX;
+        previousPositionAndMeaning.y = posiY;
+        previousPositionAndMeaning.meaning = meaning;
+      }
     }
     else {
       previousPositionAndMeaning.x = 0.0;
@@ -335,10 +338,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       previousPositionAndMeaning.meaning = "";
     }
 
-    // workaround for removal of overlay during AppBar switch
-    theDicOverlayEntry = overlayEntry;
-
-    overlayState.insert(overlayEntry);
+    if (dicStage != DictionaryStage.firstzis) {
+      overlayState.insert(overlayEntry);
+    }
   }
 
   Widget getSearchErrorMessage() {
@@ -356,11 +358,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        clearOverlayEntry();
 
         _clearAnimation();
 
@@ -427,10 +425,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
+        clearOverlayEntry();
 
         _clearAnimation();
 
@@ -459,10 +454,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   Widget getGoHomeButton() {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
+        clearOverlayEntry();
 
         setState(() {
           dicStage = DictionaryStage.firstzis;
@@ -478,10 +470,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int searchingZiId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
+        clearOverlayEntry();
 
         var searchingZi = theSearchingZiList[searchingZiId];
         TextToSpeech.speak(searchingZi.char);
@@ -503,10 +492,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   getHelpPositionedButton(posiAndSize) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
+        clearOverlayEntry();
 
         Navigator.push(
           context,
@@ -535,53 +521,10 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     return posiCenter;
   }
 
-  /* no longer used
-  getSearchPositionedButton(posiAndSize) {
-    var butt = FlatButton(
-      onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
-
-        setState(() {
-          /*
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DictionarySearchPage(),
-              )
-          );
-           */
-          dicStage = DictionaryStage.search;
-          firstZiIndex = -1;
-
-          //shouldDrawCenter = true;
-        });
-      },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
-    );
-
-    var posiCenter = Positioned(
-        top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-  */
-
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        clearOverlayEntry();
 
         resetCompoundZiAnimation();
 
@@ -747,10 +690,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-        }
+        clearOverlayEntry();
         //setState(() {
         //searchingZiIndex = newCenterZiId;
         //});

@@ -425,14 +425,6 @@ class Utility {
 
     return count;
   }
-
-  // a workaround through global variable to remove Dic overlayentry
-  static removeDicOverlayEntry() {
-    if (theDicOverlayEntry != null) {
-      theDicOverlayEntry.remove();
-      theDicOverlayEntry = null;
-    }
-  }
 }
 
 //TODO: check - this is not used anymore I think.

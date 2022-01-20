@@ -17,8 +17,6 @@ class _LessonsPageState extends State<LessonsPage> {
 
   @override
   Widget build(BuildContext context) {
-    Utility.removeDicOverlayEntry();
-
     return Scaffold
       (
       appBar: AppBar
