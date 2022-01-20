@@ -38,6 +38,8 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousText = "";
   bool justCompletedPosting = false;
   bool justCompletedFullCompDisplay = false;
+  //bool hasRunLowercase = false;
+  String previousValueWithLowercase = "";
   List<String> ziCandidates = null;
 
   OverlayEntry overlayEntry;
@@ -327,6 +329,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     previousText = newText;
         justCompletedPosting = true;
+        //hasRunLowercase = false; // init lowercase as well
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -407,6 +410,7 @@ class _InputZiPageState extends State<InputZiPage> {
       if (_controller.text != previousText) {
         initOverlay();
       }
+      //hasRunLowercase = false;
       setTextByChosenZiIndex(selectionIndex, false);
     }
     //TODO: temp disable in order to test component shapes
@@ -415,6 +419,7 @@ class _InputZiPageState extends State<InputZiPage> {
       showOverlay(context, overlayParameters);
 
       justCompletedFullCompDisplay = true;
+      //hasRunLowercase = false; // init lowercase
       previousEndSelection = _controller.selection.end;
       // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
@@ -427,6 +432,7 @@ class _InputZiPageState extends State<InputZiPage> {
       if (_controller.text != previousText) {
         initOverlay();
       }
+      //hasRunLowercase = false;
       setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
@@ -436,6 +442,42 @@ class _InputZiPageState extends State<InputZiPage> {
 
       if (_controller.text != previousText) {
         initOverlay();
+
+        //if (hasRunLowercase) {
+        //  return;
+        //}
+
+        if (_controller.text == previousValueWithLowercase) {
+          return;
+        }
+        else {
+          // prepare to skip callback. set before _controller change.
+          //hasRunLowercase = true;
+          previousValueWithLowercase = _controller.text;
+
+          // manipulate composing since iPhone doesn't seem to set the composing value for some reason
+          if (_controller.value.composing.start == -1) {
+            int startPosi = 0;
+            if (_controller.value.selection.start >= 1) {
+              // selection seems starting with 1, while composing starts with 0.
+              startPosi = _controller.value.selection.start - 1;
+            }
+
+            _controller.value = _controller.value.copyWith(
+                composing: TextRange(
+                    start: startPosi, end: startPosi + 1)); //TextRange.collapsed(1));
+          }
+
+          // note: with new lower case letter, the start position has to be different from the previous start.
+          // Likely it just doesn't set. We are setting the end manually here.
+          if (previousStartComposing == _controller.value.composing.start) {
+            if (previousEndComposing == _controller.value.composing.end) {
+              _controller.value = _controller.value.copyWith(
+                  composing: TextRange(start: previousStartComposing,
+                      end: previousEndComposing + 1));
+            }
+          }
+        }
       }
 
       var composingText = getFullComposingText(latestInputKeyLetter);
@@ -449,6 +491,11 @@ class _InputZiPageState extends State<InputZiPage> {
 
       previousStartComposing = _controller.value.composing.start;
       previousEndComposing = _controller.value.composing.end;
+
+      // TODO: should I set here as well?
+      //previousText = _controller.text;
+      // prepare for next lowercase input
+      //hasRunLowercase = false;
 
       // prepare for next input
       // only init when a lower case letter is set to make sure the value lasts long enough.
@@ -597,6 +644,8 @@ class _InputZiPageState extends State<InputZiPage> {
                 controller: _controller,
                 focusNode: _textNode,
                 autofocus: true,
+                //autocorrect: false,
+                //enableSuggestions: false,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: '', //'Full Name',
@@ -607,7 +656,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
                 maxLines: maxNumberOfLines,
                 //expands: true,
-                keyboardType: TextInputType.multiline,
+                keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
               ),//focusNode: _textNode,
             ),
           //),
