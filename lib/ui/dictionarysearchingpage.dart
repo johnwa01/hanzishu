@@ -89,21 +89,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       vsync: this,
     );
 
-    //_editController.addListener(processEditInput);
-    //_editController.text = "";
-
     theCurrentCenterZiId = searchingZiIndex;
 
     setState(() {
-      searchingZiIndex = searchingZiIndex;  // what for?
+      //searchingZiIndex = searchingZiIndex;  // what for?
       shouldDrawCenter = true;
       compoundZiComponentNum = 0;
 
       searchingZiIndex = 0;
-      dicStage = DictionaryStage.firstzis;
-      firstZiIndex = 0;
-      //dicStage = DictionaryStage.searchingzis; // different init from DicitonaryPage
-      //firstZiIndex = widget.firstZiIndex;      // different init from DictionaryPage
+      dicStage = DictionaryStage.searchingzis;
+      firstZiIndex = widget.firstZiIndex;
     });
   }
 
@@ -223,67 +218,6 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     return Future.value(true);
   }
-
-  //Widget getContainer() {
-  //    return Container(
-  //      child: getWillPopScope(),
-  //    );
-  //}
-
-  /*
-  Widget getHelpButton() {
-    return Align(
-      alignment: Alignment.topRight,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          textStyle: const TextStyle(fontSize: 20),
-        ),
-        onPressed: () {
-          //theStatisticsManager.trackTimeAndTap();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => DictionaryHelpPage(),
-            ),
-          );},
-        child: const Text('Help'),
-      ),
-    );
-  }
-  */
-
-  /*
-  Widget getWillPopScope() {
-    return WillPopScope(
-      child: new Stack(
-          children: <Widget>[
-            new Positioned(
-              child: CustomPaint(
-                foregroundPainter: DictionaryPainter(
-                  Colors.amber,
-                  //lessonId: widget.lessonId,
-                  screenWidth,
-                  //screenWidth: screenWidth,
-                  dicStage,
-                  firstZiIndex,
-                  searchingZiIndex,
-                  context,
-                    compoundZiCurrentComponentId
-                ),
-                child: Center(
-                  child: Stack(
-                    children: displayCharsAndCreateHittestButtons(context)
-                  ),
-                ),
-              ),
-            ),
-            getAnimatedPathPainter(),
-          ]
-        ),
-        onWillPop: _onWillPop
-    );
-  }
-*/
 
   Widget getAnimatedPathPainter() {
     //Note: need to match the dictionarypainter's value
@@ -437,21 +371,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
         _clearAnimation();
 
-     //   if (newDicStage == DictionaryStage.searchingzis)
-          setState(() {
-            dicStage = newDicStage;
-            shouldDrawCenter = true;
-          });
-     //   else {  // firstzis
-     //     Navigator.push(
-     //       context,
-     //       MaterialPageRoute(
-     //         builder: (context) => DictionaryPage(),
-     //       ),
-     //     );
-     //   }
-          //_editController.text = "";
-     //   });
+        setState(() {
+          dicStage = newDicStage;
+          shouldDrawCenter = true;
+        });
       },
       onLongPress: () {
       },
@@ -518,12 +441,6 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
             builder: (context) => DictionaryHelpPage(),
           ),
         );
-
-        //setState(() {
-        //  dicStage = DictionaryStage.help;
-        //  shouldDrawCenter = true;
-        //  _editController.text = "";
-        //});
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );

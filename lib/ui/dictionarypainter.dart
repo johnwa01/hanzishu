@@ -293,28 +293,28 @@ class DictionaryPainter extends BreakoutPainter {
 
   static void getSearchingParameters(int numberOfZi, PrimitiveWrapper actualColumnCount, PositionAndSize startPosition) {
     int columnCount = 8;
-    double fontSize = 45.0;
+    double fontSize = 41.0; //45.0
     double rowStartPosition = 85.0;
     double xStartPosition = 12.0;
 
     if (numberOfZi > 40 && numberOfZi <= 80) {
       columnCount = 9;
-      fontSize = 40.0;
+      fontSize = 37.0; //40.0;
       rowStartPosition = 80.0;
     }
     else if (numberOfZi > 80 && numberOfZi <= 120) {
       columnCount = 10;
-      fontSize = 35.0;
+      fontSize = 31.0; //35.0;
       rowStartPosition = 75.0;
     }
     else if (numberOfZi > 120 && numberOfZi <= 135) {
       columnCount = 11;
-      fontSize = 30.0;
+      fontSize = 27.0; //30.0;
       rowStartPosition = 70.0;
     }
     else if (numberOfZi > 135) {
       columnCount = 12;
-      fontSize = 28.0;
+      fontSize = 26.0; //28.0;
       rowStartPosition = 65.0;
     }
 
@@ -340,7 +340,7 @@ class DictionaryPainter extends BreakoutPainter {
     int newCharCount = 0;
     int previousStrokeCount = 0;
     int currentStrokeCount = 0;
-    double strokeIndexFontSize = 20.0;
+    double strokeIndexFontSize = 15.0;
 
     String strokeIndexStr;
 
