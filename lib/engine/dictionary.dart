@@ -58,6 +58,15 @@ class SearchingZi {
       this.image = image;
       this.hint = hint;
   }
+
+  bool isSingleComponentZi() {
+    if (composit.length == 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
 
 class Dictionary {

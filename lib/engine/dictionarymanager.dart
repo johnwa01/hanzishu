@@ -18,6 +18,21 @@ class DictionaryManager {
     return theSearchingZiList[id];
   }
 
+  static int getSearchingZiId(String char) {
+    for (int i = 0; i < theSearchingZiList.length; i++) {
+      if (theSearchingZiList[i].char == char) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  static bool isSingleCompZi(int searchingZiId) {
+    var searchingZi = getSearchingZi(searchingZiId);
+    return searchingZi.isSingleComponentZi();
+  }
+
   static String getPinyinAndMeaning(int id) {
     var searchingZi = getSearchingZi(id);
     return Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);

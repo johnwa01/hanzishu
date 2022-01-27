@@ -54,7 +54,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     );
 
     List<SpeechIconInfo> listOfSpeechIconInfo = List<SpeechIconInfo>();
-    // get iconinfo only
+    // get iconinfo only, isInfoOnly = true
     listOfZiPainter.displayAllZi(widget.lessonId, true, listOfSpeechIconInfo, contentLength);
 
     //contentLength = MediaQuery.of(context).size.height; this is inaccurate

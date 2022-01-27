@@ -466,17 +466,19 @@ class BasePainter extends CustomPainter{
   // strokeString is a series of strokeCodes.
   void drawStrokeZiList(String strokeString, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
-    for (int i = 0; i < strokeString.length; i++) {
-      drawStrokeZi(
-          strokeString[i],
-          transX + widthX * i,
-          transY,
-          widthX,
-          heightY,
-          charFontSize,
-          ofColor,
-          isSingleColor,
-          ziLineWidth);
+    if (strokeString.length > 0) {
+      for (int i = 0; i < strokeString.length; i++) {
+        drawStrokeZi(
+            strokeString[i],
+            transX + widthX * i,
+            transY,
+            widthX,
+            heightY,
+            charFontSize,
+            ofColor,
+            isSingleColor,
+            ziLineWidth);
+      }
     }
   }
 
@@ -930,6 +932,68 @@ class BasePainter extends CustomPainter{
             frameFillColor,
             true);
       }
+  }
+
+  displayFullComponents(int searchingZiId, PositionAndSize posi) {
+    var comps = List<String>();
+    DictionaryManager.getAllComponents(searchingZiId, comps);
+    displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    drawComponentZiList(
+        comps,
+        160.0,
+        posi.transY,
+        posi.charFontSize,
+        posi.charFontSize,
+        posi.charFontSize,
+        Colors.cyan, //this.lineColor,
+        true,
+        posi.charFontSize * 0.05);
+  }
+
+  // assume a single comp zi. used in dictionary.
+  displayStrokes(int searchingZiIndex, PositionAndSize posi) {
+    var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
+    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    var comp = ComponentManager.getComponentByCode(comps[0]);
+
+    if (comp.strokesString.length > 0) {
+      drawStrokeZiList(
+          comp.strokesString,
+          110.0,
+          posi.transY,
+          posi.charFontSize,
+          posi.charFontSize,
+          posi.charFontSize, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
+          Colors.cyan, //this.lineColor,
+          true,
+          posi.charFontSize * 0.05);
+    }
+  }
+
+  // assume a single comp zi. used in zi list in lessons.
+  displayCompStrokes(int ziId, PositionAndSize posi) {
+    var compCode = ComponentManager.getCompCodeFromZiId(ziId);
+    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    var comp = ComponentManager.getComponentByCode(compCode);
+
+    if (comp != null) {
+      drawStrokeZiList(
+          comp.strokesString,
+          110.0,
+          posi.transY,
+          posi.charFontSize,
+          posi.charFontSize,
+          posi.charFontSize, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
+          Colors.cyan, //this.lineColor,
+          true,
+          posi.charFontSize * 0.05);
+    }
+  }
+
+  displayTypingCode(int searchingZiIndex, PositionAndSize posi) {
+    var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
+    displayTextWithValue(
+        "Typing Code: " + typingCode, posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
   @override

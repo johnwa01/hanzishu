@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/data/componentlist.dart';
+import 'package:hanzishu/engine/component.dart';
 import 'dart:math';
 import 'dart:ui';
 import 'package:hanzishu/engine/lesson.dart';
@@ -8,8 +10,8 @@ import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/engine/generalmanager.dart';
-import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
@@ -61,9 +63,9 @@ class ListOfZiPainter extends BasePainter {
     if (length > 0) {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
-        displayTextWithValue("Basic Character", lessonLeftEdge, yPositionWrapper.value,
+        displayTextWithValue("Basic Characters (components)", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.blue);
+                ZiOrCharSize.defaultSize), Colors.brown);
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + 15.0);
@@ -101,9 +103,9 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Basic Non-character", lessonLeftEdge, yPositionWrapper.value,
+            "Basic Non-characters (components)", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.blue);
+                ZiOrCharSize.defaultSize), Colors.brown);  //blue
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + 15.0);
@@ -123,9 +125,9 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += xYLength(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Character", lessonLeftEdge, yPositionWrapper.value,
+            "Characters", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.blue);
+                ZiOrCharSize.defaultSize), Colors.brown);
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + 15.0);
@@ -166,7 +168,7 @@ class ListOfZiPainter extends BasePainter {
         displayTextWithValue(
             "Character Groups", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.blue);
+                ZiOrCharSize.defaultSize), Colors.brown);
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + 15.0);
@@ -189,10 +191,44 @@ class ListOfZiPainter extends BasePainter {
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
     yPositionWrapper.value += xYLength(20.0);
-    displayOneZiHelper(id, type, lessonLeftEdge + 20.0, yPositionWrapper.value, isInfoOnly, listOfSpeechIconInfo);
-    yPositionWrapper.value += xYLength(50.0);
+    displayOneZiHelper(id, type, /*lessonLeftEdge +*/ 20.0, yPositionWrapper, isInfoOnly, listOfSpeechIconInfo);
 
-    var posi = PositionAndSize(lessonLeftEdge + 20.0, yPositionWrapper.value,
+    if (type != CharType.Phrase) {
+      yPositionWrapper.value += xYLength(30.0);
+
+      if (!isInfoOnly) {
+        var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+        if (theZiList[id].isBasicZi()) {
+          var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+          var posiSize = PositionAndSize(20.0, yPositionWrapper.value, fontSize, fontSize, fontSize, 1.0);
+          displayCompStrokes(id, posiSize);
+        }
+        else {
+          var searchingZiId = DictionaryManager.getSearchingZiId(
+              theZiList[id].char);
+          if (searchingZiId != -1) {
+            var posiSize = PositionAndSize(20.0, yPositionWrapper.value, fontSize, fontSize, fontSize, 1.0);
+            displayFullComponents(searchingZiId, posiSize);
+          }
+        }
+      }
+
+      if (!theZiManager.getZi(id).isStrokeOrNonChar()) {
+        var searchingZiIndex = DictionaryManager.getSearchingZiId(
+            theZiList[id].char);
+        if (searchingZiIndex > 0) {
+          yPositionWrapper.value += xYLength(30.0);
+          if (!isInfoOnly) {
+            var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+            var posiSize = PositionAndSize(20.0, yPositionWrapper.value, fontSize, fontSize, fontSize, 1.0);
+            displayTypingCode(searchingZiIndex, posiSize);
+          }
+        }
+      }
+    }
+
+    yPositionWrapper.value += xYLength(30.0);
+    var posi = PositionAndSize(/*lessonLeftEdge + */ 20.0, yPositionWrapper.value,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), 0.0, 1.0);
     if(!isInfoOnly) {
       DisplayHint(id, type == CharType.Phrase, posi);
@@ -205,16 +241,16 @@ class ListOfZiPainter extends BasePainter {
     }
   }
 
-  displayOneZiHelper(int id, String type, double transX, double transY, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
+  displayOneZiHelper(int id, String type, double transX, PrimitiveWrapper yPositionWrapper, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
     var pinyin;
     var meaning;
 
     if (type == CharType.Phrase) {
       if (!isInfoOnly) {
-        displayTextWithValue(thePhraseList[id].chars, transX, transY - 20.0,
+        displayTextWithValue(thePhraseList[id].chars, transX, yPositionWrapper.value - 20.0,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.assembleDissembleSize), Colors.blue);
-        pinyin = "[" + thePhraseList[id].getPinyin() + "]";
+        pinyin = thePhraseList[id].getPinyin();
         meaning = thePhraseList[id].meaning;
       }
       transX += (thePhraseList[id].chars.length * thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) + 10.0);
@@ -225,7 +261,7 @@ class ListOfZiPainter extends BasePainter {
             id,
             ZiListType.zi,
             transX,
-            transY,
+            yPositionWrapper.value,
             thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
             thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
             thePositionManager.getCharFontSize(
@@ -240,32 +276,43 @@ class ListOfZiPainter extends BasePainter {
             false,
             Colors.blue,
             true);
-        pinyin = "[" + theZiList[id].pinyin + "]";
+        pinyin = theZiList[id].pinyin;
         meaning = theZiList[id].meaning;
       }
       transX += (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) + 10.0);
     }
 
+    transX = 20.0;
+    yPositionWrapper.value += 33.0;
+    if (!isInfoOnly) {
+      displayTextWithValue("Sound: ", transX, yPositionWrapper.value,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          Colors.blue);
+    }
+
+    transX += 60.0;
     // display speech icon
     if (!isInfoOnly) {
-      DisplayIcon(iconSpeechStrokes, transX, transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+      DisplayIcon(iconSpeechStrokes, transX, yPositionWrapper.value, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
     }
     else {
       // save the icon infor.
-      var speechIconInfo = SpeechIconInfo(type == CharType.Phrase, id, transX, transY);
+      var speechIconInfo = SpeechIconInfo(type == CharType.Phrase, id, transX, yPositionWrapper.value);
       listOfSpeechIconInfo.add(speechIconInfo);
     }
     transX += 30.0;
 
     // display pinyin
     if (!isInfoOnly) {
-      displayTextWithValue(pinyin, transX, transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
+      displayTextWithValue(pinyin, transX, yPositionWrapper.value, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
       transX += (8.0 * pinyin.length + 10.0);
     }
 
+    yPositionWrapper.value += 30.0;
+
     // display meaning
     if (!isInfoOnly) {
-      displayTextWithValue(meaning, transX, transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
+      displayTextWithValue("Meaning: " + meaning, 20.0, yPositionWrapper.value, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
     }
   }
 

@@ -221,3 +221,15 @@ class ZiWithComponentsAndStrokes {
   }
 }
 
+class ZiIdToCompMap {
+  int id;
+  String compCode;
+
+  ZiIdToCompMap (
+      int id,
+      String compCode)
+  {
+    this.id = id;
+    this.compCode = compCode;
+  }
+}

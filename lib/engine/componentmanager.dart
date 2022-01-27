@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:hanzishu/data/ziidtocompcodemaplist.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
@@ -857,5 +858,16 @@ class ComponentManager {
     }
 
     return value;
+  }
+
+  static String getCompCodeFromZiId(int ziId) {
+      //TODO: do a binary search
+      for (var i = 0; i < theZiIdToCompCodeMapList.length; i++) {
+        if (theZiIdToCompCodeMapList[i].id == ziId) {
+          return theZiIdToCompCodeMapList[i].compCode;
+        }
+      }
+
+      return null;
   }
 }
