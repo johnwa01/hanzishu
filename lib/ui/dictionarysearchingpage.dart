@@ -14,21 +14,26 @@ import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
-import 'package:hanzishu/ui/dictionarysearchingpage.dart';
+import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/main.dart';
 
-class DictionaryPage extends StatefulWidget {
+class DictionarySearchingPage extends StatefulWidget {
+  final int firstZiIndex;
+  //dicStage = DictionaryStage.searchingzis;
+  DictionarySearchingPage({this.firstZiIndex});
+
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
   @override
-  _DictionaryPageState createState() => _DictionaryPageState();
+  _DictionarySearchingPageState createState() => _DictionarySearchingPageState();
 }
 
-class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProviderStateMixin {
+class _DictionarySearchingPageState extends State<DictionarySearchingPage> with SingleTickerProviderStateMixin {
   //final TextEditingController _editController = TextEditingController();
   //int searchingZiIndex;
   int firstZiIndex; // different meaning for different stage
@@ -90,13 +95,15 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     theCurrentCenterZiId = searchingZiIndex;
 
     setState(() {
-      searchingZiIndex = searchingZiIndex;
+      searchingZiIndex = searchingZiIndex;  // what for?
       shouldDrawCenter = true;
       compoundZiComponentNum = 0;
 
       searchingZiIndex = 0;
       dicStage = DictionaryStage.firstzis;
       firstZiIndex = 0;
+      //dicStage = DictionaryStage.searchingzis; // different init from DicitonaryPage
+      //firstZiIndex = widget.firstZiIndex;      // different init from DictionaryPage
     });
   }
 
@@ -175,38 +182,38 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       appBar: AppBar
         (
         title: Text("Hanzishu One Tap Dictionary"),  //汉字树一触字典
-        ),
+      ),
       body: Container(
-        child: WillPopScope(
-          child: new Stack(
-            children: <Widget>[
-              new Positioned(
-                child: CustomPaint(
-                  foregroundPainter: DictionaryPainter(
-                    Colors.amber,
-                    //lessonId: widget.lessonId,
-                    screenWidth,
-                    //screenWidth: screenWidth,
-                    dicStage,
-                    firstZiIndex,
-                    searchingZiIndex,
-                    context,
-                    compoundZiCurrentComponentId,
-                    currentZiListType,
-                    shouldDrawCenter
-                  ),
-                  child: Center(
-                    child: Stack(
-                      children: displayCharsAndCreateHittestButtons(context)
+          child: WillPopScope(
+              child: new Stack(
+                  children: <Widget>[
+                    new Positioned(
+                      child: CustomPaint(
+                        foregroundPainter: DictionaryPainter(
+                            Colors.amber,
+                            //lessonId: widget.lessonId,
+                            screenWidth,
+                            //screenWidth: screenWidth,
+                            dicStage,
+                            firstZiIndex,
+                            searchingZiIndex,
+                            context,
+                            compoundZiCurrentComponentId,
+                            currentZiListType,
+                            shouldDrawCenter
+                        ),
+                        child: Center(
+                          child: Stack(
+                              children: displayCharsAndCreateHittestButtons(context)
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
+                    getAnimatedPathPainter(),
+                  ]
               ),
-              getAnimatedPathPainter(),
-            ]
-          ),
-          onWillPop: _onWillPop
-        )
+              onWillPop: _onWillPop
+          )
       ),
     );
   }
@@ -376,14 +383,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
         setState(() {
           if (dicStage == DictionaryStage.firstzis) {
-            //this.firstZiIndex = ziIndex;
-            //dicStage = DictionaryStage.searchingzis;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DictionarySearchingPage(firstZiIndex: ziIndex),
-              ),
-            );
+            this.firstZiIndex = ziIndex;
+            dicStage = DictionaryStage.searchingzis;
             //_editController.text = "";
           }
           else if (dicStage == DictionaryStage.searchingzis) {
@@ -396,22 +397,22 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         });
       },
       onLongPress: () {
-          var char;
-          var pinyinAndMeaning;
-          if (dicStage == DictionaryStage.firstzis) {
-            var searchingZiId = theFirstZiList[ziIndex].searchingZiId;
-            var searchingZi = theSearchingZiList[searchingZiId];
-            char = searchingZi.char;
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
-          }
-          else if (dicStage == DictionaryStage.searchingzis) {
-            var searchingZi = theSearchingZiList[ziIndex];
-            char = searchingZi.char;
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
-          }
+        var char;
+        var pinyinAndMeaning;
+        if (dicStage == DictionaryStage.firstzis) {
+          var searchingZiId = theFirstZiList[ziIndex].searchingZiId;
+          var searchingZi = theSearchingZiList[searchingZiId];
+          char = searchingZi.char;
+          pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
+        }
+        else if (dicStage == DictionaryStage.searchingzis) {
+          var searchingZi = theSearchingZiList[ziIndex];
+          char = searchingZi.char;
+          pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
+        }
 
-          TextToSpeech.speak(char);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
+        TextToSpeech.speak(char);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -436,11 +437,21 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
         _clearAnimation();
 
-        setState(() {
-          dicStage = newDicStage;
-          shouldDrawCenter = true;
+     //   if (newDicStage == DictionaryStage.searchingzis)
+          setState(() {
+            dicStage = newDicStage;
+            shouldDrawCenter = true;
+          });
+     //   else {  // firstzis
+     //     Navigator.push(
+     //       context,
+     //       MaterialPageRoute(
+     //         builder: (context) => DictionaryPage(),
+     //       ),
+     //     );
+     //   }
           //_editController.text = "";
-        });
+     //   });
       },
       onLongPress: () {
       },
@@ -566,19 +577,19 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
 
   CreateNavigationHitttestButtons(DictionaryStage stage, List<Widget> buttons) {
-      PositionAndSize dicRootPosi = PositionAndSize(
-          10.0, 5.0, 25.0, 25.0, 20.0, 1.0);
-      var button1 = getPositionedNavigationButton(
-          dicRootPosi, DictionaryStage.firstzis);
-      buttons.add(button1);
+    PositionAndSize dicRootPosi = PositionAndSize(
+        10.0, 5.0, 25.0, 25.0, 20.0, 1.0);
+    var button1 = getPositionedNavigationButton(
+        dicRootPosi, DictionaryStage.firstzis);
+    buttons.add(button1);
 
-      if (stage == DictionaryStage.detailedzi) {
-        PositionAndSize dicSearchingZiPosi = PositionAndSize(
-            70.0, 5.0, 25.0, 25.0, 20.0, 1);
-        var button2 = getPositionedNavigationButton(
-            dicSearchingZiPosi, DictionaryStage.searchingzis);
-        buttons.add(button2);
-      }
+    if (stage == DictionaryStage.detailedzi) {
+      PositionAndSize dicSearchingZiPosi = PositionAndSize(
+          70.0, 5.0, 25.0, 25.0, 20.0, 1);
+      var button2 = getPositionedNavigationButton(
+          dicSearchingZiPosi, DictionaryStage.searchingzis);
+      buttons.add(button2);
+    }
   }
 
   List<Widget> displayCharsAndCreateHittestButtons(BuildContext context) {
@@ -730,7 +741,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     //var breakoutPositions = //theLessonManager.getBreakoutPositions(1/*TODO*/);
     //if (breakoutPositions.length == 0) {
-      var painter = DictionaryPainter(
+    var painter = DictionaryPainter(
         Colors.amber,
         //lessonId: widget.lessonId,
         screenWidth,
@@ -739,11 +750,11 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
         firstZiIndex,
         searchingZiIndex,
         context,
-          0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
+        0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
         currentZiListType,
         shouldDrawCenter
-        );
-      var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
+    );
+    var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}
 
     var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
