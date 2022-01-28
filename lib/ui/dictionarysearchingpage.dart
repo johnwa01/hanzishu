@@ -251,17 +251,20 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     });
   }
 
-  showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
+  showOverlay(BuildContext context, double xPosi, double yPosi, String meaning) {
     clearOverlayEntry();
 
     OverlayState overlayState = Overlay.of(context);
-    if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
+    var screenWidth = Utility.getScreenWidth(context);
+    var adjustedXValue = Utility.adjustOverlayXPosition(xPosi, screenWidth);
+
+    if (previousPositionAndMeaning.x != adjustedXValue || previousPositionAndMeaning.y != yPosi || previousPositionAndMeaning.meaning != meaning) {
       if (dicStage != DictionaryStage.firstzis) {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                    top: posiY,
-                    left: posiX,
+                    top: yPosi,
+                    left: adjustedXValue,
                     child: FlatButton(
                       child: Text(meaning, style: TextStyle(fontSize: 20.0),),
                       color: Colors.blueAccent,
@@ -269,8 +272,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                       onPressed: () {},
                     )
                 ));
-        previousPositionAndMeaning.x = posiX;
-        previousPositionAndMeaning.y = posiY;
+        previousPositionAndMeaning.x = adjustedXValue;
+        previousPositionAndMeaning.y = yPosi;
         previousPositionAndMeaning.meaning = meaning;
       }
     }
