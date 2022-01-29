@@ -455,6 +455,15 @@ class ComponentManager {
     return theComponentList[id];
   }
 
+  static Component getComponentByTypingCode(String typingCode) {
+    for (int i = 0; i < theComponentList.length; i++) {
+      if (theComponentList[i].typingCode == typingCode) {
+        return theComponentList[i];
+      }
+    }
+    return null;
+  }
+
   static String getPinyinAndMeanging(int id) {
     var comp = getComponent(id);
     var meaning = comp.meaning;

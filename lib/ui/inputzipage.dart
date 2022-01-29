@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
-import 'package:hanzishu/ui/inputzicomponentpainter.dart';
+import 'package:hanzishu/ui/inputzihintpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
@@ -41,6 +41,7 @@ class _InputZiPageState extends State<InputZiPage> {
   //bool hasRunLowercase = false;
   String previousValueWithLowercase = "";
   List<String> ziCandidates = null;
+  bool showHint = false;
 
   OverlayEntry overlayEntry;
   //TypingType previousOverlayType = TypingType.FreeTyping;
@@ -61,6 +62,7 @@ class _InputZiPageState extends State<InputZiPage> {
     setState(() {
       updateCounter =0;
       currentIndex = 0;
+      showHint = false;
     });
   }
 
@@ -234,18 +236,35 @@ class _InputZiPageState extends State<InputZiPage> {
           }
         }
 
+        var inputZiHintPainter = InputZiHintPainter(
+            lineColor: Colors.amber,
+            completeColor: Colors.blueAccent,
+            screenWidth: screenWidth //350 /*TODO: temp*/
+        );
+
         OverlayState overlayState = Overlay.of(context);
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 65.0, //85.0, //posiY,
-                  left: 0.0, //posiX,
+                  top: 65, //65.0, //85.0, //posiY,
+                  left: 100, //0.0, //posiX,
+                  /*
                   child: Image.asset(
                     fullPath,
                     width: 350.0,
                     height: 70.0,
                     //fit: BoxFit.fitWidth,
                   ),
+                  */
+                  /*
+                  child:  SizedBox(
+                      //width: 250,
+                      //height: 40,
+                      child:  CustomPaint(
+                        foregroundPainter: inputZiHintPainter,
+                      ),
+                    ),
+                   */
                 ));
         overlayState.insert(overlayEntry);
         //previousOverlayType = type;
@@ -716,7 +735,13 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getComponentAndMapping() {
     var fontSize = 15.0;
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
-
+/*
+    var inputZiHintPainter = InputZiHintPainter(
+        lineColor: Colors.amber,
+        completeColor: Colors.blueAccent,
+        screenWidth: screenWidth //350 /*TODO: temp*/
+    );
+*/
     return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -754,6 +779,15 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.center   //left
                   ),
                 ),
+                /*
+                SizedBox(
+                  width: 250,
+                  height: 40,
+                  child:  CustomPaint(
+                    foregroundPainter: inputZiHintPainter,
+                        ),
+                ),
+                */
               ]
           ),
 
@@ -785,6 +819,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var fontSize = 15.0;
 
+    var inputZiHintPainter = InputZiHintPainter(
+        lineColor: Colors.amber,
+        completeColor: Colors.blueAccent,
+        screenWidth: screenWidth, //350 /*TODO: temp*/
+        showHint: this.showHint,
+        char: zi.zi
+    );
+
     return WillPopScope(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -801,7 +843,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
           Row(
               children: <Widget>[
-                Flexible(
+                SizedBox(
+                  width: 30,
                   child: Text(
                       "Type: ",
                       style: TextStyle(fontSize: fontSize),
@@ -809,15 +852,18 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ),
                 SizedBox(width: fontSize),
-                Flexible(
+                SizedBox(
+                  width: 40.0,
                   child: Text(
                       zi.zi,
                       style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: 200.0),
-                FlatButton(
+                //SizedBox(width: 200.0), //200.0
+                SizedBox(
+                  width: 50.0,
+                child: FlatButton(
                   color: Colors.white,
                   textColor: Colors.blueAccent,
                   padding: EdgeInsets.zero,
@@ -827,14 +873,25 @@ class _InputZiPageState extends State<InputZiPage> {
                         overlayEntry = null;
                     }
 
-                    var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, false, '');
-                    showOverlay(context, overlayParameters);
+                    setState(() {
+                      showHint = true;
+                    });
+
+                    //var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, false, '');
+                    //showOverlay(context, overlayParameters);
                   },
                   child: Text(
                     "Hint",
                     style: TextStyle(fontSize: fontSize),
                     textAlign: TextAlign.center
                   ),
+                ),
+                ),
+                Flexible(
+                 //   width: 150.0,
+                    child:  CustomPaint(
+                      foregroundPainter: inputZiHintPainter,
+                    ),
                 ),
               ]
           ),
