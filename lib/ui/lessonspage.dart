@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/data/levellist.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -39,46 +40,49 @@ class _LessonsPageState extends State<LessonsPage> {
             }
 
             int level = 1;
-            if (index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-              if (index == 4) {level = 1;}
-              else if (index == 8) { level = 2;}
-              else if (index == 11) { level = 3;}
-              else if (index == 14) { level = 4;}
-              else if (index == 18) { level = 5;}
-              else if (index == 21) { level = 6;}
-              else if (index == 24) { level = 7;}
-              else if (index == 27) { level = 8;}
-              else if (index == 30) { level = 9;}
-              else if (index == 34) { level = 10;}
+            //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
+            if (index == 0 || index == 5 || index == 9 || index == 12 || index == 15 || index == 19 || index == 22 || index == 25 || index == 28 || index == 31) {
 
-              return getButtonRowWithLevelEnd(context, lessons[index], lessonCount, level);
+                if (index == 0) {level = 1;}
+                else if (index == 5) { level = 2;}
+                else if (index == 9) { level = 3;}
+                else if (index == 12) { level = 4;}
+                else if (index == 15) { level = 5;}
+                else if (index == 19) { level = 6;}
+                else if (index == 22) { level = 7;}
+                else if (index == 25) { level = 8;}
+                else if (index == 28) { level = 9;}
+                else if (index == 31) { level = 10;}
+                //else if (index == 34) { level = 10;}
+                //return getLevel(context, level);
+                return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);
+              }
+              else {
+                return getButtonRow(context, lessons[index], lessonCount);
+              }
             }
-            else {
-              return getButtonRow(context, lessons[index], lessonCount);
-            }
-          },
-        ),
+          ),
       ),
     );
   }
 
-  Widget getButtonRowWithLevelEnd(BuildContext context, int lessonNumber, int lessonCount, int level) {
+  Widget getButtonRowWithLevelBegin(BuildContext context, int lessonNumber, int lessonCount, int level) {
     return Column(
-        children: <Widget>[
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: getRowSections(context, lessonNumber, lessonCount),
-            ),
-            padding: EdgeInsets.all(20),
+      children: <Widget>[
+        Text(
+          "Unit " + '$level' + ": " + theLevelList[level].description,
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 20.0),
+        ),
+        Divider(color: Colors.black),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: getRowSections(context, lessonNumber, lessonCount),
           ),
-          Text(
-            '$level',
-            textAlign: TextAlign.right,
-            //style: TextStyle(fontSize: 50.0),
-          ),
-          Divider(color: Colors.black),
-        ]
+          padding: EdgeInsets.all(20),
+        ),
+      ]
     );
   }
 
