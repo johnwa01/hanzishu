@@ -194,7 +194,7 @@ var theFullExpandedComponentList = [
   ComponentCollection(24, "EF62.png", 6, 2, ""),
 ];
 
-var theZiWithThreeOrMoreComponentList=[
+var theZiForIntroductionList=[
   ZiWithComponentsAndStrokes("键", ["Tl", "Xh", "B2"], "GG6.png", ""),
   ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "-> 日, 日, 日 -> o, o, o"),
   ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "-> 厂, 丁 -> k, j"),  // move down
@@ -205,7 +205,7 @@ var theZiWithThreeOrMoreComponentList=[
   ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "-> 口, 人, 一, 口 -> i, e, g, i"),
 ];
 
-var theZiWithTwoComponentList=[
+var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("双", ["Na", "Na"], "500.png", ""),
   ZiWithComponentsAndStrokes("森", ["La", "La", "La"], "503.png", ""),
   ZiWithComponentsAndStrokes("引", ["Ca", "Ya"], "502.png", ""),
@@ -225,7 +225,7 @@ var theZiWithTwoComponentList=[
   // 月 巾  雪
 ];
 
-var theZiWithOneComponentList=[
+var theZiForExpandedCompExerciseList=[
   ZiWithComponentsAndStrokes("呆", ["Ia", "La"], "515.png", ""), //
   ZiWithComponentsAndStrokes("从", ["Ea", "Ea"], "516.png", ""),   //
   ZiWithComponentsAndStrokes("旦", ["Oa", "Ga"], "517.png", ""),  //
@@ -237,7 +237,7 @@ var theZiWithOneComponentList=[
   ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "492.png", ""),
   ZiWithComponentsAndStrokes("师", ["Ya", "Ga", "Ua"], "493.png", ""),
   ZiWithComponentsAndStrokes("您", ["Ta", "Ta", "Ya", "Ha"], "494.png", ""),
-  ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "496.png", ""),
+  //ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "496.png", ""),
   ZiWithComponentsAndStrokes("起", ["Aa", "Ya", "Sa"], "498.png", ""),
   ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "499.png", ""),
   ZiWithComponentsAndStrokes("会", ["Ea", "Ga", "Ma"], "488.png", ""),

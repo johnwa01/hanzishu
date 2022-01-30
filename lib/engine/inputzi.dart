@@ -1,9 +1,9 @@
 import 'package:hanzishu/utility.dart';
 
 enum TypingType {
-  ThreeOrMoreComponents,
-  TwoComponents,
-  OneComponent,
+  ForIntroduction,
+  LeadComponents,
+  ExpandedComponents,
   FromLessons,
   FreeTyping
 }

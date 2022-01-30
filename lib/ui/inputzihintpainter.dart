@@ -44,7 +44,7 @@ class InputZiHintPainter extends BasePainter {
     DictionaryManager.getAllComponents(searchingZiId, components);
 
     double size = 18.0;
-    double xPosi = 0.0;
+    double xPosi = 10.0;
 
     drawComponentZiList(
         components,
@@ -61,7 +61,7 @@ class InputZiHintPainter extends BasePainter {
 
     var typingStrokes = "";
     if (components.length < 3) {
-      displayTextWithValue("(", xPosi, 0.0, size, Colors.cyan);
+      displayTextWithValue(" (", xPosi, 0.0, size, Colors.cyan);
       xPosi += size;
       typingStrokes = DictionaryManager.getAllTypingStrokes(components);
       drawStrokeZiList(
@@ -74,13 +74,13 @@ class InputZiHintPainter extends BasePainter {
           Colors.cyan,
           true,
           1.0);
-      xPosi += size * typingStrokes.length;
-      displayTextWithValue(")", xPosi, 0.0, size, Colors.cyan);
+      xPosi += size * 1.3 * typingStrokes.length;
+      displayTextWithValue(") ", xPosi, 0.0, size, Colors.cyan);
       xPosi += size;
     }
 
-    displayTextWithValue("->", xPosi, 0.0, size, Colors.cyan);
-    xPosi += size;
+    displayTextWithValue(" -> ", xPosi, 0.0, size, Colors.cyan);
+    xPosi += size * 1.5;
 
     var leadComps = DictionaryManager.getAllLeadComponents(components);
     var leadTypingStrokes = "";
@@ -115,13 +115,13 @@ class InputZiHintPainter extends BasePainter {
             Colors.cyan,
             true,
             1.0);
-        xPosi += size * leadTypingStrokes.length;
+        xPosi += size * 1.3 * leadTypingStrokes.length;
         displayTextWithValue(") ", xPosi, 0.0, size, Colors.cyan);
         xPosi += size;
       }
 
-      displayTextWithValue("->", xPosi, 0.0, size, Colors.cyan);
-      xPosi += size;
+      displayTextWithValue(" -> ", xPosi, 0.0, size, Colors.cyan);
+      xPosi += size * 1.5;
     }
 
     var compCodes= DictionaryManager.getAllComponentCodes(leadComps);

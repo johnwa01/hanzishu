@@ -470,7 +470,7 @@ class BasePainter extends CustomPainter{
       for (int i = 0; i < strokeString.length; i++) {
         drawStrokeZi(
             strokeString[i],
-            transX + widthX * i,
+            transX + widthX * 1.4 * i,
             transY,
             widthX,
             heightY,

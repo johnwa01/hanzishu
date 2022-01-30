@@ -221,14 +221,14 @@ class InputZiManager {
 
   static String getIntroduction(TypingType typingType, int currentIndex, int lessonId) {
     String instruction;
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      instruction = theZiWithThreeOrMoreComponentList[currentIndex].hintText;
+    if (typingType == TypingType.ForIntroduction) {
+      instruction = theZiForIntroductionList[currentIndex].hintText;
     }
-    else if (typingType == TypingType.TwoComponents) {
-      instruction = theZiWithTwoComponentList[currentIndex].hintText;
+    else if (typingType == TypingType.LeadComponents) {
+      instruction = theZiForLeadCompExerciseList[currentIndex].hintText;
     }
-    else if (typingType == TypingType.OneComponent) {
-      instruction = theZiWithOneComponentList[currentIndex].hintText;
+    else if (typingType == TypingType.ExpandedComponents) {
+      instruction = theZiForExpandedCompExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.FromLessons) {
       instruction = "Please type new characters as instructed.";
@@ -238,14 +238,14 @@ class InputZiManager {
   }
 
   ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      return theZiWithThreeOrMoreComponentList[index];
+    if (typingType == TypingType.ForIntroduction) {
+      return theZiForIntroductionList[index];
     }
-    else if (typingType == TypingType.TwoComponents) {
-      return theZiWithTwoComponentList[index];
+    else if (typingType == TypingType.LeadComponents) {
+      return theZiForLeadCompExerciseList[index];
     }
-    else if (typingType == TypingType.OneComponent) {
-      return theZiWithOneComponentList[index];
+    else if (typingType == TypingType.ExpandedComponents) {
+      return theZiForExpandedCompExerciseList[index];
     }
     else if (typingType == TypingType.FromLessons) {
       var zi = theLessonManager.getChar(lessonId, index);
@@ -280,18 +280,18 @@ class InputZiManager {
   int getNextIndex(TypingType typingType, int currentIndex, int lessonId) {
     currentIndex++;
 
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      if (currentIndex >= theZiWithThreeOrMoreComponentList.length) {
+    if (typingType == TypingType.ForIntroduction) {
+      if (currentIndex >= theZiForIntroductionList.length) {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.TwoComponents) {
-      if (currentIndex >= theZiWithTwoComponentList.length) {
+    else if (typingType == TypingType.LeadComponents) {
+      if (currentIndex >= theZiForLeadCompExerciseList.length) {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.OneComponent) {
-      if (currentIndex >= theZiWithOneComponentList.length) {
+    else if (typingType == TypingType.ExpandedComponents) {
+      if (currentIndex >= theZiForExpandedCompExerciseList.length) {
         currentIndex = -1;
       }
     }
@@ -314,16 +314,16 @@ class InputZiManager {
     }
 
     var zi;
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      zi = theZiWithThreeOrMoreComponentList[currentIndex];
+    if (typingType == TypingType.ForIntroduction) {
+      zi = theZiForIntroductionList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.TwoComponents) {
-      zi = theZiWithTwoComponentList[currentIndex];
+    else if (typingType == TypingType.LeadComponents) {
+      zi = theZiForLeadCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.OneComponent) {
-      zi = theZiWithOneComponentList[currentIndex];
+    else if (typingType == TypingType.ExpandedComponents) {
+      zi = theZiForExpandedCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
     else if (typingType == TypingType.FromLessons) {
@@ -335,14 +335,14 @@ class InputZiManager {
   }
 
   int getTotal(TypingType typingType, int lessonId) {
-    if (typingType == TypingType.ThreeOrMoreComponents) {
-      return theZiWithThreeOrMoreComponentList.length;
+    if (typingType == TypingType.ForIntroduction) {
+      return theZiForIntroductionList.length;
     }
-    else if (typingType == TypingType.TwoComponents) {
-      return theZiWithTwoComponentList.length;
+    else if (typingType == TypingType.LeadComponents) {
+      return theZiForLeadCompExerciseList.length;
     }
-    else if (typingType == TypingType.OneComponent) {
-      return theZiWithOneComponentList.length;
+    else if (typingType == TypingType.ExpandedComponents) {
+      return theZiForExpandedCompExerciseList.length;
     }
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);

@@ -241,7 +241,7 @@ class DictionaryManager {
         leadTypingStrokes += "f";
       }
       else if (typingCode == "b") {
-        leadTypingStrokes += "S";
+        leadTypingStrokes += "V";
       }
     }
 

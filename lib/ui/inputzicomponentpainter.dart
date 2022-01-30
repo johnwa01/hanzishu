@@ -45,13 +45,13 @@ class InputZiComponentPainter extends BasePainter {
 
   displayComponents(Size size) {
     String instruction;
-    if (typingType == TypingType.ThreeOrMoreComponents) {
+    if (typingType == TypingType.ForIntroduction) {
       instruction = "Type the given character. Use hint as needed.";
     }
-    else if (typingType == TypingType.TwoComponents) {
+    else if (typingType == TypingType.LeadComponents) {
       instruction = "Type the given character. Use hint as needed.";
     }
-    else if (typingType == TypingType.OneComponent) {
+    else if (typingType == TypingType.ExpandedComponents) {
       instruction = "Type the given character. Use hint as needed.";
     }
 

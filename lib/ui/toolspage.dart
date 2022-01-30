@@ -60,7 +60,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ThreeOrMoreComponents), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.ForIntroduction), //InputZiPage(),
               ),
             );
           },
@@ -120,7 +120,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents, lessonId: 0), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.LeadComponents, lessonId: 0), //InputZiPage(),
               ),
             );
           },
@@ -152,7 +152,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.OneComponent, lessonId: 0), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.ExpandedComponents, lessonId: 0), //InputZiPage(),
               ),
             );
           },

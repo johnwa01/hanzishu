@@ -227,14 +227,14 @@ class _InputZiPageState extends State<InputZiPage> {
             }
             fullPath = "assets/typing/" + imageName;
         }
-        else {
-          imageName = theInputZiManager
-              .getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId)
-              .hintImage;
-          if (imageName != null) {
-            fullPath = "assets/typingexercise/" + imageName;
-          }
-        }
+   //     else {
+   //       imageName = theInputZiManager
+   //           .getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId)
+   //           .hintImage;
+   //       if (imageName != null) {
+   //         fullPath = "assets/typingexercise/" + imageName;
+   //       }
+   //     }
 
         var inputZiHintPainter = InputZiHintPainter(
             lineColor: Colors.amber,
@@ -246,25 +246,14 @@ class _InputZiPageState extends State<InputZiPage> {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 65, //65.0, //85.0, //posiY,
-                  left: 100, //0.0, //posiX,
-                  /*
+                  top: 50,//65, //65.0, //85.0, //posiY,
+                  left: 150, //100, //0.0, //posiX,
                   child: Image.asset(
                     fullPath,
-                    width: 350.0,
-                    height: 70.0,
+                    width: 80.0, //350.0,
+                    height: 110.0,
                     //fit: BoxFit.fitWidth,
                   ),
-                  */
-                  /*
-                  child:  SizedBox(
-                      //width: 250,
-                      //height: 40,
-                      child:  CustomPaint(
-                        foregroundPainter: inputZiHintPainter,
-                      ),
-                    ),
-                   */
                 ));
         overlayState.insert(overlayEntry);
         //previousOverlayType = type;
@@ -370,6 +359,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
     previousStartComposing = -1;
     previousEndComposing = -1;
+
+    showHint = false;
 
     //restart a typing cycle
     InputZiManager.previousFirstPositionList.clear();
@@ -557,7 +548,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Image.asset(
-                "assets/typing/" + theZiWithThreeOrMoreComponentList[0].hintImage,
+                "assets/typing/" + theZiForIntroductionList[0].hintImage,
                 width: 350.0,
                 height: 150.0,
                 fit: BoxFit.fitWidth
@@ -629,17 +620,17 @@ class _InputZiPageState extends State<InputZiPage> {
     );
 
     var title = 'Hanzishu Component Input Method';
-    if (typingType == TypingType.ThreeOrMoreComponents) {
+    if (typingType == TypingType.ForIntroduction) {
       title = 'Characters with 3 or more components';
     }
-    else if (typingType == TypingType.TwoComponents) {
+    else if (typingType == TypingType.LeadComponents) {
       title = 'Characters with 2 components';
     }
-    else if (typingType == TypingType.OneComponent) {
+    else if (typingType == TypingType.ExpandedComponents) {
       title = 'Characters with 1 component';
     }
 
-    if (typingType == TypingType.ThreeOrMoreComponents && currentIndex == 0) {
+    if (typingType == TypingType.ForIntroduction && currentIndex == 0) {
       return getIntroductionPage();
     }
 
@@ -747,7 +738,7 @@ class _InputZiPageState extends State<InputZiPage> {
         children: <Widget>[
           Flexible(
             child: Image.asset(
-              "assets/typing/" + theZiWithThreeOrMoreComponentList[0].hintImage,
+              "assets/typing/" + theZiForIntroductionList[0].hintImage,
               width: 300.0,
               height: 100.0,
               fit: BoxFit.fitHeight,  // make sure it doesn't overflow the height.
@@ -759,11 +750,11 @@ class _InputZiPageState extends State<InputZiPage> {
                 SizedBox(
                   child: Text(
                       "Type: ",
-                      style: TextStyle(fontSize: fontSize),
+                      style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: fontSize),
+                SizedBox(width: fontSize * 1.2),
                 SizedBox(
                   child: Text(
                       zi.zi,
@@ -772,22 +763,14 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ),
                 SizedBox(width: fontSize),
+                SizedBox(width: 70.0),
                 SizedBox(
                   child: Text(
-                      "Hint: " + theZiWithThreeOrMoreComponentList[currentIndex].hintText ,
-                      style: TextStyle(fontSize: fontSize),
+                      "Hint: " + theZiForIntroductionList[currentIndex].hintText ,
+                      style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.center   //left
                   ),
                 ),
-                /*
-                SizedBox(
-                  width: 250,
-                  height: 40,
-                  child:  CustomPaint(
-                    foregroundPainter: inputZiHintPainter,
-                        ),
-                ),
-                */
               ]
           ),
 
@@ -809,7 +792,7 @@ class _InputZiPageState extends State<InputZiPage> {
       );*/
     }
 
-    if (typingType == TypingType.ThreeOrMoreComponents) {
+    if (typingType == TypingType.ForIntroduction) {
       return getComponentAndMapping();
     }
 
@@ -844,23 +827,23 @@ class _InputZiPageState extends State<InputZiPage> {
           Row(
               children: <Widget>[
                 SizedBox(
-                  width: 30,
+                  width: 50,
                   child: Text(
                       "Type: ",
-                      style: TextStyle(fontSize: fontSize),
+                      style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
                 ),
                 SizedBox(width: fontSize),
                 SizedBox(
-                  width: 40.0,
+                  width: 50.0,
                   child: Text(
                       zi.zi,
                       style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
                 ),
-                //SizedBox(width: 200.0), //200.0
+                SizedBox(width: 220.0), //200.0
                 SizedBox(
                   width: 50.0,
                 child: FlatButton(
@@ -882,43 +865,28 @@ class _InputZiPageState extends State<InputZiPage> {
                   },
                   child: Text(
                     "Hint",
-                    style: TextStyle(fontSize: fontSize),
+                    style: TextStyle(fontSize: fontSize * 1.2),
                     textAlign: TextAlign.center
                   ),
                 ),
                 ),
-                Flexible(
-                 //   width: 150.0,
-                    child:  CustomPaint(
-                      foregroundPainter: inputZiHintPainter,
-                    ),
-                ),
               ]
           ),
-
-        ]
+        Row(
+            children: <Widget>[
+              SizedBox(
+                height: 40.0,
+                //width: 150.0,
+                child:  CustomPaint(
+                  foregroundPainter: inputZiHintPainter,
+                ),
+              ),
+              ]
+         ),
+       ]
       ),
       onWillPop: _onWillPop
     );
-
-    /*
-    var inputZiComponentPainter = InputZiComponentPainter(
-        lineColor: Colors.amber,
-        completeColor: Colors.blueAccent,
-        currentIndex: currentIndex, /*TODO: temp*/
-        screenWidth: screenWidth, //350, /*TODO: temp*/
-        typingType: typingType
-    );
-
-    return SizedBox(
-      width: double.infinity,
-      height: 155,
-      child:  CustomPaint(
-        foregroundPainter: inputZiComponentPainter,
-        //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
-      ),
-    );
-    */
   }
 
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
@@ -977,15 +945,15 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
-    if (typingType == TypingType.ThreeOrMoreComponents) {
+    if (typingType == TypingType.ForIntroduction) {
     title = "Amazing!";
     content = "You did great and can move on to the next session now to memorize the component mapping.";
     }
-    else if (typingType == TypingType.TwoComponents) {
+    else if (typingType == TypingType.LeadComponents) {
       title = "Wonderful!";
-      content = "You have learnt the method well! You just need to get yourself familiar with the expanded components in the next session.";
+      content = "You have learned the method well! You just need to get yourself familiar with the expanded components in the next session.";
     }
-    else if (typingType == TypingType.OneComponent) {
+    else if (typingType == TypingType.ExpandedComponents) {
       title = "Congratulation!";
       content = "You have completed all the training sessions! You can now start your own free typing.";
     }
