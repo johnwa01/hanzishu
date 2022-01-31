@@ -171,7 +171,9 @@ class _QuizPageState extends State<QuizPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               getText(AnswerPosition.positionA),
+              SizedBox(height: 5.0),
               getText(AnswerPosition.positionB),
+              SizedBox(height: 5.0),
               getText(AnswerPosition.positionC),
             ]
           ),
@@ -183,7 +185,9 @@ class _QuizPageState extends State<QuizPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               getZiContainer(AnswerPosition.positionA, true),
+              SizedBox(height: 5.0),
               getZiContainer(AnswerPosition.positionB, true),
+              SizedBox(height: 5.0),
               getZiContainer(AnswerPosition.positionC, true),
             ]
         );
@@ -342,7 +346,6 @@ class _QuizPageState extends State<QuizPage> {
     if (noncharId != 0) {// nonchar case
       return InkWell(
         onTap: () {
-          theStatisticsManager.trackTimeAndTap();
           setPositionState(position);
           //theQuizManager.setAnswered(true);
           },

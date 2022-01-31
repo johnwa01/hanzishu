@@ -833,13 +833,6 @@ class _ComponentPageState extends State<ComponentPage> {
     if (!theComponentManager.isCurrentComponentChar()) {// nonchar case
       int noncharCompId = theComponentManager.getCurrentComponentId();
       return InkWell(
-        /*
-        onTap: () {
-          theStatisticsManager.trackTimeAndTap();
-          setPositionState(position);
-          //theComponentManager.setAnswered(true);
-        },
-        */
         child: Container(
           height: size /*250.0*/,
           width: size /*180.0*/,

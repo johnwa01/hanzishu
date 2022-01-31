@@ -109,11 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theStrokeManager = StrokeManager();
     theDictionaryManager = DictionaryManager();
 
-    theStatisticsManager.init(0,
-        0.0,
-        0,
-        '',
-        null);
+    theStatisticsManager.init(null);
 
     LessonManager.populateLessonsInfo();
   }
@@ -129,7 +125,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   onTappedBar(int index)
   {
-    theStatisticsManager.trackTimeAndTap();
     setState(() => _currentIndex = index);
   }
 

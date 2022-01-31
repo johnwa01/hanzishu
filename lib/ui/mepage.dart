@@ -42,7 +42,6 @@ class _MePageState extends State<MePage> {
               title: Text("Review of Lessons", textDirection: TextDirection.ltr),
               trailing: Icon(Icons.location_city),
               onTap: () {
-                theStatisticsManager.trackTimeAndTap();
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -51,36 +50,6 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
-            /*
-            ListTile(
-              leading: Icon(Icons.location_city),
-              title: Text("Study Time", textDirection: TextDirection.ltr),
-              trailing: Icon(Icons.location_city),
-              onTap: () {
-                theStatisticsManager.trackTimeAndTap();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => StudyTimePage(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.location_city),
-              title: Text("Tap Count", textDirection: TextDirection.ltr),
-              trailing: Icon(Icons.location_city),
-              onTap: () {
-                theStatisticsManager.trackTimeAndTap();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TapCountPage(),
-                  ),
-                );
-              },
-            ),
-            */
             ListTile(
               leading: Icon(Icons.location_city),
               title: Text("Quiz Results", textDirection: TextDirection.ltr),
@@ -90,7 +59,6 @@ class _MePageState extends State<MePage> {
               //  textDirection: TextDirection.rtl,
               //),
               onTap: () {
-                theStatisticsManager.trackTimeAndTap();
                 Navigator.push(
                   context,
                   MaterialPageRoute(

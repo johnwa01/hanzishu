@@ -35,28 +35,11 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget getMeListView(BuildContext context) {
     return ListView(
       children: <Widget>[
-        /*
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Introduction", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiHelpPage(),
-              ),
-            );
-          },
-        ),
-        */
-        ListTile(
-          //leading: Icon(Icons.location_city),
-          title: Text("Introduction", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
-          onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -73,7 +56,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("        Memorize component groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -87,7 +69,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("        Memorize components in groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -102,7 +83,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("        Memorize components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -116,7 +96,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("Guided typing", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -130,7 +109,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("Be familiar with expanded components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -148,7 +126,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("Typing exercises", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -165,7 +142,6 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Text("Typing", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
-            theStatisticsManager.trackTimeAndTap();
             Navigator.push(
               context,
               MaterialPageRoute(

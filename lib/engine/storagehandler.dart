@@ -11,8 +11,8 @@ part 'storagehandler.g.dart';
 
 @JsonSerializable(nullable: false)
 class Storage {
-  String storageVersion;
-  int latestEnabledLesson;
+  String storageVersion;    // to add language after this.
+  int latestEnabledLesson;  // String for completed lessons, with index matching the lesson i, started with 0.
   List<Statistics> statisticsArray;
   List<LessonQuizResult> lessonQuizResults;
 

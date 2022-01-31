@@ -400,7 +400,6 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
           }
           var startInternalLessonId = LevelManager.getStartInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
           var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
-          theStatisticsManager.trackTimeAndTap();
           Navigator.push(
             context,
             MaterialPageRoute(

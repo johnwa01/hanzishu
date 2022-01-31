@@ -701,7 +701,6 @@ class _InputZiPageState extends State<InputZiPage> {
               textStyle: const TextStyle(fontSize: 20),
             ),
             onPressed: () {
-              //theStatisticsManager.trackTimeAndTap();
               Navigator.push(
                 context,
                 MaterialPageRoute(
