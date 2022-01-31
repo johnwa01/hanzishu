@@ -47,14 +47,14 @@ class StatisticsManager {
   }
 
   // temp statistics data to storage memory, but not write to physical file.
-  dumpStatisticsToStorageMemory() {
+  //dumpStatisticsToStorageMemory() {
     // note we never accumulate data over night, we always save to the storage the first time when we hit a new date.
 
-    var statistics = Statistics(); //dateString, studyTime, tapCount/*, quizResult: quizResult*/);
-    statistics.init();
+  //  var statistics = Statistics(); //dateString, studyTime, tapCount/*, quizResult: quizResult*/);
+  //  statistics.init();
 
-    theStorageHandler.addOrUpdateStatistics(statistics);
-  }
+  //  theStorageHandler.addOrUpdateStatistics(statistics);
+  //}
 
   // temp statistics data to storage memory, but not write to physical file.
   dumpLessonQuizToStorageMemory() {
@@ -72,38 +72,16 @@ class StatisticsManager {
 
   // save statistics to storage. no update to lesson status
   saveStatisticsToStorage(/*dateString: String*/) {
-    dumpStatisticsToStorageMemory();
+  //  dumpStatisticsToStorageMemory();
 
     theStorageHandler.SaveToFile();
   }
 
   saveLessonQuizAndStatisticsToStorage() {
     dumpLessonQuizToStorageMemory();
-    dumpStatisticsToStorageMemory();
+   // dumpStatisticsToStorageMemory();
 
     theStorageHandler.SaveToFile();
-  }
-
-  static String produceStudyTimeString(String timeString, double studyTime) {
-    var resultString = timeString;
-    resultString += "     ";
-
-    var minu = studyTime / 60;
-
-    resultString += minu.toStringAsFixed(1); //String(format:"%.1f", minu);
-    resultString += " minutes";
-
-    return resultString;
-  }
-
-  static String produceTapCountString(String timeString, int tapCount) {
-    var resultString = timeString;
-    resultString += "     ";
-
-    resultString += tapCount.toString();
-    resultString += " times";
-
-    return resultString;
   }
 
   static double percentRateFloat(int number1, int number2) {

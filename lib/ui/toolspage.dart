@@ -6,7 +6,6 @@ import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/ui/studytimepage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';

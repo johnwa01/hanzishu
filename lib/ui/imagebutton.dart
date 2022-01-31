@@ -50,6 +50,21 @@ class OpenHelper {
     }
   }
 
+  static Widget getCompletedImage(int lessonNumber) {
+    var completed = theStorageHandler.hasLessonCompleted(lessonNumber);
+    if (completed) {
+      return Ink.image(
+        image: AssetImage("assets/lessons/L0.png"),
+        width: 16.0,
+        height: 16.0,
+      );
+    }
+    else {
+      return SizedBox(height: 0.0, width: 0.0);
+    }
+
+  }
+
   static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson) {
     final colorScheme = Theme.of(context).colorScheme;
     var lesson = theLessonManager.getLesson(lessonNumber);
@@ -58,6 +73,29 @@ class OpenHelper {
 
     if (isLesson) {
       lessonOrSectionName = lesson.titleTranslation;
+      return
+        InkWell(
+          child: Column(
+              children: [
+                Ink.image(
+                  image: AssetImage(imagePath),
+                  width: 110.0,
+                  height: 110.0,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                      style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
+                    ),
+                    getCompletedImage(lessonNumber),
+                  ]
+                ),
+              ]
+          ),
+
+          onTap: () => openPage(context, lessonNumber, lessonSection),
+        );
     }
     else {
       switch (lessonSection) {
@@ -80,62 +118,24 @@ class OpenHelper {
           lessonOrSectionName = "Quiz";
           break;
       }
-    }
-
-    return
-      InkWell(
-        child: Column(
-            children: [
-              //Container(
-                //decoration: BoxDecoration(
-                //  color: Colors.transparent,
-                //  border: Border.all(color: Colors.blue, width: 1.0),
-                //  borderRadius: BorderRadius.circular(40),
-                //),
+      return
+        InkWell(
+          child: Column(
+              children: [
                 Ink.image(
                   image: AssetImage(imagePath),
                   width: 110.0,
                   height: 110.0,
                 ),
-              //),
-              Text(
-                lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
-              ),
-            ]
-        ),
+                Text(
+                  lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                  style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
+                ),
+              ]
+          ),
 
-        onTap: () => openPage(context, lessonNumber, lessonSection),
-    );
-
-    /*
-    return SizedBox(
-      width: 110,
-      height: 130,
-      child: FlatButton(
-        child: Column(
-            children: [
-              Image.asset(
-                imagePath,
-                width: 90.0,
-                height: 100.0,
-              ),
-              Text(
-                lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                style: TextStyle(fontSize: 12.0, fontFamily: "Raleway"),
-              ),
-            ]
-        ),
-        onPressed: () => openPage(context, lessonNumber, lessonSection),
-        textColor: Colors.blueAccent, //Colors.white,
-        color: colorScheme.primary,
-        //color: Color(0xFF226597),
-        shape: OutlineInputBorder(
-            borderSide: BorderSide(
-                style: BorderStyle.solid, width: 1.0, color: Colors.black),
-            borderRadius: BorderRadius.circular(20.0)),
-      ),
-    );
-    */
+          onTap: () => openPage(context, lessonNumber, lessonSection),
+        );
+    }
   }
 }

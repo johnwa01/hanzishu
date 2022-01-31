@@ -4,8 +4,6 @@ import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/ui/studytimepage.dart';
-import 'package:hanzishu/ui/tapcountpage.dart';
 import 'package:hanzishu/ui/reviewselectionpage.dart';
 
 class MePage extends StatefulWidget {

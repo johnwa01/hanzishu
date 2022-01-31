@@ -7,7 +7,6 @@ import 'package:hanzishu/ui/quizpainter.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
-import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'dart:async';
 
 class QuizPage extends StatefulWidget {
@@ -34,12 +33,13 @@ class _QuizPageState extends State<QuizPage> {
 
     //TODO
     //theStatisticsManager.initLessonQuizResults();
+    lessonId = widget.lessonId;
     theQuizManager.initValues();
-    index = theQuizManager.getFirstIndex(widget.lessonId); //TODO: lessonId
+    index = theQuizManager.getFirstIndex(lessonId); //TODO: lessonId
 
     theStatisticsManager.initLessonQuizResults();
 
-    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(widget.lessonId) * 2;
+    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(lessonId) * 2;
 
     setState(() {
       answerPosition = AnswerPosition.none;
@@ -428,9 +428,12 @@ class _QuizPageState extends State<QuizPage> {
     String title;
     String content;
 
+
     if (correctPercent >= 70.0) {
       title = "Congratulation!";
       content = "You have passed this quiz with a score of " + corStr + "!";
+      // save the info to storage
+      updateCompleteStatus();
     }
     else {
       title = "Good effort!";
@@ -454,6 +457,14 @@ class _QuizPageState extends State<QuizPage> {
         return alert;
       },
     );
+  }
+
+  updateCompleteStatus() {
+    var wasCompleted = theStorageHandler.hasLessonCompleted(lessonId);
+    if (!wasCompleted) {
+      theStorageHandler.updateOneLessonStatus(lessonId, true);
+      theStorageHandler.SaveToFile();
+    }
   }
 
   /*

@@ -72,9 +72,10 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     init();
 
+    theStorageHandler.initStorage();
+
     theFileIOFile = widget.fileIO;
 
-    theStorageHandler.initStorage();
     //TODO: for write to storage part of code
     //var str = theStorageHandler.putStorageToJson();
     //widget.fileIO.writeString(str);
@@ -87,9 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
         if (storage != null) {
           theStorageHandler.setStorage(storage);
         }
-        //setState(() {
-        //  _str = value;
-        //});
       }
     });
   }

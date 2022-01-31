@@ -6,19 +6,22 @@ import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'dart:convert';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 
 part 'storagehandler.g.dart';
 
 @JsonSerializable(nullable: false)
 class Storage {
-  String storageVersion;    // to add language after this.
-  int latestEnabledLesson;  // String for completed lessons, with index matching the lesson i, started with 0.
-  List<Statistics> statisticsArray;
+  String storageVersion;
+  String language;
+  String lessonsStatus; // completed = '1', not completed = '0'; starting from 0 position up to 59. Total 60 for now.
+  //List<Statistics> statisticsArray;  //Note: The most complicated structure I created for the storage.
   List<LessonQuizResult> lessonQuizResults;
 
-  Storage({this.storageVersion, this.latestEnabledLesson, this.statisticsArray, this.lessonQuizResults});
+  Storage({this.storageVersion, this.language, this.lessonsStatus, this.lessonQuizResults});
 }
 
+/* Keep for reference
 class Statistics {
   String dateString;
   double studyTime;
@@ -48,6 +51,7 @@ class Statistics {
     "tapCount": tapCount,
   };
 }
+*/
 
 class LessonQuizResult {
   String dateString;
@@ -83,9 +87,8 @@ class StorageHandler {
 
   initStorage() {
     storage.storageVersion = '1.0';
-    storage.latestEnabledLesson = 1;
-    //var sta = Statistics("10:11:2020", 0.0, 0);
-    storage.statisticsArray = [Statistics()]; //add({"10:11:2020", 0.0, 0});
+    storage.language = 'en-us';
+    storage.lessonsStatus = '000000000000000000000000000000000000000000000000000000000000';
     storage.lessonQuizResults = [LessonQuizResult()];
   }
 
@@ -93,16 +96,34 @@ class StorageHandler {
     storage.storageVersion = storageVersion;
   }
 
-  setLatestEnabledLesson(int latestEnabledLesson) {
-    storage.latestEnabledLesson = latestEnabledLesson;
+  setLanguage(String language) {
+    storage.language = language;
   }
 
-  int getLatestEnabledLesson() {
-    return storage.latestEnabledLesson;
+  setLessonsStatus(String lessonsStatus) {
+    storage.lessonsStatus = lessonsStatus;
   }
 
-  List<Statistics> getStatisticsArray() {
-    return storage.statisticsArray;
+  updateOneLessonStatus(int lessonId, bool completed) {
+    var newValue = completed ? '1' : '0';
+    storage.lessonsStatus = Utility.replaceCharAt(storage.lessonsStatus, lessonId - 1, newValue);
+  }
+
+  bool hasLessonCompleted(int lessonId) {
+    var value = storage.lessonsStatus.codeUnitAt(lessonId - 1);
+    return (value == 49) ? true : false;    // 49 -> '1'
+  }
+
+  String getStorageVersion() {
+    return storage.storageVersion;
+  }
+
+  String getLanguage() {
+    return storage.language;
+  }
+
+  String getLessonsStatus() {
+    return storage.lessonsStatus;
   }
 
   List<LessonQuizResult> getLessonQuizResults() {
@@ -129,49 +150,6 @@ class StorageHandler {
     return 0;
   }
 
-  int getStudyTimeAndTapCountLength () {
-    var array = getStatisticsArray();
-    if (array != null) {
-      return array.length;
-    }
-
-    return 0;
-  }
-
-  Statistics getStudyTimeAndTapCount(int index) {
-    var statistics = getStatisticsArray();
-    if (statistics != null) {
-      if (index <= statistics.length - 1) {
-        return statistics[index];
-      }
-    }
-
-    return null;
-  }
-
-  bool existStatisticsForDateString(String dateString) {
-    var arrayCount = storage.statisticsArray.length;
-    if (arrayCount > 0) {
-      if (storage.statisticsArray[arrayCount-1].dateString == dateString) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  updateStatistics(Statistics statistics) {
-    var arrayCount = storage.statisticsArray.length;
-    if (arrayCount > 0) {
-      storage.statisticsArray[arrayCount - 1].studyTime += statistics.studyTime;
-      storage.statisticsArray[arrayCount - 1].tapCount += statistics.tapCount;
-    }
-  }
-
-  appendStatistics(Statistics statistics) {
-    storage.statisticsArray.add(statistics);
-  }
-
   appendLessonQuizResult(LessonQuizResult lessonQuizResult) {
     var result = LessonQuizResult();
     result.dateString = lessonQuizResult.dateString;
@@ -182,23 +160,28 @@ class StorageHandler {
     storage.lessonQuizResults.add(result);
   }
 
-  addOrUpdateStatistics(Statistics statistics) {
-    var exist = existStatisticsForDateString(statistics.dateString);
-
-    if (exist) {
-      updateStatistics(statistics);
-    }
-    else {
-      appendStatistics(statistics);
-    }
-  }
-
   Storage getStorage() {
     return storage;
   }
 
+  // setting this way will make it easier for new versions with new entries. It'll pick up whatever new entries you add here in future versions.
   setStorage(Storage storage) {
-    this.storage = storage;
+    // update some values from local storage
+    if (storage.storageVersion != null) {
+      this.storage.storageVersion = storage.storageVersion;
+    }
+
+    if (storage.language != null) {
+      this.storage.language = storage.language;
+    }
+
+    if (storage.lessonsStatus != null) {
+      this.storage.lessonsStatus = storage.lessonsStatus;
+    }
+
+    if (storage.lessonQuizResults != null) {
+      this.storage.lessonQuizResults = storage.lessonQuizResults;
+    }
   }
 
   Storage getStorageFromJson(String content) {

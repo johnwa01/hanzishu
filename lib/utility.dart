@@ -454,6 +454,11 @@ class Utility {
 
     return adjustedValue;
   }
+
+  static String replaceCharAt(String oldString, int index, String newChar) {
+    return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
+  }
+  // var newStr = replaceCharAt("hello", 1, "E") //usage
 }
 
 //TODO: check - this is not used anymore I think.
