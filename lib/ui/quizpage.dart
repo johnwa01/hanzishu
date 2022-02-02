@@ -106,11 +106,14 @@ class _QuizPageState extends State<QuizPage> {
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(40), //10
+            padding: EdgeInsets.all(20), //40
+          ),
+          Container(
+            padding: EdgeInsets.all(20), //
           ),
           Container(
             child: getContinue(context),
-            padding: EdgeInsets.all(20),
+    //        padding: EdgeInsets.all(10),
           ),
         ]
     );
