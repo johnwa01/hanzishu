@@ -49,15 +49,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: _buildShrineTheme(),
       title: 'Hanzishu',
-      home: MyHomePage(fileIO: CounterStorage()),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  final CounterStorage fileIO;
-  MyHomePage({Key key, @required this.fileIO}) : super(key: key);
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -71,25 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     init();
-
     theStorageHandler.initStorage();
-
-    theFileIOFile = widget.fileIO;
-
-    //TODO: for write to storage part of code
-    //var str = theStorageHandler.putStorageToJson();
-    //widget.fileIO.writeString(str);
-
-    //widget.fileIO.writeCounter(1);
-
-    widget.fileIO.readString().then((String value) {
-      if(value != null) {
-        var storage = theStorageHandler.getStorageFromJson(value);
-        if (storage != null) {
-          theStorageHandler.setStorage(storage);
-        }
-      }
-    });
   }
 
   init() {

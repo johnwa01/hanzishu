@@ -84,12 +84,14 @@ class LessonQuizResult {
 
 class StorageHandler {
   Storage storage = Storage();
+  bool hasTriedToLoadStorage;
 
   initStorage() {
     storage.storageVersion = '1.0';
     storage.language = 'en-us';
     storage.lessonsStatus = '000000000000000000000000000000000000000000000000000000000000';
     storage.lessonQuizResults = [LessonQuizResult()];
+    hasTriedToLoadStorage = false;
   }
 
   setStorageVersion(String storageVersion) {
@@ -102,6 +104,10 @@ class StorageHandler {
 
   setLessonsStatus(String lessonsStatus) {
     storage.lessonsStatus = lessonsStatus;
+  }
+
+  setHasTriedToLoadStorage() {
+    this.hasTriedToLoadStorage = true;
   }
 
   updateOneLessonStatus(int lessonId, bool completed) {
@@ -124,6 +130,10 @@ class StorageHandler {
 
   String getLessonsStatus() {
     return storage.lessonsStatus;
+  }
+
+  bool getHasTriedToLoadStorage() {
+    return hasTriedToLoadStorage;
   }
 
   List<LessonQuizResult> getLessonQuizResults() {

@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'package:hanzishu/engine/fileio.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
-import 'package:hanzishu/utility.dart';
+
+import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
+import 'package:hanzishu/utility.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -9,6 +13,7 @@ class LessonsPage extends StatefulWidget {
 }
 
 class _LessonsPageState extends State<LessonsPage> {
+  bool hasLoadedStorage;
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
   //}
@@ -17,7 +22,40 @@ class _LessonsPageState extends State<LessonsPage> {
   final List<int> lessons = <int>[1, 2, 4, 6, 7, 10, 11, 13, 16, 17, 18, 20, 22, 23, 25, 27, 28, 30, 33, 34, 35, 37, 39, 40, 42, 44, 45, 48, 50, 51, 53, 54, 55, 57, 60];
 
   @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      this.hasLoadedStorage = false;
+    });
+  }
+
+  handleStorage() {
+    if (!theStorageHandler.getHasTriedToLoadStorage()) {
+      var fileIO = CounterStorage();
+      theStorageHandler.setHasTriedToLoadStorage();
+      fileIO.readString().then((String value) {
+        // just once, doesn't matter whether it loads any data or not
+        if (value != null) {
+          var storage = theStorageHandler.getStorageFromJson(value);
+          if (storage != null) {
+            theStorageHandler.setStorage(storage);
+            setState(() {
+              this.hasLoadedStorage = true;
+            });
+          }
+        }
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    // do here so that it'll refresh the lessonspage to reflect the lesson completed status from storage.
+    // also away from the main thread I think.
+    // do it only once
+    handleStorage();
+
     return Scaffold
       (
       appBar: AppBar
