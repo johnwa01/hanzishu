@@ -82,6 +82,8 @@ class LessonQuizResult {
 }
 
 class StorageHandler {
+  static int MaximumNumberOfQuizResults = 60;
+  static int NumberOfQuizResultsToTrim = 10;
   Storage storage = Storage();
   bool hasTriedToLoadStorage;
 
@@ -141,9 +143,11 @@ class StorageHandler {
 
   LessonQuizResult getLessonQuizResult(int index) {
     var results = getLessonQuizResults();
+    // make newest result the first - reverse the order
     if (results != null) {
-      if (index <= results.length - 1) {
-        return results[index];
+      var length = results.length;
+      if (length > 0 && index >= 0 && index <= length - 1) {
+        return results[length - 1 - index];
       }
     }
 
@@ -167,6 +171,11 @@ class StorageHandler {
     result.answ = lessonQuizResult.answ;
 
     storage.lessonQuizResults.add(result);
+
+    // trim the results if more than the max
+    if (storage.lessonQuizResults.length > MaximumNumberOfQuizResults) {
+      storage.lessonQuizResults.removeRange(0, NumberOfQuizResultsToTrim);
+    }
   }
 
   Storage getStorage() {
