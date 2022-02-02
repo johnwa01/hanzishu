@@ -81,7 +81,6 @@ class LessonQuizResult {
   };
 }
 
-
 class StorageHandler {
   Storage storage = Storage();
   bool hasTriedToLoadStorage;
@@ -205,6 +204,8 @@ class StorageHandler {
   SaveToFile() {
     var str = theStorageHandler.putStorageToJson();
 
-    theFileIOFile.writeString(str);
+    if (theFileIOFile != null) {
+      theFileIOFile.writeString(str);
+    }
   }
 }

@@ -32,6 +32,8 @@ var theCurrentLessonId = 1;
 var theCurrentCenterZiId = 1;
 var thePreviousCenterZiId = 0;
 
+var theLessonsPage = null;
+
 //TODO: move to theConfig
 var theIsPartialZiMode = true;
 

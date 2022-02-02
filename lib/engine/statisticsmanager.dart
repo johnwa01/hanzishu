@@ -115,12 +115,12 @@ class StatisticsManager {
     var quizResultString = lessonQuizResult.dateString;
     quizResultString += "   ";
 
-    var levelLessonPair = LevelManager.getLevelLessonPair(lessonQuizResult.lessonId);
-    quizResultString += "L";
-    quizResultString += levelLessonPair.levelId.toString();
-    quizResultString += "/L";
-    quizResultString += levelLessonPair.lessonId.toString();
-    quizResultString +=  ". ";
+    //var levelLessonPair = LevelManager.getLevelLessonPair(lessonQuizResult.lessonId);
+    //quizResultString += "L";
+    //quizResultString += levelLessonPair.levelId.toString();
+    quizResultString += "Lesson ";
+    quizResultString += lessonQuizResult.lessonId.toString();
+    quizResultString +=  ": ";
 
     quizResultString += lessonQuizResult.cor.toString();
     quizResultString += " of ";

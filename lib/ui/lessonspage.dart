@@ -33,6 +33,7 @@ class _LessonsPageState extends State<LessonsPage> {
   handleStorage() {
     if (!theStorageHandler.getHasTriedToLoadStorage()) {
       var fileIO = CounterStorage();
+      theFileIOFile = fileIO;
       theStorageHandler.setHasTriedToLoadStorage();
       fileIO.readString().then((String value) {
         // just once, doesn't matter whether it loads any data or not
