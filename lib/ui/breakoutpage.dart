@@ -113,11 +113,13 @@ class _BreakoutPageState extends State<BreakoutPage> {
       theDicOverlayEntry = null;
     }
 
+    var screenWidth = Utility.getScreenWidth(context);
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
         builder: (context) =>Positioned(
             top: posiY,
-            left: posiX,
+            left: adjustedXValue,
             child: FlatButton(
               child: Text(meaning, style: TextStyle(fontSize: 20.0),),
               color: Colors.blueAccent,

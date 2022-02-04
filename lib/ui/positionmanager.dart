@@ -4,6 +4,27 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
+class PositionAndMeaning {
+  double x;
+  double y;
+  String meaning;
+
+  PositionAndMeaning(
+      double x,
+      double y,
+      String meaning) {
+    this.x = x;
+    this.y = y;
+    this.meaning = meaning;
+  }
+
+  set(double x, double y, String meaning) {
+    this.x = x;
+    this.y = y;
+    this.meaning = meaning;
+  }
+}
+
 class ZiOrCharSize {
   static int defaultSize = 0;
   static int centerSize = 1;

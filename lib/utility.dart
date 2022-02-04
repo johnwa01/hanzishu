@@ -431,24 +431,27 @@ class Utility {
     double adjustedValue = xPosi;
 
     if (diff < 20.0) {
-      adjustedValue -= 140.0;
+      adjustedValue -= 160.0;
     }
     else if (diff < 40.0) {
-      adjustedValue -= 120.0;
+      adjustedValue -= 140.0;
     }
     else if (diff < 60.0) {
-      adjustedValue -= 100.0;
+      adjustedValue -= 120.0;
     }
     else if (diff < 80.0) {
-      adjustedValue -= 80.0;
+      adjustedValue -= 100.0;
     }
     else if (diff < 100.0) {
-      adjustedValue -= 60.0;
+      adjustedValue -= 80.0;
     }
     else if (diff < 120.0) {
-      adjustedValue -= 40.0;
+      adjustedValue -= 60.0;
     }
     else if (diff < 140.0) {
+      adjustedValue -= 40.0;
+    }
+    else if (diff < 160.0) {
       adjustedValue -= 20.0;
     }
 

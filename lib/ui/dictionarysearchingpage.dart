@@ -255,11 +255,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     clearOverlayEntry();
 
     OverlayState overlayState = Overlay.of(context);
-    var screenWidth = Utility.getScreenWidth(context);
-    var adjustedXValue = Utility.adjustOverlayXPosition(xPosi, screenWidth);
 
-    if (previousPositionAndMeaning.x != adjustedXValue || previousPositionAndMeaning.y != yPosi || previousPositionAndMeaning.meaning != meaning) {
+    if (previousPositionAndMeaning.x != xPosi || previousPositionAndMeaning.y != yPosi || previousPositionAndMeaning.meaning != meaning) {
       if (dicStage != DictionaryStage.firstzis) {
+        var screenWidth = Utility.getScreenWidth(context);
+        var adjustedXValue = Utility.adjustOverlayXPosition(xPosi, screenWidth);
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
@@ -272,20 +272,17 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                       onPressed: () {},
                     )
                 ));
-        previousPositionAndMeaning.x = adjustedXValue;
-        previousPositionAndMeaning.y = yPosi;
-        previousPositionAndMeaning.meaning = meaning;
+        overlayState.insert(overlayEntry);
+        previousPositionAndMeaning.set(xPosi, yPosi, meaning);
       }
     }
     else {
-      previousPositionAndMeaning.x = 0.0;
-      previousPositionAndMeaning.y = 0.0;
-      previousPositionAndMeaning.meaning = "";
+      previousPositionAndMeaning.set(0.0, 0.0, "");
     }
 
-    if (dicStage != DictionaryStage.firstzis) {
-      overlayState.insert(overlayEntry);
-    }
+    //if (dicStage != DictionaryStage.firstzis) {
+    //  overlayState.insert(overlayEntry);
+    //}
   }
 
   Widget getSearchErrorMessage() {

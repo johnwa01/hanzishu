@@ -37,7 +37,7 @@ class Phrase {
 
   String getPinyinAndMeaning() {
     String str = '[';
-    str += pinyin;
+    str += getPinyin();
     str += '] ';
     str += meaning;
 

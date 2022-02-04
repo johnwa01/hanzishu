@@ -16,6 +16,7 @@ enum ButtonType {
   none,
   char,
   phrase,
+  specialPhrase,
   sound
 }
 
@@ -31,6 +32,8 @@ class _ConversationPageState extends State<ConversationPage> {
   double screenWidth;
   OverlayEntry overlayEntry;
   var lesson;
+  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
+      0.0, 0.0, "");
 
   @override
   void initState() {
@@ -91,19 +94,29 @@ class _ConversationPageState extends State<ConversationPage> {
       theDicOverlayEntry = null;
     }
 
-    OverlayState overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(
-        builder: (context) =>Positioned(
-            top: posiY,
-            left: posiX,
-            child: FlatButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              onPressed: () {},
-            )
-        ));
-    overlayState.insert(overlayEntry);
+    if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
+      var screenWidth = Utility.getScreenWidth(context);
+      var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+
+      OverlayState overlayState = Overlay.of(context);
+      overlayEntry = OverlayEntry(
+          builder: (context) =>
+              Positioned(
+                  top: posiY,
+                  left: adjustedXValue,
+                  child: FlatButton(
+                    child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+                    color: Colors.blueAccent,
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  )
+              ));
+      overlayState.insert(overlayEntry);
+      previousPositionAndMeaning.set(posiX, posiY, meaning);
+    }
+    else {
+      previousPositionAndMeaning.set(0.0, 0.0, "");
+    }
   }
 
   Positioned getPositionedButton(int id, PositionAndSize posiAndSize, ButtonType buttonType) {
@@ -148,8 +161,15 @@ class _ConversationPageState extends State<ConversationPage> {
           var meaning = ZiManager.getPinyinAndMeaning(id);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
-        else if (buttonType == ButtonType.phrase){
-          var phrase = thePhraseList[id];
+        else if (buttonType == ButtonType.phrase || buttonType == ButtonType.specialPhrase){
+          var phrase;
+          if (buttonType == ButtonType.phrase) {
+            phrase = thePhraseList[id];
+          }
+          else {
+            phrase = theSpecialPhraseList[id];
+          }
+
           TextToSpeech.speak(phrase.chars);
 
           var meaning = phrase.getPinyinAndMeaning();
@@ -182,50 +202,61 @@ class _ConversationPageState extends State<ConversationPage> {
       var conv = theSentenceList[sentId].conv;
       var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      var position = PositionAndSize(25.0, 33.0 + 140.0 * j, 20.0, 20.0, 0.0, 0.0);
+      var position = PositionAndSize(25.0, 33.0 + 150.0 * j, 20.0, 20.0, 0.0, 0.0);
       buttons.add(getPositionedButton(j, position, ButtonType.sound));
 
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
         var id = ZiManager.findIdFromChar(oneChar);
 
-        var position = PositionAndSize(50.0 + 35.0 * i, 30.0 + 140.0 * j, 30.0, 30.0, 0.0, 0.0);
+        var position = PositionAndSize(50.0 + 30.0 * i, 30.0 + 150.0 * j, 28.0, 28.0, 0.0, 0.0);
 
         buttons.add(getPositionedButton(id, position, ButtonType.char));
       }
 
       ButtonType buttonType;
-      var previousChar = "|";
+      var previousChar = '|';
+      var phrase;
       var xPosi = 50.0;
       for (int i = 0; i < convWithSeparation.length; i++) {
         var oneSeparation = convWithSeparation[i];
 
         int separationCount = 1;
 
-        if (oneSeparation == "|") {
+        if (oneSeparation == '|' || Utility.specialChar(oneSeparation)) {
           xPosi += 12.0;
         }
         else {
-          var id = 0;
-          if (previousChar == "|") {
+          var id = -1;
+          if (previousChar == '|' || Utility.specialChar(previousChar)) {
             var width;
             // complete the whole separation block after "|"
             if ((separationCount =
                 Utility.findSeparationCount(convWithSeparation, i)) == 1) {
-              width = 20.0;
+              width = 25.0; //20.0;
               id = ZiManager.findIdFromChar(oneSeparation);
               buttonType = ButtonType.char;
             }
             else {
               width = 25.0 * separationCount;
               var subStr = convWithSeparation.substring(i, i + separationCount);
-              id = PhraseManager.getPhraseId(subStr);
-              buttonType = ButtonType.phrase;
+              phrase = PhraseManager.getPhraseByName(subStr);
+              if (phrase != null) {
+                id = phrase.id;
+                buttonType = ButtonType.phrase;
+              }
+              else {
+                phrase = PhraseManager.getSpecialPhraseByName(subStr);
+                if (phrase != null) {
+                  id = phrase.id;
+                  buttonType = ButtonType.specialPhrase;
+                }
+              }
             }
 
-            if (id != -1) {
+            if ( id != -1) {
               var position = PositionAndSize(
-                  xPosi, 100.0 + 140.0 * j, width, 20.0, 0.0, 0.0);
+                  xPosi, 100.0 + 150.0 * j, width, 20.0, 0.0, 0.0);
               buttons.add(getPositionedButton(id, position, buttonType));
 
               xPosi += width;
