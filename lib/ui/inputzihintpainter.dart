@@ -12,7 +12,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/engine/inputzimanager.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/utility.dart';
 
@@ -23,19 +23,35 @@ class InputZiHintPainter extends BasePainter {
   double screenWidth;
   bool showHint;
   String char;
+  TypingType typingType;
 
   InputZiHintPainter({
-    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.char
+    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.char, this.typingType
   });
 
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-    this.width = screenWidth;  // set the base class width variable
+    this.width = screenWidth; // set the base class width variable
 
     if (showHint) {
       displayHintMessage(18.0, char);
     }
+    else {
+      displayShiftKeyNote();
+    }
+  }
+
+  displayShiftKeyNote() {
+    String note;
+    if (typingType == TypingType.LeadComponents) {
+      note = "Note: use 'shift-z' to show components to keyboard mapping.";
+    }
+    else {
+      note = "Note: use 'shift-a' to 'shift-y' to show expanded components. Use 'shift-z' to show mapping.";
+    }
+
+    displayTextWithValue(note, 10.0, 0.0, 18.0, Colors.blue);
   }
 
   displayHintMessage(double fontSize, String char) {

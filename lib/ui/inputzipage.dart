@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
@@ -42,11 +43,13 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousValueWithLowercase = "";
   List<String> ziCandidates = null;
   bool showHint = false;
+  //String previousOverlayImagePath = "";
 
   OverlayEntry overlayEntry;
   //TypingType previousOverlayType = TypingType.FreeTyping;
   //int previousOverlayIndex = 0;
-  var previousOverlayParameters = InputZiOverlayParameters(TypingType.FreeTyping, 0, false, '');
+  var previousOverlayParameters = InputZiOverlayParameters(TypingType.FreeTyping, 0, false, '', false);
+  int dismissCount = 0;
 
   int updateCounter = 0;
 
@@ -215,9 +218,16 @@ class _InputZiPageState extends State<InputZiPage> {
     if (!overlayParameters.isEqual(previousOverlayParameters)) {
         var imageName;
         var fullPath;
+        double imageLeft = 150.0;
+        double imageWidth = 100.0;
+        double imageHeight = 135.0;
+
         if (overlayParameters.isFullComponents) {
             if (overlayParameters.fullComponentsLetter == 'Z') {
-              imageName = "GG4.png";
+              imageName = theZiForIntroductionList[0].hintImage;
+              imageLeft = 20.0;
+              imageWidth = 350.0;
+              imageHeight = 150.0;
             }
             else {
               var pair = ComponentManager.getGroupAndIndexFromLetter(
@@ -227,41 +237,29 @@ class _InputZiPageState extends State<InputZiPage> {
             }
             fullPath = "assets/typing/" + imageName;
         }
-   //     else {
-   //       imageName = theInputZiManager
-   //           .getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId)
-   //           .hintImage;
-   //       if (imageName != null) {
-   //         fullPath = "assets/typingexercise/" + imageName;
-   //       }
-   //     }
-
-        var inputZiHintPainter = InputZiHintPainter(
-            lineColor: Colors.amber,
-            completeColor: Colors.blueAccent,
-            screenWidth: screenWidth //350 /*TODO: temp*/
-        );
 
         OverlayState overlayState = Overlay.of(context);
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
                   top: 50,//65, //65.0, //85.0, //posiY,
-                  left: 150, //100, //0.0, //posiX,
+                  left: imageLeft, //100, //0.0, //posiX,
                   child: Image.asset(
                     fullPath,
-                    width: 80.0, //350.0,
-                    height: 110.0,
-                    //fit: BoxFit.fitWidth,
+                    width: imageWidth, //350.0,
+                    height: imageHeight,
+                    fit: BoxFit.fitWidth,
                   ),
                 ));
         overlayState.insert(overlayEntry);
-        //previousOverlayType = type;
-        //previousOverlayIndex = index;
         previousOverlayParameters.assign(overlayParameters);
+        dismissCount = 0;
       }
       else {
-        previousOverlayParameters.init();
+        dismissCount += 1;
+        if (dismissCount >= 2) { // work around to the two messages for one key input issue
+          previousOverlayParameters.justDismissed = true;
+        }
       }
   }
 
@@ -425,7 +423,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     //TODO: temp disable in order to test component shapes
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
-      var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter);
+      var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter, false);
       showOverlay(context, overlayParameters);
 
       justCompletedFullCompDisplay = true;
@@ -534,7 +532,7 @@ class _InputZiPageState extends State<InputZiPage> {
           children: <Widget>[
             Flexible(
               child: Text(
-                  "Hanzishu typing is fast and easy!\n\nFirst, you break a Chinese character into components, then type the components in sequence, just like the way you type letters of an English word.\n",
+                  "Hanzishu typing is fast and easy!\n\nFirst, you break a Chinese character into components. Then, type as many components as necessary in sequence, just like the way you type letters of an English word.\n",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
@@ -556,7 +554,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Text(
-                  "For example: To type character '品'，first, you break it into three components '口', '口', and '口'; find the corresponding keyboard keys 'i', 'i' and 'i'. Then, type 'iii' in the editing field and choose '品' from the list of characters below the editing field. You can also use space key to choose the first one from the list. The Hanzishu typing code will convert letters 'iii' into '品' in editing field.",
+                  "For example: To type character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use space bar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu typing code will convert the letters you typed in the editing field into '品'.",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
@@ -621,13 +619,13 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var title = 'Hanzishu Component Input Method';
     if (typingType == TypingType.ForIntroduction) {
-      title = 'Characters with 3 or more components';
+      title = 'Introduction';
     }
     else if (typingType == TypingType.LeadComponents) {
-      title = 'Characters with 2 components';
+      title = 'Guided typing';
     }
     else if (typingType == TypingType.ExpandedComponents) {
-      title = 'Characters with 1 component';
+      title = 'Typing exercises';
     }
 
     if (typingType == TypingType.ForIntroduction && currentIndex == 0) {
@@ -735,12 +733,12 @@ class _InputZiPageState extends State<InputZiPage> {
     return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Flexible(
+          SizedBox( //Flexible(
             child: Image.asset(
               "assets/typing/" + theZiForIntroductionList[0].hintImage,
-              width: 300.0,
-              height: 100.0,
-              fit: BoxFit.fitHeight,  // make sure it doesn't overflow the height.
+              width: 350.0, //300.0,
+              height: 150.0, //100.0,
+              fit: BoxFit.fitWidth,
             )
           ),
 
@@ -806,7 +804,8 @@ class _InputZiPageState extends State<InputZiPage> {
         completeColor: Colors.blueAccent,
         screenWidth: screenWidth, //350 /*TODO: temp*/
         showHint: this.showHint,
-        char: zi.zi
+        char: zi.zi,
+        typingType: typingType
     );
 
     return WillPopScope(

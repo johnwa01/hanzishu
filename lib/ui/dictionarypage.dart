@@ -35,8 +35,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   double screenWidth;
   DictionaryStage dicStage;
   OverlayEntry overlayEntry;
-  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
-      0.0, 0.0, "");
+ // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
+ //     0.0, 0.0, "");
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
