@@ -12,5 +12,5 @@ var theLevelList = [
   Level(7, theNumberOfLessonsInLevels[6], false, "Shopping"),
   Level(8, theNumberOfLessonsInLevels[7], false, "Travel"),
   Level(9, theNumberOfLessonsInLevels[8], false, "Transportation"),
-  Level(10, theNumberOfLessonsInLevels[9], false, "Entertainment and Sports"),
+  Level(10, theNumberOfLessonsInLevels[9], false, "Entertainments and Sports"),
 ];

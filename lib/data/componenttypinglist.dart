@@ -196,13 +196,13 @@ var theFullExpandedComponentList = [
 
 var theZiForIntroductionList=[
   ZiWithComponentsAndStrokes("键", ["Tl", "Xh", "B2"], "GG6.png", ""),
-  ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "-> 日, 日, 日 -> o, o, o"),
-  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "-> 厂, 丁 -> k, j"),  // move down
-  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "-> 十, 又 -> a, n"),
-  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "-> 八, 刀 -> r, v"),
-  ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "-> 木, 日, 一 -> l, o, g"),
-  ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "-> 日, 刀, 口 -> o, v, i"),
-  ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "-> 口, 人, 一, 口 -> i, e, g, i"),
+  ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "日 > o, 日 > o, 日 > o"),
+  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 > k, 丁 > j"),  // move down
+  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 > a, 又 > n"),
+  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "八 > r, 刀 > v"),
+  ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "木 > l, 日 > o, 一 > g"),
+  ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "日 > o, 刀 > v, 口 > i"),
+  ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "口 > i, 人 > e, 一 > g, 口 > g, i"),
 ];
 
 var theZiForLeadCompExerciseList=[

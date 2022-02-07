@@ -95,7 +95,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       overlayEntry = OverlayEntry(
           builder: (context) =>
               Positioned(
-                top: 160.0, //posiY,
+                top: 100.0, //posiY,
                 left: 80.0, //posiX,
                 child: Image.asset(
                   "assets/typing/" + fullExpandedComp.imageName,
@@ -179,7 +179,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "1. According to rules listed in Note 1, divide the character into components (Lead Components or Expanded Components).",
+                "1. According to rules listed in Note 2, divide the character into components (Lead Components or Expanded Components).",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -187,7 +187,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "2. According to the components/keyboard mapping in Note 2, type the character's components in sequence through keyboard.",
+                "2. According to the components/keyboard mapping in Note 3, type the character's components in sequence through keyboard.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -202,19 +202,11 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           ),
           Flexible(
             child: Text(
-                "All the fold strokes map to component '乙'/key 'b' as shown below:",
+                "All the fold strokes map to component '乙'/key 'b' as shown in Note 4.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-                "assets/typing/Strokes.png",
-                width: 400.0,
-                height: 250.0),
-          ),
-          SizedBox(height: fontSize),
           Flexible(
             child: Text(
                 "b. If the character has 2 components, after typing the two components, if you don't see your character, you can continue to type two make-up strokes: last stroke of each of the two components of the character.",
@@ -233,7 +225,14 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-              "Note 1: The rules for breaking character into components:\n--Don't break strokes that are crossed through each other, ex: never break the strokes of character '井' into separate components, unless you are reading its strokes.;\n--Ok to break two strokes if they are disconnected or just touched, ex: '明' into '日' and '月', '古' into '十' and '口';\n--Break into bigger components if available, ex: '房' into '户' and '方' instead of into 4 coomopnents;",
+                "Note 1: You can double click the context in the editing field to copy / paste it to other applications.",
+                style: TextStyle(fontSize: fontSize),
+                textAlign: TextAlign.left
+            ),
+          ),
+          Flexible(
+            child: Text(
+              "Note 2: The rules for breaking character into components:\n--Don't break strokes that are crossed through each other, ex: never break the strokes of character '井' into separate components, unless you are reading its strokes.;\n--Ok to break two strokes if they are disconnected or just touched, ex: '明' into '日' and '月', '古' into '十' and '口';\n--Break into bigger components if available, ex: '房' into '户' and '方' instead of into 4 coomopnents;",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,
@@ -243,7 +242,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-              "Note 2: The components and keyboard mapping are shown below. You can click them to see their expanded components associated to them. To type a component or its expanded component, simply type the corresponding keyboard key.",
+              "Note 3: The components and keyboard mapping are shown below. You can click them to see their expanded components associated to them. To type a component or its expanded component, simply type the corresponding keyboard key.",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,
@@ -298,27 +297,19 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               ]
           ),
           SizedBox(height: fontSize),
-          //Flexible(
-          //  child: Text(
-          //      "Note 3: Full component mapping:",
-          //      style: TextStyle(fontSize: fontSize),
-          //      textAlign: TextAlign.left
-          //  ),
-          //),
-          //Container(
-          //  alignment: Alignment.center,
-          //  child: Image.asset(
-          //  "assets/typing/FullComponents.png",
-          //  width: 400.0,
-          //  height: 250.0),
-          //),
-          //SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "Note 3: You can double click the context in the editing field to copy / paste it to other applications.",
+                "Note 4: stroke mapping table:",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Image.asset(
+                "assets/typing/Strokes.png",
+                width: 390.0,
+                height: 150.0),
           ),
           //     SizedBox(height: 18),
         ]

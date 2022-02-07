@@ -185,9 +185,9 @@ class DictionaryPainter extends BreakoutPainter {
     posiSize.transY += 35.0;
     displayTypingCode(ziIndex, posiSize);
 
-    displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
+    //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue("Break out: ", 10.0, 385.0, 20.0, Colors.blue);
+    displayTextWithValue("Break out: ", 10.0, 350.0, 20.0, Colors.blue);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
   }

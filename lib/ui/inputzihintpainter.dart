@@ -54,7 +54,7 @@ class InputZiHintPainter extends BasePainter {
     displayTextWithValue(note, 10.0, 0.0, 18.0, Colors.blue);
   }
 
-  displayHintMessage(double fontSize, String char) {
+  displayHintMessage_old(double fontSize, String char) {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
     List<String> components = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
@@ -144,6 +144,87 @@ class InputZiHintPainter extends BasePainter {
     var strokeCodes = DictionaryManager.getStrokeTypingCodes(leadTypingStrokes);
     var typingCodes = DictionaryManager.getOneTypingCode(compCodes, strokeCodes);
     displayTextWithValue(typingCodes, xPosi, 0.0, size, Colors.cyan);
+  }
+
+  displayHintMessage(double fontSize, String char) {
+    var searchingZiId = DictionaryManager.getSearchingZiId(char);
+    List<String> components = List<String>();
+    DictionaryManager.getAllComponents(searchingZiId, components);
+
+    var typingStrokes = "";
+    if (components.length < 3) {
+      typingStrokes = DictionaryManager.getAllTypingStrokes(components);
+    }
+
+    var leadComps = DictionaryManager.getAllLeadComponents(components);
+    var leadTypingStrokes = "";
+    if (leadComps.length < 3) {
+      leadTypingStrokes = DictionaryManager.getLeadTypingStrokes(typingStrokes);
+    }
+
+    var compCodes= DictionaryManager.getAllComponentCodes(leadComps);
+    var strokeCodes = DictionaryManager.getStrokeTypingCodes(leadTypingStrokes);
+    var typingCodes = DictionaryManager.getOneTypingCode(compCodes, strokeCodes);
+
+    double size = 18.0;
+    double halfSize = size/1.5;
+    double xPosi = 10.0;
+
+    for (int i = 0; i < components.length; i++) {
+      if (i != 0) {
+        xPosi += halfSize;
+        displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize;
+      }
+      drawComponentZi(components[i], xPosi, 0.0, size, size, size, Colors.blue, true, 1);
+      xPosi += size;
+      displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
+      xPosi += halfSize;
+      if (components[i] !=  leadComps[i]) {
+        drawComponentZi(
+            leadComps[i],
+            xPosi,
+            0.0,
+            size,
+            size,
+            size,
+            Colors.blue,
+            true,
+            1);
+        xPosi += size;
+        displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize;
+      }
+
+      displayTextWithValue(typingCodes[i], xPosi, 0.0, size, Colors.blue);
+    }
+
+    for (int j = 0; j < typingStrokes.length; j++) {
+      xPosi += halfSize;
+      displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
+      xPosi += halfSize;
+      drawStrokeZi(typingStrokes[j], xPosi, 0.0, size, size, size, Colors.blue, true, 1.0);
+      xPosi += size;
+      displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
+      xPosi += halfSize;
+      if (typingStrokes[j] != leadTypingStrokes[j]) {
+        drawStrokeZi(
+            leadTypingStrokes[j],
+            xPosi,
+            0.0,
+            size,
+            size,
+            size,
+            Colors.blue,
+            true,
+            1.0);
+        xPosi += size;
+        displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize;
+      }
+
+      displayTextWithValue(typingCodes[components.length + j], xPosi, 0.0, size, Colors.blue);
+    }
   }
 
   @override
