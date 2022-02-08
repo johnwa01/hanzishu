@@ -420,8 +420,8 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       var char = comp.charOrNameOfNonchar;
       var strokes = comp.strokes;
-//TEMP: all uses strokes for testing purpose - just comment out the else part.
-      if (!comp.isChar) {
+//TEMP: all uses strokes for testing purpose - just comment out the if/else part.
+ //     if (!comp.isChar) {
         buildBaseZi(
             strokes,
             transX,
@@ -431,11 +431,11 @@ class BasePainter extends CustomPainter{
             ofColor, /*int hitTestId,*/
             isSingleColor,
             ziLineWidth);
-      }
-      else {
-        displayTextWithValue(
-            char, transX, transY, charFontSize, Colors.blue[800]);
-      }
+ //     }
+ //     else {
+ //       displayTextWithValue(
+ //           char, transX, transY, charFontSize, Colors.blue[800]);
+ //     }
     }
   }
 

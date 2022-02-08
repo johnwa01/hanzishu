@@ -61,6 +61,7 @@ flutter:
      - assets/breakout.png
      - assets/conversations.png
      - assets/quiz.png
+     - assets/components/LC00.png
      - assets/components/LC11.png
      - assets/components/LC12.png
      - assets/components/LC13.png

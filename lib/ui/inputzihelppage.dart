@@ -118,7 +118,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   {
     var image;
     if (keyGroup == 0 && keyIndex == 0) {
-      image = "C00.png"; // the empty image without content
+      image = "C00.png"; // the empty image without content, actual LC00.png
     }
     else {
       image = theComponentManager.getComponentByGroupAndIndex(
@@ -299,7 +299,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "Note 4: stroke mapping table:",
+                "Note 4: stroke table",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),

@@ -422,6 +422,7 @@ class _InputZiPageState extends State<InputZiPage> {
       setTextByChosenZiIndex(selectionIndex, false);
     }
     //TODO: temp disable in order to test component shapes
+    /*
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter, false);
       showOverlay(context, overlayParameters);
@@ -436,6 +437,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
+    */
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
         initOverlay();
@@ -443,6 +445,7 @@ class _InputZiPageState extends State<InputZiPage> {
       //hasRunLowercase = false;
       setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
     }
+    /*
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
       justCompletedPosting = false;
@@ -509,6 +512,7 @@ class _InputZiPageState extends State<InputZiPage> {
       // only init when a lower case letter is set to make sure the value lasts long enough.
       initInitialControllerTextValue();
     }
+    */
   }
 
   initInitialControllerTextValue() {
