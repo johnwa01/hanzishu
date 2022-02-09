@@ -22,7 +22,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Typing Method"),
+        title: Text("Hanzishu Component Input Method"),
       ),
       body: Center
         (

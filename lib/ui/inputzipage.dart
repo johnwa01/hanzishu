@@ -536,14 +536,14 @@ class _InputZiPageState extends State<InputZiPage> {
           children: <Widget>[
             Flexible(
               child: Text(
-                  "Hanzishu typing is fast and easy!\n\nFirst, you break a Chinese character into components. Then, type as many components as necessary in sequence, just like the way you type letters of an English word.\n",
+                  "Hanzishu component input method for typing Chinese characters is fast and easy!\n\nFirst, you break a Chinese character into components. Then, type as many components as necessary in sequence, just like the way you type letters of an English word.\n",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
             ),
             Flexible(
               child: Text(
-                "Hanzishu typing uses standard English keyboard. The following chart shows a conceptional mapping of components to keys. Use this chart as a reference before you remember them.\n",
+                "Hanzishu input method uses standard English keyboard. The following chart shows a conceptional mapping of components to keys. Use this chart as a reference before you remember them.\n",
                   style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.left
               ),
@@ -558,7 +558,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Text(
-                  "For example: To type character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use space bar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu typing code will convert the letters you typed in the editing field into '品'.",
+                  "For example: To type character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use space bar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu input method code will convert the letters you typed in the editing field into '品'.",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
