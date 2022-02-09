@@ -126,7 +126,7 @@ Sentence(109, "往前走三个街区。", "Walk straight ahead for three blocks.
   Sentence(120, "到处都有，很便宜。", "They are everywhere, and very cheap.", 51, null, [], "到处|都|有，很|便宜。"),
   Sentence(121, "飞机马上就要起飞了。", "Airplane will take off soon.", 52, null, [], "飞机|马上|就要|起飞了。"),
   Sentence(122, "乘客们请登机。", "Passengers please start boarding.", 52, null, [], "乘客们|请|登机。"),
-  Sentence(123, "本次列车开往苹果园方向。", "This train is heading toward Pinguo Yuan direciton.", 53, null, [], "本次|列车|开往|苹果园|方向。"),
+  Sentence(123, "本次列车开往苹果园方向。", "This train is heading toward Pinguo Yuan direction.", 53, null, [], "本次|列车|开往|苹果园|方向。"),
   Sentence(124, "下一站是西单。", "Next station is Xidan.", 53, null, [], "下一站|是|西单。"),
 Sentence(125, "比赛几点钟开始？", "When will the game start?", 54, null, [], "比赛|几点钟|开始？"),
 Sentence(126, "上午九点二十分。", "Nine twenty in the morning.", 54, null, [116], "上午|九点|二十分。"),

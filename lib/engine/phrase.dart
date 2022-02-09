@@ -29,7 +29,7 @@ class Phrase {
       chars.runes.forEach((int rune) {
         var char = new String.fromCharCode(rune);
         var zi = theZiManager.getZiByChar(char);
-        pinyin += zi.pinyin;
+          pinyin += zi.pinyin;
       });
       return pinyin;
     }
