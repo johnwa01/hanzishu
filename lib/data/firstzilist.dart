@@ -59,7 +59,7 @@ var theFirstZiList = [
   FirstZi("已", 1741),
   FirstZi("巳", 1742),
   FirstZi("弓", 1755),
-  FirstZi("孑", 1771),
+  FirstZi("子", 1771),
   FirstZi("女", 1804),
   FirstZi("幺", 1871),
   FirstZi("也", 1887),
@@ -187,4 +187,3 @@ var theFirstZiList = [
   FirstZi("鬼", 3708),
   FirstZi("黑", 3712),
 ];
-
