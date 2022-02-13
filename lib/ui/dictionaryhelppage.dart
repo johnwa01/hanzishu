@@ -164,7 +164,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "1. From the Basic Character Table, find & tap the FIRST Basic Character that this character contains.\nEx: For Character '你'， tap '小' which is the only/first Basic Character it contains.",
+                "1. From the Basic Character Table, find and tap the FIRST Basic Character that this character contains.\nEx: For Character '你'， tap '小' which is the only/first Basic Character it contains.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -180,7 +180,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "1b. If the character doesn't contain any Basic Character, get & tap the first stroke of the character. Note that in the table, '乙' represents all of the turning strokes.\nEx: For character '扎'， tap stroke '一'; for character '丝', tap stroke '乙'.",
+                "1b. If the character doesn't contain any Basic Character, get the first stroke of the character and tap the corresponding one at the beginning of the table. Note that all of the fold strokes map to '乙'.\nEx: For character '扎'， tap stroke '一'; for character '丝', tap stroke '乙'.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -206,7 +206,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-              "Note: The number within the [] of Basic Character Table is the starting stroke count in that group. Same with the character list page except it excludes the count of the Basic Character itself.",
+              "Note: The number within the [] of Basic Character Table is the starting stroke count in that group. Same with the character list page.",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,

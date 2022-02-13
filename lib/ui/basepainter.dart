@@ -354,7 +354,7 @@ class BasePainter extends CustomPainter{
       else {
         double textTransYAdjusted = textTransYAdjust(transY, heightY);
         displayText(
-            id, listType, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
+            id, listType, transX, textTransYAdjusted, charFontSize, ofColor/*Colors.blue[800]*/);
       }
     }
 
@@ -485,7 +485,11 @@ class BasePainter extends CustomPainter{
   // currently used for compound zi animation
   void drawCenterZi(int ziId, ZiListType listType) {
     var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-    drawRootZi(ziId, listType, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, Colors.brown/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
+    var charColor = Colors.blue;  //[800];
+    if (ziId != theCurrentCenterZiId) {
+      charColor = Colors.brown;
+    }
+    drawRootZi(ziId, listType, posiSize.transX, posiSize.transY, posiSize.width, posiSize.height, posiSize.charFontSize, charColor/*ziColor*/, /*isSingleColor:*/ true, posiSize.lineWidth, /*createFrame:*/ true, false /*rootZiLearned*/, false/*withPinyin*/, Colors.cyan /*TODO*/, true);
   }
 
   /*
@@ -701,7 +705,7 @@ class BasePainter extends CustomPainter{
             posiSize.width,
             posiSize.height,
             posiSize.charFontSize,
-            ziColor, /*isSingleColor:*/
+            Colors.blue, //ziColor, /*isSingleColor:*/  //Center zi set to color blue, diff from others.
             true,
             posiSize.lineWidth, /*createFrame:*/
             true,
@@ -942,12 +946,12 @@ class BasePainter extends CustomPainter{
         comps,
         160.0,
         posi.transY,
-        posi.charFontSize,
-        posi.charFontSize,
-        posi.charFontSize,
-        Colors.cyan, //this.lineColor,
+        posi.charFontSize * 1.3,
+        posi.charFontSize * 1.3,
+        posi.charFontSize * 1.3,
+        Colors.blue, // cyan, //this.lineColor,
         true,
-        posi.charFontSize * 0.05);
+        posi.charFontSize * 0.07);
   }
 
   // assume a single comp zi. used in dictionary.
@@ -961,12 +965,12 @@ class BasePainter extends CustomPainter{
           comp.strokesString,
           110.0,
           posi.transY,
-          posi.charFontSize,
-          posi.charFontSize,
-          posi.charFontSize, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
-          Colors.cyan, //this.lineColor,
+          posi.charFontSize * 1.3,
+          posi.charFontSize * 1.3,
+          posi.charFontSize * 1.3, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
+          Colors.blue,  //cyan, //this.lineColor,
           true,
-          posi.charFontSize * 0.05);
+          posi.charFontSize * 0.07);
     }
   }
 
@@ -981,12 +985,12 @@ class BasePainter extends CustomPainter{
           comp.strokesString,
           110.0,
           posi.transY,
-          posi.charFontSize,
-          posi.charFontSize,
-          posi.charFontSize, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
-          Colors.cyan, //this.lineColor,
+          posi.charFontSize * 1.3,
+          posi.charFontSize * 1.3,
+          posi.charFontSize * 1.3, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
+          Colors.blue,   //cyan, //this.lineColor,
           true,
-          posi.charFontSize * 0.05);
+          posi.charFontSize * 0.07);
     }
   }
 

@@ -48,7 +48,7 @@ class InputZiHintPainter extends BasePainter {
       note = "Note: use 'shift-z' to show components to keyboard mapping.";
     }
     else {
-      note = "Note: use 'shift-a' to 'shift-y' to show expanded components. Use 'shift-z' to show mapping.";
+      note = "Note: use 'shift-a' to 'shift-y' to show Expanded Components. Use 'shift-z' to show mapping.";
     }
 
     displayTextWithValue(note, 10.0, 0.0, 18.0, Colors.blue);

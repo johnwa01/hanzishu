@@ -145,19 +145,32 @@ class DictionaryPainter extends BreakoutPainter {
 
     var posi = PositionManager.getDicAnimatedZiPositionAndSize();
 
-    if (compoundZiCurrentComponentId > 0) {
-      // for compound zi animation action only
-      //compoundZiCurrentComponentId
+    var charColor = Colors.blue;
+    if (compoundZiCurrentComponentId != ziIndex) {
+      // for animation's component chars
+      charColor = Colors.brown;
+    }
 
-      if (ziListType == ZiListType.searching) {
-        // in this case, compoundZiCurrentComponentId is actually the id of a searchingZi itself (not a component), that is, detailedZi.
-        if (shouldDrawCenter) {
-          var ziChar = DictionaryManager.getChar(compoundZiCurrentComponentId);
-          displayTextWithValue(ziChar, posi.transX, posi.transY, posi.charFontSize, Colors.blue);
-        }
+    // compoundZiCurrentComponentId is also used for compound zi animation action
+    if (ziListType == ZiListType.searching) {
+      // in this case, compoundZiCurrentComponentId is actually the id of a searchingZi itself (not a component), that is, detailedZi.
+      if (compoundZiCurrentComponentId > 0 && shouldDrawCenter) {
+        var ziChar = DictionaryManager.getChar(compoundZiCurrentComponentId);
+        displayTextWithValue(ziChar, posi.transX, posi.transY, posi.charFontSize, charColor);
       }
-      else {
-        drawComponentZiById(compoundZiCurrentComponentId, posi.transX, posi.transY + 25.0, posi.charFontSize, posi.charFontSize, posi.charFontSize, Colors.blue, false, posi.lineWidth);
+    }
+    else {
+      if (compoundZiCurrentComponentId >= 0) {
+        drawComponentZiById(
+            compoundZiCurrentComponentId,
+              posi.transX,
+              posi.transY + 25.0,
+              posi.charFontSize,
+              posi.charFontSize,
+              posi.charFontSize,
+              charColor,
+              false,
+              posi.lineWidth);
       }
     }
 

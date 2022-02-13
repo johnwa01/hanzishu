@@ -40,17 +40,20 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   Widget getLessonSections(BuildContext context, int lessonId) {
-    return Column(
+    // put scrollview since I get render overflow issue
+    return SingleChildScrollView(
+      child: Column(
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(30),
-          ),
+          //Container(
+          //  padding: EdgeInsets.all(30),
+          //),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 OpenHelper.getImageButton(context, lessonId, "assets/charactertree.png", LessonSection.FullCharacterTree, false),
-                OpenHelper.getImageButton(context, lessonId, "assets/characterlist.png", LessonSection.Characters, false),
+                //OpenHelper.getImageButton(context, lessonId, "assets/characterlist.png", LessonSection.Characters, false),
+                OpenHelper.getImageButton(context, lessonId, "assets/breakout.png", LessonSection.Characters, false),
               ],
             ),
             padding: EdgeInsets.all(20),
@@ -69,13 +72,14 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  OpenHelper.getImageButton(context, lessonId, "assets/characterlist.png", LessonSection.Typing, false),
+                  OpenHelper.getImageButton(context, lessonId, "assets/quiz.png", LessonSection.Typing, false),
                   OpenHelper.getImageButton(context, lessonId, "assets/quiz.png", LessonSection.Quiz, false),
                 ],
             ),
             padding: EdgeInsets.all(20),
           ),
         ]
+      ),
     );
   }
 }

@@ -91,7 +91,7 @@ class _ComponentPageState extends State<ComponentPage> {
       title = 'Memorize components';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Be familiar with the expanded components';
+      title = 'Be familiar with the Expanded Components';
     }
 
     return Scaffold
@@ -229,7 +229,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'You used the above chart as a reference in your introduction typing. Since we use standard English keyboard which would not show the components, we need to memorize them. This is the first of the three exercises to help you memorize which component maps to which key.',
+                      'You used the above mapping chart as a reference in your introduction typing. Since we use standard English keyboard which would not show the components, we need to memorize the mapping. This is the first of the three exercises to help you memorize which component maps to which key.',
                       style: TextStyle(fontSize: 18)
                   ),
                 )
@@ -258,7 +258,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'For easier memorization, the key/component pairs are divided into six groups according to the first stroke of the components.',
+                  'For easier memorization, the component/key pairs are divided into six groups according to the first stroke of the components.',
                   style: TextStyle(fontSize: 18)
                 ),
               )
@@ -534,7 +534,7 @@ class _ComponentPageState extends State<ComponentPage> {
         return Flexible (
           child: Text(
               //'Each Lead Component (in red) has some Expanded Components (in black) associated to it. Those Expanded Components look more or less similar to their corresponding Lead Component and you type the SAME keyboard key for the whole group. Therefore it is important to get more and more familiar with them over the time of actual typing.',
-              "The above chart shows the component '日'（key letter 'O') and its expanded components, whose shapes look more or less similar to the component '日'. To type an expanded component (ex: '自'), guess or remember its component (ex: '日') and corresponding key (ex: key letter 'O'）, then type the SAME key.",
+              "The above chart shows the component '日'（key letter 'O') and its Expanded Components, whose shapes look more or less similar to the component '日'. To type an Expanded Component (ex: '自'), guess or remember its component (ex: '日') and corresponding key (ex: key letter 'O'）, then type the SAME key.",
               style: TextStyle(fontSize: 18.0)
           ),
         );
@@ -958,7 +958,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = "WOW!";
-        content = "You even know the expanded components now! Move on to the last guided typing to try it out...";
+        content = "You even know the Expanded Components now! Move on to the last guided typing to try it out...";
      }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}

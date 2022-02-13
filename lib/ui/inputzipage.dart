@@ -421,8 +421,7 @@ class _InputZiPageState extends State<InputZiPage> {
       //hasRunLowercase = false;
       setTextByChosenZiIndex(selectionIndex, false);
     }
-    //TODO: temp disable in order to test component shapes
-    /*
+    //Note: temp disable in order to test component shapes - UpperCase and LowerCase
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter, false);
       showOverlay(context, overlayParameters);
@@ -437,7 +436,6 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(false);
       _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
-    */
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
         initOverlay();
@@ -445,7 +443,6 @@ class _InputZiPageState extends State<InputZiPage> {
       //hasRunLowercase = false;
       setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
     }
-    /*
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       // reset the completed flag. reset only at this time.
       justCompletedPosting = false;
@@ -512,7 +509,6 @@ class _InputZiPageState extends State<InputZiPage> {
       // only init when a lower case letter is set to make sure the value lasts long enough.
       initInitialControllerTextValue();
     }
-    */
   }
 
   initInitialControllerTextValue() {
@@ -543,7 +539,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Text(
-                "Hanzishu input method uses standard English keyboard. The following chart shows a conceptional mapping of components to keys. Use this chart as a reference before you remember them.\n",
+                "Hanzishu method uses standard English keyboard. The following chart shows a conceptional mapping of Lead Components to keys. Use this chart as a reference before you remember them.\n",
                   style: TextStyle(fontSize: 15.0),
                 textAlign: TextAlign.left
               ),
@@ -558,7 +554,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             Flexible(
               child: Text(
-                  "For example: To type character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use space bar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu input method code will convert the letters you typed in the editing field into '品'.",
+                  "For example: To type Chinese character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use spacebar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu input method code will convert the letters you typed in the editing field into Chinese character '品'.",
                   style: TextStyle(fontSize: 15.0),
                   textAlign: TextAlign.left
               ),
@@ -953,7 +949,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.LeadComponents) {
       title = "Wonderful!";
-      content = "You have learned the method well! You just need to get yourself familiar with the expanded components in the next session.";
+      content = "You have learned the method well! You just need to get yourself familiar with the Expanded Components in the next session.";
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = "Congratulation!";

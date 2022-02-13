@@ -195,21 +195,21 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "a. If the character has only 1 component, after typing the component first, if you don't see your character, you can continue to type up to 3 make-up strokes: first, second, and last stroke of the character.",
+                "a. If the character has only 1 component, after typing the component first, if you don't see your character, you can continue to type up to three make-up strokes: first, second, and last stroke of the character.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
           ),
           Flexible(
             child: Text(
-                "All the fold strokes map to component '乙'/key 'b' as shown in Note 4.",
+                "For those strokes which are also components, you type a stroke just like typing a component. For those fold strokes which are not components, you treat them all as stroke/component '乙'. Note 4 is a full stroke table.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
           ),
           Flexible(
             child: Text(
-                "b. If the character has 2 components, after typing the two components, if you don't see your character, you can continue to type two make-up strokes: last stroke of each of the two components of the character.",
+                "b. If the character has 2 components, after typing the two components, if you don't see your character, you can continue to type up to two make-up strokes: last stroke of each of the two components of the character.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -217,7 +217,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "3. You can pick the desired character whenever you see it from the list below typing field. You can also use Space key to pick the first character in the list.",
+                "3. You can pick the desired character whenever you see it from the list below typing field. You can also use spacebar to pick the first character in the list.",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),
@@ -232,7 +232,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           ),
           Flexible(
             child: Text(
-              "Note 2: The rules for breaking character into components:\n--Don't break strokes that are crossed through each other, ex: never break the strokes of character '井' into separate components, unless you are reading its strokes.;\n--Ok to break two strokes if they are disconnected or just touched, ex: '明' into '日' and '月', '古' into '十' and '口';\n--Break into bigger components if available, ex: '房' into '户' and '方' instead of into 4 coomopnents;",
+              "Note 2: The rules for breaking character into components:\n--Never break strokes that are crossed through each other, ex: don't break the strokes of character '井' into separate components;\n--Ok to break two strokes if they are disconnected or just touched, ex: '明' into '日' and '月', '古' into '十' and '口';\n--Break into bigger components if available, ex: '房' into '户' and '方' instead of into 4 coomopnents;",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,
@@ -242,7 +242,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-              "Note 3: The components and keyboard mapping are shown below. You can click them to see their expanded components associated to them. To type a component or its expanded component, simply type the corresponding keyboard key.",
+              "Note 3: The Lead Components and keyboard mapping are shown below. You can click them to see their Expanded Components associated to them. To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key.",
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left,
               //overflow: TextOverflow.ellipsis,
@@ -299,7 +299,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           SizedBox(height: fontSize),
           Flexible(
             child: Text(
-                "Note 4: stroke table",
+                "Note 4: Stroke table",
                 style: TextStyle(fontSize: fontSize),
                 textAlign: TextAlign.left
             ),

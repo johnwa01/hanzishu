@@ -70,7 +70,8 @@ class InputZiPainter extends BasePainter {
         x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
       }
 
-      //TODO: for testing only
+      /*
+      //Note: for testing component stroke drawing only
       if (globalTestDoubleByteCode.length == 2) {
         if (ComponentManager.getComponentByCode(globalTestDoubleByteCode) != null) {
           drawComponentZi(
@@ -85,7 +86,7 @@ class InputZiPainter extends BasePainter {
               60.0 * 0.05);
         }
       }
-/* TODO: Test 31 strokes
+      //Note: to test 31 strokes
       if (globalTestDoubleByteCode.length == 1) {
         if (StrokeManager.getStrokeByCode(globalTestDoubleByteCode) != null) {
           drawStrokeZi(
@@ -100,8 +101,7 @@ class InputZiPainter extends BasePainter {
               60.0 * 0.05);
         }
       }
-*/
-
+      */
     }
 
     /*
