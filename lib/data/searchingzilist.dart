@@ -95,7 +95,7 @@ var theSearchingZiList = [
   SearchingZi(91,"冬", "dōng", "winter",5,["Oi","Me"],"",0,"",""),
   SearchingZi(92,"刍", "chú", "hay",5,["Oc","Ya"],"",0,"",""),
   SearchingZi(93,"乐", "lè", "happy",5,["Fo"],"",0,"",""),
-  SearchingZi(94,"印", "jìn", "print; seal",5,["Vk","Pf"],"",0,"",""),
+  SearchingZi(94,"印", "yìn", "print; seal",5,["Vk","Pf"],"",0,"",""),
   SearchingZi(95,"乎", "hū", "(expressing doubt)",5,["Do"],"",0,"",""),
   SearchingZi(96,"卯", "mǎo", "mortise",5,["Ll","Pf"],"",0,"",""),
   SearchingZi(97,"犯", "fàn", "violate",5,["Lk","Rf"],"",0,"",""),
