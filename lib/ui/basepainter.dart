@@ -662,7 +662,11 @@ class BasePainter extends CustomPainter{
       if (theIsPartialZiMode && memberZiId != 155) {
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
-      drawRootZi(partialZiId, ZiListType.zi, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, ziColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
+      var oneZiColor = ziColor;
+      if (ZiManager.getZiComponentCount(memberZiId) > 2 && !theZiManager.isBasicZi(memberZiId)) {
+        oneZiColor = Colors.blue;
+      }
+      drawRootZi(partialZiId, ZiListType.zi, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, oneZiColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
 
       thePositionManager.updatePositionIndex(memberZiId);
     }

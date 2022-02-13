@@ -305,7 +305,7 @@ class ZiManager {
     var zi = theZiManager.getZi(id);
 
     // Check whether it's single or combined word
-    if (zi.isSingleBody && zi.bodyComposites.count == 0)
+    if (zi.isSingleBody && zi.bodyComposites.length == 0)
     {
       return null;
     }
@@ -541,7 +541,12 @@ class ZiManager {
 
   static int getZiComponentCount(int id) {
     var components = theZiManager.getZiComponents(id);
-    return components.length;
+    if (components != null) {
+      return components.length;
+    }
+    else {
+      return -1;
+    }
   }
 
   //TODO: clean up the two functions
