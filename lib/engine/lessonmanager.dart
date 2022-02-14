@@ -252,7 +252,7 @@ class LessonManager {
     var lesson = theLessonList[lessonId];
     for (var idB in lesson.charsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootMember(idB)) != 0) {
+      if ((rootId = theZiManager.getRootCharOrStar(idB)) != 0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
@@ -261,14 +261,14 @@ class LessonManager {
 
     for (var idB in lesson.convCharsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootMember(idB)) != 0) {
+      if ((rootId = theZiManager.getRootCharOrStar(idB)) != 0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
       }
     }
 
-    if (lesson.comps.length > 0) {
+    if (lesson.comps.length > 0 && !rootMembers.contains(theConst.starCharId)) {
       rootMembers.add(theConst.starCharId);  // the * member
     }
 
@@ -283,6 +283,7 @@ class LessonManager {
 
     for (var idB in lesson.comps) {
       rootId = 0;
+      // This is used for children under starChar only
       if ((rootId = theZiManager.getRootMember(idB)) != 0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);

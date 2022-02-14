@@ -82,7 +82,7 @@ Zi(76,"女","nǚ","female", true, [4.0,0.5,0.05,8.0,0.4,0.35,8.0,0.325,0.525,8.0
 Zi(77,"竿","gān","bamboo pole", false, [], ["41","68"],"u", [],68,0,"bamboo (竹) shaft (干)",0,"h", 68),
 Zi(78,"刊","kān","carve; print; publish", false, [], ["68","43"],"r", [],68,0,"work (干) with a knife (刀)",0,"h", 68),
 Zi(79,"轩","xuān","a small room or veranda with windows", false, [], ["45","68"],"l", [],68,0,"pole (干) in a horse-drawn carriage (车)",0,"h", 68),
-Zi(80,"土","tǔ","dirt; soil", true, [4.0,0.125,0.475,8.0,0.877,0.475,4.0,0.5,0.05,8.0,0.5,0.975,4.0,0.05,0.975,8.0,0.95,0.975], ["170","12","170"],"r", [351,378,443,447,522,616,627,637],643,0,"the stuff that crosses (十) the ground (一)",0,"j", 0),
+Zi(80,"土","tǔ","dirt; soil", true, [4.0,0.125,0.475,8.0,0.877,0.475,4.0,0.5,0.05,8.0,0.5,0.975,4.0,0.05,0.975,8.0,0.95,0.975], ["170","12","170"],"r", [351,378,443,447,522,616,627,637],742,0,"the stuff that crosses (十) the ground (一)",0,"j", 0),
 Zi(81,"赶","gǎn","pursue", false, [], ["48","68"],"b", [],68,0,"use shaft (干) to make cow move (走)",0,"h", 68),
 Zi(82,"香","xiāng","fragrance", false, [], ["72","61"],"b", [],72,0,"grain (禾) smell and pictograph of a nose (日)",0,"h", 0),
 Zi(83,"和","hé","and", false, [], ["72","4"],"r", [],72,0,"mouth (口) and grain (禾) together",0,"h", 72),

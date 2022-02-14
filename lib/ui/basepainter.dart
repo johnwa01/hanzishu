@@ -776,7 +776,7 @@ class BasePainter extends CustomPainter{
   static List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
     var realGroupMembers = getRealGroupMembersFromCache(id, realGroupMembersCache);
 
-    //TODO: temp remove for debugging
+    //Note: You can temp comment out if/cache for debugging
     if (realGroupMembers == null) {
       // hardcode for lesson 2's number to have a sequential display order
       if (id == 1 && internalStartLessonId == 2 && internalEndLessonId == internalStartLessonId) {

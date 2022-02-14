@@ -44,6 +44,8 @@ var theFileIOFile;
 // for removing of dictionary's overlay
 var theDicOverlayEntry;
 
+bool theHavePopulatedLessonsInfo = false;
+
 class theConst {
   static var starCharId = 756;
   static var starChar = '*';

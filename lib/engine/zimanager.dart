@@ -249,6 +249,31 @@ class ZiManager {
     return false;
   }
 
+  int getRootCharOrStar(int ziId) {
+    var pathZiId = ziId;
+
+    while (pathZiId != 0 ) {
+      var lessonZi = theZiManager.getZi(pathZiId);
+      if (lessonZi != null) {
+        // the second layer structure which parent is the pseudo root zi
+        // only the root zi (over 200) can have parent of pseudo root zi (10 of them)
+        if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
+          return pathZiId;
+        }
+        if (Utility.isStarChar(lessonZi.parentId)) {
+          return theConst.starCharId;
+        }
+        else {
+          pathZiId = lessonZi.parentId;
+        }
+      }
+      else {
+        return 0;
+      }
+    }
+
+    return 0;
+  }
   // assume ziId isn't a rootMember itself
   int getRootMember(int ziId) {
     var pathZiId = ziId;

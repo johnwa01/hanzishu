@@ -88,7 +88,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     theStatisticsManager.init(null);
 
-    LessonManager.populateLessonsInfo();
+    //move to lesson
+    //LessonManager.populateLessonsInfo();
   }
 
   final List<Widget> _children =

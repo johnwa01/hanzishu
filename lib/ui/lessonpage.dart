@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
-import 'package:hanzishu/ui/treepage.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
@@ -18,6 +18,18 @@ class _LessonPageState extends State<LessonPage> {
   //_LessonPageState(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage()));
   //}
+
+  @override
+  void initState() {
+    super.initState();
+
+    // should just run once
+    // believe initState only runs once, but added a global variable just to be sure.
+    if (!theHavePopulatedLessonsInfo) {
+      LessonManager.populateLessonsInfo();
+      theHavePopulatedLessonsInfo = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
