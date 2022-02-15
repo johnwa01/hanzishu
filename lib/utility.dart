@@ -252,6 +252,28 @@ class Utility {
         .size;
     //var height = screenSize.height;
     double screenWidth = screenSize.width;
+//    thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO: with exclusion of tree/dict, no need for this anymore?
+
+    return screenWidth;
+  }
+
+  // These two cases need to display the whole thing
+  static double getScreenWidthForTreeAndDict(BuildContext context) {
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
+
+    var ratio = screenSize.height / screenSize.width;
+    double screenWidth;
+    if (ratio >= 1.6) {
+      // actual size
+      screenWidth = screenSize.width;
+    }
+    else {
+      // make width shorter than actual to have enough space to displace the whole tree frame
+      screenWidth = screenSize.width * ratio / 1.6;
+    }
+
     thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
 
     return screenWidth;
