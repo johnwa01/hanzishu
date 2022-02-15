@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:ui';
-
+import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';  // for PathMetric
 import 'package:hanzishu/ui/basepainter.dart';
 
@@ -83,7 +83,7 @@ class AnimatedPathPainter extends CustomPainter {
     final Paint paint = Paint();
     paint.color = Colors.amberAccent;
     paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = 7.0;
+    paint.strokeWidth = xYLength(3.0); //7.0;
 
     canvas.drawPath(path, paint);
   }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
@@ -21,7 +22,6 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
-import 'package:hanzishu/engine/statisticsmanager.dart';
 //import 'package:hanzishu/ui/reviewselectionpage.dart';
 import 'package:hanzishu/ui/toolspage.dart';
 
@@ -32,6 +32,11 @@ import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   runApp(MyApp());
 }
 
@@ -46,7 +51,8 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+    return  MaterialApp(
       theme: _buildShrineTheme(),
       title: 'Hanzishu',
       home: MyHomePage(),
@@ -108,6 +114,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //theDrawingSizeRatio = Utility.getDrawingSizeRatio(context);
+
     theLessonsPage = _children[0]; // for refresh the Lessons completed page after a quiz
 
     final colorScheme = Theme.of(context).colorScheme;

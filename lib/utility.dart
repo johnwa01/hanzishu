@@ -160,69 +160,8 @@ class ScreenManager {
   static var screenWidth = 375; //UIScreen.main.bounds.width
   static var screenHeight = 600; //UIScreen.main.bounds.height
 
-  //static var iconAreaHeight = XYLength(CGFloat(55.0))
-  //static var statusBarHeight = XYLength(CGFloat(30.0))
-
-  //var frameWidth: CGFloat
-  //var topEdgeSize: CGFloat
-  //var titleX: CGFloat
-  //var titleY: CGFloat
-
-  //init() {
-  //frameWidth = ScreenManager.screenWidth - XYLength(CGFloat(10.0))  //20.0
-  //topEdgeSize = theTreeTopEdgePosi //CGFloat(72.0) // CGFloat(55.0)
-  //titleX = ScreenManager.screenWidth * 0.25 //0.15 //0.20 //0.33
-  //titleY = XYLength(40.0) //23.0
-
-  //if (ScreenManager.screenWidth < CGFloat(ScreenManager.iPhone7Width)) {
-  //frameWidth = ScreenManager.screenWidth * (ScreenManager.screenWidth / CGFloat(ScreenManager.iPhone7Width)) - XYLength(CGFloat(8.0))
-  //}
-
-  //if (ScreenManager.screenWidth > CGFloat(ScreenManager.iPhone7Width)*1.4) {
-  //var rate = ScreenManager.screenWidth / CGFloat(ScreenManager.iPhone7Width)
-  //if (rate > 1.4) {
-  //rate = 1.4
-  //}
-
-  //frameWidth = ScreenManager.screenWidth / rate - XYLength(CGFloat(8.0))
-  //}
-  //}
-
-  //func getTopEdgeSize() ->CGFloat {
-  //return topEdgeSize
-  //}
-
-  //func getTitleX() ->CGFloat {
-  //return titleX
-  //}
-
-  //func getTitleY() ->CGFloat {
-  //return titleY
-  //}
-
-  //func getFrameWidth() ->CGFloat {
-  //return frameWidth
-  //}
-
-  //func getIconAreaEdgeY() ->CGFloat {
-  //return ScreenManager.screenHeight - ScreenManager.iconAreaHeight
-  //}
-
-  //func getInstructionStartX1() ->CGFloat {
-  //return (ScreenManager.screenWidth - theScreenManager.frameWidth ) / 2.0 + theScreenManager.frameWidth / 8.5
-  //}
-
-  //func getInstructionStartX2() ->CGFloat {
-  //return (ScreenManager.screenWidth - theScreenManager.frameWidth ) / 2.0 + theScreenManager.frameWidth / 5.5
-  //}
-
-  //func getInstructionStartY1() ->CGFloat {
-  //return topEdgeSize + (theFrameHeightY / 12.0)
-  //}
-
-  //func getInstructionStartY2() ->CGFloat {
-  //return topEdgeSize + (theFrameHeightY * 5.0 / 6.5)
-  //}
+  //static double Android3Width = 392.72727272727275;
+  //static double Android3Height = 737.4545454545455;
 }
 
 // adjusted length according to iPhone 8 Plus length which is used in
@@ -232,8 +171,9 @@ class ScreenManager {
 //  return ScreenManager.screenWidth / 414.0 * length;
 //}
 
+// need to use the less ratio one of the x and y ratios
 double xYLength(double xy) {
-  return xy;
+  return xy; //* theDrawingSizeRatio;
 }
 
 class Utility {
@@ -311,11 +251,39 @@ class Utility {
         .of(context)
         .size;
     //var height = screenSize.height;
-    double screenWidth = screenSize.width; //401; //TODO
+    double screenWidth = screenSize.width;
     thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
 
     return screenWidth;
   }
+
+  /*
+  static double getDrawingSizeRatio(BuildContext context) {
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
+    var widthRatio = screenSize.width / ScreenManager.Android3Width;
+    var heightRatio = screenSize.height / ScreenManager.Android3Height;
+
+    return min(widthRatio, heightRatio);
+  }
+
+  // untested
+  static double getScreenWidthForTreeFrameAndDict(BuildContext context) {
+    var screenSize = MediaQuery
+        .of(context)
+        .size;
+
+    var defaultRatio = ScreenManager.Android3Height / ScreenManager.Android3Width; // 1.877778
+    var currentRatio = screenSize.height / screenSize.width;
+
+    if (currentRatio < 1.6) {  // Android3's ratio has a bit of buffer space
+      return screenSize.width * currentRatio / defaultRatio; // narrow the width a bit so that enough height will show
+    }
+
+    return screenSize.width;
+  }
+  */
 
   static int getUniqueNumberFromId(int breakoutIndex, int id, ZiListType listType) {
     if (listType == ZiListType.zi) {

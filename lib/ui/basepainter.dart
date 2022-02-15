@@ -15,7 +15,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class BasePainter extends CustomPainter{
-  static double FrameLineWidth = 1.0;
+  static double FrameLineWidth = xYLength(1.0);
 
   int theCreatedNumber = 0;
   var totalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
@@ -125,7 +125,7 @@ class BasePainter extends CustomPainter{
     path5.close();
     Matrix4 matrix4 = Matrix4.identity();
     matrix4.scale(0.5, 0.5, 0);
-    matrix4.translate(40.0, 20.0, 0.0);
+    matrix4.translate(xYLength(40.0), xYLength(20.0), 0.0);
 
     var path5b = path5.transform(matrix4.storage);
     canvas.drawPath(path5b, paint4);
@@ -302,7 +302,7 @@ class BasePainter extends CustomPainter{
   }
 
   double textTransYAdjust(double transY, double heightY) {
-    return transY - heightY / 2.0;
+    return transY - heightY / 2.0;   //Note: no ratio change here
   }
 
   List<double> getStrokes(int id, ZiListType listType) {
@@ -370,7 +370,7 @@ class BasePainter extends CustomPainter{
           widthX * 0.27,
           heightY * 0.27,
           Colors.amber,
-          3.0);
+          xYLength(3.0));
     }
 
     // TODO: if createFrame, add to data structure for hittest buttons.
@@ -596,7 +596,7 @@ class BasePainter extends CustomPainter{
           posiNewChar.width,
           posiNewChar.height,
           Colors.amber /*MaterialColor ofColor*/,
-          2.0 /*ziLineWidth*/);
+          xYLength(2.0) /*ziLineWidth*/);
     }
 
     var posi = thePositionManager.getHintPosi();
@@ -948,7 +948,7 @@ class BasePainter extends CustomPainter{
     displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
     drawComponentZiList(
         comps,
-        160.0,
+        xYLength(160.0),
         posi.transY,
         posi.charFontSize * 1.3,
         posi.charFontSize * 1.3,
@@ -967,7 +967,7 @@ class BasePainter extends CustomPainter{
     if (comp.strokesString.length > 0) {
       drawStrokeZiList(
           comp.strokesString,
-          110.0,
+          xYLength(110.0),
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,
@@ -987,7 +987,7 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       drawStrokeZiList(
           comp.strokesString,
-          110.0,
+          xYLength(110.0),
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,

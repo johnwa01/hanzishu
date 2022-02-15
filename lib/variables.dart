@@ -45,6 +45,7 @@ var theFileIOFile;
 var theDicOverlayEntry;
 
 bool theHavePopulatedLessonsInfo = false;
+//double theDrawingSizeRatio;
 
 class theConst {
   static var starCharId = 756;
