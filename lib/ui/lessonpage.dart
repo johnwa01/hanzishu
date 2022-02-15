@@ -24,7 +24,7 @@ class _LessonPageState extends State<LessonPage> {
     super.initState();
 
     // should just run once
-    // believe initState only runs once, but added a global variable just to be sure.
+    // believe initState only runs once, but added a global variable in case ReviewPage has run it already.
     if (!theHavePopulatedLessonsInfo) {
       LessonManager.populateLessonsInfo();
       theHavePopulatedLessonsInfo = true;

@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/reviewpainter.dart';
 import 'package:hanzishu/utility.dart';
@@ -63,6 +63,13 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateReviewMap(1);
+
+    // should just run once
+    // believe initState only runs once, but added a global variable in case LessonPage has run it already.
+    if (!theHavePopulatedLessonsInfo) {
+      LessonManager.populateLessonsInfo();
+      theHavePopulatedLessonsInfo = true;
+    }
 
     _controller = new AnimationController(
       duration: Duration(seconds: 4),
@@ -134,7 +141,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       }
     }
 
-    screenWidth = Utility.getScreenWidth(context);
+    //screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
       compoundZiAnimation();

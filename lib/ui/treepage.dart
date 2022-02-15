@@ -134,7 +134,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       }
     }
 
-    screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     treePainter = new TreePainter(
       Colors.amber, //lineColor: Colors.amber,
       Colors.blueAccent, //completeColor: Colors.blueAccent,
