@@ -42,6 +42,11 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
 
+  getSizeRatio() {
+    var defaultFontSize = screenWidth / 16;
+    return defaultFontSize / 25.0; // ratio over original hard coded value
+  }
+
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
@@ -143,6 +148,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
 
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
       compoundZiAnimation();
@@ -432,7 +438,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromReviewPage, List<Widget> buttons) {
-    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviewPage);
+    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviewPage, getSizeRatio());
 
     for (var id in naviMap.keys) {
       var posi = getPositionedButton(naviMap[id], id, id);

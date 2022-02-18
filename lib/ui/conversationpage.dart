@@ -156,7 +156,9 @@ class _ConversationPageState extends State<ConversationPage> {
         }
         else if (buttonType == ButtonType.char) {
           var zi = theZiManager.getZi(id);
-          TextToSpeech.speak(zi.char);
+          if (zi != null) {
+            TextToSpeech.speak(zi.char);
+          }
 
           var meaning = ZiManager.getPinyinAndMeaning(id);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);

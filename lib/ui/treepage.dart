@@ -35,6 +35,11 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
 
+  double getSizeRatio() {
+    var defaultFontSize = screenWidth / 16;
+    return defaultFontSize / 25.0; // ratio over original hard coded value
+  }
+
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
@@ -135,6 +140,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    // for different devices
+    thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
+
     treePainter = new TreePainter(
       Colors.amber, //lineColor: Colors.amber,
       Colors.blueAccent, //completeColor: Colors.blueAccent,
@@ -423,7 +431,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromReviePage, List<Widget> buttons) {
-    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviePage);
+    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviePage, getSizeRatio());
 
     for (var id in naviMap.keys) {
       var posi = getPositionedButton(naviMap[id], id, id);

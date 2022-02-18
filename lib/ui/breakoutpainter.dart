@@ -119,6 +119,8 @@ class BreakoutPainter extends BasePainter {
 
     if (isBreakoutPositionsOnly) {
       breakoutIndex += 1;
+      //posiSize2.width *= getSizeRatio();
+      //posiSize2.height *= getSizeRatio();
       breakoutPositions[Utility.getUniqueNumberFromId(breakoutIndex, id, listType)] = posiSize2;
     }
     else {

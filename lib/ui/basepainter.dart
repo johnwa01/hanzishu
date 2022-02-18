@@ -52,6 +52,15 @@ class BasePainter extends CustomPainter{
 
   //BasePainter({this.lineColor, this.completeColor, this.centerId, this.shouldDrawCenter, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
 
+  double getSizeRatio() {
+    var defaultSize = width / 16.0; // roughly equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
@@ -813,7 +822,7 @@ class BasePainter extends CustomPainter{
         Colors.blue);
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
-    xPosi.value += 80.0; // hardcoded. ignore screenWidth
+    xPosi.value += applyRatio(55.0); // hardcoded. ignore screenWidth
 
     DisplayHintHelper(ziOrPhraseHint, xPosi, posi);
   }
@@ -872,7 +881,7 @@ class BasePainter extends CustomPainter{
     xPosi.value = xPosi.value + hint.length * 8;
     var  indexStart = hint.indexOf('(');
     if (indexStart != null) {
-      xPosi.value = xPosi.value + 20.0;
+      xPosi.value = xPosi.value + applyRatio(20.0);
     }
   }
 
@@ -888,8 +897,9 @@ class BasePainter extends CustomPainter{
     }
   }
 
+  // Note: this path will not change its size regardless of the screen size
   displayNavigationPath(int ziId) {
-    var posi = thePositionManager.getNavigationPosi();
+    var posi = thePositionManager.getTreeNavigationPosi(getSizeRatio());
     displayOneNaviationPathChar(0, ziId, posi);
   }
 
@@ -909,11 +919,11 @@ class BasePainter extends CustomPainter{
       // for lesson, skip those pseudo ones.
       if (isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))) {
         if (zi.id != 1) {
-          posi.transX += xYLength(18.0); // 23.0
+          posi.transX += applyRatio(18.0); // 23.0
           displayTextWithValue(
               " -> ", posi.transX, posi.transY - posi.charFontSize * 0.3,
               posi.charFontSize, Colors.brown);
-          posi.transX += xYLength(36.0); //15.0
+          posi.transX += applyRatio(36.0); //15.0
         }
 
         var frameFillColor = Colors.yellow;

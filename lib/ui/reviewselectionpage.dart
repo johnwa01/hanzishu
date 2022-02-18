@@ -119,7 +119,10 @@ class ReviewLesson {
     if (lessonSelectedEndingId == 0) {
       populateMaximumLessons("Starting Lesson");
       // get real lessons for the level
-      var length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
+      var length = 0;
+      if (selectedLevel > 0) {
+        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
+      }
       var startingLessons = List<ReviewLesson>(length);
       for (var index = 0; index < length; index++) {
         startingLessons[index] = lessons[index];
@@ -273,11 +276,15 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
   setInitLessons() {
     _reviewLessonsStarting = ReviewLesson.getReviewLessonsStarting(_selectedReviewLevelStarting.id, 0);
     _dropdownMenuItemsLessonStarting = buildDropdownMenuItemsLesson(_reviewLessonsStarting);
-    _selectedReviewLessonStarting = _dropdownMenuItemsLessonStarting[0].value;
+    if (_dropdownMenuItemsLessonStarting != null && _dropdownMenuItemsLessonStarting.length > 0) {
+      _selectedReviewLessonStarting = _dropdownMenuItemsLessonStarting[0].value;
+    }
 
     _reviewLessonsEnding = ReviewLesson.getReviewLessonsEnding(_selectedReviewLevelStarting.id, 0);
     _dropdownMenuItemsLessonEnding = buildDropdownMenuItemsLesson(_reviewLessonsEnding);
-    _selectedReviewLessonEnding = _dropdownMenuItemsLessonEnding[0].value;
+    if (_dropdownMenuItemsLessonEnding != null && _dropdownMenuItemsLessonEnding.length > 0) {
+      _selectedReviewLessonEnding = _dropdownMenuItemsLessonEnding[0].value;
+    }
   }
 
   onChangeDropdownItemLessonStarting(ReviewLesson selectedReviewLesson) {

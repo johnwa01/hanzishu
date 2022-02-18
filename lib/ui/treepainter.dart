@@ -28,6 +28,11 @@ class TreePainter extends BasePainter {
     //this._progress = _progress;
   }
 
+  double getSizeRatio() {
+    var defaultSize = width / 16.0; // equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     super.paint(canvas, size);
@@ -35,6 +40,8 @@ class TreePainter extends BasePainter {
     isFromReviewPage = false;
 
     thePositionManager.setFrameWidth(getFrameWidth());
+    thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
+
     drawFrameWithColors(
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);

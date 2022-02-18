@@ -87,12 +87,18 @@ class PositionManager
   static int theBigMaximumNumber = 8;
   //var theTotalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
   var theCurrentSideIndexOfZis = NumberOfZis(0, 0, 0, 0);
-  static double FrameTopEdgeSize = xYLength(35.0);
+  static double defaultFrameTopEdgeSize = 35.0;
+  static double FrameTopEdgeSize = defaultFrameTopEdgeSize; // initial value
+
   static double FrameLeftEdgeSize = xYLength(4.0);
   static double FrameHeightToWidthRatio = 1.2;
 
   var frameWidth = 0.0;
   var theFrameHeightY = 0.0; // = theFrameWidth * theFrameHeightToWidthRatio
+
+  setFrameTopEdgeSizeWithRatio(double sizeRatio) {
+    FrameTopEdgeSize = defaultFrameTopEdgeSize * sizeRatio;
+  }
 
   init() {}
 
@@ -199,14 +205,14 @@ class PositionManager
         charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
   }
 
-  PositionAndSize getNavigationPosi() {
-    // speech icon
+  PositionAndSize getTreeNavigationPosi(double sizeRatio) {
     var xPosi1 = getFrameXPosition(1);
     var yPosi1 = getFrameYPosition(1);
-    var charFontSize = getCharFontSize(ZiOrCharSize.conversationSize);
+    // Not apply sizeRatio for the chars in navigation path, only apply to the space of each char so that it looks bigger
+    var charFontSize = getCharFontSize(ZiOrCharSize.conversationSize) /* sizeRatio*/;
 
-    return PositionAndSize(xPosi1, yPosi1 - charFontSize,
-        charFontSize, charFontSize, charFontSize, 2.0);
+    return PositionAndSize(xPosi1, yPosi1 - charFontSize,  // change to shift just half
+        charFontSize, charFontSize, charFontSize, 2.0 /* sizeRatio*/);
   }
 
   PositionAndSize getPositionAndSize(int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {
@@ -758,30 +764,30 @@ class PositionManager
     return posi;
   }
 
-  static Map<int, PositionAndSize> getNavigationPathPosi(int ziId, bool isFromReviewPage) {
-    var posi = thePositionManager.getNavigationPosi();
+  static Map<int, PositionAndSize> getNavigationPathPosi(int ziId, bool isFromReviewPage, double sizeRatio) {
+    var posi = thePositionManager.getTreeNavigationPosi(sizeRatio);
     Map<int, PositionAndSize> naviMap = Map();
-    getOneNaviationPathPosi(0, ziId, posi, isFromReviewPage, naviMap);
+    getOneNaviationPathPosi(0, ziId, posi, isFromReviewPage, naviMap, sizeRatio);
 
     return naviMap;
   }
 
-  static getOneNaviationPathPosi(int recurLevel, int id, PositionAndSize posi, bool isFromReviewPage, Map<int, PositionAndSize> naviMap) {
+  static getOneNaviationPathPosi(int recurLevel, int id, PositionAndSize posi, bool isFromReviewPage, Map<int, PositionAndSize> naviMap, double sizeRatio) {
     var zi = theZiManager.getZi(id);
     if (zi.id != 1) // till hit root
         {
       var newRecurLevel = recurLevel + 1;
       var parentId = zi.parentId;
 
-      getOneNaviationPathPosi(newRecurLevel, parentId, posi, isFromReviewPage, naviMap);
+      getOneNaviationPathPosi(newRecurLevel, parentId, posi, isFromReviewPage, naviMap, sizeRatio);
     }
 
     // for lesson, skip those pseudo ones.
     if (isFromReviewPage || !Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id)) {
       if (zi.id != 1) {
-        posi.transX += xYLength(18.0); // 23.0
+        posi.transX += 18.0 * sizeRatio; // 23.0
 
-        posi.transX += xYLength(36.0); //15.0
+        posi.transX += 36.0 * sizeRatio; //15.0
       }
 
       naviMap[id] = copyPositionAndSize(posi);

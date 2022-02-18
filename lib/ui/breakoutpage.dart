@@ -183,7 +183,12 @@ class _BreakoutPageState extends State<BreakoutPage> {
 
     var breakoutPositions = theLessonManager.getBreakoutPositions(widget.lessonId);
     if (breakoutPositions.length == 0) {
-      var painter = BreakoutPainter();
+      //var painter = BreakoutPainter();
+      var painter = BreakoutPainter(
+          lineColor: Colors.amber,
+          completeColor: Colors.blueAccent,
+          lessonId: widget.lessonId,
+          screenWidth: screenWidth);
       breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
     }
 

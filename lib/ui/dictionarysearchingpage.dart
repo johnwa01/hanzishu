@@ -53,6 +53,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   int compoundZiCurrentComponentId;
   var currentZiListType = ZiListType.searching;
 
+  getSizeRatio() {
+    var defaultFontSize = screenWidth / 16;
+    return defaultFontSize / 25.0; // ratio over original hard coded value
+  }
+
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
@@ -629,11 +634,6 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
 
     return buttons;
-  }
-
-  getSizeRatio() {
-    var defaultFontSize = screenWidth / 16;
-    return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
   Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
