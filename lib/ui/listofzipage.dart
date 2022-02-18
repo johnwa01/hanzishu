@@ -39,6 +39,15 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     super.dispose();
   }
 
+  double getSizeRatio() {
+    var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
@@ -100,14 +109,14 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
 
         TextToSpeech.speak(str);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
     );
 
     var posiCenter = Positioned(
         top: speechIconInfo.yPosi,
         left: speechIconInfo.xPosi,
-        height: 30.0, //posiAndSize.height,
-        width: 30.0, //posiAndSize.width,
+        height: applyRatio(30.0), //posiAndSize.height,
+        width: applyRatio(30.0), //posiAndSize.width,
         child: butt
     );
 

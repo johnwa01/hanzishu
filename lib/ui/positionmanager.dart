@@ -788,12 +788,12 @@ class PositionManager
     }
   }
 
-  static PositionAndSize getDicAnimatedZiPositionAndSize() {
-    var size = thePositionManager.getCharFontSize(ZiOrCharSize.centerSize) * 1.3;
-    return PositionAndSize(90.0, 20.0, size, size, size, 8.0);
+  static PositionAndSize getDicAnimatedZiPositionAndSize(double sizeRatio) {
+    var size = thePositionManager.getCharFontSize(ZiOrCharSize.centerSize); //1.3
+    return PositionAndSize(90.0*sizeRatio, 20.0*sizeRatio, size*sizeRatio, size*sizeRatio, size*sizeRatio, 8.0*sizeRatio);
   }
 
-  static PositionAndSize getDicAnimationBrushPositionAndSize() {
-    return PositionAndSize(235.0, 130.0, 25.0, 25.0, 25.0, 2.0);
+  static PositionAndSize getDicAnimationBrushPositionAndSize(PositionAndSize ziPosi, double sizeRatio) {
+    return PositionAndSize(ziPosi.transX + ziPosi.width, ziPosi.transY + ziPosi.height, 25.0*sizeRatio, 25.0*sizeRatio, 25.0*sizeRatio, 2.0*sizeRatio);
   }
 }

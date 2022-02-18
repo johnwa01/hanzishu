@@ -164,13 +164,12 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       }
     }
 
-    screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    //screenWidth = Utility.getScreenWidth(context);
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
       compoundZiAnimation();
     }
-
-    screenWidth = Utility.getScreenWidth(context);
 
     return Scaffold
       (
@@ -197,11 +196,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                             currentZiListType,
                             shouldDrawCenter
                         ),
-                        child: Center(
+                        //child: Center(
                           child: Stack(
                               children: displayCharsAndCreateHittestButtons(context)
                           ),
-                        ),
+                        //),
                       ),
                     ),
                     getAnimatedPathPainter(),
@@ -221,12 +220,13 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
   Widget getAnimatedPathPainter() {
     //Note: need to match the dictionarypainter's value
-    var posi = PositionManager.getDicAnimatedZiPositionAndSize();
+
+    var posi = PositionManager.getDicAnimatedZiPositionAndSize(getSizeRatio());
     //var strokes = DictionaryManager.getSearchingZi(searchingZiIndex).strokes;
     if (searchingZiIndex > 0 && !DictionaryManager.isCompoundZi(searchingZiIndex)) {
       var strokes = DictionaryManager.getSingleComponentSearchingZiStrokes(searchingZiIndex);
       return new Positioned(
-        top: posi.transY + 25.0 * 2, // 25 is the navigation text height
+        top: posi.transY + 25.0 * 2 * getSizeRatio(), // 25 is the navigation text height
         left: posi.transX,
         height: posi.height,
         width: posi.width,
@@ -258,7 +258,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     if (previousPositionAndMeaning.x != xPosi || previousPositionAndMeaning.y != yPosi || previousPositionAndMeaning.meaning != meaning) {
       if (dicStage != DictionaryStage.firstzis) {
-        var screenWidth = Utility.getScreenWidth(context);
+        var screenWidth = Utility.getScreenWidth(context); // Ok to use full width here
         var adjustedXValue = Utility.adjustOverlayXPosition(xPosi, screenWidth);
         overlayEntry = OverlayEntry(
             builder: (context) =>
@@ -266,7 +266,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                     top: yPosi,
                     left: adjustedXValue,
                     child: FlatButton(
-                      child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
                       color: Colors.blueAccent,
                       textColor: Colors.white,
                       onPressed: () {},
@@ -348,7 +348,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         TextToSpeech.speak(char);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -378,7 +378,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       },
       onLongPress: () {
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -402,7 +402,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           //_editController.text = "";
         });
       },
-      child: Text('@ ->', style: TextStyle(fontSize: 25.0),),
+      child: Text('@ ->', style: TextStyle(fontSize: 25.0 * getSizeRatio()),),
     );
 
     return butt;
@@ -416,7 +416,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         var searchingZi = theSearchingZiList[searchingZiId];
         TextToSpeech.speak(searchingZi.char);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -442,7 +442,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           ),
         );
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -479,7 +479,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         var zi = DictionaryManager.getSearchingZi(ziId);
         TextToSpeech.speak(zi.char);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -494,15 +494,21 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   CreateNavigationHitttestButtons(DictionaryStage stage, List<Widget> buttons) {
+    var defaultFontSize = screenWidth / 16.0;     // was hardcoded 25.0, use it as the standard
+    var fontSize1 = defaultFontSize * (5.0 / 25.0);
+    var fontSize2 = defaultFontSize * (10.0 / 25.0);
+    var fontSize3 = defaultFontSize * (20.0 / 25.0);
+    var fontSize4 = defaultFontSize * (70.0 / 25.0);
+
     PositionAndSize dicRootPosi = PositionAndSize(
-        10.0, 5.0, 25.0, 25.0, 20.0, 1.0);
+        fontSize2, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
     var button1 = getPositionedNavigationButton(
         dicRootPosi, DictionaryStage.firstzis);
     buttons.add(button1);
 
     if (stage == DictionaryStage.detailedzi) {
       PositionAndSize dicSearchingZiPosi = PositionAndSize(
-          70.0, 5.0, 25.0, 25.0, 20.0, 1);
+          fontSize4, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
       var button2 = getPositionedNavigationButton(
           dicSearchingZiPosi, DictionaryStage.searchingzis);
       buttons.add(button2);
@@ -514,21 +520,27 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     thePositionManager.resetPositionIndex();
 
-    if (dicStage == DictionaryStage.firstzis) {
-      // search button first
-      var searchPosiAndSize = PositionAndSize(screenWidth - 140.0, 5.0, 40.0, 40.0, 0.0, 0.0);
-      //var searchPosi = getSearchPositionedButton(searchPosiAndSize);
-      //buttons.add(searchPosi);
+    var defaultFontSize = screenWidth / 16;     // was hardcoded 25.0 in painter, use it as the standard
+    var hitTestPositionGap = defaultFontSize * (30.0 / 25.0);
+    var hitTestSize = defaultFontSize * (27.0 / 25.0);
+    var startXSize = defaultFontSize * (20.0 / 25.0);
+    var startYSize = defaultFontSize * (60.0 / 25.0); // ratio of 60.0/25.0
+    var helpPara1 = defaultFontSize * (70.0 / 25.0);
+    var helpPara2 = defaultFontSize * (5.0 / 25.0);
+    var helpPara3 = defaultFontSize * (40.0 / 25.0);
+    var valuePara1 = defaultFontSize * (90.0 / 25.0);
+    var valuePara2 = defaultFontSize * (210.0 / 25.0);
 
+    if (dicStage == DictionaryStage.firstzis) {
       // help button next
-      var helpPosiAndSize = PositionAndSize(screenWidth - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      var helpPosiAndSize = PositionAndSize(screenWidth - helpPara1, helpPara2, helpPara3, helpPara3, 0.0, 0.0);
       var helpPosi = getHelpPositionedButton(helpPosiAndSize);
       buttons.add(helpPosi);
 
       for (var j = 0; j < 16; j++) {
         for (var i = 0; i < 12; i++) {
           var positionAndSize = PositionAndSize(
-              20.0 + i * 30.0, 60.0 + j * 30.0, 27.0, 27.0, 0.0, 0.0);
+              startXSize + i * hitTestPositionGap, startYSize + j * hitTestPositionGap, hitTestSize, hitTestSize, 0.0, 0.0);
 
           int indexOfFirstZi = j * 12 + i;
           if (indexOfFirstZi >= theFirstZiList.length) {
@@ -550,7 +562,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       PrimitiveWrapper actualColumnCount = new PrimitiveWrapper(0);
       PositionAndSize startPosition = new PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-      DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
+      DictionaryPainter.getSearchingParameters(screenWidth, length, actualColumnCount, startPosition);
 
       //int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
       int newCharCount = 0;
@@ -599,14 +611,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
     else if (dicStage == DictionaryStage.detailedzi) {
       // for speech icon. Need to match the DictionaryPainter yPosi.
-      var positionAndSize = PositionAndSize(90.0, 210.0, 20.0, 20.0, 0.0, 0.0);
+      var positionAndSize = PositionAndSize(valuePara1, valuePara2, startXSize, startXSize, 0.0, 0.0);
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
       createBreakoutHittestButtons(context, buttons);
 
-      var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize();
+      var ratio =  getSizeRatio();
+      var animatedZiPosi = PositionManager.getDicAnimatedZiPositionAndSize(ratio);
+      var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize(animatedZiPosi, ratio);
       var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, searchingZiIndex);
       buttons.add(drawBihuaPosiCenter);
     }
@@ -615,6 +629,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
 
     return buttons;
+  }
+
+  getSizeRatio() {
+    var defaultFontSize = screenWidth / 16;
+    return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
   Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
@@ -640,7 +659,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         //var meaning = ZiManager.getPinyinAndMeaning(id);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -674,7 +693,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>

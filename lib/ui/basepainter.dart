@@ -31,7 +31,7 @@ class BasePainter extends CustomPainter{
 
   Color lineColor;
   Color completeColor;
-  double width;
+  double width;  //screenWidth
   int centerId;
   bool shouldDrawCenter;
 
@@ -813,7 +813,7 @@ class BasePainter extends CustomPainter{
         Colors.blue);
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
-    xPosi.value += xYLength(45.0);
+    xPosi.value += 80.0; // hardcoded. ignore screenWidth
 
     DisplayHintHelper(ziOrPhraseHint, xPosi, posi);
   }
@@ -842,13 +842,13 @@ class BasePainter extends CustomPainter{
 
           if (id != null) {
             displayTextWithValue('(', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-            xPosi.value = xPosi.value + xYLength(9.0);
+            xPosi.value = xPosi.value + 9.0;
 
-            drawRootZi(id, ZiListType.zi, xPosi.value, posi.transY, xYLength(30.0), xYLength(30.0), thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, xYLength(2.0), false, false, false, Colors.blue, true);
-            xPosi.value = xPosi.value + xYLength(25.0);
+            drawRootZi(id, ZiListType.zi, xPosi.value, posi.transY, 30.0, 30.0, thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, 2.0, false, false, false, Colors.blue, true);
+            xPosi.value = xPosi.value + 25.0;
             displayTextWithValue(')', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
             //DisplayText(theLessonsTextTag, xPosi.value, yPosi, ScreenManager.screenWidth - xYLength(10.0), theAnswerTextHeight, ")", theDefaultSize, UIColor.black);
-            xPosi.value = xPosi.value + xYLength(9.0);
+            xPosi.value = xPosi.value + 9.0;
           }
 
           // find the substring after ]
@@ -872,7 +872,7 @@ class BasePainter extends CustomPainter{
     xPosi.value = xPosi.value + hint.length * 8;
     var  indexStart = hint.indexOf('(');
     if (indexStart != null) {
-      xPosi.value = xPosi.value + xYLength(20.0);
+      xPosi.value = xPosi.value + 20.0;
     }
   }
 
@@ -942,13 +942,13 @@ class BasePainter extends CustomPainter{
       }
   }
 
-  displayFullComponents(int searchingZiId, PositionAndSize posi) {
+  displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, comps);
     displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
     drawComponentZiList(
         comps,
-        xYLength(160.0),
+        160.0 * ratio,
         posi.transY,
         posi.charFontSize * 1.3,
         posi.charFontSize * 1.3,
@@ -959,7 +959,7 @@ class BasePainter extends CustomPainter{
   }
 
   // assume a single comp zi. used in dictionary.
-  displayStrokes(int searchingZiIndex, PositionAndSize posi) {
+  displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio) {
     var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
     displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
     var comp = ComponentManager.getComponentByCode(comps[0]);
@@ -967,7 +967,7 @@ class BasePainter extends CustomPainter{
     if (comp.strokesString.length > 0) {
       drawStrokeZiList(
           comp.strokesString,
-          xYLength(110.0),
+          110.0 * ratio,
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,
@@ -979,7 +979,7 @@ class BasePainter extends CustomPainter{
   }
 
   // assume a single comp zi. used in zi list in lessons.
-  displayCompStrokes(int ziId, PositionAndSize posi) {
+  displayCompStrokes(int ziId, PositionAndSize posi, double ratio) {
     var compCode = ComponentManager.getCompCodeFromZiId(ziId);
     displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
     var comp = ComponentManager.getComponentByCode(compCode);
@@ -987,7 +987,7 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       drawStrokeZiList(
           comp.strokesString,
-          xYLength(110.0),
+          110.0 * ratio,
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,

@@ -12,7 +12,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
 class BreakoutPainter extends BasePainter {
-  static var lessonLeftEdge = xYLength(10.0);
+  var lessonLeftEdge;
 
   int breakoutIndex;
 
@@ -31,10 +31,20 @@ class BreakoutPainter extends BasePainter {
   @override
   void paint(Canvas canvas, Size size) {
     width = screenWidth;
+    lessonLeftEdge = applyRatio(10.0);
     this.canvas = canvas;
     //this.width = size.width;
     isBreakoutPositionsOnly = false;
     displayCharacterDecomposing(lessonId);
+  }
+
+  double getSizeRatio() {
+    var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
   }
 
   Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
@@ -51,16 +61,16 @@ class BreakoutPainter extends BasePainter {
     var lesson = theLessonList[lessonId];
 
     var numberOfNewAnalysisChars = lesson.getNumberOfNewAnalysisChars();
-    var sharedTitleLength = xYLength(170.0);
-    var contentLength = numberOfNewAnalysisChars * xYLength(180.0) + sharedTitleLength;
+    var sharedTitleLength = applyRatio(170.0);
+    var contentLength = numberOfNewAnalysisChars * applyRatio(180.0) + sharedTitleLength;
 
-    var yPositionWrapper = YPositionWrapper(xYLength(100.0));  //170.0
+    var yPositionWrapper = YPositionWrapper(applyRatio(100.0));  //170.0
 
     for (var i = 0; i <= (lesson.convCharsIds.length - 1); i++) {
       if (!isBreakoutPositionsOnly) {
-        drawLine(xYLength(10.0), yPositionWrapper.yPosi - xYLength(20.0),
-            xYLength(600.0), yPositionWrapper.yPosi - xYLength(20.0),
-            Colors.amber, 1);
+        drawLine(applyRatio(10.0), yPositionWrapper.yPosi - applyRatio(20.0),
+            applyRatio(600.0), yPositionWrapper.yPosi - applyRatio(20.0),
+            Colors.amber, applyRatio(1));
       }
       var ziId = lesson.convCharsIds[i];
       var zi = theZiManager.getZi(ziId);
@@ -76,14 +86,19 @@ class BreakoutPainter extends BasePainter {
 
   displayOneCharDissembling(YPositionWrapper yPositionWrapper, int ziId, ZiListType listType, int maxRecurLevel) {
     LessonManager.clearComponentsStructure();
+    if (lessonLeftEdge == null) {
+      lessonLeftEdge = applyRatio(10.0);
+    }
+
     drawZiAndComponentsDissembling(0, 0, ziId, listType, lessonLeftEdge, yPositionWrapper.yPosi);
 
-    yPositionWrapper.yPosi += xYLength(20.0);
+    yPositionWrapper.yPosi += applyRatio(20.0);
     yPositionWrapper.yPosi = LessonManager.getNextYPosition(yPositionWrapper.yPosi);
   }
 
   // for dissembly only
   drawZiAndComponentsDissembling(int recurLevel, int indexInLevel, int id, ZiListType listType, double transX, double transY) {
+    // note: didn't apply sizeRatio to height/width. a bit better without applying it.
     var posiSize2 = PositionAndSize(transX, transY, thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiLineWidth(ZiOrCharSize.assembleDissembleSize));
 
     var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
@@ -95,7 +110,7 @@ class BreakoutPainter extends BasePainter {
       }
 
       if (!isBreakoutPositionsOnly) {
-        drawLine(transX - xYLength(100.0-40.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel-1]-1), transX - xYLength(10.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel]), Colors.amber, 2);
+        drawLine(transX - applyRatio(100.0-40.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel-1]-1), transX - applyRatio(10.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel]), Colors.amber, applyRatio(2));
       }
     }
 
@@ -136,8 +151,9 @@ class BreakoutPainter extends BasePainter {
     {
       var newRecurLevel = recurLevel + 1;
 
+      var size = 100.0 * getSizeRatio();
       for (var i = 0; i < composits.length; i++) {
-        drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + xYLength(100.0), transY); // transY is the original value
+        drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + size, transY); // transY is the original value
       }
 
     }

@@ -18,7 +18,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class DictionaryPainter extends BreakoutPainter {
   Color lineColor;
-  double screenWidth;
+  //double screenWidth; == width in basepainter
   DictionaryStage dicStage;
   int firstZiIndex;  // different meaning for different stage
   int searchingZiIndex;
@@ -32,10 +32,9 @@ class DictionaryPainter extends BreakoutPainter {
 
   Map<int, PositionAndSize> dicBreakoutPositions = Map();
 
-  DictionaryPainter(Color lineColor, double width, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter) {
+  DictionaryPainter(Color lineColor, double screenWidth, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter) {
     this.lineColor = lineColor;
-    this.width = width;
-    //this.screenWidth,
+    this.width = screenWidth;
     this.dicStage = dicStage;
 
     this.firstZiIndex = firstZiIndex;
@@ -44,6 +43,15 @@ class DictionaryPainter extends BreakoutPainter {
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
     this.ziListType = ziListType;
     this.shouldDrawCenter = shouldDrawCenter;
+  }
+
+  double getSizeRatio() {
+    var defaultSize = width / 16.0; // equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
   }
 
   @override
@@ -99,9 +107,16 @@ class DictionaryPainter extends BreakoutPainter {
 */
 
   DisplayNavigationPath(DictionaryStage stage) {
+    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
+    var fontSize1 = defaultFontSize * (5.0 / 25.0);
+    var fontSize2 = defaultFontSize * (10.0 / 25.0);
+    var fontSize3 = defaultFontSize * (35.0 / 25.0);
+    var fontSize4 = defaultFontSize * (70.0 / 25.0);
+    var fontSize5 = defaultFontSize * (105.0 / 25.0);
+    var fontSize6 = defaultFontSize * (140.0 / 25.0);
 
-    displayTextWithValue("@", 10.0, 5.0, 25.0, Colors.blueAccent);
-    displayTextWithValue("->", 35.0, 5.0, 25.0, Colors.blueAccent);
+    displayTextWithValue("@", fontSize2, fontSize1, defaultFontSize, Colors.blueAccent);
+    displayTextWithValue("->", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
 
     if (stage == DictionaryStage.searchingzis || stage == DictionaryStage.detailedzi) {
       // TODO: this line should be called in page so that it'll persist the firstZiIndex value
@@ -112,18 +127,18 @@ class DictionaryPainter extends BreakoutPainter {
       if (firstZiIndex >= 0) {
         var searchingZiIndex = theFirstZiList[firstZiIndex].searchingZiId;
         displayTextWithValue(
-            theSearchingZiList[searchingZiIndex].char, 70.0, 5.0, 25.0,
+            theSearchingZiList[searchingZiIndex].char, fontSize4, fontSize1, defaultFontSize,
             Colors.blueAccent);
       }
     }
     else if (stage == DictionaryStage.help) {
       //var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
-      displayTextWithValue("Help", 70.0, 5.0, 25.0, Colors.blueAccent);
+      displayTextWithValue("Help", fontSize4, fontSize1, defaultFontSize, Colors.blueAccent);
     }
 
     if (stage == DictionaryStage.detailedzi) {
-      displayTextWithValue("->", 105.0, 5.0, 25.0, Colors.blueAccent);
-      displayTextWithValue(theSearchingZiList[searchingZiIndex].char, 140.0, 5.0, 25.0, Colors.blueAccent);
+      displayTextWithValue("->", fontSize5, fontSize1, defaultFontSize, Colors.blueAccent);
+      displayTextWithValue(theSearchingZiList[searchingZiIndex].char, fontSize6, fontSize1, defaultFontSize, Colors.blueAccent);
     }
   }
 
@@ -136,6 +151,20 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayDetailedZi(int ziIndex) {
     thePositionManager.setFrameWidth(getFrameWidth());
 
+    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
+    var fontSize1 = defaultFontSize * (1.0 / 25.0);
+    var fontSize2 = defaultFontSize * (2.0 / 25.0);
+    var fontSize3 = defaultFontSize * (10.0 / 25.0);
+    var fontSize4 = defaultFontSize * (20.0 / 25.0);
+    var fontSize5 = defaultFontSize * (25.0 / 25.0);
+    var fontSize6 = defaultFontSize * (35.0 / 25.0);
+    var fontSize7 = defaultFontSize * (90.0 / 25.0);
+    var fontSize8 = defaultFontSize * (115.0 / 25.0);
+    var fontSize9 = defaultFontSize * (210.0 / 25.0);
+    var fontSize10 = defaultFontSize * (245.0 / 25.0);
+    var fontSize11 = defaultFontSize * (280.0 / 25.0);
+    var fontSize12 = defaultFontSize * (350.0 / 25.0);
+
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
     //    PositionManager.FrameTopEdgeSize, Colors.cyan,
@@ -143,7 +172,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     var detailedZi = theSearchingZiList[ziIndex];
 
-    var posi = PositionManager.getDicAnimatedZiPositionAndSize();
+    var posi = PositionManager.getDicAnimatedZiPositionAndSize(getSizeRatio());
 
     var charColor = Colors.blue;
     if (compoundZiCurrentComponentId != ziIndex) {
@@ -164,7 +193,7 @@ class DictionaryPainter extends BreakoutPainter {
         drawComponentZiById(
             compoundZiCurrentComponentId,
               posi.transX,
-              posi.transY + 25.0,
+              posi.transY + fontSize5,
               posi.charFontSize,
               posi.charFontSize,
               posi.charFontSize,
@@ -175,7 +204,8 @@ class DictionaryPainter extends BreakoutPainter {
     }
 
     // Note: same position as button action in page.
-    var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize();
+    var animatedZiPosi = PositionManager.getDicAnimatedZiPositionAndSize(getSizeRatio());
+    var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize(animatedZiPosi, getSizeRatio());
     DisplayIcon(
         iconPenStrokes,
         posiAndSizeBihua.transX,
@@ -183,24 +213,24 @@ class DictionaryPainter extends BreakoutPainter {
         posiAndSizeBihua.width,
         posiAndSizeBihua.height,
         Colors.amber,
-        2.0);
+        fontSize2);
 
     //Need to match the yPosi in DictionaryPage.
-    displayTextWithValue("Sound: ", 10.0, 210.0, 20.0, Colors.blue);
-    DisplayIcon(iconSpeechStrokes, 90.0, 210.0, 20.0, 20.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, 115.0, 210.0, 20.0, Colors.blue);
+    displayTextWithValue("Sound: ", fontSize3, fontSize9, fontSize4, Colors.blue);
+    DisplayIcon(iconSpeechStrokes, fontSize7, fontSize9, fontSize4, fontSize4, Colors.amber/*MaterialColor ofColor*/, fontSize2/*ziLineWidth*/);
+    displayTextWithValue(detailedZi.pinyin, fontSize8, fontSize9, fontSize4, Colors.blue);
 
-    displayTextWithValue("Meaning: " + detailedZi.meaning, 10.0, 245.0, 20.0, Colors.blue);
+    displayTextWithValue("Meaning: " + detailedZi.meaning, fontSize3, fontSize10, fontSize4, Colors.blue);
 
 
-    var posiSize = PositionAndSize(10.0, 280.0, 20.0, 20.0, 20.0, 1.0);
+    var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
     displayComponentsOrStrokes(ziIndex, posiSize);
-    posiSize.transY += 35.0;
+    posiSize.transY += fontSize6;
     displayTypingCode(ziIndex, posiSize);
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue("Break out: ", 10.0, 350.0, 20.0, Colors.blue);
+    displayTextWithValue("Break out: ", fontSize3, fontSize12, fontSize4, Colors.blue);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
   }
@@ -209,10 +239,10 @@ class DictionaryPainter extends BreakoutPainter {
     var isSingleCompZi = DictionaryManager.isSingleCompZi(searchingZiIndex);
 
     if (isSingleCompZi) {
-      displayStrokes(searchingZiId, posi);
+      displayStrokes(searchingZiId, posi, getSizeRatio());
     }
     else {
-      displayFullComponents(searchingZiId, posi);
+      displayFullComponents(searchingZiId, posi, getSizeRatio());
     }
 
     /*
@@ -251,8 +281,10 @@ class DictionaryPainter extends BreakoutPainter {
   displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
+
+    var fontSize1 = applyRatio(405.0); //425.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
-    var yPositionWrapper = YPositionWrapper(xYLength(425.0));  //170.0
+    var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
   }
 
@@ -277,6 +309,12 @@ class DictionaryPainter extends BreakoutPainter {
     String charStr;
     double yPosi;
 
+    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
+    var smallFontSize = defaultFontSize * (20.0 / 25.0);
+    var fillerSize = defaultFontSize * (5.0 / 25.0);
+    var startYSize = defaultFontSize * (60.0 / 25.0); // ratio of 60.0/25.0
+
+
     for (var j = 0; j < 16; j++) {
       for (var i = 0; i < 12 /*realGroupMembers.length*/; i++) {
         int firstZiId = j * 12 + i;
@@ -284,60 +322,61 @@ class DictionaryPainter extends BreakoutPainter {
           return;
         }
 
-        fontSize = 25.0;
+        fontSize = defaultFontSize;  //25.0
         if (theFirstZiList[firstZiId].char[0] == '[') {
-          fontSize = 20.0;
+          fontSize = smallFontSize;   //20.0
         }
 
         charStr = theFirstZiList[firstZiId].char;
         if (charStr[0] == "[") {
           textColor = Colors.redAccent;
-          yPosi = 60.0 + j * (25.0 + 5.0) /*- 25.0 * 0.25*/;
+          yPosi = startYSize + j * (defaultFontSize + fillerSize) /*- 25.0 * 0.25*/;
         }
         else {
           textColor = Colors.blueAccent;
-          yPosi =  60.0 + j * (25.0 + 5.0) - 25.0 * 0.25;
+          yPosi =  startYSize + j * (defaultFontSize + fillerSize) - defaultFontSize * 0.25;
         }
 
-        displayTextWithValue(charStr, 20.0 + i * (25.0 + 5.0), yPosi, fontSize, textColor);
+        displayTextWithValue(charStr, smallFontSize + i * (defaultFontSize + fillerSize), yPosi, fontSize, textColor);
       }
     }
   }
 
-  static void getSearchingParameters(int numberOfZi, PrimitiveWrapper actualColumnCount, PositionAndSize startPosition) {
+  static void getSearchingParameters(double screenWidth, int numberOfZi, PrimitiveWrapper actualColumnCount, PositionAndSize startPosition) {
+    var defaultFontSize = screenWidth / 16.0;  // was 25.0 as the hardcoded value
     int columnCount = 8;
-    double fontSize = 41.0; //45.0
-    double rowStartPosition = 85.0;
-    double xStartPosition = 12.0;
+    double fontSize = defaultFontSize * (41.0 / 25.0); //45.0
+    double rowStartPosition = defaultFontSize * (70.0 / 25.0);  //85.0
+    double xStartPosition = defaultFontSize * (12.0 / 25.0);
 
     if (numberOfZi > 40 && numberOfZi <= 80) {
       columnCount = 9;
-      fontSize = 37.0; //40.0;
-      rowStartPosition = 80.0;
+      fontSize = defaultFontSize * (37.0 / 25.0); //40.0;
+      rowStartPosition = defaultFontSize * (62.0 / 25.0);
     }
     else if (numberOfZi > 80 && numberOfZi <= 120) {
       columnCount = 10;
-      fontSize = 31.0; //35.0;
-      rowStartPosition = 75.0;
+      fontSize = defaultFontSize * (31.0 / 25.0); //35.0;
+      rowStartPosition = defaultFontSize * (54.0 / 25.0);
     }
     else if (numberOfZi > 120 && numberOfZi <= 135) {
       columnCount = 11;
-      fontSize = 27.0; //30.0;
-      rowStartPosition = 70.0;
+      fontSize = defaultFontSize * (27.0 / 25.0); //30.0;
+      rowStartPosition = defaultFontSize * (46.0 / 25.0);
     }
     else if (numberOfZi > 135) {
       columnCount = 12;
-      fontSize = 26.0; //28.0;
-      rowStartPosition = 65.0;
+      fontSize = defaultFontSize * (26.0 / 25.0); //28.0;
+      rowStartPosition = defaultFontSize * (32.0 / 25.0);
     }
 
     actualColumnCount.value = columnCount;
     startPosition.transX = xStartPosition;
     startPosition.transY = rowStartPosition;
-    startPosition.width = fontSize + 5.0;
-    startPosition.height = fontSize + 5.0;
+    startPosition.width = fontSize + defaultFontSize * (5.0 / 25.0);
+    startPosition.height = fontSize + defaultFontSize * (5.0 / 25.0);
     startPosition.charFontSize = fontSize;
-    startPosition.lineWidth = 1.0;
+    startPosition.lineWidth = defaultFontSize * (1.0 / 25.0);
   }
 
   // Note: searchingZis display uses firstZiIndex as input to show all the zis belonging to the firstZiIndex.
@@ -347,13 +386,15 @@ class DictionaryPainter extends BreakoutPainter {
     PrimitiveWrapper actualColumnCount = new PrimitiveWrapper(0);
     PositionAndSize startPosition = new PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    DictionaryPainter.getSearchingParameters(length, actualColumnCount, startPosition);
+    getSearchingParameters(width, length, actualColumnCount, startPosition);
 
     //int baseStrokeCount = theSearchingZiList[searchingZiId].strokeCount;
     int newCharCount = 0;
     int previousStrokeCount = 0;
     int currentStrokeCount = 0;
-    double strokeIndexFontSize = 15.0;
+
+    var defaultFontSize = width / 16.0;  // was 25.0 as the hardcoded value
+    double strokeIndexFontSize = defaultFontSize * (15.0 / 25.0);
 
     String strokeIndexStr;
 

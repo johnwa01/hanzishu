@@ -52,13 +52,22 @@ class _BreakoutPageState extends State<BreakoutPage> {
   }
   */
 
+  double getSizeRatio() {
+    var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
+    return defaultSize / 25.0;
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
 
     return Scaffold
       (
@@ -121,7 +130,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
             top: posiY,
             left: adjustedXValue,
             child: FlatButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+              child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
               color: Colors.blueAccent,
               textColor: Colors.white,
               onPressed: () {},
@@ -155,7 +164,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
         var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
@@ -178,7 +187,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
     }
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>

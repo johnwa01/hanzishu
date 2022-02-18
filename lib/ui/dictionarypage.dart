@@ -94,7 +94,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       }
     }
 
-    screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
     return Scaffold
       (
@@ -212,18 +212,28 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     thePositionManager.resetPositionIndex();
 
+    var defaultFontSize = screenWidth / 16;     // was hardcoded 25.0 in painter, use it as the standard
+    var hitTestPositionGap = defaultFontSize * (30.0 / 25.0);
+    var hitTestSize = defaultFontSize * (27.0 / 25.0);
+    var startXSize = defaultFontSize * (20.0 / 25.0);
+    var startYSize = defaultFontSize * (60.0 / 25.0); // ratio of 60.0/25.0
+    var helpPara1 = defaultFontSize * (70.0 / 25.0);
+    var helpPara2 = defaultFontSize * (5.0 / 25.0);
+    var helpPara3 = defaultFontSize * (40.0 / 25.0);
+
+
     if (dicStage == DictionaryStage.firstzis) {
-      var searchPosiAndSize = PositionAndSize(screenWidth - 140.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      //var searchPosiAndSize = PositionAndSize(screenWidth - 140.0, 5.0, 40.0, 40.0, 0.0, 0.0);
 
       // help button next
-      var helpPosiAndSize = PositionAndSize(screenWidth - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      var helpPosiAndSize = PositionAndSize(screenWidth - helpPara1, helpPara2, helpPara3, helpPara3, 0.0, 0.0);
       var helpPosi = getHelpPositionedButton(helpPosiAndSize);
       buttons.add(helpPosi);
 
       for (var j = 0; j < 16; j++) {
         for (var i = 0; i < 12; i++) {
           var positionAndSize = PositionAndSize(
-              20.0 + i * 30.0, 60.0 + j * 30.0, 27.0, 27.0, 0.0, 0.0);
+              startXSize + i * hitTestPositionGap, startYSize + j * hitTestPositionGap, hitTestSize, hitTestSize, 0.0, 0.0);
 
           int indexOfFirstZi = j * 12 + i;
           if (indexOfFirstZi >= theFirstZiList.length) {
