@@ -90,7 +90,7 @@ class PositionManager
   static double defaultFrameTopEdgeSize = 35.0;
   static double FrameTopEdgeSize = defaultFrameTopEdgeSize; // initial value
 
-  static double FrameLeftEdgeSize = xYLength(4.0);
+  static double FrameLeftEdgeSize = 4.0;
   static double FrameHeightToWidthRatio = 1.2;
 
   var frameWidth = 0.0;
@@ -338,12 +338,12 @@ class PositionManager
     var lessonId = levelLessonPair.lessonId;
     var numberOfLessons =    theNumberOfLessonsInLevels[levelId - 1];
 
-    var firstXWithTwoMembers = xYLength(75.0);
-    var firstXWithThreeMembers = xYLength(5.0);
-    var xGapForSevenTotalMax = xYLength(30.0);
-    var yGapForSevenTotalMax = xYLength(70.0);
-    var widthForSevenTotalMax = xYLength(100.0);
-    var heightForSevenTotalMax = xYLength(100.0);
+    var firstXWithTwoMembers = 75.0;
+    var firstXWithThreeMembers = 5.0;
+    var xGapForSevenTotalMax = 30.0;
+    var yGapForSevenTotalMax = 70.0;
+    var widthForSevenTotalMax = 100.0;
+    var heightForSevenTotalMax = 100.0;
 
     var x = 0.0;
     var y = transYPosition;

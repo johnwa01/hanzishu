@@ -15,7 +15,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class BasePainter extends CustomPainter{
-  static double FrameLineWidth = xYLength(1.0);
+  static double FrameLineWidth = 1.0;
 
   int theCreatedNumber = 0;
   var totalSideNumberOfZis = NumberOfZis(0, 0, 0, 0);
@@ -134,7 +134,7 @@ class BasePainter extends CustomPainter{
     path5.close();
     Matrix4 matrix4 = Matrix4.identity();
     matrix4.scale(0.5, 0.5, 0);
-    matrix4.translate(xYLength(40.0), xYLength(20.0), 0.0);
+    matrix4.translate(40.0, 20.0, 0.0);
 
     var path5b = path5.transform(matrix4.storage);
     canvas.drawPath(path5b, paint4);
@@ -379,7 +379,7 @@ class BasePainter extends CustomPainter{
           widthX * 0.27,
           heightY * 0.27,
           Colors.amber,
-          xYLength(3.0));
+          3.0);
     }
 
     // TODO: if createFrame, add to data structure for hittest buttons.
@@ -605,7 +605,7 @@ class BasePainter extends CustomPainter{
           posiNewChar.width,
           posiNewChar.height,
           Colors.amber /*MaterialColor ofColor*/,
-          xYLength(2.0) /*ziLineWidth*/);
+          2.0 /*ziLineWidth*/);
     }
 
     var posi = thePositionManager.getHintPosi();
@@ -856,7 +856,7 @@ class BasePainter extends CustomPainter{
             drawRootZi(id, ZiListType.zi, xPosi.value, posi.transY, 30.0, 30.0, thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, 2.0, false, false, false, Colors.blue, true);
             xPosi.value = xPosi.value + 25.0;
             displayTextWithValue(')', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-            //DisplayText(theLessonsTextTag, xPosi.value, yPosi, ScreenManager.screenWidth - xYLength(10.0), theAnswerTextHeight, ")", theDefaultSize, UIColor.black);
+            //DisplayText(theLessonsTextTag, xPosi.value, yPosi, ScreenManager.screenWidth - 10.0, theAnswerTextHeight, ")", theDefaultSize, UIColor.black);
             xPosi.value = xPosi.value + 9.0;
           }
 
@@ -872,7 +872,7 @@ class BasePainter extends CustomPainter{
     }
     else {
       displayTextWithValue(hint, xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-      //DisplayText(theLessonsTextTag, xPosi, yPosi, theAnswerStringLength - xYLength(15.0), theAnswerTextHeight * 2, hint, theDefaultSize, UIColor.black);
+      //DisplayText(theLessonsTextTag, xPosi, yPosi, theAnswerStringLength - 15.0, theAnswerTextHeight * 2, hint, theDefaultSize, UIColor.black);
       HintSubstringContainsZi(hint, xPosi);
     }
   }

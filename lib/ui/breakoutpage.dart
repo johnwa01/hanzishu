@@ -164,7 +164,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
         var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 20.0),),
     );
 
     var posiCenter = Positioned(
@@ -192,7 +192,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
     }
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
+    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>

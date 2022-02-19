@@ -16,7 +16,7 @@ import 'package:hanzishu/utility.dart';
 
 //NOTE: Right now NOT used by InputZiPage.
 class InputZiComponentPainter extends BasePainter {
-  static var lessonLeftEdge = xYLength(10.0);
+  static var lessonLeftEdge = 10.0;
 
   int breakoutIndex;
 

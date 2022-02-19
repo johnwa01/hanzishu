@@ -750,7 +750,7 @@ class _ComponentPageState extends State<ComponentPage> {
   // One center usage left
   Widget getText(AnswerPosition position) {
     var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
-    var fontSize = xYLength(20.0); // 30.0
+    var fontSize = 20.0; // 30.0
     var currentType = theComponentManager.getCurrentType();
 
     var backgroundColor = Colors.white;  // make it a non-material color first
@@ -773,7 +773,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (position == AnswerPosition.center) {
       backgroundColor = Colors.white;
-      fontSize = xYLength(100.0);
+      fontSize = 100.0;
     }
 
     // actually no effect if no pressed action since the background will be white in that case.
@@ -803,9 +803,9 @@ class _ComponentPageState extends State<ComponentPage> {
 
   // is only used in question in InputZi, therefore only used in center position.
   Widget getZiContainer(/*AnswerPosition position,*/ bool withNonCharFrame) {
-    var size = xYLength(55.0); //35
+    var size = 55.0; //35
     //if (position == AnswerPosition.center) {
-      size = xYLength(120.0);
+      size = 120.0;
     //}
 
     var backgroundColor = Colors.white;  // make it a non-material color first
@@ -898,7 +898,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
       return Container(
         child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: xYLength(18.0)),),
+          child: Text(result, style: TextStyle(fontSize: 18.0),),
           color: Colors.blueAccent, // Colors.brown,
           textColor: Colors.white,
           onPressed: () {

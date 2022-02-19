@@ -140,12 +140,12 @@ class _QuizPageState extends State<QuizPage> {
       var currentValues = theQuizManager.getCurrentValues();
 
       return Container(
-        height: xYLength(150.0), //180
-          width: xYLength(150.0),
+        height: 150.0, //180
+          width: 150.0,
         child: IconButton(
             icon: Icon(
                 Icons.volume_up,
-                size: xYLength(150.0)    // 150
+                size: 150.0,   // 150
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {
@@ -271,19 +271,19 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
-    var fontSize = xYLength(35.0); // 30.0
+    var fontSize = 35.0; // 30.0
     var currentType = theQuizManager.getCurrentType();
 
     if (currentType == QuizType.conversations) {
-      fontSize = xYLength(25);
+      fontSize = 25;
     }
 
     if (position == AnswerPosition.center) {
       if (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars) {
-        fontSize = xYLength(120.0); //60.0;
+        fontSize = 120.0; //60.0;
       }
       else {
-        fontSize = xYLength(50);
+        fontSize = 50.0;
       }
     }
 
@@ -322,9 +322,9 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getZiContainer(AnswerPosition position, bool withNonCharFrame) {
-    var size = xYLength(55.0); //35
+    var size = 55.0; //35
     if (position == AnswerPosition.center) {
-      size = xYLength(120.0);
+      size = 120.0;
     }
 
     var noncharId = getNoncharId(position);
@@ -392,7 +392,7 @@ class _QuizPageState extends State<QuizPage> {
 
       return Container(
           child: FlatButton(
-            child: Text(result, style: TextStyle(fontSize: xYLength(25.0)),),
+            child: Text(result, style: TextStyle(fontSize: 25.0),),
             color: Colors.blueAccent,
             textColor: Colors.white,
             onPressed: () {

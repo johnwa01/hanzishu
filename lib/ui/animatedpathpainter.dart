@@ -83,7 +83,7 @@ class AnimatedPathPainter extends CustomPainter {
     final Paint paint = Paint();
     paint.color = Colors.amberAccent;
     paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = xYLength(3.0); //7.0;
+    paint.strokeWidth = 3.0; //7.0;
 
     canvas.drawPath(path, paint);
   }
