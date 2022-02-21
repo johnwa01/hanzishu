@@ -305,8 +305,11 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getThirdHeaderOfGroups() {
     return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: <Widget>[
-          SizedBox(width: 30),
+          SizedBox(width: 40),
           Row(
               children: <Widget>[
                 //SizedBox(width: 20),
@@ -330,6 +333,9 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getHeaderOfComponentInGroup() {
     return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: <Widget>[
           Row(
               children: <Widget>[
@@ -374,6 +380,9 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getHeaderOfComponent() {
     return Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: <Widget>[
           Row(
               children: <Widget>[

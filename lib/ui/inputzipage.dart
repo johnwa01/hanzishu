@@ -802,7 +802,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ),
                 SizedBox(width: fontSize),
-                SizedBox(width: 70.0),
+                SizedBox(width: 30.0),
                 SizedBox(
                   child: Text(
                       "Hint: " + theZiForIntroductionList[currentIndex].hintText ,
@@ -986,12 +986,12 @@ class _InputZiPageState extends State<InputZiPage> {
     String content;
 
     if (typingType == TypingType.ForIntroduction) {
-    title = "Good job!";
-    content = "You’ve mastered all six Component Groups! In the next exercise, you will memorize the Components in each group.";
+      title = "Good job!";
+      content = "You did it! Let's go through the typing exercises now.";
     }
     else if (typingType == TypingType.LeadComponents) {
       title = "Good job!";
-      content = "You did it! Let’s get to know the Expanded Components. ";
+      content = "You did it again! Let’s get to know the Expanded Components. ";
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = "Congratulations!";
