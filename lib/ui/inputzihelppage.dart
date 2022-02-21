@@ -150,106 +150,34 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   Widget getHelpContentView(BuildContext context) {
     var fontSize = 18.0;
     return Column(
-        mainAxisSize: MainAxisSize.min,
+        //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: fontSize/2),
-          Flexible(
-            child: Text(
-                "Hanzishu Component Input Method is a 'what you see is what you type' method. Like typing letters of an English word through keyboard, you type the components of a Chinese character through keyboard in sequence according to components/keyboard mapping.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
+          SizedBox(height: theConst.fontSizes[2] / 2),
+
+          Text(
+              "What are Components?",
+              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              textAlign: TextAlign.start
           ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "This app provides the preparation steps to remember the keyboard positions of those Lead Components and to be familiar with their Expanded Components. It also provides some guided typing so that you can speed up fast. After that, you can start your own typing.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
+          Text(
+              "Components are elements of a Character. The Hanzishu Component Input Method breaks Components into two types. Lead Components are the base Components. And each Lead Component houses a collection of sub-components called Expanded Components.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
           ),
-          SizedBox(height: fontSize +3),
-          Flexible(
-            child: Text(
-              "Steps to type a Chinese character",
-              style: TextStyle(fontSize: fontSize + 3, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.left
-            ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "How it works",
+              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              textAlign: TextAlign.start
           ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "1. According to rules listed in Note 2, divide the character into components (Lead Components or Expanded Components).",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
+          Text(
+              "The Hanzishu Component Input Method matches each Lead Component with a key on the English keyboard to create a Component-key pairing. Reference this chart to visualize how Lead Components are mapped to English letters.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
           ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "2. According to the components/keyboard mapping in Note 3, type the character's components in sequence through keyboard.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "a. If the character has only 1 component, after typing the component first, if you don't see your character, you can continue to type up to three make-up strokes: first, second, and last stroke of the character.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          Flexible(
-            child: Text(
-                "For those strokes which are also components, you type a stroke just like typing a component. For those fold strokes which are not components, you treat them all as stroke/component '乙'. Note 4 is a full stroke table.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          Flexible(
-            child: Text(
-                "b. If the character has 2 components, after typing the two components, if you don't see your character, you can continue to type up to two make-up strokes: last stroke of each of the two components of the character.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "3. You can pick the desired character whenever you see it from the list below typing field. You can also use spacebar to pick the first character in the list.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "Note 1: You can double click the context in the editing field to copy / paste it to other applications.",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
-          ),
-          Flexible(
-            child: Text(
-              "Note 2: The rules for breaking character into components:\n--Never break strokes that are crossed through each other, ex: don't break the strokes of character '井' into separate components;\n--Ok to break two strokes if they are disconnected or just touched, ex: '明' into '日' and '月', '古' into '十' and '口';\n--Break into bigger components if available, ex: '房' into '户' and '方' instead of into 4 coomopnents;",
-              style: TextStyle(fontSize: fontSize),
-              textAlign: TextAlign.left,
-              //overflow: TextOverflow.ellipsis,
-              //maxLines: 4
-            ),
-          ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-              "Note 3: The Lead Components and keyboard mapping are shown below. You can click them to see their Expanded Components associated to them. To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key.",
-              style: TextStyle(fontSize: fontSize),
-              textAlign: TextAlign.left,
-              //overflow: TextOverflow.ellipsis,
-              //maxLines: 4
-            ),
-          ),
-          SizedBox(height: fontSize),
+          SizedBox(height: theConst.fontSizes[2]),
 
           Row(
               children: <Widget>[
@@ -296,13 +224,132 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 Flexible(child: getOneKeyboardButton(0, 0)),
               ]
           ),
-          SizedBox(height: fontSize),
-          Flexible(
-            child: Text(
-                "Note 4: Stroke table",
-                style: TextStyle(fontSize: fontSize),
-                textAlign: TextAlign.left
-            ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Expanded Components are grouped under each Lead Component-key pairing. To type in Chinese, Components are grouped into sequences of English letters. Each sequence of Components creates a Character.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "The Typing section of this app will:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Introduce you to Lead & Expanded Components ",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Teach you the Component-key pairings and typing method",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Help you memorize the Component-key pairings",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Help you practice with guided and free typing",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "By the time you finish, you’ll be ready to type in Chinese on your own!",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Tips",
+              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Tip 1: Want to use what you type elsewhere? Double click the content in the editing field to copy.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Tip 2: The Dos and Don’ts of breaking up a Character into Components.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	DON’T break up Strokes that cross through each other.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	 ex: Character 井 doesn’t split into separate Components",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	DO break up two strokes that are next to each other or just touching.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	ex: 明 -> 日 and 月",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	ex: 古 -> 十 and 口 ",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	DO break up Characters into as few Components as possible.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	ex: 房 -> 户 and 方 (instead of four Components)",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	DO break up Characters into the Component with the most  strokes. ",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	ex: 云 -> 一 (plus another Component with three strokes)",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Tip 3: The Lead Components and their keyboard pairings are visualized on the keyboard chart above.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Tap or hold each Lead Component in the chart to see the Expanded Components associated to them.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	During typing, select Shift+z to show the Component-key pairings. Select Shift+ any key (except z) to show the Expanded Components.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "Tip 4: Use this table to learn all the Strokes.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
           ),
           Container(
             alignment: Alignment.center,
@@ -311,7 +358,128 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 width: 390.0,
                 height: 150.0),
           ),
-          //     SizedBox(height: 18),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "How to type a Chinese Character ",
+              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "1.	Divide the character into components (Lead Components or Expanded Components).",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  a.	If a Character has one Component:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    i.	Type the Component",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    ii.	If the Character doesn’t appear on the list:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      1.	Type up to three make-up Strokes (the first, second, and the last stroke of the Component) until the Character appears",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      2.	Treat all fold Strokes as a Component 乙",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  b.	If a Character has two Components:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    i.	 Type the two Components first",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    ii.	If the Character doesn’t appear on the list:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      1.	Type two make-up Strokes (the last Stroke of each Component) until the Character appears",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      2.	Treat all fold Strokes as a Component 乙",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  c.	If a Character has three or more Components:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    i.	Type as many Components as necessary in sequence until the Character appears",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: theConst.fontSizes[2]),
+          Text(
+              "In action ",
+              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "Ex: Type the Chinese character 品",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Find the first Component 口",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Find the corresponding key i",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	Tap it",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	If 品 appears in the Character list (below the editing field), select it by:",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	Tapping the Character",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    o	 Tapping the spacebar if it’s first in the list",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	If the Character is not listed, repeat the these steps with the second and third Components until you see 品 listed",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	The English letters in the editing field automatically convert to 品.",
+              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
         ]
     );
   }

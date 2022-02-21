@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/ui/reviewpage.dart';
+import 'package:hanzishu/ui/glossarypage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/variables.dart';
@@ -61,6 +61,19 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => QuizResultPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.location_city),
+              title: Text("Glossary", textDirection: TextDirection.ltr),
+              trailing: Icon(Icons.location_city),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => GlossaryPage(),
                   ),
                 );
               },

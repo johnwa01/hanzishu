@@ -230,7 +230,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue("Break out: ", fontSize3, fontSize12, fontSize4, Colors.blue);
+    displayTextWithValue("Breakdown: ", fontSize3, fontSize12, fontSize4, Colors.blue);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
   }

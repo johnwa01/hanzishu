@@ -170,8 +170,8 @@ class _BreakoutPageState extends State<BreakoutPage> {
     var posiCenter = Positioned(
         top: posiAndSize.transY,
         left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
+        height: posiAndSize.height * 1.3,  // 1.3. for some reason, the hit box is smaller than the char.
+        width: posiAndSize.width * 1.3,
         child: butt
     );
 

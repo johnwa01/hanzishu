@@ -526,23 +526,29 @@ class _InputZiPageState extends State<InputZiPage> {
       (
       appBar: AppBar
         (
-        title: Text("Introduction"),
+        title: Text("Give it a try"),
       ),
       body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Flexible(
-              child: Text(
-                  "Hanzishu component input method for typing Chinese characters is fast and easy!\n\nFirst, you break a Chinese character into components. Then, type as many components as necessary in sequence, just like the way you type letters of an English word.\n",
-                  style: TextStyle(fontSize: 15.0),
-                  textAlign: TextAlign.left
-              ),
+            SizedBox(height: theConst.fontSizes[1]),
+            Text(
+                "The Hanzishu Component Input Method is fast and easy!",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
             ),
-            Flexible(
-              child: Text(
-                "Hanzishu method uses standard English keyboard. The following chart shows a conceptional mapping of Lead Components to keys. Use this chart as a reference before you remember them.\n",
-                  style: TextStyle(fontSize: 15.0),
-                textAlign: TextAlign.left
-              ),
+            SizedBox(height: theConst.fontSizes[1]),
+            Text(
+                "Chinese Characters are broken up into Components and matched with a key on the English keyboard to create a Component-key pairing.",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            SizedBox(height: theConst.fontSizes[1]),
+            Text(
+                "Reference this chart to visualize how Lead Components are mapped to English letters.",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
             ),
             Flexible(
               child: Image.asset(
@@ -552,33 +558,69 @@ class _InputZiPageState extends State<InputZiPage> {
                 fit: BoxFit.fitWidth
               ),
             ),
-            Flexible(
-              child: Text(
-                  "For example: To type Chinese character '品'. First, you find its first component '口'. Then, find the corresponding keyboard key 'i' of the component and type it. If you see '品' showing up in the candidate list below the editing field, you can tap to choose it or use spacebar to choose it if it is the first one in the list.  If necessary, repeat the above steps with the second and third components. After you choose '品' from the list, the Hanzishu input method code will convert the letters you typed in the editing field into Chinese character '品'.",
-                  style: TextStyle(fontSize: 15.0),
-                  textAlign: TextAlign.left
-              ),
+            SizedBox(height: theConst.fontSizes[1]),
+            Text(
+                "Example: Type the Chinese character 品",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	Find the first Component 口",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	Find the corresponding key i",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	Tap it",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	If 品 appears in the Character list (below the editing field), select it by:",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "    o	Tapping the Character",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "    o	 Tapping the spacebar if it’s first in the list",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	If the Character is not listed, repeat the these steps with the second and third Components until you see 品 listed",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
+            ),
+            Text(
+                "  •	The English letters in the editing field automatically convert to 品.",
+                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                textAlign: TextAlign.start
             ),
             SizedBox(
-              //width: double.infinity,
-              //height: 30,
               child: Align(
                 alignment: Alignment.topCenter,
                 child: TextButton(
-                  style: TextButton.styleFrom(
-                    textStyle: const TextStyle(fontSize: 15.0),
-                  ),
+                         style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 15.0),
+                          ),
                   onPressed: () {
-                    setState(() {
-                      currentIndex = 1;
-                    });
-                  },
-                  child: const Text('Sounds good! Let me try a few ...',
-                  style: TextStyle(color: Colors.blue)),
-                ),
-              ),
-            )
-          ]
+                           setState(() {
+                            currentIndex = 1;
+                        });
+                           },
+                      child: const Text('Try a few',
+                      style: TextStyle(color: Colors.blue)),
+                    ),
+                  ),
+            ),
+    ]
       ),
     );
   }
@@ -619,7 +661,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var title = 'Hanzishu Component Input Method';
     if (typingType == TypingType.ForIntroduction) {
-      title = 'Introduction';
+      title = 'Give it a try';
     }
     else if (typingType == TypingType.LeadComponents) {
       title = 'Guided typing';
@@ -944,20 +986,20 @@ class _InputZiPageState extends State<InputZiPage> {
     String content;
 
     if (typingType == TypingType.ForIntroduction) {
-    title = "Amazing!";
-    content = "You did great and can move on to the next session now to memorize the component mapping.";
+    title = "Good job!";
+    content = "You’ve mastered all six Component Groups! In the next exercise, you will memorize the Components in each group.";
     }
     else if (typingType == TypingType.LeadComponents) {
-      title = "Wonderful!";
-      content = "You have learned the method well! You just need to get yourself familiar with the Expanded Components in the next session.";
+      title = "Good job!";
+      content = "You did it! Let’s get to know the Expanded Components. ";
     }
     else if (typingType == TypingType.ExpandedComponents) {
-      title = "Congratulation!";
-      content = "You have completed all the training sessions! You can now start your own free typing.";
+      title = "Congratulations!";
+      content = "Your training is complete. Practice or use what you learned with some free typing.";
     }
     else if (typingType == TypingType.FromLessons) {
       title = "Good job!";
-      content = "You have completed typing exercise for this lesson.";
+      content = "Your typing exercise is complete for this lesson.";
     }
 
     // set up the AlertDialog

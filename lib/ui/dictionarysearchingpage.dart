@@ -665,8 +665,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var posiCenter = Positioned(
         top: posiAndSize.transY,
         left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
+        height: posiAndSize.height * 1.3, // not sure why the hittest area is smaller than the char. so use 1.3
+        width: posiAndSize.width * 1.3,
         child: butt
     );
 

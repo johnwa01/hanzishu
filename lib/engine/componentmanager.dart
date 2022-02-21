@@ -603,7 +603,19 @@ class ComponentManager {
   bool isSecondHeaderOfGroups() {
     if (currentQuestionType == QuestionType.ComponentGroup) {
       var index = theComponentGroupListInRealExercise[currentIndex];
-      if (theComponentGroupList[index].id == 1) {
+      if (theComponentGroupList[index].id == 1 && currentIndex < 2) { // the first one with id == 1
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // the group index is 0, indicating to show the image for whole groups
+  bool isThirdHeaderOfGroups() {
+    if (currentQuestionType == QuestionType.ComponentGroup) {
+      var index = theComponentGroupListInRealExercise[currentIndex];
+      if (theComponentGroupList[index].id == 1 && currentIndex >= 2) { // the 2nd one with id == 1
         return true;
       }
     }

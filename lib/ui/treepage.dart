@@ -34,6 +34,12 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
+  double _progress = 0.0;
+
+  int centerZiId;
+  bool shouldDrawCenter;
+  double screenWidth;
+  OverlayEntry overlayEntry;
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -56,13 +62,6 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     _controller.stop();
     _controller.reset();
   }
-
-  double _progress = 0.0;
-
-  int centerZiId;
-  bool shouldDrawCenter;
-  double screenWidth;
-  OverlayEntry overlayEntry;
 
   @override
   void initState() {

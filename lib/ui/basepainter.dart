@@ -1011,7 +1011,7 @@ class BasePainter extends CustomPainter{
   displayTypingCode(int searchingZiIndex, PositionAndSize posi) {
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
-        "Typing Code: " + typingCode, posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+        "Typing code: " + typingCode, posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
   @override

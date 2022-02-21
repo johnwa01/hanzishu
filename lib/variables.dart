@@ -47,11 +47,14 @@ var theDicOverlayEntry;
 bool theHavePopulatedLessonsInfo = false;
 //double theDrawingSizeRatio;
 
+
+
 class theConst {
   static var starCharId = 756;
   static var starChar = '*';
   static var atCharId = 1;
   static var atChar = '@';
+  static List<double> fontSizes = [13.0, 12.0, 11.0];
 }
 
 class theConfig {  // can change by runtime

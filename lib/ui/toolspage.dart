@@ -36,7 +36,7 @@ class _ToolsPageState extends State<ToolsPage> {
       children: <Widget>[
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Introduction", textDirection: TextDirection.ltr),
+          title: Text("Give it a try", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(
@@ -48,11 +48,11 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("Memorize components to keyboard mapping", textDirection: TextDirection.ltr),
+          title: Text("Memorize the Component-key pairings", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize component groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize the Component groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(
@@ -65,7 +65,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize components in groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize the Components in groups", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(
@@ -79,7 +79,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize components", textDirection: TextDirection.ltr),
+          title: Text("        Memorize Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(
@@ -105,7 +105,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Be familiar with expanded components", textDirection: TextDirection.ltr),
+          title: Text("Learn the Expanded Components", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(
@@ -138,7 +138,7 @@ class _ToolsPageState extends State<ToolsPage> {
         //),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Typing", textDirection: TextDirection.ltr),
+          title: Text("Free typing", textDirection: TextDirection.ltr),
           trailing: Icon(Icons.location_city),
           onTap: () {
             Navigator.push(

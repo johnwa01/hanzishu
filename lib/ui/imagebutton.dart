@@ -100,19 +100,19 @@ class OpenHelper {
     else {
       switch (lessonSection) {
         case LessonSection.FullCharacterTree:
-          lessonOrSectionName = "Character Tree";
+          lessonOrSectionName = "Character tree";
           break;
         case LessonSection.Characters:
-          lessonOrSectionName = "Character List";
+          lessonOrSectionName = "Character list";
           break;
         case LessonSection.Assembling:
-          lessonOrSectionName = "Character Break Out";
+          lessonOrSectionName = "Character breakdown";
           break;
         case LessonSection.Conversation:
           lessonOrSectionName = "Conversation";
           break;
         case LessonSection.Typing:
-          lessonOrSectionName = "Typing";
+          lessonOrSectionName = "Typing exercises";
           break;
         case LessonSection.Quiz:
           lessonOrSectionName = "Quiz";
