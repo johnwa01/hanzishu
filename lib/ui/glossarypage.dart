@@ -270,7 +270,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character tree (Hanzishu)",
+              "Character drills",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

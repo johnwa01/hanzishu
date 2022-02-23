@@ -455,6 +455,7 @@ class ComponentManager {
     return theComponentList[id];
   }
 
+  // have to do a full search of the 443 components
   static Component getComponentByTypingCode(String typingCode) {
     for (int i = 0; i < theComponentList.length; i++) {
       if (theComponentList[i].typingCode == typingCode) {
@@ -474,13 +475,41 @@ class ComponentManager {
   }
 
   static Component getComponentByCode(String code) {
-    //TODO: do a binary search
+    return binarySearch(theComponentList, code, 0, theComponentList.length - 1);
+
+    /*
     for (var i = 0; i < theComponentList.length; i++) {
       if (theComponentList[i].doubleByteCode == code) {
         return theComponentList[i];
       }
     }
 
+    return null;
+    */
+  }
+
+/*
+  void sample() {
+    List<int> arr = [0, 1, 3, 4, 5, 8, 9, 22];
+    int userValue = 3;
+    int min = 0;
+    int max = arr.length - 1;
+    binarySearch(arr, userValue, min, max);
+  }
+*/
+
+  static Component binarySearch(List<Component> arr, String doubleByteCode, int min, int max) {
+    if (max >= min) {
+      int mid = ((max + min) / 2).floor();
+      var result = doubleByteCode.compareTo(arr[mid].doubleByteCode);
+      if (result == 0) {
+        return theComponentList[mid];
+      } else if (result > 0) {
+        return binarySearch(arr, doubleByteCode, mid + 1, max);
+      } else {
+        return binarySearch(arr, doubleByteCode, min, mid - 1);
+      }
+    }
     return null;
   }
 

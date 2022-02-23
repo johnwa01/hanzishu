@@ -164,7 +164,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       (
       appBar: AppBar
         (
-        title: Text("Character Tree"),
+        title: Text("Character drills"),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow

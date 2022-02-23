@@ -421,7 +421,7 @@ class _InputZiPageState extends State<InputZiPage> {
       //hasRunLowercase = false;
       setTextByChosenZiIndex(selectionIndex, false);
     }
-    //Note: temp disable in order to test component shapes - UpperCase and LowerCase
+    //Note: Temp disable UpperCase and LowerCase if want to test component shapes
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
       var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter, false);
       showOverlay(context, overlayParameters);
@@ -762,6 +762,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  //Note: Make this case special so that 1: I don't need to put stroke kind of info to the "Give it a try" samples.
+  //      2: More space for the keyboard which is special for "Give it a try" case.
   Widget getComponentAndMapping() {
     var fontSize = 15.0;
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);

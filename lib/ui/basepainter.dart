@@ -246,6 +246,9 @@ class BasePainter extends CustomPainter{
     else if (listType == ZiListType.searching) {
       char = DictionaryManager.getChar(id);
     }
+    else if (listType == ZiListType.component) {
+      char = ComponentManager.getComponent(id).charOrNameOfNonchar;
+    }
     else {
       return;
     }
@@ -429,8 +432,8 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       var char = comp.charOrNameOfNonchar;
       var strokes = comp.strokes;
-//TEMP: all uses strokes for testing purpose - just comment out the if/else part.
- //     if (!comp.isChar) {
+      //TEMP: all uses strokes for testing purpose - just comment out the if/else part.
+      if (!comp.isChar) {
         buildBaseZi(
             strokes,
             transX,
@@ -439,12 +442,12 @@ class BasePainter extends CustomPainter{
             heightY,
             ofColor, /*int hitTestId,*/
             isSingleColor,
-            ziLineWidth);
- //     }
- //     else {
- //       displayTextWithValue(
- //           char, transX, transY, charFontSize, Colors.blue[800]);
- //     }
+            ziLineWidth * 1.2); // adjust a bit against text
+      }
+      else {
+        displayTextWithValue(
+            char, transX, transY - 3.0, charFontSize, ofColor); // adjust a bit against baseZi
+      }
     }
   }
 
@@ -475,18 +478,24 @@ class BasePainter extends CustomPainter{
   // strokeString is a series of strokeCodes.
   void drawStrokeZiList(String strokeString, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
+    var xPosi = PrimitiveWrapper(transX);
+    var yPosi = PrimitiveWrapper(transY);
+
     if (strokeString.length > 0) {
       for (int i = 0; i < strokeString.length; i++) {
+        checkAndUpdateSubstrStartPosition(' ', xPosi, yPosi, charFontSize);
         drawStrokeZi(
             strokeString[i],
-            transX + widthX * 1.4 * i,
-            transY,
+            xPosi.value,
+            yPosi.value,
             widthX,
             heightY,
             charFontSize,
             ofColor,
             isSingleColor,
             ziLineWidth);
+
+        xPosi.value += widthX;
       }
     }
   }
@@ -822,21 +831,41 @@ class BasePainter extends CustomPainter{
         Colors.blue);
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
+    PrimitiveWrapper yPosi = PrimitiveWrapper(posi.transY);
     xPosi.value += applyRatio(55.0); // hardcoded. ignore screenWidth
 
-    DisplayHintHelper(ziOrPhraseHint, xPosi, posi);
+    DisplayHintHelper(ziOrPhraseHint, xPosi, yPosi);
   }
 
-  DisplayHintHelper(String hint, PrimitiveWrapper xPosi, PositionAndSize posi) {
+  checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth) {
+    //Note: Don't double applyRatio for fontWidth here
+    var strSize = str.length * fontWidth;
+    var  indexStart = str.indexOf('(');
+    if (indexStart >= 0) {
+      xPosi.value += applyRatio(fontWidth); // give one extra space for Chinese character
+    }
+
+    if (xPosi.value + strSize > width) {
+      xPosi.value = /*20.0 + */ applyRatio(55.0);
+      yPosi.value += fontWidth; // move to next line
+    }
+  }
+
+  DisplayHintHelper(String hint, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi) {
+    double defaultFontSize = applyRatio(16.84);
     if (hint.contains("[")) {
+      // Measured with Android 3.30 for following value which matches other values here.
+      // the average English letter width is about 8.0, that is, about half the font size.
+      //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)
+
       // find string before it
       // display the string
       var  indexStart = hint.indexOf('[');
       if (indexStart != null) {
         //var stringBeforeIndex = hint[..<indexStart];
         var realStringBeforeIndex = hint.substring(0, indexStart); //String(stringBeforeIndex);
-
-        displayTextWithValue(realStringBeforeIndex, xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
+        checkAndUpdateSubstrStartPosition(realStringBeforeIndex, xPosi, yPosi, applyRatio(8.0));
+        displayTextWithValue(realStringBeforeIndex, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
         HintSubstringContainsZi(realStringBeforeIndex, xPosi);
 
         // find the next "]"
@@ -850,14 +879,15 @@ class BasePainter extends CustomPainter{
           var id = Utility.StringToInt(charIdString);
 
           if (id != null) {
-            displayTextWithValue('(', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-            xPosi.value = xPosi.value + 9.0;
+            checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0));
+            displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
+            xPosi.value += applyRatio(7.0);
 
-            drawRootZi(id, ZiListType.zi, xPosi.value, posi.transY, 30.0, 30.0, thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize), Colors.blue, false, 2.0, false, false, false, Colors.blue, true);
-            xPosi.value = xPosi.value + 25.0;
-            displayTextWithValue(')', xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-            //DisplayText(theLessonsTextTag, xPosi.value, yPosi, ScreenManager.screenWidth - 10.0, theAnswerTextHeight, ")", theDefaultSize, UIColor.black);
-            xPosi.value = xPosi.value + 9.0;
+            drawRootZi(id, ZiListType.zi, xPosi.value, yPosi.value, applyRatio(13.0), applyRatio(13.0), applyRatio(11.0)/*thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize)*/, Colors.blue, false, 1.5, false, false, false, Colors.blue, true);
+            xPosi.value += applyRatio(13.0);
+            displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
+
+            xPosi.value += applyRatio(8.0);
           }
 
           // find the substring after ]
@@ -865,23 +895,23 @@ class BasePainter extends CustomPainter{
           var indexPairPlusOne = indexPair + 1;
           if (hint.length > indexPairPlusOne) {
             var rightString = hint.substring(indexPairPlusOne, hint.length);
-            DisplayHintHelper(rightString, xPosi, posi);
+            DisplayHintHelper(rightString, xPosi, yPosi);
          }
        }
      }
     }
     else {
-      displayTextWithValue(hint, xPosi.value, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.blue);
-      //DisplayText(theLessonsTextTag, xPosi, yPosi, theAnswerStringLength - 15.0, theAnswerTextHeight * 2, hint, theDefaultSize, UIColor.black);
+      //checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, 9.0);
+      displayTextWithValue(hint, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
       HintSubstringContainsZi(hint, xPosi);
     }
   }
 
   HintSubstringContainsZi(String hint, PrimitiveWrapper xPosi) {
-    xPosi.value = xPosi.value + hint.length * 8;
+    xPosi.value += hint.length * applyRatio(8.0);
     var  indexStart = hint.indexOf('(');
-    if (indexStart != null) {
-      xPosi.value = xPosi.value + applyRatio(20.0);
+    if (indexStart >= 0) {
+      xPosi.value += applyRatio(8.0); //20.0
     }
   }
 

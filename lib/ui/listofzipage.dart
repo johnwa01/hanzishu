@@ -72,7 +72,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
       (
       appBar: AppBar
         (
-        title: Text("List of Zi"),
+        title: Text("Character list"),
       ),
       body: Container(
         child: SingleChildScrollView(

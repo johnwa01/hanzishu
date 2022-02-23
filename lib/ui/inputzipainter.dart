@@ -62,16 +62,15 @@ class InputZiPainter extends BasePainter {
 
       var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
 
-      if (activeCandidatesLength > 6) {  // TODO: for testing, leave 7 for test
-        activeCandidatesLength = 6;
+      if (activeCandidatesLength > 7) {  // Temp: for testing, leave 7 for test
+        activeCandidatesLength = 7;
       }
       for (int i = 0; i < activeCandidatesLength; i++) {
         displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0);
         x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
       }
 
-      /*
-      //Note: for testing component stroke drawing only
+      /* Temp: for testing component stroke drawing only
       if (globalTestDoubleByteCode.length == 2) {
         if (ComponentManager.getComponentByCode(globalTestDoubleByteCode) != null) {
           drawComponentZi(
@@ -103,10 +102,6 @@ class InputZiPainter extends BasePainter {
       }
       */
     }
-
-    /*
-    displayOneCandidate("好", 0.0, 0.0, 30.0);
-    */
   }
 
   displayOneCandidate(String candidate, double x, double y, double fontSize) {

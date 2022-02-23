@@ -32,7 +32,7 @@ var theLessonList = [
   Lesson(27, "汉字树", "Hanzi Tree", [],  "", [], "",  [], [], "", [], [133]),
   Lesson(28, "汉字", "Chinese characters", [],  "", [], "",  [], [], "", [], []),
   Lesson(29, "大学", "College", [],  "", [],  "",  [], [], "Four Character Idoms", [], [48,49,50,51]),
-  Lesson(30, "中文", "Chinese language", [],  "", [], "",  [], [], "Pinyin", [], [1,2]),
+  Lesson(30, "中文", "Chinese", [],  "", [], "",  [], [], "Pinyin", [], [1,2]),
   Lesson(31, "住", "Accommodations", [],  "", [], "",  [], [], "Mandarin and  Cantonese", [], [21,22,23]),
   Lesson(32, "功课", "Homework", [],  "", [], "",  [], [], "Pronounciation of Characters   ", [], [13,14]),
   Lesson(33, "喜欢", "Likes & dislikes", [],  "", [], "",  [], [], "Grammar Is Simple", [], [15]),
