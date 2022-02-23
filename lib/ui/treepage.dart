@@ -401,7 +401,6 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       var positionAndSize = BasePainter.getPositionAndSize(memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
-
       thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
     }

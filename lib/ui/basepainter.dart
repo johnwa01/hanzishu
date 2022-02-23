@@ -314,7 +314,7 @@ class BasePainter extends CustomPainter{
   }
 
   double textTransYAdjust(double transY, double heightY) {
-    return transY - heightY / 2.0;   //Note: no ratio change here
+    return transY - heightY / 3.4;  //2.0;   //Note: no ratio change here
   }
 
   List<double> getStrokes(int id, ZiListType listType) {

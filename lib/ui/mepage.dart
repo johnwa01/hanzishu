@@ -37,7 +37,7 @@ class _MePageState extends State<MePage> {
             //),
             ListTile(
               leading: Icon(Icons.location_city),
-              title: Text("Review of Lessons", textDirection: TextDirection.ltr),
+              title: Text("Character review", textDirection: TextDirection.ltr),
               trailing: Icon(Icons.location_city),
               onTap: () {
                 Navigator.push(
@@ -50,7 +50,7 @@ class _MePageState extends State<MePage> {
             ),
             ListTile(
               leading: Icon(Icons.location_city),
-              title: Text("Quiz Results", textDirection: TextDirection.ltr),
+              title: Text("Quiz results", textDirection: TextDirection.ltr),
               trailing: Icon(Icons.location_city),
               //subtitle: Text(
               //  "XXXXXXXXXX",

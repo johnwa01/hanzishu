@@ -275,7 +275,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components (situated on all four sides of the screen) building up the central Character one layer at a time.",
+              "Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components (situated on all four sides of the screen) building up the central Character one layer at a time. Tapping a character in the center drills down, and tapping a component on the sides moves back.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -376,6 +376,28 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           Text(
               "Track your progress and review what you’ve already covered.",
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
+              "Character review",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "Review the characters according to the lessons and the units that they were first introduced.",
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
+              "Quiz results",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "Records of the quizzes that you have taken",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
