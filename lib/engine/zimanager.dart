@@ -330,7 +330,7 @@ class ZiManager {
     var zi = theZiManager.getZi(id);
 
     // Check whether it's single or combined word
-    if (zi.isSingleBody || zi.bodyComposites.length == 0)
+    if (/*zi.isSingleBody ||*/ zi.bodyComposites.length == 0)
     {
       return null;
     }
@@ -479,6 +479,7 @@ class ZiManager {
     return false;
   }
 
+  /*
   static int getNonRootStandardCharCompId(int id) {
     var zi = theZiManager.getZi(id);
     var countOfStandardNonRootCharComp = 0;
@@ -563,6 +564,7 @@ class ZiManager {
       return 0;
     }
   }
+  */
 
   static int getZiComponentCount(int id) {
     var components = theZiManager.getZiComponents(id);
@@ -574,6 +576,7 @@ class ZiManager {
     }
   }
 
+  /*
   //TODO: clean up the two functions
   static int getNonRootNonCharCompId(id) {
     var zi = theZiManager.getZi(id);
@@ -653,6 +656,7 @@ class ZiManager {
       return 0;
     }
   }
+  */
 
   static String getPinyinAndMeaning(int ziId) {
     return theZiList[ziId].getPinyinAndMeaning();

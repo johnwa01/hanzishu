@@ -499,6 +499,10 @@ class ComponentManager {
 */
 
   static Component binarySearch(List<Component> arr, String doubleByteCode, int min, int max) {
+    if (doubleByteCode == null || doubleByteCode.length == 0) {
+      return null;
+    }
+
     if (max >= min) {
       int mid = ((max + min) / 2).floor();
       var result = doubleByteCode.compareTo(arr[mid].doubleByteCode);

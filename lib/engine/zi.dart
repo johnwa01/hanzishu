@@ -22,7 +22,7 @@ class Zi {
     String char,
     String pinyin,
     String meaning,
-    bool isSingleBody,
+    bool isSingleBody,  // this field is no longer used. the data isn't accurate any more.
     List<double> strokes,
     List<String> bodyComposites,
     String displaySide,

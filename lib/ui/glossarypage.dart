@@ -92,6 +92,17 @@ class _GlossaryPageState extends State<GlossaryPage> {
             ),
           SizedBox(height: fontSize3),
           Text(
+              "Hanzi (汉字)",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "Chinese character",
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
                 "Hanzishu (汉字树)",
                 style: TextStyle(color: Colors.blue, fontSize: fontSize2),
                 textAlign: TextAlign.start

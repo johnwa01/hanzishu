@@ -355,7 +355,7 @@ class BasePainter extends CustomPainter{
       if (strokes != null) {
         buildBaseZi(
             strokes,
-            transX,
+            transX + widthX * 0.05, // adjust a little bit
             transY,
             widthX,
             heightY,
@@ -845,7 +845,8 @@ class BasePainter extends CustomPainter{
       xPosi.value += applyRatio(fontWidth); // give one extra space for Chinese character
     }
 
-    if (xPosi.value + strSize > width) {
+    // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
+    if ((strSize < width / 5) && (xPosi.value + strSize > width)) {
       xPosi.value = /*20.0 + */ applyRatio(55.0);
       yPosi.value += fontWidth; // move to next line
     }
@@ -866,7 +867,7 @@ class BasePainter extends CustomPainter{
         var realStringBeforeIndex = hint.substring(0, indexStart); //String(stringBeforeIndex);
         checkAndUpdateSubstrStartPosition(realStringBeforeIndex, xPosi, yPosi, applyRatio(8.0));
         displayTextWithValue(realStringBeforeIndex, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
-        HintSubstringContainsZi(realStringBeforeIndex, xPosi);
+        HintSubstringContainsZi(realStringBeforeIndex, xPosi, yPosi, defaultFontSize);
 
         // find the next "]"
         // get the string between [ and ]
@@ -901,17 +902,22 @@ class BasePainter extends CustomPainter{
      }
     }
     else {
-      //checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, 9.0);
+      //checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, 8.0);
       displayTextWithValue(hint, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
-      HintSubstringContainsZi(hint, xPosi);
+      HintSubstringContainsZi(hint, xPosi, yPosi, defaultFontSize);
     }
   }
 
-  HintSubstringContainsZi(String hint, PrimitiveWrapper xPosi) {
+  HintSubstringContainsZi(String hint, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontSize) {
     xPosi.value += hint.length * applyRatio(8.0);
     var  indexStart = hint.indexOf('(');
     if (indexStart >= 0) {
       xPosi.value += applyRatio(8.0); //20.0
+    }
+
+    if (xPosi.value >= width) {
+      xPosi.value = (xPosi.value - width) + applyRatio(55.0 + 18.0);
+      yPosi.value += fontSize * 1.3; // fontSize has ratio already
     }
   }
 
