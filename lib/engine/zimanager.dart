@@ -330,7 +330,8 @@ class ZiManager {
     var zi = theZiManager.getZi(id);
 
     // Check whether it's single or combined word
-    if (/*zi.isSingleBody ||*/ zi.bodyComposites.length == 0)
+
+    if (zi.isBasicZi()/*zi.isSingleBody*/ || zi.bodyComposites.length == 0)
     {
       return null;
     }

@@ -559,7 +559,7 @@ class BasePainter extends CustomPainter{
       drawOneFrameLineWithColor([x3, y3, x2, y3]);
       drawOneFrameLineWithColor([x2, y3, x2, y2]);
 
-      if (!Utility.isPseudoRootZiId(centerId) && !Utility.isPseudoNonCharRootZiId(centerId)) {
+      if (!Utility.isPseudoRootZiId(centerId) && !Utility.isPseudoNonCharRootZiId(centerId) && !Utility.isStarChar(centerId)) {
         // lines in between
         drawOneFrameLineWithColor([x1, y1, x2, y2]);
         drawOneFrameLineWithColor([x4, y1, x3, y2]);
@@ -681,7 +681,7 @@ class BasePainter extends CustomPainter{
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
       var oneZiColor = ziColor;
-      if (ZiManager.getZiComponentCount(memberZiId) > 2 && !theZiManager.isBasicZi(memberZiId)) {
+      if ((ZiManager.getZiComponentCount(memberZiId) > 2 && !theZiManager.isBasicZi(memberZiId)) || theZiManager.isBasicZi(memberZiId)) {
         oneZiColor = Colors.blue;
       }
       drawRootZi(partialZiId, ZiListType.zi, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, oneZiColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
