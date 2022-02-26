@@ -23,6 +23,8 @@ class _BreakoutPageState extends State<BreakoutPage> {
   double screenWidth;
   OverlayEntry overlayEntry;
   ScrollController _scrollController;
+  int previousZiId = 0;
+  bool haveShowedOverlay = true;
 
   @override
   void initState() {
@@ -105,22 +107,22 @@ class _BreakoutPageState extends State<BreakoutPage> {
     );
   }
 
-  Future<bool>_onWillPop() {
+  initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
+  }
+
+  Future<bool>_onWillPop() {
+    initOverlay();
 
     return Future.value(true);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    initOverlay();
 
     var screenWidth = Utility.getScreenWidth(context);
     var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
@@ -147,22 +149,29 @@ class _BreakoutPageState extends State<BreakoutPage> {
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
+
         //setState(() {
           //centerZiId = newCenterZiId;
         //});
       },
       onLongPress: () {
+        initOverlay();
+
         var scrollOffset = _scrollController.offset;
         var zi = theZiManager.getZi(id);
         TextToSpeech.speak(zi.char);
 
-        var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
+        if (previousZiId != id || !haveShowedOverlay) {
+          var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY - scrollOffset, meaning);
+          haveShowedOverlay = true;
+        }
+        else if (haveShowedOverlay) {
+          haveShowedOverlay = false;
+        }
+
+        previousZiId = id;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );

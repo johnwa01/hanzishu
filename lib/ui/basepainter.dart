@@ -285,6 +285,8 @@ class BasePainter extends CustomPainter{
   }
 
   void displayTextWithValue(var char, double transX, double transY, double charFontSize, Color color) {
+    // shouldn't put such thing under a very basic function
+    /*
     if (isReviewCenterPseudoZi) {
         //char = theConst.atChar;
         charFontSize /= 2;
@@ -302,6 +304,7 @@ class BasePainter extends CustomPainter{
       transX += (charFontSize * 0.25);
       transY += charFontSize / 2 ;
     }
+    */
 
     TextSpan span = TextSpan(style: TextStyle(color: color/*Colors.blue[800]*/, fontSize: charFontSize/*, fontFamily: 'Roboto'*/), text: char);
     //TextPainter tp = TextPainter(span, TextDirection.ltr);
@@ -483,7 +486,7 @@ class BasePainter extends CustomPainter{
 
     if (strokeString.length > 0) {
       for (int i = 0; i < strokeString.length; i++) {
-        checkAndUpdateSubstrStartPosition(' ', xPosi, yPosi, charFontSize);
+        checkAndUpdateSubstrStartPositionSimple(' ', xPosi, yPosi, charFontSize);
         drawStrokeZi(
             strokeString[i],
             xPosi.value,
@@ -639,8 +642,7 @@ class BasePainter extends CustomPainter{
     // get its real members
     //var groupMembers = theLessonManager.getRealGroupMembers(id);
     var groupMembers;
-    // hardcode lesson 2 so that it'll have a sequential order in top layer display
-
+    // hardcode lesson 2 so that it'll have a sequential number order in top layer display
     groupMembers = getRealGroupMembers(id, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
 
     //var phraseZis = theLessonManager.getPhraseZis(id, internalStartLessonId, internalEndLessonId);
@@ -676,8 +678,8 @@ class BasePainter extends CustomPainter{
 
       // check if its a composite zi and return partial zi
       var partialZiId = memberZiId;
-      //id = 155 ->六  [In the tree, treat it as a basic one. but in word list etc, still keep as multiple component char.
-      if (theIsPartialZiMode && memberZiId != 155) {
+      //lesson==2, id = 155 ->六  [In the tree, treat it as a basic one. but in word list etc, still keep as multiple component char.
+      if (theIsPartialZiMode && theCurrentLessonId == 2 && memberZiId != 155) {
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
       var oneZiColor = ziColor;
@@ -717,6 +719,12 @@ class BasePainter extends CustomPainter{
       }
       if (isFromReviewPage && Utility.isPseudoNonCharRootZiId(id)) {
         isReviewCenterPseudoNonCharZi = true;
+      }
+
+      // make '*' near the center, otherwise, it'll be in the uppper left corner of the center
+      if (id == 756) { // the * char
+        posiSize.transX += posiSize.charFontSize * 0.25;
+        posiSize.transY += posiSize.charFontSize / 4 ;
       }
 
       drawRootZi(
@@ -798,7 +806,7 @@ class BasePainter extends CustomPainter{
     if (realGroupMembers == null) {
       // hardcode for lesson 2's number to have a sequential display order
       if (id == 1 && internalStartLessonId == 2 && internalEndLessonId == internalStartLessonId) {
-        realGroupMembers = [2, 3, 170, 153, 154, 7, 155, 8, 10, 157];
+        realGroupMembers = [2, 3, 170, 153, 154, 7, 155, 8, 10, 157]; //'6'(155) is manually added here.
       }
       else {
         realGroupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
@@ -846,9 +854,21 @@ class BasePainter extends CustomPainter{
     }
 
     // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
-    if ((strSize < width / 5) && (xPosi.value + strSize > width)) {
+    if ((strSize < width / 3) && (xPosi.value + strSize > width)) {
       xPosi.value = /*20.0 + */ applyRatio(55.0);
-      yPosi.value += fontWidth; // move to next line
+      yPosi.value += fontWidth * 1.3; // move to next line with gap
+    }
+  }
+
+  // suitable for displaying strokes with many small entries
+  checkAndUpdateSubstrStartPositionSimple(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth) {
+    //Note: Don't double applyRatio for fontWidth here
+    var strSize = str.length * fontWidth;
+
+    // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
+    if ((strSize < fontWidth * 4) && (xPosi.value + strSize > width)) {
+      xPosi.value = /*20.0 + */ applyRatio(55.0);
+      yPosi.value += fontWidth; // move to next line without gap
     }
   }
 

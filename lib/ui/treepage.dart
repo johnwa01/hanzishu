@@ -30,7 +30,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   Map<int, bool> allLearnedZis = Map();
   Map<int, bool> newInLesson = Map();
   int previousZiId = 0;
-  bool showedNoOverlay = false;
+  bool haveShowedOverlay = true;
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
@@ -211,28 +211,29 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     }
   }
 
-  Future<bool>_onWillPop() {
+  initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
+  }
+
+  Future<bool>_onWillPop() {
+    initOverlay();
 
     return Future.value(true);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    initOverlay();
 
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
       builder: (context) =>Positioned(
         top: posiY,
-        left: posiX,
+        left: adjustedXValue,
         child: FlatButton(
           child: Text(meaning, style: TextStyle(fontSize: 20.0),),
           color: Colors.blueAccent,
@@ -246,11 +247,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         //resetCompoundZiAnimation();
 
@@ -274,11 +271,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         resetCompoundZiAnimation();
 
@@ -326,11 +319,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         _clearAnimation();
         resetCompoundZiAnimation();
@@ -350,11 +339,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         TextToSpeech.speak(zi.char);
       },
       onLongPress: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         var partialZiId = currentZiId;
         if (theCurrentCenterZiId != currentZiId) {
@@ -363,13 +348,13 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 
-        if (previousZiId != currentZiId || showedNoOverlay) {
+        if (previousZiId != currentZiId || !haveShowedOverlay) {
           var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
-          showedNoOverlay = false;
+          haveShowedOverlay = true;
         }
-        else if (!showedNoOverlay) {
-          showedNoOverlay = true;
+        else if (haveShowedOverlay) {
+          haveShowedOverlay = false;
         }
 
         previousZiId = currentZiId;

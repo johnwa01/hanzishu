@@ -77,22 +77,22 @@ class _ConversationPageState extends State<ConversationPage> {
     );
   }
 
-  Future<bool>_onWillPop() {
+  initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
+  }
+
+  Future<bool>_onWillPop() {
+    initOverlay();
 
     return Future.value(true);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    initOverlay();
 
     if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
       var screenWidth = Utility.getScreenWidth(context);
@@ -124,11 +124,7 @@ class _ConversationPageState extends State<ConversationPage> {
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         if (buttonType == ButtonType.sound) {
           var conv = lesson.getSentence(id);

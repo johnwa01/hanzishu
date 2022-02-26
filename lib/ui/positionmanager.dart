@@ -222,7 +222,9 @@ class PositionManager
     //var displayZiInCreationList = isCreationList
 
     var memberZi = theZiManager.getZi(memberZiId);
-    String displaySideString = memberZi.displaySide;
+
+    String displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+
     switch (displaySideString) {
       case "l":
         currentDisplayOrder = theCurrentSideIndexOfZis.left;
@@ -313,7 +315,8 @@ class PositionManager
 
   void updatePositionIndex(int memberZiId) {
     var memberZi = theZiManager.getZi(memberZiId);
-    String displaySideString = memberZi.displaySide;
+    String displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+
     switch (displaySideString) {
       case "l":
         theCurrentSideIndexOfZis.left = theCurrentSideIndexOfZis.left  + 1;

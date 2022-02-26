@@ -70,22 +70,22 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     );
   }
 
-  Future<bool>_onWillPop() {
+  initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
+  }
+
+  Future<bool>_onWillPop() {
+    initOverlay();
 
     return Future.value(true);
   }
 
   showOverlay(BuildContext context, keyGroup, keyIndex) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    initOverlay();
 
     if (!(keyGroup == 0 && keyIndex == 0) && !(previousOverlayGroup == keyGroup && previousOverlayIndex == keyIndex)) {
       var fullExpandedComp = theComponentManager
@@ -130,11 +130,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       textColor: Colors.blueAccent,
       padding: EdgeInsets.zero,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         showOverlay(context, keyGroup, keyIndex);
       },

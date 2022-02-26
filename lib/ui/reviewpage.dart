@@ -34,6 +34,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   bool shouldDrawCenter;
   double screenWidth;
   OverlayEntry overlayEntry;
+  int previousZiId = 0;
+  bool haveShowedOverlay = true;
 
   AnimationController _controller;
   Map<int, bool> allLearnedZis = Map();
@@ -218,12 +220,16 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     }
   }
 
-  Future<bool>_onWillPop() {
+  initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
+  }
+
+  Future<bool>_onWillPop() {
+    initOverlay();
 
     return Future.value(true);
   }
@@ -239,17 +245,14 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
+    initOverlay();
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
 
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
         builder: (context) =>Positioned(
             top: posiY,
-            left: posiX,
+            left: adjustedXValue,
             child: FlatButton(
               child: Text(meaning, style: TextStyle(fontSize: 20.0),),
               color: Colors.blueAccent,
@@ -265,11 +268,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         _clearAnimation();
         resetCompoundZiAnimation();
@@ -283,13 +282,23 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         TextToSpeech.speak(zi.char);
       },
       onLongPress: () {
+        initOverlay();
+
         var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
 
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 
-        var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        if (previousZiId != currentZiId || !haveShowedOverlay) {
+          var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+          haveShowedOverlay = true;
+        }
+        else if (haveShowedOverlay) {
+          haveShowedOverlay = false;
+        }
+
+        previousZiId = currentZiId;
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -308,11 +317,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak(zi.char);
@@ -334,11 +339,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
     var butt = FlatButton(
       onPressed: () {
-        if (overlayEntry != null) {
-          overlayEntry.remove();
-          overlayEntry = null;
-          theDicOverlayEntry = null;
-        }
+        initOverlay();
 
         resetCompoundZiAnimation();
 
@@ -412,7 +413,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       }
     }
     */
-    //if (centerZiId != 1 ) {
+
+    if (centerZiId != 1 ) {
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
@@ -420,7 +422,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
 
       buttons.add(posiCenter);
-    //}
+    }
 
     // draw speech icon
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();

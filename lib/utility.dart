@@ -451,6 +451,17 @@ class Utility {
   static String replaceCharAt(String oldString, int index, String newChar) {
     return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
   }
+
+  static String checkAndUpdateOneCharSideForLessonTwo(int id, String displaySideString) {
+    // do special for '六' for lesson 2 so that it'll order sequencially in screen
+    if (theCurrentLessonId == 2 && id == 155) {
+      return "b"; // is 'u' regularly
+    }
+    else {
+      return displaySideString;
+    }
+  }
+
   // var newStr = replaceCharAt("hello", 1, "E") //usage
 }
 

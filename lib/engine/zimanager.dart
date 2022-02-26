@@ -122,7 +122,8 @@ class ZiManager {
 
     for (var memberZiId in groupMembers) {
       var memberZi = getZi(memberZiId);
-      var displaySideString = memberZi.displaySide;
+      var displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+
       switch (displaySideString) {
         case "l":
           numberOfZis.left = numberOfZis.left + 1;
