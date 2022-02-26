@@ -122,7 +122,7 @@ Phrase(114, "黄山", "huángshān", "Yellow Mountain", "Yellow (黄) Mountain (
   Phrase(116, "二十", "", "twenty", "two (二) ten (十)"),
   Phrase(117, "同学", "", "classmate", "learning (学) at same (同) time"),
   Phrase(118, "现在", "", "right now", "at (在) present (现)"),
-  Phrase(119, "上课", "", "attend class", "lesson (课) up (上)"),
+  Phrase(119, "上课", "", "begin class", "lesson (课) up (上)"),
   Phrase(120, "下课", "", "class over", "lesson (课) down (下)"),
   Phrase(121, "哥哥", "", "elder brother", "elder brother (哥) elder brother (哥)"),
   Phrase(122, "姐姐", "", "elder sister", "elder sister (姐) elder sister (姐)"),
