@@ -507,7 +507,7 @@ class ComponentManager {
       int mid = ((max + min) / 2).floor();
       var result = doubleByteCode.compareTo(arr[mid].doubleByteCode);
       if (result == 0) {
-        return theComponentList[mid];
+        return arr[mid];
       } else if (result > 0) {
         return binarySearch(arr, doubleByteCode, mid + 1, max);
       } else {
@@ -915,7 +915,8 @@ class ComponentManager {
   }
 
   static String getCompCodeFromZiId(int ziId) {
-      //TODO: do a binary search
+      return binarySearch2(theZiIdToCompCodeMapList, ziId, 0, theZiIdToCompCodeMapList.length - 1);
+      /*
       for (var i = 0; i < theZiIdToCompCodeMapList.length; i++) {
         if (theZiIdToCompCodeMapList[i].id == ziId) {
           return theZiIdToCompCodeMapList[i].compCode;
@@ -923,5 +924,25 @@ class ComponentManager {
       }
 
       return null;
+      */
+  }
+
+  static String binarySearch2(List<ZiIdToCompMap> arr, int id, int min, int max) {
+    if (id < 0) {
+      return null;
+    }
+
+    if (max >= min) {
+      int mid = ((max + min) / 2).floor();
+      var result = id - arr[mid].id;
+      if (result == 0) {
+        return arr[mid].compCode;
+      } else if (result > 0) {
+        return binarySearch2(arr, id, mid + 1, max);
+      } else {
+        return binarySearch2(arr, id, min, mid - 1);
+      }
+    }
+    return null;
   }
 }

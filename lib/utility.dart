@@ -462,6 +462,32 @@ class Utility {
     }
   }
 
+  // count max of three for now. need recursive one otherwise.
+  static int substringCountMaxThree(String str, String sub) {
+    int count = 0;
+    var  indexStart = str.indexOf(sub);
+    if (indexStart > 0) {
+      count += 1;
+
+      int indexStart2 = 0;
+      if (indexStart < str.length - 1) {
+        var indexStart2 = str.indexOf(sub, indexStart + 1);
+        if (indexStart2 > 0) {
+          count += 1;
+
+          if (indexStart2 < str.length - 1) {
+            var indexStart3 = str.indexOf(sub, indexStart2 + 1);
+            if (indexStart3 > 0) {
+              count += 1;
+            }
+          }
+        }
+      }
+    }
+
+    return count;
+  }
+
   // var newStr = replaceCharAt("hello", 1, "E") //usage
 }
 

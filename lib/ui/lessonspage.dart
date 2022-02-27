@@ -19,7 +19,18 @@ class _LessonsPageState extends State<LessonsPage> {
   //}
   // starting lesson number in each row
   //final List<int> lessons = <int>[1, 2, 3, 5, 6, 8, 9, 11, 13, 16, 18, 19, 21, 22, 24, 26, 29, 31, 32, 34, 36, 37, 39, 41, 44, 46, 47, 49, 50, 53, 56, 59];
-  final List<int> lessons = <int>[1, 2, 4, 6, 7, 10, 11, 13, 16, 17, 18, 20, 22, 23, 25, 27, 28, 30, 33, 34, 35, 37, 39, 40, 42, 44, 45, 48, 50, 51, 53, 54, 55, 57, 60];
+  //final List<int> lessons = <int>[1, 2, 4, 6, 7, 10, 11, 13, 16, 17, 18, 20, 22, 23, 25, 27, 28, 30, 33, 34, 35, 37, 39, 40, 42, 44, 45, 48, 50, 51, 53, 54, 55, 57, 60];
+  final List<int> lessons = <int>[
+       1, 2, 4, 6, 8,
+       10, 11, 13, 15,
+       17, 18, 20,
+       22, 23, 25,
+       27, 28, 30, 32,
+       34, 35, 37,
+       39, 40, 42,
+       44, 45, 47, 49,
+       50, 51, 53,
+       54, 55, 57, 59, 60];
 
   @override
   void initState() {
@@ -80,7 +91,7 @@ class _LessonsPageState extends State<LessonsPage> {
 
             int level = 1;
             //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-            if (index == 0 || index == 5 || index == 9 || index == 12 || index == 15 || index == 19 || index == 22 || index == 25 || index == 28 || index == 31) {
+            if (index == 0 || index == 5 || index == 9 || index == 12 || index == 15 || index == 19 || index == 22 || index == 25 || index == 29 || index == 32) {
 
                 if (index == 0) {level = 1;}
                 else if (index == 5) { level = 2;}
@@ -90,8 +101,8 @@ class _LessonsPageState extends State<LessonsPage> {
                 else if (index == 19) { level = 6;}
                 else if (index == 22) { level = 7;}
                 else if (index == 25) { level = 8;}
-                else if (index == 28) { level = 9;}
-                else if (index == 31) { level = 10;}
+                else if (index == 29) { level = 9;}
+                else if (index == 32) { level = 10;}
                 //else if (index == 34) { level = 10;}
                 //return getLevel(context, level);
                 return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);

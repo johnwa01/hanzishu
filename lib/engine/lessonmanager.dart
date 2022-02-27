@@ -162,13 +162,13 @@ class LessonManager {
             var compZi = theZiManager.getZi(eachComp);
 
             if (!compExists(j, compZi.parentId)) {
-              if (!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isAtChar(compZi.parentId)) {
+              if (!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isPseudoRootZiId(compZi.parentId) && !Utility.isAtChar(compZi.parentId)) {
                 theLessonList[j].comps.add(compZi.parentId);
               }
             }
 
             // add the non-char itself
-            if (!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isAtChar(eachComp)) {
+            if (!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isPseudoRootZiId(eachComp) & !Utility.isAtChar(eachComp)) {
               theLessonList[j].comps.add(eachComp);
             }
           }

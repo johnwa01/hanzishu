@@ -455,8 +455,22 @@ class BasePainter extends CustomPainter{
   }
 
   void drawComponentZiList(List<String> components, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth) {
+    // handle this special case. want to treat left side of 踢 as 足 as whole, but display comp correctly.
+    if (components.length > 2 && components[0] == "Ja" && components[1] == "Ng") {
+      components[1] = "Ai"; // replace the bottom component for 足 in display
+    }
+
     for (int i = 0; i < components.length; i++) {
-      drawComponentZi(components[i], transX + widthX * i, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
+      drawComponentZi(
+            components[i],
+            transX + widthX * i,
+            transY,
+            widthX,
+            heightY,
+            charFontSize,
+            ofColor,
+            isSingleColor,
+            ziLineWidth);
     }
   }
 
@@ -486,6 +500,7 @@ class BasePainter extends CustomPainter{
 
     if (strokeString.length > 0) {
       for (int i = 0; i < strokeString.length; i++) {
+        // Pass charFontSize instead of fontWidth. normally double the fontWidth, therefore leave plenty of space between strokes
         checkAndUpdateSubstrStartPositionSimple(' ', xPosi, yPosi, charFontSize);
         drawStrokeZi(
             strokeString[i],
@@ -836,7 +851,7 @@ class BasePainter extends CustomPainter{
 
     displayTextWithValue("Hint: ", posi.transX, posi.transY,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        Colors.blue);
+        Colors.black);
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
     PrimitiveWrapper yPosi = PrimitiveWrapper(posi.transY);
@@ -845,18 +860,19 @@ class BasePainter extends CustomPainter{
     DisplayHintHelper(ziOrPhraseHint, xPosi, yPosi);
   }
 
-  checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth) {
+  checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth, double fontSize) {
     //Note: Don't double applyRatio for fontWidth here
     var strSize = str.length * fontWidth;
-    var  indexStart = str.indexOf('(');
-    if (indexStart >= 0) {
-      xPosi.value += applyRatio(fontWidth); // give one extra space for Chinese character
+    //var  indexStart = str.indexOf('(');
+    var count = Utility.substringCountMaxThree(str, '(');
+    if (count > 0) {
+      xPosi.value += applyRatio(fontWidth) * count; // give one extra space for Chinese character
     }
 
     // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
-    if ((strSize < width / 3) && (xPosi.value + strSize > width)) {
+    if ((xPosi.value > (width / 2)) && ((xPosi.value + strSize) > width)) {
       xPosi.value = /*20.0 + */ applyRatio(55.0);
-      yPosi.value += fontWidth * 1.3; // move to next line with gap
+      yPosi.value += fontSize * 1.3; // move to next line with gap
     }
   }
 
@@ -866,7 +882,7 @@ class BasePainter extends CustomPainter{
     var strSize = str.length * fontWidth;
 
     // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
-    if ((strSize < fontWidth * 4) && (xPosi.value + strSize > width)) {
+    if (/*(strSize < fontWidth * 4) && */(xPosi.value + strSize + applyRatio(10.0)) >= width) {
       xPosi.value = /*20.0 + */ applyRatio(55.0);
       yPosi.value += fontWidth; // move to next line without gap
     }
@@ -885,7 +901,7 @@ class BasePainter extends CustomPainter{
       if (indexStart != null) {
         //var stringBeforeIndex = hint[..<indexStart];
         var realStringBeforeIndex = hint.substring(0, indexStart); //String(stringBeforeIndex);
-        checkAndUpdateSubstrStartPosition(realStringBeforeIndex, xPosi, yPosi, applyRatio(8.0));
+        checkAndUpdateSubstrStartPosition(realStringBeforeIndex, xPosi, yPosi, applyRatio(8.0), defaultFontSize);
         displayTextWithValue(realStringBeforeIndex, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
         HintSubstringContainsZi(realStringBeforeIndex, xPosi, yPosi, defaultFontSize);
 
@@ -900,7 +916,7 @@ class BasePainter extends CustomPainter{
           var id = Utility.StringToInt(charIdString);
 
           if (id != null) {
-            checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0));
+            checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0), defaultFontSize);
             displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
             xPosi.value += applyRatio(7.0);
 
@@ -923,6 +939,7 @@ class BasePainter extends CustomPainter{
     }
     else {
       //checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, 8.0);
+      checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, applyRatio(8.0), defaultFontSize);
       displayTextWithValue(hint, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
       HintSubstringContainsZi(hint, xPosi, yPosi, defaultFontSize);
     }
@@ -930,13 +947,17 @@ class BasePainter extends CustomPainter{
 
   HintSubstringContainsZi(String hint, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontSize) {
     xPosi.value += hint.length * applyRatio(8.0);
-    var  indexStart = hint.indexOf('(');
-    if (indexStart >= 0) {
-      xPosi.value += applyRatio(8.0); //20.0
+    var count = Utility.substringCountMaxThree(hint, '(');
+    //var  indexStart = hint.indexOf('(');
+    if (count > 0) {
+      xPosi.value += applyRatio(8.0) * count; //20.0
     }
 
     if (xPosi.value >= width) {
       xPosi.value = (xPosi.value - width) + applyRatio(55.0 + 18.0);
+      if (count >= 2) {
+        xPosi.value += applyRatio(25.0); // some buffer at the end of screen. appears not enough space for this case
+      }
       yPosi.value += fontSize * 1.3; // fontSize has ratio already
     }
   }
@@ -1011,7 +1032,7 @@ class BasePainter extends CustomPainter{
   displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, comps);
-    displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     drawComponentZiList(
         comps,
         160.0 * ratio,
@@ -1047,7 +1068,7 @@ class BasePainter extends CustomPainter{
   // assume a single comp zi. used in zi list in lessons.
   displayCompStrokes(int ziId, PositionAndSize posi, double ratio) {
     var compCode = ComponentManager.getCompCodeFromZiId(ziId);
-    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     var comp = ComponentManager.getComponentByCode(compCode);
 
     if (comp != null) {
@@ -1067,7 +1088,8 @@ class BasePainter extends CustomPainter{
   displayTypingCode(int searchingZiIndex, PositionAndSize posi) {
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
-        "Typing code: " + typingCode, posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+        "Typing code: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(typingCode, posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
   @override
