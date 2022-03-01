@@ -35,8 +35,7 @@ class _ComponentPageState extends State<ComponentPage> {
   double screenWidth;
 
   double getSizeRatio() {
-    var defaultFontSize = screenWidth / 16;
-    return defaultFontSize / 25.0; // ratio over original hard coded value
+    return Utility.getSizeRatio(screenWidth);
   }
 
   @override
@@ -99,7 +98,7 @@ class _ComponentPageState extends State<ComponentPage> {
       title = 'Memorize components';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Be familiar with the Expanded Components';
+      title = 'Learn the Expanded Components';
     }
 
     return Scaffold
@@ -120,26 +119,26 @@ class _ComponentPageState extends State<ComponentPage> {
     return Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5.0 * getSizeRatio()), //10.0
           ),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(10 * getSizeRatio()),
           ),
           Container(
             child: getQuestion(context),
-            padding: EdgeInsets.all(2),
+            padding: EdgeInsets.all(2 * getSizeRatio()),
           ),
           //Container(
           //  padding: EdgeInsets.all(10), //
           //),
           getAnswers(context),
           Container(
-            padding: EdgeInsets.only(top: 15.0), //
+            padding: EdgeInsets.only(top: 5.0 * getSizeRatio()), //10.0
           ),
           Container(
             child: getContinue(context),
-            padding: EdgeInsets.all(10),
+            padding: EdgeInsets.all(5),
           ),
         ]
     );
@@ -193,7 +192,7 @@ class _ComponentPageState extends State<ComponentPage> {
       else {
         return Container(
           child: getIndividualAnswers(context),
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(20 * getSizeRatio()),
         );
       }
     }
@@ -234,7 +233,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                SizedBox(height: 30),
+                SizedBox(height: 30 * getSizeRatio()),
               ]
           ),
           Row(
@@ -243,14 +242,14 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                       'Ready to memorize the Component-key pairings?',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)
+                      style: TextStyle(fontSize: 15 * getSizeRatio(), fontWeight: FontWeight.bold)
                   ),
                 )
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 40 * getSizeRatio()),
               ]
           ),
         ]
@@ -262,7 +261,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                SizedBox(height: 30),
+                SizedBox(height: 30 * getSizeRatio()),
               ]
           ),
           Row(
@@ -272,7 +271,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
                   'The pairings are divided into six groups (based on the first Stroke of each Component).',
-                  style: TextStyle(fontSize: 15) // 18
+                  style: TextStyle(fontSize: 15 * getSizeRatio()) // 18
                 ),
               ),
             ]
@@ -289,14 +288,14 @@ class _ComponentPageState extends State<ComponentPage> {
                   child: Text(
                     //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
                       'Learn the above groups.',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold) // 18
+                      style: TextStyle(fontSize: 15  * getSizeRatio(), fontWeight: FontWeight.bold) // 18
                   ),
                 )
               ]
           ),
           Row(
             children: <Widget>[
-              SizedBox(height: 40),
+              SizedBox(height: 40 * getSizeRatio()),
             ]
           ),
         ]
@@ -309,7 +308,7 @@ class _ComponentPageState extends State<ComponentPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
 
         children: <Widget>[
-          SizedBox(width: 40),
+          SizedBox(width: 40.0 * getSizeRatio()),
           Row(
               children: <Widget>[
                 //SizedBox(width: 20),
@@ -317,14 +316,14 @@ class _ComponentPageState extends State<ComponentPage> {
                   child: Text(
                     //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
                       'Learn the above Component-key pairing groups.',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold) // 18
+                      style: TextStyle(fontSize: 15 * getSizeRatio(), fontWeight: FontWeight.bold) // 18
                   ),
                 )
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 40 * getSizeRatio()),
               ]
           ),
         ]
@@ -339,7 +338,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                SizedBox(height: 30),
+                SizedBox(height: 30 * getSizeRatio()),
               ]
           ),
           Row(
@@ -348,30 +347,30 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                     'The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group.',
-                    style: TextStyle(fontSize: 15)  // 20
+                    style: TextStyle(fontSize: 15 * getSizeRatio())  // 20
                   ),
                 ),
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 20 * getSizeRatio()),
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(width: 20),
+                SizedBox(width: 20 * getSizeRatio()),
                 Flexible (
                   child: Text(
                       'Memorize the above Component-key pairings.',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)  // 20
+                      style: TextStyle(fontSize: 15 * getSizeRatio(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 40 * getSizeRatio()),
               ]
           ),
         ]
@@ -386,7 +385,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                SizedBox(height: 30),
+                SizedBox(height: 30 * getSizeRatio()),
               ]
           ),
           Row(
@@ -395,14 +394,14 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                       'Memorize the above Component-key pairings.',
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold)  // 20
+                      style: TextStyle(fontSize: 15 * getSizeRatio(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
               ]
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 40),
+                SizedBox(height: 40 * getSizeRatio()),
               ]
           ),
         ]
@@ -478,8 +477,8 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getResultReminderImage(BuildContext context) {
     String imagePath;
-    double imageWidth = 180.0;
-    double imageHeight = 160.0;
+    double imageWidth = 180.0 * getSizeRatio();
+    double imageHeight = 160.0 * getSizeRatio();
 
     if (currentIndex > 0 && questionType == QuestionType.ExpandedComponent) {
       var compCollection = theExpandedComponentList[currentIndex];
@@ -504,18 +503,18 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getQuestionImage() {
     String imagePath;
-    double imageWidth = 400.0;
-    double imageHeight = 150.0;
+    double imageWidth = 390.0 * getSizeRatio();
+    double imageHeight = 150.0  * getSizeRatio();
 
     if (questionType == QuestionType.ComponentGroup) {
       var index = theComponentGroupListInRealExercise[currentIndex];
       imagePath = 'assets/typing/' + theComponentGroupList[index].imageName;
-      imageHeight = 200.0;
+      imageHeight = 200.0 * getSizeRatio();
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
-      imageWidth = 180.0;
-      imageHeight = 160.0;
+      imageWidth = 160.0 * getSizeRatio();
+      imageHeight = 160.0 * getSizeRatio();
     }
     else if (questionType == QuestionType.ComponentInGroup) {
       var groupNumberOfcomponentInGroup = theComponentInGroupList[currentIndex].groupNumber;
@@ -534,7 +533,7 @@ class _ComponentPageState extends State<ComponentPage> {
       var imageName;
       if (theComponentManager.isHeaderOfRandomComponents()) {
          imageName = 'GG6.png';
-         imageHeight = 250.0;
+         imageHeight = 250.0 * getSizeRatio();
       }
       else {
         var componentInGroup = theRandomComponentList[currentIndex];
@@ -568,17 +567,17 @@ class _ComponentPageState extends State<ComponentPage> {
             ),
             Row(
               children: <Widget>[
-                SizedBox(height: 20),
+                SizedBox(height: 10 * getSizeRatio()),  // 20.0
               ]
             ),
             Row(
               textDirection: TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 20),
+                SizedBox(width: 20 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition1)),
                 //Expanded(child: getText(AnswerPosition.groupPosition1)),
-                SizedBox(width: 10),
+                SizedBox(width: 10 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition2)),
               ],
             ),
@@ -586,9 +585,9 @@ class _ComponentPageState extends State<ComponentPage> {
               textDirection: TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 20),
+                SizedBox(width: 20 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
-                SizedBox(width: 10),
+                SizedBox(width: 10 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition4)),
               ],
             ),
@@ -596,9 +595,9 @@ class _ComponentPageState extends State<ComponentPage> {
               textDirection: TextDirection.ltr,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                SizedBox(width: 20),
+                SizedBox(width: 20 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
-                SizedBox(width: 10),
+                SizedBox(width: 10 * getSizeRatio()),
                 Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition6)),
               ],
             ),
@@ -607,12 +606,12 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getAnswerQuestion() {
-    double size = 15.0; // 18
+    double size = 15.0 * getSizeRatio(); // 18
 
     if (answeredPosition != AnswerPosition.continueNext) {
-      var questionSize = size;
+      var questionSize = 0.0; // size
       if (questionType == QuestionType.ExpandedComponent) {
-        questionSize = size * 3.0;
+        questionSize = size * 1.5; // 3.0
       }
       return Container(width:0.0, height: questionSize);
     }
@@ -651,20 +650,20 @@ class _ComponentPageState extends State<ComponentPage> {
                 children: <Widget>[
                   Flexible(child: Text(
                      "This chart shows the Expanded Components for Lead Component 日（key O). To type an Expanded Component, just type its Lead Component 日（key O).",
-                    style: TextStyle(fontSize: 15.0), // 18
+                    style: TextStyle(fontSize: 15.0 * getSizeRatio()), // 18
                     textAlign: TextAlign.start),),
                 ]
               ),
               Row(
                 children: <Widget>[
-                  SizedBox(height: 15),
+                  SizedBox(height: 15 * getSizeRatio()),
                 ]
               ),
               Row(
                   children: <Widget>[
                     Flexible(child: Text(
                           "Note: The Expanded Components have similar shapes to their Lead Component.",
-                        style: TextStyle(fontSize: 15.0, fontStyle: FontStyle.italic),
+                        style: TextStyle(fontSize: 15.0 * getSizeRatio(), fontStyle: FontStyle.italic),
                     textAlign: TextAlign.start),),// 18
                   ]
               ),
@@ -692,7 +691,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 15),
+                SizedBox(height: 15 * getSizeRatio()),
               ]
           ),
           Row(
@@ -723,7 +722,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
         Row(
           children: <Widget>[
-            SizedBox(height: 4),
+            SizedBox(height: 4.0 * getSizeRatio()),
           ]
         ),
         Row(
@@ -892,7 +891,7 @@ class _ComponentPageState extends State<ComponentPage> {
   // One center usage left
   Widget getText(AnswerPosition position) {
     var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
-    var fontSize = 20.0; // 30.0
+    var fontSize = 20.0 * getSizeRatio(); // 30.0
     var currentType = theComponentManager.getCurrentType();
 
     var backgroundColor = Colors.white;  // make it a non-material color first
@@ -915,7 +914,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (position == AnswerPosition.center) {
       backgroundColor = Colors.white;
-      fontSize = 100.0;
+      fontSize = 100.0 * getSizeRatio();
     }
 
     // actually no effect if no pressed action since the background will be white in that case.
@@ -945,9 +944,9 @@ class _ComponentPageState extends State<ComponentPage> {
 
   // is only used in question in InputZi, therefore only used in center position.
   Widget getZiContainer(/*AnswerPosition position,*/ bool withNonCharFrame) {
-    var size = 55.0; //35
+    var size = 55.0 * getSizeRatio(); //35
     //if (position == AnswerPosition.center) {
-      size = 120.0;
+      size = 120.0 * getSizeRatio();
     //}
 
     var backgroundColor = Colors.white;  // make it a non-material color first
@@ -1044,7 +1043,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
       return Container(
         child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: 18.0),),
+          child: Text(result, style: TextStyle(fontSize: 18.0 * getSizeRatio()),),
           color: Colors.blueAccent, // Colors.brown,
           textColor: Colors.white,
           onPressed: () {

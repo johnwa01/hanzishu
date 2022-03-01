@@ -221,7 +221,7 @@ class InputZiManager {
 
   static String getIntroduction(TypingType typingType, int currentIndex, int lessonId) {
     String instruction;
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       instruction = theZiForIntroductionList[currentIndex].hintText;
     }
     else if (typingType == TypingType.LeadComponents) {
@@ -238,7 +238,7 @@ class InputZiManager {
   }
 
   ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       return theZiForIntroductionList[index];
     }
     else if (typingType == TypingType.LeadComponents) {
@@ -280,7 +280,7 @@ class InputZiManager {
   int getNextIndex(TypingType typingType, int currentIndex, int lessonId) {
     currentIndex++;
 
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       if (currentIndex >= theZiForIntroductionList.length) {
         currentIndex = -1;
       }
@@ -314,7 +314,7 @@ class InputZiManager {
     }
 
     var zi;
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       zi = theZiForIntroductionList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
@@ -335,7 +335,7 @@ class InputZiManager {
   }
 
   int getTotal(TypingType typingType, int lessonId) {
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       return theZiForIntroductionList.length;
     }
     else if (typingType == TypingType.LeadComponents) {

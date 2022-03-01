@@ -18,7 +18,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
       (
       appBar: AppBar
         (
-        title: Text("Quiz Results"),
+        title: Text("Quiz results"),
       ),
       body: Center
         (

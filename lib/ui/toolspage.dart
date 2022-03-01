@@ -42,7 +42,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ForIntroduction), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.GiveItATry), //InputZiPage(),
               ),
             );
           },

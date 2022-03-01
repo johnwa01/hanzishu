@@ -30,7 +30,7 @@ class SpeechIconInfo {
 }
 
 class InputZiPainter extends BasePainter {
-  static var lessonLeftEdge = 10.0;
+  static var lessonLeftEdge;
 
   int breakoutIndex;
 
@@ -52,7 +52,7 @@ class InputZiPainter extends BasePainter {
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
     PrimitiveWrapper contentLength; // not used
-
+    lessonLeftEdge = 10.0 * getSizeRatio();
     displayCandidates();
   }
 
@@ -65,9 +65,10 @@ class InputZiPainter extends BasePainter {
       if (activeCandidatesLength > 7) {  // Temp: for testing, leave 7 for test
         activeCandidatesLength = 7;
       }
+      var widthSizeRation = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
-        displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0);
-        x += (30.0 * theCurrentZiCandidates[i].length + 25.0);
+        displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRation);
+        x += (30.0 * widthSizeRation * theCurrentZiCandidates[i].length + 25.0 * widthSizeRation);
       }
 
       /* Temp: for testing component stroke drawing only

@@ -20,9 +20,9 @@ class GlossaryPage extends StatefulWidget {
 }
 
 class _GlossaryPageState extends State<GlossaryPage> {
-  double fontSize1 = 13.0;
-  double fontSize2 = 12.0;
-  double fontSize3 = 11.0; // base size 11
+  double fontSize1;
+  double fontSize2;
+  double fontSize3;
 
   double screenWidth;
   ScrollController _scrollController;
@@ -30,6 +30,10 @@ class _GlossaryPageState extends State<GlossaryPage> {
   OverlayEntry overlayEntry;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
+
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
+  }
 
   @override
   void initState() {
@@ -49,6 +53,11 @@ class _GlossaryPageState extends State<GlossaryPage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
+
+    fontSize1 = 13.0 * getSizeRatio();
+    fontSize2 = 12.0 * getSizeRatio();
+    fontSize3 = 11.0 * getSizeRatio(); // base size 11
+
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
@@ -460,7 +469,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Hold a Character almost anywhere in the app, it’ll show the detailed information about that Character.",
+              "Holding a Character in many features within the app, it’ll show the detailed information about that Character.",
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

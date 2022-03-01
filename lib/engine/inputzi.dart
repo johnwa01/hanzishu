@@ -1,7 +1,7 @@
 import 'package:hanzishu/utility.dart';
 
 enum TypingType {
-  ForIntroduction,
+  GiveItATry,
   LeadComponents,
   ExpandedComponents,
   FromLessons,

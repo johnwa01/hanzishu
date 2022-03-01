@@ -157,7 +157,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "The Hanzishu One Tap Dictionary is organized based on the Basic Character Table which groups Basic Character into groups 1-8. Each number represents the number of strokes for each Basic Character in that group. For example, Basic Characters in group 1 have one stroke. Basic Characters in group 2 have two strokes, and so on. The One Tap Dictionary houses nearly 4,000 Characters, all contained under its corresponding Basic Character.",
+              "The Hanzishu One Tap Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 4,000 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
               style: TextStyle(fontSize: theConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
@@ -173,7 +173,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	Tap the first Basic Character",
+              "   •	Tap the first Basic Character of the Character that you are searching for",
               style: TextStyle(fontSize: theConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),

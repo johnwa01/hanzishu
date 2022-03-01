@@ -246,6 +246,7 @@ class Utility {
     } while (navigationZiId != toId);
   }
 
+  // use getScreenWidthForTreeAndDict() if a page needs to consider the height factor.
   static double getScreenWidth(BuildContext context) {
     var screenSize = MediaQuery
         .of(context)
@@ -277,6 +278,15 @@ class Utility {
     thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
 
     return screenWidth;
+  }
+
+  // Note: assume screenWidth has considered the height to screen ratio already, that is, might be narrowed areadly
+  //       from the actual screen size if height to width ratio is lower than the minimum.
+  static double getSizeRatio(double screenWidth) {
+    return screenWidth / 392.0;
+    //var defaultFontSize = screenWidth / 16.0;
+    //return defaultFontSize / 25.0; // ratio over original hard coded value I took as the standard in Android.
+    // that is, roughtly screen size 392 is the standard.
   }
 
   /*

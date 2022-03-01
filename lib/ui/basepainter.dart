@@ -53,8 +53,9 @@ class BasePainter extends CustomPainter{
   //BasePainter({this.lineColor, this.completeColor, this.centerId, this.shouldDrawCenter, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
 
   double getSizeRatio() {
-    var defaultSize = width / 16.0; // roughly equivalent to the original hardcoded value of 25.0
-    return defaultSize / 25.0;
+    // Note: assume screenWidth has considered the height to screen ratio already, that is, might be narrowed areadly
+    //       from the actual screen size if height to width ratio is lower than the minimum.
+    return Utility.getSizeRatio(width);
   }
 
   double applyRatio(double value) {
@@ -1048,7 +1049,7 @@ class BasePainter extends CustomPainter{
   // assume a single comp zi. used in dictionary.
   displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio) {
     var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
-    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     var comp = ComponentManager.getComponentByCode(comps[0]);
 
     if (comp.strokesString.length > 0) {

@@ -35,7 +35,7 @@ class InputZiHintPainter extends BasePainter {
     this.width = screenWidth; // set the base class width variable
 
     if (showHint) {
-      displayHintMessage(18.0, char);
+      displayHintMessage(15.0 * getSizeRatio(), char);  // 18.0
     }
     else {
       displayShiftKeyNote();
@@ -51,7 +51,7 @@ class InputZiHintPainter extends BasePainter {
       note = "Note: use 'shift-a' to 'shift-y' to show Expanded Components. Use 'shift-z' to show mapping.";
     }
 
-    displayTextWithValue(note, 10.0, 0.0, 18.0, Colors.blue);
+    displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue); // 18.0
   }
 
   displayHintMessage_old(double fontSize, String char) {

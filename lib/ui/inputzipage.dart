@@ -53,6 +53,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   int updateCounter = 0;
 
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
+  }
 
   @override
   initState() {
@@ -212,16 +215,16 @@ class _InputZiPageState extends State<InputZiPage> {
     if (!overlayParameters.isEqual(previousOverlayParameters)) {
         var imageName;
         var fullPath;
-        double imageLeft = 150.0;
-        double imageWidth = 100.0;
-        double imageHeight = 135.0;
+        double imageLeft = 150.0 * getSizeRatio();
+        double imageWidth = 100.0 * getSizeRatio();
+        double imageHeight = 135.0 * getSizeRatio();
 
         if (overlayParameters.isFullComponents) {
             if (overlayParameters.fullComponentsLetter == 'Z') {
               imageName = theZiForIntroductionList[0].hintImage;
-              imageLeft = 20.0;
-              imageWidth = 350.0;
-              imageHeight = 150.0;
+              imageLeft = 20.0 * getSizeRatio();
+              imageWidth = 350.0 * getSizeRatio();
+              imageHeight = 150.0 * getSizeRatio();
             }
             else {
               var pair = ComponentManager.getGroupAndIndexFromLetter(
@@ -236,7 +239,7 @@ class _InputZiPageState extends State<InputZiPage> {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 50,//65, //65.0, //85.0, //posiY,
+                  top: 50 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
                   left: imageLeft, //100, //0.0, //posiX,
                   child: Image.asset(
                     fullPath,
@@ -515,7 +518,9 @@ class _InputZiPageState extends State<InputZiPage> {
     initialControllerTextValue = _controller.text;
   }
 
-  Widget getIntroductionPage() {
+  Widget getGiveItATryPage() {
+    var fontSize1 = theConst.fontSizes[1] * getSizeRatio();
+
     return Scaffold
       (
       appBar: AppBar
@@ -526,83 +531,83 @@ class _InputZiPageState extends State<InputZiPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            SizedBox(height: theConst.fontSizes[1]),
+            SizedBox(height: fontSize1),
             Text(
                 "The Hanzishu Component Input Method is fast and easy!",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
-            SizedBox(height: theConst.fontSizes[1]),
+            SizedBox(height: fontSize1),
             Text(
                 "Chinese Characters are broken up into Components and matched with a key on the English keyboard to create a Component-key pairing.",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
-            SizedBox(height: theConst.fontSizes[1]),
+            SizedBox(height: fontSize1),
             Text(
                 "Reference this chart to visualize how Lead Components are mapped to English letters.",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Flexible(
               child: Image.asset(
                 "assets/typing/" + theZiForIntroductionList[0].hintImage,
-                width: 350.0,
-                height: 150.0,
+                width: 350.0 * getSizeRatio(),
+                height: 150.0 * getSizeRatio(),
                 fit: BoxFit.fitWidth
               ),
             ),
-            SizedBox(height: theConst.fontSizes[1]),
+            SizedBox(height: fontSize1),
             Text(
                 "Example: Type the Chinese character 品",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	Find the first Component 口",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	Find the corresponding key i",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	Tap it",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	If 品 appears in the Character list (below the editing field), select it by:",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "    o	Tapping the Character",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "    o	 Tapping the spacebar if it’s first in the list",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	If the Character is not listed, repeat the these steps with the second and third Components until you see 品 listed",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             Text(
                 "  •	The English letters in the editing field automatically convert to 品.",
-                style: TextStyle(fontSize: theConst.fontSizes[1]),
+                style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             SizedBox(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: TextButton(
-                         style: TextButton.styleFrom(textStyle: const TextStyle(fontSize: 15.0),
+                         style: TextButton.styleFrom(textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
                           ),
                   onPressed: () {
                            setState(() {
@@ -623,16 +628,21 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget build(BuildContext context) {
     typingType = widget.typingType; //theComponentManager.getCurrentType();
     lessonId = widget.lessonId;
+
     if (currentIndex < 0) {
       return Container(width:0.0, height: 0.0);
     }
+
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    double editFontSize = 30.0 * getSizeRatio();
 
     //To be sure
     initOverlay();
 
     int maxNumberOfLines;
     if (typingType == TypingType.FreeTyping) {
-      maxNumberOfLines = 3;
+      maxNumberOfLines = 4;  //
+      editFontSize = 26 * getSizeRatio();
     }
     else {
       maxNumberOfLines = 1;
@@ -644,7 +654,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //   typingType = widget.typingType; //theComponentManager.getCurrentType();
 //    theInputZiManager.setCurrentType(typingType); //TODO: should pass as a parameter in painter?
 
-    screenWidth = Utility.getScreenWidth(context);
+
 
     var inputZiPainter = InputZiPainter(
         lineColor: Colors.amber,
@@ -654,7 +664,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
 
     var title = 'Hanzishu Component Input Method';
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       title = 'Give it a try';
     }
     else if (typingType == TypingType.LeadComponents) {
@@ -664,8 +674,8 @@ class _InputZiPageState extends State<InputZiPage> {
       title = 'Typing exercises';
     }
 
-    if (typingType == TypingType.ForIntroduction && currentIndex == 0) {
-      return getIntroductionPage();
+    if (typingType == TypingType.GiveItATry && currentIndex == 0) {
+      return getGiveItATryPage();
     }
 
     return Scaffold
@@ -695,8 +705,8 @@ class _InputZiPageState extends State<InputZiPage> {
                   labelText: '', //'Full Name',
                 ),
                 style: TextStyle(
-                  fontSize: 35,
-                  height: 1.5
+                  fontSize: editFontSize * getSizeRatio(), // 35
+                  height: 1.3
                 ),
                 maxLines: maxNumberOfLines,
                 //expands: true,
@@ -706,7 +716,7 @@ class _InputZiPageState extends State<InputZiPage> {
           //),
           SizedBox(
             width: double.infinity,
-            height: 40,
+            height: 30.0 * getSizeRatio(), //40
             child:  CustomPaint(
               foregroundPainter: inputZiPainter,
               //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
@@ -732,7 +742,7 @@ class _InputZiPageState extends State<InputZiPage> {
           alignment: Alignment.topRight,
           child: TextButton(
             style: TextButton.styleFrom(
-              textStyle: const TextStyle(fontSize: 20),
+              textStyle: TextStyle(fontSize: 16.0 * getSizeRatio()),
             ),
             onPressed: () {
               Navigator.push(
@@ -759,7 +769,7 @@ class _InputZiPageState extends State<InputZiPage> {
   //Note: Make this case special so that 1: I don't need to put stroke kind of info to the "Give it a try" samples.
   //      2: More space for the keyboard which is special for "Give it a try" case.
   Widget getComponentAndMapping() {
-    var fontSize = 15.0;
+    var fontSize = 15.0 * getSizeRatio();
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
 /*
     var inputZiHintPainter = InputZiHintPainter(
@@ -768,18 +778,32 @@ class _InputZiPageState extends State<InputZiPage> {
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 */
+    var sizeRatio = getSizeRatio();
+    if (0.80 < sizeRatio && sizeRatio < 0.83) {
+      // dp = 320 or below. special case iPod touch 7 which ratio is 0.816. have to make the image size smaller
+      // in order to show the whole huge keyboard in iPod touch 7.
+      sizeRatio = 0.46;
+    }
+
     return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox( //Flexible(
+          SizedBox( //Flexible
             child: Image.asset(
               "assets/typing/" + theZiForIntroductionList[0].hintImage,
-              width: 350.0, //300.0,
-              height: 150.0, //100.0,
+              width: 350.0 * sizeRatio,
+              height: 150.0 * sizeRatio,
               fit: BoxFit.fitWidth,
             )
           ),
-
+          /*
+          FittedBox( //Flexible( //FittedBox
+              child: Image.asset(
+                "assets/typing/" + theZiForIntroductionList[0].hintImage,
+                fit: BoxFit.fill,
+              )
+          ),
+          */
           Row(
               children: <Widget>[
                 SizedBox(
@@ -789,20 +813,20 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: fontSize * 1.2),
+                SizedBox(width: fontSize * 0.5), //1.2
                 SizedBox(
                   child: Text(
-                      zi.zi,
-                      style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                      zi.zi, // was fontSize*2.0
+                      style: TextStyle(fontSize: 30.0 * sizeRatio, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
                 ),
                 SizedBox(width: fontSize),
-                SizedBox(width: 30.0),
+                SizedBox(width: 10.0 * getSizeRatio()),
                 SizedBox(
                   child: Text(
                       "Hint: " + theZiForIntroductionList[currentIndex].hintText ,
-                      style: TextStyle(fontSize: fontSize * 1.2),
+                      style: TextStyle(fontSize: fontSize),  // fontSize * 1.2
                       textAlign: TextAlign.center   //left
                   ),
                 ),
@@ -810,6 +834,22 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
 
         ]
+    );
+  }
+
+  Widget getInstruction(String instruction) {
+    if (instruction == null || instruction.length == 0) {
+      return Container(width:0.0, height: 0.0);
+    }
+
+    var fontSize = 13.0 * getSizeRatio();
+
+    return SizedBox(  //
+      child: Text(
+          instruction,
+          style: TextStyle(fontSize: fontSize),
+          textAlign: TextAlign.left
+      ),
     );
   }
 
@@ -827,7 +867,8 @@ class _InputZiPageState extends State<InputZiPage> {
       );*/
     }
 
-    if (typingType == TypingType.ForIntroduction) {
+    // treat it specially so that it can have shorter/non-standard hints for sample chars.
+    if (typingType == TypingType.GiveItATry) {
       return getComponentAndMapping();
     }
 
@@ -835,7 +876,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
 
-    var fontSize = 15.0;
+    var fontSize = 13.0 * getSizeRatio();     //15.0
 
     var inputZiHintPainter = InputZiHintPainter(
         lineColor: Colors.amber,
@@ -850,20 +891,23 @@ class _InputZiPageState extends State<InputZiPage> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SizedBox(height: fontSize),
-          Flexible(
+          //SizedBox(height: fontSize),
+          getInstruction(instruction),
+          /*
+          SizedBox(  //
             child: Text(
                 instruction,
               style: TextStyle(fontSize: fontSize),
               textAlign: TextAlign.left
             ),
           ),
+          */
           //SizedBox(height: fontSize),
 
           Row(
               children: <Widget>[
                 SizedBox(
-                  width: 50,
+                  width: 50 * getSizeRatio(),
                   child: Text(
                       "Type: ",
                       style: TextStyle(fontSize: fontSize * 1.2),
@@ -872,43 +916,43 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
                 SizedBox(width: fontSize),
                 SizedBox(
-                  width: 50.0,
+                  width: 50.0 * getSizeRatio(),
                   child: Text(
                       zi.zi,
                       style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: 220.0), //200.0
+                SizedBox(width: 220.0 * getSizeRatio()), //200.0
                 SizedBox(
-                  width: 50.0,
-                child: FlatButton(
-                  color: Colors.white,
-                  textColor: Colors.blueAccent,
-                  padding: EdgeInsets.zero,
-                  onPressed: () {
-                    initOverlay();
+                  width: 50.0 * getSizeRatio(),
+                  child: FlatButton(
+                    color: Colors.white,
+                    textColor: Colors.blueAccent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      initOverlay();
 
-                    setState(() {
-                      showHint = true;
-                    });
+                      setState(() {
+                        showHint = true;
+                      });
 
                     //var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, false, '');
                     //showOverlay(context, overlayParameters);
-                  },
-                  child: Text(
-                    "Hint",
-                    style: TextStyle(fontSize: fontSize * 1.2),
-                    textAlign: TextAlign.center
+                    },
+                    child: Text(
+                      "Hint",
+                      style: TextStyle(fontSize: fontSize * 1.2),
+                      textAlign: TextAlign.left //TextAlign.center
+                    ),
                   ),
-                ),
                 ),
               ]
           ),
         Row(
             children: <Widget>[
               SizedBox(
-                height: 40.0,
+                height: 40.0 * getSizeRatio(),
                 //width: 150.0,
                 child:  CustomPaint(
                   foregroundPainter: inputZiHintPainter,
@@ -933,18 +977,18 @@ class _InputZiPageState extends State<InputZiPage> {
         setTextByChosenZiIndex(candidateIndex, true);
         //isCurrentlyUnderChoiceSelection = false;
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
         top: 0.0,
         left: xPosi.value,
-        height: 30.0, //posiAndSize.height,
-        width: 30.0 * zi.length, //posiAndSize.width,
+        height: 30.0 * getSizeRatio(), //posiAndSize.height,
+        width: 30.0 * getSizeRatio() * zi.length, //posiAndSize.width,
         child: butt
     );
 
-    xPosi.value += (30.0 * zi.length + 25.0);
+    xPosi.value += (30.0 * getSizeRatio() * zi.length + 25.0 * getSizeRatio());
 
     return posiCenter;
   }
@@ -952,7 +996,7 @@ class _InputZiPageState extends State<InputZiPage> {
   List<Widget> createHittestButtons(BuildContext context, List<String> ziCandidates) {
     List<Widget> buttons = [];
 
-    buttons.add (Container(height: 80.0 /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
+    buttons.add (Container(height: 80.0 * getSizeRatio() /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(0.0);
 
@@ -978,7 +1022,7 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
-    if (typingType == TypingType.ForIntroduction) {
+    if (typingType == TypingType.GiveItATry) {
       title = "Good job!";
       content = "You did it! Let's go through the typing exercises now.";
     }

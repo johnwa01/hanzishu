@@ -59,14 +59,14 @@ class DictionaryPainter extends BreakoutPainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("Basic Character Table[首字表]", 10.0, 5.0, 20.0, Colors.blueGrey);
+      displayTextWithValue("Basic Character Table[首字表]", applyRatio(10.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20.0
 
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
 
       // below should match dictionaryPage
-      var helpPosiAndSize = PositionAndSize(width - 70.0, 5.0, 40.0, 40.0, 0.0, 0.0);
+      var helpPosiAndSize = PositionAndSize(width - applyRatio(60.0), applyRatio(25.0), applyRatio(30.0), applyRatio(30.0), 0.0, 0.0); // 5.0
       displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width / 2.0, Colors.lightBlue);
 
       DisplayFirstZis();
@@ -107,13 +107,13 @@ class DictionaryPainter extends BreakoutPainter {
 */
 
   DisplayNavigationPath(DictionaryStage stage) {
-    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
-    var fontSize1 = defaultFontSize * (5.0 / 25.0);
-    var fontSize2 = defaultFontSize * (10.0 / 25.0);
-    var fontSize3 = defaultFontSize * (35.0 / 25.0);
-    var fontSize4 = defaultFontSize * (70.0 / 25.0);
-    var fontSize5 = defaultFontSize * (105.0 / 25.0);
-    var fontSize6 = defaultFontSize * (140.0 / 25.0);
+    var defaultFontSize = applyRatio(25.0);
+    var fontSize1 = applyRatio (5.0);
+    var fontSize2 = applyRatio(10.0);
+    var fontSize3 = applyRatio(35.0);
+    var fontSize4 = applyRatio(70.0);
+    var fontSize5 = applyRatio(105.0);
+    var fontSize6 = applyRatio(140.0);
 
     displayTextWithValue("@", fontSize2, fontSize1, defaultFontSize, Colors.blueAccent);
     displayTextWithValue("->", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
@@ -151,19 +151,19 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayDetailedZi(int ziIndex) {
     thePositionManager.setFrameWidth(getFrameWidth());
 
-    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
-    var fontSize1 = defaultFontSize * (1.0 / 25.0);
-    var fontSize2 = defaultFontSize * (2.0 / 25.0);
-    var fontSize3 = defaultFontSize * (10.0 / 25.0);
-    var fontSize4 = defaultFontSize * (20.0 / 25.0);
-    var fontSize5 = defaultFontSize * (25.0 / 25.0);
-    var fontSize6 = defaultFontSize * (35.0 / 25.0);
-    var fontSize7 = defaultFontSize * (90.0 / 25.0);
-    var fontSize8 = defaultFontSize * (115.0 / 25.0);
-    var fontSize9 = defaultFontSize * (210.0 / 25.0);
-    var fontSize10 = defaultFontSize * (245.0 / 25.0);
-    var fontSize11 = defaultFontSize * (280.0 / 25.0);
-    var fontSize12 = defaultFontSize * (350.0 / 25.0);
+    var defaultFontSize = applyRatio(25.0);
+    var fontSize1 = applyRatio(1.0);
+    var fontSize2 = applyRatio(2.0);
+    var fontSize3 = applyRatio(10.0);
+    var fontSize4 = applyRatio(20.0);
+    var fontSize5 = applyRatio(25.0);
+    var fontSize6 = applyRatio(35.0);
+    var fontSize7 = applyRatio(90.0);
+    var fontSize8 = applyRatio(115.0);
+    var fontSize9 = applyRatio(210.0);
+    var fontSize10 = applyRatio(245.0);
+    var fontSize11 = applyRatio(280.0);
+    var fontSize12 = applyRatio(350.0);
 
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
@@ -185,7 +185,7 @@ class DictionaryPainter extends BreakoutPainter {
       // in this case, compoundZiCurrentComponentId is actually the id of a searchingZi itself (not a component), that is, detailedZi.
       if (compoundZiCurrentComponentId > 0 && shouldDrawCenter) {
         var ziChar = DictionaryManager.getChar(compoundZiCurrentComponentId);
-        displayTextWithValue(ziChar, posi.transX, posi.transY, posi.charFontSize, charColor);
+        displayTextWithValue(ziChar, posi.transX, posi.transY + fontSize5 * 0.7, posi.charFontSize, charColor);
       }
     }
     else {
@@ -221,7 +221,7 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue(detailedZi.pinyin, fontSize8, fontSize9, fontSize4, Colors.blue);
 
     displayTextWithValue("Meaning: ", fontSize3, fontSize10, fontSize4, Colors.black);
-    displayTextWithValue(detailedZi.meaning, fontSize3 + 80.0, fontSize10, fontSize4, Colors.blue);
+    displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
     displayComponentsOrStrokes(ziIndex, posiSize);
@@ -309,10 +309,10 @@ class DictionaryPainter extends BreakoutPainter {
     String charStr;
     double yPosi;
 
-    var defaultFontSize = width / 16.0;     // was hardcoded 25.0, use it as the standard
-    var smallFontSize = defaultFontSize * (20.0 / 25.0);
-    var fillerSize = defaultFontSize * (5.0 / 25.0);
-    var startYSize = defaultFontSize * (60.0 / 25.0); // ratio of 60.0/25.0
+    var defaultFontSize = applyRatio(25.0);
+    var smallFontSize = applyRatio(20.0);
+    var fillerSize = applyRatio(5.0);
+    var startYSize = applyRatio(60.0);
 
 
     for (var j = 0; j < 16; j++) {
@@ -343,6 +343,7 @@ class DictionaryPainter extends BreakoutPainter {
   }
 
   static void getSearchingParameters(double screenWidth, int numberOfZi, PrimitiveWrapper actualColumnCount, PositionAndSize startPosition) {
+    // since this is static function shared by others, just do the ratio here itself
     var defaultFontSize = screenWidth / 16.0;  // was 25.0 as the hardcoded value
     int columnCount = 8;
     double fontSize = defaultFontSize * (41.0 / 25.0); //45.0
@@ -393,8 +394,7 @@ class DictionaryPainter extends BreakoutPainter {
     int previousStrokeCount = 0;
     int currentStrokeCount = 0;
 
-    var defaultFontSize = width / 16.0;  // was 25.0 as the hardcoded value
-    double strokeIndexFontSize = defaultFontSize * (15.0 / 25.0);
+    double strokeIndexFontSize = applyRatio(15.0);
 
     String strokeIndexStr;
 
