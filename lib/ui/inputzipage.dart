@@ -716,16 +716,16 @@ class _InputZiPageState extends State<InputZiPage> {
           //),
           SizedBox(
             width: double.infinity,
-            height: 30.0 * getSizeRatio(), //40
+            height: 40.0 * getSizeRatio(), //40
             child:  CustomPaint(
               foregroundPainter: inputZiPainter,
               //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
 
-              child: Center(
+              //child: Center(
                 child: Stack(
                   children: createHittestButtons(context, theCurrentZiCandidates),
                 ),
-              ),
+              //),
             ),
           )
         ]
@@ -981,7 +981,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
 
     var posiCenter = Positioned(
-        top: 0.0,
+        top: 5.0 * getSizeRatio(),
         left: xPosi.value,
         height: 30.0 * getSizeRatio(), //posiAndSize.height,
         width: 30.0 * getSizeRatio() * zi.length, //posiAndSize.width,
@@ -996,7 +996,7 @@ class _InputZiPageState extends State<InputZiPage> {
   List<Widget> createHittestButtons(BuildContext context, List<String> ziCandidates) {
     List<Widget> buttons = [];
 
-    buttons.add (Container(height: 80.0 * getSizeRatio() /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
+    buttons.add (Container(height: 60.0 * getSizeRatio() /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(0.0);
 
