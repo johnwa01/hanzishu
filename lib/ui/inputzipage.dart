@@ -34,13 +34,13 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
-  String initialControllerTextValue = "unlikelyIniStr876";
-  bool itsTheFirstTime = true;
+  String initialControllerTextValue; // = "unlikelyIniStr876";
+//  bool itsTheFirstTime = true;
   String previousText = "";
-  bool justCompletedPosting = false;
-  bool justCompletedFullCompDisplay = false;
+//  bool justCompletedPosting = false;
+//  bool justCompletedFullCompDisplay = false;
   //bool hasRunLowercase = false;
-  String previousValueWithLowercase = "";
+//  String previousValueWithLowercase = "";
   List<String> ziCandidates = null;
   bool showHint = false;
   //String previousOverlayImagePath = "";
@@ -91,41 +91,12 @@ class _InputZiPageState extends State<InputZiPage> {
     var newInputText = "";
     var selectionEnd;
 
-    //TODO: can i just use selection.end char?
     if (_controller.value.text != null && _controller.value.text.length != 0) {
       selectionEnd = _controller.value.selection.end;
       if (selectionEnd >= 1) {
         return _controller.value.text.substring(selectionEnd - 1, selectionEnd);
       }
     }
-
-    /*
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
-      if (_controller.value.selection.start != -1) {
-        newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
-      }
-      else if (_controller.value.composing.end != -1) {
-        //Note: composing start/end includes the one letter just typed if no composing letters shown in the screen,
-        // but includes it if no letters shown in screen, this inconsistency is hard to manage in code.
-        // Found the selection.start is more reliable for this purpose. should check other usage as well.
-        newInputText += _controller.value.text.substring(0, _controller.value.composing.end);
-      }
-      else if (previousEndComposing != -1) {  // in case the current _controller doesn't contain composing info
-        //TODO: verify adding 1 here. Since it was an old value not updated in current input?
-        newInputText += _controller.value.text.substring(0, previousEndComposing + 1);
-      }
-      else {
-        newInputText = _controller.value.text;
-      }
-    }
-
-    if (newInputText.length > 0) {
-      return newInputText[newInputText.length - 1];
-    }
-    else {
-      return '';
-    }
-    */
 
     return newInputText;
   }
@@ -146,24 +117,6 @@ class _InputZiPageState extends State<InputZiPage> {
             0, _controller.value.selection.start);
       }
     }
-    /*
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
-      if (_controller.value.composing.start != -1) {
-        newInputText += _controller.value.text.substring(0, _controller.value.composing.start);
-      }
-      else if (previousStartComposing != -1) {  // in case the current _controller doesn't contain composing info
-        newInputText += _controller.value.text.substring(0, previousStartComposing);
-      }
-      // for this purpose, should use composing since selection.start might be same value as selection.end.
-      // There are cases that both composing are unavailable
-      else if (_controller.value.selection.start != -1) {
-        newInputText += _controller.value.text.substring(0, _controller.value.selection.start);
-      }
-      else {
-        newInputText = _controller.value.text;
-      }
-    }
-    */
 
     return newInputText;
   }
@@ -181,25 +134,6 @@ class _InputZiPageState extends State<InputZiPage> {
             _controller.value.selection.end, _controller.value.text.length);
       }
     }
-/*
-    if (_controller.value.selection.end != -1 &&
-    (_controller.value.selection.end + 1) <= _controller.value.text.length) {
-      newInputText = _controller.value.text.substring(
-      _controller.value.selection.end, _controller.value.text.length);
-    }
-    else if (_controller.value.composing.end != -1 &&
-        _controller.value.composing.end + 1 < _controller.value.text.length) {
-      // Note: The composing.end varies when there are composing letters shown in screen or not.
-      // Use selection.end to be reliable. use composing as fallback just in case.
-      newInputText = _controller.value.text.substring(
-          _controller.value.composing.end + 1, _controller.value.text.length);
-    }
-    else if (previousEndComposing != -1 &&
-        (previousEndComposing + 1) <= _controller.value.text.length) {
-      newInputText = _controller.value.text.substring(
-          previousEndComposing + 1, _controller.value.text.length);
-    }
-*/
 
     return newInputText;
   }
@@ -208,13 +142,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var newInputText = "";
 
     newInputText = getInputTextBeforeComposingAndSelectionStart();
-/*
-    var length = newInputText.length;
-    // check if last letter is a choice number, in this case, not a real input and need to be removed
-    if (length > 0 && (isNumberOneToSeven(newInputText[length - 1]) || newInputText[length - 1] == " " || Utility.isAUpperCaseLetter(newInputText[length - 1]))) {
-      newInputText = newInputText.substring(0, length - 1);
-    }
-*/
+
     var candidateZiString = InputZiManager.getCandidateZiString(index);
     if (candidateZiString != null) {
       newInputText += candidateZiString;
@@ -224,7 +152,6 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return newInputText;
   }
-
 
   String getInputTextWithoutUpperCaseLetter(String upperCaseLetter) {
     var inputTextWithoutUpperCaseLetter = "";
@@ -349,21 +276,6 @@ class _InputZiPageState extends State<InputZiPage> {
           selectionPosi -= (previousEndComposing - previousStartComposing); // subtract composing
       }
     }
-    /*
-    else if (previousEndSelection >= 0) {
-      // Note: if typing spacebar, the value.selection could be set to -1. That's why we need this backup value.
-      selectionPosi = previousEndSelection;
-      if (isFromCharCandidateList) {
-        selectionPosi++;
-      }
-      if (previousEndComposing >= 1) {
-        selectionPosi -= (previousEndComposing - previousStartComposing);
-        if (!isFromCharCandidateList) {
-          selectionPosi++;
-        }
-      }
-    }
-    */
     else {
       selectionPosi = _controller.value.text.length;
     }
@@ -379,8 +291,6 @@ class _InputZiPageState extends State<InputZiPage> {
     var newText = getInputText(selectionIndex);
 
     previousText = newText;
-        justCompletedPosting = true;
-        //hasRunLowercase = false; // init lowercase as well
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -391,15 +301,6 @@ class _InputZiPageState extends State<InputZiPage> {
     _controller.value = _controller.value.copyWith(text: newText,
             composing: TextRange.empty, //TextRange(start: previousStartComposing, end: previousEndComposing),
             selection: TextSelection.collapsed(offset: selectionPosi));
-    /*
-    //now reset controller which will notify the listeners right away
-    _controller.text = newText;
-    _controller.clearComposing();
-    //Note: set cursor to the right position of the current editing specifically
-    // otherwise it'll set at the beginning
-    var textPosition = TextPosition(offset: selectionPosi);
-    _controller.selection = TextSelection.fromPosition(textPosition);
-    */
 
     previousStartComposing = -1;
     previousEndComposing = -1;
@@ -414,6 +315,8 @@ class _InputZiPageState extends State<InputZiPage> {
     handleKeyInputHelper(0);
   }
 
+  // my method counds on previousStartComposing/previousEndComposing & set value.composing as needed to
+  // tell Flutter to under the characters in composing.
   void handleKeyInputHelper(int selectionIndex) {
     // Note: For each event, the system might send message multiple times.
     // This logic filters out the extra top level calls to this function, as well as the
@@ -435,13 +338,6 @@ class _InputZiPageState extends State<InputZiPage> {
     else {
       setInitialControllerTextValue(); // set it as the comparasion standard
     }
-
-    /*
-    else if (itsTheFirstTime) {
-      initialControllerTextValue = _controller.text;
-      itsTheFirstTime = false;
-    }
-    */
 
     if (currentIndex < 0) {
       return;
@@ -465,21 +361,13 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
 
-    print('Second text field: ${_controller.text}');
+    //print('Second text field: ${_controller.text}');
     String latestInputKeyLetter = "";
-
-    // this is as early as the place to check this. ex: notified with controller text update but without real change.
-    // use two conditions so that new typing can continue. if only use justCompletedPosting, all code would be blocked.
- //   if ((justCompletedPosting || justCompletedFullCompDisplay) && _controller.text == previousText) {
- //       return;
- //   }
 
     latestInputKeyLetter = getLatestInputLetter();
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
-//      if (_controller.text != previousText) {
-        initOverlay();
-//      }
+      initOverlay();
 
       setPreviousComposing();
 
@@ -492,18 +380,15 @@ class _InputZiPageState extends State<InputZiPage> {
 
       setPreviousComposing();
 
-      justCompletedFullCompDisplay = true;
-      //hasRunLowercase = false; // init lowercase
-
       // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
       // actually set the current value, although use previousText parameter
       var selectionPosi = getCursorPosition(false, true);
       previousEndSelection = selectionPosi;
+      previousEndComposing--; // subtract the uppercase letter for overlay
       _controller.value = _controller.value.copyWith(text: previousText,
+          composing: TextRange(start: previousStartComposing, end: previousEndComposing),
           selection: TextSelection.collapsed(offset: selectionPosi));
-//      _controller.text = previousText; //_controller.text.substring(0, _controller.text.length - 1);
-//      _controller.selection = TextSelection.fromPosition(TextPosition(offset: selectionPosi));
     }
     /*
     // with bugs after refactoring.
@@ -517,50 +402,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
-      // reset the completed flag. reset only at this time.
-      justCompletedPosting = false;
-      justCompletedFullCompDisplay = false;
-
-//      if (_controller.text != previousText) {
-        initOverlay();
-
-//        if (_controller.text == previousValueWithLowercase) {
-//          return;
-//        }
-//        else {
-          // prepare to skip callback. set before _controller change.
-          //hasRunLowercase = true;
-          previousValueWithLowercase = _controller.text;
-
-          // set the first value.composing to let the App know we have a new composing now.
-          // also start recording the previousStartComposing & previousEndComposing values.
-          if (previousStartComposing == -1) { // composing hasn't started yet
-            // init the previousComposing variables for this new composing cycle. -1 means no composing currently.
-            if (_controller.value.selection.start >= 1) {
-            // selection seems starting with 1, while composing starts with 0.
-              previousStartComposing = _controller.value.selection.start - 1;
-              previousEndComposing = previousStartComposing + 1;
-            }
-            else {
-              previousStartComposing = 0;
-              previousEndComposing = 1; // the first char just typed
-            }
-
-            /*
-            _controller.value = _controller.value.copyWith(
-                composing: TextRange(
-                    start: previousStartComposing, end: previousEndComposing)); //TextRange.collapsed(1));
-
-             */
-          }
-          else {
-            // when code reaches here, it means there is a new letter entered for composing.
-            // this is non the first letter in this composing scope.
-            // update the endComposing variable correspondingly.
-            previousEndComposing += 1;
-          }
-//        }
-//      }
+      initOverlay();
+      setPreviousComposing();
 
       var composingText = getFullComposingText(previousStartComposing, previousEndComposing);
       theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
@@ -580,18 +423,6 @@ class _InputZiPageState extends State<InputZiPage> {
         _controller.value = _controller.value.copyWith(
             composing: TextRange(start: previousStartComposing, end: previousEndComposing));
       }
-
-      //previousStartComposing = _controller.value.composing.start;
-      //previousEndComposing = _controller.value.composing.end;
-
-      // TODO: should I set here as well?
-      //previousText = _controller.text;
-      // prepare for next lowercase input
-      //hasRunLowercase = false;
-
-      // prepare for next input
-      // only init when a lower case letter is set to make sure the value lasts long enough.
-//      initInitialControllerTextValue();
     }
   }
 
@@ -603,11 +434,6 @@ class _InputZiPageState extends State<InputZiPage> {
       previousStartComposing = _controller.selection.end - 1; // since the ' ' takes one space, it'll always >= 1
       previousEndComposing = previousStartComposing + 1; // for the space itself
     }
-  }
-
-  initInitialControllerTextValue() {
-    itsTheFirstTime = true;
-    initialControllerTextValue = "";
   }
 
   setInitialControllerTextValue() {
@@ -753,8 +579,6 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //   typingType = widget.typingType; //theComponentManager.getCurrentType();
 //    theInputZiManager.setCurrentType(typingType); //TODO: should pass as a parameter in painter?
-
-
 
     var inputZiPainter = InputZiPainter(
         lineColor: Colors.amber,
@@ -993,16 +817,6 @@ class _InputZiPageState extends State<InputZiPage> {
         children: <Widget>[
           //SizedBox(height: fontSize),
           getInstruction(instruction),
-          /*
-          SizedBox(  //
-            child: Text(
-                instruction,
-              style: TextStyle(fontSize: fontSize),
-              textAlign: TextAlign.left
-            ),
-          ),
-          */
-          //SizedBox(height: fontSize),
 
           Row(
               children: <Widget>[
