@@ -52,6 +52,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int dismissCount = 0;
 
   int updateCounter = 0;
+  bool isFromDeletion = false;
 
   double getSizeRatio() {
     return Utility.getSizeRatio(screenWidth);
@@ -317,6 +318,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   // my method counds on previousStartComposing/previousEndComposing & set value.composing as needed to
   // tell Flutter to under the characters in composing.
+  // Feel have a root finally. Otherwise it's always floating somewhere.
   void handleKeyInputHelper(int selectionIndex) {
     // Note: For each event, the system might send message multiple times.
     // This logic filters out the extra top level calls to this function, as well as the
@@ -336,7 +338,14 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
     else {
-      setInitialControllerTextValue(); // set it as the comparasion standard
+      if (_controller.value.text.length < previousText.length) {
+        isFromDeletion = true;
+      }
+      else {
+        isFromDeletion = false;
+      }
+      // set it as the comparision standard
+      setInitialControllerTextValue();
     }
 
     if (currentIndex < 0) {
@@ -372,6 +381,27 @@ class _InputZiPageState extends State<InputZiPage> {
       setPreviousComposing();
 
       setTextByChosenZiIndex(selectionIndex, false, false);
+    }
+    else if (_controller.text.length == 0) { // due to deletion, otherwise won't be 0
+      theCurrentZiCandidates = theDefaultZiCandidates;
+      previousStartComposing = -1;
+      previousEndComposing = -1;
+      previousText = _controller.text;
+    }
+    else if (isFromDeletion) {
+      if ((previousEndComposing - previousStartComposing) > 1) {
+        previousEndComposing--;
+        var composingText = getFullComposingText(previousStartComposing, previousEndComposing);
+        theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
+        InputZiManager.updateFirstCandidate(theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
+        previousText = _controller.text;
+      }
+      else {
+        previousStartComposing = -1;
+        previousEndComposing = -1;
+        theCurrentZiCandidates = theDefaultZiCandidates;
+        previousText = _controller.text;
+      }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
