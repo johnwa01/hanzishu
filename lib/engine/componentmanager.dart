@@ -203,7 +203,6 @@ class ComponentManager {
           pair = GroupAndIndexPair(2, 1);
         }
         break;
-      // not expect Z
     }
 
     return pair;

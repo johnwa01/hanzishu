@@ -28,6 +28,7 @@ class InputZi {
   }
 }
 
+/*
 class InputZiOverlayParameters {
     TypingType type;
     int index;
@@ -75,3 +76,4 @@ class InputZiOverlayParameters {
             justDismissed == para.justDismissed;
     }
 }
+*/
