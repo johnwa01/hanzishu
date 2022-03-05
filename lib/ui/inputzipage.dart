@@ -12,6 +12,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 
 import 'dart:core';
+import 'dart:io';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
@@ -35,24 +36,16 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousEndComposing = -1;
   int previousEndSelection = -1;
   String initialControllerTextValue; // = "unlikelyIniStr876";
-//  bool itsTheFirstTime = true;
   String previousText = "";
-//  bool justCompletedPosting = false;
-//  bool justCompletedFullCompDisplay = false;
-  //bool hasRunLowercase = false;
-//  String previousValueWithLowercase = "";
   List<String> ziCandidates = null;
   bool showHint = false;
-  //String previousOverlayImagePath = "";
 
   OverlayEntry overlayEntry;
-  //TypingType previousOverlayType = TypingType.FreeTyping;
-  //int previousOverlayIndex = 0;
-  var previousOverlayParameters = InputZiOverlayParameters(TypingType.FreeTyping, 0, false, '', false);
   int dismissCount = 0;
 
   int updateCounter = 0;
   bool isFromDeletion = false;
+  String previousOverlayLetter = "";
 
   double getSizeRatio() {
     return Utility.getSizeRatio(screenWidth);
@@ -71,6 +64,13 @@ class _InputZiPageState extends State<InputZiPage> {
       currentIndex = 0;
       showHint = false;
     });
+  }
+
+  initParameters() {
+    previousStartComposing = -1;
+    previousEndComposing = -1;
+    previousText = "";
+    initialControllerTextValue = "";
   }
 
   // make sure overlay will be removed when moving back to the parent page.
@@ -174,31 +174,34 @@ class _InputZiPageState extends State<InputZiPage> {
     return inputTextWithoutUpperCaseLetter;
   }
 
-  showOverlay(BuildContext context, InputZiOverlayParameters overlayParameters/*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
+  showOverlay(BuildContext context, String latestOverleyLetter/*InputZiOverlayParameters overlayParameters*//*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
     initOverlay();
 
-    if (!overlayParameters.isEqual(previousOverlayParameters)) {
+    if (latestOverleyLetter != previousOverlayLetter) {
         var imageName;
         var fullPath;
-        double imageLeft = 150.0 * getSizeRatio();
-        double imageWidth = 100.0 * getSizeRatio();
-        double imageHeight = 135.0 * getSizeRatio();
+        double imageLeft;
+        double imageWidth;
+        double imageHeight;
 
-        if (overlayParameters.isFullComponents) {
-            if (overlayParameters.fullComponentsLetter == 'Z') {
-              imageName = theZiForIntroductionList[0].hintImage;
-              imageLeft = 20.0 * getSizeRatio();
-              imageWidth = 350.0 * getSizeRatio();
-              imageHeight = 150.0 * getSizeRatio();
-            }
-            else {
-              var pair = ComponentManager.getGroupAndIndexFromLetter(
-                  overlayParameters.fullComponentsLetter);
-              var fullExpandedComponent = theComponentManager.getFullExpandedComponentByGroupAndIndex(pair.groupNumber, pair.indexInGroup);
-              imageName = fullExpandedComponent.imageName;
-            }
-            fullPath = "assets/typing/" + imageName;
+        if (latestOverleyLetter == "Z") { // the full mapping chart
+          imageName = "GG6.png";
+          imageLeft = 50.0 * getSizeRatio();
+          imageWidth = 300.0 * getSizeRatio();
+          imageHeight = 135.0 * getSizeRatio();
         }
+        else {
+          var pair = ComponentManager.getGroupAndIndexFromLetter(
+              latestOverleyLetter);
+          var fullExpandedComponent = theComponentManager
+              .getFullExpandedComponentByGroupAndIndex(
+              pair.groupNumber, pair.indexInGroup);
+          imageName = fullExpandedComponent.imageName;
+          imageLeft = 150.0 * getSizeRatio();
+          imageWidth = 100.0 * getSizeRatio();
+          imageHeight = 135.0 * getSizeRatio();
+        }
+        fullPath = "assets/typing/" + imageName;
 
         OverlayState overlayState = Overlay.of(context);
         overlayEntry = OverlayEntry(
@@ -214,14 +217,10 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ));
         overlayState.insert(overlayEntry);
-        previousOverlayParameters.assign(overlayParameters);
-        dismissCount = 0;
+        previousOverlayLetter = latestOverleyLetter;
       }
       else {
-        dismissCount += 1;
-        if (dismissCount >= 2) { // work around to the two messages for one key input issue
-          previousOverlayParameters.justDismissed = true;
-        }
+        previousOverlayLetter = ""; // this time no display = dismiss the display; prepare for next time to re-display
       }
   }
 
@@ -292,6 +291,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var newText = getInputText(selectionIndex);
 
     previousText = newText;
+    initialControllerTextValue = newText;
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -324,13 +324,13 @@ class _InputZiPageState extends State<InputZiPage> {
     // This logic filters out the extra top level calls to this function, as well as the
     // calls triggered by code below but before the controller text is changed.
     // For the case controller text has been changed, the dup-avoid logic is managed by separate code later.
-    if (   _controller.text == initialControllerTextValue) {
+    isFromDeletion = false;
+    if (_controller.text == initialControllerTextValue) {
       if (initialControllerTextValue != previousText) {
         //handle overlay uppercase letter case & spacebar case, this top level call comes again after first controller otext was changed.
         initialControllerTextValue = previousText;
         _controller.value = _controller.value.copyWith(text: previousText,
             selection: TextSelection.collapsed(offset: previousEndSelection));
-        //_controller.text = previousText;
       }
       return;
     }
@@ -340,9 +340,6 @@ class _InputZiPageState extends State<InputZiPage> {
     else {
       if (_controller.value.text.length < previousText.length) {
         isFromDeletion = true;
-      }
-      else {
-        isFromDeletion = false;
       }
       // set it as the comparision standard
       setInitialControllerTextValue();
@@ -382,12 +379,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
       setTextByChosenZiIndex(selectionIndex, false, false);
     }
+    /*
     else if (_controller.text.length == 0) { // due to deletion, otherwise won't be 0
       theCurrentZiCandidates = theDefaultZiCandidates;
       previousStartComposing = -1;
       previousEndComposing = -1;
       previousText = _controller.text;
     }
+    */
     else if (isFromDeletion) {
       if ((previousEndComposing - previousStartComposing) > 1) {
         previousEndComposing--;
@@ -405,20 +404,27 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
     else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
-      var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, true, latestInputKeyLetter, false);
-      showOverlay(context, overlayParameters);
-
+      showOverlay(context, latestInputKeyLetter);
       setPreviousComposing();
 
       // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
+      // we normally only reset this init value at the function entry. but need to do it for overlay case.
+ //     initialControllerTextValue = previousText; // prepare for next input, equal to the value.text
       // actually set the current value, although use previousText parameter
       var selectionPosi = getCursorPosition(false, true);
       previousEndSelection = selectionPosi;
       previousEndComposing--; // subtract the uppercase letter for overlay
-      _controller.value = _controller.value.copyWith(text: previousText,
-          composing: TextRange(start: previousStartComposing, end: previousEndComposing),
-          selection: TextSelection.collapsed(offset: selectionPosi));
+      if (Platform.isAndroid) {
+        _controller.value = _controller.value.copyWith(text: previousText,
+            composing: TextRange(
+                start: previousStartComposing, end: previousEndComposing),
+            selection: TextSelection.collapsed(offset: selectionPosi));
+      }
+      else {  // iOS simulator would crash on backspace with composing. so have to skip the underline feature until it's fixed.
+        _controller.value = _controller.value.copyWith(text: previousText,
+            selection: TextSelection.collapsed(offset: selectionPosi));
+      }
     }
     /*
     // with bugs after refactoring.
@@ -449,10 +455,20 @@ class _InputZiPageState extends State<InputZiPage> {
       // Check myself and update value.composing value if not matching to tell the phone to show underline the letters
       // under composing.
       // This logic also covers the initial value.composing case which should be empty (-1, -1).
-      if (_controller.value.composing.start != previousStartComposing || _controller.value.composing.end != previousEndComposing) {
-        _controller.value = _controller.value.copyWith(
-            composing: TextRange(start: previousStartComposing, end: previousEndComposing));
+      if (Platform.isAndroid) { // iOS simulator would crash on backspace with composing
+        if (_controller.value.composing.start != previousStartComposing ||
+            _controller.value.composing.end != previousEndComposing) {
+          _controller.value = _controller.value.copyWith(
+              composing: TextRange(
+                  start: previousStartComposing, end: previousEndComposing));
+        }
       }
+    }
+    else {
+      previousStartComposing = -1;
+      previousEndComposing = -1;
+      theCurrentZiCandidates = theDefaultZiCandidates;
+      previousText = ""; //?
     }
   }
 
@@ -594,6 +610,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //To be sure
     initOverlay();
+
+    //initParameters();
 
     int maxNumberOfLines;
     if (typingType == TypingType.FreeTyping) {
@@ -880,9 +898,6 @@ class _InputZiPageState extends State<InputZiPage> {
                       setState(() {
                         showHint = true;
                       });
-
-                    //var overlayParameters = InputZiOverlayParameters(typingType, currentIndex, false, '');
-                    //showOverlay(context, overlayParameters);
                     },
                     child: Text(
                       "Hint",
@@ -915,12 +930,8 @@ class _InputZiPageState extends State<InputZiPage> {
       color: Colors.white,
       textColor: Colors.blueAccent,
       onPressed: () {
-        // this lock mechanism seems working fine, but not sure ...
-        //isCurrentlyUnderChoiceSelection = true;
         initOverlay();
-        setInitialControllerTextValue();
         setTextByChosenZiIndex(candidateIndex, true, false);
-        //isCurrentlyUnderChoiceSelection = false;
       },
       child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio()),),
     );

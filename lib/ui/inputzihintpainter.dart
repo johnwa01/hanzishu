@@ -166,7 +166,7 @@ class InputZiHintPainter extends BasePainter {
     var strokeCodes = DictionaryManager.getStrokeTypingCodes(leadTypingStrokes);
     var typingCodes = DictionaryManager.getOneTypingCode(compCodes, strokeCodes);
 
-    double size = 18.0;
+    double size = 18.0 * getSizeRatio();
     double halfSize = size/1.5;
     double xPosi = 10.0;
 
