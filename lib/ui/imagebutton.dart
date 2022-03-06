@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/ui/treepage.dart';
-//import 'package:hanzishu/ui/characterlistpage.dart';
 import 'package:hanzishu/ui/listofzipage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/ui/quizpage.dart';

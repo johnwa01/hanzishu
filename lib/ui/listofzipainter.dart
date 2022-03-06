@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/data/componentlist.dart';
-import 'package:hanzishu/engine/component.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';

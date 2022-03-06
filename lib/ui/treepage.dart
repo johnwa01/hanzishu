@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/treepainter.dart';
 import 'package:hanzishu/utility.dart';
@@ -330,7 +328,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
             centerZiId = 1;   // skip the pseudo layer for treepage.
           }
           else if (Utility.isPseudoNonCharRootZiId(centerZiId)) {
-            centerZiId = theConst.starCharId;   // skip the pseudo layer for treepage.
+            centerZiId = TheConst.starCharId;   // skip the pseudo layer for treepage.
           }
           shouldDrawCenter = true;
         });

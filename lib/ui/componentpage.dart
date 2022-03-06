@@ -1,17 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/componentpainter.dart';
 import 'package:hanzishu/engine/component.dart';
-import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
-import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
-import 'dart:async';
 
 class ComponentPage extends StatefulWidget {
   final QuestionType questionType;

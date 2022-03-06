@@ -2,8 +2,6 @@ import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
-import 'package:hanzishu/engine/lessonmanager.dart';
-import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/utility.dart';
 
 class SentenceManager {

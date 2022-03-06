@@ -1,6 +1,5 @@
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/component.dart';

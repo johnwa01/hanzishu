@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
-import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/breakoutpainter.dart';
 import 'package:hanzishu/utility.dart';

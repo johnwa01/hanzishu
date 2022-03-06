@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/data/inputzilist.dart';

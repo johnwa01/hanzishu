@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
-import 'dart:math';
 import 'dart:ui';
 import 'dart:async';
-import 'package:hanzishu/engine/componentmanager.dart';
-import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
@@ -14,11 +11,9 @@ import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
-import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/main.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
   final int firstZiIndex;

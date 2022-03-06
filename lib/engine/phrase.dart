@@ -1,4 +1,3 @@
-import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/variables.dart';
 
 class Phrase {

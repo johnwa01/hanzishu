@@ -3,7 +3,6 @@ import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
-import 'package:hanzishu/utility.dart';
 
 class ReviewLevel {
   int id;

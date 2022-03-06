@@ -1,20 +1,19 @@
-import 'package:hanzishu/utility.dart';
 import 'dart:io';
 
 //TODO: create theManagers
-var theLessonManager = null;
-var theZiManager = null;
-var thePhraseManager = null;
-var theSentenceManager = null;
-var theLevelManager = null;
-var thePositionManager = null;
-var theStorageHandler = null;
-var theQuizManager = null;
-var theStatisticsManager = null;
-var theInputZiManager = null;
-var theComponentManager = null;
-var theStrokeManager = null;
-var theDictionaryManager = null;
+var theLessonManager;
+var theZiManager;
+var thePhraseManager;
+var theSentenceManager;
+var theLevelManager;
+var thePositionManager;
+var theStorageHandler;
+var theQuizManager;
+var theStatisticsManager;
+var theInputZiManager;
+var theComponentManager;
+var theStrokeManager;
+var theDictionaryManager;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 60; //TODO: to lessonmanager?
@@ -32,12 +31,12 @@ var theCurrentLessonId = 1;
 var theCurrentCenterZiId = 1;
 var thePreviousCenterZiId = 0;
 
-var theLessonsPage = null;
+var theLessonsPage;
 
 //TODO: move to theConfig
 var theIsPartialZiMode = true;
 
-Directory theStorageFileDirectory = null;
+Directory theStorageFileDirectory;
 
 var theFileIOFile;
 
@@ -49,7 +48,7 @@ bool theHavePopulatedLessonsInfo = false;
 
 
 
-class theConst {
+class TheConst {
   static var starCharId = 756;
   static var starChar = '*';
   static var atCharId = 1;
@@ -57,7 +56,7 @@ class theConst {
   static List<double> fontSizes = [13.0, 12.0, 11.0];
 }
 
-class theConfig {  // can change by runtime
+class TheConfig {  // can change by runtime
   static bool withSoundAndExplains = true;
 }
 

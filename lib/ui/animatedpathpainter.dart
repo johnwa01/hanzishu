@@ -1,8 +1,5 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/variables.dart';  // for PathMetric
 import 'package:hanzishu/ui/basepainter.dart';
 
 Path createAnimatedPath(

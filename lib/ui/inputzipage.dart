@@ -489,7 +489,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getGiveItATryPage() {
-    var fontSize1 = theConst.fontSizes[1] * getSizeRatio();
+    var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
 
     return Scaffold
       (

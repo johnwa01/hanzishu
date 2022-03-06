@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/ui/inputzihelppage.dart';
-import 'package:hanzishu/ui/reviewpage.dart';
-import 'package:hanzishu/ui/quizresultpage.dart';
-import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
-import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';

@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
-import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/engine/generalmanager.dart';
-import 'package:hanzishu/ui/positionmanager.dart';
 
 class ComponentPainter extends BasePainter {
   static double FrameHeightToWidthRaitio = 1.2;

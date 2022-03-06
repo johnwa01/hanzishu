@@ -1,4 +1,3 @@
-import 'package:hanzishu/utility.dart';
 
 enum TypingType {
   GiveItATry,

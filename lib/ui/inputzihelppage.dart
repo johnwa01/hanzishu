@@ -1,15 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
-import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/listofzipainter.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
 
 
 class InputZiHelpPage extends StatefulWidget {
@@ -148,8 +141,8 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   }
 
   Widget getHelpContentView(BuildContext context) {
-    var fontSize1 = theConst.fontSizes[1] * getSizeRatio();
-    var fontSize2 = theConst.fontSizes[2] * getSizeRatio();
+    var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
+    var fontSize2 = TheConst.fontSizes[2] * getSizeRatio();
 
     var fontSize = 18.0;
     return Column(

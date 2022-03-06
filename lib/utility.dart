@@ -1,10 +1,6 @@
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
-import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:flutter/material.dart';
-import 'dart:math';
-import 'dart:ui';
-import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 /*
@@ -360,7 +356,7 @@ class Utility {
   }
 
   static bool isPseudoRootZiIdPlusStar(int rootZiId) {
-    return isPseudoRootZiId(rootZiId) || (rootZiId == theConst.starCharId);
+    return isPseudoRootZiId(rootZiId) || (rootZiId == TheConst.starCharId);
   }
 
   static bool isPseudoNonCharRootZiId(int rootZiId) {
@@ -370,15 +366,15 @@ class Utility {
 
   static bool isPseudoNonCharRootZiIdPlusStar(int rootZiId) {
     return isPseudoNonCharRootZiId(rootZiId) ||
-        (rootZiId == theConst.starCharId);
+        (rootZiId == TheConst.starCharId);
   }
 
   static bool isStarChar(int rootZiId) {
-    return (rootZiId == theConst.starCharId);
+    return (rootZiId == TheConst.starCharId);
   }
 
   static bool isAtChar(int rootZiId) {
-    return (rootZiId == theConst.atCharId);
+    return (rootZiId == TheConst.atCharId);
   }
 
   static bool specialChar(String char) {

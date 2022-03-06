@@ -1,31 +1,23 @@
-import 'dart:io';
 import 'package:flutter/services.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
-import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
-import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/ui/theme.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/phrasemanager.dart';
 import 'package:hanzishu/engine/sentencemanager.dart';
-import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
-import 'package:hanzishu/engine/fileio.dart';
-import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
-//import 'package:hanzishu/ui/reviewselectionpage.dart';
 import 'package:hanzishu/ui/toolspage.dart';
 
-import 'package:hanzishu/ui/animatedpathpainter.dart'; // TODO: temp
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';

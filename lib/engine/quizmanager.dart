@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
-import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/variables.dart';
 
 enum QuizCategory {

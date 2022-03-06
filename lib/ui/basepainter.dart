@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/phraselist.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
-import 'package:hanzishu/engine/generalmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
@@ -374,11 +371,11 @@ class BasePainter extends CustomPainter{
       }
     }
 
-    if (withPinyin && theConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi) {
+    if (withPinyin && TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi) {
       displayTextForPinyin(id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800], true);
     }
 
-    if (theConfig.withSoundAndExplains && hasRootZiLearned) {
+    if (TheConfig.withSoundAndExplains && hasRootZiLearned) {
       DisplayIcon(
           iconZiLearnedStrokes,
           transX + charFontSize * 0.9,
@@ -760,7 +757,7 @@ class BasePainter extends CustomPainter{
             Colors.cyan /*TODO*/,
             shouldDrawCenter);
 
-      if (theConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && (id != theConst.starCharId) ) {
+      if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && (id != TheConst.starCharId) ) {
         displayCenterZiRelated(id, posiSize.charFontSize);
       }
 

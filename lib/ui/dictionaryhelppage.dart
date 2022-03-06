@@ -1,15 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
-import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/listofzipainter.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
 
 
 class DictionaryHelpPage extends StatefulWidget {
@@ -150,77 +143,77 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: theConst.fontSizes[2] / 2),
+          SizedBox(height: TheConst.fontSizes[2] / 2),
           Text(
               "About the Hanzishu One Tap Dictionary",
-              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
               "The Hanzishu One Tap Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 4,000 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
-          SizedBox(height: theConst.fontSizes[2]),
+          SizedBox(height: TheConst.fontSizes[2]),
           Text(
               "Navigate the Hanzishu One Tap Dictionary",
-              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	Open the Basic Character Table",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	Tap the first Basic Character of the Character that you are searching for",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	Select the Character from the list. Note: If it’s not there, the dictionary doesn’t support this character.",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	View the detailed information about the Character",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
-          SizedBox(height: theConst.fontSizes[2]),
+          SizedBox(height: TheConst.fontSizes[2]),
           Text(
               "Identify the Character’s first Basic Character",
-              style: TextStyle(color: Colors.blue, fontSize: theConst.fontSizes[1]),
+              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	Ex: Character 你 -> Basic Character 小 (the first and only Basic Character)",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	If a Character’s first Basic Character is 口, but it contains other Basic Characters, select the next Basic Character",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   	 o	Ex: 听 -> 斤 (skip 口)",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   •	If a Character doesn’t contain any Basic Characters, select the Character’s first stroke (in group 1)",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   	 o	Ex: Character 扎 -> Stroke 一 ",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
               "   	 o	Ex: Character 丝 -> Stroke 乙. Note: all fold strokes map to 乙.",
-              style: TextStyle(fontSize: theConst.fontSizes[2]),
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
         ]

@@ -1,11 +1,8 @@
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/engine/zi.dart';
-import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 
@@ -156,7 +153,7 @@ class ZiManager {
       if (id == 1) {
         return LessonManager.getRootMembersForLesson(internalStartLessonId);
       }
-      else if (id == theConst.starCharId) {
+      else if (id == TheConst.starCharId) {
         return LessonManager.getRootNonCharMembersForLesson(internalStartLessonId);
       }
     }
@@ -262,7 +259,7 @@ class ZiManager {
           return pathZiId;
         }
         if (Utility.isStarChar(lessonZi.parentId)) {
-          return theConst.starCharId;
+          return TheConst.starCharId;
         }
         else {
           pathZiId = lessonZi.parentId;

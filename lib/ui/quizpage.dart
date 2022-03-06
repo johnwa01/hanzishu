@@ -1,13 +1,9 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:hanzishu/ui/imagebutton.dart';
-import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/quizpainter.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
-import 'dart:async';
 
 class QuizPage extends StatefulWidget {
   final int lessonId;

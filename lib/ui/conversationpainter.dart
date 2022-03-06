@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/sentencelist.dart';
-import 'dart:math';
 import 'dart:ui';
-import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/engine/generalmanager.dart';
-import 'package:hanzishu/engine/lessonmanager.dart';
-import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/engine/phrasemanager.dart';
-import 'package:hanzishu/data/phraselist.dart';
 
 class ConversationPainter extends BasePainter {
   static var lessonLeftEdge = 10.0;

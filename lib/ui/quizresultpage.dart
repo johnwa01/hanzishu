@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 
 class QuizResultPage extends StatefulWidget {

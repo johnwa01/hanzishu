@@ -1,7 +1,6 @@
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
-import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
@@ -268,8 +267,8 @@ class LessonManager {
       }
     }
 
-    if (lesson.comps.length > 0 && !rootMembers.contains(theConst.starCharId)) {
-      rootMembers.add(theConst.starCharId);  // the * member
+    if (lesson.comps.length > 0 && !rootMembers.contains(TheConst.starCharId)) {
+      rootMembers.add(TheConst.starCharId);  // the * member
     }
 
     return rootMembers;
