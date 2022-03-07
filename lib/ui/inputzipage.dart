@@ -287,11 +287,32 @@ class _InputZiPageState extends State<InputZiPage> {
     return selectionPosi;
   }
 
+  checkAndUpdateCurrentIndex() {
+    // for guarded typing
+    if (typingType != TypingType.FreeTyping) {
+      if (theInputZiManager.doesTypingResultContainTheZi(
+          typingType, currentIndex, _controller.text, lessonId)) {
+        // tell Flutter to refresh with the next index
+        setState(() {
+          if ((currentIndex + 1) ==
+              theInputZiManager.getTotal(typingType, lessonId)) {
+            showCompletedDialog(currentBuildContext);
+          }
+          currentIndex =
+              theInputZiManager.getNextIndex(
+                  typingType, currentIndex, lessonId);
+        });
+
+        //       return;
+      }
+    }
+  }
+
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList, bool isFromOverlay) {
     var newText = getInputText(selectionIndex);
 
     previousText = newText;
-    initialControllerTextValue = newText;
+//    initialControllerTextValue = newText;
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -308,6 +329,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
     showHint = false;
 
+    checkAndUpdateCurrentIndex();
+
     //restart a typing cycle
     InputZiManager.previousFirstPositionList.clear();
   }
@@ -323,12 +346,14 @@ class _InputZiPageState extends State<InputZiPage> {
     // Note: For each event, the system might send message multiple times.
     // This logic filters out the extra top level calls to this function, as well as the
     // calls triggered by code below but before the controller text is changed.
-    // For the case controller text has been changed, the dup-avoid logic is managed by separate code later.
     isFromDeletion = false;
+    // Will always blocks if same text as the previous one. Only setting initialControllerTextValue in this if/else block.
+    // We don't support clicking of same upper case letter multi-times. We simply ignore the later clicks. Otherwise the logic is too complicated
+    // due to repeated Flutter messages and same text value.
     if (_controller.text == initialControllerTextValue) {
+      // this is due to repeated Flutter messages.
       if (initialControllerTextValue != previousText) {
-        //handle overlay uppercase letter case & spacebar case, this top level call comes again after first controller otext was changed.
-        initialControllerTextValue = previousText;
+        // set this _controller.value to be the same as the one we processed in the following code. This way, it won't show the wrong value to UI.
         _controller.value = _controller.value.copyWith(text: previousText,
             selection: TextSelection.collapsed(offset: previousEndSelection));
       }
@@ -352,6 +377,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //TODO: temp testing for comp shapes
     globalTestDoubleByteCode = _controller.text;
 
+    /*
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
       //var comp = theInputZiManager.getZiWithComponentsAndStrokes(currentIndex) ;
@@ -366,6 +392,7 @@ class _InputZiPageState extends State<InputZiPage> {
         return;
       }
     }
+    */
 
     //print('Second text field: ${_controller.text}');
     String latestInputKeyLetter = "";
@@ -409,7 +436,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
       // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
-      // we normally only reset this init value at the function entry. but need to do it for overlay case.
+      // we normally only reset this init value at the function entry.
+      // But need to do it for overlay case so that the next input can go through the checking at the entry.
  //     initialControllerTextValue = previousText; // prepare for next input, equal to the value.text
       // actually set the current value, although use previousText parameter
       var selectionPosi = getCursorPosition(false, true);
