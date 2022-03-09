@@ -63,9 +63,8 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonId, "assets/charactertree.png", LessonSection.FullCharacterTree, false),
-                //OpenHelper.getImageButton(context, lessonId, "assets/characterlist.png", LessonSection.Characters, false),
-                OpenHelper.getImageButton(context, lessonId, "assets/breakout.png", LessonSection.Characters, false),
+                OpenHelper.getImageButton(context, lessonId, "assets/core/characterdrill.png", LessonSection.FullCharacterTree, false, 131, 81),
+                OpenHelper.getImageButton(context, lessonId, "assets/core/characterlist.png", LessonSection.Characters, false, 131, 81),
               ],
             ),
             padding: EdgeInsets.all(20),
@@ -74,8 +73,8 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonId, "assets/breakout.png", LessonSection.Assembling, false),
-                OpenHelper.getImageButton(context, lessonId, "assets/conversations.png", LessonSection.Conversation, false),
+                OpenHelper.getImageButton(context, lessonId, "assets/core/breakout.png", LessonSection.Assembling, false, 131, 81),
+                OpenHelper.getImageButton(context, lessonId, "assets/core/conversations.png", LessonSection.Conversation, false, 131, 81),
               ],
             ),
             padding: EdgeInsets.all(20),
@@ -84,8 +83,8 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  OpenHelper.getImageButton(context, lessonId, "assets/quiz.png", LessonSection.Typing, false),
-                  OpenHelper.getImageButton(context, lessonId, "assets/quiz.png", LessonSection.Quiz, false),
+                  OpenHelper.getImageButton(context, lessonId, "assets/core/typing.png", LessonSection.Typing, false, 131, 80),
+                  OpenHelper.getImageButton(context, lessonId, "assets/core/quiz.png", LessonSection.Quiz, false, 131,80),
                 ],
             ),
             padding: EdgeInsets.all(20),

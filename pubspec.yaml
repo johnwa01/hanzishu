@@ -34,6 +34,8 @@ dependencies:
 
   json_annotation: ^3.0.0
 
+  flutter_launcher_icons: ^0.8.1
+
   intl:
 
 dev_dependencies:
@@ -46,6 +48,14 @@ dev_dependencies:
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
+flutter_icons:
+   android: "launcher_icon"
+   ios: true
+   image_path: "assets/core/logo.jpg"
+   image_path_android: "assets/core/logoandroid.png"
+   adaptive_icon_background: "#ffffff"
+#   adaptive_icon_foreground: "assets/christmas.png"
+
 # The following section is specific to Flutter.
 flutter:
 
@@ -56,11 +66,6 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/charactertree.png
-     - assets/characterlist.png
-     - assets/breakout.png
-     - assets/conversations.png
-     - assets/quiz.png
      - assets/components/LC00.png
      - assets/components/LC11.png
      - assets/components/LC12.png
@@ -88,6 +93,84 @@ flutter:
      - assets/components/LC55.png
      - assets/components/LC61.png
      - assets/components/LC62.png
+     - assets/core/breakout.png
+     - assets/core/characterdrill.png
+     - assets/core/characterlist.png
+     - assets/core/completedicon.png
+     - assets/core/conversations.png
+     - assets/core/dictionaryicon0.png
+     - assets/core/dictionaryicon1.png
+     - assets/core/itemicon.png
+     - assets/core/lessonsicon0.png
+     - assets/core/lessonsicon1.png
+     - assets/core/logo.jpg
+     - assets/core/logoandroid.png
+     - assets/core/meicon0.png
+     - assets/core/meicon1.png
+     - assets/core/typing.png
+     - assets/core/typingicon0.png
+     - assets/core/typingicon1.png
+     - assets/core/quiz.png
+     - assets/lessons/L1.png
+     - assets/lessons/L2.png
+     - assets/lessons/L3.png
+     - assets/lessons/L4.png
+     - assets/lessons/L5.png
+     - assets/lessons/L6.png
+     - assets/lessons/L7.png
+     - assets/lessons/L8.png
+     - assets/lessons/L9.png
+     - assets/lessons/L10.png
+     - assets/lessons/L11.png
+     - assets/lessons/L12.png
+     - assets/lessons/L13.png
+     - assets/lessons/L14.png
+     - assets/lessons/L15.png
+     - assets/lessons/L16.png
+     - assets/lessons/L17.png
+     - assets/lessons/L18.png
+     - assets/lessons/L19.png
+     - assets/lessons/L20.png
+     - assets/lessons/L21.png
+     - assets/lessons/L22.png
+     - assets/lessons/L23.png
+     - assets/lessons/L24.png
+     - assets/lessons/L25.png
+     - assets/lessons/L26.png
+     - assets/lessons/L27.png
+     - assets/lessons/L28.png
+     - assets/lessons/L29.png
+     - assets/lessons/L30.png
+     - assets/lessons/L31.png
+     - assets/lessons/L32.png
+     - assets/lessons/L33.png
+     - assets/lessons/L34.png
+     - assets/lessons/L35.png
+     - assets/lessons/L36.png
+     - assets/lessons/L37.png
+     - assets/lessons/L38.png
+     - assets/lessons/L39.png
+     - assets/lessons/L40.png
+     - assets/lessons/L41.png
+     - assets/lessons/L42.png
+     - assets/lessons/L43.png
+     - assets/lessons/L44.png
+     - assets/lessons/L45.png
+     - assets/lessons/L46.png
+     - assets/lessons/L47.png
+     - assets/lessons/L48.png
+     - assets/lessons/L49.png
+     - assets/lessons/L50.png
+     - assets/lessons/L51.png
+     - assets/lessons/L52.png
+     - assets/lessons/L53.png
+     - assets/lessons/L54.png
+     - assets/lessons/L55.png
+     - assets/lessons/L56.png
+     - assets/lessons/L57.png
+     - assets/lessons/L58.png
+     - assets/lessons/L59.png
+     - assets/lessons/L60.png
      - assets/letters/L11.png
      - assets/letters/L12.png
      - assets/letters/L13.png
@@ -217,16 +300,7 @@ flutter:
      - assets/typing/EF33.png
      - assets/typing/FullComponents.png
      - assets/typing/Strokes.png
-     - assets/lessons/L0.png
-     - assets/lessons/L1.png
-     - assets/lessons/L2.png
-     - assets/lessons/L3.png
-     - assets/lessons/L4.png
-     - assets/lessons/L5.png
-     - assets/lessons/L6.png
-     - assets/lessons/L7.png
-     - assets/lessons/L8.png
-     - assets/lessons/L9.png
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

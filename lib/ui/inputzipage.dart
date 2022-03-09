@@ -321,7 +321,7 @@ class _InputZiPageState extends State<InputZiPage> {
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
     _controller.value = _controller.value.copyWith(text: newText,
-            composing: TextRange.empty, //TextRange(start: previousStartComposing, end: previousEndComposing),
+            composing: TextRange.empty,
             selection: TextSelection.collapsed(offset: selectionPosi));
 
     previousStartComposing = -1;
@@ -477,13 +477,17 @@ class _InputZiPageState extends State<InputZiPage> {
         List<String> composingList =  [composingText];
         theCurrentZiCandidates = composingList;
       }
+      previousText = _controller.text;
 
       // Android appears updating its value.composing after initial setting of the value.composing from empty by app.
-      // But iPhone doesn't seem to update value.composing after initial setting.
+      // or even without initial setting. Maybe a kind of algorithm behind detecting what kind of input. By default, it seems treating
+      // English letter input as composing.
       // Check myself and update value.composing value if not matching to tell the phone to show underline the letters
       // under composing.
       // This logic also covers the initial value.composing case which should be empty (-1, -1).
-      if (Platform.isAndroid) { // iOS simulator would crash on backspace with composing
+      // But iPhone doesn't seem to update value.composing after initial setting.
+      // iOS simulator would crash on backspace with composing, so not supporting underline feature.
+      if (Platform.isAndroid) {
         if (_controller.value.composing.start != previousStartComposing ||
             _controller.value.composing.end != previousEndComposing) {
           _controller.value = _controller.value.copyWith(
@@ -496,7 +500,7 @@ class _InputZiPageState extends State<InputZiPage> {
       previousStartComposing = -1;
       previousEndComposing = -1;
       theCurrentZiCandidates = theDefaultZiCandidates;
-      previousText = ""; //?
+      previousText = _controller.text;
     }
   }
 

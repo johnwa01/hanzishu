@@ -91,18 +91,18 @@ class _LessonsPageState extends State<LessonsPage> {
 
             int level = 1;
             //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-            if (index == 0 || index == 6 || index == 9 || index == 12 || index == 15 || index == 19 || index == 22 || index == 25 || index == 29 || index == 32) {
+            if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
 
                 if (index == 0) {level = 1;}
                 else if (index == 6) { level = 2;}
-                else if (index == 9) { level = 3;}
-                else if (index == 12) { level = 4;}
-                else if (index == 15) { level = 5;}
-                else if (index == 19) { level = 6;}
-                else if (index == 22) { level = 7;}
-                else if (index == 25) { level = 8;}
-                else if (index == 29) { level = 9;}
-                else if (index == 32) { level = 10;}
+                else if (index == 10) { level = 3;}
+                else if (index == 13) { level = 4;}
+                else if (index == 16) { level = 5;}
+                else if (index == 20) { level = 6;}
+                else if (index == 23) { level = 7;}
+                else if (index == 26) { level = 8;}
+                else if (index == 30) { level = 9;}
+                else if (index == 33) { level = 10;}
                 //else if (index == 34) { level = 10;}
                 //return getLevel(context, level);
                 return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);
@@ -149,30 +149,30 @@ class _LessonsPageState extends State<LessonsPage> {
   List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount) {
     List<Widget> sections = [];
     var realNumber = lessonNumber;
-    var modNumber = realNumber % 10;
-    var path = "assets/lessons/L" + modNumber.toString() + ".png";
+    //var modNumber = realNumber % 10;
+    var path = "assets/lessons/L" + realNumber.toString() + ".png";
     //if (modNumber == 9) {
     //  path = "assets/IMG_6606.PNG";
     //}
-    sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true)));
+    sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
 
     if (lessonCount >= 2) {
       realNumber++;
-      modNumber = realNumber % 10;
-      var path = "assets/lessons/L" + modNumber.toString() + ".png";
+      //modNumber = realNumber % 10;
+      var path = "assets/lessons/L" + realNumber.toString() + ".png";
       //if (modNumber == 9) {
       //  path = "assets/IMG_6606.PNG";
       //}
-      sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true)));
+      sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true, 110, 110)));
 
       if (lessonCount >= 3) {
         realNumber++;
-        modNumber = realNumber % 10;
-        var path = "assets/lessons/L" + modNumber.toString() + ".png";
+        //modNumber = realNumber % 10;
+        var path = "assets/lessons/L" + realNumber.toString() + ".png";
         //if (modNumber == 9) {
         //  path = "assets/IMG_6606.PNG";
         //}
-        sections.add(Container(child: OpenHelper.getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true)));
+        sections.add(Container(child: OpenHelper.getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
       }
     }
 

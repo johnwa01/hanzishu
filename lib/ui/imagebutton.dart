@@ -52,7 +52,7 @@ class OpenHelper {
     var completed = theStorageHandler.hasLessonCompleted(lessonNumber);
     if (completed) {
       return Ink.image(
-        image: AssetImage("assets/lessons/L0.png"),
+        image: AssetImage("assets/core/completedicon.png"),
         width: 16.0,
         height: 16.0,
       );
@@ -63,7 +63,7 @@ class OpenHelper {
 
   }
 
-  static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson) {
+  static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
     final colorScheme = Theme.of(context).colorScheme;
     var lesson = theLessonManager.getLesson(lessonNumber);
 
@@ -77,8 +77,8 @@ class OpenHelper {
               children: [
                 Ink.image(
                   image: AssetImage(imagePath),
-                  width: 110.0,
-                  height: 110.0,
+                  width: xSize,
+                  height: ySize,
                 ),
                 Row(
                   children: [
@@ -122,12 +122,12 @@ class OpenHelper {
               children: [
                 Ink.image(
                   image: AssetImage(imagePath),
-                  width: 110.0,
-                  height: 110.0,
+                  width: xSize,
+                  height: ySize,
                 ),
                 Text(
                   lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                  style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
+                  style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                 ),
               ]
           ),

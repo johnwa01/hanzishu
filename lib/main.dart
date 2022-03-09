@@ -125,20 +125,24 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
-            title: Text('Lessons'),
-            icon: Icon(Icons.favorite),
+            label: 'Lessons',
+            icon: Image.asset('assets/core/lessonsicon0.png'),
+            activeIcon: Image.asset('assets/core/lessonsicon1.png'),
           ),
           BottomNavigationBarItem(
-            title: Text('Dictionary'),
-            icon: Icon(Icons.location_on),
+            label: 'Dictionary',
+            icon: Image.asset('assets/core/dictionaryicon0.png'),
+            activeIcon: Image.asset('assets/core/dictionaryicon1.png'),
           ),
           BottomNavigationBarItem(
-            title: Text('Typing'),
-            icon: Icon(Icons.location_on),
+            label: 'Typing',
+            icon: Image.asset('assets/core/typingicon0.png'),
+            activeIcon: Image.asset('assets/core/typingicon1.png'),
           ),
           BottomNavigationBarItem(
-            title: Text('Me'),
-            icon: Icon(Icons.library_books),
+            label: 'Me',
+            icon: Image.asset('assets/core/meicon0.png'),
+            activeIcon: Image.asset('assets/core/meicon1.png'),
           ),
         ],
       ),

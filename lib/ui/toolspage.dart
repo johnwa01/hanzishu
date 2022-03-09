@@ -31,7 +31,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Give it a try", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -47,7 +47,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("        Memorize the Component groups", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -60,7 +60,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("        Memorize the Components in groups", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -74,7 +74,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("        Memorize Components", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -87,7 +87,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Guided typing", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -100,7 +100,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Learn the Expanded Components", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -117,7 +117,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Typing exercises", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
@@ -133,7 +133,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Free typing", textDirection: TextDirection.ltr),
-          trailing: Icon(Icons.location_city),
+          trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
