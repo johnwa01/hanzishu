@@ -312,7 +312,10 @@ class _InputZiPageState extends State<InputZiPage> {
     var newText = getInputText(selectionIndex);
 
     previousText = newText;
-//    initialControllerTextValue = newText;
+    if (isFromCharCandidateList) {
+      // in this case, it has no chance to go through handleKeyInputHelper to set the init value. Therefore we are setting it specifically.
+      initialControllerTextValue = "newText";
+    }
 
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -515,9 +518,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   setInitialControllerTextValue() {
-    //itsTheFirstTime = false;
-    initialControllerTextValue = _controller.text;
-    previousText = _controller.text;
+    initialControllerTextValue = _controller.text; // will not change until next letter input.
+    previousText = _controller.text; // can change with the updated value within the same letter input.
   }
 
   Widget getGiveItATryPage() {
