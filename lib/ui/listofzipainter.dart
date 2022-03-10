@@ -146,8 +146,6 @@ class ListOfZiPainter extends BasePainter {
 
     length = lesson.charsIds.length;
     if (length > 0) {
-      double xLineStarting = lessonLeftEdge + applyRatio(20.0);
-
       for (int charId in lesson.charsIds) {
         var zi = theZiManager.getZi(charId);
         if (theZiManager.containSameSubType(zi.type, CharType.CompositChar)) {

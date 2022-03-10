@@ -33,7 +33,7 @@ class OpenHelper {
       case LessonSection.Characters:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ListOfZiPage(lessonId: lessonId)));
         break;
-      case LessonSection.Assembling:
+      case LessonSection.Decomposing:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => BreakoutPage(lessonId: lessonId)));
         break;
       case LessonSection.Conversation:
@@ -44,6 +44,8 @@ class OpenHelper {
         break;
       case LessonSection.Quiz:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => QuizPage(lessonId: lessonId)));
+        break;
+      case LessonSection.None:
         break;
     }
   }
@@ -64,7 +66,6 @@ class OpenHelper {
   }
 
   static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
-    final colorScheme = Theme.of(context).colorScheme;
     var lesson = theLessonManager.getLesson(lessonNumber);
 
     String lessonOrSectionName = "";
@@ -103,7 +104,7 @@ class OpenHelper {
         case LessonSection.Characters:
           lessonOrSectionName = "Character list";
           break;
-        case LessonSection.Assembling:
+        case LessonSection.Decomposing:
           lessonOrSectionName = "Character breakdown";
           break;
         case LessonSection.Conversation:
@@ -114,6 +115,8 @@ class OpenHelper {
           break;
         case LessonSection.Quiz:
           lessonOrSectionName = "Quiz";
+          break;
+        case LessonSection.None:
           break;
       }
       return

@@ -42,7 +42,6 @@ class InputZiPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
-    PrimitiveWrapper contentLength; // not used
     lessonLeftEdge = 10.0 * getSizeRatio();
     displayCandidates();
   }

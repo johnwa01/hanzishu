@@ -85,7 +85,7 @@ class ComponentManager {
         break;
       case "B":
         {
-          pair = GroupAndIndexPair(5, 1);;
+          pair = GroupAndIndexPair(5, 1);
         }
         break;
       case "C":

@@ -330,7 +330,6 @@ class QuizManager {
   }
 
   String getOneValueById(QuizCategory category, QuizType type, int id, bool usedForQuestion) {
-    var list = getCurrentTypeList();
     var value = "";
 
     if (category == QuizCategory.sound || usedForQuestion) {

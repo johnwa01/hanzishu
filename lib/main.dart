@@ -59,8 +59,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
-  String _str;
-  //int _counter;
 
   @override
   void initState() {

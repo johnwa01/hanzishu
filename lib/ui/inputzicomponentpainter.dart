@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/inputzi.dart';
-import 'package:hanzishu/utility.dart';
 
 //NOTE: Right now NOT used by InputZiPage.
 class InputZiComponentPainter extends BasePainter {
@@ -29,7 +28,6 @@ class InputZiComponentPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
-    PrimitiveWrapper contentLength; // not used
 
     displayComponents(size);
   }

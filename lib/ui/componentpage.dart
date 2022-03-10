@@ -885,7 +885,6 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getText(AnswerPosition position) {
     var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
     var fontSize = 20.0 * getSizeRatio(); // 30.0
-    var currentType = theComponentManager.getCurrentType();
 
     var backgroundColor = Colors.white;  // make it a non-material color first
     backgroundColor = Colors.blueAccent;
@@ -1068,10 +1067,6 @@ class _ComponentPageState extends State<ComponentPage> {
         Navigator.of(context).pop(); // to the lesson page
       },
     );
-
-    //var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    var correctPercent = 75; //(lessonQuizResult.cor * 100) / lessonQuizResult.answ;
-    var corStr = correctPercent.toStringAsFixed(1);
 
     String title;
     String content;

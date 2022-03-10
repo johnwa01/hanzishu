@@ -145,7 +145,7 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayDetailedZi(int ziIndex) {
     thePositionManager.setFrameWidth(getFrameWidth());
 
-    var defaultFontSize = applyRatio(25.0);
+    //var defaultFontSize = applyRatio(25.0);
     var fontSize1 = applyRatio(1.0);
     var fontSize2 = applyRatio(2.0);
     var fontSize3 = applyRatio(10.0);

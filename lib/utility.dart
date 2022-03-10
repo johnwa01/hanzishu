@@ -58,7 +58,6 @@ enum LessonSection {
   FullCharacterTree,
   Characters,
   Decomposing,
-  Assembling,
   Conversation,
   Typing,
   Quiz,
@@ -475,7 +474,6 @@ class Utility {
     if (indexStart > 0) {
       count += 1;
 
-      int indexStart2 = 0;
       if (indexStart < str.length - 1) {
         var indexStart2 = str.indexOf(sub, indexStart + 1);
         if (indexStart2 > 0) {

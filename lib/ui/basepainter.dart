@@ -319,7 +319,7 @@ class BasePainter extends CustomPainter{
   }
 
   List<double> getStrokes(int id, ZiListType listType) {
-    List<double> strokes = null;
+    List<double> strokes;
 
     if (listType == ZiListType.component) {
       var comp = ComponentManager.getComponent(id);
@@ -407,12 +407,7 @@ class BasePainter extends CustomPainter{
             ziLineWidth);
     }
     else {
-        //TODO: next line not used
-        double textTransYAdjusted = textTransYAdjust(transY, heightY);
-
         displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800]);
-        //displayComponentText(
-        //    id, transX, textTransYAdjusted, charFontSize, Colors.blue[800]);
     }
   }
 

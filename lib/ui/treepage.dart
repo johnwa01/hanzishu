@@ -32,7 +32,6 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
-  double _progress = 0.0;
 
   int centerZiId;
   bool shouldDrawCenter;

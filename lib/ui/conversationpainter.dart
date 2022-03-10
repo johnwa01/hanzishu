@@ -31,7 +31,6 @@ class ConversationPainter extends BasePainter {
 
   displayConversations(int lessonId) {
     var lesson = theLessonList[theCurrentLessonId];
-    var sentenceList = lesson.sentenceList;
     var sentenceLength = lesson.sentenceList.length;
 
 
@@ -94,14 +93,12 @@ class ConversationPainter extends BasePainter {
         else {
           var id = 0;
           if (previousChar == '|' || Utility.specialChar(previousChar)) {
-            var width;
             // complete the whole separation block after "|"
             if ((separationCount = Utility.findSeparationCount(convWithSeparation, i)) == 1) {
               id = ZiManager.findIdFromChar(oneSeparation);
               translation += Utility.getFirstMeaning(theZiList[id].meaning);
             }
             else {
-              width = 30.0 * separationCount - 5.0;
               var subStr = convWithSeparation.substring(i, i + separationCount);
               phrase = PhraseManager.getPhraseIncludingSpecial(subStr);
               if (phrase != null) {

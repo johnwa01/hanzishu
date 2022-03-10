@@ -344,7 +344,6 @@ class PositionManager
     var firstXWithTwoMembers = 75.0;
     var firstXWithThreeMembers = 5.0;
     var xGapForSevenTotalMax = 30.0;
-    var yGapForSevenTotalMax = 70.0;
     var widthForSevenTotalMax = 100.0;
     var heightForSevenTotalMax = 100.0;
 

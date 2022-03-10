@@ -38,7 +38,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousEndSelection = -1;
   String initialControllerTextValue; // = "unlikelyIniStr876";
   String previousText = "";
-  List<String> ziCandidates = null;
+  List<String> ziCandidates;
   bool showHint = false;
 
   OverlayEntry overlayEntry;

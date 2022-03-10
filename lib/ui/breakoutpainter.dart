@@ -57,10 +57,6 @@ class BreakoutPainter extends BasePainter {
   displayCharacterDecomposing(int lessonId) {
     var lesson = theLessonList[lessonId];
 
-    var numberOfNewAnalysisChars = lesson.getNumberOfNewAnalysisChars();
-    var sharedTitleLength = applyRatio(170.0);
-    var contentLength = numberOfNewAnalysisChars * applyRatio(180.0) + sharedTitleLength;
-
     var yPositionWrapper = YPositionWrapper(applyRatio(100.0));  //170.0
 
     for (var i = 0; i <= (lesson.convCharsIds.length - 1); i++) {

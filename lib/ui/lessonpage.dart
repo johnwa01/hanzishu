@@ -73,7 +73,7 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonId, "assets/core/breakout.png", LessonSection.Assembling, false, 131, 81),
+                OpenHelper.getImageButton(context, lessonId, "assets/core/breakout.png", LessonSection.Decomposing, false, 131, 81),
                 OpenHelper.getImageButton(context, lessonId, "assets/core/conversations.png", LessonSection.Conversation, false, 131, 81),
               ],
             ),

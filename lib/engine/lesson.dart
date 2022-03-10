@@ -37,7 +37,7 @@ class Lesson {
   Map<int, List<int>> treeMap = Map();
   //Map<int, PositionAndSize> sidePositions = Map();
   //Map<int, List<int>> realGroupMembersMap  = Map();
-  PositionAndSize centerPositionAndSize = null;
+  PositionAndSize centerPositionAndSize;
   Map<int, PositionAndSize> breakoutPositions = Map();
 
   Lesson(
@@ -221,6 +221,7 @@ class Lesson {
     }
   }
 
+  // believe on used anymore
   void setLatestSectionToNext(LessonSection lessonSection) {
     var lessonId = theCurrentLessonId; //theLessonManager.getLessonNumber(theLessonManager.theCurrentLesson);
     var lesson = theLessonList[lessonId];
@@ -240,13 +241,13 @@ class Lesson {
           lesson.setLatestSection(LessonSection.Conversation);
         }
         break;
-      case LessonSection.Assembling:
-        if (this.latestSection.index <= LessonSection.Conversation.index) {
-          lesson.setLatestSection(LessonSection.Conversation);
-        }
-        break;
       case LessonSection.Conversation:
         if (this.latestSection.index <= LessonSection.Conversation.index) {
+          lesson.setLatestSection(LessonSection.Typing);
+        }
+        break;
+      case LessonSection.Typing:
+        if (this.latestSection.index <= LessonSection.Typing.index) {
           lesson.setLatestSection(LessonSection.Quiz);
         }
         break;
