@@ -30,7 +30,8 @@ class _InputZiPageState extends State<InputZiPage> {
   double _progressValue;
   int totalQuestions;
   double screenWidth;
-  TextEditingController _controller = new TextEditingController();
+  // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
+  TextEditingController _controller = new TextEditingController(text: ">");
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
@@ -207,7 +208,7 @@ class _InputZiPageState extends State<InputZiPage> {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 50 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
+                  top: 20 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
                   left: imageLeft, //100, //0.0, //posiX,
                   child: Image.asset(
                     fullPath,
@@ -418,7 +419,14 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (isFromDeletion) {
-      if ((previousEndComposing - previousStartComposing) > 1) {
+      initOverlay();
+      if (_controller.text.length == 0) {
+        // don't allow to remove the default character value of '>' at the beginning to work around an Android issue as described earlier
+        _controller.value = _controller.value.copyWith(text: '>',
+            composing: TextRange.empty,
+            selection: TextSelection.collapsed(offset: 1));
+      }
+      else if ((previousEndComposing - previousStartComposing) > 1) {
         previousEndComposing--;
         var composingText = getFullComposingText(previousStartComposing, previousEndComposing);
         theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
@@ -490,16 +498,15 @@ class _InputZiPageState extends State<InputZiPage> {
       // This logic also covers the initial value.composing case which should be empty (-1, -1).
       // But iPhone doesn't seem to update value.composing after initial setting.
       // iOS simulator would crash on backspace with composing, so not supporting underline feature.
-      if (Platform.isAndroid) {
-        if (_controller.value.composing.start != previousStartComposing ||
-            _controller.value.composing.end != previousEndComposing) {
+      if (_controller.value.composing.start != previousStartComposing ||
+          _controller.value.composing.end != previousEndComposing) {
           _controller.value = _controller.value.copyWith(
               composing: TextRange(
                   start: previousStartComposing, end: previousEndComposing));
-        }
       }
     }
     else {
+      initOverlay();
       previousStartComposing = -1;
       previousEndComposing = -1;
       theCurrentZiCandidates = theDefaultZiCandidates;
@@ -690,7 +697,8 @@ class _InputZiPageState extends State<InputZiPage> {
         (
         title: Text(title),
         ),
-      body: Column(
+      body: WillPopScope( // for dismissing overlay menu only when hitting back arrow
+        child: Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
         //mainAxisSize:  MainAxisSize.max,
         children: <Widget>[
@@ -735,6 +743,8 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
           )
         ]
+      ),
+          onWillPop: _onWillPop
       ),
     );
   }

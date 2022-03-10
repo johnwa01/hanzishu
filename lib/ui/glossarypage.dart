@@ -248,6 +248,12 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
+              "A separate IME app for the input method is under development and could be released at any time.",
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
               "Hanzishu One Tap Dictionary",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
