@@ -156,8 +156,8 @@ class DictionaryPainter extends BreakoutPainter {
     var fontSize8 = applyRatio(115.0);
     var fontSize9 = applyRatio(210.0);
     var fontSize10 = applyRatio(245.0);
-    var fontSize11 = applyRatio(280.0);
-    var fontSize12 = applyRatio(350.0);
+    var fontSize11 = applyRatio(295.0);
+    var fontSize12 = applyRatio(365.0);
 
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
