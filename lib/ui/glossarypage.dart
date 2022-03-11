@@ -164,7 +164,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Characters are created with Components and/or Strokes.",
+              "Characters are created with Components or Strokes.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -242,13 +242,13 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters.",
+              "A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters. Supports nearly 4,000 Characters.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "A separate IME app for the input method is under development and could be released at any time.",
+              "A separate IME app for the input method to be used by other programs is under development and could be released at any time.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -259,7 +259,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "A Chinese Character dictionary that’s organized based on Basic Characters.",
+              "A Chinese Character dictionary that’s organized based on Basic Characters. Searching a Character by searching the first Basic Character it contains.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -293,7 +293,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components (situated on all four sides of the screen) building up the central Character one layer at a time. Tapping a character in the center drills down, and tapping a component on the sides moves back.",
+              "Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components/Characters (situated on all four sides of the screen) building up the central Character one layer at a time. Tapping a Character in the center drills down, and tapping a Component/Character on the sides moves back. Holding a Character/Component displays its detailed information.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -315,7 +315,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Separates Characters in a lesson into Characters or Components and then strokes.",
+              "Separates Characters in a lesson into Characters or Components. Tapping a Character or a Component displays its detailed information.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -326,7 +326,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Demonstrates pronunciation and provides speaking practice.",
+              "Demonstrates pronunciation and provides speaking practice. Tapping a Character displays its overlay information.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -467,7 +467,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Holding a Character in many features within the app, it’ll show the detailed information about that Character.",
+              "Tapping or holding a Character in many features within the app displays the detailed information about that Character.",
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

@@ -132,7 +132,7 @@ class _ToolsPageState extends State<ToolsPage> {
         //),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Free typing", textDirection: TextDirection.ltr),
+          title: Text("Free typing and help", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

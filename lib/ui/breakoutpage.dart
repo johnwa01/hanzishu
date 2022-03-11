@@ -145,6 +145,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
+      /*
       onPressed: () {
         initOverlay();
 
@@ -152,7 +153,9 @@ class _BreakoutPageState extends State<BreakoutPage> {
           //centerZiId = newCenterZiId;
         //});
       },
-      onLongPress: () {
+      */
+      //onLongPress: () {
+      onPressed: () {
         initOverlay();
 
         var scrollOffset = _scrollController.offset;

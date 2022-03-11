@@ -92,12 +92,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       overlayEntry = OverlayEntry(
           builder: (context) =>
               Positioned(
-                top: 100.0, //posiY,
-                left: 80.0, //posiX,
+                top: 20.0, //posiY, //100
+                left: 100.0, //posiX,
                 child: Image.asset(
                   "assets/typing/" + fullExpandedComp.imageName,
-                  width: 250.0,
-                  height: 300.0,
+                  width: 100.0,
+                  height: 130.0,
                   //fit: BoxFit.fitWidth,
                 ),
               ));
@@ -327,7 +327,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	Tap or hold each Lead Component in the chart to see the Expanded Components associated to them.",
+              "  •	Tap each Lead Component in the chart to see the Expanded Components associated to them.",
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
