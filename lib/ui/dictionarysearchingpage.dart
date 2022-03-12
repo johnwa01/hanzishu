@@ -638,6 +638,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
+      /*
       onPressed: () {
         clearOverlayEntry();
         //setState(() {
@@ -645,6 +646,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         //});
       },
       onLongPress: () {
+      */
+      onPressed: () {
         //var scrollOffset = _scrollController.offset;
         //var zi = theZiManager.getZi(id);
         //var searchingZi = DictionaryManager.getSearchingZi(id);

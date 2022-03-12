@@ -315,13 +315,13 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 getStartingLevel(context),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 Text('to'),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
                 getEndingLevel(context),
-                SizedBox(width: 20),
+                SizedBox(width: 10),
               ],
             ),
           ),
@@ -358,13 +358,13 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            SizedBox(width: 20),
+            SizedBox(width: 10),
             getStartingLesson(context),
-            SizedBox(width: 20),
+            SizedBox(width: 10),
             Text('to'),
-            SizedBox(width: 20),
+            SizedBox(width: 10),
             getEndingLesson(context),
-            SizedBox(width: 20),
+            SizedBox(width: 10),
           ],
         ),
       );

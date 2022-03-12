@@ -1,3 +1,4 @@
+// This page is for the dictionary front page only. the dictionarysearchingpage.dart is for all three stages - front, selection and details.
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:ui';

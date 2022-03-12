@@ -12,9 +12,10 @@ class CounterStorage {
 
   Future<File> get _localFile async {
     final path = await _localPath;
-    return File('$path/counter4.txt');
+    return File('$path/Hanzishu2020.txt');  // the hardcoded default file for Hanzishu storage.
   }
 
+  /*
   Future<int> readCounter() async {
     try {
       final file = await _localFile;
@@ -29,6 +30,7 @@ class CounterStorage {
       return 0;
     }
   }
+  */
 
   Future<String> readString() async {
     try {
@@ -44,12 +46,14 @@ class CounterStorage {
     }
   }
 
+  /*
   Future<File> writeCounter(int counter) async {
     final file = await _localFile;
 
     // Write the file
     return file.writeAsString('$counter');
   }
+  */
 
   Future<File> writeString(String content) async {
     final file = await _localFile;

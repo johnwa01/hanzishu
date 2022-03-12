@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/quizpainter.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 
 class QuizPage extends StatefulWidget {
@@ -16,11 +17,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  double screenWidth;
   AnswerPosition answerPosition;
   int lessonId;
   int index;
   double _progressValue;
   int totalMeaningAndSoundQuestions;
+
+  getSizeRatio() {
+    var defaultFontSize = screenWidth / 16.0;
+    return defaultFontSize / 25.0; // ratio over original hard coded value
+  }
 
   @override
   void initState() {
@@ -47,6 +54,8 @@ class _QuizPageState extends State<QuizPage> {
     //if (answerPosition == AnswerPosition.continueNext) {
     //  index = theQuizManager.getNextIndexForCurrentType();
     //}
+
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
     QuizType currentType = theQuizManager.getCurrentType();
     if (answerPosition == AnswerPosition.continueNext ||
@@ -91,21 +100,21 @@ class _QuizPageState extends State<QuizPage> {
           ),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(30 * getSizeRatio()),
           ),
           Container(
             child: getQuestion(context),
             //padding: EdgeInsets.all(20),
           ),
           Container(
-            padding: EdgeInsets.all(20), //
+            padding: EdgeInsets.all(20 * getSizeRatio()), //
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(20), //40
+            padding: EdgeInsets.all(20 * getSizeRatio()), //40
           ),
           Container(
-            padding: EdgeInsets.all(20), //
+            padding: EdgeInsets.all(20 * getSizeRatio()), //
           ),
           Container(
             child: getContinue(context),
@@ -136,12 +145,12 @@ class _QuizPageState extends State<QuizPage> {
       var currentValues = theQuizManager.getCurrentValues();
 
       return Container(
-        height: 150.0, //180
-          width: 150.0,
+        height: 150.0 * getSizeRatio(), //180
+          width: 150.0 * getSizeRatio(),
         child: IconButton(
             icon: Icon(
                 Icons.volume_up,
-                size: 150.0,   // 150
+                size: 150.0 * getSizeRatio(),   // 150
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {
@@ -170,9 +179,9 @@ class _QuizPageState extends State<QuizPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               getText(AnswerPosition.positionA),
-              SizedBox(height: 5.0),
+              SizedBox(height: 5.0 * getSizeRatio()),
               getText(AnswerPosition.positionB),
-              SizedBox(height: 5.0),
+              SizedBox(height: 5.0 * getSizeRatio()),
               getText(AnswerPosition.positionC),
             ]
           ),
@@ -184,9 +193,9 @@ class _QuizPageState extends State<QuizPage> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               getZiContainer(AnswerPosition.positionA, true),
-              SizedBox(height: 5.0),
+              SizedBox(height: 5.0 * getSizeRatio()),
               getZiContainer(AnswerPosition.positionB, true),
-              SizedBox(height: 5.0),
+              SizedBox(height: 5.0 * getSizeRatio()),
               getZiContainer(AnswerPosition.positionC, true),
             ]
         );
@@ -267,19 +276,19 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
-    var fontSize = 35.0; // 30.0
+    var fontSize = 35.0 * getSizeRatio(); // 30.0
     var currentType = theQuizManager.getCurrentType();
 
     if (currentType == QuizType.conversations) {
-      fontSize = 25;
+      fontSize = 25 * getSizeRatio();
     }
 
     if (position == AnswerPosition.center) {
       if (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars) {
-        fontSize = 120.0; //60.0;
+        fontSize = 120.0 * getSizeRatio(); //60.0;
       }
       else {
-        fontSize = 50.0;
+        fontSize = 50.0 * getSizeRatio();
       }
     }
 
@@ -318,9 +327,9 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getZiContainer(AnswerPosition position, bool withNonCharFrame) {
-    var size = 55.0; //35
+    var size = 55.0 * getSizeRatio(); //35
     if (position == AnswerPosition.center) {
-      size = 120.0;
+      size = 120.0 * getSizeRatio();
     }
 
     var noncharId = getNoncharId(position);
@@ -388,7 +397,7 @@ class _QuizPageState extends State<QuizPage> {
 
       return Container(
           child: FlatButton(
-            child: Text(result, style: TextStyle(fontSize: 25.0),),
+            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio()),),
             color: Colors.blueAccent,
             textColor: Colors.white,
             onPressed: () {
@@ -421,14 +430,14 @@ class _QuizPageState extends State<QuizPage> {
     );
 
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
+    var correctPercent = (lessonQuizResult.cor * 100 * getSizeRatio()) / lessonQuizResult.answ;
     var corStr = correctPercent.toStringAsFixed(1);
 
     String title;
     String content;
 
 
-    if (correctPercent >= 70.0) {
+    if (correctPercent >= 70.0 * getSizeRatio()) {
       title = "Congratulation!";
       content = "You have passed this quiz with a score of " + corStr + "!";
       // save the info to storage
