@@ -64,45 +64,6 @@ enum LessonSection {
   None
 }
 
-//TODO: not used anymore?
-/*
-enum ColorType {
-  inactive,
-  latest,
-  completed
-}
-*/
-
-// Note: each lesson uses its lessonId directly
-/*
-enum ButtonTag {
-  LessonBase = 0,
-  MaxLessonCapacity = 499,
-  QuizQuestion = 500,
-  QuizAnswer1 = 501,
-  QuizAnswer2 = 502,
-  QuizAnswer3 = 503,
-  QuizBackToLesson = 504,
-  QuizContinue = 505,
-  QuizProgressFrame = 506,
-  QuizProgressBar = 507,
-  QuizProgressBarExit = 508,
-  Characters = 520,
-  Review = 521,
-  Analyze = 522,
-  Conversations = 523,
-  Quiz = 524,
-  ReviewTree = 525,
-  AllLessons = 526,
-  StudyTime = 527,
-  TapCount = 528,
-  QuizResults = 529,
-  AnnotateCenter = 530,
-  AnnotateZiBase = 10000  // base number for annotate zi
-}
-*/
-
-
 class CharType {
   static const BasicChar = "j";
   static const BasicNonchar = "f";

@@ -322,7 +322,7 @@ class LessonManager {
       for (var ch in lesson.convChars.runes) {
         var char = String.fromCharCode(ch);
         var id = ZiManager.findIdFromChar(char);
-        if (id != 10000) {
+        if (id != -1) {
           lesson.convCharsIds.add(id);
         }
       }
@@ -334,7 +334,7 @@ class LessonManager {
       for (var ch in lesson.chars.runes) {
         var char = String.fromCharCode(ch);
         var id = ZiManager.findIdFromChar(char);
-          if (id != 10000) {
+          if (id != -1) {
           lesson.charsIds.add(id);
         }
       }

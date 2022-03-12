@@ -433,7 +433,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Indicates a definition",
+              "Indicates a new Character or Component in the lesson.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -456,6 +456,17 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           Text(
               "Tap to hear the Character",
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
+              "Check mark",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "Indicates that you have just gone through this Character or Component.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),

@@ -78,7 +78,7 @@ class ZiManager {
       }
     }
 
-    return 10000;  // not found
+    return -1;  // not found
   }
 
   bool isIdAZi(String idName) {

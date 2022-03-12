@@ -259,12 +259,13 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   // isFromCharChandidateList: true if tap a candidate char; false if type "spacebar" or uppercase letter for overlay.
-  int getCursorPosition(bool isFromCharCandidateList, bool isFromOverlay) {
+  // candidateLength includes cases like "ttt" as the first candidate, that is, run out of normal candidates.
+  int getCursorPosition(int candidateCharLength, bool isFromCharCandidateList, bool isFromOverlay) {
     var  selectionPosi;
     if (_controller.value.selection.end >= 0) {
       selectionPosi = _controller.value.selection.end;
       if (isFromCharCandidateList) { // since it's from candidate, not from keyboard.
-        selectionPosi++; // the new Chinese char
+        selectionPosi += candidateCharLength; // the new Chinese char
         if (previousEndComposing >= 1) {
           selectionPosi -= (previousEndComposing - previousStartComposing); // subtract composing if any
         }
@@ -273,7 +274,7 @@ class _InputZiPageState extends State<InputZiPage> {
         selectionPosi--; // subtract the uppercase letter
       }
       else { // currently just spacebar case: previousEndComposing is always >= 1 due to the spacebar ' ' space
-          selectionPosi++; // the new Chinese char
+          selectionPosi += candidateCharLength; // the new Chinese char
           selectionPosi -= (previousEndComposing - previousStartComposing); // subtract composing
       }
     }
@@ -318,10 +319,11 @@ class _InputZiPageState extends State<InputZiPage> {
       initialControllerTextValue = "newText";
     }
 
+    var candidateCharLength = theCurrentZiCandidates[selectionIndex].length;
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
 
-    var selectionPosi = getCursorPosition(isFromCharCandidateList, isFromOverlay);
+    var selectionPosi = getCursorPosition(candidateCharLength, isFromCharCandidateList, isFromOverlay);
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
     _controller.value = _controller.value.copyWith(text: newText,
@@ -451,7 +453,7 @@ class _InputZiPageState extends State<InputZiPage> {
       // But need to do it for overlay case so that the next input can go through the checking at the entry.
  //     initialControllerTextValue = previousText; // prepare for next input, equal to the value.text
       // actually set the current value, although use previousText parameter
-      var selectionPosi = getCursorPosition(false, true);
+      var selectionPosi = getCursorPosition(1, false, true);
       previousEndSelection = selectionPosi;
       previousEndComposing--; // subtract the uppercase letter for overlay
       if (Platform.isAndroid) {
@@ -480,12 +482,14 @@ class _InputZiPageState extends State<InputZiPage> {
       initOverlay();
       setPreviousComposing();
 
-      var composingText = getFullComposingText(previousStartComposing, previousEndComposing);
+      var composingText = getFullComposingText(
+          previousStartComposing, previousEndComposing);
       theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
-      InputZiManager.updateFirstCandidate(theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
+      InputZiManager.updateFirstCandidate(
+          theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
 
       if (theCurrentZiCandidates == null) {
-        List<String> composingList =  [composingText];
+        List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;
       }
       previousText = _controller.text;
@@ -498,11 +502,13 @@ class _InputZiPageState extends State<InputZiPage> {
       // This logic also covers the initial value.composing case which should be empty (-1, -1).
       // But iPhone doesn't seem to update value.composing after initial setting.
       // iOS simulator would crash on backspace with composing, so not supporting underline feature.
-      if (_controller.value.composing.start != previousStartComposing ||
+      if (Platform.isAndroid) {
+        if (_controller.value.composing.start != previousStartComposing ||
           _controller.value.composing.end != previousEndComposing) {
-          _controller.value = _controller.value.copyWith(
+            _controller.value = _controller.value.copyWith(
               composing: TextRange(
-                  start: previousStartComposing, end: previousEndComposing));
+                start: previousStartComposing, end: previousEndComposing));
+        }
       }
     }
     else {
@@ -709,6 +715,8 @@ class _InputZiPageState extends State<InputZiPage> {
               width: double.infinity,
               //height: 120,
               child: TextField(
+                autocorrect: false,
+                enableSuggestions: false,
                 controller: _controller,
                 focusNode: _textNode,
                 autofocus: true,

@@ -96,7 +96,9 @@ class ConversationPainter extends BasePainter {
             // complete the whole separation block after "|"
             if ((separationCount = Utility.findSeparationCount(convWithSeparation, i)) == 1) {
               id = ZiManager.findIdFromChar(oneSeparation);
-              translation += Utility.getFirstMeaning(theZiList[id].meaning);
+              if (id != -1) {
+                translation += Utility.getFirstMeaning(theZiList[id].meaning);
+              }
             }
             else {
               var subStr = convWithSeparation.substring(i, i + separationCount);

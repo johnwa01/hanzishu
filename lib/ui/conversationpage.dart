@@ -204,10 +204,11 @@ class _ConversationPageState extends State<ConversationPage> {
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
         var id = ZiManager.findIdFromChar(oneChar);
-
-        var position = PositionAndSize(50.0 + 30.0 * i, 30.0 + 150.0 * j, 28.0, 28.0, 0.0, 0.0);
-
-        buttons.add(getPositionedButton(id, position, ButtonType.char));
+        if (id != -1) {
+          var position = PositionAndSize(
+              50.0 + 30.0 * i, 30.0 + 150.0 * j, 28.0, 28.0, 0.0, 0.0);
+          buttons.add(getPositionedButton(id, position, ButtonType.char));
+        }
       }
 
       ButtonType buttonType;
