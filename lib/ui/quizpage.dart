@@ -100,21 +100,21 @@ class _QuizPageState extends State<QuizPage> {
           ),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.all(30 * getSizeRatio()),
+            padding: EdgeInsets.all(25 * getSizeRatio()),
           ),
           Container(
             child: getQuestion(context),
             //padding: EdgeInsets.all(20),
           ),
           Container(
-            padding: EdgeInsets.all(20 * getSizeRatio()), //
+            padding: EdgeInsets.all(18 * getSizeRatio()), //
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(20 * getSizeRatio()), //40
+            padding: EdgeInsets.all(18 * getSizeRatio()), //40
           ),
           Container(
-            padding: EdgeInsets.all(20 * getSizeRatio()), //
+            padding: EdgeInsets.all(18 * getSizeRatio()), //
           ),
           Container(
             child: getContinue(context),
@@ -276,7 +276,7 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
-    var fontSize = 35.0 * getSizeRatio(); // 30.0
+    var fontSize = 30.0 * getSizeRatio(); // 35.0
     var currentType = theQuizManager.getCurrentType();
 
     if (currentType == QuizType.conversations) {

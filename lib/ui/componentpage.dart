@@ -127,7 +127,7 @@ class _ComponentPageState extends State<ComponentPage> {
           //),
           getAnswers(context),
           Container(
-            padding: EdgeInsets.only(top: 5.0 * getSizeRatio()), //10.0
+            padding: EdgeInsets.only(top: 15.0 * getSizeRatio()), //5.0
           ),
           Container(
             child: getContinue(context),

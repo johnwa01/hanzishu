@@ -697,6 +697,11 @@ class _InputZiPageState extends State<InputZiPage> {
       return getGiveItATryPage();
     }
 
+    var editFieldFontRatio = getSizeRatio();
+    if (editFieldFontRatio > 1.7) { // otherwise iPad Pro 12.9" would have a huge char size in EditField
+      editFieldFontRatio /= 1.3;
+    }
+
     return Scaffold
       (
       appBar: AppBar
@@ -727,7 +732,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   labelText: '', //'Full Name',
                 ),
                 style: TextStyle(
-                  fontSize: editFontSize * getSizeRatio(), // 35
+                  fontSize: editFontSize * editFieldFontRatio, // 35
                   height: 1.3
                 ),
                 maxLines: maxNumberOfLines,

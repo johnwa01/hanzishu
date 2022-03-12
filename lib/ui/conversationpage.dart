@@ -121,6 +121,7 @@ class _ConversationPageState extends State<ConversationPage> {
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
+      /*
       onPressed: () {
         initOverlay();
 
@@ -144,6 +145,8 @@ class _ConversationPageState extends State<ConversationPage> {
         }
       },
       onLongPress: () {
+      */
+      onPressed: () {
         if (buttonType == ButtonType.sound) {
           var conv = lesson.getSentence(id);
           TextToSpeech.speak(conv);

@@ -686,8 +686,9 @@ class BasePainter extends CustomPainter{
 
       // check if its a composite zi and return partial zi
       var partialZiId = memberZiId;
+      // exclude the case for lesson 2, id 155.
       //lesson==2, id = 155 ->六  [In the tree, treat it as a basic one. but in word list etc, still keep as multiple component char.
-      if (theIsPartialZiMode && theCurrentLessonId == 2 && memberZiId != 155) {
+      if (theIsPartialZiMode && !(theCurrentLessonId == 2 && memberZiId == 155)) {
         partialZiId = theZiManager.getPartialZiId(id, memberZiId);
       }
       var oneZiColor = ziColor;

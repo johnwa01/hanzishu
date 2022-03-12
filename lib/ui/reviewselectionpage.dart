@@ -140,10 +140,13 @@ class ReviewLesson {
   }
 
   static List<ReviewLesson> getReviewLessonsEnding(int selectedLevel, int lessonSelectedStartingId) {
+    var length = 0;
     if (lessonSelectedStartingId == 0) {
       populateMaximumLessons("Ending Lesson");
       // get real lessons for the level
-      var length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
+      if (selectedLevel > 0) { // Unit 1 to 10 instead of the title "Starting Unit"
+        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
+      }
       var endingLessons = List<ReviewLesson>(length);
       for (var index = 0; index < length; index++) {
         endingLessons[index] = lessons[index];
@@ -152,9 +155,12 @@ class ReviewLesson {
       return endingLessons;
     }
     else {
-      var length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1; //lessons.length;
+      var newLength = 0;
+      if (selectedLevel > 0) {
+        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1; //lessons.length;
+        newLength = length - lessonSelectedStartingId + 1;
+      }
 
-      var newLength = length - lessonSelectedStartingId + 1;
       var newEndingLessons = List<ReviewLesson>(newLength);
       newEndingLessons[0] = lessons[0];
       for (var index = 1; index <= newLength - 1; index++) {
