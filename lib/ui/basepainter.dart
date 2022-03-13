@@ -59,6 +59,14 @@ class BasePainter extends CustomPainter{
     return value * getSizeRatio();
   }
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(width);
+  }
+
+  double applyRatioWithLimit(double value) {
+    return value * getSizeRatioWithLimit();
+  }
+
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;

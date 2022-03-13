@@ -39,36 +39,36 @@ class ConversationPainter extends BasePainter {
       var conv = theSentenceList[sentId].conv;
       var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      displayTextWithValue((j + 1).toString() + ".", applyRatio(8.0), applyRatio(30.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
+      displayTextWithValue((j + 1).toString() + ".", applyRatioWithLimit(8.0), applyRatioWithLimit(30.0 + 130.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent);
 
-      DisplayIcon(iconSpeechStrokes, applyRatio(25.0), applyRatio(33.0 + 130.0 * j), applyRatio(20.0), applyRatio(20.0), Colors.amber/*MaterialColor ofColor*/, applyRatio(2.0)/*ziLineWidth*/);
+      DisplayIcon(iconSpeechStrokes, applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 130.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), Colors.amber/*MaterialColor ofColor*/, applyRatioWithLimit(2.0)/*ziLineWidth*/);
 
       // text itself
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
         displayTextWithValue(
  //           oneChar, 50.0 + 35.0 * i, 30.0 + 140.0 * j - 30.0 * 0.25, 30.0,
-            oneChar, applyRatio(50.0 + 30.0 * i), applyRatio(30.0 + 130.0 * j - 30.0 * 0.25), applyRatio(28.0),
+            oneChar, applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 130.0 * j - 30.0 * 0.25), applyRatioWithLimit(28.0),
             Colors.blueAccent);
       }
 
       // text trans
-      displayTextWithValue(theSentenceList[sentId].trans, applyRatio(50.0), applyRatio(65.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
+      displayTextWithValue(theSentenceList[sentId].trans, applyRatioWithLimit(50.0), applyRatioWithLimit(65.0 + 130.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent);
 
       // conWithSepa text
-      var xPosi = applyRatio(50.0);
+      var xPosi = applyRatioWithLimit(50.0);
       for (int i = 0; i < convWithSeparation.length; i++) {
         var oneSeparation = convWithSeparation[i];
 
         displayTextWithValue(
-            oneSeparation, xPosi, applyRatio(100.0 + 130.0 * j - 20.0 * 0.25), applyRatio(20.0),
+            oneSeparation, xPosi, applyRatioWithLimit(100.0 + 130.0 * j - 20.0 * 0.25), applyRatioWithLimit(20.0),
             Colors.blueAccent);
 
         if (oneSeparation == '|' || Utility.specialChar(oneSeparation)) {
-          xPosi += applyRatio(12.0);
+          xPosi += applyRatioWithLimit(12.0);
         }
         else {
-          xPosi += applyRatio(25.0);
+          xPosi += applyRatioWithLimit(25.0);
         }
       }
 
@@ -121,7 +121,7 @@ class ConversationPainter extends BasePainter {
         previousChar = oneSeparation;
       }
 
-      displayTextWithValue(translation, applyRatio(50.0), applyRatio(125.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
+      displayTextWithValue(translation, applyRatioWithLimit(50.0), applyRatioWithLimit(125.0 + 130.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent);
     }
   }
 

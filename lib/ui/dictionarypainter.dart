@@ -118,7 +118,7 @@ class DictionaryPainter extends BreakoutPainter {
       //}
 
       if (firstZiIndex >= 0) {
-        displayTextWithValue("->", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
+        displayTextWithValue("<-", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
         var searchingZiIndex = theFirstZiList[firstZiIndex].searchingZiId;
         displayTextWithValue(
             theSearchingZiList[searchingZiIndex].char, fontSize4, fontSize1, defaultFontSize,
