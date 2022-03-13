@@ -103,22 +103,22 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayNavigationPath(DictionaryStage stage) {
     var defaultFontSize = applyRatio(25.0);
     var fontSize1 = applyRatio (5.0);
-    var fontSize2 = applyRatio(10.0);
+//    var fontSize2 = applyRatio(10.0);
     var fontSize3 = applyRatio(35.0);
     var fontSize4 = applyRatio(70.0);
-    var fontSize5 = applyRatio(105.0);
-    var fontSize6 = applyRatio(140.0);
+//    var fontSize5 = applyRatio(105.0);
+//    var fontSize6 = applyRatio(140.0);
 
-    displayTextWithValue("@", fontSize2, fontSize1, defaultFontSize, Colors.blueAccent);
-    displayTextWithValue("->", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
+//    displayTextWithValue("@", fontSize2, fontSize1, defaultFontSize, Colors.blueAccent);
 
-    if (stage == DictionaryStage.searchingzis || stage == DictionaryStage.detailedzi) {
+    if (/*stage == DictionaryStage.searchingzis ||*/ stage == DictionaryStage.detailedzi) {
       // TODO: this line should be called in page so that it'll persist the firstZiIndex value
       //if (firstZiIndex == -1) {
       //  firstZiIndex = Dictionary.getFirstZiIndexByPickingZiIndex(searchingZiIndex);
       //}
 
       if (firstZiIndex >= 0) {
+        displayTextWithValue("->", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
         var searchingZiIndex = theFirstZiList[firstZiIndex].searchingZiId;
         displayTextWithValue(
             theSearchingZiList[searchingZiIndex].char, fontSize4, fontSize1, defaultFontSize,
@@ -129,11 +129,12 @@ class DictionaryPainter extends BreakoutPainter {
       //var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
       displayTextWithValue("Help", fontSize4, fontSize1, defaultFontSize, Colors.blueAccent);
     }
-
+/*
     if (stage == DictionaryStage.detailedzi) {
       displayTextWithValue("->", fontSize5, fontSize1, defaultFontSize, Colors.blueAccent);
       displayTextWithValue(theSearchingZiList[searchingZiIndex].char, fontSize6, fontSize1, defaultFontSize, Colors.blueAccent);
     }
+*/
   }
 
   DisplayHelpPath() {

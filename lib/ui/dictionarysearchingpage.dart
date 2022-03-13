@@ -1,3 +1,4 @@
+// Note: This page doesn't cover FirstZi feature which is in charge of by dictionarypage.dart.
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:ui';
@@ -496,16 +497,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   CreateNavigationHitttestButtons(DictionaryStage stage, List<Widget> buttons) {
     var defaultFontSize = screenWidth / 16.0;     // was hardcoded 25.0, use it as the standard
     var fontSize1 = defaultFontSize * (5.0 / 25.0);
-    var fontSize2 = defaultFontSize * (10.0 / 25.0);
+//    var fontSize2 = defaultFontSize * (10.0 / 25.0);
     var fontSize3 = defaultFontSize * (20.0 / 25.0);
     var fontSize4 = defaultFontSize * (70.0 / 25.0);
-
+/*
     PositionAndSize dicRootPosi = PositionAndSize(
         fontSize2, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
     var button1 = getPositionedNavigationButton(
         dicRootPosi, DictionaryStage.firstzis);
     buttons.add(button1);
-
+*/
     if (stage == DictionaryStage.detailedzi) {
       PositionAndSize dicSearchingZiPosi = PositionAndSize(
           fontSize4, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
