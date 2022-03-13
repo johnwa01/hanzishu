@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/glossarypage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
 import 'package:hanzishu/ui/reviewselectionpage.dart';
+import 'package:hanzishu/utility.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -9,8 +10,16 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> {
+  double screenWidth;
+
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
+  }
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+
     return Scaffold
       (
       appBar: AppBar
@@ -33,9 +42,9 @@ class _MePageState extends State<MePage> {
             //  textAlign: TextAlign.center,
             //),
             ListTile(
-              leading: Icon(Icons.location_city),
+              leading: Image.asset('assets/core/characterdrill.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
               title: Text("Character review", textDirection: TextDirection.ltr),
-              trailing: Icon(Icons.location_city),
+              //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
                 Navigator.push(
                   context,
@@ -46,9 +55,9 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.location_city),
+              leading: Image.asset('assets/core/quiz.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
               title: Text("Quiz results", textDirection: TextDirection.ltr),
-              trailing: Icon(Icons.location_city),
+              //trailing: Image.asset('assets/core/itemicon.png'),
               //subtitle: Text(
               //  "XXXXXXXXXX",
               //  textDirection: TextDirection.rtl,
@@ -63,9 +72,9 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Icon(Icons.location_city),
+              leading: Image.asset('assets/core/characterlist.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
               title: Text("Glossary", textDirection: TextDirection.ltr),
-              trailing: Icon(Icons.location_city),
+              //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
                 Navigator.push(
                   context,

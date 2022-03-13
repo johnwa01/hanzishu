@@ -103,7 +103,7 @@ class BreakoutPainter extends BasePainter {
       }
 
       if (!isBreakoutPositionsOnly) {
-        drawLine(transX - applyRatio(100.0-40.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel-1]-1), transX - applyRatio(10.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel]), Colors.amber, applyRatio(2));
+        drawLine(transX - applyRatio(89.0-40.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel-1]-1), transX - applyRatio(10.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel]), Colors.amber, applyRatio(2));
       }
     }
 
@@ -146,7 +146,7 @@ class BreakoutPainter extends BasePainter {
     {
       var newRecurLevel = recurLevel + 1;
 
-      var size = 100.0 * getSizeRatio();
+      var size = 89.0 * getSizeRatio(); //100 // length of each layer
       for (var i = 0; i < composits.length; i++) {
         drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + size, transY); // transY is the original value
       }

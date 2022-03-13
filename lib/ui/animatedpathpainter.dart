@@ -73,7 +73,7 @@ class AnimatedPathPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final animationPercent = this._animation.value;
 
-    print("Painting + ${animationPercent} - ${size}");
+    //print("Painting + ${animationPercent} - ${size}");
 
     final path = createAnimatedPath(_createAnyPath(size), animationPercent);
 

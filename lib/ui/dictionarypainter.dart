@@ -158,7 +158,7 @@ class DictionaryPainter extends BreakoutPainter {
     var fontSize9 = applyRatio(210.0);
     var fontSize10 = applyRatio(245.0);
     var fontSize11 = applyRatio(295.0);
-    var fontSize12 = applyRatio(365.0);
+    var fontSize12 = applyRatio(362.0);
 
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
@@ -277,7 +277,7 @@ class DictionaryPainter extends BreakoutPainter {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
-    var fontSize1 = applyRatio(405.0); //425.0
+    var fontSize1 = applyRatio(396.0); //425.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
