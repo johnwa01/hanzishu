@@ -33,43 +33,42 @@ class ConversationPainter extends BasePainter {
     var lesson = theLessonList[theCurrentLessonId];
     var sentenceLength = lesson.sentenceList.length;
 
-
     for (int j = 0; j < sentenceLength; j++) {
       //var conv = lesson.getSentence(j);
       var sentId = lesson.sentenceList[j];
       var conv = theSentenceList[sentId].conv;
       var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      displayTextWithValue((j + 1).toString() + ".", 8.0, 30.0 + 150.0 * j, 17.0, Colors.blueAccent);
+      displayTextWithValue((j + 1).toString() + ".", applyRatio(8.0), applyRatio(30.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
 
-      DisplayIcon(iconSpeechStrokes, 25.0, 33.0 + 150.0 * j, 20.0, 20.0, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+      DisplayIcon(iconSpeechStrokes, applyRatio(25.0), applyRatio(33.0 + 130.0 * j), applyRatio(20.0), applyRatio(20.0), Colors.amber/*MaterialColor ofColor*/, applyRatio(2.0)/*ziLineWidth*/);
 
       // text itself
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
         displayTextWithValue(
  //           oneChar, 50.0 + 35.0 * i, 30.0 + 140.0 * j - 30.0 * 0.25, 30.0,
-            oneChar, 50.0 + 30.0 * i, 30.0 + 150.0 * j - 30.0 * 0.25, 28.0,
+            oneChar, applyRatio(50.0 + 30.0 * i), applyRatio(30.0 + 130.0 * j - 30.0 * 0.25), applyRatio(28.0),
             Colors.blueAccent);
       }
 
       // text trans
-      displayTextWithValue(theSentenceList[sentId].trans, 50.0, 65.0 + 150.0 * j, 17.0, Colors.blueAccent);
+      displayTextWithValue(theSentenceList[sentId].trans, applyRatio(50.0), applyRatio(65.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
 
       // conWithSepa text
-      var xPosi = 50.0;
+      var xPosi = applyRatio(50.0);
       for (int i = 0; i < convWithSeparation.length; i++) {
         var oneSeparation = convWithSeparation[i];
 
         displayTextWithValue(
-            oneSeparation, xPosi, 100.0 + 150.0 * j - 20.0 * 0.25, 20.0,
+            oneSeparation, xPosi, applyRatio(100.0 + 130.0 * j - 20.0 * 0.25), applyRatio(20.0),
             Colors.blueAccent);
 
         if (oneSeparation == '|' || Utility.specialChar(oneSeparation)) {
-          xPosi += 12.0;
+          xPosi += applyRatio(12.0);
         }
         else {
-          xPosi += 25.0;
+          xPosi += applyRatio(25.0);
         }
       }
 
@@ -122,7 +121,7 @@ class ConversationPainter extends BasePainter {
         previousChar = oneSeparation;
       }
 
-      displayTextWithValue(translation, 50.0, 125.0 + 150.0 * j, 17.0, Colors.blueAccent);
+      displayTextWithValue(translation, applyRatio(50.0), applyRatio(125.0 + 130.0 * j), applyRatio(17.0), Colors.blueAccent);
     }
   }
 

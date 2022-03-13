@@ -811,7 +811,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (0.80 < sizeRatio && sizeRatio < 0.83) {
       // dp = 320 or below. special case iPod touch 7 which ratio is 0.816. have to make the image size smaller
       // in order to show the whole huge keyboard in iPod touch 7.
-      sizeRatio = 0.46;
+      sizeRatio = 0.54;
     }
 
     return Column(
@@ -820,8 +820,8 @@ class _InputZiPageState extends State<InputZiPage> {
           SizedBox( //Flexible
             child: Image.asset(
               "assets/typing/" + theZiForIntroductionList[0].hintImage,
-              width: 350.0 * sizeRatio,
-              height: 150.0 * sizeRatio,
+              width: 300.0 * sizeRatio,  // 350
+              height: 100.0 * sizeRatio, // 150
               fit: BoxFit.fitWidth,
             )
           ),

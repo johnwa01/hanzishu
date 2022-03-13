@@ -41,6 +41,13 @@ class _ConversationPageState extends State<ConversationPage> {
     //lesson.populateNewItemList();
   }
 
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +61,9 @@ class _ConversationPageState extends State<ConversationPage> {
         title: Text("Conversation"),
       ),
       body: Container(
-        //height: 200.0,
-        //width: 200.0,
-        child: WillPopScope(   // just for removing overlay on detecting back arrow
+          //height: 200.0,
+          //width: 200.0,
+          child: WillPopScope(   // just for removing overlay on detecting back arrow
             child: CustomPaint(
               foregroundPainter: ConversationPainter(
                   lineColor: Colors.amber,
@@ -70,7 +77,7 @@ class _ConversationPageState extends State<ConversationPage> {
               ),
             ),
             onWillPop: _onWillPop
-        ),
+          ),
       ),
     );
   }
@@ -103,7 +110,7 @@ class _ConversationPageState extends State<ConversationPage> {
                   top: posiY,
                   left: adjustedXValue,
                   child: FlatButton(
-                    child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+                    child: Text(meaning, style: TextStyle(fontSize: applyRatio(20.0)),),
                     color: Colors.blueAccent,
                     textColor: Colors.white,
                     onPressed: () {},
@@ -176,7 +183,7 @@ class _ConversationPageState extends State<ConversationPage> {
         }
       },
       child:
-        Text("", style: TextStyle(fontSize: 32.0),),
+        Text("", style: TextStyle(fontSize: applyRatio(32.0))),
       // Note: cannot put char here directly since the gap would be too big.
     );
 
@@ -201,7 +208,7 @@ class _ConversationPageState extends State<ConversationPage> {
       var conv = theSentenceList[sentId].conv;
       var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      var position = PositionAndSize(25.0, 33.0 + 150.0 * j, 20.0, 20.0, 0.0, 0.0);
+      var position = PositionAndSize(applyRatio(25.0), applyRatio(33.0 + 130.0 * j), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0);
       buttons.add(getPositionedButton(j, position, ButtonType.sound));
 
       for (int i = 0; i < conv.length; i++) {
@@ -209,7 +216,7 @@ class _ConversationPageState extends State<ConversationPage> {
         var id = ZiManager.findIdFromChar(oneChar);
         if (id != -1) {
           var position = PositionAndSize(
-              50.0 + 30.0 * i, 30.0 + 150.0 * j, 28.0, 28.0, 0.0, 0.0);
+              applyRatio(50.0 + 30.0 * i), applyRatio(30.0 + 130.0 * j), applyRatio(28.0), applyRatio(28.0), 0.0, 0.0);
           buttons.add(getPositionedButton(id, position, ButtonType.char));
         }
       }
@@ -217,14 +224,14 @@ class _ConversationPageState extends State<ConversationPage> {
       ButtonType buttonType;
       var previousChar = '|';
       var phrase;
-      var xPosi = 50.0;
+      var xPosi = applyRatio(50.0);
       for (int i = 0; i < convWithSeparation.length; i++) {
         var oneSeparation = convWithSeparation[i];
 
         int separationCount = 1;
 
         if (oneSeparation == '|' || Utility.specialChar(oneSeparation)) {
-          xPosi += 12.0;
+          xPosi += applyRatio(12.0);
         }
         else {
           var id = -1;
@@ -233,12 +240,12 @@ class _ConversationPageState extends State<ConversationPage> {
             // complete the whole separation block after "|"
             if ((separationCount =
                 Utility.findSeparationCount(convWithSeparation, i)) == 1) {
-              width = 25.0; //20.0;
+              width = applyRatio(25.0); //20.0;
               id = ZiManager.findIdFromChar(oneSeparation);
               buttonType = ButtonType.char;
             }
             else {
-              width = 25.0 * separationCount;
+              width = applyRatio(25.0) * separationCount;
               var subStr = convWithSeparation.substring(i, i + separationCount);
               phrase = PhraseManager.getPhraseByName(subStr);
               if (phrase != null) {
@@ -256,7 +263,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
             if ( id != -1) {
               var position = PositionAndSize(
-                  xPosi, 100.0 + 150.0 * j, width, 20.0, 0.0, 0.0);
+                  xPosi, applyRatio(100.0 + 130.0 * j), width, applyRatio(20.0), 0.0, 0.0);
               buttons.add(getPositionedButton(id, position, buttonType));
 
               xPosi += width;

@@ -71,7 +71,7 @@ class ListOfZiPainter extends BasePainter {
     if (lesson.charsIds.length > 0 || lesson.convCharsIds.length > 0) {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
-        displayTextWithValue("Basic Characters (components)", lessonLeftEdge, yPositionWrapper.value,
+        displayTextWithValue("Basic Characters (Components)", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);
       }
@@ -114,7 +114,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Basic Non-characters (components)", lessonLeftEdge, yPositionWrapper.value,
+            "Basic Non-Characters (Components)", lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);  //blue
       }

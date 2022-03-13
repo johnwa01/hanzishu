@@ -53,14 +53,14 @@ class DictionaryPainter extends BreakoutPainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("Basic Character Table[首字表]", applyRatio(10.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20.0
+      displayTextWithValue("Basic Character Table[首字表]", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20.0
 
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
 
       // below should match dictionaryPage
-      var helpPosiAndSize = PositionAndSize(width - applyRatio(60.0), applyRatio(25.0), applyRatio(30.0), applyRatio(30.0), 0.0, 0.0); // 5.0
+      var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(25.0), applyRatio(30.0), applyRatio(30.0), 0.0, 0.0); // 5.0
       displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width / 2.0, Colors.lightBlue);
 
       DisplayFirstZis();
@@ -305,8 +305,8 @@ class DictionaryPainter extends BreakoutPainter {
 
     var defaultFontSize = applyRatio(25.0);
     var smallFontSize = applyRatio(20.0);
-    var fillerSize = applyRatio(5.0);
-    var startYSize = applyRatio(60.0);
+    var fillerSize = applyRatio(4.0); // 5
+    var startYSize = applyRatio(45.0); // 60
 
 
     for (var j = 0; j < 16; j++) {

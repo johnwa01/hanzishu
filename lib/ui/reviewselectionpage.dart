@@ -243,7 +243,7 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
       (
       appBar: AppBar
         (
-        title: Text("Review Page"),
+        title: Text("Review selection"),
       ),
       body: Center
         (

@@ -521,10 +521,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     thePositionManager.resetPositionIndex();
 
     var defaultFontSize = screenWidth / 16;     // was hardcoded 25.0 in painter, use it as the standard
-    var hitTestPositionGap = defaultFontSize * (30.0 / 25.0);
+    var hitTestPositionGap = defaultFontSize * (29.0 / 25.0);  // 25 + 4 = 29
     var hitTestSize = defaultFontSize * (27.0 / 25.0);
     var startXSize = defaultFontSize * (20.0 / 25.0);
-    var startYSize = defaultFontSize * (60.0 / 25.0); // ratio of 60.0/25.0
+    var startYSize = defaultFontSize * (45.0 / 25.0); // ratio of 60.0/25.0
     var helpPara1 = defaultFontSize * (70.0 / 25.0);
     var helpPara2 = defaultFontSize * (5.0 / 25.0);
     var helpPara3 = defaultFontSize * (40.0 / 25.0);
