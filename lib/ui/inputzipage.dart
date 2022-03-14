@@ -132,8 +132,10 @@ class _InputZiPageState extends State<InputZiPage> {
             previousEndComposing, _controller.value.text.length);
       }
       else {
-        return _controller.value.text.substring(
-            _controller.value.selection.end, _controller.value.text.length);
+        if (_controller.value.selection.end > -1) {
+          return _controller.value.text.substring(
+              _controller.value.selection.end, _controller.value.text.length);
+        }
       }
     }
 
