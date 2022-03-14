@@ -917,7 +917,7 @@ class BasePainter extends CustomPainter{
           var charIdString = hint.substring(indexStart + 1, indexPair);
           var id = Utility.StringToInt(charIdString);
 
-          if (id != null) {
+          if (id != -1) {
             checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0), defaultFontSize);
             displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
             xPosi.value += applyRatio(7.0);

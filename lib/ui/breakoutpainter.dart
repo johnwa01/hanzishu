@@ -57,10 +57,10 @@ class BreakoutPainter extends BasePainter {
   displayCharacterDecomposing(int lessonId) {
     var lesson = theLessonList[lessonId];
 
-    var yPositionWrapper = YPositionWrapper(applyRatio(100.0));  //170.0
+    var yPositionWrapper = YPositionWrapper(applyRatio(20.0));  //170.0
 
     for (var i = 0; i <= (lesson.convCharsIds.length - 1); i++) {
-      if (!isBreakoutPositionsOnly) {
+      if (!isBreakoutPositionsOnly && i != 0) {
         drawLine(applyRatio(10.0), yPositionWrapper.yPosi - applyRatio(20.0),
             applyRatio(600.0), yPositionWrapper.yPosi - applyRatio(20.0),
             Colors.amber, applyRatio(1));

@@ -24,6 +24,10 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     return Utility.getSizeRatio(screenWidth);
   }
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -92,12 +96,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       overlayEntry = OverlayEntry(
           builder: (context) =>
               Positioned(
-                top: 20.0, //posiY, //100
-                left: 100.0, //posiX,
+                top: 25 * getSizeRatio(), //posiY, //100
+                left: 100.0 * getSizeRatio(), //posiX,
                 child: Image.asset(
                   "assets/typing/" + fullExpandedComp.imageName,
-                  width: 100.0,
-                  height: 130.0,
+                  width: 100.0 * getSizeRatio(),
+                  height: 130.0 * getSizeRatio(),
                   //fit: BoxFit.fitWidth,
                 ),
               ));
@@ -133,8 +137,8 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       },
       child: Image.asset(
         "assets/components/L" + image,
-        width: 30.0,
-        height: 55.0,
+        width: 30.0 * getSizeRatioWithLimit(),
+        height: 55.0 * getSizeRatioWithLimit(),
         fit: BoxFit.fitWidth,
       ),
     );
@@ -144,7 +148,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
     var fontSize2 = TheConst.fontSizes[2] * getSizeRatio();
 
-    var fontSize = 18.0;
+    var fontSize = 18.0 * getSizeRatio();
     return Column(
         //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -351,8 +355,8 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
             alignment: Alignment.center,
             child: Image.asset(
                 "assets/typing/Strokes.png",
-                width: 390.0,
-                height: 150.0),
+                width: 390.0 * getSizeRatio(),
+                height: 150.0 * getSizeRatio()),
           ),
           SizedBox(height: fontSize2),
           Text(

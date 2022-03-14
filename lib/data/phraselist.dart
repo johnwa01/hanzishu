@@ -156,6 +156,8 @@ Phrase(142, "西单", "", "Xidan", "west (西) single (单) "),
   Phrase(150, "还有", "", "still have", "still（还) have (有) "),
   Phrase(151, "需要", "", "need", "need（需) & wanted (要) "),
   Phrase(152, "她们", "", "they", "plural (们) of she（她) "),
+  Phrase(153, "几月", "", "which month", "how many (几) month（月) "),
+  Phrase(154, "八月", "", "August", "eight (八) month（月) "),
 ];
 
 List<Phrase> theSpecialPhraseList =

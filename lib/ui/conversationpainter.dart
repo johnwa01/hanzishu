@@ -53,7 +53,7 @@ class ConversationPainter extends BasePainter {
       }
 
       // text trans
-      displayTextWithValue(theSentenceList[sentId].trans, applyRatioWithLimit(50.0), applyRatioWithLimit(65.0 + 130.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent);
+      displayTextWithValue(theSentenceList[sentId].trans, applyRatioWithLimit(50.0), applyRatioWithLimit(65.0 + 130.0 * j), applyRatioWithLimit(15.0), Colors.blueAccent);
 
       // conWithSepa text
       var xPosi = applyRatioWithLimit(50.0);
@@ -121,7 +121,7 @@ class ConversationPainter extends BasePainter {
         previousChar = oneSeparation;
       }
 
-      displayTextWithValue(translation, applyRatioWithLimit(50.0), applyRatioWithLimit(125.0 + 130.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent);
+      displayTextWithValue(translation, applyRatioWithLimit(50.0), applyRatioWithLimit(125.0 + 130.0 * j), applyRatioWithLimit(15.0), Colors.blueAccent);
     }
   }
 
