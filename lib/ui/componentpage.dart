@@ -822,6 +822,10 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getOneKeyboardAnswer(AnswerPosition position)
   {
+    if (position == AnswerPosition.none) {
+      return Container(width: 0.0, height: 0.0);
+    }
+
     var answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
     var currentType = theComponentManager.getCurrentType();
 
@@ -1091,7 +1095,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = "Wow!";
-        content = "You know your Expanded Components! Let’s practice with some guided typing.";
+        content = "You know your Expanded Components! Let’s practice with some typing exercises.";
      }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}

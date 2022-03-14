@@ -9,7 +9,7 @@ Phrase(2, "一点", "", "a little bit", "one (一) dot (点)"),
 Phrase(3, "多大", "", "much big", "much (多) big (大)"),
 Phrase(4, "明白", "", "understand", "bright (明) and white (白)"),
 Phrase(5, "哪国", "", "which country", "which (哪) country (国)"),
-Phrase(6, "美国", "", "America", "Beautiful (美) country (国)"),
+Phrase(6, "美国", "", "America", "Beautiful (美) country (国)"), // not used
 Phrase(7, "中国", "", "China", "Central (中) country (国)"),
 Phrase(8, "今天", "", "today", "present (今) day (天)"),
 Phrase(9, "天气", "", "weather", "air (气) of sky (天) "),

@@ -35,7 +35,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     theCurrentLessonId = widget.lessonId;
 
-    String lessonName = "Lesson " + theCurrentLessonId.toString() + ": " + theLessonList[theCurrentLessonId].titleTranslation;
+    String lessonName = "Lesson " + theCurrentLessonId.toString() + ": " + theLessonList[theCurrentLessonId].titleTranslation + " " + theLessonList[theCurrentLessonId].title;
 
     return Scaffold
       (
