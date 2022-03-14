@@ -12,8 +12,8 @@ class MePage extends StatefulWidget {
 class _MePageState extends State<MePage> {
   double screenWidth;
 
-  double getSizeRatio() {
-    return Utility.getSizeRatio(screenWidth);
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
   @override
@@ -34,6 +34,8 @@ class _MePageState extends State<MePage> {
   }
 
       Widget getMeListView(BuildContext context) {
+        var imageSize = 35.0 * getSizeRatioWithLimit();
+
         return ListView(
           children: <Widget>[
             //Text(
@@ -42,7 +44,7 @@ class _MePageState extends State<MePage> {
             //  textAlign: TextAlign.center,
             //),
             ListTile(
-              leading: Image.asset('assets/core/characterdrill.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text("Character review", textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
@@ -55,7 +57,7 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/quiz.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/quizresults.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text("Quiz results", textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               //subtitle: Text(
@@ -72,7 +74,7 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/characterlist.png', width: 35.0, height: 35.0), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text("Glossary", textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {

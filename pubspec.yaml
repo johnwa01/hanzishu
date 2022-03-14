@@ -96,10 +96,12 @@ flutter:
      - assets/core/breakout.png
      - assets/core/characterdrill.png
      - assets/core/characterlist.png
+     - assets/core/characterreview.png
      - assets/core/completedicon.png
      - assets/core/conversations.png
      - assets/core/dictionaryicon0.png
      - assets/core/dictionaryicon1.png
+     - assets/core/glossary.png
      - assets/core/itemicon.png
      - assets/core/lessonsicon0.png
      - assets/core/lessonsicon1.png
@@ -111,6 +113,7 @@ flutter:
      - assets/core/typingicon0.png
      - assets/core/typingicon1.png
      - assets/core/quiz.png
+     - assets/core/quizresults.png
      - assets/lessons/L1.png
      - assets/lessons/L2.png
      - assets/lessons/L3.png

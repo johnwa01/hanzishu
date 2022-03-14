@@ -262,7 +262,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
+  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
     var butt = FlatButton(
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
@@ -283,7 +283,11 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       onLongPress: () {
         initOverlay();
 
-        var partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+        var partialZiId = currentZiId;
+        // navigation would always show the real char
+        if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
+          partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+        }
 
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
@@ -391,7 +395,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
             memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
       //}
 
-      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
+      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
 
       thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
@@ -418,7 +422,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
+      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
 
       buttons.add(posiCenter);
     }
@@ -442,7 +446,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviewPage, getSizeRatio());
 
     for (var id in naviMap.keys) {
-      var posi = getPositionedButton(naviMap[id], id, id);
+      var posi = getPositionedButton(naviMap[id], id, id, true);
       buttons.add(posi);
     }
   }

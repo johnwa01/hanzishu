@@ -311,7 +311,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     });
   }
 
-  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId) {
+  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
@@ -339,9 +339,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         initOverlay();
 
         var partialZiId = currentZiId;
-        if (theCurrentCenterZiId != currentZiId) {
+        if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
           partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
         }
+
         var zi = theZiManager.getZi(partialZiId);
         TextToSpeech.speak(zi.char);
 
@@ -382,7 +383,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize = BasePainter.getPositionAndSize(memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
-      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId);
+      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
       thePositionManager.updatePositionIndex(memberZiId);
       buttons.add(posi);
     }
@@ -391,7 +392,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(centerZiId);
       var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
-      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId);
+      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
       buttons.add(posiCenter);
 
       // draw speech icon
@@ -414,7 +415,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviePage, getSizeRatio());
 
     for (var id in naviMap.keys) {
-      var posi = getPositionedButton(naviMap[id], id, id);
+      var posi = getPositionedButton(naviMap[id], id, id, true);
       buttons.add(posi);
     }
   }
