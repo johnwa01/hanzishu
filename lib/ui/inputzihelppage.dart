@@ -96,7 +96,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       overlayEntry = OverlayEntry(
           builder: (context) =>
               Positioned(
-                top: 25 * getSizeRatio(), //posiY, //100
+                top: 30 * getSizeRatio(), // 30 is the minimum value without being partially covered
                 left: 100.0 * getSizeRatio(), //posiX,
                 child: Image.asset(
                   "assets/typing/" + fullExpandedComp.imageName,
