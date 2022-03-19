@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       theme: _buildShrineTheme(),
       title: 'Hanzishu',
       home: MyHomePage(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
