@@ -451,6 +451,10 @@ class ComponentManager {
   }
 
   static Component getComponent(int id) {
+    if (id >= theComponentList.length) {
+      return null;
+    }
+
     return theComponentList[id];
   }
 

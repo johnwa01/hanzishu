@@ -116,13 +116,23 @@ class _LessonsPageState extends State<LessonsPage> {
     );
   }
 
+  Widget getADivider(int lessonNumber) {
+    if (lessonNumber == 1) {
+    return Container(width: 0.0, height: 0.0);
+    }
+    else {
+      return Divider(color: Colors.black);
+    }
+  }
+
   Widget getButtonRowWithLevelBegin(BuildContext context, int lessonNumber, int lessonCount, int level) {
     return Column(
       children: <Widget>[
+        getADivider(lessonNumber),
         Text(
           "Unit " + '$level' + ": " + theLevelList[level].description,
           textAlign: TextAlign.right,
-          style: TextStyle(fontSize: 20.0),
+          style: TextStyle(fontSize: 16.0),
         ),
         Divider(color: Colors.black),
         Container(

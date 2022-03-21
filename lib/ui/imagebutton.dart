@@ -85,7 +85,7 @@ class OpenHelper {
                   children: [
                     Text(
                       lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                      style: TextStyle(fontSize: 16.0, fontFamily: "Raleway"),
+                      style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                     ),
                     getCompletedImage(lessonNumber),
                   ]

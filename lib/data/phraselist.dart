@@ -158,6 +158,7 @@ Phrase(142, "西单", "", "Xidan", "west (西) single (单) "),
   Phrase(152, "她们", "", "they", "plural (们) of she（她) "),
   Phrase(153, "几月", "", "which month", "how many (几) month（月) "),
   Phrase(154, "八月", "", "August", "eight (八) month（月) "),
+  Phrase(155, "下雪", "", "Snow", "Falling (下) snow（雪) "),
 ];
 
 List<Phrase> theSpecialPhraseList =
@@ -259,4 +260,6 @@ Phrase(0, "三个", "", "three unit", ""),
   Phrase(94, "中国人", "", "中国人", ""),
   Phrase(95, "哪国人", "", "person of which country", ""),
   Phrase(96, "多大了", "", "how old", ""),
+  Phrase(97, "喝点", "", "drink some", ""),
+  Phrase(98, "是啊", "", "oh yes", ""),
 ];

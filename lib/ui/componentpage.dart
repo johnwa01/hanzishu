@@ -82,16 +82,16 @@ class _ComponentPageState extends State<ComponentPage> {
 
     var title = '';
     if (questionType == QuestionType.ComponentGroup) {
-      title = 'Memorize component groups';
+      title = 'Memorize groups';
     }
     else if (questionType == QuestionType.ComponentInGroup) {
-      title = 'Memorize components in groups';
+      title = 'Memorize by groups';
     }
     else if (questionType == QuestionType.Component) {
-      title = 'Memorize components';
+      title = 'Memorize the pairings';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Learn the Expanded Components';
+      title = 'Expanded Components';
     }
 
     return Scaffold

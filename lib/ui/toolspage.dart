@@ -46,7 +46,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize the Component groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize groups", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -59,7 +59,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize the Components in groups", textDirection: TextDirection.ltr),
+          title: Text("        Memorize by groups", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -73,7 +73,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("        Memorize Components", textDirection: TextDirection.ltr),
+          title: Text("        Memorize the pairings", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -99,7 +99,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Learn the Expanded Components", textDirection: TextDirection.ltr),
+          title: Text("Expanded Components", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -116,7 +116,8 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Icon(Icons.location_city),
-          title: Text("Typing exercises", textDirection: TextDirection.ltr),
+          title: Text(""
+              "Typing exercises", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
