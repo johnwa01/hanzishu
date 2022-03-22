@@ -210,7 +210,7 @@ class _InputZiPageState extends State<InputZiPage> {
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                  top: 20 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
+                  top: 30 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
                   left: imageLeft, //100, //0.0, //posiX,
                   child: Image.asset(
                     fullPath,
