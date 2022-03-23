@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/ui/treepage.dart';
 import 'package:hanzishu/ui/listofzipage.dart';
@@ -52,7 +53,8 @@ class OpenHelper {
 
   static Widget getCompletedImage(int lessonNumber) {
     var completed = theStorageHandler.hasLessonCompleted(lessonNumber);
-    if (completed) {
+
+    if (completed && !kIsWeb) {
       return Ink.image(
         image: AssetImage("assets/core/completedicon.png"),
         width: 16.0,

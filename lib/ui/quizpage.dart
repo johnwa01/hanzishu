@@ -430,7 +430,7 @@ class _QuizPageState extends State<QuizPage> {
     );
 
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    var correctPercent = (lessonQuizResult.cor * 100 * getSizeRatio()) / lessonQuizResult.answ;
+    var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
     var corStr = correctPercent.toStringAsFixed(1);
 
     String title;

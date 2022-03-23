@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 
@@ -206,10 +207,13 @@ class StorageHandler {
   }
 
   SaveToFile() {
-    var str = theStorageHandler.putStorageToJson();
+    // do nothing if web for now
+    if (!kIsWeb) {
+      var str = theStorageHandler.putStorageToJson();
 
-    if (theFileIOFile != null) {
-      theFileIOFile.writeString(str);
+      if (theFileIOFile != null) {
+        theFileIOFile.writeString(str);
+      }
     }
   }
 }

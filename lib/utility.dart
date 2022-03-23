@@ -246,6 +246,7 @@ class Utility {
     // that is, roughtly screen size 392 is the standard.
   }
 
+  /*
   static double getSizeRatioWithLimit(double screenWidth) {
     var ratio = screenWidth / 392.0;
     if (ratio > 1.7) {   // control the value for really wide case in consideration of height
@@ -256,6 +257,16 @@ class Utility {
     //var defaultFontSize = screenWidth / 16.0;
     //return defaultFontSize / 25.0; // ratio over original hard coded value I took as the standard in Android.
     // that is, roughtly screen size 392 is the standard.
+  }
+  */
+
+  static double getSizeRatioWithLimit(double screenWidth) {
+    var ratio = screenWidth / 392.0;
+    if (ratio > 1.5) {   // control the value for really wide case in consideration of height
+      ratio = 1.5;
+    }
+
+    return ratio;
   }
 
   /*

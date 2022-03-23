@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
@@ -458,14 +459,14 @@ class _InputZiPageState extends State<InputZiPage> {
       var selectionPosi = getCursorPosition(1, false, true);
       previousEndSelection = selectionPosi;
       previousEndComposing--; // subtract the uppercase letter for overlay
-      if (Platform.isAndroid) {
+      if (!kIsWeb && Platform.isIOS) {  // iOS simulator would crash on backspace with composing. so have to skip the underline feature until it's fixed.
+      _controller.value = _controller.value.copyWith(text: previousText,
+          selection: TextSelection.collapsed(offset: selectionPosi));
+      }
+      else { // Android and web
         _controller.value = _controller.value.copyWith(text: previousText,
             composing: TextRange(
                 start: previousStartComposing, end: previousEndComposing),
-            selection: TextSelection.collapsed(offset: selectionPosi));
-      }
-      else {  // iOS simulator would crash on backspace with composing. so have to skip the underline feature until it's fixed.
-        _controller.value = _controller.value.copyWith(text: previousText,
             selection: TextSelection.collapsed(offset: selectionPosi));
       }
     }
@@ -504,7 +505,7 @@ class _InputZiPageState extends State<InputZiPage> {
       // This logic also covers the initial value.composing case which should be empty (-1, -1).
       // But iPhone doesn't seem to update value.composing after initial setting.
       // iOS simulator would crash on backspace with composing, so not supporting underline feature.
-      if (Platform.isAndroid) {
+      if (kIsWeb || (!kIsWeb && Platform.isAndroid)) {
         if (_controller.value.composing.start != previousStartComposing ||
           _controller.value.composing.end != previousEndComposing) {
             _controller.value = _controller.value.copyWith(

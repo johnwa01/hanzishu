@@ -23,8 +23,8 @@ class _GlossaryPageState extends State<GlossaryPage> {
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
-  double getSizeRatio() {
-    return Utility.getSizeRatio(screenWidth);
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
   @override
@@ -46,9 +46,9 @@ class _GlossaryPageState extends State<GlossaryPage> {
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
 
-    fontSize1 = 13.0 * getSizeRatio();
-    fontSize2 = 12.0 * getSizeRatio();
-    fontSize3 = 11.0 * getSizeRatio(); // base size 11
+    fontSize1 = 14.0 * getSizeRatioWithLimit();
+    fontSize2 = 13.0 * getSizeRatioWithLimit();
+    fontSize3 = 12.0 * getSizeRatioWithLimit(); // base size 12
 
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);

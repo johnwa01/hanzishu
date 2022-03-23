@@ -1,4 +1,4 @@
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
@@ -42,22 +42,25 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   handleStorage() {
-    if (!theStorageHandler.getHasTriedToLoadStorage()) {
-      var fileIO = CounterStorage();
-      theFileIOFile = fileIO;
-      theStorageHandler.setHasTriedToLoadStorage();
-      fileIO.readString().then((String value) {
-        // just once, doesn't matter whether it loads any data or not
-        if (value != null) {
-          var storage = theStorageHandler.getStorageFromJson(value);
-          if (storage != null) {
-            theStorageHandler.setStorage(storage);
-            setState(() {
-              this.hasLoadedStorage = true;
-            });
+    // doing nothing for web for now
+    if (!kIsWeb) {
+      if (!theStorageHandler.getHasTriedToLoadStorage()) {
+        var fileIO = CounterStorage();
+        theFileIOFile = fileIO;
+        theStorageHandler.setHasTriedToLoadStorage();
+        fileIO.readString().then((String value) {
+          // just once, doesn't matter whether it loads any data or not
+          if (value != null) {
+            var storage = theStorageHandler.getStorageFromJson(value);
+            if (storage != null) {
+              theStorageHandler.setStorage(storage);
+              setState(() {
+                this.hasLoadedStorage = true;
+              });
+            }
           }
-        }
-      });
+        });
+      }
     }
   }
 
