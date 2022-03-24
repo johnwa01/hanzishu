@@ -135,23 +135,23 @@ class _MyHomePageState extends State<MyHomePage> {
         items: [
           BottomNavigationBarItem(
             label: 'Lessons',
-            icon: Image.asset('assets/core/lessonsicon0.png'),
-            activeIcon: Image.asset('assets/core/lessonsicon1.png'),
+            icon: Image.asset('assets/core/lessonsicon1.png'),
+            activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
             label: 'Dictionary',
-            icon: Image.asset('assets/core/dictionaryicon0.png'),
-            activeIcon: Image.asset('assets/core/dictionaryicon1.png'),
+            icon: Image.asset('assets/core/dictionaryicon1.png'),
+            activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
           ),
           BottomNavigationBarItem(
             label: 'Typing',
-            icon: Image.asset('assets/core/typingicon0.png'),
-            activeIcon: Image.asset('assets/core/typingicon1.png'),
+            icon: Image.asset('assets/core/typingicon1.png'),
+            activeIcon: Image.asset('assets/core/typingicon0.png'),
           ),
           BottomNavigationBarItem(
             label: 'Me',
-            icon: Image.asset('assets/core/meicon0.png'),
-            activeIcon: Image.asset('assets/core/meicon1.png'),
+            icon: Image.asset('assets/core/meicon1.png'),
+            activeIcon: Image.asset('assets/core/meicon0.png'),
           ),
         ],
       ),
