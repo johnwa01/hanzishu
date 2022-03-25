@@ -49,6 +49,8 @@ class _InputZiPageState extends State<InputZiPage> {
   bool isFromDeletion = false;
   String previousOverlayLetter = "";
 
+  bool hasVerifiedToBeALowerCase = false;
+
   double getSizeRatio() {
     return Utility.getSizeRatio(screenWidth);
   }
@@ -314,6 +316,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList, bool isFromOverlay) {
+    hasVerifiedToBeALowerCase = false;
+
     var newText = getInputText(selectionIndex);
 
     previousText = newText;
@@ -348,6 +352,23 @@ class _InputZiPageState extends State<InputZiPage> {
     handleKeyInputHelper(0);
   }
 
+  workaroundWebCases() {
+    if (hasVerifiedToBeALowerCase || (_controller.text.length > 0 && _controller.selection == -1)) {
+       // For web case, only the combination of composing empty and setting selection will set cursor in the right position in web.
+       // at the same time, it won't reserve the composing value which is fine for now. (like iOS to avoid crash).
+       // TODO: will validate in future flutter version.
+      int posi = _controller.text.length;
+      if (previousEndComposing > 0) {
+        posi = previousEndComposing;
+      }
+      _controller.value = _controller.value.copyWith(
+          composing: TextRange.empty,
+          selection: TextSelection.collapsed(offset: posi));
+      //_controller.value = _controller.value.copyWith(selection: TextSelection.collapsed(offset: _controller.text.length));
+      //_controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+    }
+  }
+
   // my method counds on previousStartComposing/previousEndComposing & set value.composing as needed to
   // tell Flutter to under the characters in composing.
   // Feel have a root finally. Otherwise it's always floating somewhere.
@@ -366,6 +387,11 @@ class _InputZiPageState extends State<InputZiPage> {
         _controller.value = _controller.value.copyWith(text: previousText,
             selection: TextSelection.collapsed(offset: previousEndSelection));
       }
+
+      if (kIsWeb) {
+        workaroundWebCases();
+      }
+
       return;
     }
     else if (_controller.text == previousText) {
@@ -377,6 +403,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       // set it as the comparision standard
       setInitialControllerTextValue();
+      hasVerifiedToBeALowerCase  = false;
     }
 
     if (currentIndex < 0) {
@@ -463,7 +490,13 @@ class _InputZiPageState extends State<InputZiPage> {
       _controller.value = _controller.value.copyWith(text: previousText,
           selection: TextSelection.collapsed(offset: selectionPosi));
       }
-      else { // Android and web
+      else if (kIsWeb) {
+        // make cursor correct, but no underline though.
+        _controller.value = _controller.value.copyWith(text: previousText,
+            composing: TextRange.empty,
+            selection: TextSelection.collapsed(offset: selectionPosi));
+      }
+      else { // Android
         _controller.value = _controller.value.copyWith(text: previousText,
             composing: TextRange(
                 start: previousStartComposing, end: previousEndComposing),
@@ -482,6 +515,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
+      hasVerifiedToBeALowerCase = true;
       initOverlay();
       setPreviousComposing();
 
