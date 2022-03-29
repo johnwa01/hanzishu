@@ -3,6 +3,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';
+import 'package:hanzishu/ui/typingselectionpage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -128,9 +129,20 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
-        //ListTile(
-        //  title: Text("At your own:", textDirection: TextDirection.ltr),
-        //),
+        ListTile(
+          //leading: Icon(Icons.location_city),
+          title: Text(""
+              "[Optional] Customized exercises", textDirection: TextDirection.ltr),
+          trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TpyingSelectionPage(),
+              ),
+            );
+          },
+        ),
         ListTile(
           //leading: Icon(Icons.location_city),
           title: Text("Free typing and help", textDirection: TextDirection.ltr),

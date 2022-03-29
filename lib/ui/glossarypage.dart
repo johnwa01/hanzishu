@@ -299,7 +299,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character list",
+              "Flashcards",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

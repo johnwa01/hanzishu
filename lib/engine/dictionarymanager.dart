@@ -102,6 +102,11 @@ class DictionaryManager {
     }
   }
 
+  static bool isNonCharacter(int searchingZiId) {
+    // in theSearchingZiList
+    return searchingZiId == 0 || searchingZiId == 69 || searchingZiId == 77 || searchingZiId == 160;
+  }
+
   // iterate function to get all the basic components
   static getAllComponents(int searchingZiId, List<String> components) {
     var zi = theSearchingZiList[searchingZiId];

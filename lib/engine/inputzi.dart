@@ -3,8 +3,9 @@ enum TypingType {
   GiveItATry,
   LeadComponents,
   ExpandedComponents,
+  CustomizedTyping,
   FromLessons,
-  FreeTyping
+  FreeTyping,
 }
 
 class InputZi {

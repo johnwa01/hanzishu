@@ -104,7 +104,7 @@ class OpenHelper {
           lessonOrSectionName = "Character drills";
           break;
         case LessonSection.Characters:
-          lessonOrSectionName = "Character list";
+          lessonOrSectionName = "Flashcards";
           break;
         case LessonSection.Decomposing:
           lessonOrSectionName = "Character breakdown";

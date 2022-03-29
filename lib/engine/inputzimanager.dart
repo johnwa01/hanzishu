@@ -1,7 +1,9 @@
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/data/inputzilist.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:math';
 
 import 'package:hanzishu/variables.dart';
@@ -236,6 +238,20 @@ class InputZiManager {
     return instruction;
   }
 
+  // index 0->100, lessonId == exerciseId -> 1 to 38 (1 based).
+  ZiWithComponentsAndStrokes getCustomizedTypingZi(int index, int lessonId) {
+    // every other 38 items.
+    int searchingZiId = getSearchingZiId(index, lessonId); // skip the index 0 in theSearchingZiList
+    if (searchingZiId < theSearchingZiList.length) {
+      var oneSearchingItem = theSearchingZiList[searchingZiId];
+      var components = List<String>();
+      DictionaryManager.getAllComponents(searchingZiId, components);
+      return ZiWithComponentsAndStrokes(oneSearchingItem.char, components, "", "");
+    }
+
+    return null;
+  }
+
   ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
     if (typingType == TypingType.GiveItATry) {
       return theZiForIntroductionList[index];
@@ -245,6 +261,9 @@ class InputZiManager {
     }
     else if (typingType == TypingType.ExpandedComponents) {
       return theZiForExpandedCompExerciseList[index];
+    }
+    else if (typingType == TypingType.CustomizedTyping) {
+      return getCustomizedTypingZi(index, lessonId);
     }
     else if (typingType == TypingType.FromLessons) {
       var zi = theLessonManager.getChar(lessonId, index);
@@ -276,6 +295,10 @@ class InputZiManager {
   }
 */
 
+  static int getSearchingZiId(int index, int lessonId) {
+    return index * 38 + lessonId;
+  }
+
   int getNextIndex(TypingType typingType, int currentIndex, int lessonId) {
     currentIndex++;
 
@@ -291,6 +314,16 @@ class InputZiManager {
     }
     else if (typingType == TypingType.ExpandedComponents) {
       if (currentIndex >= theZiForExpandedCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.CustomizedTyping) {
+      // overall index = 0, 69, 77, 160
+      var searchingZiId = getSearchingZiId(currentIndex, lessonId);
+      if (DictionaryManager.isNonCharacter(searchingZiId)) {
+        currentIndex++; // skip to next one
+      }
+      else if (searchingZiId >= theSearchingZiList.length) {
         currentIndex = -1;
       }
     }
@@ -325,6 +358,11 @@ class InputZiManager {
       zi = theZiForExpandedCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
+    else if (typingType == TypingType.CustomizedTyping) {
+      var searchingZiId = getSearchingZiId(currentIndex, lessonId);
+      zi = theSearchingZiList[searchingZiId];
+      result = typingResult.contains(zi.char);
+    }
     else if (typingType == TypingType.FromLessons) {
       zi = theLessonManager.getChar(lessonId, currentIndex);
       result = typingResult.contains(zi.char);
@@ -342,6 +380,13 @@ class InputZiManager {
     }
     else if (typingType == TypingType.ExpandedComponents) {
       return theZiForExpandedCompExerciseList.length;
+    }
+    else if (typingType == TypingType.CustomizedTyping) {
+      int total = ((theSearchingZiList.length - 1) / 38).truncate();    // 37
+      int remain = (theSearchingZiList.length -1) % 38; // first 30
+      if (lessonId <= remain) {
+        total += 1;
+      }
     }
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);
