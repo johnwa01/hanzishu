@@ -1,44 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/ui/reviewpage.dart';
-import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
-import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/variables.dart';
 
-class ReviewLevel {
+
+class ExerciseNumber {
   int id;
   String name;
   static int totalExercises = 38; // roughly 98 chars a exercises.
 
-  ReviewLevel(this.id, this.name);
+  ExerciseNumber(this.id, this.name);
 
-  static List<ReviewLevel> startingLevels = List<ReviewLevel>(totalExercises);
+  static List<ExerciseNumber> exerciseNumbers = List<ExerciseNumber>(totalExercises);
 
-  static populateInitialLevels() {
-    if (startingLevels[0] == null) {
+  static populateInitialNumbers() {
+    if (exerciseNumbers[0] == null) {
       for (var index = 0; index <= totalExercises - 1; index++) {
-        var level = ReviewLevel(index + 1, (index + 1).toString());
-        startingLevels[index] = level;
+        var level = ExerciseNumber(index + 1, (index + 1).toString());
+        exerciseNumbers[index] = level;
       }
     }
   }
 
-  // note: selected ReveiwLevel instance has to be the same one as in the list.
+  // note: selected ReveiwNumber instance has to be the same one as in the list.
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
-  static List<ReviewLevel> getReviewLevelsStarting(int levelSelectedEndingId) {
-    if (levelSelectedEndingId == 0) {
-      populateInitialLevels();
-      return startingLevels;
-    }
-    else {
-      var newStartingLevels = List<ReviewLevel>(levelSelectedEndingId+1);
-      for (var index = 0; index <= levelSelectedEndingId; index++) {
-        newStartingLevels[index] = startingLevels[index];
-      }
-
-      return newStartingLevels;
-    }
+  static List<ExerciseNumber> getExerciseNumbers() {
+      populateInitialNumbers();
+      return exerciseNumbers;
   }
 }
 
@@ -48,25 +36,25 @@ class TpyingSelectionPage extends StatefulWidget {
 }
 
 class _TypingSelectionPageState extends State<TpyingSelectionPage> {
-  List<ReviewLevel> _reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(0);
-  List<DropdownMenuItem<ReviewLevel>> _dropdownMenuItemsLevelStarting;
-  ReviewLevel _selectedReviewLevelStarting;
+  List<ExerciseNumber> _exerciseNumbers = ExerciseNumber.getExerciseNumbers();
+  List<DropdownMenuItem<ExerciseNumber>> _dropdownMenuItemsNumber;
+  ExerciseNumber _selectedExerciseNumber;
 
   @override
   void initState() {
-    _dropdownMenuItemsLevelStarting = buildDropdownMenuItemsLevel(_reviewLevelsStarting);
-    _selectedReviewLevelStarting = _dropdownMenuItemsLevelStarting[0].value;
+    _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(_exerciseNumbers);
+    _selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
 
     super.initState();
   }
 
-  List<DropdownMenuItem<ReviewLevel>> buildDropdownMenuItemsLevel(List reviewLevels) {
-    List<DropdownMenuItem<ReviewLevel>> items = List();
-    for (ReviewLevel reviewLevel in reviewLevels) {
+  List<DropdownMenuItem<ExerciseNumber>> buildDropdownMenuItemsNumber(List exerciseNumbers) {
+    List<DropdownMenuItem<ExerciseNumber>> items = List();
+    for (ExerciseNumber exerciseNumber in exerciseNumbers) {
       items.add(
         DropdownMenuItem(
-          value: reviewLevel,
-          child: Text(reviewLevel.name),
+          value: exerciseNumber,
+          child: Text(exerciseNumber.name),
         ),
       );
     }
@@ -75,28 +63,38 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
 
   @override
   Widget build(BuildContext context) {
+    //_selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text("Review selection"),
+        title: Text("Exercise selection"),
       ),
       body: Center
         (
-        child: getReviewSelection(context),
+        child: getExerciseSelection(context),
       ),
     );
   }
 
-  onChangeDropdownItemLevelStarting(ReviewLevel selectedReviewLevel) {
+  onChangeDropdownItemNumber(ExerciseNumber selectedExerciseNumber) {
     setState(() {
-      _selectedReviewLevelStarting = selectedReviewLevel;
+      _selectedExerciseNumber = selectedExerciseNumber;
     });
   }
 
-  Widget getReviewSelection(BuildContext context) {
+  Widget getExerciseSelection(BuildContext context) {
     return Column(
         children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(30),
+          ),
+          Text(
+              "Practice typing 3,800 Characters in 38 exercises",
+              style: TextStyle(fontSize: 15),
+              textAlign: TextAlign.start
+          ),
           Container(
             padding: EdgeInsets.all(30),
           ),
@@ -105,39 +103,39 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(width: 10),
-                getStartingLevel(context),
+                getNumber(context),
                 SizedBox(width: 10),
               ],
             ),
           ),
           SizedBox(height: 40),
           Container(
-            child: getStartReview(context),
+            child: getStartExercise(context),
             padding: EdgeInsets.all(20),
           ),
         ]
     );
   }
 
-  Widget getStartingLevel(BuildContext context) {
+  Widget getNumber(BuildContext context) {
     return DropdownButton(
-      value: _selectedReviewLevelStarting,
-      items: _dropdownMenuItemsLevelStarting,
-      onChanged: onChangeDropdownItemLevelStarting,
+      value: _selectedExerciseNumber,
+      items: _dropdownMenuItemsNumber,
+      onChanged: onChangeDropdownItemNumber,
     );
   }
 
-  Widget getStartReview(BuildContext context) {
+  Widget getStartExercise(BuildContext context) {
     return Container(
       child: FlatButton(
-        child: Text("Start", style: TextStyle(fontSize: 30.0),),
+        child: Text("Start", style: TextStyle(fontSize: 28.0),),
         color: Colors.blueAccent,
         textColor: Colors.white,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.CustomizedTyping, lessonId: 1), // TODO: hardcoded
+              builder: (context) => InputZiPage(typingType: TypingType.CustomizedTyping, lessonId: _selectedExerciseNumber.id), // TODO: hardcoded
             ),
           );
         },

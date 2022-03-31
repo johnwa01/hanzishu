@@ -46,7 +46,7 @@ var theDicOverlayEntry;
 bool theHavePopulatedLessonsInfo = false;
 //double theDrawingSizeRatio;
 
-
+//int theTypingExerciseNumber = 1;
 
 class TheConst {
   static var starCharId = 756;

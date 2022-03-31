@@ -397,8 +397,8 @@ class _QuizPageState extends State<QuizPage> {
 
       return Container(
           child: FlatButton(
-            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio()),),
-            color: Colors.blueAccent,
+            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(),)),
+            color: Colors.cyan,    //blueAccent,
             textColor: Colors.white,
             onPressed: () {
               setState(() {

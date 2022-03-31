@@ -150,7 +150,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "The Hanzishu One Tap Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 4,000 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
+              "The Hanzishu One Tap Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),

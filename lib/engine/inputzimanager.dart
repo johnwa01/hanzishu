@@ -387,6 +387,7 @@ class InputZiManager {
       if (lessonId <= remain) {
         total += 1;
       }
+      return total;
     }
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);

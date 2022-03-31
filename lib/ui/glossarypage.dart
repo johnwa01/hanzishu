@@ -242,7 +242,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters. Supports nearly 4,000 Characters.",
+              "A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters. Supports nearly 3,800 Characters.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -359,7 +359,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "View all the characters based on the Hanzishu One Tap Dictionary method which groups Characters by their Basic Characters. Contains nearly 4,000 Characters.",
+              "View all the characters based on the Hanzishu One Tap Dictionary method which groups Characters by their Basic Characters. Contains nearly 3,800 Characters.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),

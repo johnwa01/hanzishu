@@ -119,6 +119,7 @@ class _LessonsPageState extends State<LessonsPage> {
     );
   }
 
+  // not use for now
   Widget getADivider(int lessonNumber) {
     if (lessonNumber == 1) {
     return Container(width: 0.0, height: 0.0);
@@ -131,7 +132,7 @@ class _LessonsPageState extends State<LessonsPage> {
   Widget getButtonRowWithLevelBegin(BuildContext context, int lessonNumber, int lessonCount, int level) {
     return Column(
       children: <Widget>[
-        getADivider(lessonNumber),
+        //getADivider(lessonNumber),
         Text(
           "Unit " + '$level' + ": " + theLevelList[level].description,
           textAlign: TextAlign.right,

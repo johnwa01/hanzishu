@@ -303,6 +303,14 @@ class _InputZiPageState extends State<InputZiPage> {
         setState(() {
           if ((currentIndex + 1) ==
               theInputZiManager.getTotal(typingType, lessonId)) {
+            /*
+            if (lessonId == 38) {
+              theTypingExerciseNumber = 1;
+            }
+            else {
+              theTypingExerciseNumber += 1;
+            }
+            */
             showCompletedDialog(currentBuildContext);
           }
           currentIndex =
@@ -1032,6 +1040,10 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.ExpandedComponents) {
       title = "Congratulations!";
       content = "Your training is complete. Practice or use what you learned with some free typing.";
+    }
+    else if (typingType == TypingType.CustomizedTyping) {
+      title = "Good job!";
+      content = "You are making great progress in typing Chinese characters.";
     }
     else if (typingType == TypingType.FromLessons) {
       title = "Good job!";
