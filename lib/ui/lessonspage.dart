@@ -75,7 +75,7 @@ class _LessonsPageState extends State<LessonsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu"), // "Lessons Page"
+        title: Text("Hanzishu 汉字树"), // "Lessons Page"
       ),
       body: Center
         (

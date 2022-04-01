@@ -176,7 +176,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu One Tap Dictionary"),  //汉字树一触字典
+        title: Text("First Character Dictionary"),  //汉字树一触字典
       ),
       body: Container(
           child: WillPopScope(

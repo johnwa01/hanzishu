@@ -595,7 +595,7 @@ class _InputZiPageState extends State<InputZiPage> {
           children: <Widget>[
             SizedBox(height: fontSize1),
             Text(
-                "The Hanzishu Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard.",
+                "The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard.",
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
@@ -676,7 +676,7 @@ class _InputZiPageState extends State<InputZiPage> {
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
-    var title = 'Hanzishu Component Input Method';
+    var title = 'Component Input Method 部件输入法';
     if (typingType == TypingType.GiveItATry) {
       title = 'Give it a try';
     }
@@ -685,6 +685,12 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = 'Typing exercises';
+    }
+    else if (typingType == TypingType.FreeTyping) {
+      title = 'Free typing and help';
+    }
+    else if (typingType == TypingType.CustomizedTyping) {
+      title = 'Customized exercises';
     }
 
     if (typingType == TypingType.GiveItATry && currentIndex == 0) {

@@ -101,7 +101,7 @@ class OpenHelper {
     else {
       switch (lessonSection) {
         case LessonSection.FullCharacterTree:
-          lessonOrSectionName = "Character drills";
+          lessonOrSectionName = "Character drills 识字钻";
           break;
         case LessonSection.Characters:
           lessonOrSectionName = "Flashcards";

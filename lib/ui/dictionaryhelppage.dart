@@ -145,18 +145,18 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
         children: <Widget>[
           SizedBox(height: TheConst.fontSizes[2] / 2),
           Text(
-              "About the Hanzishu One Tap Dictionary",
+              "About the First Character Dictionary",
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
-              "The Hanzishu One Tap Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
+              "The First Character Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           SizedBox(height: TheConst.fontSizes[2]),
           Text(
-              "Navigate the Hanzishu One Tap Dictionary",
+              "Navigate the First Character Dictionary",
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),

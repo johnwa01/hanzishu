@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
-import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 
 
 class ExerciseNumber {
@@ -36,6 +36,7 @@ class TpyingSelectionPage extends StatefulWidget {
 }
 
 class _TypingSelectionPageState extends State<TpyingSelectionPage> {
+  double screenWidth;
   List<ExerciseNumber> _exerciseNumbers = ExerciseNumber.getExerciseNumbers();
   List<DropdownMenuItem<ExerciseNumber>> _dropdownMenuItemsNumber;
   ExerciseNumber _selectedExerciseNumber;
@@ -46,6 +47,10 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
     _selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
 
     super.initState();
+  }
+
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
   }
 
   List<DropdownMenuItem<ExerciseNumber>> buildDropdownMenuItemsNumber(List exerciseNumbers) {
@@ -64,6 +69,7 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
   @override
   Widget build(BuildContext context) {
     //_selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    screenWidth = Utility.getScreenWidth(context);
 
     return Scaffold
       (
@@ -88,30 +94,30 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
     return Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(30 * getSizeRatio()),
           ),
           Text(
               "Practice typing 3,800 Characters in 38 exercises",
-              style: TextStyle(fontSize: 15),
+              style: TextStyle(fontSize: 15 * getSizeRatio()),
               textAlign: TextAlign.start
           ),
           Container(
-            padding: EdgeInsets.all(30),
+            padding: EdgeInsets.all(30 * getSizeRatio()),
           ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                SizedBox(width: 10),
+                SizedBox(width: 10 * getSizeRatio()),
                 getNumber(context),
-                SizedBox(width: 10),
+                SizedBox(width: 10 * getSizeRatio()),
               ],
             ),
           ),
-          SizedBox(height: 40),
+          SizedBox(height: 40 * getSizeRatio()),
           Container(
             child: getStartExercise(context),
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(20 * getSizeRatio()),
           ),
         ]
     );
@@ -128,7 +134,7 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
   Widget getStartExercise(BuildContext context) {
     return Container(
       child: FlatButton(
-        child: Text("Start", style: TextStyle(fontSize: 28.0),),
+        child: Text("Start", style: TextStyle(fontSize: 28.0 * getSizeRatio()),),
         color: Colors.blueAccent,
         textColor: Colors.white,
         onPressed: () {

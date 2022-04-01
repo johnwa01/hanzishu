@@ -153,7 +153,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Standalone Components. Basic Characters are the foundation of the Hanzishu One Tap Dictionary.",
+              "Standalone Components. Basic Characters are the foundation of the First Character Dictionary.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -237,7 +237,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Hanzishu Input Typing Method",
+              "Component Input Method 部件输入法",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -254,7 +254,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Hanzishu One Tap Dictionary",
+              "First Character Dictionary 首字字典",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -282,13 +282,13 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Return to this section once you have mastered the Hanzishu Typing Method.",
+              "Return to this section once you have mastered the Component Input Method.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character drills",
+              "Character drills 识字钻",
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -337,7 +337,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Practice for typing the Character using the Hanzishu Input Typing Method.",
+              "Practice for typing the Character using the Component Input Method.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -359,13 +359,13 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "View all the characters based on the Hanzishu One Tap Dictionary method which groups Characters by their Basic Characters. Contains nearly 3,800 Characters.",
+              "View all the characters based on the First Character Dictionary method which groups Characters by their Basic Characters. Contains nearly 3,800 Characters.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Reference the Dictionary as you learn the Hanzishu Input Typing Method and complete the lessons.",
+              "Reference the Dictionary as you learn the Component Input Method and complete the lessons.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
@@ -376,7 +376,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Learn the Hanzishu Input Typing Method and memorize the Component-key pairings.",
+              "Learn the Component Input Method and memorize the Component-key pairings.",
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),

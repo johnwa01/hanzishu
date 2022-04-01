@@ -17,7 +17,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Component Input Method"),
+        title: Text("Component Input Method 部件输入法"),
       ),
       body: Center
         (
