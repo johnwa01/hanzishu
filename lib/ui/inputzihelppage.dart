@@ -20,9 +20,11 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
-  double getSizeRatio() {
-    return Utility.getSizeRatio(screenWidth);
+  /*
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
   }
+*/
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -96,12 +98,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       overlayEntry = OverlayEntry(
           builder: (context) =>
               Positioned(
-                top: 30 * getSizeRatio(), // 30 is the minimum value without being partially covered
-                left: 100.0 * getSizeRatio(), //posiX,
+                top: 30 * getSizeRatioWithLimit(), // 30 is the minimum value without being partially covered
+                left: 100.0 * getSizeRatioWithLimit(), //posiX,
                 child: Image.asset(
                   "assets/typing/" + fullExpandedComp.imageName,
-                  width: 100.0 * getSizeRatio(),
-                  height: 130.0 * getSizeRatio(),
+                  width: 100.0 * getSizeRatioWithLimit(),
+                  height: 130.0 * getSizeRatioWithLimit(),
                   //fit: BoxFit.fitWidth,
                 ),
               ));
@@ -145,10 +147,10 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   }
 
   Widget getHelpContentView(BuildContext context) {
-    var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
-    var fontSize2 = TheConst.fontSizes[2] * getSizeRatio();
+    var fontSize1 = TheConst.fontSizes[1] * getSizeRatioWithLimit();
+    var fontSize2 = TheConst.fontSizes[2] * getSizeRatioWithLimit();
 
-    var fontSize = 18.0 * getSizeRatio();
+    var fontSize = 18.0 * getSizeRatioWithLimit();
     return Column(
         //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -355,8 +357,8 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
             alignment: Alignment.center,
             child: Image.asset(
                 "assets/typing/Strokes.png",
-                width: 390.0 * getSizeRatio(),
-                height: 150.0 * getSizeRatio()),
+                width: 390.0 * getSizeRatioWithLimit(),
+                height: 150.0 * getSizeRatioWithLimit()),
           ),
           SizedBox(height: fontSize2),
           Text(
@@ -471,7 +473,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	If the Character is not listed, repeat the these steps with the second and third Components until you see 品 listed",
+              "    o	 Typing the number associated with the character",
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "  •	If the Character is not listed, repeat these steps with the second and third Components until you see 品 listed",
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
