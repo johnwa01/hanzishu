@@ -10,13 +10,13 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/Icon-192.png",
+            "src": "icons/logo-192.png",
             "sizes": "192x192",
             "type": "image/png"
         },
         {
-            "src": "icons/Icon-512.png",
-            "sizes": "512x512",
+            "src": "icons/logoAndroid-1738-2004.png",
+            "sizes": "1738x2004",
             "type": "image/png"
         }
     ]
