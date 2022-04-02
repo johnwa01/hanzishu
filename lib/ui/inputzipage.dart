@@ -106,7 +106,7 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
-  String getInputTextBeforeComposingAndSelectionStart() {
+  String getInputTextBeforeComposingAndSelectionStart(bool isFromNumber) {
     var newInputText = "";
 
     if (_controller.value.text != null && _controller.value.text.length != 0) {
@@ -118,8 +118,13 @@ class _InputZiPageState extends State<InputZiPage> {
             0, previousStartComposing);
       }
       else if (_controller.value.selection.start >= 1) {
+        var selectionStart = _controller.value.selection.start;
+        if (isFromNumber) {
+          // exclude the number letter itself which isn't part of the input
+          selectionStart -= 1;
+        }
         return _controller.value.text.substring(
-            0, _controller.value.selection.start);
+            0, selectionStart);
       }
     }
 
@@ -145,10 +150,10 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
-  String getInputText(int index) {
+  String getInputText(int index, bool isFromNumber) {
     var newInputText = "";
 
-    newInputText = getInputTextBeforeComposingAndSelectionStart();
+    newInputText = getInputTextBeforeComposingAndSelectionStart(isFromNumber);
 
     var candidateZiString = InputZiManager.getCandidateZiString(index);
     if (candidateZiString != null) {
@@ -323,10 +328,10 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList, bool isFromOverlay) {
+  void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList, bool isFromOverlay, bool isFromNumber) {
     hasVerifiedToBeALowerCase = false;
 
-    var newText = getInputText(selectionIndex);
+    var newText = getInputText(selectionIndex, isFromNumber);
 
     previousText = newText;
     if (isFromCharCandidateList) {
@@ -448,7 +453,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
       setPreviousComposing();
 
-      setTextByChosenZiIndex(selectionIndex, false, false);
+      setTextByChosenZiIndex(selectionIndex, false, false, false);
     }
     /*
     else if (_controller.text.length == 0) { // due to deletion, otherwise won't be 0
@@ -511,17 +516,14 @@ class _InputZiPageState extends State<InputZiPage> {
             selection: TextSelection.collapsed(offset: selectionPosi));
       }
     }
-    /*
-    // with bugs after refactoring.
-    else if (isNumberOneToSeven(latestInputKeyLetter)) {
-      if (_controller.text != previousText) {
-        initOverlay();
-      }
-      previousEndComposing += 1;
-      //hasRunLowercase = false;
-      setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false);
+    else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
+        if (_controller.text != previousText) {
+          initOverlay();
+        }
+
+        previousEndComposing += 1;
+        setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
-    */
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       hasVerifiedToBeALowerCase = true;
       initOverlay();
@@ -988,7 +990,7 @@ class _InputZiPageState extends State<InputZiPage> {
       textColor: Colors.blueAccent,
       onPressed: () {
         initOverlay();
-        setTextByChosenZiIndex(candidateIndex, true, false);
+        setTextByChosenZiIndex(candidateIndex, true, false, false);
       },
       child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio()),),
     );
@@ -1001,7 +1003,7 @@ class _InputZiPageState extends State<InputZiPage> {
         child: butt
     );
 
-    xPosi.value += (30.0 * getSizeRatio() * zi.length + 25.0 * getSizeRatio());
+    xPosi.value += (30.0 * getSizeRatio() * zi.length + 23.0 * getSizeRatio());
 
     return posiCenter;
   }

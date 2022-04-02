@@ -49,8 +49,8 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
     super.initState();
   }
 
-  double getSizeRatio() {
-    return Utility.getSizeRatio(screenWidth);
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
   List<DropdownMenuItem<ExerciseNumber>> buildDropdownMenuItemsNumber(List exerciseNumbers) {
@@ -94,30 +94,30 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
     return Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(30 * getSizeRatio()),
+            padding: EdgeInsets.all(30 * getSizeRatioWithLimit()),
           ),
           Text(
               "Practice typing 3,800 Characters in 38 exercises",
-              style: TextStyle(fontSize: 15 * getSizeRatio()),
+              style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()),
               textAlign: TextAlign.start
           ),
           Container(
-            padding: EdgeInsets.all(30 * getSizeRatio()),
+            padding: EdgeInsets.all(30 * getSizeRatioWithLimit()),
           ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                SizedBox(width: 10 * getSizeRatio()),
+                SizedBox(width: 10 * getSizeRatioWithLimit()),
                 getNumber(context),
-                SizedBox(width: 10 * getSizeRatio()),
+                SizedBox(width: 10 * getSizeRatioWithLimit()),
               ],
             ),
           ),
-          SizedBox(height: 40 * getSizeRatio()),
+          SizedBox(height: 40 * getSizeRatioWithLimit()),
           Container(
             child: getStartExercise(context),
-            padding: EdgeInsets.all(20 * getSizeRatio()),
+            padding: EdgeInsets.all(20 * getSizeRatioWithLimit()),
           ),
         ]
     );
@@ -134,7 +134,7 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
   Widget getStartExercise(BuildContext context) {
     return Container(
       child: FlatButton(
-        child: Text("Start", style: TextStyle(fontSize: 28.0 * getSizeRatio()),),
+        child: Text("Start", style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit()),),
         color: Colors.blueAccent,
         textColor: Colors.white,
         onPressed: () {

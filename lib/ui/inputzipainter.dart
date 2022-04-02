@@ -55,10 +55,11 @@ class InputZiPainter extends BasePainter {
       if (activeCandidatesLength > 7) {  // Temp: for testing, leave 7 for test
         activeCandidatesLength = 7;
       }
-      var widthSizeRation = Utility.getSizeRatio(screenWidth);
+      var widthSizeRatio = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
-        displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRation);
-        x += (30.0 * widthSizeRation * theCurrentZiCandidates[i].length + 25.0 * widthSizeRation);
+           displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRatio);
+           displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black);
+           x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 23.0 * widthSizeRatio);
       }
 
       /* Temp: for testing component stroke drawing only
