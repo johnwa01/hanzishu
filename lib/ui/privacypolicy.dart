@@ -48,11 +48,22 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           ),
           SizedBox(height: fontSize3),
           Text(
-            "Hanzishu App doesn't collect user specific data.",
-            style: TextStyle(color: Colors.blue, fontSize: fontSize2),
-            textAlign: TextAlign.start
+              "Hanzishu App doesn't collect sensitive user specific data.",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
+          Text(
+              "In order to have a consistent user experience, the app's storage version, language, status of lessons and quiz results are stored in the local storage of the phones so that users will see the same status after a phone reboots. ",
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
+              "John Zhongqi Wang",
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
           Text(
               "john@hanzishu.com",
               style: TextStyle(fontSize: fontSize2),
