@@ -115,7 +115,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                     context,
                     compoundZiCurrentComponentId,
                     currentZiListType,
-                    shouldDrawCenter
+                    shouldDrawCenter,
+                    false
                   ),
                   child: Center(
                     child: Stack(
@@ -213,9 +214,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     var hitTestSize = defaultFontSize * (27.0 / 25.0);
     var startXSize = defaultFontSize * (20.0 / 25.0);
     var startYSize = defaultFontSize * (45.0 / 25.0); // ratio of 60.0/25.0
-    var helpPara1 = defaultFontSize * (70.0 / 25.0);
+    var helpPara1 = defaultFontSize * (65.0 / 25.0);
     var helpPara2 = defaultFontSize * (5.0 / 25.0); // 5.0
-    var helpPara3 = defaultFontSize * (40.0 / 25.0);
+    var helpPara3 = defaultFontSize * (20.0 / 25.0);
 
 
     if (dicStage == DictionaryStage.firstzis) {

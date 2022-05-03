@@ -33,11 +33,12 @@ class InputZiHintPainter extends BasePainter {
 
   displayShiftKeyNote() {
     String note;
+
     if (typingType == TypingType.LeadComponents) {
-      note = "Note: use 'shift-z' to show components to keyboard mapping.";
+      note = "Note: Type uppercase letter Z to show components to keyboard mapping.";
     }
     else {
-      note = "Note: use 'shift-a' to 'shift-y' to show Expanded Components. Use 'shift-z' to show mapping.";
+      note = "Note: Type uppercase letter A to Y to show Expanded Components. Type Z to show mapping.";
     }
 
     displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue); // 18.0

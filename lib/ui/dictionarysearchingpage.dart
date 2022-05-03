@@ -48,6 +48,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   var compoundZiAnimationTimer;
   int compoundZiCurrentComponentId;
   var currentZiListType = ZiListType.searching;
+  bool showBreakoutDetails;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -100,6 +101,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       searchingZiIndex = 0;
       dicStage = DictionaryStage.searchingzis;
       firstZiIndex = widget.firstZiIndex;
+      showBreakoutDetails = false;
     });
   }
 
@@ -195,7 +197,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                             context,
                             compoundZiCurrentComponentId,
                             currentZiListType,
-                            shouldDrawCenter
+                            shouldDrawCenter,
+                            showBreakoutDetails,
                         ),
                         //child: Center(
                           child: Stack(
@@ -431,6 +434,29 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     return posiCenter;
   }
 
+  Positioned getPositionedBreakdownButton(PositionAndSize posiAndSize) {
+    var butt = FlatButton(
+      onPressed: () {
+        clearOverlayEntry();
+
+        setState(() {
+          showBreakoutDetails = !showBreakoutDetails;
+        });
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+    );
+
+    var posi = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posi;
+  }
+
   getHelpPositionedButton(posiAndSize) {
     var butt = FlatButton(
       onPressed: () {
@@ -499,7 +525,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var fontSize1 = defaultFontSize * (5.0 / 25.0);
 //    var fontSize2 = defaultFontSize * (10.0 / 25.0);
     var fontSize3 = defaultFontSize * (20.0 / 25.0);
-    var fontSize4 = defaultFontSize * (70.0 / 25.0);
+    var fontSize4 = defaultFontSize * (35.0 / 25.0);
 /*
     PositionAndSize dicRootPosi = PositionAndSize(
         fontSize2, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
@@ -509,7 +535,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 */
     if (stage == DictionaryStage.detailedzi) {
       PositionAndSize dicSearchingZiPosi = PositionAndSize(
-          fontSize4, fontSize1, defaultFontSize, defaultFontSize, fontSize3, 1.0);
+          fontSize4, fontSize1, defaultFontSize * 2.5, defaultFontSize, fontSize3, 1.0);
       var button2 = getPositionedNavigationButton(
           dicSearchingZiPosi, DictionaryStage.searchingzis);
       buttons.add(button2);
@@ -616,6 +642,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 
+      var breakdownPositionAndSize = PositionAndSize(115.0 * 1.1 * getSizeRatio(), 362.0 * getSizeRatio(), 20.0 * getSizeRatio(), 20.0 * getSizeRatio(), 0.0, 0.0);
+      var breakdownPosi = getPositionedBreakdownButton(breakdownPositionAndSize);
+      buttons.add(breakdownPosi);
+
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
       createBreakoutHittestButtons(context, buttons);
 
@@ -687,7 +717,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         context,
         0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
         currentZiListType,
-        shouldDrawCenter
+        shouldDrawCenter,
+        showBreakoutDetails,
     );
     var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}

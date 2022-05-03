@@ -23,6 +23,7 @@ class BasePainter extends CustomPainter{
   List<double> iconPenStrokes = [4.0, 0.375, 0.125, 8.0, 1.0, 0.75, 8.0, 0.75, 1, 8.0, 0.125, 0.375, 8.0, 0.125, 0.125, 8.0, 0.375, 0.125, 8.0, 0.125, 0.375];
   List<double> iconZiLearnedStrokes = [4.0, 0.125, 0.5, 8.0, 0.375, 0.75, 8.0, 0.875, 0.25];
   List<double> iconNewCharStrokes = [4.0, 0.0, 0.5, 8.0, 0.75, 0.25, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5];
+  List<double> iconBreakdownStrokes = [4.0, 0.5, 0.0, 8.0, 1.0, 0.5, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5, 8.0, 0.5, 0.0];
 
   bool isFromReviewPage = false;
 

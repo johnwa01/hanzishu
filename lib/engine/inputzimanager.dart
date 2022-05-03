@@ -232,7 +232,7 @@ class InputZiManager {
       instruction = theZiForExpandedCompExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.FromLessons) {
-      instruction = "Please type new characters as instructed.";
+      instruction = "Reminder: You should finish the typing course from the main menu before this exercise.";
     }
 
     return instruction;

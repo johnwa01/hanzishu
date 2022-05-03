@@ -3,10 +3,12 @@ import 'dart:ui';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
+import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 
 class BreakoutPainter extends BasePainter {
   var lessonLeftEdge;
@@ -68,7 +70,7 @@ class BreakoutPainter extends BasePainter {
       var ziId = lesson.convCharsIds[i];
       var zi = theZiManager.getZi(ziId);
       if (zi != null && zi.type == "h") {
-        displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.zi, 0);
+        displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.zi, 0, false);
       }
     }
 
@@ -77,20 +79,20 @@ class BreakoutPainter extends BasePainter {
     }
   }
 
-  displayOneCharDissembling(YPositionWrapper yPositionWrapper, int ziId, ZiListType listType, int maxRecurLevel) {
+  displayOneCharDissembling(YPositionWrapper yPositionWrapper, int ziId, ZiListType listType, int maxRecurLevel, bool showBreakoutDetails) {
     LessonManager.clearComponentsStructure();
     if (lessonLeftEdge == null) {
       lessonLeftEdge = applyRatio(10.0);
     }
 
-    drawZiAndComponentsDissembling(0, 0, ziId, listType, lessonLeftEdge, yPositionWrapper.yPosi);
+    drawZiAndComponentsDissembling(0, 0, ziId, listType, lessonLeftEdge, yPositionWrapper.yPosi, showBreakoutDetails);
 
     yPositionWrapper.yPosi += applyRatio(20.0);
     yPositionWrapper.yPosi = LessonManager.getNextYPosition(yPositionWrapper.yPosi);
   }
 
   // for dissembly only
-  drawZiAndComponentsDissembling(int recurLevel, int indexInLevel, int id, ZiListType listType, double transX, double transY) {
+  drawZiAndComponentsDissembling(int recurLevel, int indexInLevel, int id, ZiListType listType, double transX, double transY, bool showBreakoutDetails) {
     // note: didn't apply sizeRatio to height/width. a bit better without applying it.
     var posiSize2 = PositionAndSize(transX, transY, thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiLineWidth(ZiOrCharSize.assembleDissembleSize));
 
@@ -136,6 +138,12 @@ class BreakoutPainter extends BasePainter {
           withPinyin,
           Colors.blue,
           true);
+
+      if (showBreakoutDetails && recurLevel == 1) {
+        var searchingZi = theSearchingZiList[id];
+        String pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
+        displayTextWithValue(pinyinAndMeaning, posiSize2.transX + posiSize2.charFontSize * 1.1, posiSize2.transY, posiSize2.charFontSize/1.7, Colors.blue);
+      }
     }
 
     theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
@@ -146,9 +154,12 @@ class BreakoutPainter extends BasePainter {
     {
       var newRecurLevel = recurLevel + 1;
 
-      var size = 89.0 * getSizeRatio(); //100 // length of each layer
-      for (var i = 0; i < composits.length; i++) {
-        drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + size, transY); // transY is the original value
+      // if showBreakoutDetails, stop at recurLevel 1
+      if (!showBreakoutDetails || (showBreakoutDetails && newRecurLevel <= 1)) {
+        var size = 89.0 * getSizeRatio(); //100 // length of each layer
+        for (var i = 0; i < composits.length; i++) {
+          drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + size, transY, showBreakoutDetails); // transY is the original value
+        }
       }
 
     }

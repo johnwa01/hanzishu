@@ -603,7 +603,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             SizedBox(height: fontSize1),
             Text(
-                "Reference this chart to visualize how Lead Components are mapped to English letters.",
+                "Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side.",
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
@@ -839,7 +839,7 @@ class _InputZiPageState extends State<InputZiPage> {
               children: <Widget>[
                 SizedBox(
                   child: Text(
-                      "Type: ",
+                      "Please type: ",
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
@@ -853,10 +853,10 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ),
                 SizedBox(width: fontSize),
-                SizedBox(width: 10.0 * getSizeRatio()),
+                SizedBox(width: 5.0 * getSizeRatio()), //10.0
                 SizedBox(
                   child: Text(
-                      "Hint: " + theZiForIntroductionList[currentIndex].hintText ,
+                      "Help: " + theZiForIntroductionList[currentIndex].hintText ,
                       style: TextStyle(fontSize: fontSize),  // fontSize * 1.2
                       textAlign: TextAlign.center   //left
                   ),
@@ -928,9 +928,9 @@ class _InputZiPageState extends State<InputZiPage> {
           Row(
               children: <Widget>[
                 SizedBox(
-                  width: 50 * getSizeRatio(),
+                  width: 130 * getSizeRatio(),
                   child: Text(
-                      "Type: ",
+                      "Please type: ",
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
@@ -944,7 +944,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: 220.0 * getSizeRatio()), //200.0
+                SizedBox(width: 140.0 * getSizeRatio()), //200.0
                 SizedBox(
                   width: 50.0 * getSizeRatio(),
                   child: FlatButton(
@@ -959,8 +959,8 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      "Hint",
-                      style: TextStyle(fontSize: fontSize * 1.2),
+                      "Help",
+                      style: TextStyle(fontSize: fontSize * 1.6), // 1.2
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),

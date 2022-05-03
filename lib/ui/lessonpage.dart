@@ -57,8 +57,12 @@ class _LessonPageState extends State<LessonPage> {
       child: Column(
         children: <Widget>[
           //Container(
-          //  padding: EdgeInsets.all(30),
+          //  padding: EdgeInsets.all(5),
           //),
+          Container(
+            child: Text("Please complete exercises in order.", style: TextStyle(fontSize: 16.0),),
+            padding: EdgeInsets.all(15),
+          ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,

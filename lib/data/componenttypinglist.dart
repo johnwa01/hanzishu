@@ -198,11 +198,11 @@ var theZiForIntroductionList=[
   ZiWithComponentsAndStrokes("键", ["Tl", "Xh", "B2"], "GG6.png", ""), //index only, not used
   ZiWithComponentsAndStrokes("人", ["Ea"], "", "Tap 人 in the list below."),
   //ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "八 > r, 刀 > v"),
-  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "Type in letter 'r', then spacebar."),
-  ZiWithComponentsAndStrokes("品", ["Ia", "Ia", "Ia"], "", "口 > i, 口 > i, then tap 品."),
+  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "Type 'r', spacebar."),
+  ZiWithComponentsAndStrokes("品", ["Ia", "Ia", "Ia"], "", "口 > i, 口 > i, tap 品."),
   //ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "日 > o, 日 > o, 日 > o"),
-  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 > k, 丁 > j, then tap 厅."),  // move down
-  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 > a, 又 > n， then spacebar."),
+  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 > k, 丁 > j, tap 厅."),  // move down
+  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 > a, 又 > n, spacebar."),
   ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "木 > l, 日 > o, 一 > g"),
   ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "日 > o, 刀 > v, 口 > i"),
   // ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "口 > i,人 > e,一 > g,口 > i"), // enough. limit the numbers.
@@ -219,7 +219,7 @@ var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("召", ["Va", "Ia"], "506.png", ""),
   ZiWithComponentsAndStrokes("义", ["Wa", "Ha"], "501.png", ""),
   ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "", ""),
-  ZiWithComponentsAndStrokes("田", ["Pa"], "509.png", "Reminder: For a character containing a single component, after typing the component, if needed, you can continue to type up to three strokes of the character: 1st, 2nd and last stroke."),   // da shu 'y'
+  //ZiWithComponentsAndStrokes("田", ["Pa"], "509.png", "Reminder: For a character containing a single component, after typing the component, if needed, you can continue to type up to three strokes of the character: 1st, 2nd and last stroke."),   // da shu 'y'
   ZiWithComponentsAndStrokes("公", ["Ra", "Ma"], "510.png", ""),
   ZiWithComponentsAndStrokes("乙", ["Ba"], "511.png", "Reminder: For a character containing a single component, after typing the component, if needed, you can continue to type up to three strokes of the character: 1st, 2nd and last stroke."),  // da 'b'
   ZiWithComponentsAndStrokes("旧", ["Ya", "Oa"], "512.png", ""),
@@ -230,12 +230,12 @@ var theZiForLeadCompExerciseList=[
 // 月 巾  雪
 
 var theZiForExpandedCompExerciseList=[
-  ZiWithComponentsAndStrokes("呆", ["Ia", "La"], "515.png", ""), //
-  ZiWithComponentsAndStrokes("从", ["Ea", "Ea"], "516.png", ""),   //
-  ZiWithComponentsAndStrokes("旦", ["Oa", "Ga"], "517.png", ""),  //
-  ZiWithComponentsAndStrokes("旷", ["Oa", "Kb"], "519.png", "->"),
+  //ZiWithComponentsAndStrokes("呆", ["Ia", "La"], "515.png", ""), //
+  //ZiWithComponentsAndStrokes("从", ["Ea", "Ea"], "516.png", ""),   //
+  //ZiWithComponentsAndStrokes("旦", ["Oa", "Ga"], "517.png", ""),  //
+  //ZiWithComponentsAndStrokes("旷", ["Oa", "Kb"], "519.png", "->"),
   ZiWithComponentsAndStrokes("客", ["Ha", "Na", "Ia"], "497.png", ""),
-  ZiWithComponentsAndStrokes("叮", ["Ia", "Ja"], "518.png", "Use make-up strokes as needed."),
+  //ZiWithComponentsAndStrokes("叮", ["Ia", "Ja"], "518.png", "Use make-up strokes as needed."),
   ZiWithComponentsAndStrokes("你", ["Ta", "Ta", "Ya"], "490.png", ""),
   ZiWithComponentsAndStrokes("谢", ["Ha", "Oa", "Ja"], "491.png", ""),
   ZiWithComponentsAndStrokes("卖", ["Aa", "Ba", "Ha", "Ea"], "492.png", ""),
@@ -246,8 +246,8 @@ var theZiForExpandedCompExerciseList=[
   ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "499.png", ""),
   ZiWithComponentsAndStrokes("会", ["Ea", "Ga", "Ma"], "488.png", ""),
   ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "495.png", ""),
-  ZiWithComponentsAndStrokes("双", ["Na", "Na"], "460.png", ""),
-  ZiWithComponentsAndStrokes("明", ["Oa", "Qa"], "461.png", ""),
+  //ZiWithComponentsAndStrokes("双", ["Na", "Na"], "460.png", ""),
+  //ZiWithComponentsAndStrokes("明", ["Oa", "Qa"], "461.png", ""),
   ZiWithComponentsAndStrokes("好", ["Wa", "Ja"], "462.png", ""),
   ZiWithComponentsAndStrokes("多", ["Na", "Na"], "463.png", ""),
   ZiWithComponentsAndStrokes("岁", ["Ya", "Na"], "464.png", ""),
@@ -256,8 +256,8 @@ var theZiForExpandedCompExerciseList=[
   ZiWithComponentsAndStrokes("再", ["Ga", "Aa"], "467.png", ""),
   ZiWithComponentsAndStrokes("们", ["Ta", "Ua"], "468.png", ""),
   ZiWithComponentsAndStrokes("对", ["Na", "Ja"], "469.png", ""),
-  ZiWithComponentsAndStrokes("关", ["Ha", "Ea"], "470.png", ""),
-  ZiWithComponentsAndStrokes("系", ["Ta", "Ma"], "471.png", ""),
+  //ZiWithComponentsAndStrokes("关", ["Ha", "Ea"], "470.png", ""),
+  //ZiWithComponentsAndStrokes("系", ["Ta", "Ma"], "471.png", ""),
   /*
   ZiWithComponentsAndStrokes("人", ["Ea"], "452.png", ""),
   ZiWithComponentsAndStrokes("大", ["Ea"], "453.png", ""),

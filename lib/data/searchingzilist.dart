@@ -933,7 +933,7 @@ var theSearchingZiList = [
   SearchingZi(929,"涵", "hán", "contain",11,["Mi","925"],"",0,"",""),
   SearchingZi(930,"蒸", "zhēng", "evaporate; steam",13,["Wa","921","Mp"],"",0,"",""),
   SearchingZi(931,"力", "lì", "power; strength",2,["Ic"],"",0,"",""),
-  SearchingZi(932,"为", "wèi", "do; act",4,["Ip"],"",0,"",""),
+  SearchingZi(932,"为", "wéi, wèi", "do; act",4,["Ip"],"",0,"",""),
   SearchingZi(933,"办", "bàn", "handle; manage",4,["931","512"],"",0,"",""),
   SearchingZi(934,"另", "lìng", "other",5,["1362","931"],"",0,"",""),
   SearchingZi(935,"务", "wù", "task; affair",5,["Oi","931"],"",0,"",""),

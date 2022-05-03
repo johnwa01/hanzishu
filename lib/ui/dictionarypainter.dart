@@ -19,6 +19,7 @@ class DictionaryPainter extends BreakoutPainter {
   BuildContext context;
   int compoundZiCurrentComponentId;
   ZiListType ziListType;
+  bool showBreakoutDetails;
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
@@ -26,7 +27,7 @@ class DictionaryPainter extends BreakoutPainter {
 
   Map<int, PositionAndSize> dicBreakoutPositions = Map();
 
-  DictionaryPainter(Color lineColor, double screenWidth, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter) {
+  DictionaryPainter(Color lineColor, double screenWidth, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter, bool showBreakoutDetails) {
     this.lineColor = lineColor;
     this.width = screenWidth;
     this.dicStage = dicStage;
@@ -37,6 +38,7 @@ class DictionaryPainter extends BreakoutPainter {
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
     this.ziListType = ziListType;
     this.shouldDrawCenter = shouldDrawCenter;
+    this.showBreakoutDetails = showBreakoutDetails;
   }
 
   double getSizeRatio() {
@@ -53,15 +55,14 @@ class DictionaryPainter extends BreakoutPainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("Basic Character Table[首字表]", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20.0
-
+      displayTextWithValue("Basic Character Table[首字表]", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
 
       // below should match dictionaryPage
-      var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(25.0), applyRatio(30.0), applyRatio(30.0), 0.0, 0.0); // 5.0
-      displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width / 2.0, Colors.lightBlue);
+      var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(5.0), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0); // 5.0
+      displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width, Colors.lightBlue);
 
       DisplayFirstZis();
     }
@@ -213,7 +214,7 @@ class DictionaryPainter extends BreakoutPainter {
     //Need to match the yPosi in DictionaryPage.
     displayTextWithValue("Sound: ", fontSize3, fontSize9, fontSize4, Colors.black);
     DisplayIcon(iconSpeechStrokes, fontSize7, fontSize9, fontSize4, fontSize4, Colors.amber/*MaterialColor ofColor*/, fontSize2/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, fontSize8, fontSize9, fontSize4, Colors.blue);
+    displayTextWithValue(detailedZi.pinyin, fontSize8 * 1.1, fontSize9, fontSize4, Colors.blue);
 
     displayTextWithValue("Meaning: ", fontSize3, fontSize10, fontSize4, Colors.black);
     displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue);
@@ -226,6 +227,7 @@ class DictionaryPainter extends BreakoutPainter {
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
     displayTextWithValue("Breakdown: ", fontSize3, fontSize12, fontSize4, Colors.black);
+    DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);
   }
@@ -280,7 +282,7 @@ class DictionaryPainter extends BreakoutPainter {
     var fontSize1 = applyRatio(396.0); //425.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
-    displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0);
+    displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails);
   }
 
   displayWholeStrokes() {
