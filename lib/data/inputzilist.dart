@@ -3464,7 +3464,7 @@ var theInputZiList=[
   InputZi("uugcg", 1049,"鹦"),
   InputZi("uuhh", 2256,"棘"),
   InputZi("uuhy", 103832,"需"),
-  InputZi("uuj", 4392,"搏"),
+  InputZi("juj", 4392,"搏"),
   InputZi("uvm", 26803,"购"),
   InputZi("uvs", 558,"雹"),
   InputZi("uvw", 2548,"敷"),
