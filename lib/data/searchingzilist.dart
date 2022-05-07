@@ -3513,7 +3513,7 @@ var theSearchingZiList = [
   SearchingZi(3509,"释", "shì", "explain",12,["Ks","855","Kg"],"",0,"",""),
   SearchingZi(3510,"番", "fān", "kind",12,["Ks","3058"],"",0,"",""),
   SearchingZi(3511,"粤", "yuè", "another name for Guangdong Province",12,["La","Xa","3488","Pb"],"",0,"",""),
-  SearchingZi(3512,"奥", "ào", "abstruse; profound",12,["Ma","Qb","3488","1187"],"",0,"",""),
+  SearchingZi(3512,"奥", "ào", "abstruse; profound",12,["La","Qb","3488","1187"],"",0,"",""),
   SearchingZi(3513,"粪", "fèn", "dung; droppings",12,["3488","521"],"",0,"",""),
   SearchingZi(3514,"缕", "lǚ", "thread",12,["Vl","3494"],"",0,"",""),
   SearchingZi(3515,"粮", "liáng", "food",13,["3488","3540"],"",0,"",""),
