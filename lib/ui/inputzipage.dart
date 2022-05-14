@@ -782,7 +782,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   builder: (context) => InputZiHelpPage(),
                 ),
               );},
-            child: const Text('Help'),
+            child: const Text('Help', style: TextStyle(fontWeight: FontWeight. bold)),
           ),
         ),
         //TODO: put a help button at the right end

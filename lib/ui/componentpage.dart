@@ -264,7 +264,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'The pairings are divided into six groups (based on the first Stroke of each Component).',
+                  'The pairings are divided into six groups (based on the first Stroke of each Component). Five single-stroke components are located in the middle, therefore remember each group from middle to sides.',
                   style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()) // 18
                 ),
               ),
@@ -619,7 +619,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 hint + ")";
       }
       else if (questionType == QuestionType.ComponentGroup) {
-        question = "Match the Component group to its key group.";
+        question = "Match above Component group to its key group.";
       }
 
       return Flexible(

@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     //theDrawingSizeRatio = Utility.getDrawingSizeRatio(context);
 
-    theLessonsPage = _children[0]; // for refresh the Lessons completed page after a quiz
+    //theLessonsPage = _children[0]; // for refresh the Lessons completed page after a quiz
 
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;

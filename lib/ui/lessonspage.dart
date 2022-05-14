@@ -6,6 +6,7 @@ import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/ui/lessonpage.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -14,6 +15,8 @@ class LessonsPage extends StatefulWidget {
 
 class _LessonsPageState extends State<LessonsPage> {
   bool hasLoadedStorage;
+  int newFinishedLessons;
+
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
   //}
@@ -38,6 +41,7 @@ class _LessonsPageState extends State<LessonsPage> {
 
     setState(() {
       this.hasLoadedStorage = false;
+      this.newFinishedLessons = 0;
     });
   }
 
@@ -168,7 +172,7 @@ class _LessonsPageState extends State<LessonsPage> {
     //if (modNumber == 9) {
     //  path = "assets/IMG_6606.PNG";
     //}
-    sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
+    sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
 
     if (lessonCount >= 2) {
       realNumber++;
@@ -177,7 +181,7 @@ class _LessonsPageState extends State<LessonsPage> {
       //if (modNumber == 9) {
       //  path = "assets/IMG_6606.PNG";
       //}
-      sections.add(Container(child: OpenHelper.getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true, 110, 110)));
+      sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true, 110, 110)));
 
       if (lessonCount >= 3) {
         realNumber++;
@@ -186,10 +190,57 @@ class _LessonsPageState extends State<LessonsPage> {
         //if (modNumber == 9) {
         //  path = "assets/IMG_6606.PNG";
         //}
-        sections.add(Container(child: OpenHelper.getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
+        sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
       }
     }
 
     return sections;
   }
+
+  _getRequests() async {
+    if (theHasNewlyCompletedLesson) {
+      setState(() {
+        // force refresh to pick up the completed icon for the lesson
+        this.newFinishedLessons += 1;
+      });
+
+      theHasNewlyCompletedLesson = false;
+    }
+  }
+
+  openPage(BuildContext context, int lessonId) {
+    Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getRequests()});
+  }
+
+  Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
+    var lesson = theLessonManager.getLesson(lessonNumber);
+
+    String lessonOrSectionName = "";
+
+      lessonOrSectionName = lesson.titleTranslation;
+      return
+        InkWell(
+          child: Column(
+              children: [
+                Ink.image(
+                  image: AssetImage(imagePath),
+                  width: xSize,
+                  height: ySize,
+                ),
+                Row(
+                    children: [
+                      Text(
+                        lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                        style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+                      ),
+                      OpenHelper.getCompletedImage(lessonNumber),
+                    ]
+                ),
+              ]
+          ),
+
+          onTap: () => openPage(context, lessonNumber),
+        );
+    }
 }

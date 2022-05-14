@@ -442,6 +442,7 @@ class _QuizPageState extends State<QuizPage> {
       content = "You have passed this quiz with a score of " + corStr + "!";
       // save the info to storage
       updateCompleteStatus();
+      theHasNewlyCompletedLesson = true;
     }
     else {
       title = "Good effort!";

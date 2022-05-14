@@ -46,11 +46,8 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("        Component-key pairings", textDirection: TextDirection.ltr),
-        ),
-        ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("        2. Memorize groups", textDirection: TextDirection.ltr),
+          title: Text("2. Component-key pairing groups", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -63,7 +60,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("        3. Memorize by groups", textDirection: TextDirection.ltr),
+          title: Text("3. Memorize by groups", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -77,7 +74,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("        4. Memorize the pairings", textDirection: TextDirection.ltr),
+          title: Text("4. Memorize the pairings", textDirection: TextDirection.ltr),
           trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

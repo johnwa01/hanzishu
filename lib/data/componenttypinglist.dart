@@ -244,7 +244,7 @@ var theZiForExpandedCompExerciseList=[
   //ZiWithComponentsAndStrokes("学", ["Ha", "Ha", "Ja"], "496.png", ""),
   ZiWithComponentsAndStrokes("起", ["Aa", "Ya", "Sa"], "498.png", ""),
   ZiWithComponentsAndStrokes("没", ["Ha", "Ba", "Na"], "499.png", ""),
-  ZiWithComponentsAndStrokes("会", ["Ea", "Ga", "Ma"], "488.png", ""),
+  ZiWithComponentsAndStrokes("会", ["Ea", "Ga", "Ma"], "488.png", "If there are two options to separate components, choose the option that contains a component with more strokes."),
   ZiWithComponentsAndStrokes("同", ["Ua", "Ga", "Oa"], "495.png", ""),
   //ZiWithComponentsAndStrokes("双", ["Na", "Na"], "460.png", ""),
   //ZiWithComponentsAndStrokes("明", ["Oa", "Qa"], "461.png", ""),
