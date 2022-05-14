@@ -33,6 +33,7 @@ var thePreviousCenterZiId = 0;
 
 //var theLessonsPage;
 bool theHasNewlyCompletedLesson = false;
+int theNewlyCompletedTypingExercise = -1;
 
 //TODO: move to theConfig
 var theIsPartialZiMode = true;

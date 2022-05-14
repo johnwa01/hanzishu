@@ -1040,14 +1040,17 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.GiveItATry) {
       title = "Good job!";
       content = "You did it! Let's go through the Component-key pairings now.";
+      theNewlyCompletedTypingExercise = 0;
     }
     else if (typingType == TypingType.LeadComponents) {
       title = "Good job!";
       content = "You did it again! Let’s get to know the Expanded Components. ";
+      theNewlyCompletedTypingExercise = 4;
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = "Congratulations!";
       content = "Your training is complete. Practice or use what you learned with some free typing.";
+      theNewlyCompletedTypingExercise = 6;
     }
     else if (typingType == TypingType.CustomizedTyping) {
       title = "Good job!";

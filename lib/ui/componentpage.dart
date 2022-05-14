@@ -1085,18 +1085,22 @@ class _ComponentPageState extends State<ComponentPage> {
       if (questionType == QuestionType.ComponentGroup) {
         title = "Good job!";
         content = "You’ve mastered all six Component groups! In the next exercise, you will memorize the Components in each group.";
+        theNewlyCompletedTypingExercise = 1;
       }
       if (questionType == QuestionType.ComponentInGroup) {
         title = "Good job!";
         content = "You remember the Components by group! In the next exercise, you will review the Components.";
+        theNewlyCompletedTypingExercise = 2;
       }
       if (questionType == QuestionType.Component) {
         title = "Way to go!";
         content = "You know your Lead Components! Let’s test your knowledge with some guided typing.";
+        theNewlyCompletedTypingExercise = 3;
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = "Wow!";
         content = "You know your Expanded Components! Let’s practice with some typing exercises.";
+        theNewlyCompletedTypingExercise = 5;
      }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
