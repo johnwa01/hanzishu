@@ -199,12 +199,12 @@ var theZiForIntroductionList=[
   ZiWithComponentsAndStrokes("人", ["Ea"], "", "Tap 人 in the list below."),
   //ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "八 > r, 刀 > v"),
   ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "Type 'r', spacebar."),
-  ZiWithComponentsAndStrokes("品", ["Ia", "Ia", "Ia"], "", "口 > i, 口 > i, tap 品."),
+  ZiWithComponentsAndStrokes("品", ["Ia", "Ia", "Ia"], "", "口 : i, 口 : i, tap 品."),
   //ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "日 > o, 日 > o, 日 > o"),
-  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 > k, 丁 > j, tap 厅."),  // move down
-  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 > a, 又 > n, spacebar."),
-  ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "木 > l, 日 > o, 一 > g"),
-  ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "日 > o, 刀 > v, 口 > i"),
+  ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 : k, 丁 : j, tap 厅."),  // move down
+  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 : a, 又 : n, spacebar."),
+  ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "木 : l, 日 : o, 一 : g"),
+  ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "日 : o, 刀 : v, 口 : i"),
   // ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "口 > i,人 > e,一 > g,口 > i"), // enough. limit the numbers.
 ];
 

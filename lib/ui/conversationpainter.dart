@@ -96,7 +96,10 @@ class ConversationPainter extends BasePainter {
             if ((separationCount = Utility.findSeparationCount(convWithSeparation, i)) == 1) {
               id = ZiManager.findIdFromChar(oneSeparation);
               if (id != -1) {
-                translation += Utility.getFirstMeaning(theZiList[id].meaning);
+                var firstMeaning = Utility.getFirstMeaning(theZiList[id].char);
+                if (firstMeaning != "了") {
+                  translation += Utility.getFirstMeaning(theZiList[id].meaning);
+                }
               }
             }
             else {

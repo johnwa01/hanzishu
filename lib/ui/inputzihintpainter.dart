@@ -167,10 +167,11 @@ class InputZiHintPainter extends BasePainter {
         xPosi += halfSize;
       }
       drawComponentZi(components[i], xPosi, 0.0, size, size, size, Colors.blue, true, 1);
-      xPosi += size;
-      displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
-      xPosi += halfSize;
+
       if (components[i] !=  leadComps[i]) {
+        xPosi += size;
+        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize;
         drawComponentZi(
             leadComps[i],
             xPosi,
@@ -182,9 +183,12 @@ class InputZiHintPainter extends BasePainter {
             true,
             1);
         xPosi += size;
-        displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize;
+        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
       }
+
+      xPosi += size;
+      displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
+      xPosi += halfSize;
 
       displayTextWithValue(typingCodes[i], xPosi, 0.0, size, Colors.blue);
     }

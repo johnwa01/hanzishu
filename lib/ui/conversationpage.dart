@@ -51,7 +51,8 @@ class _ConversationPageState extends State<ConversationPage> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = Utility.getScreenWidth(context);
+    //screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameWidth(screenWidth);
 
     return Scaffold

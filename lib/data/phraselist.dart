@@ -262,4 +262,6 @@ Phrase(0, "三个", "", "three unit", ""),
   Phrase(96, "多大了", "", "how old", ""),
   Phrase(97, "喝点", "", "drink some", ""),
   Phrase(98, "是啊", "", "oh yes", ""),
+  Phrase(99, "吃饭", "", "eat", ""),
+  Phrase(100, "看到", "", "see", ""),
 ];

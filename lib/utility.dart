@@ -214,7 +214,7 @@ class Utility {
     return screenWidth;
   }
 
-  // These two cases need to display the whole thing
+  // These two cases need to display the whole thing. And Conversation page as well.
   static double getScreenWidthForTreeAndDict(BuildContext context) {
     var screenSize = MediaQuery
         .of(context)
