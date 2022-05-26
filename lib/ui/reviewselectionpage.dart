@@ -3,6 +3,7 @@ import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/utility.dart';
 
 class ReviewLevel {
   int id;
@@ -19,15 +20,15 @@ class ReviewLevel {
     if (startingLevels[0] == null && endingLevels[0] == null) {
       for (var index = 0; index <= length - 1; index++) {
         var level;
-        if (index == 0) {
-          startingLevels[index] = ReviewLevel(index, "Starting Unit");
-          endingLevels[index] = ReviewLevel(index, "Ending Unit");
-        }
-        else {
-          level = ReviewLevel(index, 'Unit ' + index.toString());
+        //if (index == 0) {
+        //  startingLevels[index] = ReviewLevel(index, getString(291)/*"Starting Unit"*/);
+        //  endingLevels[index] = ReviewLevel(index, getString(292)/*"Ending Unit"*/);
+        //}
+        //else {
+          level = ReviewLevel(index, getString(9)/*'Unit '*/ + (index + 1).toString());
           startingLevels[index] = level;
           endingLevels[index] = level;
-        }
+        //}
       }
     }
   }
@@ -57,7 +58,7 @@ class ReviewLevel {
     else {
       var length = endingLevels.length;
 
-      var newLength = length - levelSelectedStartingId + 1;
+      var newLength = length - levelSelectedStartingId /*+ 1*/;
       var newEndingLevels = List<ReviewLevel>(newLength);
       newEndingLevels[0] = endingLevels[0];
       for (var index = 1; index <= newLength - 1; index++) {
@@ -88,8 +89,8 @@ class ReviewLesson {
     return maximumLessons;
   }
 
-  static List<ReviewLesson> lessons = List(getMaximumLessons() + 1); /*[
-    ReviewLesson(0, 'Starting Lesson'),
+  static List<ReviewLesson> lessons = List(getMaximumLessons() /*+ 1*/); /*[
+    //ReviewLesson(0, 'Starting Lesson'),
     ReviewLesson(1, 'Lesson 1'),
     ReviewLesson(2, 'Lesson 2'),
     ReviewLesson(3, 'Lesson 3'),
@@ -97,17 +98,17 @@ class ReviewLesson {
     ReviewLesson(5, 'Lesson 5'),
   ];*/
 
-  static populateMaximumLessons(String str) {
-    var length = getMaximumLessons() + 1;
+  static populateMaximumLessons(/*String str*/) {
+    var length = getMaximumLessons() /*+ 1*/;
     if (lessons[0] == null) {
       for (var index = 0; index < length; index++) {
         var lesson;
-        if (index == 0) {
-          lesson = ReviewLesson(index, str);
-        }
-        else {
-          lesson = ReviewLesson(index, 'Lesson ' + index.toString());
-        }
+        //if (index == 0) {
+        //  lesson = ReviewLesson(index, str);
+        //}
+        //else {
+          lesson = ReviewLesson(index, getString(295)/*'Lesson'*/ + ' ' + (index + 1).toString());
+        //}
 
         lessons[index] = lesson;
       }
@@ -116,12 +117,12 @@ class ReviewLesson {
 
   static List<ReviewLesson> getReviewLessonsStarting(int selectedLevel, int lessonSelectedEndingId) {
     if (lessonSelectedEndingId == 0) {
-      populateMaximumLessons("Starting Lesson");
+      populateMaximumLessons(/*getString(293)"Starting Lesson"*/);
       // get real lessons for the level
       var length = 0;
-      if (selectedLevel > 0) {
-        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
-      }
+      //if (selectedLevel > 0) {
+        length = theNumberOfLessonsInLevels[selectedLevel /*- 1*/] /*+ 1*/;
+      //}
       var startingLessons = List<ReviewLesson>(length);
       for (var index = 0; index < length; index++) {
         startingLessons[index] = lessons[index];
@@ -142,11 +143,11 @@ class ReviewLesson {
   static List<ReviewLesson> getReviewLessonsEnding(int selectedLevel, int lessonSelectedStartingId) {
     var length = 0;
     if (lessonSelectedStartingId == 0) {
-      populateMaximumLessons("Ending Lesson");
+      populateMaximumLessons(/*getString(294)"Ending Lesson"*/);
       // get real lessons for the level
-      if (selectedLevel > 0) { // Unit 1 to 10 instead of the title "Starting Unit"
-        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1;
-      }
+      //if (selectedLevel > 0) { // Unit 1 to 10 instead of the title "Starting Unit"
+        length = theNumberOfLessonsInLevels[selectedLevel /*- 1*/] /*+ 1*/;
+      //}
       var endingLessons = List<ReviewLesson>(length);
       for (var index = 0; index < length; index++) {
         endingLessons[index] = lessons[index];
@@ -156,10 +157,10 @@ class ReviewLesson {
     }
     else {
       var newLength = 0;
-      if (selectedLevel > 0) {
-        length = theNumberOfLessonsInLevels[selectedLevel - 1] + 1; //lessons.length;
-        newLength = length - lessonSelectedStartingId + 1;
-      }
+      //if (selectedLevel > 0) {
+        length = theNumberOfLessonsInLevels[selectedLevel - 1] /*+ 1*/; //lessons.length;
+        newLength = length - lessonSelectedStartingId /*+ 1*/;
+      //}
 
       var newEndingLessons = List<ReviewLesson>(newLength);
       newEndingLessons[0] = lessons[0];
@@ -202,11 +203,12 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
     _dropdownMenuItemsLevelEnding = buildDropdownMenuItemsLevel(_reviewLevelsEnding);
     _selectedReviewLevelEnding = _dropdownMenuItemsLevelEnding[0].value;
 
+    setInitLessons();
     //_dropdownMenuItemsLessonStarting = buildDropdownMenuItemsLesson(_reviewLessonsStarting);
-    //_selectedReviewLessonStarting.id = 0; // = _dropdownMenuItemsLessonStarting[0].value;
+    //_selectedReviewLessonStarting.id = _dropdownMenuItemsLessonStarting[0].value;
 
     //_dropdownMenuItemsLessonEnding = buildDropdownMenuItemsLesson(_reviewLessonsEnding);
-    //_selectedReviewLessonEnding.id = 0; // = _dropdownMenuItemsLessonEnding[0].value;
+    //_selectedReviewLessonEnding.id = _dropdownMenuItemsLessonEnding[0].value;
 
     super.initState();
   }
@@ -243,7 +245,7 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
       (
       appBar: AppBar
         (
-        title: Text("Review selection"),
+        title: Text(getString(290)/*"Review selection"*/),
       ),
       body: Center
         (
@@ -359,7 +361,8 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
   }
 
   Widget getLessonRange(BuildContext context) {
-    if (_selectedReviewLevelStarting.id != 0 && _selectedReviewLevelEnding.id != 0 && _selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id ) {
+    if (/*_selectedReviewLevelStarting.id != 0 && _selectedReviewLevelEnding.id != 0 && */_selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id ) {
+      //setInitLessons();
       return Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -398,7 +401,7 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
   Widget getStartReview(BuildContext context) {
     return Container(
       child: FlatButton(
-        child: Text("Start", style: TextStyle(fontSize: 30.0),),
+        child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 30.0),),
         color: Colors.blueAccent,
         textColor: Colors.white,
         onPressed: () {
@@ -410,8 +413,8 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
           if (_selectedReviewLessonEnding != null && _selectedReviewLessonEnding.id != null) {
             endLessonId = _selectedReviewLessonEnding.id;
           }
-          var startInternalLessonId = LevelManager.getStartInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
-          var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId, endLessonId);
+          var startInternalLessonId = LevelManager.getStartInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId + 1, endLessonId + 1); // lesson id 0 == lesson 1
+          var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId + 1, endLessonId + 1);
           Navigator.push(
             context,
             MaterialPageRoute(

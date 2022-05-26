@@ -56,7 +56,7 @@ class _MePageState extends State<MePage> {
       (
       appBar: AppBar
         (
-        title: Text("Me"),
+        title: Text(getString(94)/*"Me"*/),
       ),
       body: Center
         (
@@ -77,7 +77,7 @@ class _MePageState extends State<MePage> {
             //),
             ListTile(
               leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text("Character review", textDirection: TextDirection.ltr),
+              title: Text(getString(139)/*"Character review"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
                 Navigator.push(
@@ -91,7 +91,7 @@ class _MePageState extends State<MePage> {
             getQuizResults(),
             ListTile(
               leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text("Glossary", textDirection: TextDirection.ltr),
+              title: Text(getString(140)/*"Glossary"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
                 Navigator.push(
@@ -104,7 +104,7 @@ class _MePageState extends State<MePage> {
             ),
             ListTile(
               leading: Image.asset('assets/lessons/L9.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text("Privacy policy", textDirection: TextDirection.ltr),
+              title: Text(getString(141)/*"Privacy policy"*/, textDirection: TextDirection.ltr),
               onTap: () {
                 Navigator.push(
                   context,

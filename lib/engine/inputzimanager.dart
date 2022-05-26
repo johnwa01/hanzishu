@@ -7,6 +7,7 @@ import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:math';
 
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 
 
 class InputZiManager {
@@ -232,7 +233,7 @@ class InputZiManager {
       instruction = theZiForExpandedCompExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.FromLessons) {
-      instruction = "Reminder: You should finish the typing course from the main menu before this exercise.";
+      instruction = getString(280)/*"Reminder: You should finish the typing course from the main menu before this exercise."*/;
     }
 
     return instruction;

@@ -68,7 +68,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
       (
       appBar: AppBar
         (
-        title: Text("Flashcards"),
+        title: Text(getString(2)/*"Flashcards"*/),
       ),
       body: Container(
         child: SingleChildScrollView(

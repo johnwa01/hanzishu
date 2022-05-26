@@ -72,7 +72,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       (
       appBar: AppBar
         (
-        title: Text("Character Break Out"),
+        title: Text(getString(3)/*"Character breakdown"*/),
       ),
       body: Container(
         child: SingleChildScrollView(

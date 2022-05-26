@@ -35,6 +35,8 @@ var thePreviousCenterZiId = 0;
 bool theHasNewlyCompletedLesson = false;
 int theNewlyCompletedTypingExercise = -1;
 
+var theDefaultLocale = "en_US";
+
 //TODO: move to theConfig
 var theIsPartialZiMode = true;
 

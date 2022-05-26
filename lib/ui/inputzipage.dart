@@ -597,13 +597,13 @@ class _InputZiPageState extends State<InputZiPage> {
           children: <Widget>[
             SizedBox(height: fontSize1),
             Text(
-                "The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard.",
+                getString(110)/*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/,
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
             SizedBox(height: fontSize1),
             Text(
-                "Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side.",
+                getString(111)/*"Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side."*/,
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
@@ -627,7 +627,7 @@ class _InputZiPageState extends State<InputZiPage> {
                             currentIndex = 1;
                         });
                            },
-                      child: const Text('Try a few',
+                      child: Text(getString(109)/*'Try a few'*/,
                       style: TextStyle(color: Colors.blue)),
                     ),
                   ),
@@ -678,21 +678,21 @@ class _InputZiPageState extends State<InputZiPage> {
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
-    var title = 'Component Input Method 部件输入法';
+    var title = getString(98)/*'Component Input Method'*/;
     if (typingType == TypingType.GiveItATry) {
-      title = 'Give it a try';
+      title = getString(100)/*'Give it a try'*/;
     }
     else if (typingType == TypingType.LeadComponents) {
-      title = 'Guided typing';
+      title = getString(104)/*'Guided typing'*/;
     }
     else if (typingType == TypingType.ExpandedComponents) {
-      title = 'Typing exercises';
+      title = getString(106)/*'Typing exercises'*/;
     }
     else if (typingType == TypingType.FreeTyping) {
-      title = 'Free typing and help';
+      title = getString(108)/*'Free typing and help'*/;
     }
     else if (typingType == TypingType.CustomizedTyping) {
-      title = 'Customized exercises';
+      title = getString(112)/*'Customized exercises'*/;
     }
 
     if (typingType == TypingType.GiveItATry && currentIndex == 0) {
@@ -782,7 +782,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   builder: (context) => InputZiHelpPage(),
                 ),
               );},
-            child: const Text('Help', style: TextStyle(fontWeight: FontWeight. bold)),
+            child: Text(getString(114)/*'Help'*/, style: TextStyle(fontWeight: FontWeight. bold)),
           ),
         ),
         //TODO: put a help button at the right end
@@ -839,7 +839,7 @@ class _InputZiPageState extends State<InputZiPage> {
               children: <Widget>[
                 SizedBox(
                   child: Text(
-                      "Please type: ",
+                      getString(113)/*"Please type"*/ + ": ",
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
@@ -856,7 +856,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 SizedBox(width: 5.0 * getSizeRatio()), //10.0
                 SizedBox(
                   child: Text(
-                      "Help: " + theZiForIntroductionList[currentIndex].hintText ,
+                      getString(114)/*"Help"*/ + ": " + theZiForIntroductionList[currentIndex].hintText ,
                       style: TextStyle(fontSize: fontSize),  // fontSize * 1.2
                       textAlign: TextAlign.center   //left
                   ),
@@ -930,7 +930,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 SizedBox(
                   width: 130 * getSizeRatio(),
                   child: Text(
-                      "Please type: ",
+                      getString(113)/*"Please type"*/ + ": ",
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
@@ -959,7 +959,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      "Help",
+                      getString(114)/*"Help"*/,
                       style: TextStyle(fontSize: fontSize * 1.6), // 1.2
                       textAlign: TextAlign.left //TextAlign.center
                     ),
@@ -1038,27 +1038,27 @@ class _InputZiPageState extends State<InputZiPage> {
     String content;
 
     if (typingType == TypingType.GiveItATry) {
-      title = "Good job!";
-      content = "You did it! Let's go through the Component-key pairings now.";
+      title = getString(115)/*"Good job!"*/;
+      content = getString(116)/*"You did it! Let's go through the Component-key pairings now."*/;
       theNewlyCompletedTypingExercise = 0;
     }
     else if (typingType == TypingType.LeadComponents) {
-      title = "Good job!";
-      content = "You did it again! Let’s get to know the Expanded Components. ";
+      title = getString(115)/*"Good job!"*/;
+      content = getString(117)/*"You did it again! Let’s get to know the Expanded Components."*/;
       theNewlyCompletedTypingExercise = 4;
     }
     else if (typingType == TypingType.ExpandedComponents) {
-      title = "Congratulations!";
+      title = getString(118)/*"Congratulations!"*/;
       content = "Your training is complete. Practice or use what you learned with some free typing.";
       theNewlyCompletedTypingExercise = 6;
     }
     else if (typingType == TypingType.CustomizedTyping) {
-      title = "Good job!";
-      content = "You are making great progress in typing Chinese characters.";
+      title = getString(115)/*"Good job!"*/;
+      content = getString(119)/*"You are making great progress in typing Chinese characters."*/;
     }
     else if (typingType == TypingType.FromLessons) {
-      title = "Good job!";
-      content = "Your typing exercise is complete for this lesson.";
+      title = getString(115)/*"Good job!"*/;
+      content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
     }
 
     // set up the AlertDialog

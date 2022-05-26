@@ -96,7 +96,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       (
       appBar: AppBar
         (
-        title: Text("First Character Dictionary 首字字典"),  //汉字树一触字典
+        title: Text(getString(95)/*"First Character Dictionary"*/),  //汉字树一触字典
         ),
       body: Container(
         child: WillPopScope(

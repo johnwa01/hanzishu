@@ -79,7 +79,7 @@ class _LessonsPageState extends State<LessonsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu 汉字树"), // "Lessons Page"
+        title: Text(getString(10)/*"Hanzishu"*/), // "Lessons Page"
       ),
       body: Center
         (
@@ -138,7 +138,7 @@ class _LessonsPageState extends State<LessonsPage> {
       children: <Widget>[
         //getADivider(lessonNumber),
         Text(
-          "Unit " + '$level' + ": " + theLevelList[level].description,
+          getString(9)/*"Unit"*/ + " " + '$level' + ": " + theLevelList[level].description,
           textAlign: TextAlign.right,
           style: TextStyle(fontSize: 16.0),
         ),

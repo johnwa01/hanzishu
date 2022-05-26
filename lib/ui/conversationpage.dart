@@ -59,7 +59,7 @@ class _ConversationPageState extends State<ConversationPage> {
       (
       appBar: AppBar
         (
-        title: Text("Conversation"),
+        title: Text(getString(4)/*"Conversation"*/),
       ),
       body: Container(
           //height: 200.0,

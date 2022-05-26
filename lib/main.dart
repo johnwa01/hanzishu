@@ -23,6 +23,11 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io';
+import 'dart:ui';
+import "package:hanzishu/utility.dart";
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
@@ -41,8 +46,17 @@ void main() {
 
 
 class MyApp extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
+    if (kIsWeb) {
+      var defaultSystemOrWindowLocale = window.locale;
+      theDefaultLocale = defaultSystemOrWindowLocale.toString();
+    }
+    else {
+      String defaultSystemOrWindowLocale = Platform.localeName;
+      theDefaultLocale = "zh_CN"; //defaultSystemOrWindowLocale; //"zh_CN"
+    }
 
     return  MaterialApp(
       theme: _buildShrineTheme(),
@@ -134,22 +148,22 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
-            label: 'Lessons',
+            label: getString(91)/*'Lessons'*/,
             icon: Image.asset('assets/core/lessonsicon1.png'),
             activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: 'Dictionary',
+            label: getString(92)/*'Dictionary'*/,
             icon: Image.asset('assets/core/dictionaryicon1.png'),
             activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: 'Typing',
+            label: getString(93)/*'Typing'*/,
             icon: Image.asset('assets/core/typingicon1.png'),
             activeIcon: Image.asset('assets/core/typingicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: 'Me',
+            label: getString(94)/*'Me'*/,
             icon: Image.asset('assets/core/meicon1.png'),
             activeIcon: Image.asset('assets/core/meicon0.png'),
           ),

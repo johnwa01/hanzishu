@@ -55,14 +55,14 @@ class DictionaryPainter extends BreakoutPainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue("Basic Character Table[首字表]", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
+      displayTextWithValue(getString(96)/*"Basic Character Table"*/, applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
       // below should match dictionaryPage
       //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
       //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
 
       // below should match dictionaryPage
       var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(5.0), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0); // 5.0
-      displayTextWithValue("Help", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width, Colors.lightBlue);
+      displayTextWithValue(getString(114)/*"Help"*/, helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width, Colors.lightBlue);
 
       DisplayFirstZis();
     }
@@ -128,7 +128,7 @@ class DictionaryPainter extends BreakoutPainter {
     }
     else if (stage == DictionaryStage.help) {
       //var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
-      displayTextWithValue("Help", fontSize4, fontSize1, defaultFontSize, Colors.blueAccent);
+      displayTextWithValue(getString(114)/*"Help"*/, fontSize4, fontSize1, defaultFontSize, Colors.blueAccent);
     }
 /*
     if (stage == DictionaryStage.detailedzi) {
@@ -141,7 +141,7 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayHelpPath() {
     displayTextWithValue("@", 10.0, 5.0, 25.0, Colors.blueAccent);
     displayTextWithValue("->", 35.0, 5.0, 20.0, Colors.blueAccent);
-    displayTextWithValue("Help", 60.0, 5.0, 20.0, Colors.blueAccent);
+    displayTextWithValue(getString(114)/*"Help"*/, 60.0, 5.0, 20.0, Colors.blueAccent);
   }
 
   DisplayDetailedZi(int ziIndex) {
@@ -226,7 +226,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue("Breakdown: ", fontSize3, fontSize12, fontSize4, Colors.black);
+    displayTextWithValue(getString(98)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black);
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);

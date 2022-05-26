@@ -5,6 +5,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -22,7 +23,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Component Input Method 部件输入法"),
+        title: Text(getString(98)/*"Component Input Method"*/),
       ),
       body: Center
         (
@@ -47,11 +48,11 @@ class _ToolsPageState extends State<ToolsPage> {
     return ListView(
       children: <Widget>[
         ListTile(
-          title: Text("Please finish exercise 1 - 7 to learn the input method:", textDirection: TextDirection.ltr),
+          title: Text(getString(99)/*"Please finish exercise 1 - 7 to learn the input method"*/ + ":", textDirection: TextDirection.ltr),
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("1. Give it a try", textDirection: TextDirection.ltr),
+          title: Text("1. " + getString(100)/*"Give it a try"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -64,7 +65,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("2. Component-key pairing groups", textDirection: TextDirection.ltr),
+          title: Text("2. " + getString(101)/*"Component-key pairing groups"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[1] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -77,7 +78,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("3. Memorize by groups", textDirection: TextDirection.ltr),
+          title: Text("3. " + getString(102)/*"Memorize by groups"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[2] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -91,7 +92,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("4. Memorize the pairings", textDirection: TextDirection.ltr),
+          title: Text("4. " + getString(103)/*"Memorize the pairings"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[3] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -104,7 +105,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("5. Guided typing", textDirection: TextDirection.ltr),
+          title: Text("5. " + getString(104)/*"Guided typing"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -117,7 +118,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("6. Expanded Components", textDirection: TextDirection.ltr),
+          title: Text("6. " + getString(105)/*"Expanded Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[5] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -134,8 +135,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(""
-              "7. Typing exercises", textDirection: TextDirection.ltr),
+          title: Text("7. " + getString(106)/*"Typing exercises"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[6] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -148,8 +148,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(""
-              "[Optional] Customized exercises", textDirection: TextDirection.ltr),
+          title: Text(getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -162,7 +161,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("Free typing and help", textDirection: TextDirection.ltr),
+          title: Text(getString(108)/*"Free typing and help"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

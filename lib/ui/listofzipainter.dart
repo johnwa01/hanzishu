@@ -71,7 +71,7 @@ class ListOfZiPainter extends BasePainter {
     if (lesson.charsIds.length > 0 || lesson.convCharsIds.length > 0) {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
-        displayTextWithValue("Basic Characters (Components)", lessonLeftEdge, yPositionWrapper.value,
+        displayTextWithValue(getString(81)/*"Basic Characters (Components)"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);
       }
@@ -114,7 +114,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Basic Non-Characters (Components)", lessonLeftEdge, yPositionWrapper.value,
+            getString(82)/*"Basic Non-Characters (Components)"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);  //blue
       }
@@ -136,7 +136,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Characters", lessonLeftEdge, yPositionWrapper.value,
+            getString(83)/*"Characters"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);
       }
@@ -179,7 +179,7 @@ class ListOfZiPainter extends BasePainter {
       yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
         displayTextWithValue(
-            "Character Groups", lessonLeftEdge, yPositionWrapper.value,
+            getString(84)/*"Character Groups"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
                 ZiOrCharSize.defaultSize), Colors.brown);
       }
@@ -303,7 +303,7 @@ class ListOfZiPainter extends BasePainter {
     transX = applyRatio(20.0);
     yPositionWrapper.value += applyRatio(33.0);
     if (!isInfoOnly) {
-      displayTextWithValue("Sound: ", transX, yPositionWrapper.value,
+      displayTextWithValue(getString(85)/*"Sound"*/ + ": ", transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.black);
     }
@@ -341,7 +341,7 @@ class ListOfZiPainter extends BasePainter {
     // display meaning
     if (!isInfoOnly) {
       displayTextWithValue(
-          "Meaning: ", applyRatio(20.0), yPositionWrapper.value,
+          getString(86)/*"Meaning"*/ + ": ", applyRatio(20.0), yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.black);
       displayTextWithValue(

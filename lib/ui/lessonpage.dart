@@ -35,7 +35,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     theCurrentLessonId = widget.lessonId;
 
-    String lessonName = "Lesson " + theCurrentLessonId.toString() + ": " + theLessonList[theCurrentLessonId].titleTranslation + " " + theLessonList[theCurrentLessonId].title;
+    String lessonName = getString(7) /*"Lesson"*/ + " " + theCurrentLessonId.toString() + ": " + theLessonList[theCurrentLessonId].titleTranslation/* + " " + theLessonList[theCurrentLessonId].title*/;
 
     return Scaffold
       (
@@ -60,7 +60,7 @@ class _LessonPageState extends State<LessonPage> {
           //  padding: EdgeInsets.all(5),
           //),
           Container(
-            child: Text("Please complete exercises in order.", style: TextStyle(fontSize: 16.0),),
+            child: Text(getString(8)/*"Please complete exercises in order."*/, style: TextStyle(fontSize: 16.0),),
             padding: EdgeInsets.all(15),
           ),
           Container(

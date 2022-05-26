@@ -19,7 +19,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
       (
       appBar: AppBar
         (
-        title: Text("Privacy policy"),
+        title: Text(getString(141)/*"Privacy policy"*/),
       ),
       body: Center
         (
@@ -42,28 +42,17 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
 
         children: <Widget>[
           Text(
-           "Privacy policy",
+           getString(141)/*"Privacy policy"*/,
             style: TextStyle(color: Colors.blue, fontSize: fontSize1/*, fontWeight: FontWeight.bold*/),
             textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Hanzishu App doesn't collect sensitive user specific data.",
+              getString(297)/*"Hanzishu App doesn't collect sensitive user specific data."*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
-          Text(
-              "In order to have a consistent user experience, the app's storage version, language, status of lessons and quiz results are stored in the local storage of the phones so that users will see the same status after a phone reboots. ",
-              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: fontSize3),
-          Text(
-              "John Zhongqi Wang",
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
           Text(
               "john@hanzishu.com",
               style: TextStyle(fontSize: fontSize2),
@@ -75,7 +64,12 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "Bellevue, WA 98008, U.S.A.",
+              "Bellevue, WA 98008",
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "U.S.A.",
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

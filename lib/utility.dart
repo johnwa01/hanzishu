@@ -2,6 +2,8 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/localization/string_en_US.dart';
+import 'package:hanzishu/localization/string_zh_CN.dart';
 
 /*
 enum HittestState {
@@ -130,6 +132,30 @@ class ScreenManager {
 // need to use the less ratio one of the x and y ratios
 double xYLength(double xy) {
   return xy; //* theDrawingSizeRatio;
+}
+
+String getString(int id) {
+  // according to theDefaultLocale
+  String localString;
+  switch (theDefaultLocale) {
+    case "en_US":
+      {
+        localString = theString_en_US[id].str;
+      }
+      break;
+    case "zh_CN":
+      {
+        localString = theString_zh_CN[id].str;
+      }
+      break;
+    default:
+      {
+        localString = theString_en_US[id].str;
+      }
+      break;
+  }
+
+  return localString;
 }
 
 class Utility {

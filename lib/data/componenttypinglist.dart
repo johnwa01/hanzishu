@@ -1,5 +1,5 @@
 import 'package:hanzishu/engine/component.dart';
-
+import 'package:hanzishu/utility.dart';
 
 var theLeadComponentList = [
   LeadComponent(0, "Ta", "撇", false, true, 1, 1, "C11.png", "nmdc", [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92]),
@@ -196,13 +196,13 @@ var theFullExpandedComponentList = [
 
 var theZiForIntroductionList=[
   ZiWithComponentsAndStrokes("键", ["Tl", "Xh", "B2"], "GG6.png", ""), //index only, not used
-  ZiWithComponentsAndStrokes("人", ["Ea"], "", "Tap 人 in the list below."),
+  ZiWithComponentsAndStrokes("人", ["Ea"], "", getString(298)/*"Tap 人 in the list below."*/),
   //ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "八 > r, 刀 > v"),
-  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", "Type 'r', spacebar."),
+  ZiWithComponentsAndStrokes("分", ["Ra", "Va"], "", getString(299)/*"Type 'r', spacebar."*/),
   ZiWithComponentsAndStrokes("品", ["Ia", "Ia", "Ia"], "", "口 : i, 口 : i, tap 品."),
   //ZiWithComponentsAndStrokes("晶", ["Oa", "Oa", "Oa"], "501.png", "日 > o, 日 > o, 日 > o"),
   ZiWithComponentsAndStrokes("厅", ["Ka", "Ja"], "", "厂 : k, 丁 : j, tap 厅."),  // move down
-  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 : a, 又 : n, spacebar."),
+  ZiWithComponentsAndStrokes("支", ["Aa", "Na"], "", "十 : a, 又 : n, " + getString(300)/*"spacebar."*/),
   ZiWithComponentsAndStrokes("查", ["La", "Oa", "Ga"], "", "木 : l, 日 : o, 一 : g"),
   ZiWithComponentsAndStrokes("昭", ["Oa", "Va", "Ia"], "", "日 : o, 刀 : v, 口 : i"),
   // ZiWithComponentsAndStrokes("哈", ["Ia", "Ea", "Ga", "Ia"], "", "口 > i,人 > e,一 > g,口 > i"), // enough. limit the numbers.

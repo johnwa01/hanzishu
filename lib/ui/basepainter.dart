@@ -852,7 +852,7 @@ class BasePainter extends CustomPainter{
       ziOrPhraseHint = theZiManager.getZi(id).origin;
     }
 
-    displayTextWithValue("Hint: ", posi.transX, posi.transY,
+    displayTextWithValue(getString(90)/*"Hint"*/ + ": ", posi.transX, posi.transY,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
         Colors.black);
 
@@ -1035,7 +1035,7 @@ class BasePainter extends CustomPainter{
   displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, comps);
-    displayTextWithValue("Components: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(getString(97)/*"Components"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     drawComponentZiList(
         comps,
         160.0 * ratio,
@@ -1051,7 +1051,7 @@ class BasePainter extends CustomPainter{
   // assume a single comp zi. used in dictionary.
   displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio) {
     var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
-    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(getString(88)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     var comp = ComponentManager.getComponentByCode(comps[0]);
 
     if (comp.strokesString.length > 0) {
@@ -1071,7 +1071,7 @@ class BasePainter extends CustomPainter{
   // assume a single comp zi. used in zi list in lessons.
   displayCompStrokes(int ziId, PositionAndSize posi, double ratio) {
     var compCode = ComponentManager.getCompCodeFromZiId(ziId);
-    displayTextWithValue("Strokes: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(getString(87)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     var comp = ComponentManager.getComponentByCode(compCode);
 
     if (comp != null) {
@@ -1091,7 +1091,7 @@ class BasePainter extends CustomPainter{
   displayTypingCode(int searchingZiIndex, PositionAndSize posi) {
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
-        "Typing code: ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+        getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     displayTextWithValue(typingCode, posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 

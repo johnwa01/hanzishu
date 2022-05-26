@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/utility.dart';
 
 
 class InputZiHintPainter extends BasePainter {
@@ -35,10 +36,10 @@ class InputZiHintPainter extends BasePainter {
     String note;
 
     if (typingType == TypingType.LeadComponents) {
-      note = "Note: Type uppercase letter Z to show components to keyboard mapping.";
+      note = getString(281)/*"Note: Type uppercase letter Z to show components to keyboard mapping."*/;
     }
     else {
-      note = "Note: Type uppercase letter A to Y to show Expanded Components. Type Z to show mapping.";
+      note = getString(282)/*"Note: Type uppercase letter A to Y to show Expanded Components. Type Z to show mapping."*/;
     }
 
     displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue); // 18.0

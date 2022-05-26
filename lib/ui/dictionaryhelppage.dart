@@ -45,7 +45,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
       (
       appBar: AppBar
         (
-        title: Text("Help"),
+        title: Text(getString(114)/*"Help"*/),
       ),
       body: Container(
         //height: 800.00,
@@ -145,74 +145,74 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
         children: <Widget>[
           SizedBox(height: TheConst.fontSizes[2] / 2),
           Text(
-              "About the First Character Dictionary",
+              getString(142)/*"About the First Character Dictionary"*/,
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
-              "The First Character Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group.",
+              getString(143)/*"The First Character Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group."*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           SizedBox(height: TheConst.fontSizes[2]),
           Text(
-              "Navigate the First Character Dictionary",
+              getString(144)/*"Navigate the First Character Dictionary"*/,
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	Open the Basic Character Table",
+              "   •	" + getString(145)/*"Open the Basic Character Table"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	Tap the first Basic Character of the Character that you are searching for",
+              "   • " + getString(146)/*"Tap the first Basic Character of the Character that you are searching for"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	Select the Character from the list. Note: If it’s not there, the dictionary doesn’t support this character.",
+              "   •	" + getString(147)/*"Select the Character from the list. Note: If it’s not there, the dictionary doesn’t support this character."*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	View the detailed information about the Character",
+              "   •	" + getString(148)/*"View the detailed information about the Character"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           SizedBox(height: TheConst.fontSizes[2]),
           Text(
-              "Identify the Character’s first Basic Character",
+              getString(149)/*"Identify the Character’s first Basic Character"*/,
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	Ex: Character 你 -> Basic Character 小 (the first and only Basic Character)",
+              "   •	" + getString(150)/*"Ex: Character 你 -> Basic Character 小 (the first and only Basic Character)"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	If a Character’s first Basic Character is 口, but it contains other Basic Characters, select the next Basic Character",
+              "   •	" + getString(151)/*"If a Character’s first Basic Character is 口, but it contains other Basic Characters, select the next Basic Character"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	Ex: 听 -> 斤 (skip 口)",
+              "   	 o	" + getString(152)/*"Ex: 听 -> 斤 (skip 口)"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	If a Character doesn’t contain any Basic Characters, select the Character’s first stroke (in group 1)",
+              "   •	" + getString(153)/*"If a Character doesn’t contain any Basic Characters, select the Character’s first stroke (in group 1)"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	Ex: Character 扎 -> Stroke 一 ",
+              "   	 o	" + getString(154)/*"Ex: Character 扎 -> Stroke 一 "*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	Ex: Character 丝 -> Stroke 乙. Note: all fold strokes map to 乙.",
+              "   	 o	" + getString(155)/*"Ex: Character 丝 -> Stroke 乙. Note: all fold strokes map to 乙."*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),

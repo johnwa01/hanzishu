@@ -92,7 +92,7 @@ class _ComponentPageState extends State<ComponentPage> {
       title = 'Memorize the pairings';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Expanded Components';
+      title = getString(105)/*'Expanded Components'*/;
     }
 
     return Scaffold
@@ -235,7 +235,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'Ready to memorize the Component-key pairings?',
+                      getString(121)/*('Ready to memorize the Component-key pairings?'*/,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)
                   ),
                 )
@@ -264,7 +264,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Flexible (
                 child: Text(
                   //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  'The pairings are divided into six groups (based on the first Stroke of each Component). Five single-stroke components are located in the middle, therefore remember each group from middle to sides.',
+                  getString(122)/*'The pairings are divided into six groups (based on the first Stroke of each Component). Five single-stroke components are located in the middle, therefore remember each group from middle to sides.'*/,
                   style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()) // 18
                 ),
               ),
@@ -281,7 +281,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                     //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                      'Learn the above groups.',
+                      getString(123)/*'Learn the above groups.'*/,
                       style: TextStyle(fontSize: 15  * getSizeRatioWithLimit(), fontWeight: FontWeight.bold) // 18
                   ),
                 )
@@ -309,7 +309,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                     //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                      'Learn the above Component-key pairing groups.',
+                      getString(124)/*'Learn the above Component-key pairing groups.'*/,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold) // 18
                   ),
                 )
@@ -340,7 +340,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    'The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group.',
+                    getString(125)/*'The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group.'*/,
                     style: TextStyle(fontSize: 15 * getSizeRatioWithLimit())  // 20
                   ),
                 ),
@@ -356,7 +356,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20 * getSizeRatioWithLimit()),
                 Flexible (
                   child: Text(
-                      'Memorize the above Component-key pairings.',
+                      getString(126)/*'Memorize the above Component-key pairings.'*/,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
@@ -387,7 +387,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      'Memorize the above Component-key pairings.',
+                      getString(127)/*'Memorize the above Component-key pairings.'*/,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
@@ -610,16 +610,16 @@ class _ComponentPageState extends State<ComponentPage> {
       return Container(width:0.0, height: questionSize);
     }
     else {
-      String question = "Map the Component to its key.";
+      String question = getString(128)/*"Map the Component to its key."*/;
 
       if (questionType == QuestionType.ExpandedComponent) {
         var hint = theExpandedComponentList[currentIndex].hint;
         question =
-            "Guess the Lead Component and corresponding key for these Expanded Components. (Hint: " +
+            getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
       else if (questionType == QuestionType.ComponentGroup) {
-        question = "Match above Component group to its key group.";
+        question = getString(130)/*"Match above Component group to its key group."*/;
       }
 
       return Flexible(
@@ -643,7 +643,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Row(
                 children: <Widget>[
                   Flexible(child: Text(
-                     "This chart shows the Expanded Components for Lead Component 日（key O). To type an Expanded Component, just type its Lead Component 日（key O).",
+                     getString(131)/*"This chart shows the Expanded Components for Lead Component 日（key O). To type an Expanded Component, just type its Lead Component 日（key O)."*/,
                     style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
                     textAlign: TextAlign.start),),
                 ]
@@ -656,7 +656,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Row(
                   children: <Widget>[
                     Flexible(child: Text(
-                          "Note: The Expanded Components have similar shapes to their Lead Component.",
+                          getString(132)/*"Note: The Expanded Components have similar shapes to their Lead Component."*/,
                         style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit(), fontStyle: FontStyle.italic),
                     textAlign: TextAlign.start),),// 18
                   ]
@@ -1026,15 +1026,15 @@ class _ComponentPageState extends State<ComponentPage> {
         if (answeredPosition !=
             theComponentManager.getCorrectAnswerPosition()) {
           //TODO: theStatisticsManager.incrementLessonQuizResult(false);
-          result = "Incorrect. ";
+          result = getString(283)/*"Incorrect. "*/;
         }
         else {
           //TODO: theStatisticsManager.incrementLessonQuizResult(true);
-          result = "Correct. ";
+          result = getString(284)/*"Correct. "*/;
         }
       }
 
-      result += "Next";
+      result += getString(138)/*"Next"*/;
 
       //_updateProgress();
 
@@ -1066,7 +1066,7 @@ class _ComponentPageState extends State<ComponentPage> {
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text(getString(286)/*"OK"*/),
       onPressed: () {
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
@@ -1083,23 +1083,23 @@ class _ComponentPageState extends State<ComponentPage> {
     //else {
 
       if (questionType == QuestionType.ComponentGroup) {
-        title = "Good job!";
-        content = "You’ve mastered all six Component groups! In the next exercise, you will memorize the Components in each group.";
+        title = getString(115)/*"Good job!"*/;
+        content = getString(287)/*"You’ve mastered all six Component groups! In the next exercise, you will memorize the Components in each group."*/;
         theNewlyCompletedTypingExercise = 1;
       }
       if (questionType == QuestionType.ComponentInGroup) {
-        title = "Good job!";
-        content = "You remember the Components by group! In the next exercise, you will review the Components.";
+        title = getString(115)/*"Good job!"*/;
+        content = getString(133)/*"You remember the Components by group! In the next exercise, you will review the Components."*/;
         theNewlyCompletedTypingExercise = 2;
       }
       if (questionType == QuestionType.Component) {
-        title = "Way to go!";
-        content = "You know your Lead Components! Let’s test your knowledge with some guided typing.";
+        title = getString(134)/*"Way to go!"*/;
+        content = getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
         theNewlyCompletedTypingExercise = 3;
       }
       if (questionType == QuestionType.ExpandedComponent) {
-        title = "Wow!";
-        content = "You know your Expanded Components! Let’s practice with some typing exercises.";
+        title = getString(136)/*"Wow!"*/;
+        content = getString(137)/*"You know your Expanded Components! Let’s practice with some typing exercises."*/;
         theNewlyCompletedTypingExercise = 5;
      }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";

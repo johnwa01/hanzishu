@@ -57,7 +57,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
       (
       appBar: AppBar
         (
-        title: Text("Glossary"),
+        title: Text(getString(140)/*"Glossary"*/),
       ),
       body: Container(
         //height: 800.00,
@@ -87,398 +87,398 @@ class _GlossaryPageState extends State<GlossaryPage> {
 
         children: <Widget>[
           Text(
-              "Terminology",
+              getString(209)/*"Terminology"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1/*, fontWeight: FontWeight.bold*/),
               textAlign: TextAlign.start
             ),
           SizedBox(height: fontSize3),
           Text(
-              "Hanzi (汉字)",
+              getString(210)/*"Hanzi"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Chinese character",
+              getString(211)/*"Chinese character"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-                "Hanzishu (汉字树)",
+                getString(212)/*"Hanzishu"*/,
                 style: TextStyle(color: Colors.blue, fontSize: fontSize2),
                 textAlign: TextAlign.start
           ),
           Text(
-                "Hanzishu literally translates to ‘Chinese character tree’. Hansizhu is a learning method which breaks up Chinese Characters into Components. This system is used to search through the Chinese dictionary as well as to teach reading and typing in Chinese.",
+                getString(213)/*"Hanzishu literally translates to ‘Chinese character tree’. Hansizhu is a learning method which breaks up Chinese Characters into Components. This system is used to search through the Chinese dictionary as well as to teach reading and typing in Chinese."*/,
                 style: TextStyle(fontSize: fontSize3),
                 textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Strokes",
+              getString(214)/*"Strokes"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "The lines used to create a Character (or a Component).",
+              getString(215)/*"The lines used to create a Character (or a Component)."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Components",
+              getString(216)/*"Components"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Elements of a Character. There are two types of Components:",
+              getString(217)/*"Elements of a Character. There are two types of Components:"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "  •	Components that are also Characters (Basic Characters)",
+              "  •	" + getString(218)/*"Components that are also Characters (Basic Characters)"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	Non-Character Components. They require other Components to create a Character.",
+              "  •	" + getString(219)/*"Non-Character Components. They require other Components to create a Character."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Basic Characters",
+              getString(220)/*"Basic Characters"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Standalone Components. Basic Characters are the foundation of the First Character Dictionary.",
+              getString(221)/*"Standalone Components. Basic Characters are the foundation of the First Character Dictionary."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Characters",
+              getString(222)/*"Characters"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Characters are created with Components or Strokes.",
+              getString(223)/*"Characters are created with Components or Strokes."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Lead Components",
+              getString(224)/*"Lead Components"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "The basic Components which are mapped to a key on the English keyboard.",
+              getString(225)/*"The basic Components which are mapped to a key on the English keyboard."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Select Shift+z to show the Component-key pairings while typing.",
+              getString(226)/*"Select Shift+z to show the Component-key pairings while typing."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Expanded Components",
+              getString(227)/*"Expanded Components"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "The Components that stem from a Lead Component. Expanded Components usually have a similar shape to its Lead Component.",
+              getString(228)/*"The Components that stem from a Lead Component. Expanded Components usually have a similar shape to its Lead Component."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Select Shift+ any key except z to show the Expanded Components while typing.",
+              getString(229)/*"Select Shift+ any key except z to show the Expanded Components while typing."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Make-up Strokes",
+              getString(230)/*"Make-up Strokes"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "The Strokes used to complete typing of Characters which contains only one or two Components.",
+              getString(231)/*"The Strokes used to complete typing of Characters which contains only one or two Components."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Component-key pairing",
+              getString(232)/*"Component-key pairing"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "A Lead Component and its corresponding key on the English keyboard.",
+              getString(233)/*"A Lead Component and its corresponding key on the English keyboard."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Mapping",
+              getString(234)/*"Mapping"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "The concept of matching Lead Components to the English keyboard.",
+              getString(235)/*"The concept of matching Lead Components to the English keyboard."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Component Input Method 部件输入法",
+              getString(236)/*"Component Input Method"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters. Supports nearly 3,800 Characters.",
+              getString(237)/*"A methodology of learning and typing Chinese by breaking up Characters into Components and mapping those core Components (Lead Components) to the English keyboard. All other Components (Expanded Components) are sorted under each Lead Component (often with a similar shape). Components are grouped into sequences of English letters. These sequences create Characters. Supports nearly 3,800 Characters."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "A separate IME app for the input method to be used by other programs is under development and could be released at any time.",
+              getString(238)/*"A separate IME app for the input method to be used by other programs is under development and could be released at any time."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "First Character Dictionary 首字字典",
+              getString(239)/*"First Character Dictionary"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "A Chinese Character dictionary that’s organized based on Basic Characters. Searching a Character by searching the first Basic Character it contains.",
+              getString(240)/*"A Chinese Character dictionary that’s organized based on Basic Characters. Searching a Character by searching the first Basic Character it contains."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           SizedBox(height: fontSize3),
           Text(
-              "Sections",
+              getString(241)/*"Sections"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Lessons",
+              getString(242)/*"Lessons"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Practice your Chinese with 10 units of lessons (60 lessons total).",
+              getString(243)/*"Practice your Chinese with 10 units of lessons (60 lessons total)."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           Text(
-              "Return to this section once you have mastered the Component Input Method.",
+              getString(244)/*"Return to this section once you have mastered the Component Input Method."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character drills 识字钻",
+              getString(245)/*"Character drills"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components/Characters (situated on all four sides of the screen) building up the central Character one layer at a time. Tapping a Character in the center drills down, and tapping a Component/Character on the sides moves back. Holding a Character/Component displays its detailed information.",
+              getString(246)/*"Overview of Characters via a navigation tree. Includes definition, pronunciation, writing how-to, and the Basic Characters. It is a recursive tree with Components forming complicated Characters. It is visualized with the Character in the center of the screen and the Components/Characters (situated on all four sides of the screen) building up the central Character one layer at a time. Tapping a Character in the center drills down, and tapping a Component/Character on the sides moves back. Holding a Character/Component displays its detailed information."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Flashcards",
+              getString(247)/*"Flashcards"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Reviews all the new Basic Characters, non-characters, and phrases from a lesson. Includes pronunciation, definition, strokes, and the Component-key pairing sequence.",
+              getString(248)/*"Reviews all the new Basic Characters, non-characters, and phrases from a lesson. Includes pronunciation, definition, strokes, and the Component-key pairing sequence."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character breakdown",
+              getString(249)/*"Character breakdown"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Separates Characters in a lesson into Characters or Components. Tapping a Character or a Component displays its detailed information.",
+              getString(250)/*"Separates Characters in a lesson into Characters or Components. Tapping a Character or a Component displays its detailed information."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Conversation",
+              getString(251)/*"Conversation"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Demonstrates pronunciation and provides speaking practice. Tapping a Character displays its overlay information.",
+              getString(252)/*"Demonstrates pronunciation and provides speaking practice. Tapping a Character displays its overlay information."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Typing exercises",
+              getString(253)/*"Typing exercises"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Practice for typing the Character using the Component Input Method.",
+              getString(254)/*"Practice for typing the Character using the Component Input Method."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Quiz",
+              getString(255)/*"Quiz"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Reviews the lesson.",
+              getString(256)/*"Reviews the lesson."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Dictionary",
+              getString(257)/*"Dictionary"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "View all the characters based on the First Character Dictionary method which groups Characters by their Basic Characters. Contains nearly 3,800 Characters.",
+              getString(258)/*"View all the characters based on the First Character Dictionary method which groups Characters by their Basic Characters. Contains nearly 3,800 Characters."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Reference the Dictionary as you learn the Component Input Method and complete the lessons.",
+              getString(259)/*"Reference the Dictionary as you learn the Component Input Method and complete the lessons."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Typing",
+              getString(260)/*"Typing"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Learn the Component Input Method and memorize the Component-key pairings.",
+              getString(261)/*"Learn the Component Input Method and memorize the Component-key pairings."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Start in this section before continuing to the Lessons section.",
+              getString(262)/*"Start in this section before continuing to the Lessons section."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Me",
+              getString(263)/*"Me"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Track your progress and review what you’ve already covered.",
+              getString(264)/*"Track your progress and review what you’ve already covered."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Character review",
+              getString(265)/*"Character review"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Review the characters according to the lessons and the units that they were first introduced.",
+              getString(266)/*"Review the characters according to the lessons and the units that they were first introduced."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Quiz results",
+              getString(267)/*"Quiz results"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Records of the quizzes that you have taken",
+              getString(268)/*"Records of the quizzes that you have taken"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           SizedBox(height: fontSize3),
           Text(
-              "Icons",
+              getString(269)/*"Icons"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Triangle",
+              getString(270)/*"Triangle"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Indicates a new Character or Component in the lesson.",
+              getString(271)/*"Indicates a new Character or Component in the lesson."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Pencil",
+              getString(272)/*"Pencil"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Tap to see the Character drawn",
+              getString(273)/*"Tap to see the Character drawn"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Speaker",
+              getString(274)/*"Speaker"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Tap to hear the Character",
+              getString(275)/*"Tap to hear the Character"*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           Text(
-              "Check mark",
+              getString(276)/*"Check mark"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "Indicates that you have just gone through this Character or Component.",
+              getString(277)/*"Indicates that you have just gone through this Character or Component."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
           SizedBox(height: fontSize3),
           Text(
-              "Overlay",
+              getString(278)/*"Overlay"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
           Text(
-              "Tapping or holding a Character in many features within the app displays the detailed information about that Character.",
+              getString(279)/*"Tapping or holding a Character in many features within the app displays the detailed information about that Character."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),

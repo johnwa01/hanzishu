@@ -82,7 +82,7 @@ class _QuizPageState extends State<QuizPage> {
         (
         appBar: AppBar
           (
-          title: Text("Quiz"),
+          title: Text(getString(6)/*"Quiz")*/),
         ),
         body: Center
           (
@@ -384,14 +384,14 @@ class _QuizPageState extends State<QuizPage> {
       var result; // = "Correct! ";
       if (answerPosition != theQuizManager.getCorrectAnswerPosition()) {
         theStatisticsManager.incrementLessonQuizResult(false);
-        result = "Incorrect. ";
+        result = getString(283)/*"Incorrect. "*/;
       }
       else {
         theStatisticsManager.incrementLessonQuizResult(true);
-        result = "Correct! ";
+        result = getString(284)/*"Correct! "*/;
       }
 
-      result += "Continue";
+      result += getString(285)/*"Continue"*/;
 
       //_updateProgress();
 
@@ -422,7 +422,7 @@ class _QuizPageState extends State<QuizPage> {
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
-      child: Text("OK"),
+      child: Text(getString(286)/*"Ok"*/),
       onPressed: () {
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page

@@ -159,7 +159,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       (
       appBar: AppBar
         (
-        title: Text("Review"),
+        title: Text(getString(296)/*"Review"*/),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
