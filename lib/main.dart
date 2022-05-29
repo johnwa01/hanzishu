@@ -1,5 +1,5 @@
 import 'package:flutter/services.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
@@ -26,6 +26,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 
 import 'dart:io';
 import "package:hanzishu/utility.dart";
+import 'dart:ui';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
     init();
     theStorageHandler.initStorage();
+    initDefaultLocale();
   }
 
   init() {
@@ -100,6 +102,26 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //move to lesson
     //LessonManager.populateLessonsInfo();
+  }
+
+  void initDefaultLocale() {
+    String tempLocale;
+
+    if (kIsWeb) {
+      var defaultSystemOrWindowLocale = window.locale;
+      tempLocale = defaultSystemOrWindowLocale.toString();
+    }
+    else {
+      String defaultSystemOrWindowLocale = Platform.localeName;
+      tempLocale = defaultSystemOrWindowLocale;
+    }
+
+    if (tempLocale == "en_US" || tempLocale == "zh_CN") {
+      theDefaultLocale = tempLocale;
+    }
+    else {
+      theDefaultLocale = "en_US";
+    }
   }
 
   final List<Widget> _children =

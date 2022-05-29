@@ -305,7 +305,7 @@ var theString_en_US = [
   Local(300, "spacebar."),
   Local(301, "Start"),
   Local(302, "Language setting"),
-  Local(303, "Explanation language:"),
+  Local(303, "Language in title:"),
   Local(304, "Breakdown"),
   Local(305, "Diamond"),
   Local(306, "To show the detailed breakdown info."),

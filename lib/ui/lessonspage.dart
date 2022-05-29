@@ -62,6 +62,7 @@ class _LessonsPageState extends State<LessonsPage> {
           if (value != null) {
             var storage = theStorageHandler.getStorageFromJson(value);
             if (storage != null) {
+              updateDefaultLocale(storage.language);
               theStorageHandler.setStorage(storage);
               setState(() {
                 this.hasLoadedStorage = true;
@@ -73,22 +74,15 @@ class _LessonsPageState extends State<LessonsPage> {
     }
   }
 
-  void initLocale() {
-    var localeFromStorage = theStorageHandler.getLanguage();
-    if (localeFromStorage != null) {
-      if (localeFromStorage == "en_US" || localeFromStorage == "zh_CN") {
-        theDefaultLocale = localeFromStorage;
-        return;
-      }
-    }
+  void updateDefaultLocale(String localeFromPhysicalStorage) {
+    if (localeFromPhysicalStorage != null && (localeFromPhysicalStorage == 'en_US' || localeFromPhysicalStorage == 'zh_CN')) {
+      if (theDefaultLocale != localeFromPhysicalStorage) {
+        theDefaultLocale = localeFromPhysicalStorage;
 
-    if (kIsWeb) {
-      var defaultSystemOrWindowLocale = window.locale;
-      theDefaultLocale = defaultSystemOrWindowLocale.toString();
-    }
-    else {
-      String defaultSystemOrWindowLocale = Platform.localeName;
-      theDefaultLocale = defaultSystemOrWindowLocale; //"zh_CN", "en_US"
+        // let main page refresh to pick up the language change for navigation bar items
+        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
+        navigationBar.onTap(0);
+      }
     }
   }
 
@@ -98,7 +92,6 @@ class _LessonsPageState extends State<LessonsPage> {
     // also away from the main thread I think.
     // do it only once
     handleStorage();
-    initLocale();
 
     return Scaffold
       (
