@@ -85,7 +85,7 @@ class StorageHandler {
 
   initStorage() {
     storage.storageVersion = '1.0';
-    storage.language = 'en-us';
+    storage.language = 'en_US';
     storage.lessonsStatus = '000000000000000000000000000000000000000000000000000000000000';
     storage.lessonQuizResults = [LessonQuizResult()];
     hasTriedToLoadStorage = false;

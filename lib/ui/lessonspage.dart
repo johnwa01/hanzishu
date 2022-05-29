@@ -7,6 +7,9 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/lessonpage.dart';
+import 'package:hanzishu/data/lessonlist.dart';
+import 'dart:ui';
+import 'dart:io';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -16,6 +19,7 @@ class LessonsPage extends StatefulWidget {
 class _LessonsPageState extends State<LessonsPage> {
   bool hasLoadedStorage;
   int newFinishedLessons;
+  //String currentLocale;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -42,6 +46,7 @@ class _LessonsPageState extends State<LessonsPage> {
     setState(() {
       this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
+      //this.currentLocale = theDefaultLocale;
     });
   }
 
@@ -68,12 +73,32 @@ class _LessonsPageState extends State<LessonsPage> {
     }
   }
 
+  void initLocale() {
+    var localeFromStorage = theStorageHandler.getLanguage();
+    if (localeFromStorage != null) {
+      if (localeFromStorage == "en_US" || localeFromStorage == "zh_CN") {
+        theDefaultLocale = localeFromStorage;
+        return;
+      }
+    }
+
+    if (kIsWeb) {
+      var defaultSystemOrWindowLocale = window.locale;
+      theDefaultLocale = defaultSystemOrWindowLocale.toString();
+    }
+    else {
+      String defaultSystemOrWindowLocale = Platform.localeName;
+      theDefaultLocale = defaultSystemOrWindowLocale; //"zh_CN", "en_US"
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // do here so that it'll refresh the lessonspage to reflect the lesson completed status from storage.
     // also away from the main thread I think.
     // do it only once
     handleStorage();
+    initLocale();
 
     return Scaffold
       (
@@ -138,7 +163,7 @@ class _LessonsPageState extends State<LessonsPage> {
       children: <Widget>[
         //getADivider(lessonNumber),
         Text(
-          getString(9)/*"Unit"*/ + " " + '$level' + ": " + theLevelList[level].description,
+          getString(9)/*"Unit"*/ + " " + '$level' + ": " + getString(BaseLevelDescriptionStringID + level)/*theLevelList[level].description*/,
           textAlign: TextAlign.right,
           style: TextStyle(fontSize: 16.0),
         ),
@@ -214,11 +239,10 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
-    var lesson = theLessonManager.getLesson(lessonNumber);
+    //var lesson = theLessonManager.getLesson(lessonNumber);
+    //String lessonOrSectionName = "";
+      //lessonOrSectionName = lesson.titleTranslation;
 
-    String lessonOrSectionName = "";
-
-      lessonOrSectionName = lesson.titleTranslation;
       return
         InkWell(
           child: Column(
@@ -231,7 +255,7 @@ class _LessonsPageState extends State<LessonsPage> {
                 Row(
                     children: [
                       Text(
-                        lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                        getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),
                       OpenHelper.getCompletedImage(lessonNumber),

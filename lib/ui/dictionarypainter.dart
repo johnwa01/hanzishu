@@ -212,11 +212,11 @@ class DictionaryPainter extends BreakoutPainter {
         fontSize2);
 
     //Need to match the yPosi in DictionaryPage.
-    displayTextWithValue("Sound: ", fontSize3, fontSize9, fontSize4, Colors.black);
+    displayTextWithValue(getString(85)/*"Sound"*/ + ": ", fontSize3, fontSize9, fontSize4, Colors.black);
     DisplayIcon(iconSpeechStrokes, fontSize7, fontSize9, fontSize4, fontSize4, Colors.amber/*MaterialColor ofColor*/, fontSize2/*ziLineWidth*/);
     displayTextWithValue(detailedZi.pinyin, fontSize8 * 1.1, fontSize9, fontSize4, Colors.blue);
 
-    displayTextWithValue("Meaning: ", fontSize3, fontSize10, fontSize4, Colors.black);
+    displayTextWithValue(getString(86)/*"Meaning"*/ + ": ", fontSize3, fontSize10, fontSize4, Colors.black);
     displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
@@ -226,7 +226,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue(getString(98)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black);
+    displayTextWithValue(getString(304)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black);
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
     displayCharBreakout(ziIndex, isGetPositionOnly);

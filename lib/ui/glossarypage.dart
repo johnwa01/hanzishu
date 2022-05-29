@@ -46,9 +46,9 @@ class _GlossaryPageState extends State<GlossaryPage> {
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
 
-    fontSize1 = 14.0 * getSizeRatioWithLimit();
-    fontSize2 = 13.0 * getSizeRatioWithLimit();
-    fontSize3 = 12.0 * getSizeRatioWithLimit(); // base size 12
+    fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
+    fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
+    fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
@@ -409,17 +409,17 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
-          Text(
-              getString(267)/*"Quiz results"*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              getString(268)/*"Records of the quizzes that you have taken"*/,
-              style: TextStyle(fontSize: fontSize3),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: fontSize3),
+          //Text(
+          //    getString(267)/*"Quiz results"*/,
+          //    style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+          //    textAlign: TextAlign.start
+          //),
+          //Text(
+          //    getString(268)/*"Records of the quizzes that you have taken"*/,
+          //    style: TextStyle(fontSize: fontSize3),
+          //    textAlign: TextAlign.start
+          //),
+          //SizedBox(height: fontSize3),
           SizedBox(height: fontSize3),
           Text(
               getString(269)/*"Icons"*/,
@@ -467,6 +467,17 @@ class _GlossaryPageState extends State<GlossaryPage> {
           ),
           Text(
               getString(277)/*"Indicates that you have just gone through this Character or Component."*/,
+              style: TextStyle(fontSize: fontSize3),
+              textAlign: TextAlign.start
+          ),
+          SizedBox(height: fontSize3),
+          Text(
+              getString(305)/*"Diamond"*/,
+              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              getString(306)/*"To show the detailed breakdown info."*/,
               style: TextStyle(fontSize: fontSize3),
               textAlign: TextAlign.start
           ),

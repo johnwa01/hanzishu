@@ -23,9 +23,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io';
-import 'dart:ui';
 import "package:hanzishu/utility.dart";
 
 void main() {
@@ -49,15 +47,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (kIsWeb) {
-      var defaultSystemOrWindowLocale = window.locale;
-      theDefaultLocale = defaultSystemOrWindowLocale.toString();
-    }
-    else {
-      String defaultSystemOrWindowLocale = Platform.localeName;
-      theDefaultLocale = "zh_CN"; //defaultSystemOrWindowLocale; //"zh_CN"
-    }
-
     return  MaterialApp(
       theme: _buildShrineTheme(),
       title: 'Hanzishu',

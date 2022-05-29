@@ -57,7 +57,7 @@ class TheConst {
   static var starChar = '*';
   static var atCharId = 1;
   static var atChar = '@';
-  static List<double> fontSizes = [13.0, 12.0, 11.0];
+  static List<double> fontSizes = [15.0, 14.0, 13.0]; //[13.0, 12.0, 11.0];
 }
 
 class TheConfig {  // can change by runtime

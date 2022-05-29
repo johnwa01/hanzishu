@@ -147,8 +147,8 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   }
 
   Widget getHelpContentView(BuildContext context) {
-    var fontSize1 = TheConst.fontSizes[1] * getSizeRatioWithLimit();
-    var fontSize2 = TheConst.fontSizes[2] * getSizeRatioWithLimit();
+    var fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
+    var fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
     var fontSize = 18.0 * getSizeRatioWithLimit();
     return Column(

@@ -5,7 +5,10 @@ import 'package:hanzishu/ui/reviewselectionpage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hanzishu/ui/settingspage.dart';
 import 'dart:io';
+
+import 'package:hanzishu/variables.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -14,6 +17,16 @@ class MePage extends StatefulWidget {
 
 class _MePageState extends State<MePage> {
   double screenWidth;
+  String currentLocale;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      currentLocale = theDefaultLocale;
+    });
+  }
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -65,6 +78,23 @@ class _MePageState extends State<MePage> {
     );
   }
 
+    _callbackFromSettingsPage() {
+      if (currentLocale != theDefaultLocale) {
+        setState(() {
+          // let this page refresh to pick up the locale change.
+          currentLocale = theDefaultLocale;
+        });
+        theStorageHandler.setLanguage(theDefaultLocale);
+        theStorageHandler.SaveToFile();
+      }
+
+      /*
+      var bottomWidgetKey=new GlobalKey<State<BottomNavigationBar>>();
+      BottomNavigationBar navigationBar =  bottomWidgetKey.currentWidget as BottomNavigationBar;
+      navigationBar.onTap(1);
+      */
+    }
+
       Widget getMeListView(BuildContext context) {
         var imageSize = 35.0 * getSizeRatioWithLimit();
 
@@ -100,6 +130,20 @@ class _MePageState extends State<MePage> {
                     builder: (context) => GlossaryPage(),
                   ),
                 );
+              },
+            ),
+            ListTile(
+              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title: Text(getString(302)/*"Language Settings"*/, textDirection: TextDirection.ltr),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => SettingsPage())).then((val)=>{_callbackFromSettingsPage()});
+                //      Navigator.of(context).push(
+                //          MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getRequests()});
+                //  ),
+                //);
               },
             ),
             ListTile(
