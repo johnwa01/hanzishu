@@ -17,6 +17,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/toolspage.dart';
+import 'package:hanzishu/ui/mepage.dart';
 
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
@@ -41,7 +42,6 @@ void main() {
 //    home: new AnimatedPathDemo(),
 //  ),
 //);
-
 
 class MyApp extends StatelessWidget {
 
@@ -127,6 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
+        key: globalKeyNav,
         onTap: onTappedBar,
         type: BottomNavigationBarType.fixed,
         currentIndex: _currentIndex,

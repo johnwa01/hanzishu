@@ -1,5 +1,6 @@
 import 'dart:io';
-
+//import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 //TODO: create theManagers
 var theLessonManager;
 var theZiManager;
@@ -69,3 +70,5 @@ List<String> theDefaultZiCandidates = ['的', '人', '大', '一', '十', '力',
 //seems hard to pass the value from page to painter
 List<String> theCurrentZiCandidates = theDefaultZiCandidates;
 String globalTestDoubleByteCode = "";
+
+GlobalKey globalKeyNav = new GlobalKey(debugLabel: 'btm_app_bar');

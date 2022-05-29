@@ -309,7 +309,7 @@ var theString_en_US = [
   Local(304, "Breakdown"),
   Local(305, "Diamond"),
   Local(306, "To show the detailed breakdown info."),
-  Local(307, ""),
+  Local(307, "to"),
   Local(308, ""),
   Local(309, ""),
   Local(310, ""),

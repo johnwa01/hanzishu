@@ -7,7 +7,6 @@ import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/settingspage.dart';
 import 'dart:io';
-
 import 'package:hanzishu/variables.dart';
 
 class MePage extends StatefulWidget {
@@ -86,6 +85,10 @@ class _MePageState extends State<MePage> {
         });
         theStorageHandler.setLanguage(theDefaultLocale);
         theStorageHandler.SaveToFile();
+
+        // let main page refresh to pick up the language change for navigation bar items
+        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
+        navigationBar.onTap(3);
       }
 
       /*
@@ -133,7 +136,7 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/settings.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(302)/*"Language Settings"*/, textDirection: TextDirection.ltr),
               onTap: () {
                 Navigator.push(

@@ -109,6 +109,7 @@ flutter:
      - assets/core/logoandroid.png
      - assets/core/meicon0.png
      - assets/core/meicon1.png
+     - assets/core/settings.png
      - assets/core/typing.png
      - assets/core/typingicon0.png
      - assets/core/typingicon1.png
