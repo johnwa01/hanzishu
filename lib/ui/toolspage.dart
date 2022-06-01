@@ -13,7 +13,7 @@ class ToolsPage extends StatefulWidget {
 }
 
 class _ToolsPageState extends State<ToolsPage> {
-  var exerciseCompleted = [false, false, false, false, false, false, false];
+  var exerciseCompleted = [false, false, false, false, false, false, false, false];
 
   int numberOfExercises = 0;
 
@@ -132,11 +132,26 @@ class _ToolsPageState extends State<ToolsPage> {
         //ListTile(
         //  title: Text("Guided typing of characters", textDirection: TextDirection.ltr),
         //),
-
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("7. " + getString(106)/*"Typing exercises"*/, textDirection: TextDirection.ltr),
+          title: Text("7. " + getString(308)/*"Review Expanded Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[6] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComponentPage(questionType: QuestionType.ReviewExpandedComponent),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        //ListTile(
+        //  title: Text("Guided typing of characters", textDirection: TextDirection.ltr),
+        //),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("8. " + getString(106)/*"Typing exercises"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[7] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,

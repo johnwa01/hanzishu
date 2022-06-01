@@ -166,6 +166,35 @@ var theExpandedComponentList = [
   ComponentCollection(25, "E35.png", 3, 5, "which common shape"),
 ];
 
+var theReviewExpandedComponentList = [
+  //ComponentCollection(0, "", 0, 0, "component"),
+  ComponentCollection(0, "EF24.png", 2, 4, "自"),
+  ComponentCollection(1, "EF13.png", 1, 3, "火"),
+  ComponentCollection(2, "EF23.png", 2, 3, "中"),
+  ComponentCollection(3, "EF53.png", 5, 3, "弗"),
+  ComponentCollection(4, "EF42.png", 4, 2, "于"),
+  ComponentCollection(5, "EF11.png", 1, 1, "片"),
+  ComponentCollection(6, "EF25.png", 2, 5, "甲"),
+  ComponentCollection(7, "EF44.png", 4, 4, "本"),
+  ComponentCollection(8, "EF31.png", 3, 1, "卅"),
+  ComponentCollection(9, "EF62.png", 6, 2, "幺"),
+  ComponentCollection(10, "EF34.png", 3, 4, "匕"),
+  ComponentCollection(11, "EF41.png", 4, 1, "心"),
+  ComponentCollection(12, "EF14.png", 1, 4, "丈"),
+  ComponentCollection(13, "EF22.png", 2, 2, "巾"),
+  ComponentCollection(14, "EF43.png", 4, 3, "广"),
+  ComponentCollection(15, "EF52.png", 5, 2, "刁"),
+  ComponentCollection(16, "EF61.png", 6, 1, "皮"),
+  ComponentCollection(17, "EF12.png", 1, 2, "川"),
+  ComponentCollection(18, "EF33.png", 3, 3, "王"),
+  ComponentCollection(19, "EF32.png", 3, 2, "工"),
+  ComponentCollection(20, "EF51.png", 5, 1, "飞"),
+  ComponentCollection(21, "EF54.png", 5, 4, "聿"),
+  ComponentCollection(22, "EF15.png", 1, 5, "月"),
+  ComponentCollection(23, "EF21.png", 2, 1, "卜"),
+  ComponentCollection(24, "EF35.png", 3, 5, "土"),
+];
+
 var theFullExpandedComponentList = [
   ComponentCollection(0, "EF11.png", 1, 1, ""),
   ComponentCollection(1, "EF12.png", 1, 2, ""),

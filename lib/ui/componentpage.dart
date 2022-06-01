@@ -22,7 +22,7 @@ class _ComponentPageState extends State<ComponentPage> {
   AnswerPosition answeredPosition;
   //int lessonId;
   AnswerType answerType;
-  int currentIndex;
+  int currentIndex; // assign the value from the one in ComponentManager every time so that we can keep its state per exit/re-enter case
   double _progressValue;
   int totalQuestions;
   double screenWidth;
@@ -36,16 +36,16 @@ class _ComponentPageState extends State<ComponentPage> {
     super.initState();
     _progressValue = 0.0;
 
+    questionType = widget.questionType;
     //TODO
     //theStatisticsManager.initLessonQuizResults();
-    theComponentManager.initValues();
-    currentIndex = theComponentManager.getFirstIndex(widget.questionType); //TODO: lessonId
+
+    theComponentManager.setCurrentType(questionType);
+    currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();
 
     totalQuestions = theComponentManager.getTotalQuestions(widget.questionType);
-    theComponentManager.setCurrentType(questionType); //TODO: need to init every time.
-    theComponentManager.initCurrentIndex();
 
     setState(() {
       answeredPosition = AnswerPosition.none;
@@ -83,16 +83,19 @@ class _ComponentPageState extends State<ComponentPage> {
 
     var title = '';
     if (questionType == QuestionType.ComponentGroup) {
-      title = 'Memorize groups';
+      title = getString(101)/*'Component-key pairing groups'*/;
     }
     else if (questionType == QuestionType.ComponentInGroup) {
-      title = 'Memorize by groups';
+      title = getString(102)/*'Memorize by groups'*/;
     }
     else if (questionType == QuestionType.Component) {
-      title = 'Memorize the pairings';
+      title = getString(103)/*'Memorize the pairings'*/;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       title = getString(105)/*'Expanded Components'*/;
+    }
+    else if (questionType == QuestionType.ReviewExpandedComponent) {
+      title = getString(308)/*'Review Expanded Components'*/;
     }
 
     return Scaffold
@@ -156,7 +159,7 @@ class _ComponentPageState extends State<ComponentPage> {
         );
       }
     }
-    else if(this.questionType == QuestionType.Component  || this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup || this.questionType == QuestionType.ExpandedComponent) {
+    else if(this.questionType == QuestionType.Component  || this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup || this.questionType == QuestionType.ExpandedComponent || this.questionType == QuestionType.ReviewExpandedComponent) {
       if (this.questionType == QuestionType.ComponentInGroup && theComponentManager.isHeaderOfComponentInGroup()) {
         if (currentIndex == 0) {
           // only for the first time
@@ -467,6 +470,38 @@ class _ComponentPageState extends State<ComponentPage> {
         return getQuestionImage();
       }
     }
+    else if (questionType == QuestionType.ReviewExpandedComponent) {
+      if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
+        return Row(
+            children: <Widget>[
+              SizedBox(width: 40 * getSizeRatioWithLimit()),
+              getReviewExpandedComponentChar(),
+              SizedBox(width: 60 * getSizeRatioWithLimit()),
+              Container(
+                child: getResultReminderImage(context), // only used by Expanded Component and Review Expanded Component
+                //padding: EdgeInsets.all(10),
+              ),
+            ]
+        );
+      }
+      else {
+        return Row(
+            children: <Widget>[
+              SizedBox(width: 40 * getSizeRatioWithLimit()),
+              getReviewExpandedComponentChar(),
+              SizedBox(height: 160 * getSizeRatioWithLimit())
+            ]
+        );
+      }
+    }
+  }
+
+  Widget getReviewExpandedComponentChar() {
+    var comp = theReviewExpandedComponentList[currentIndex];
+    return Text(
+          comp.hint, // hint or char
+          style: TextStyle(fontSize: 60.0 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)
+    );
   }
 
   Widget getResultReminderImage(BuildContext context) {
@@ -474,12 +509,20 @@ class _ComponentPageState extends State<ComponentPage> {
     double imageWidth = 180.0 * getSizeRatioWithLimit();
     double imageHeight = 160.0 * getSizeRatioWithLimit();
 
-    if (currentIndex > 0 && questionType == QuestionType.ExpandedComponent) {
-      var compCollection = theExpandedComponentList[currentIndex];
-      var comp = theComponentManager.getComponentByGroupAndIndex(compCollection.groupNumber, compCollection.indexInGroup);
-
-      imagePath =
-          'assets/typing/' + comp.image;
+    if ((currentIndex > 0 && questionType == QuestionType.ExpandedComponent) || (questionType == QuestionType.ReviewExpandedComponent)) {
+      if (questionType == QuestionType.ExpandedComponent) {
+        var compCollection = theExpandedComponentList[currentIndex];
+        var comp = theComponentManager.getComponentByGroupAndIndex(
+            compCollection.groupNumber, compCollection.indexInGroup);
+        imagePath =
+            'assets/typing/' + comp.image;
+      }
+      else if (questionType == QuestionType.ReviewExpandedComponent) {
+          var compCollection = theReviewExpandedComponentList[currentIndex];
+          var comp = compCollection.imageName;
+          imagePath =
+              'assets/typing/' + compCollection.imageName;
+      }
 
       return Container(
           alignment: Alignment.topRight, //topLeft,
@@ -509,6 +552,9 @@ class _ComponentPageState extends State<ComponentPage> {
       imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
       imageWidth = 160.0 * getSizeRatioWithLimit();
       imageHeight = 160.0 * getSizeRatioWithLimit();
+    }
+    else if (questionType == QuestionType.ReviewExpandedComponent) {
+      return getReviewExpandedComponentChar();
     }
     else if (questionType == QuestionType.ComponentInGroup) {
       var groupNumberOfcomponentInGroup = theComponentInGroupList[currentIndex].groupNumber;
@@ -618,6 +664,11 @@ class _ComponentPageState extends State<ComponentPage> {
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
+      if (questionType == QuestionType.ReviewExpandedComponent) {
+        //var hint = theExpandedComponentList[currentIndex].hint;
+        question =
+            getString(309)/*"For the above Expanded Component, guess its Lead Component and type corresponding key."*/;
+      }
       else if (questionType == QuestionType.ComponentGroup) {
         question = getString(130)/*"Match above Component group to its key group."*/;
       }
@@ -632,7 +683,7 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    if (questionType == QuestionType.ExpandedComponent) {
+    if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ReviewExpandedComponent) {
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
 
@@ -873,7 +924,7 @@ class _ComponentPageState extends State<ComponentPage> {
       //textColor: Colors.blueAccent,
       padding: EdgeInsets.all(2.0), //EdgeInsets.zero,
       onPressed: () {
-          setPositionState(position);
+        setPositionState(position);
       },
       child: Image.asset(
         //TODO: temp folder and name
@@ -1054,6 +1105,7 @@ class _ComponentPageState extends State<ComponentPage> {
               //}
               //if (theComponentManager.getCurrentType() == QuestionType.none) {
               if (currentIndex == -1) {
+                theComponentManager.initCurrentIndex();
                 showCompletedDialog(context);
               }
             });
@@ -1099,9 +1151,14 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
-        content = getString(137)/*"You know your Expanded Components! Let’s practice with some typing exercises."*/;
+        content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
         theNewlyCompletedTypingExercise = 5;
      }
+    if (questionType == QuestionType.ReviewExpandedComponent) {
+      title = getString(136)/*"Wow!"*/;
+      content = getString(310)/*"You really know your Expanded Components! Let’s practice with some typing exercises."*/;
+      theNewlyCompletedTypingExercise = 6;
+    }
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
 

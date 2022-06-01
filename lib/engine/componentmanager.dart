@@ -7,15 +7,17 @@ import 'package:hanzishu/data/componentlist.dart';
 
 
 class ComponentManager {
-  var currentQuestionType = QuestionType
-      .ComponentGroup; // starting with 1, 0 for no more
-  int currentIndex = 1;
+  // keep track type and index from manager so that we can keep a state for exit/re-enter the same exercise case.
+  var currentQuestionType = QuestionType.none;
+  int currentIndex = 0;
   AnswerPosition correctAnswerPosition;
 
+  /*
   initValues() {
     currentQuestionType =
-        QuestionType.ComponentGroup; // starting with 1, 0 for no more
+        QuestionType.none; // starting with 1, 0 for no more
   }
+  */
 
   int getTotalQuestions(QuestionType questionType) {
     int total;
@@ -31,6 +33,9 @@ class ComponentManager {
     else if (questionType == QuestionType.ExpandedComponent) {
       total = theExpandedComponentList.length;
     }
+    else if (questionType == QuestionType.ReviewExpandedComponent) {
+      total = theReviewExpandedComponentList.length;
+    }
 
     return total;
   }
@@ -40,16 +45,19 @@ class ComponentManager {
   }
 
   setCurrentType(QuestionType currentType) {
-    this.currentQuestionType = currentType;
+    if (currentQuestionType != currentType) {
+      currentQuestionType = currentType;
+      currentIndex = 0;
+    }
+  }
+
+  getCurrentIndex(QuestionType questionType) {
+    return currentIndex;
   }
 
   initCurrentIndex() {
-    this.currentIndex = 0; // skip the 0 which is a placeholder one
+    currentIndex = 0;
   }
-
-  //List<String> getCurrentValues() {
-  //  return currentValues;
-  //}
 
   //TODO: a nicer way to compare a range
   bool isGroupOrIndividualAnswerType(AnswerPosition answerPosition) {
@@ -391,6 +399,11 @@ class ComponentManager {
       correctAnswerPosition = getPositionByGroupAndIndex(
           expandedComp.groupNumber, expandedComp.indexInGroup);
     }
+    else if (currentQuestionType == QuestionType.ReviewExpandedComponent) {
+      var reviewExpandedComp = theReviewExpandedComponentList[currentIndex];
+      correctAnswerPosition = getPositionByGroupAndIndex(
+          reviewExpandedComp.groupNumber, reviewExpandedComp.indexInGroup);
+    }
 
     return correctAnswerPosition;
   }
@@ -400,7 +413,10 @@ class ComponentManager {
   }
 
   int getFirstIndex(QuestionType questionType) {
-    //TODO
+    //  if (questionType == QuestionType.ReviewExpandedComponent) {
+    //    return 1;
+    //  }
+
     return 0;
   }
 

@@ -3,7 +3,8 @@ enum QuestionType {
   ComponentGroup,
   ComponentInGroup,
   Component,
-  ExpandedComponent
+  ExpandedComponent,
+  ReviewExpandedComponent
 }
 
 enum AnswerType {
@@ -85,7 +86,7 @@ class ComponentCollection {
   String imageName;
   int groupNumber;
   int indexInGroup;
-  String hint;
+  String hint; // or character
 
   ComponentCollection(
       int id,

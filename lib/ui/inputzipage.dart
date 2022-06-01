@@ -1050,7 +1050,7 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.ExpandedComponents) {
       title = getString(118)/*"Congratulations!"*/;
       content = "Your training is complete. Practice or use what you learned with some free typing.";
-      theNewlyCompletedTypingExercise = 6;
+      theNewlyCompletedTypingExercise = 7;
     }
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(115)/*"Good job!"*/;
