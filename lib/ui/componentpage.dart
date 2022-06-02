@@ -648,7 +648,7 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getAnswerQuestion() {
     double size = 15.0 * getSizeRatioWithLimit(); // 18
 
-    if (answeredPosition != AnswerPosition.continueNext) {
+    if (answeredPosition != AnswerPosition.none && answeredPosition != AnswerPosition.continueNext) {
       var questionSize = 0.0; // size
       if (questionType == QuestionType.ExpandedComponent) {
         questionSize = size * 1.5; // 3.0

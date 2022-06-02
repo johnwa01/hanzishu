@@ -11,10 +11,31 @@ import 'package:hanzishu/utility.dart';
 
 
 class InputZiManager {
+  TypingType currentTypingType = TypingType.none;
+  int currentIndex = 0;
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
 //  TypingType typingType;
+
+  TypingType getCurrentType() {
+    return currentTypingType;
+  }
+
+  setCurrentType(TypingType currentType) {
+    if (currentTypingType != currentType) {
+      currentTypingType = currentType;
+      currentIndex = 0;
+    }
+  }
+
+  getCurrentIndex(TypingType typingType) {
+    return currentIndex;
+  }
+
+  initCurrentIndex() {
+    currentIndex = 0;
+  }
 
   static int findFirst(String input) {
     for (var i = 0; i < theInputZiList.length; i++) {
@@ -300,7 +321,7 @@ class InputZiManager {
     return index * 38 + lessonId;
   }
 
-  int getNextIndex(TypingType typingType, int currentIndex, int lessonId) {
+  int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId) {
     currentIndex++;
 
     if (typingType == TypingType.GiveItATry) {

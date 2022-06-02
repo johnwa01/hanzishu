@@ -62,11 +62,13 @@ class _InputZiPageState extends State<InputZiPage> {
     _controller.addListener(handleKeyInput);
     _progressValue = 0.0;
     totalQuestions = theInputZiManager.getTotal(widget.typingType, widget.lessonId);
+    typingType = widget.typingType;
+    theInputZiManager.setCurrentType(typingType);
 
     setState(() {
       updateCounter = 0;
-      currentIndex = 0;
       showHint = false;
+      currentIndex = theInputZiManager.getCurrentIndex(typingType);
     });
   }
 
@@ -316,11 +318,12 @@ class _InputZiPageState extends State<InputZiPage> {
               theTypingExerciseNumber += 1;
             }
             */
+            theInputZiManager.initCurrentIndex();
             showCompletedDialog(currentBuildContext);
           }
           currentIndex =
               theInputZiManager.getNextIndex(
-                  typingType, currentIndex, lessonId);
+                  typingType, /*currentIndex,*/ lessonId);
         });
 
         //       return;

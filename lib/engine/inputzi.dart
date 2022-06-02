@@ -1,5 +1,6 @@
 
 enum TypingType {
+  none,
   GiveItATry,
   LeadComponents,
   ExpandedComponents,
