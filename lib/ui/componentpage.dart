@@ -82,21 +82,25 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     var title = '';
+    /*
     if (questionType == QuestionType.ComponentGroup) {
       title = getString(101)/*'Component-key pairing groups'*/;
     }
     else if (questionType == QuestionType.ComponentInGroup) {
       title = getString(102)/*'Memorize by groups'*/;
     }
-    else if (questionType == QuestionType.Component) {
+    */
+    if (questionType == QuestionType.Component) {
       title = getString(103)/*'Memorize the pairings'*/;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       title = getString(105)/*'Expanded Components'*/;
     }
+    /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
       title = getString(308)/*'Review Expanded Components'*/;
     }
+    */
 
     return Scaffold
       (
@@ -142,6 +146,7 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getAnswers(BuildContext context) {
+    /*
     if (this.questionType == QuestionType.ComponentGroup) {
       if (theComponentManager.isFirstHeaderOfGroups()) {
         return getFirstHeaderOfGroups();
@@ -159,8 +164,10 @@ class _ComponentPageState extends State<ComponentPage> {
         );
       }
     }
-    else if(this.questionType == QuestionType.Component  || this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup || this.questionType == QuestionType.ExpandedComponent || this.questionType == QuestionType.ReviewExpandedComponent) {
-      if (this.questionType == QuestionType.ComponentInGroup && theComponentManager.isHeaderOfComponentInGroup()) {
+    */
+    if(this.questionType == QuestionType.Component  /*|| this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup*/ || this.questionType == QuestionType.ExpandedComponent /*|| this.questionType == QuestionType.ReviewExpandedComponent*/) {
+/*
+      if (/*this.questionType == QuestionType.ComponentInGroup &&*/ theComponentManager.isHeaderOfComponentInGroup()) {
         if (currentIndex == 0) {
           // only for the first time
           return getHeaderOfComponentInGroup();
@@ -169,7 +176,8 @@ class _ComponentPageState extends State<ComponentPage> {
           return getHeaderOfComponent();
         }
       }
-      else if (this.questionType == QuestionType.Component && theComponentManager.isHeaderOfRandomComponents()) {
+ */
+      if (this.questionType == QuestionType.Component && theComponentManager.isHeaderOfRandomComponents()) {
         // just return an empty Widget
       //  if (currentIndex == 0) {
           return getHeaderOfComponent();
@@ -390,7 +398,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      getString(127)/*'Memorize the above Component-key pairings.'*/,
+                      getString(126)/*'Memorize the above Component-key pairings.'*/,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
@@ -440,6 +448,7 @@ class _ComponentPageState extends State<ComponentPage> {
       //  return getZiContainer(/*AnswerPosition.center, */ false);
       //}
     }  // TODO: combine with the above
+    /*
     else if (questionType == QuestionType.ComponentInGroup) {
       //if (theComponentManager.isHeaderOfComponentInGroup()) {
         return getQuestionImage();
@@ -451,6 +460,7 @@ class _ComponentPageState extends State<ComponentPage> {
     else if (questionType == QuestionType.ComponentGroup) {
       return getQuestionImage();
     }
+    */
     else if (questionType == QuestionType.ExpandedComponent) {
       //if(theComponentManager.isHeaderOfExpandedComponents()) {
       //  return getHeaderOfExpandedComponents();
@@ -458,10 +468,10 @@ class _ComponentPageState extends State<ComponentPage> {
       if (currentIndex != 0 && theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
         return Row(
           children: <Widget>[
-            Container(
-              child: getResultReminderImage(context), // only used by Expanded
+           // Container(
+           //   child: getResultReminderImage(context), // only used by Expanded
               //padding: EdgeInsets.all(10),
-            ),
+           // ),
             getQuestionImage(),
           ]
         );
@@ -470,6 +480,7 @@ class _ComponentPageState extends State<ComponentPage> {
         return getQuestionImage();
       }
     }
+    /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
       if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
         return Row(
@@ -494,6 +505,7 @@ class _ComponentPageState extends State<ComponentPage> {
         );
       }
     }
+    */
   }
 
   Widget getReviewExpandedComponentChar() {
@@ -509,7 +521,7 @@ class _ComponentPageState extends State<ComponentPage> {
     double imageWidth = 180.0 * getSizeRatioWithLimit();
     double imageHeight = 160.0 * getSizeRatioWithLimit();
 
-    if ((currentIndex > 0 && questionType == QuestionType.ExpandedComponent) || (questionType == QuestionType.ReviewExpandedComponent)) {
+    if ((currentIndex > 0 && questionType == QuestionType.ExpandedComponent) /*|| (questionType == QuestionType.ReviewExpandedComponent)*/) {
       if (questionType == QuestionType.ExpandedComponent) {
         var compCollection = theExpandedComponentList[currentIndex];
         var comp = theComponentManager.getComponentByGroupAndIndex(
@@ -517,12 +529,14 @@ class _ComponentPageState extends State<ComponentPage> {
         imagePath =
             'assets/typing/' + comp.image;
       }
+      /*
       else if (questionType == QuestionType.ReviewExpandedComponent) {
           var compCollection = theReviewExpandedComponentList[currentIndex];
           var comp = compCollection.imageName;
           imagePath =
               'assets/typing/' + compCollection.imageName;
       }
+      */
 
       return Container(
           alignment: Alignment.topRight, //topLeft,
@@ -543,16 +557,19 @@ class _ComponentPageState extends State<ComponentPage> {
     double imageWidth = 390.0 * getSizeRatioWithLimit();
     double imageHeight = 150.0  * getSizeRatioWithLimit();
 
+    /*
     if (questionType == QuestionType.ComponentGroup) {
       var index = theComponentGroupListInRealExercise[currentIndex];
       imagePath = 'assets/typing/' + theComponentGroupList[index].imageName;
       imageHeight = 200.0 * getSizeRatioWithLimit();
     }
-    else if (questionType == QuestionType.ExpandedComponent) {
+    */
+    if (questionType == QuestionType.ExpandedComponent) {
       imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
       imageWidth = 160.0 * getSizeRatioWithLimit();
       imageHeight = 160.0 * getSizeRatioWithLimit();
     }
+    /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
       return getReviewExpandedComponentChar();
     }
@@ -569,6 +586,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       imagePath = 'assets/typing/' + imageName;
     }
+    */
     else if (questionType == QuestionType.Component) { // for the header only
       var imageName;
       if (theComponentManager.isHeaderOfRandomComponents()) {
@@ -656,7 +674,7 @@ class _ComponentPageState extends State<ComponentPage> {
       return Container(width:0.0, height: questionSize);
     }
     else {
-      String question = getString(128)/*"Map the Component to its key."*/;
+      String question = getString(128)/*"Please map the Component to its key."*/;
 
       if (questionType == QuestionType.ExpandedComponent) {
         var hint = theExpandedComponentList[currentIndex].hint;
@@ -664,6 +682,7 @@ class _ComponentPageState extends State<ComponentPage> {
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
+      /*
       if (questionType == QuestionType.ReviewExpandedComponent) {
         //var hint = theExpandedComponentList[currentIndex].hint;
         question =
@@ -672,6 +691,7 @@ class _ComponentPageState extends State<ComponentPage> {
       else if (questionType == QuestionType.ComponentGroup) {
         question = getString(130)/*"Match above Component group to its key group."*/;
       }
+      */
 
       return Flexible(
         child: Text(
@@ -683,7 +703,7 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ReviewExpandedComponent) {
+    if (questionType == QuestionType.ExpandedComponent /*|| questionType == QuestionType.ReviewExpandedComponent*/) {
 
       if (theComponentManager.isHeaderOfExpandedComponents()) {
 
@@ -704,6 +724,7 @@ class _ComponentPageState extends State<ComponentPage> {
                   SizedBox(height: 15 * getSizeRatioWithLimit()),
                 ]
               ),
+              /*
               Row(
                   children: <Widget>[
                     Flexible(child: Text(
@@ -712,6 +733,7 @@ class _ComponentPageState extends State<ComponentPage> {
                     textAlign: TextAlign.start),),// 18
                   ]
               ),
+               */
           ]
         );
 
@@ -885,12 +907,14 @@ class _ComponentPageState extends State<ComponentPage> {
     // default without a color frame
     //backgroundColor = Colors.blueAccent;
     // actually no effect if no pressed action since the background will be white in that case.
-    bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
+    //bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
+    /*
     if (currentType == QuestionType.ComponentInGroup) {
       if (!(position != AnswerPosition.center && position != AnswerPosition.none && !isPositionAtRightGroup)) {
         backgroundColor = Colors.blueAccent; //Colors.grey;
       }
     }
+    */
 
     bool isAGroupAnswerType = theComponentManager.isAGroupAnswerType(position);
 
@@ -966,8 +990,8 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     // actually no effect if no pressed action since the background will be white in that case.
-    bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
-    if (position != AnswerPosition.center && position != AnswerPosition.none && !isPositionAtRightGroup) {
+    //bool isPositionAtRightGroup = theComponentManager.isPositionAtRightGroup(position);
+    if (position != AnswerPosition.center && position != AnswerPosition.none /*&& !isPositionAtRightGroup*/) {
       backgroundColor = Colors.grey;
     }
 
@@ -1045,14 +1069,14 @@ class _ComponentPageState extends State<ComponentPage> {
 
 
   Widget getContinue(BuildContext context) {
-    bool isHeaderOfComponentInGroup = theComponentManager.isHeaderOfComponentInGroup();
-    bool isFirstHeaderOfGroups = theComponentManager.isFirstHeaderOfGroups();
-    bool isSecondHeaderOfGroups = theComponentManager.isSecondHeaderOfGroups();
-    bool isThirdHeaderOfGroups = theComponentManager.isThirdHeaderOfGroups();
+    //bool isHeaderOfComponentInGroup = theComponentManager.isHeaderOfComponentInGroup();
+    //bool isFirstHeaderOfGroups = theComponentManager.isFirstHeaderOfGroups();
+    //bool isSecondHeaderOfGroups = theComponentManager.isSecondHeaderOfGroups();
+    //bool isThirdHeaderOfGroups = theComponentManager.isThirdHeaderOfGroups();
     bool isHeaderOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
     bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
 
-    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isThirdHeaderOfGroups || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) /*|| isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isThirdHeaderOfGroups*/ || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
       var result = ""; // = "Correct! ";
       /*
       if (isHeaderOfComponentInGroup) {
@@ -1071,7 +1095,7 @@ class _ComponentPageState extends State<ComponentPage> {
         result = "Please read above, then ";
       }
       */
-      if (!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups && !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents) { // skip the first one
+      if (/*!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups &&*/ !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents) { // skip the first one
         //var answerType = theComponentManager.getAnswerType(answeredPosition);
 
         if (answeredPosition !=
@@ -1134,6 +1158,7 @@ class _ComponentPageState extends State<ComponentPage> {
     //}
     //else {
 
+    /*
       if (questionType == QuestionType.ComponentGroup) {
         title = getString(115)/*"Good job!"*/;
         content = getString(287)/*"You’ve mastered all six Component groups! In the next exercise, you will memorize the Components in each group."*/;
@@ -1144,21 +1169,24 @@ class _ComponentPageState extends State<ComponentPage> {
         content = getString(133)/*"You remember the Components by group! In the next exercise, you will review the Components."*/;
         theNewlyCompletedTypingExercise = 2;
       }
+     */
       if (questionType == QuestionType.Component) {
         title = getString(134)/*"Way to go!"*/;
         content = getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
-        theNewlyCompletedTypingExercise = 3;
+        theNewlyCompletedTypingExercise = 0;
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
         content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
-        theNewlyCompletedTypingExercise = 5;
+        theNewlyCompletedTypingExercise = 2;
      }
+      /*
     if (questionType == QuestionType.ReviewExpandedComponent) {
       title = getString(136)/*"Wow!"*/;
       content = getString(310)/*"You really know your Expanded Components! Let’s practice with some typing exercises."*/;
       theNewlyCompletedTypingExercise = 6;
     }
+    */
       //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
 

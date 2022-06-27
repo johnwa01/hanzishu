@@ -1,10 +1,11 @@
 enum QuestionType {
   none,
-  ComponentGroup,
-  ComponentInGroup,
+  //TODO: remove all but two
+  //ComponentGroup,
+  //ComponentInGroup,
   Component,
   ExpandedComponent,
-  ReviewExpandedComponent
+  //ReviewExpandedComponent
 }
 
 enum AnswerType {

@@ -244,14 +244,38 @@ class InputZiManager {
 
   static String getIntroduction(TypingType typingType, int currentIndex, int lessonId) {
     String instruction;
-    if (typingType == TypingType.GiveItATry) {
-      instruction = theZiForIntroductionList[currentIndex].hintText;
-    }
-    else if (typingType == TypingType.LeadComponents) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  instruction = theZiForIntroductionList[currentIndex].hintText;
+    //}
+    if (typingType == TypingType.LeadComponents) {
       instruction = theZiForLeadCompExerciseList[currentIndex].hintText;
+    }
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  instruction = theZiForExpandedInitialExerciseList[currentIndex].hintText;
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      instruction = theZiForExpandedReviewExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.ExpandedComponents) {
       instruction = theZiForExpandedCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      instruction = theZiForAttachedCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      instruction = theZiForTwinCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.SubComponents) {
+      instruction = theZiForSubCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      instruction = theZiForSingleCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      instruction = theZiForTwoCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      instruction = theZiForGeneralExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.FromLessons) {
       instruction = getString(280)/*"Reminder: You should finish the typing course from the main menu before this exercise."*/;
@@ -275,14 +299,38 @@ class InputZiManager {
   }
 
   ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
-    if (typingType == TypingType.GiveItATry) {
-      return theZiForIntroductionList[index];
-    }
-    else if (typingType == TypingType.LeadComponents) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  return theZiForIntroductionList[index];
+    //}
+    if (typingType == TypingType.LeadComponents) {
       return theZiForLeadCompExerciseList[index];
+    }
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  return theZiForExpandedInitialExerciseList[index];
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      return theZiForExpandedReviewExerciseList[index];
     }
     else if (typingType == TypingType.ExpandedComponents) {
       return theZiForExpandedCompExerciseList[index];
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      return theZiForAttachedCompExerciseList[index];
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      return theZiForTwinCompExerciseList[index];
+    }
+    else if (typingType == TypingType.SubComponents) {
+      return theZiForSubCompExerciseList[index];
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      return theZiForSingleCompExerciseList[index];
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      return theZiForTwoCompExerciseList[index];
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      return theZiForGeneralExerciseList[index];
     }
     else if (typingType == TypingType.CustomizedTyping) {
       return getCustomizedTypingZi(index, lessonId);
@@ -324,18 +372,53 @@ class InputZiManager {
   int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId) {
     currentIndex++;
 
-    if (typingType == TypingType.GiveItATry) {
-      if (currentIndex >= theZiForIntroductionList.length) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  if (currentIndex >= theZiForIntroductionList.length) {
+    //    currentIndex = -1;
+    //  }
+    //}
+    if (typingType == TypingType.LeadComponents) {
+      if (currentIndex >= theZiForLeadCompExerciseList.length) {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.LeadComponents) {
-      if (currentIndex >= theZiForLeadCompExerciseList.length) {
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  if (currentIndex >= theZiForExpandedInitialExerciseList.length) {
+    //    currentIndex = -1;
+    //  }
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      if (currentIndex >= theZiForExpandedReviewExerciseList.length) {
         currentIndex = -1;
       }
     }
     else if (typingType == TypingType.ExpandedComponents) {
       if (currentIndex >= theZiForExpandedCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      if (currentIndex >= theZiForAttachedCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      if (currentIndex >= theZiForTwinCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.SubComponents) {
+      if (currentIndex >= theZiForSubCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      if (currentIndex >= theZiForSingleCompExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      if (currentIndex >= theZiForGeneralExerciseList.length) {
         currentIndex = -1;
       }
     }
@@ -368,16 +451,48 @@ class InputZiManager {
     }
 
     var zi;
-    if (typingType == TypingType.GiveItATry) {
-      zi = theZiForIntroductionList[currentIndex];
+    //if (typingType == TypingType.GiveItATry) {
+    //  zi = theZiForIntroductionList[currentIndex];
+    //  result = typingResult.contains(zi.zi);
+    //}
+    if (typingType == TypingType.LeadComponents) {
+      zi = theZiForLeadCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.LeadComponents) {
-      zi = theZiForLeadCompExerciseList[currentIndex];
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  zi = theZiForExpandedInitialExerciseList[currentIndex];
+    //  result = typingResult.contains(zi.zi);
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      zi = theZiForExpandedReviewExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
     else if (typingType == TypingType.ExpandedComponents) {
       zi = theZiForExpandedCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      zi = theZiForAttachedCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      zi = theZiForTwinCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.SubComponents) {
+      zi = theZiForSubCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      zi = theZiForSingleCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      zi = theZiForTwoCompExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      zi = theZiForGeneralExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
     else if (typingType == TypingType.CustomizedTyping) {
@@ -394,14 +509,38 @@ class InputZiManager {
   }
 
   int getTotal(TypingType typingType, int lessonId) {
-    if (typingType == TypingType.GiveItATry) {
-      return theZiForIntroductionList.length;
-    }
-    else if (typingType == TypingType.LeadComponents) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  return theZiForIntroductionList.length;
+    //}
+    if (typingType == TypingType.LeadComponents) {
       return theZiForLeadCompExerciseList.length;
+    }
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  return theZiForExpandedInitialExerciseList.length;
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      return theZiForExpandedReviewExerciseList.length;
     }
     else if (typingType == TypingType.ExpandedComponents) {
       return theZiForExpandedCompExerciseList.length;
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      return theZiForAttachedCompExerciseList.length;
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      return theZiForTwinCompExerciseList.length;
+    }
+    else if (typingType == TypingType.SubComponents) {
+      return theZiForSubCompExerciseList.length;
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      return theZiForSingleCompExerciseList.length;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      return theZiForTwoCompExerciseList.length;
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      return theZiForGeneralExerciseList.length;
     }
     else if (typingType == TypingType.CustomizedTyping) {
       int total = ((theSearchingZiList.length - 1) / 38).truncate();    // 37

@@ -21,21 +21,25 @@ class ComponentManager {
 
   int getTotalQuestions(QuestionType questionType) {
     int total;
+    /*
     if (questionType == QuestionType.ComponentGroup) {
       total = theComponentGroupListInRealExercise.length;
     }
     else if (questionType == QuestionType.ComponentInGroup) {
       total = theComponentInGroupList.length;
     }
-    else if (questionType == QuestionType.Component) {
+     */
+    if (questionType == QuestionType.Component) {
       total = theRandomComponentList.length;
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       total = theExpandedComponentList.length;
     }
+    /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
       total = theReviewExpandedComponentList.length;
     }
+     */
 
     return total;
   }
@@ -379,31 +383,37 @@ class ComponentManager {
       return correctAnswerPosition;
     }
 
+    /*
     if (currentQuestionType == QuestionType.ComponentGroup) {
       var index = theComponentGroupListInRealExercise[currentIndex];
       var group = theComponentGroupList[index];
       correctAnswerPosition = GetPositionByGroup(group.id);
     }
-    else if (currentQuestionType == QuestionType.Component) {
+    */
+    if (currentQuestionType == QuestionType.Component) {
       var comp = theRandomComponentList[currentIndex];
       correctAnswerPosition =
           getPositionByGroupAndIndex(comp.groupNumber, comp.indexInGroup);
     }
+    /*
     else if (currentQuestionType == QuestionType.ComponentInGroup) {
       var compInGroup = theComponentInGroupList[currentIndex];
       correctAnswerPosition = getPositionByGroupAndIndex(
           compInGroup.groupNumber, compInGroup.indexInGroup);
     }
+     */
     else if (currentQuestionType == QuestionType.ExpandedComponent) {
       var expandedComp = theExpandedComponentList[currentIndex];
       correctAnswerPosition = getPositionByGroupAndIndex(
           expandedComp.groupNumber, expandedComp.indexInGroup);
     }
+    /*
     else if (currentQuestionType == QuestionType.ReviewExpandedComponent) {
       var reviewExpandedComp = theReviewExpandedComponentList[currentIndex];
       correctAnswerPosition = getPositionByGroupAndIndex(
           reviewExpandedComp.groupNumber, reviewExpandedComp.indexInGroup);
     }
+     */
 
     return correctAnswerPosition;
   }
@@ -628,6 +638,7 @@ class ComponentManager {
     return isChar;
   }
 
+  /*
   // the component index is 0, indicating to show the group image only
   bool isHeaderOfComponentInGroup() {
     if (currentQuestionType == QuestionType.ComponentInGroup) {
@@ -674,6 +685,7 @@ class ComponentManager {
 
     return false;
   }
+*/
 
   bool isHeaderOfRandomComponents() {
     if (currentQuestionType == QuestionType.Component) {
@@ -739,6 +751,7 @@ class ComponentManager {
     return groupNumber;
   }
 
+  /*
   bool isPositionAtRightGroup(AnswerPosition position) {
     if (currentQuestionType == QuestionType.ComponentInGroup) {
       var groupNumber = getCurrentGroupNumberOfComponentInGroup(position);
@@ -750,6 +763,7 @@ class ComponentManager {
 
     return true;
   }
+*/
 
 // TODO: Move to manager
   String getAnswerDisplayValue(AnswerPosition position) {

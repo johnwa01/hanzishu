@@ -33,20 +33,23 @@ class InputZiComponentPainter extends BasePainter {
   }
 
   displayComponents(Size size) {
+    double x = 5.0;
+    double y = 0.0;
+    /*
     String instruction;
-    if (typingType == TypingType.GiveItATry) {
-      instruction = "Type the given character. Use hint as needed.";
-    }
-    else if (typingType == TypingType.LeadComponents) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  instruction = "Type the given character. Use hint as needed.";
+    //}
+    //TODO: do we still need this? No new types listed here.
+    if (typingType == TypingType.LeadComponents) {
       instruction = "Type the given character. Use hint as needed.";
     }
     else if (typingType == TypingType.ExpandedComponents) {
       instruction = "Type the given character. Use hint as needed.";
     }
 
-    double x = 5.0;
-    double y = 0.0;
     displayTextWithValue(instruction, x, y, 20.0, Colors.blue);
+    */
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, 0);
     var length = zi.componentCodes.length;

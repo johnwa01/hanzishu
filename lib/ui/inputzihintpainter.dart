@@ -28,7 +28,7 @@ class InputZiHintPainter extends BasePainter {
       displayHintMessage(15.0 * getSizeRatio(), char);  // 18.0
     }
     else {
-      displayShiftKeyNote();
+      //TODO: displayShiftKeyNote();
     }
   }
 

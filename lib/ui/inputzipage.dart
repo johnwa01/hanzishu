@@ -31,6 +31,7 @@ class _InputZiPageState extends State<InputZiPage> {
   double _progressValue;
   int totalQuestions;
   double screenWidth;
+
   // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
   TextEditingController _controller = new TextEditingController(text: ">");
   FocusNode _textNode = new FocusNode();
@@ -61,7 +62,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
     _controller.addListener(handleKeyInput);
     _progressValue = 0.0;
-    totalQuestions = theInputZiManager.getTotal(widget.typingType, widget.lessonId);
+    totalQuestions =
+        theInputZiManager.getTotal(widget.typingType, widget.lessonId);
     typingType = widget.typingType;
     theInputZiManager.setCurrentType(typingType);
 
@@ -80,7 +82,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   // make sure overlay will be removed when moving back to the parent page.
-  Future<bool>_onWillPop() {
+  Future<bool> _onWillPop() {
     initOverlay();
 
     return Future.value(true);
@@ -137,7 +139,8 @@ class _InputZiPageState extends State<InputZiPage> {
     var newInputText = "";
 
     if (_controller.value.text != null && _controller.value.text.length > 0) {
-      if (previousEndComposing >= 1 && previousEndComposing < _controller.value.text.length) {
+      if (previousEndComposing >= 1 &&
+          previousEndComposing < _controller.value.text.length) {
         return _controller.value.text.substring(
             previousEndComposing, _controller.value.text.length);
       }
@@ -187,57 +190,60 @@ class _InputZiPageState extends State<InputZiPage> {
     return inputTextWithoutUpperCaseLetter;
   }
 
-  showOverlay(BuildContext context, String latestOverleyLetter/*InputZiOverlayParameters overlayParameters*//*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
+  showOverlay(BuildContext context, String latestOverleyLetter
+      /*InputZiOverlayParameters overlayParameters*/
+      /*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
     initOverlay();
 
     if (latestOverleyLetter != previousOverlayLetter) {
-        var imageName;
-        var fullPath;
-        double imageLeft;
-        double imageWidth;
-        double imageHeight;
+      var imageName;
+      var fullPath;
+      double imageLeft;
+      double imageWidth;
+      double imageHeight;
 
-        if (latestOverleyLetter == "Z") { // the full mapping chart
-          imageName = "GG6.png";
-          imageLeft = 50.0 * getSizeRatio();
-          imageWidth = 300.0 * getSizeRatio();
-          imageHeight = 135.0 * getSizeRatio();
-        }
-        else {
-          var pair = ComponentManager.getGroupAndIndexFromLetter(
-              latestOverleyLetter);
-          var fullExpandedComponent = theComponentManager
-              .getFullExpandedComponentByGroupAndIndex(
-              pair.groupNumber, pair.indexInGroup);
-          imageName = fullExpandedComponent.imageName;
-          imageLeft = 150.0 * getSizeRatio();
-          imageWidth = 100.0 * getSizeRatio();
-          imageHeight = 135.0 * getSizeRatio();
-        }
-        fullPath = "assets/typing/" + imageName;
-
-        OverlayState overlayState = Overlay.of(context);
-        overlayEntry = OverlayEntry(
-            builder: (context) =>
-                Positioned(
-                  top: 30 * getSizeRatio(),//65, //65.0, //85.0, //posiY,
-                  left: imageLeft, //100, //0.0, //posiX,
-                  child: Image.asset(
-                    fullPath,
-                    width: imageWidth, //350.0,
-                    height: imageHeight,
-                    fit: BoxFit.fitWidth,
-                  ),
-                ));
-        overlayState.insert(overlayEntry);
-        previousOverlayLetter = latestOverleyLetter;
+      if (latestOverleyLetter == "Z") { // the full mapping chart
+        imageName = "GG6.png";
+        imageLeft = 50.0 * getSizeRatio();
+        imageWidth = 300.0 * getSizeRatio();
+        imageHeight = 135.0 * getSizeRatio();
       }
       else {
-        previousOverlayLetter = ""; // this time no display = dismiss the display; prepare for next time to re-display
+        var pair = ComponentManager.getGroupAndIndexFromLetter(
+            latestOverleyLetter);
+        var fullExpandedComponent = theComponentManager
+            .getFullExpandedComponentByGroupAndIndex(
+            pair.groupNumber, pair.indexInGroup);
+        imageName = fullExpandedComponent.imageName;
+        imageLeft = 150.0 * getSizeRatio();
+        imageWidth = 100.0 * getSizeRatio();
+        imageHeight = 135.0 * getSizeRatio();
       }
+      fullPath = "assets/typing/" + imageName;
+
+      OverlayState overlayState = Overlay.of(context);
+      overlayEntry = OverlayEntry(
+          builder: (context) =>
+              Positioned(
+                top: 30 * getSizeRatio(), //65, //65.0, //85.0, //posiY,
+                left: imageLeft, //100, //0.0, //posiX,
+                child: Image.asset(
+                  fullPath,
+                  width: imageWidth, //350.0,
+                  height: imageHeight,
+                  fit: BoxFit.fitWidth,
+                ),
+              ));
+      overlayState.insert(overlayEntry);
+      previousOverlayLetter = latestOverleyLetter;
+    }
+    else {
+      previousOverlayLetter =
+      ""; // this time no display = dismiss the display; prepare for next time to re-display
+    }
   }
 
-  String getFullComposingText(int startComposing, int endComposing ) {
+  String getFullComposingText(int startComposing, int endComposing) {
     var str = "";
     if (endComposing > startComposing) {
       str = _controller.value.text.substring(startComposing, endComposing);
@@ -247,10 +253,11 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   bool isNumberOneToSeven(String value) {
-    if(value.length > 0) {
+    if (value.length > 0) {
       var charCodeUnits = value[0].codeUnits;
 
-      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between 1 and 7
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 &&
+          charCodeUnits[0] <= 55) { // value is between 1 and 7
         return true;
       }
     }
@@ -259,10 +266,11 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   int getZeroBasedNumber(String value) {
-    if(value.length > 0) {
+    if (value.length > 0) {
       var charCodeUnits = value[0].codeUnits;
 
-      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 && charCodeUnits[0] <= 55 ) {  // value is between a and z
+      if (charCodeUnits.length == 1 && charCodeUnits[0] >= 49 &&
+          charCodeUnits[0] <= 55) { // value is between a and z
         return charCodeUnits[0] - 49;
       }
     }
@@ -272,29 +280,33 @@ class _InputZiPageState extends State<InputZiPage> {
 
   // isFromCharChandidateList: true if tap a candidate char; false if type "spacebar" or uppercase letter for overlay.
   // candidateLength includes cases like "ttt" as the first candidate, that is, run out of normal candidates.
-  int getCursorPosition(int candidateCharLength, bool isFromCharCandidateList, bool isFromOverlay) {
-    var  selectionPosi;
+  int getCursorPosition(int candidateCharLength, bool isFromCharCandidateList,
+      bool isFromOverlay) {
+    var selectionPosi;
     if (_controller.value.selection.end >= 0) {
       selectionPosi = _controller.value.selection.end;
       if (isFromCharCandidateList) { // since it's from candidate, not from keyboard.
         selectionPosi += candidateCharLength; // the new Chinese char
         if (previousEndComposing >= 1) {
-          selectionPosi -= (previousEndComposing - previousStartComposing); // subtract composing if any
+          selectionPosi -= (previousEndComposing -
+              previousStartComposing); // subtract composing if any
         }
       }
       else if (isFromOverlay) {
         selectionPosi--; // subtract the uppercase letter
       }
       else { // currently just spacebar case: previousEndComposing is always >= 1 due to the spacebar ' ' space
-          selectionPosi += candidateCharLength; // the new Chinese char
-          selectionPosi -= (previousEndComposing - previousStartComposing); // subtract composing
+        selectionPosi += candidateCharLength; // the new Chinese char
+        selectionPosi -=
+        (previousEndComposing - previousStartComposing); // subtract composing
       }
     }
     else {
       selectionPosi = _controller.value.text.length;
     }
 
-    if (selectionPosi < 0 /*|| (_controller.value.text.length > 0 && selectionPosi > _controller.value.text.length)*/) {
+    if (selectionPosi <
+        0 /*|| (_controller.value.text.length > 0 && selectionPosi > _controller.value.text.length)*/) {
       selectionPosi = _controller.value.text.length;
     }
 
@@ -331,7 +343,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList, bool isFromOverlay, bool isFromNumber) {
+  void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList,
+      bool isFromOverlay, bool isFromNumber) {
     hasVerifiedToBeALowerCase = false;
 
     var newText = getInputText(selectionIndex, isFromNumber);
@@ -346,12 +359,13 @@ class _InputZiPageState extends State<InputZiPage> {
     // reset the candidate. might set to global ini value
     theCurrentZiCandidates = theDefaultZiCandidates;
 
-    var selectionPosi = getCursorPosition(candidateCharLength, isFromCharCandidateList, isFromOverlay);
+    var selectionPosi = getCursorPosition(
+        candidateCharLength, isFromCharCandidateList, isFromOverlay);
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
     _controller.value = _controller.value.copyWith(text: newText,
-            composing: TextRange.empty,
-            selection: TextSelection.collapsed(offset: selectionPosi));
+        composing: TextRange.empty,
+        selection: TextSelection.collapsed(offset: selectionPosi));
 
     previousStartComposing = -1;
     previousEndComposing = -1;
@@ -369,10 +383,11 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   workaroundWebCases() {
-    if (hasVerifiedToBeALowerCase || (_controller.text.length > 0 && _controller.selection == -1)) {
-       // For web case, only the combination of composing empty and setting selection will set cursor in the right position in web.
-       // at the same time, it won't reserve the composing value which is fine for now. (like iOS to avoid crash).
-       // TODO: will validate in future flutter version.
+    if (hasVerifiedToBeALowerCase ||
+        (_controller.text.length > 0 && _controller.selection == -1)) {
+      // For web case, only the combination of composing empty and setting selection will set cursor in the right position in web.
+      // at the same time, it won't reserve the composing value which is fine for now. (like iOS to avoid crash).
+      // TODO: will validate in future flutter version.
       int posi = _controller.text.length;
       if (previousEndComposing > 0) {
         posi = previousEndComposing;
@@ -419,7 +434,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       // set it as the comparision standard
       setInitialControllerTextValue();
-      hasVerifiedToBeALowerCase  = false;
+      hasVerifiedToBeALowerCase = false;
     }
 
     if (currentIndex < 0) {
@@ -476,9 +491,11 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       else if ((previousEndComposing - previousStartComposing) > 1) {
         previousEndComposing--;
-        var composingText = getFullComposingText(previousStartComposing, previousEndComposing);
+        var composingText = getFullComposingText(
+            previousStartComposing, previousEndComposing);
         theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
-        InputZiManager.updateFirstCandidate(theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
+        InputZiManager.updateFirstCandidate(
+            theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
       }
       else {
@@ -497,14 +514,15 @@ class _InputZiPageState extends State<InputZiPage> {
       previousText = getInputTextWithoutUpperCaseLetter(latestInputKeyLetter);
       // we normally only reset this init value at the function entry.
       // But need to do it for overlay case so that the next input can go through the checking at the entry.
- //     initialControllerTextValue = previousText; // prepare for next input, equal to the value.text
+      //     initialControllerTextValue = previousText; // prepare for next input, equal to the value.text
       // actually set the current value, although use previousText parameter
       var selectionPosi = getCursorPosition(1, false, true);
       previousEndSelection = selectionPosi;
       previousEndComposing--; // subtract the uppercase letter for overlay
-      if (!kIsWeb && Platform.isIOS) {  // iOS simulator would crash on backspace with composing. so have to skip the underline feature until it's fixed.
-      _controller.value = _controller.value.copyWith(text: previousText,
-          selection: TextSelection.collapsed(offset: selectionPosi));
+      if (!kIsWeb && Platform
+          .isIOS) { // iOS simulator would crash on backspace with composing. so have to skip the underline feature until it's fixed.
+        _controller.value = _controller.value.copyWith(text: previousText,
+            selection: TextSelection.collapsed(offset: selectionPosi));
       }
       else if (kIsWeb) {
         // make cursor correct, but no underline though.
@@ -520,12 +538,13 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
-        if (_controller.text != previousText) {
-          initOverlay();
-        }
+      if (_controller.text != previousText) {
+        initOverlay();
+      }
 
-        previousEndComposing += 1;
-        setTextByChosenZiIndex(getZeroBasedNumber(latestInputKeyLetter), false, false, true);
+      previousEndComposing += 1;
+      setTextByChosenZiIndex(
+          getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       hasVerifiedToBeALowerCase = true;
@@ -554,10 +573,10 @@ class _InputZiPageState extends State<InputZiPage> {
       // iOS simulator would crash on backspace with composing, so not supporting underline feature.
       if (kIsWeb || (!kIsWeb && Platform.isAndroid)) {
         if (_controller.value.composing.start != previousStartComposing ||
-          _controller.value.composing.end != previousEndComposing) {
-            _controller.value = _controller.value.copyWith(
+            _controller.value.composing.end != previousEndComposing) {
+          _controller.value = _controller.value.copyWith(
               composing: TextRange(
-                start: previousStartComposing, end: previousEndComposing));
+                  start: previousStartComposing, end: previousEndComposing));
         }
       }
     }
@@ -575,18 +594,54 @@ class _InputZiPageState extends State<InputZiPage> {
       previousEndComposing++;
     }
     else {
-      previousStartComposing = _controller.selection.end - 1; // since the ' ' takes one space, it'll always >= 1
+      previousStartComposing = _controller.selection.end -
+          1; // since the ' ' takes one space, it'll always >= 1
       previousEndComposing = previousStartComposing + 1; // for the space itself
     }
   }
 
   setInitialControllerTextValue() {
-    initialControllerTextValue = _controller.text; // will not change until next letter input.
-    previousText = _controller.text; // can change with the updated value within the same letter input.
+    initialControllerTextValue =
+        _controller.text; // will not change until next letter input.
+    previousText = _controller
+        .text; // can change with the updated value within the same letter input.
   }
 
-  Widget getGiveItATryPage() {
+  Widget getExplainationPage() {
     var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
+
+    //if (typingType == TypingType.LeadComponents || typingType == TypingType.GiveItATry) {
+    var str = getString(
+        110); /*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/
+    // + "\n\n" + getString(111)/*"Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side."*/;
+    //}
+    //if (typingType == TypingType.ExpandedInitial) {
+    //  str = theZiForExpandedInitialExerciseList[currentIndex].hintText;
+    //}
+    if (typingType == TypingType.ExpandedReview) {
+      str = theZiForExpandedReviewExerciseList[currentIndex].hintText;
+    }
+    if (typingType == TypingType.ExpandedComponents) {
+      str = theZiForExpandedCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      str = theZiForAttachedCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      str = theZiForTwinCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.SubComponents) {
+      str = theZiForSubCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      str = theZiForSingleCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      str = theZiForTwoCompExerciseList[currentIndex].hintText;
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      str = theZiForGeneralExerciseList[currentIndex].hintText;
+    }
 
     return Scaffold
       (
@@ -600,44 +655,106 @@ class _InputZiPageState extends State<InputZiPage> {
           children: <Widget>[
             SizedBox(height: fontSize1),
             Text(
-                getString(110)/*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/,
+                str,
+                //getString(110)/*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/,
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
-            SizedBox(height: fontSize1),
+            /*     SizedBox(height: fontSize1),
             Text(
                 getString(111)/*"Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side."*/,
                 style: TextStyle(fontSize: fontSize1),
                 textAlign: TextAlign.start
             ),
-            Flexible(
-              child: Image.asset(
-                "assets/typing/" + theZiForIntroductionList[0].hintImage,
-                width: 350.0 * getSizeRatio(),
-                height: 150.0 * getSizeRatio(),
-                fit: BoxFit.fitWidth
-              ),
-            ),
+        */
+            getExplainationImage(),
             SizedBox(height: fontSize1),
             SizedBox(
               child: Align(
                 alignment: Alignment.topCenter,
                 child: TextButton(
-                         style: TextButton.styleFrom(textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
-                          ),
-                  onPressed: () {
-                           setState(() {
-                            currentIndex = 1;
-                        });
-                           },
-                      child: Text(getString(109)/*'Try a few'*/,
-                      style: TextStyle(color: Colors.blue)),
-                    ),
+                  style: TextButton.styleFrom(
+                    textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
                   ),
+                  onPressed: () {
+                    setState(() {
+                      currentIndex = 1;
+                    });
+                  },
+                  child: Text(getString(109) /*'Try a few'*/,
+                      style: TextStyle(color: Colors.blue)),
+                ),
+              ),
             ),
-    ]
+          ]
       ),
     );
+  }
+
+  Widget getExplainationImage() {
+    var image = theZiForIntroductionList[0].hintImage;
+    var width = 350.0 * getSizeRatio();
+    var height = 150.0 * getSizeRatio();
+
+    //if (typingType == TypingType.ExpandedInitial) {
+    //  image = theZiForExpandedInitialExerciseList[currentIndex].hintImage;
+    //  width = 140.0 * getSizeRatio();
+    //  height = 140.0 * getSizeRatio();
+    //}
+    if (typingType == TypingType.ExpandedReview) {
+      image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.ExpandedComponents) {
+      image = theZiForExpandedCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      image = theZiForAttachedCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      image = theZiForTwinCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.SubComponents) {
+      image = theZiForSubCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      image = theZiForSingleCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      image = theZiForTwoCompExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      image = theZiForGeneralExerciseList[currentIndex].hintImage;
+      width = 140.0 * getSizeRatio();
+      height = 140.0 * getSizeRatio();
+    }
+
+    if (image.isNotEmpty) {
+      return Container( //Flexible(
+        alignment: Alignment.center,
+        child: Image.asset(
+          "assets/typing/" + image,
+          width: 150.0 * getSizeRatio(),
+          height: 150.0 * getSizeRatio(),
+        ),
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
   }
 
   @override
@@ -682,14 +799,38 @@ class _InputZiPageState extends State<InputZiPage> {
     );
 
     var title = getString(98)/*'Component Input Method'*/;
-    if (typingType == TypingType.GiveItATry) {
-      title = getString(100)/*'Give it a try'*/;
-    }
-    else if (typingType == TypingType.LeadComponents) {
+    //if (typingType == TypingType.GiveItATry) {
+    //  title = getString(100)/*'Give it a try'*/;
+    //}
+    if (typingType == TypingType.LeadComponents) {
       title = getString(104)/*'Guided typing'*/;
+    }
+    //else if (typingType == TypingType.ExpandedInitial) {
+    //  title = getString(105)/*'Expanded Components'*/;
+    //}
+    else if (typingType == TypingType.ExpandedReview) {
+      title = getString(105)/*'Expanded Components'*/;
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = getString(106)/*'Typing exercises'*/;
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      title = getString(328)/*'Attached Components'*/;
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      title = getString(329)/*'Twin Components'*/;
+    }
+    else if (typingType == TypingType.SubComponents) {
+      title = getString(330)/*'Sub Components'*/;
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      title = getString(331)/*'Character with single Component'*/;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      title = getString(332)/*'Character with two Components'*/;
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      title = getString(333)/*'General Exercises'*/;
     }
     else if (typingType == TypingType.FreeTyping) {
       title = getString(108)/*'Free typing and help'*/;
@@ -698,8 +839,9 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(112)/*'Customized exercises'*/;
     }
 
-    if (typingType == TypingType.GiveItATry && currentIndex == 0) {
-      return getGiveItATryPage();
+    // first index is for explaination
+    if (currentIndex == 0) {
+      return getExplainationPage();
     }
 
     var editFieldFontRatio = getSizeRatio();
@@ -902,9 +1044,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // treat it specially so that it can have shorter/non-standard hints for sample chars.
-    if (typingType == TypingType.GiveItATry) {
-      return getComponentAndMapping();
-    }
+    //if (typingType == TypingType.GiveItATry) {
+    //  return getComponentAndMapping();
+    //}
 
     String instruction  = InputZiManager.getIntroduction(typingType, currentIndex, lessonId);
 
@@ -927,7 +1069,7 @@ class _InputZiPageState extends State<InputZiPage> {
         children: <Widget>[
           //SizedBox(height: fontSize),
           getInstruction(instruction),
-
+          getImageTiedToZi(),
           Row(
               children: <Widget>[
                 SizedBox(
@@ -987,6 +1129,61 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  Widget getImageTiedToZi() {
+    var image;
+    if (/*typingType == TypingType.ExpandedInitial || */typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {
+      //if (typingType == TypingType.ExpandedInitial) {
+      //  image = theZiForExpandedInitialExerciseList[currentIndex].hintImage;
+      //}
+      if (typingType == TypingType.ExpandedReview) {
+        image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
+      }
+      else if (typingType == TypingType.AttachedComponents) {
+        image = theZiForAttachedCompExerciseList[currentIndex].hintImage;
+      }
+      else if (typingType == TypingType.TwinComponents) {
+        image = theZiForTwinCompExerciseList[currentIndex].hintImage;
+      }
+      else if (typingType == TypingType.SubComponents) {
+        image = theZiForSubCompExerciseList[currentIndex].hintImage;
+      }
+
+      if (image.isNotEmpty) {
+        var arr = image.split(',');
+        var image1 = arr[0];
+        var image2 = '';
+        if (arr.length > 1) {
+          image2 = arr[1];
+        }
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getOneImage(image1),
+              getOneImage(image2),
+            ]
+        );
+      }
+    }
+
+    return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getOneImage(String image) {
+    if (image.isNotEmpty) {
+      return Container( //Flexible(
+        alignment: Alignment.center,
+        child: Image.asset(
+          "assets/typing/" + image,
+          width: 100.0 * getSizeRatio(),
+          height: 100.0 * getSizeRatio(),
+        ),
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
     var butt = FlatButton(
       color: Colors.white,
@@ -1040,20 +1237,64 @@ class _InputZiPageState extends State<InputZiPage> {
     String title;
     String content;
 
+    /*
     if (typingType == TypingType.GiveItATry) {
       title = getString(115)/*"Good job!"*/;
       content = getString(116)/*"You did it! Let's go through the Component-key pairings now."*/;
       theNewlyCompletedTypingExercise = 0;
     }
-    else if (typingType == TypingType.LeadComponents) {
+     */
+    if (typingType == TypingType.LeadComponents) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(117)/*"You did it again! Let’s get to know the Expanded Components."*/;
-      theNewlyCompletedTypingExercise = 4;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 1;
+    }
+    /*
+    else if (typingType == TypingType.ExpandedInitial) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = "Your training is complete. Practice or use what you learned with some free typing.";
+      theNewlyCompletedTypingExercise = 0;
+    }
+    */
+    else if (typingType == TypingType.ExpandedReview) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 3;
     }
     else if (typingType == TypingType.ExpandedComponents) {
       title = getString(118)/*"Congratulations!"*/;
-      content = "Your training is complete. Practice or use what you learned with some free typing.";
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 4;
+    }
+    else if (typingType == TypingType.AttachedComponents) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 5;
+    }
+    else if (typingType == TypingType.TwinComponents) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 6;
+    }
+    else if (typingType == TypingType.SubComponents) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
       theNewlyCompletedTypingExercise = 7;
+    }
+    else if (typingType == TypingType.SingleComponent) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 8;
+    }
+    else if (typingType == TypingType.TwoComponents) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 9;
+    }
+    else if (typingType == TypingType.GeneralExercise) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(355)/*"You have completed this exercise! Please move on to the next one."*/;
+      theNewlyCompletedTypingExercise = 10;
     }
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(115)/*"Good job!"*/;
