@@ -978,4 +978,34 @@ class ComponentManager {
     }
     return null;
   }
+
+  static String getTypingCode(String componentCode) {
+    var oneComp = getComponentByCode(componentCode);
+    return oneComp.typingCode.substring(0, 1);
+  }
+
+  static List<String> getSubComponents(List<String> componentCodes) {
+    var count = componentCodes.length;
+    Component oneComp;
+    var subComponents;
+
+    if (count == 1) {
+      oneComp = getComponentByCode(componentCodes[0]);
+    }
+    else if (count == 2) {
+      {
+        oneComp = getComponentByCode(componentCodes[1]);
+      }
+    }
+
+    var subCompsStr = oneComp.subComponents;
+    if (subCompsStr.length == 2) {
+      subComponents = [subCompsStr];
+    }
+    else if (subCompsStr.length == 4) {
+      subComponents = [subCompsStr.substring(0, 2), subCompsStr.substring(2, 4)];
+    }
+
+    return subComponents;
+  }
 }

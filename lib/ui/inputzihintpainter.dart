@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/utility.dart';
 
@@ -142,23 +143,13 @@ class InputZiHintPainter extends BasePainter {
     List<String> components = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
 
-    var typingStrokes = "";
+    var subComponents;
     if (components.length < 3) {
-      typingStrokes = DictionaryManager.getAllTypingStrokes(components);
+      subComponents = ComponentManager.getSubComponents(components);
     }
-
-    var leadComps = DictionaryManager.getAllLeadComponents(components);
-    var leadTypingStrokes = "";
-    if (leadComps.length < 3) {
-      leadTypingStrokes = DictionaryManager.getLeadTypingStrokes(typingStrokes);
-    }
-
-    var compCodes= DictionaryManager.getAllComponentCodes(leadComps);
-    var strokeCodes = DictionaryManager.getStrokeTypingCodes(leadTypingStrokes);
-    var typingCodes = DictionaryManager.getOneTypingCode(compCodes, strokeCodes);
 
     double size = 18.0 * getSizeRatio();
-    double halfSize = size/1.5;
+    double halfSize = size/1.2;
     double xPosi = 10.0;
 
     for (int i = 0; i < components.length; i++) {
@@ -167,14 +158,28 @@ class InputZiHintPainter extends BasePainter {
         displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
         xPosi += halfSize;
       }
-      drawComponentZi(components[i], xPosi, 0.0, size, size, size, Colors.blue, true, 1);
 
-      if (components[i] !=  leadComps[i]) {
-        xPosi += size;
-        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize;
+      var comp = components[i];
+      drawComponentZi(comp, xPosi, 0.0, size, size, size, Colors.blue, true, 1);
+
+      xPosi += size * 1.2;
+      displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
+      xPosi += halfSize / 1.5;
+      var typingCode = ComponentManager.getTypingCode(comp);
+
+      displayTextWithValue(typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+    }
+
+    if (subComponents != null) {
+      for (int i = 0; i < subComponents.length; i++) {
+
+          xPosi += halfSize;
+          displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
+          xPosi += halfSize;
+
+        var comp = subComponents[i];
         drawComponentZi(
-            leadComps[i],
+            comp,
             xPosi,
             0.0,
             size,
@@ -183,42 +188,15 @@ class InputZiHintPainter extends BasePainter {
             Colors.blue,
             true,
             1);
-        xPosi += size;
-        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+
+        xPosi += size * 1.2;
+        displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize / 1.5;
+        var typingCode = ComponentManager.getTypingCode(comp);
+
+        displayTextWithValue(
+            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
       }
-
-      xPosi += size;
-      displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
-      xPosi += halfSize;
-
-      displayTextWithValue(typingCodes[i], xPosi, 0.0, size, Colors.blue);
-    }
-
-    for (int j = 0; j < typingStrokes.length; j++) {
-      xPosi += halfSize;
-      displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
-      xPosi += halfSize;
-      drawStrokeZi(typingStrokes[j], xPosi, 0.0, size, size, size, Colors.blue, true, 1.0);
-      xPosi += size;
-      displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
-      xPosi += halfSize;
-      if (typingStrokes[j] != leadTypingStrokes[j]) {
-        drawStrokeZi(
-            leadTypingStrokes[j],
-            xPosi,
-            0.0,
-            size,
-            size,
-            size,
-            Colors.blue,
-            true,
-            1.0);
-        xPosi += size;
-        displayTextWithValue('>', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize;
-      }
-
-      displayTextWithValue(typingCodes[components.length + j], xPosi, 0.0, size, Colors.blue);
     }
   }
 

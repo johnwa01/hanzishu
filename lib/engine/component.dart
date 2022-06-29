@@ -179,6 +179,7 @@ class Component {
   String xiangXinImage;
   String strokesString;
   String meaning;
+  String subComponents;
   List<double> strokes;
 
   Component(
@@ -190,6 +191,7 @@ class Component {
       String xiangXinImag,
       String strokesString,
       String meaning,
+      String subComponents,
       List<double> strokes)
   {
     this.doubleByteCode= doubleByteCode;
@@ -200,6 +202,7 @@ class Component {
     this.xiangXinImage = xiangXinImage;
     this.strokesString = strokesString;
     this.meaning = meaning;
+    this.subComponents = subComponents;
     this.strokes = strokes;
   }
 }
