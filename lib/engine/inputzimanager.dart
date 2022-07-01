@@ -12,7 +12,7 @@ import 'package:hanzishu/utility.dart';
 
 class InputZiManager {
   TypingType currentTypingType = TypingType.none;
-  int currentIndex = 0;
+  int currentIndex = 0; // Note: to be insync with inputzipage
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
@@ -31,6 +31,10 @@ class InputZiManager {
 
   getCurrentIndex(TypingType typingType) {
     return currentIndex;
+  }
+
+  setCurrentIndex(int currentIndex) {
+    this.currentIndex = currentIndex;
   }
 
   initCurrentIndex() {

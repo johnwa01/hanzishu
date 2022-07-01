@@ -112,7 +112,7 @@ var theString_en_US = [
   Local(107, "[Optional] Customized typing exercises"),
   Local(108, "Free typing and help"),
   Local(109, "Try a few"),
-  Local(110, "The Quanzi Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard.\n\nFor example, to type character '晶', you break it into '日', '日', and '日', then type 'B', 'B', and 'B', then choose '晶' from the candidate list below the editing field.\n\nRules to break up a character: Never break up two lines that are crossing through each other; separated or touching lines are ok to break up; as fewer components as possible; prefer a component with more strokes.\n\nYou can use 'Hint' when necessary.\n\n"),
+  Local(110, "The Quanzi Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard.\n\nFor example, to type character '晶', you break it into '日', '日', and '日', then type 'B', 'B', and 'B', then choose '晶' from the candidate list below the editing field.\n\nThe order of rules to break up a character: Never break up two lines that are crossing through each other (ok for separated or touching lines); prefer separated components; as fewer components as possible; prefer components containing more strokes.\n\nYou can use 'Hint' when necessary.\n\n"),
   Local(111, "Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to two sides."),
   Local(112, "Customized exercises"),
   Local(113, "Please type"),

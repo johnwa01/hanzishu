@@ -390,7 +390,7 @@ class _ComponentPageState extends State<ComponentPage> {
         children: <Widget>[
           Row(
               children: <Widget>[
-                SizedBox(height: 30 * getSizeRatioWithLimit()),
+                SizedBox(height: 8 * getSizeRatioWithLimit()),
               ]
           ),
           Row(
@@ -406,7 +406,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
           Row(
               children: <Widget>[
-                SizedBox(height: 40 * getSizeRatioWithLimit()),
+                SizedBox(height: 10 * getSizeRatioWithLimit()),
               ]
           ),
         ]

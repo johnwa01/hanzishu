@@ -611,17 +611,18 @@ class _InputZiPageState extends State<InputZiPage> {
     var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
 
     //if (typingType == TypingType.LeadComponents || typingType == TypingType.GiveItATry) {
-    var str = getString(
-        110); /*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/
+    var str; //getString(110); /*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/
     // + "\n\n" + getString(111)/*"Reference this chart to visualize how Lead Components are mapped to English letters. The five single-stroke Components sit in the two middle columns, so try to read from middle to side."*/;
     //}
     //if (typingType == TypingType.ExpandedInitial) {
     //  str = theZiForExpandedInitialExerciseList[currentIndex].hintText;
     //}
-    if (typingType == TypingType.ExpandedReview) {
+    if (typingType == TypingType.LeadComponents)
+      str = theZiForLeadCompExerciseList[currentIndex].hintText;
+    else if (typingType == TypingType.ExpandedReview) {
       str = theZiForExpandedReviewExerciseList[currentIndex].hintText;
     }
-    if (typingType == TypingType.ExpandedComponents) {
+    else if (typingType == TypingType.ExpandedComponents) {
       str = theZiForExpandedCompExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.AttachedComponents) {
@@ -678,7 +679,8 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                   onPressed: () {
                     setState(() {
-                      currentIndex = 1;
+                      //currentIndex = 1;
+                      currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
                     });
                   },
                   child: Text(getString(109) /*'Try a few'*/,
@@ -692,54 +694,39 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getExplainationImage() {
-    var image = theZiForIntroductionList[0].hintImage;
-    var width = 350.0 * getSizeRatio();
-    var height = 150.0 * getSizeRatio();
+    //var image = theZiForIntroductionList[0].hintImage;
+    var image;
+    var width = 140.0 * getSizeRatio();
+    var height = 140.0 * getSizeRatio();
 
-    //if (typingType == TypingType.ExpandedInitial) {
-    //  image = theZiForExpandedInitialExerciseList[currentIndex].hintImage;
-    //  width = 140.0 * getSizeRatio();
-    //  height = 140.0 * getSizeRatio();
-    //}
-    if (typingType == TypingType.ExpandedReview) {
+    if (typingType == TypingType.LeadComponents) {
+      image = theZiForLeadCompExerciseList[currentIndex].hintImage;
+      width = 350.0 * getSizeRatio();
+      height = 150.0 * getSizeRatio();
+    }
+    else if (typingType == TypingType.ExpandedReview) {
       image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.ExpandedComponents) {
       image = theZiForExpandedCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.AttachedComponents) {
       image = theZiForAttachedCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.TwinComponents) {
       image = theZiForTwinCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.SubComponents) {
       image = theZiForSubCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.SingleComponent) {
       image = theZiForSingleCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.TwoComponents) {
       image = theZiForTwoCompExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
     else if (typingType == TypingType.GeneralExercise) {
       image = theZiForGeneralExerciseList[currentIndex].hintImage;
-      width = 140.0 * getSizeRatio();
-      height = 140.0 * getSizeRatio();
     }
 
     if (image.isNotEmpty) {
@@ -747,8 +734,8 @@ class _InputZiPageState extends State<InputZiPage> {
         alignment: Alignment.center,
         child: Image.asset(
           "assets/typing/" + image,
-          width: 150.0 * getSizeRatio(),
-          height: 150.0 * getSizeRatio(),
+          width: width,
+          height: height,
         ),
       );
     }
@@ -803,7 +790,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //  title = getString(100)/*'Give it a try'*/;
     //}
     if (typingType == TypingType.LeadComponents) {
-      title = getString(104)/*'Guided typing'*/;
+      title = getString(100)/*'Guided typing'*/;
     }
     //else if (typingType == TypingType.ExpandedInitial) {
     //  title = getString(105)/*'Expanded Components'*/;
@@ -1131,9 +1118,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getImageTiedToZi() {
     var image;
-    if (/*typingType == TypingType.ExpandedInitial || */typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {
-      //if (typingType == TypingType.ExpandedInitial) {
-      //  image = theZiForExpandedInitialExerciseList[currentIndex].hintImage;
+    if (typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {
+      //if (typingType == TypingType.LeadComponents) {
+      //  image = theZiForLeadCompExerciseList[currentIndex].hintImage;
       //}
       if (typingType == TypingType.ExpandedReview) {
         image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
@@ -1169,13 +1156,19 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getOneImage(String image) {
+    var width = 100.0 * getSizeRatio();
+    var height = 100.0 * getSizeRatio();
+    if (typingType == TypingType.LeadComponents) {
+      var width = 300.0 * getSizeRatio();
+    }
+
     if (image.isNotEmpty) {
-      return Container( //Flexible(
+      return Container( //Flexible(hh
         alignment: Alignment.center,
         child: Image.asset(
           "assets/typing/" + image,
-          width: 100.0 * getSizeRatio(),
-          height: 100.0 * getSizeRatio(),
+          width: width,
+          height: height,
         ),
       );
     }
