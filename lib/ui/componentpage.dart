@@ -1109,7 +1109,7 @@ class _ComponentPageState extends State<ComponentPage> {
         }
       }
 
-      result += getString(138)/*"Next"*/;
+      result += getString(357)/*"Next"*/;
 
       //_updateProgress();
 

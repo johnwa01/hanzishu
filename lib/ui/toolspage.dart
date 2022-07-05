@@ -185,7 +185,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ExpandedComponents), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
               ),
             ).then((val)=>{_getRequests()});
           },

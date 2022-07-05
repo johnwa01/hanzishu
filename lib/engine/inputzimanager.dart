@@ -260,8 +260,8 @@ class InputZiManager {
     else if (typingType == TypingType.ExpandedReview) {
       instruction = theZiForExpandedReviewExerciseList[currentIndex].hintText;
     }
-    else if (typingType == TypingType.ExpandedComponents) {
-      instruction = theZiForExpandedCompExerciseList[currentIndex].hintText;
+    else if (typingType == TypingType.ExpandedGeneral) {
+      instruction = theZiForExpandedGeneralExerciseList[currentIndex].hintText;
     }
     else if (typingType == TypingType.AttachedComponents) {
       instruction = theZiForAttachedCompExerciseList[currentIndex].hintText;
@@ -315,8 +315,8 @@ class InputZiManager {
     else if (typingType == TypingType.ExpandedReview) {
       return theZiForExpandedReviewExerciseList[index];
     }
-    else if (typingType == TypingType.ExpandedComponents) {
-      return theZiForExpandedCompExerciseList[index];
+    else if (typingType == TypingType.ExpandedGeneral) {
+      return theZiForExpandedGeneralExerciseList[index];
     }
     else if (typingType == TypingType.AttachedComponents) {
       return theZiForAttachedCompExerciseList[index];
@@ -396,8 +396,8 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.ExpandedComponents) {
-      if (currentIndex >= theZiForExpandedCompExerciseList.length) {
+    else if (typingType == TypingType.ExpandedGeneral) {
+      if (currentIndex >= theZiForExpandedGeneralExerciseList.length) {
         currentIndex = -1;
       }
     }
@@ -471,8 +471,8 @@ class InputZiManager {
       zi = theZiForExpandedReviewExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.ExpandedComponents) {
-      zi = theZiForExpandedCompExerciseList[currentIndex];
+    else if (typingType == TypingType.ExpandedGeneral) {
+      zi = theZiForExpandedGeneralExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
     else if (typingType == TypingType.AttachedComponents) {
@@ -525,8 +525,8 @@ class InputZiManager {
     else if (typingType == TypingType.ExpandedReview) {
       return theZiForExpandedReviewExerciseList.length;
     }
-    else if (typingType == TypingType.ExpandedComponents) {
-      return theZiForExpandedCompExerciseList.length;
+    else if (typingType == TypingType.ExpandedGeneral) {
+      return theZiForExpandedGeneralExerciseList.length;
     }
     else if (typingType == TypingType.AttachedComponents) {
       return theZiForAttachedCompExerciseList.length;

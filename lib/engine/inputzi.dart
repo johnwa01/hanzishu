@@ -5,7 +5,7 @@ enum TypingType {
   LeadComponents,
   //ExpandedInitial,
   ExpandedReview,
-  ExpandedComponents,
+  ExpandedGeneral,
   //ExpandedExercise,
   AttachedComponents,
   TwinComponents,
