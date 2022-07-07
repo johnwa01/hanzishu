@@ -886,7 +886,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
                 style: TextStyle(
                   fontSize: editFontSize * editFieldFontRatio, // 35
-                  height: 1.3
+                  height: 1.0 // 1.3
                 ),
                 maxLines: maxNumberOfLines,
                 //expands: true,
@@ -1079,25 +1079,25 @@ class _InputZiPageState extends State<InputZiPage> {
           Row(
               children: <Widget>[
                 SizedBox(
-                  width: 130 * getSizeRatio(),
+                  width: 55 * getSizeRatio(), //130
                   child: Text(
                       getString(113)/*"Please type"*/ + ": ",
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: fontSize),
+                //SizedBox(width: fontSize),
                 SizedBox(
-                  width: 50.0 * getSizeRatio(),
+                  width: 35.0 * getSizeRatio(), //50
                   child: Text(
                       zi.zi,
                       style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
                 ),
-                SizedBox(width: 140.0 * getSizeRatio()), //200.0
+                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
-                  width: 50.0 * getSizeRatio(),
+                  width: 45.0 * getSizeRatio(),
                   child: FlatButton(
                     color: Colors.white,
                     textColor: Colors.blueAccent,
@@ -1110,14 +1110,22 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      getString(90)/*"Hint"*/,
-                      style: TextStyle(fontSize: fontSize * 1.6), // 1.2
+                      "[" + getString(90) + "]"/*"Hint"*/,
+                      style: TextStyle(fontSize: fontSize * 1.2), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 30.0 * getSizeRatio(),
+                  //width: 150.0,
+                  child:  CustomPaint(
+                    foregroundPainter: inputZiHintPainter,
+                  ),
+                ),
               ]
           ),
+        /*
         Row(
             children: <Widget>[
               SizedBox(
@@ -1129,6 +1137,7 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
               ]
          ),
+         */
        ]
       ),
       onWillPop: _onWillPop
@@ -1175,8 +1184,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getOneImage(String image) {
-    var width = 100.0 * getSizeRatio();
-    var height = 100.0 * getSizeRatio();
+    var width = 80.0 * getSizeRatio();
+    var height = 80.0 * getSizeRatio();
     if (typingType == TypingType.LeadComponents) {
       var width = 300.0 * getSizeRatio();
     }

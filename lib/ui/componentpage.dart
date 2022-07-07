@@ -399,7 +399,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                       getString(126)/*'Memorize the above Component-key pairings.'*/,
-                      style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
+                      style: TextStyle(fontSize: 13 * getSizeRatioWithLimit()/*, fontWeight: FontWeight.bold*/)  // 20
                   ),
                 )
               ]
@@ -591,7 +591,7 @@ class _ComponentPageState extends State<ComponentPage> {
       var imageName;
       if (theComponentManager.isHeaderOfRandomComponents()) {
          imageName = 'GG6.png';
-         imageHeight = 250.0 * getSizeRatioWithLimit();
+         //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
       }
       else {
         var componentInGroup = theRandomComponentList[currentIndex];

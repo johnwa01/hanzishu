@@ -309,7 +309,7 @@ class DictionaryPainter extends BreakoutPainter {
     var defaultFontSize = applyRatio(25.0);
     var smallFontSize = applyRatio(20.0);
     var fillerSize = applyRatio(4.0); // 5
-    var startYSize = applyRatio(45.0); // 60
+    var startYSize = applyRatio(40.0); // 60
 
 
     for (var j = 0; j < 16; j++) {

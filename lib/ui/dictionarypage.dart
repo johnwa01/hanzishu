@@ -213,7 +213,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     var hitTestPositionGap = defaultFontSize * (29.0 / 25.0); //30, that is, 25 + 4 = 29
     var hitTestSize = defaultFontSize * (27.0 / 25.0);
     var startXSize = defaultFontSize * (20.0 / 25.0);
-    var startYSize = defaultFontSize * (45.0 / 25.0); // ratio of 60.0/25.0
+    var startYSize = defaultFontSize * (40.0 / 25.0); // ratio of 60.0/25.0
     var helpPara1 = defaultFontSize * (65.0 / 25.0);
     var helpPara2 = defaultFontSize * (5.0 / 25.0); // 5.0
     var helpPara3 = defaultFontSize * (20.0 / 25.0);

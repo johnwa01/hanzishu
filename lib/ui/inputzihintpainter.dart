@@ -148,15 +148,15 @@ class InputZiHintPainter extends BasePainter {
       subComponents = ComponentManager.getSubComponents(components);
     }
 
-    double size = 18.0 * getSizeRatio();
+    double size = 14.4 * getSizeRatio(); //18.0
     double halfSize = size/1.2;
-    double xPosi = 10.0;
+    double xPosi = 8.0; //10.0
 
     for (int i = 0; i < components.length; i++) {
       if (i != 0) {
         xPosi += halfSize;
         displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize;
+        xPosi += halfSize / 1.5;
       }
 
       var comp = components[i];

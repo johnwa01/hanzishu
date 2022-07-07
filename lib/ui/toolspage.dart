@@ -48,7 +48,7 @@ class _ToolsPageState extends State<ToolsPage> {
     return ListView(
       children: <Widget>[
         ListTile(
-          title: Text(getString(99)/*"Please finish exercise 1 - 7 to learn the input method"*/ + ":", textDirection: TextDirection.ltr),
+          title: Text(getString(99)/*"Please finish exercise 1 - 11 to learn the input method"*/, textDirection: TextDirection.ltr),
         ),
 /*
         ListTile(
