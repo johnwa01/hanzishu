@@ -383,6 +383,17 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getHeaderOfComponent() {
+    var str;
+    if (currentIndex == 0) {
+      str = getString(126)/*'Memorize the above Component-key pairings - 1.'*/;
+    }
+    else if (currentIndex == 7) {
+      str = getString(358)/*'Review - 2.'*/;
+    }
+    else {
+      str = getString(359)/*'Review again - 3.'*/;
+    }
+
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -398,7 +409,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                      getString(126)/*'Memorize the above Component-key pairings.'*/,
+                      str,
                       style: TextStyle(fontSize: 13 * getSizeRatioWithLimit()/*, fontWeight: FontWeight.bold*/)  // 20
                   ),
                 )
@@ -1109,7 +1120,11 @@ class _ComponentPageState extends State<ComponentPage> {
         }
       }
 
-      result += getString(357)/*"Next"*/;
+      var buttonText = getString(285); // Continue
+      if (currentIndex == 0) {
+        buttonText = getString(357); // Let's start
+      }
+      result += buttonText;
 
       //_updateProgress();
 

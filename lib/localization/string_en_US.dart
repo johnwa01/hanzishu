@@ -101,7 +101,7 @@ var theString_en_US = [
   Local(96, "Basic Character Table"),
   Local(97, "Components"),
   Local(98, "Quanzi Input Method"),
-  Local(99, "Please finish exercise 1 - 11 to learn the Quanzi Input Method: \n\n[Make sure your computer/phone is at English input mode.]"),
+  Local(99, "Please finish exercise 1 - 11 to learn the Quanzi Input Method: \n\n[Please make sure your computer/phone is under English input mode]"),
   Local(100, "Give it a try"),
   Local(101, "Component-key pairing groups"),
   Local(102, "Memorize by groups"),
@@ -358,6 +358,8 @@ var theString_en_US = [
   Local(353, "upward arrow"),
   Local(354, "You have completed this exercise! Please move on to the next one."),
   Local(355, "You have completed all the typing exercises! You can now start your own free typing or do some optional customized typing exercises."),
-  Local(356, "Expanded Components are very important! Let's practice them one more time before moving on."),
+  Local(356, "Expanded Components are very important! Let's practice them one more time before moving on.\n\n"),
   Local(357, "Let's start"),
+  Local(358, "Please review the above pairings, then continue."),
+  Local(359, "Please review the above pairings one more time, then continue."),
 ];
