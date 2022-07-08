@@ -20,6 +20,10 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -215,6 +219,24 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
               "   	 o	" + getString(155)/*"Ex: Character 丝 -> Stroke 乙. Note: all fold strokes map to 乙."*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
+          ),
+          SizedBox(height: TheConst.fontSizes[2]),
+          Text(
+              getString(360)/*"笔画类别"*/,
+              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "   •	" + getString(361)/*"按此表来选择笔画的笔画类别*/,
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Image.asset(
+                "assets/typing/Strokes.png",
+                width: 390.0 * getSizeRatioWithLimit(),
+                height: 150.0 * getSizeRatioWithLimit()),
           ),
         ]
     );

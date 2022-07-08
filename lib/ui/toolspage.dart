@@ -3,6 +3,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';
+import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
@@ -91,6 +92,19 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
 */
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(365)/*"全字输入法介绍"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiHelpPage(),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
           title: Text("1. " + getString(103)/*"Memorize the pairings"*/, textDirection: TextDirection.ltr),

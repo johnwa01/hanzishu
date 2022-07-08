@@ -481,7 +481,8 @@ var theZiForSubCompExerciseList=[
 
 var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "SpecialStrokes.png", getString(339)),
-  ZiWithComponentsAndStrokes("歹", [], "", ""),
+  //ZiWithComponentsAndStrokes("歹", [], "", ""),
+  ZiWithComponentsAndStrokes("日", [], "", ""),
   ZiWithComponentsAndStrokes("二", [], "", ""),
   ZiWithComponentsAndStrokes("乙", [], "", ""),
   ZiWithComponentsAndStrokes("一", [], "", ""),
@@ -489,7 +490,6 @@ var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("十", [], "", ""),
   ZiWithComponentsAndStrokes("大", [], "", ""),
   ZiWithComponentsAndStrokes("世", [], "", ""),
-  ZiWithComponentsAndStrokes("日", [], "", ""),
   ZiWithComponentsAndStrokes("我", [], "", ""),
   ZiWithComponentsAndStrokes("三", [], "", ""),
   ZiWithComponentsAndStrokes("田", [], "", ""),
