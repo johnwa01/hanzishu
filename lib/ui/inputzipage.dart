@@ -24,6 +24,7 @@ class InputZiPage extends StatefulWidget {
 }
 
 class _InputZiPageState extends State<InputZiPage> {
+  ScrollController _scrollController;
   TypingType typingType;
   int lessonId;
   int currentIndex;
@@ -60,6 +61,10 @@ class _InputZiPageState extends State<InputZiPage> {
   initState() {
     super.initState();
 
+    _scrollController = ScrollController()
+      ..addListener(() {
+      });
+
     _controller.addListener(handleKeyInput);
     _progressValue = 0.0;
     totalQuestions =
@@ -72,6 +77,12 @@ class _InputZiPageState extends State<InputZiPage> {
       showHint = false;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // it is a good practice to dispose the controller
+    super.dispose();
   }
 
   initParameters() {
@@ -861,56 +872,65 @@ class _InputZiPageState extends State<InputZiPage> {
         (
         title: Text(title),
         ),
-      body: WillPopScope( // for dismissing overlay menu only when hitting back arrow
-        child: Column(
-        //mainAxisAlignment: MainAxisAlignment.spaceAround,
-        //mainAxisSize:  MainAxisSize.max,
-        children: <Widget>[
-          //Spacer(),
-          getHelpOrProgressIndicator(),
-          getComponentRelated(),
-          SizedBox(
-              width: double.infinity,
-              //height: 120,
-              child: TextField(
-                autocorrect: false,
-                enableSuggestions: false,
-                controller: _controller,
-                focusNode: _textNode,
-                autofocus: true,
-                //autocorrect: false,
-                //enableSuggestions: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: '', //'Full Name',
-                ),
-                style: TextStyle(
-                  fontSize: editFontSize * editFieldFontRatio, // 35
-                  height: 1.0 // 1.3
-                ),
-                maxLines: maxNumberOfLines,
-                //expands: true,
-                keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
-              ),//focusNode: _textNode,
-            ),
-          //),
-          SizedBox(
-            width: double.infinity,
-            height: 40.0 * getSizeRatio(), //40
-            child:  CustomPaint(
-              foregroundPainter: inputZiPainter,
-              //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
-
-              //child: Center(
-                child: Stack(
-                  children: createHittestButtons(context, theCurrentZiCandidates),
+      body: Container(
+        child: SingleChildScrollView( // was trying to use this trying to avoid the issue of pushing content up in Android browser
+                                        // didn't help but didn't hurt, so leave it here for future flexibility.
+          controller: _scrollController,
+          //physics: NeverScrollableScrollPhysics(), // Didn't work: not allow to scroll to avoid the issue of pushing content up in Andorid browser
+          scrollDirection: Axis.vertical,
+          child: WillPopScope( // for dismissing overlay menu only when hitting back arrow
+            child: Column(
+            //mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //mainAxisSize:  MainAxisSize.max,
+            children: <Widget>[
+              //Spacer(),
+              getHelpOrProgressIndicator(),
+              getComponentRelated(),
+              SizedBox(
+                  width: double.infinity,
+                  //height: 120,
+                  child: TextField(
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    controller: _controller,
+                    focusNode: _textNode,
+                    autofocus: true,
+                    //autocorrect: false,
+                    //enableSuggestions: false,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: '', //'Full Name',
+                    ),
+                    style: TextStyle(
+                      fontSize: editFontSize * editFieldFontRatio, // 35
+                      height: 1.0 // 1.3
+                    ),
+                    maxLines: maxNumberOfLines,
+                    //expands: true,
+                    keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
+                  ),//focusNode: _textNode,
                 ),
               //),
-            ),
-          )
-        ]
-      ),
-          onWillPop: _onWillPop
+              SizedBox(
+                width: double.infinity,
+                height: 40.0 * getSizeRatio(), //40
+                child:  CustomPaint(
+                  foregroundPainter: inputZiPainter,
+                  //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
+
+                  //child: Center(
+                    child: Stack(
+                      children: createHittestButtons(context, theCurrentZiCandidates),
+                    ),
+                  //),
+                ),
+              ),
+              getImageTiedToZi()
+            ]
+          ),
+              onWillPop: _onWillPop
+          ),
+        ),
       ),
     );
   }
@@ -1075,7 +1095,7 @@ class _InputZiPageState extends State<InputZiPage> {
         children: <Widget>[
           //SizedBox(height: fontSize),
           getInstruction(instruction),
-          getImageTiedToZi(),
+          //getImageTiedToZi(),
           Row(
               children: <Widget>[
                 SizedBox(
@@ -1173,6 +1193,11 @@ class _InputZiPageState extends State<InputZiPage> {
         return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Text(
+                  getString(369)/*"Components:"*/,
+                  style: TextStyle(fontSize: 15.0 * getSizeRatio()),
+                  textAlign: TextAlign.center
+              ),
               getOneImage(image1),
               getOneImage(image2),
             ]
