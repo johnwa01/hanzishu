@@ -24,7 +24,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(98)/*"Component Input Method"*/),
+        title: Text(getString(368)/*"Quanzi Input Method"*/),
       ),
       body: Center
         (
@@ -91,7 +91,6 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
-*/
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
           title: Text(getString(365)/*"全字输入法介绍"*/, textDirection: TextDirection.ltr),
@@ -105,6 +104,7 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
+       */
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
           title: Text("1. " + getString(103)/*"Memorize the pairings"*/, textDirection: TextDirection.ltr),
@@ -230,6 +230,7 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
+        /*
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
           title: Text("8. " + getString(330)/*"Sub Components"*/, textDirection: TextDirection.ltr),
@@ -243,9 +244,10 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
+        */
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("9. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
+          title: Text("8. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[8] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -258,7 +260,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("10. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
+          title: Text("9. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[9] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -271,7 +273,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("11. " + getString(333)/*"General Exercises"*/, textDirection: TextDirection.ltr),
+          title: Text("10. " + getString(333)/*"General Exercises"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[10] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

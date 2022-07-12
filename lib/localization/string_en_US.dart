@@ -370,7 +370,7 @@ var theString_en_US = [
   Local(365, "Introduction of the Quanzi Input Method"),
   Local(366, "The Quanzi Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard in order to type a Chinese character. The method doesn't break up crossing strokes of the character, therefore keep the wholeness of the components (more than half is single body character) which is the reason for its name."),
   Local(367, "If '品' is listed behind, you can continue to type in Components to move up its position"),
-  Local(368, ""),
+  Local(368, "Quanzi Input Method"),
   Local(369, ""),
   Local(370, ""),
   Local(371, ""),
