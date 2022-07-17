@@ -3024,7 +3024,7 @@ var theSearchingZiList = [
   SearchingZi(3020,"冒", "mào", "emit",9,["Xb","3013"],"",0,"",""),
   SearchingZi(3021,"看", "kān/kàn", "see; look at",9,["Sh","3013"],"",0,"",""),
   SearchingZi(3022,"眠", "mián", "sleep",10,["3013","242"],"",0,"",""),
-  SearchingZi(3023,"夏", "xià", "summer",11,["1","3450","Oi"],"",0,"",""),
+  SearchingZi(3023,"夏", "xià", "summer",11,["Sb","3013","Oi"],"",0,"",""),
   SearchingZi(3024,"眼", "yǎn", "eye",11,["3013","3543"],"",0,"",""),
   SearchingZi(3025,"眶", "kuàng", "eye socket",11,["3013","1928"],"",0,"",""),
   SearchingZi(3026,"睁", "zhēng", "open (the eyes)",11,["3013","103"],"",0,"",""),

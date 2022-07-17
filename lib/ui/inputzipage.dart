@@ -735,9 +735,13 @@ class _InputZiPageState extends State<InputZiPage> {
       image = theZiForExpandedGeneralExerciseList[currentIndex].hintImage;
     }
     else if (typingType == TypingType.AttachedComponents) {
+      width = 300.0 * getSizeRatio();
+      height = 120.0 * getSizeRatio();
       image = theZiForAttachedCompExerciseList[currentIndex].hintImage;
     }
     else if (typingType == TypingType.TwinComponents) {
+      width = 300.0 * getSizeRatio();
+      height = 120.0 * getSizeRatio();
       image = theZiForTwinCompExerciseList[currentIndex].hintImage;
     }
     else if (typingType == TypingType.SubComponents) {
@@ -1089,6 +1093,19 @@ class _InputZiPageState extends State<InputZiPage> {
         typingType: typingType
     );
 
+    var promptStr = getString(113) + "： "; //"Please type"
+    var promptWidth = 65;
+    if (!showHint) {
+      if (typingType == TypingType.ExpandedReview) {
+        promptWidth = 180;
+        promptStr = getString(371) + ": "; //"Please review the table below and type:";
+      }
+      else if (typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents) {
+        promptWidth = 180;
+        promptStr = getString(370) + ": "; //"Please remember the table below and type:";
+      }
+    }
+
     return WillPopScope(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1099,9 +1116,9 @@ class _InputZiPageState extends State<InputZiPage> {
           Row(
               children: <Widget>[
                 SizedBox(
-                  width: 55 * getSizeRatio(), //130
+                  width: promptWidth * getSizeRatio(), //130 //55
                   child: Text(
-                      getString(113)/*"Please type"*/ + ": ",
+                      promptStr,
                       style: TextStyle(fontSize: fontSize * 1.2),
                       textAlign: TextAlign.left
                   ),
@@ -1193,11 +1210,13 @@ class _InputZiPageState extends State<InputZiPage> {
         return Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              /*
               Text(
                   getString(369)/*"Components:"*/,
                   style: TextStyle(fontSize: 15.0 * getSizeRatio()),
                   textAlign: TextAlign.center
               ),
+               */
               getOneImage(image1),
               getOneImage(image2),
             ]
@@ -1211,8 +1230,13 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getOneImage(String image) {
     var width = 80.0 * getSizeRatio();
     var height = 80.0 * getSizeRatio();
+    //var fit = BoxFit.fitHeight;
     if (typingType == TypingType.LeadComponents) {
-      var width = 300.0 * getSizeRatio();
+      //width = 300.0 * getSizeRatio();
+    }
+    if (typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents) {
+      width = 300.0 * getSizeRatio();
+    //  fit = BoxFit.fitWidth;
     }
 
     if (image.isNotEmpty) {
@@ -1222,6 +1246,7 @@ class _InputZiPageState extends State<InputZiPage> {
           "assets/typing/" + image,
           width: width,
           height: height,
+      //    fit: fit,
         ),
       );
     }

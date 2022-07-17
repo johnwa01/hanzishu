@@ -260,10 +260,9 @@ flutter:
      - assets/typing/E62.png
      - assets/typing/N11.png
      - assets/typing/N12.png
-     - assets/typing/N14.png
+     - assets/typing/N13.png
      - assets/typing/N15.png
      - assets/typing/N21.png
-     - assets/typing/N22.png
      - assets/typing/N23.png
      - assets/typing/N24.png
      - assets/typing/N25.png
@@ -276,19 +275,18 @@ flutter:
      - assets/typing/N42.png
      - assets/typing/N43.png
      - assets/typing/N44.png
-     - assets/typing/N51.png
      - assets/typing/N52.png
-     - assets/typing/N53.png
      - assets/typing/N54.png
      - assets/typing/N61.png
      - assets/typing/N62.png
      - assets/typing/P11.png
-     - assets/typing/P14.png
+     - assets/typing/P12.png
+     - assets/typing/P13.png
      - assets/typing/P15.png
-     - assets/typing/P22.png
      - assets/typing/P23.png
      - assets/typing/P24.png
      - assets/typing/P25.png
+     - assets/typing/P31.png
      - assets/typing/P32.png
      - assets/typing/P33.png
      - assets/typing/P34.png
@@ -297,9 +295,7 @@ flutter:
      - assets/typing/P42.png
      - assets/typing/P43.png
      - assets/typing/P44.png
-     - assets/typing/P51.png
      - assets/typing/P52.png
-     - assets/typing/P53.png
      - assets/typing/P54.png
      - assets/typing/P61.png
      - assets/typing/P62.png
