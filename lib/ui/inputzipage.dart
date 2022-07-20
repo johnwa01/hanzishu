@@ -375,8 +375,8 @@ class _InputZiPageState extends State<InputZiPage> {
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
     _controller.value = _controller.value.copyWith(text: newText,
-        composing: TextRange.empty,
-        selection: TextSelection.collapsed(offset: selectionPosi));
+          composing: TextRange.empty,
+          selection: TextSelection.collapsed(offset: selectionPosi));
 
     previousStartComposing = -1;
     previousEndComposing = -1;
@@ -1183,11 +1183,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getImageTiedToZi() {
     var image;
-    if (typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {
+    if (typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {
       //if (typingType == TypingType.LeadComponents) {
       //  image = theZiForLeadCompExerciseList[currentIndex].hintImage;
       //}
-      if (typingType == TypingType.ExpandedReview) {
+      if (typingType == TypingType.LeadComponents) {
+        image = "GG6.png";
+      }
+      else if (typingType == TypingType.ExpandedReview) {
         image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
       }
       else if (typingType == TypingType.AttachedComponents) {
@@ -1218,6 +1221,9 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
                */
               getOneImage(image1),
+              SizedBox(
+                width: 35.0 * getSizeRatio(), //50
+              ),
               getOneImage(image2),
             ]
         );
@@ -1232,7 +1238,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var height = 80.0 * getSizeRatio();
     //var fit = BoxFit.fitHeight;
     if (typingType == TypingType.LeadComponents) {
-      //width = 300.0 * getSizeRatio();
+      width = 300.0 * getSizeRatio();
     }
     if (typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents) {
       width = 300.0 * getSizeRatio();

@@ -154,7 +154,7 @@ class InputZiHintPainter extends BasePainter {
 
     for (int i = 0; i < components.length; i++) {
       if (i != 0) {
-        xPosi += halfSize;
+        xPosi += halfSize / 1.5;
         displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
         xPosi += halfSize / 1.5;
       }
@@ -163,17 +163,20 @@ class InputZiHintPainter extends BasePainter {
       drawComponentZi(comp, xPosi, 0.0, size, size, size, Colors.blue, true, 1);
 
       xPosi += size * 1.2;
-      displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
+      displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
       xPosi += halfSize / 1.5;
       var typingCode = ComponentManager.getTypingCode(comp);
-
       displayTextWithValue(typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+
+      xPosi += size; //* 1.2;
+      displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+      //xPosi += halfSize / 1.5;
     }
 
     if (subComponents != null) {
       for (int i = 0; i < subComponents.length; i++) {
 
-          xPosi += halfSize;
+          xPosi += halfSize / 1.3;
           displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
           xPosi += halfSize;
 
@@ -190,12 +193,14 @@ class InputZiHintPainter extends BasePainter {
             1);
 
         xPosi += size * 1.2;
-        displayTextWithValue(':', xPosi, 0.0, size, Colors.blue);
+        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
 
         displayTextWithValue(
             typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+        xPosi += size;
+        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
       }
     }
   }

@@ -476,6 +476,7 @@ class _ComponentPageState extends State<ComponentPage> {
       //if(theComponentManager.isHeaderOfExpandedComponents()) {
       //  return getHeaderOfExpandedComponents();
       //}
+      /*
       if (currentIndex != 0 && theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) ) {
         return Row(
           children: <Widget>[
@@ -488,8 +489,9 @@ class _ComponentPageState extends State<ComponentPage> {
         );
       }
       else {
+       */
         return getQuestionImage();
-      }
+      //}
     }
     /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
@@ -578,7 +580,7 @@ class _ComponentPageState extends State<ComponentPage> {
     if (questionType == QuestionType.ExpandedComponent) {
       imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
       imageWidth = 160.0 * getSizeRatioWithLimit();
-      imageHeight = 160.0 * getSizeRatioWithLimit();
+      imageHeight = 120.0 * getSizeRatioWithLimit();
     }
     /*
     else if (questionType == QuestionType.ReviewExpandedComponent) {
@@ -620,7 +622,7 @@ class _ComponentPageState extends State<ComponentPage> {
             imagePath,
             width: imageWidth,
             height: imageHeight,
-            //fit: BoxFit.fitWidth,
+            fit: BoxFit.fitWidth,
         )
     );
   }
