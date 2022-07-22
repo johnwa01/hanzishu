@@ -610,6 +610,8 @@ class _ComponentPageState extends State<ComponentPage> {
         var componentInGroup = theRandomComponentList[currentIndex];
         var component = theComponentManager.getComponentByGroupAndIndex(componentInGroup.groupNumber, componentInGroup.indexInGroup);
         imageName = component.image;
+        imageWidth = 160.0 * getSizeRatioWithLimit();
+        imageHeight = 160.0 * getSizeRatioWithLimit();
       }
       imagePath = 'assets/typing/' + imageName;
     }
@@ -622,7 +624,7 @@ class _ComponentPageState extends State<ComponentPage> {
             imagePath,
             width: imageWidth,
             height: imageHeight,
-            fit: BoxFit.fitWidth,
+            //fit: BoxFit.fitWidth,
         )
     );
   }

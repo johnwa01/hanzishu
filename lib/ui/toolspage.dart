@@ -7,6 +7,7 @@ import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -46,10 +47,18 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   Widget getMeListView(BuildContext context) {
+    var str = getString(99);/*"Please finish exercise 1 - 10 to learn the input method"*/
+    if (kIsWeb) {
+      str = str + " " + getString(372) + "]";
+    }
+    else {
+      str = str + "]";
+    }
+
     return ListView(
       children: <Widget>[
         ListTile(
-          title: Text(getString(99)/*"Please finish exercise 1 - 11 to learn the input method"*/, textDirection: TextDirection.ltr),
+          title: Text(str, textDirection: TextDirection.ltr),
         ),
 /*
         ListTile(
