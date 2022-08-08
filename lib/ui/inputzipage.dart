@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
+import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzihintpainter.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
@@ -357,6 +358,12 @@ class _InputZiPageState extends State<InputZiPage> {
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList,
       bool isFromOverlay, bool isFromNumber) {
     hasVerifiedToBeALowerCase = false;
+
+    // pronounce the typed char
+    if (typingType != TypingType.FreeTyping) {
+      var typedZiString = InputZiManager.getCandidateZiString(selectionIndex);
+      TextToSpeech.speak(typedZiString);
+    }
 
     var newText = getInputText(selectionIndex, isFromNumber);
 

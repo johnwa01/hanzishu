@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
 
 
 class ExerciseNumber {
@@ -69,6 +70,8 @@ class _TypingSelectionPageState extends State<TpyingSelectionPage> {
   @override
   Widget build(BuildContext context) {
     //_selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    //_selectedExerciseNumber.id = theSelectedExerciseNumber;
+    //_selectedExerciseNumber.name = '1';
     screenWidth = Utility.getScreenWidth(context);
 
     return Scaffold

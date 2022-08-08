@@ -17,6 +17,7 @@ class Lesson {
   String topicTitle;
   List<int> topicParagraphList;
   List<int> phraseIds;
+  List<int> snowballIds;
   bool newItemListCreated = false;
   List<int> newItemList = [];
   List<int> newItemTypeStartPosition = [0, 0, 0, 0];
@@ -52,7 +53,8 @@ class Lesson {
       List<int> comps,
       String topicTitle,
       List<int> topicParagraphList,
-      List<int> phraseIds) {
+      List<int> phraseIds,
+      List<int> snowballIds) {
     this.id = id;
     this.title = title;
     this.titleTranslation = titleTranslation;
@@ -65,6 +67,7 @@ class Lesson {
     this.topicTitle = topicTitle;
     this.topicParagraphList = topicParagraphList;
     this.phraseIds = phraseIds;
+    this.snowballIds = snowballIds;
   }
 
   // including non-chars and phrases

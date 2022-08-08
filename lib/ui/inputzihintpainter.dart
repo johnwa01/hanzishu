@@ -46,6 +46,7 @@ class InputZiHintPainter extends BasePainter {
     displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue); // 18.0
   }
 
+  /*
   displayHintMessage_old(double fontSize, String char) {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
     List<String> components = List<String>();
@@ -137,6 +138,7 @@ class InputZiHintPainter extends BasePainter {
     var typingCodes = DictionaryManager.getOneTypingCode(compCodes, strokeCodes);
     displayTextWithValue(typingCodes, xPosi, 0.0, size, Colors.cyan);
   }
+*/
 
   displayHintMessage(double fontSize, String char) {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
@@ -155,8 +157,8 @@ class InputZiHintPainter extends BasePainter {
     for (int i = 0; i < components.length; i++) {
       if (i != 0) {
         xPosi += halfSize / 1.5;
-        displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize / 1.5;
+      //  displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
+      //  xPosi += halfSize / 1.5;
       }
 
       var comp = components[i];
@@ -177,8 +179,8 @@ class InputZiHintPainter extends BasePainter {
       for (int i = 0; i < subComponents.length; i++) {
 
           xPosi += halfSize / 1.3;
-          displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
-          xPosi += halfSize;
+          //displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
+          //xPosi += halfSize;
 
         var comp = subComponents[i];
         drawComponentZi(

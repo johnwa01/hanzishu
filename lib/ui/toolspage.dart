@@ -25,7 +25,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(368)/*"Quanzi Input Method"*/),
+        title: Text(getString(368)/*"Component Input Method"*/),
       ),
       body: Center
         (

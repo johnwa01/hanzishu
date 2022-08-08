@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:hanzishu/utility.dart';
 
 class Sentence {
@@ -25,5 +26,30 @@ class Sentence {
   this.chars = chars;
   this.comps = comps;
   this.convWithSeparation = convWithSeparation;
+  }
+}
+
+class Sent {
+    String player;
+    int sentenceId;
+
+    Sent(
+        String player,
+        int sentenceId
+        ) {
+      this.player = player;
+      this.sentenceId = sentenceId;
+    }
+}
+
+class Snowball {
+  int snowballId;
+  List<Sent> sents;
+
+  Snowball(
+    int snowballId,
+    List<Sent> sents) {
+      this.snowballId = snowballId;
+      this.sents = sents;
   }
 }

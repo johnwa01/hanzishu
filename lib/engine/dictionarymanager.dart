@@ -187,6 +187,7 @@ class DictionaryManager {
     return componentTypingCodes;
   }
 
+  /*
   static String getAllTypingStrokes(List<String> componentCodes) {
     var count = componentCodes.length;
     Component oneComp;
@@ -224,6 +225,46 @@ class DictionaryManager {
 
     return typingStrokes;
   }
+  */
+
+  static String getSubComponentKeys(List<String> componentCodes) {
+    var count = componentCodes.length;
+    Component oneComp;
+    String subComps;
+    String subCompTypingString = "";
+
+    if (count == 1 || count == 2) {
+      oneComp = ComponentManager.getComponentByCode(componentCodes[count - 1]);
+    }
+
+    if (oneComp != null) {
+      subComps = oneComp.subComponents;
+    }
+
+    if (subComps != null && subComps.length >= 2) {
+      var firstCompStr = subComps.substring(0, 2);
+      var firstComp = ComponentManager.getComponentByCode(firstCompStr);
+      if (firstComp != null) {
+        var typingCode = firstComp.typingCode;
+        if (typingCode != null && typingCode.length > 1) {
+          subCompTypingString = typingCode.substring(0,1);
+        }
+      }
+    }
+
+    if (subComps != null && subComps.length == 4) {
+      var secondCompStr = subComps.substring(2, 4);
+      var secondComp = ComponentManager.getComponentByCode(secondCompStr);
+      if (secondComp != null) {
+        var typingCode = secondComp.typingCode;
+        if (typingCode != null && typingCode.length > 1) {
+          subCompTypingString = subCompTypingString + typingCode.substring(0,1);
+        }
+      }
+    }
+
+    return subCompTypingString;
+  }
 
   // used for hint only
   static String getLeadTypingStrokes(String typingStrokes) {
@@ -252,6 +293,7 @@ class DictionaryManager {
     return leadTypingStrokes;
   }
 
+  /*
   // typingStrokes here could be lead strokes or regular strokes
   static String getStrokeTypingCodes(String typingStrokes) {
     String typingCodes = "";
@@ -261,10 +303,11 @@ class DictionaryManager {
 
     return typingCodes;
   }
+*/
 
   // used in typing hint
-  static String getOneTypingCode(String componentTypingCodes, String strokeTypingCode) {
-    return componentTypingCodes + strokeTypingCode;
+  static String getOneTypingCode(String componentTypingCodes, String subComponentTypingCode) {
+    return (componentTypingCodes + subComponentTypingCode).toUpperCase();
   }
 
   static String getTypingCode(int searchingZiId) {
@@ -272,10 +315,17 @@ class DictionaryManager {
     getAllComponents(searchingZiId, components);
     var compCodes = getAllComponentCodes(components);
 
-    var typingStrokes = getAllTypingStrokes(components);
-    var typingCode = getStrokeTypingCodes(typingStrokes);
+    //var typingStrokes = getAllTypingStrokes(components);
+    //var typingCode = getStrokeTypingCodes(typingStrokes);
 
-    return getOneTypingCode(compCodes, typingCode);
+    var typingCode = getSubComponentKeys(components);
+
+    if (typingCode != null) {
+      return getOneTypingCode(compCodes, typingCode);
+    }
+    else {
+      return compCodes.toUpperCase();
+    }
   }
 
   /*

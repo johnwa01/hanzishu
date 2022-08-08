@@ -72,3 +72,5 @@ List<String> theCurrentZiCandidates = theDefaultZiCandidates;
 String globalTestDoubleByteCode = "";
 
 GlobalKey globalKeyNav = new GlobalKey(debugLabel: 'btm_app_bar');
+
+//int theSelectedExerciseNumber = 1;

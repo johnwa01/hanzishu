@@ -126,6 +126,8 @@ class ConversationPainter extends BasePainter {
 
       displayTextWithValue(translation, applyRatioWithLimit(50.0), applyRatioWithLimit(125.0 + 130.0 * j), applyRatioWithLimit(15.0), Colors.blueAccent);
     }
+
+    displayTextWithValue('[' + getString(373)/*"Snowball Conversation"*/ + ']', applyRatioWithLimit(50.0), applyRatioWithLimit(125.0 + 130.0 * (sentenceLength - 1) + 50.0), applyRatioWithLimit(15.0), Colors.black);
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/ui/conversationsnowballpage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
@@ -15,7 +16,8 @@ enum ButtonType {
   char,
   phrase,
   specialPhrase,
-  sound
+  sound,
+  launchPage
 }
 
 class ConversationPage extends StatefulWidget {
@@ -65,6 +67,11 @@ class _ConversationPageState extends State<ConversationPage> {
           //height: 200.0,
           //width: 200.0,
           child: WillPopScope(   // just for removing overlay on detecting back arrow
+            //child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //mainAxisSize:  MainAxisSize.max,
+          //      children: <Widget>[
+          //        Container(
             child: CustomPaint(
               foregroundPainter: ConversationPainter(
                   lineColor: Colors.amber,
@@ -77,6 +84,22 @@ class _ConversationPageState extends State<ConversationPage> {
                 ),
               ),
             ),
+            //      ),
+              /*TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ConversationSnowballPage(lessonId : widget.lessonId),
+                    ),
+                  );},
+                child: Text(getString(114), style: TextStyle(fontWeight: FontWeight. bold)),
+              ),*/
+           // ]
+           // ),
             onWillPop: _onWillPop
           ),
       ),
@@ -182,6 +205,10 @@ class _ConversationPageState extends State<ConversationPage> {
           var meaning = phrase.getPinyinAndMeaning();
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
+        else if (buttonType == ButtonType.launchPage) {
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => ConversationSnowballPage(lessonId: theCurrentLessonId)));
+        }
       },
       child:
         Text("", style: TextStyle(fontSize: applyRatioWithLimit(32.0))),
@@ -275,6 +302,11 @@ class _ConversationPageState extends State<ConversationPage> {
         previousChar = oneSeparation;
       }
     }
+
+    var xStartPosi = applyRatioWithLimit(50.0);
+    var position = PositionAndSize(
+        xStartPosi, applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80), applyRatioWithLimit(120.0/*temp width*/), applyRatioWithLimit(20.0), 0.0, 0.0);
+    buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
 
     return buttons;
   }
