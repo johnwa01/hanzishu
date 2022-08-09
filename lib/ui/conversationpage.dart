@@ -305,7 +305,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
     var xStartPosi = applyRatioWithLimit(50.0);
     var position = PositionAndSize(
-        xStartPosi, applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80), applyRatioWithLimit(120.0/*temp width*/), applyRatioWithLimit(20.0), 0.0, 0.0);
+        xStartPosi, applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80), applyRatioWithLimit(180.0/*temp width*/), applyRatioWithLimit(20.0), 0.0, 0.0);
     buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
 
     return buttons;

@@ -152,4 +152,8 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(145, "我不明白。", "No, I don't understand.", 11, null, [], "我|不|明白。"),
   Sentence(146, "我二十一岁了。", "", 62, null, [], ""),
   Sentence(147, "我叫好好。", "", 62, null, [], ""),
+  Sentence(148, "很好。", "", 62, null, [], ""),
+  Sentence(149, "昨天天气真好。", "", 62, null, [], ""),
+  Sentence(150, "北京一年有几个季节？", "", 62, null, [], ""),
+  Sentence(151, "麦克，你好！", "", 62, null, [], ""),
 ];
