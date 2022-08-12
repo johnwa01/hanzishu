@@ -102,7 +102,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(365)/*"全字输入法介绍"*/, textDirection: TextDirection.ltr),
+          title: Text(getString(365)/*"部件输入法介绍"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

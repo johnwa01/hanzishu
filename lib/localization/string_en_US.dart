@@ -163,7 +163,7 @@ var theString_en_US = [
   Local(158, "How it works"),
   Local(159, "The Component Input Method matches each Lead Component with a key on the English keyboard to create a Component-key pairing. Reference this chart to visualize how Lead Components are mapped to English letters."),
   Local(160, "According to the most significant characteristics of the Expanded Components, assign them to Lead Component-key pairings. To type in Chinese, first break a character into a sequence of Components， then the sequence of Components are converted into sequences of English letters to be entered into computer."),
-  Local(161, "The Chinese input method section of this app will:"),
+  Local(161, "The Component input method section of this app will:"),
   Local(162, "Introduce you to Lead Components & various Expanded Components"),
   Local(163, "Teach you the Component-key pairings and typing method"),
   Local(164, "Help you memorize the Component-key pairings"),

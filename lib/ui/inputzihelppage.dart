@@ -55,7 +55,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(93)/*"全字输入法"*/),
+        title: Text(getString(93)/*"部件输入法"*/),
       ),
       body: Container(
         //height: 800.00,
@@ -158,12 +158,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
         children: <Widget>[
           SizedBox(height: fontSize2 / 2),
           Text(
-              getString(93)/*"全字输入法"*/,
+              getString(93)/*"部件输入法"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
           Text(
-              getString(366)/*"全字输入法将一个汉字分解成部件，并在英文键盘上输入对应的字母。"*/,
+              getString(366)/*"部件输入法将一个汉字分解成部件，并在英文键盘上输入对应的字母。"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -249,22 +249,22 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(162)/*"Introduce you to Lead & various Expanded Components"*/,
+              "  • " + getString(162)/*"Introduce you to Lead & various Expanded Components"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(163)/*"Teach you the Component-key pairings and typing method"*/,
+              "  • " + getString(163)/*"Teach you the Component-key pairings and typing method"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(164)/*"Help you memorize the Component-key pairings"*/,
+              "  • " + getString(164)/*"Help you memorize the Component-key pairings"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(165)/*"Help you practice with guided and free typing"*/,
+              "  • " + getString(165)/*"Help you practice with guided and free typing"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -292,12 +292,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(170)/*"DON’T break up Strokes that cross through each other."*/,
+              "  • " + getString(170)/*"DON’T break up Strokes that cross through each other."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	 " + getString(171)/*"ex: Character 井 doesn’t split into separate Components"*/,
+              "    o " + getString(171)/*"ex: Character 井 doesn’t split into separate Components"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -307,32 +307,32 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           //    textAlign: TextAlign.start
           //),
           Text(
-              "    o	" + getString(173)/*"ex: 明 -> 日 and 月"*/,
+              "    o " + getString(173)/*"ex: 明 -> 日 and 月"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" + getString(174)/*"ex: 古 -> 十 and 口"*/,
+              "    o " + getString(174)/*"ex: 古 -> 十 and 口"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(175)/*"DO break up Characters into as few Components as possible."*/,
+              "  • " + getString(175)/*"DO break up Characters into as few Components as possible."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" + getString(176)/*"ex: 房 -> 户 and 方 (instead of four Components)"*/,
+              "    o " + getString(176)/*"ex: 房 -> 户 and 方 (instead of four Components)"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(177)/*"DO break up Characters into the Component with the most  strokes."*/,
+              "  • " + getString(177)/*"DO break up Characters into the Component with the most  strokes."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" +  getString(178)/*"ex: 云 -> 一 (plus another Component with three strokes)"*/,
+              "    o " +  getString(178)/*"ex: 云 -> 一 (plus another Component with three strokes)"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -343,17 +343,17 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(180)/*"Tap each Lead Component in the chart to see the Expanded Components associated to them."*/,
+              "  • " + getString(180)/*"Tap each Lead Component in the chart to see the Expanded Components associated to them."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(181)/*"During typing, select Shift+z to show the Component-key pairings. Select Shift+ any key (except z) to show the Expanded Components."*/,
+              "  • " + getString(181)/*"During typing, select Shift+z to show the Component-key pairings. Select Shift+ any key (except z) to show the Expanded Components."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(182)/*"To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key."*/,
+              "  • " + getString(182)/*"To type a Lead Component or its Expanded Component, simply type the corresponding keyboard key."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -364,17 +364,17 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(362)/*"除了以下两点，与将字分解为部件的规则相同："*/,
+              "  • " + getString(362)/*"除了以下两点，与将字分解为部件的规则相同："*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" + getString(363)/*"如果没有其它选择，可以分解相互交叉的笔画"*/,
+              "    o " + getString(363)/*"如果没有其它选择，可以分解相互交叉的笔画"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" + getString(364)/*"出现的笔画和形体按此表归入相似部件"*/,
+              "    o " + getString(364)/*"出现的笔画和形体按此表归入相似部件"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -392,71 +392,71 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "1.	" + getString(185)/*"Divide the character into components (Lead Components or Expanded Components)."*/,
+              "1. " + getString(185)/*"Divide the character into components (Lead Components or Expanded Components)."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  a.	" + getString(186)/*"If a Character has one Component:"*/,
+              "  a. " + getString(186)/*"If a Character has one Component:"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    i.	" + getString(187)/*"Type the Component"*/,
+              "    i. " + getString(187)/*"Type the Component"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    ii.	" + getString(188)/*"If the Character doesn’t appear on the list:"*/,
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          /*
-          Text(
-              "      1.	" + getString(189)/*"Type up to three make-up Strokes (the first, second, and the last stroke of the Component) until the Character appears"*/,
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "      2.	" + getString(190)/*"Treat all fold Strokes as a Component 乙"*/,
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          */
-          Text(
-              "  b.	" + getString(191)/*"If a Character has two Components:"*/,
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "    i.	 " + getString(192)/*"Type the two Components first"*/,
-              style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "    ii.	" + getString(193)/*"If the Character doesn’t appear on the list:"*/,
+              "    ii. " + getString(188)/*"If the Character doesn’t appear on the list:"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           /*
           Text(
-              "      1.	" + getString(194)/*"Type two make-up Strokes (the last Stroke of each Component) until the Character appears"*/,
+              "      1. " + getString(189)/*"Type up to three make-up Strokes (the first, second, and the last stroke of the Component) until the Character appears"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "      2.	" + getString(195)/*"Treat all fold Strokes as a Component 乙"*/,
+              "      2. " + getString(190)/*"Treat all fold Strokes as a Component 乙"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           */
           Text(
-              "  c.	" + getString(196)/*"If a Character has three or more Components:"*/,
+              "  b. " + getString(191)/*"If a Character has two Components:"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    i.	" + getString(197)/*"Type as many Components as necessary in sequence until the Character appears"*/,
+              "    i. " + getString(192)/*"Type the two Components first"*/,
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    ii. " + getString(193)/*"If the Character doesn’t appear on the list:"*/,
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          /*
+          Text(
+              "      1. " + getString(194)/*"Type two make-up Strokes (the last Stroke of each Component) until the Character appears"*/,
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      2. " + getString(195)/*"Treat all fold Strokes as a Component 乙"*/,
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          */
+          Text(
+              "  c. " + getString(196)/*"If a Character has three or more Components:"*/,
+              style: TextStyle(fontSize: fontSize2),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "    i. " + getString(197)/*"Type as many Components as necessary in sequence until the Character appears"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
@@ -472,52 +472,52 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(200)/*"Find the first Component 口"*/,
+              "  • " + getString(200)/*"Find the first Component 口"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(201)/*"Find the corresponding key i"*/,
+              "  • " + getString(201)/*"Find the corresponding key i"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(202)/*"Tap it"*/,
+              "  • " + getString(202)/*"Tap it"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(203)/*"If 品 appears in the Character list (below the editing field), select it by:"*/,
+              "  • " + getString(203)/*"If 品 appears in the Character list (below the editing field), select it by:"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	" + getString(204)/*"Tapping the Character"*/,
+              "    o " + getString(204)/*"Tapping the Character"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	 " + getString(206)/*"Typing the number associated with the character"*/,
+              "    o " + getString(206)/*"Typing the number associated with the character"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "    o	 " + getString(205)/*"Tapping the spacebar if it’s first in the list"*/,
+              "    o " + getString(205)/*"Tapping the spacebar if it’s first in the list"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(207)/*"If the Character is not listed, repeat these steps with the second and third Components until you see 品 listed"*/,
+              "  • " + getString(207)/*"If the Character is not listed, repeat these steps with the second and third Components until you see 品 listed"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(367)/*"如果'品'字排在后面，也可继续输入部件，使它的排列靠前"*/,
+              "  • " + getString(367)/*"如果'品'字排在后面，也可继续输入部件，使它的排列靠前"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
           Text(
-              "  •	" + getString(208)/*"The English letters in the editing field automatically convert to 品."*/,
+              "  • " + getString(208)/*"The English letters in the editing field automatically convert to 品."*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
