@@ -3712,7 +3712,7 @@ var theSearchingZiList = [
   SearchingZi(3708,"愚", "yú", "foolish; stupid",13,["3703","2649"],"",0,"",""),
   SearchingZi(3709,"重", "chóng/zhòng", "heavy; weight",9,["Cp"],"",0,"",""),
   SearchingZi(3710,"董", "dǒng", "direct",12,["Wa","3709"],"",0,"",""),
-  SearchingZi(3711,"懂", "dǒng", "understand",15,["Kl","3709"],"",0,"",""),
+  SearchingZi(3711,"懂", "dǒng", "understand",15,["Kl","3710"],"",0,"",""),
   SearchingZi(3712,"鬼", "guǐ", "ghost",9,["Jx"],"",0,"",""),
   SearchingZi(3713,"傀", "huī/kuǐ", "puppet",11,["Lb","3712"],"",0,"",""),
   SearchingZi(3714,"愧", "kuì", "ashamed",12,["Kl","3712"],"",0,"",""),
