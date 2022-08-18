@@ -429,7 +429,7 @@ class InputZiManager {
     else if (typingType == TypingType.CustomizedTyping) {
       // overall index = 0, 69, 77, 160
       var searchingZiId = getSearchingZiId(currentIndex, lessonId);
-      if (DictionaryManager.isNonCharacter(searchingZiId)) {
+      if (DictionaryManager.isNonCharacter(searchingZiId) || DictionaryManager.isEmpty(searchingZiId)) {
         currentIndex++; // skip to next one
       }
       else if (searchingZiId >= theSearchingZiList.length) {

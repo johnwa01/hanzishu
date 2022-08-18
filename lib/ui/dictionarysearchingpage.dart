@@ -326,8 +326,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
             //_editController.text = "";
           }
           else if (dicStage == DictionaryStage.searchingzis) {
-            this.searchingZiIndex = ziIndex;
-            dicStage = DictionaryStage.detailedzi;
+            if (!DictionaryManager.isEmpty(ziIndex)) {
+              this.searchingZiIndex = ziIndex;
+              dicStage = DictionaryStage.detailedzi;
+            }
             //_editController.text = "";
           }
 
