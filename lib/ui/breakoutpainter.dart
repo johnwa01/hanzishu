@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/data/componentlist.dart';
 import 'dart:ui';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
@@ -140,9 +141,20 @@ class BreakoutPainter extends BasePainter {
           true);
 
       if (showBreakoutDetails && recurLevel == 1) {
-        var searchingZi = theSearchingZiList[id];
-        String pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
-        displayTextWithValue(pinyinAndMeaning, posiSize2.transX + posiSize2.charFontSize * 1.1, posiSize2.transY, posiSize2.charFontSize/1.7, Colors.blue);
+        var ziOrComp;
+        if (listType == ZiListType.searching) {
+          ziOrComp = theSearchingZiList[id];
+        }
+        else if (listType == ZiListType.component) {
+          ziOrComp = theComponentList[id];
+        }
+        if (ziOrComp != null) {
+          String pinyinAndMeaning = Zi.formatPinyinAndMeaning(
+              ziOrComp.pinyin, ziOrComp.meaning);
+          displayTextWithValue(
+              pinyinAndMeaning, posiSize2.transX + posiSize2.charFontSize * 1.1,
+              posiSize2.transY, posiSize2.charFontSize / 1.7, Colors.blue);
+        }
       }
     }
 
