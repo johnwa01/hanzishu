@@ -190,16 +190,17 @@ class _BreakoutPageState extends State<BreakoutPage> {
   List<Widget> createHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
 
-    var breakoutPositions = theLessonManager.getBreakoutPositions(widget.lessonId);
-    if (breakoutPositions.length == 0) {
+    //var breakoutPositions = theLessonManager.getBreakoutPositions(widget.lessonId);
+    //No longer go through memory storage so that it can refresh every time when browser changes size.
+    //if (breakoutPositions.length == 0) {
       //var painter = BreakoutPainter();
       var painter = BreakoutPainter(
           lineColor: Colors.amber,
           completeColor: Colors.blueAccent,
           lessonId: widget.lessonId,
           screenWidth: screenWidth);
-      breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
-    }
+      Map<int, PositionAndSize> breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
+   // }
 
     var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
