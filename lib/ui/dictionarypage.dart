@@ -33,6 +33,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   OverlayEntry overlayEntry;
  // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
  //     0.0, 0.0, "");
+  FocusNode _textNode = new FocusNode();
+
+  TextEditingController _controller = new TextEditingController(text: "");
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -40,11 +43,16 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   int compoundZiCurrentComponentId;
   var currentZiListType = ZiListType.searching;
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
   @override
   void initState() {
     super.initState();
 
     theCurrentCenterZiId = searchingZiIndex;
+    //_controller.addListener(handleKeyInput);
 
     setState(() {
       searchingZiIndex = searchingZiIndex;
@@ -92,46 +100,173 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
-    return Scaffold
-      (
-      appBar: AppBar
+    try {
+      return Scaffold
         (
-        title: Text(getString(95)/*"First Character Dictionary"*/),  //汉字树一触字典
-        ),
-      body: Container(
-        child: WillPopScope(
-          child: new Stack(
-            children: <Widget>[
-              new Positioned(
-                child: CustomPaint(
-                  foregroundPainter: DictionaryPainter(
-                    Colors.amber,
-                    //lessonId: widget.lessonId,
-                    screenWidth,
-                    //screenWidth: screenWidth,
-                    dicStage,
-                    firstZiIndex,
-                    searchingZiIndex,
-                    context,
-                    compoundZiCurrentComponentId,
-                    currentZiListType,
-                    shouldDrawCenter,
-                    false
-                  ),
-                  child: Center(
-                    child: Stack(
-                      children: displayCharsAndCreateHittestButtons(context)
+        appBar: AppBar
+          (
+          title: Text(getString(95)/*"First Character Dictionary"*/),  //汉字树一触字典
+          ),
+        body: Container(
+          child: WillPopScope(
+            child: new Stack(
+              children: <Widget>[
+                //SizedBox(width: 100 * getSizeRatioWithLimit()),
+                //SizedBox(width: 80 * getSizeRatioWithLimit()),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    SizedBox(width: 20 * getSizeRatioWithLimit()),
+                    Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
+                    SizedBox(width: 30 * getSizeRatioWithLimit()),
+
+                    SizedBox(
+                      width: 80 * getSizeRatioWithLimit(), //double.infinity,
+                      //height: 120,
+                      child: TextField(
+                        //decoration: InputDecoration(
+                          //hintText: 'Test text',
+                        //),
+
+                        autocorrect: false,
+                        enableSuggestions: false,
+                        controller: _controller,
+                        focusNode: _textNode,
+                        autofocus: false,
+                        style: TextStyle(
+                          fontSize: 20 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
+                          //height: 1.0 // 1.3
+                        ),
+                        maxLines: 1,
+                        //expands: true,
+                        keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
+                        decoration: InputDecoration(
+                          //hintText: 'This test',
+                          filled: true,
+                          fillColor: Colors.black12, //lightBlueAccent,
+                        ),
+                      ),//focusNode: _textNode,
+                    ),
+                    Container(
+                        //height: 25.0 * getSizeRatioWithLimit(), //180
+                        // width: 25.0 * getSizeRatioWithLimit(),
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.search,   //volume_up,
+                          size: 25.0 * getSizeRatioWithLimit(),   // 150
+                        ),
+                        color: Colors.lightBlueAccent, //cyan, //Colors.green,
+                        onPressed: () {
+                          processZiQuery();
+                        },
+                      )
+                    ),
+                    SizedBox(width: 25 * getSizeRatioWithLimit()),
+
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DictionaryHelpPage(),
+                          ),
+                        );
+                      },
+                      child: Text(getString(114)/*"Help"*/,
+                          style: TextStyle(color: Colors.lightBlue)),
+                    ),
+                    //Text(getString(114)/*"Help"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.lightBlue),),
+                  ],
+                ),
+
+                new Positioned(
+                  child: CustomPaint(
+                    foregroundPainter: DictionaryPainter(
+                      Colors.amber,
+                      //lessonId: widget.lessonId,
+                      screenWidth,
+                      //screenWidth: screenWidth,
+                      dicStage,
+                      firstZiIndex,
+                      searchingZiIndex,
+                      context,
+                      compoundZiCurrentComponentId,
+                      currentZiListType,
+                      shouldDrawCenter,
+                      false
+                    ),
+                    child: Center(
+                      child: Stack(
+                        children: displayCharsAndCreateHittestButtons(context)
+                      ),
                     ),
                   ),
                 ),
-              ),
-      //        getAnimatedPathPainter(),
-            ]
-          ),
-          onWillPop: _onWillPop
-        )
-      ),
-    );
+        //        getAnimatedPathPainter(),
+              ]
+            ),
+            onWillPop: _onWillPop
+          )
+        ),
+      );
+    } catch (e, s) {
+      print(s);
+    }
+  }
+
+  processZiQuery() {
+    var latestValue;
+    var ziId = -1;
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      latestValue = _controller.value.text;
+      ziId = DictionaryManager.getSearchingZiId(_controller.value.text);
+    }
+
+    if (ziId > 0) {
+      _controller.clear();
+      FocusScope.of(context).unfocus();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DictionarySearchingPage(
+                  dicStage: DictionaryStage.detailedzi,
+                  firstOrSearchingZiIndex: ziId),
+        ),
+      );
+    }
+    else {
+      _controller.clear();
+      FocusScope.of(context).unfocus();
+      // set up the button
+      Widget okButton = FlatButton(
+        child: Text(getString(286)/*Ok*/),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text(getString(375)/*Result*/),
+        content: Text(
+            getString(374)/*cannot find: */ + latestValue + "."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
   }
 
   Future<bool>_onWillPop() {
@@ -158,7 +293,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DictionarySearchingPage(firstZiIndex: ziIndex),
+                builder: (context) => DictionarySearchingPage(dicStage: DictionaryStage.searchingzis, firstOrSearchingZiIndex: ziIndex),
               ),
             );
           }
@@ -180,6 +315,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     return posiCenter;
   }
 
+  /*
   getHelpPositionedButton(posiAndSize) {
     var butt = FlatButton(
       onPressed: () {
@@ -203,6 +339,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     return posiCenter;
   }
+*/
 
   List<Widget> displayCharsAndCreateHittestButtons(BuildContext context) {
     List<Widget> buttons = [];
@@ -224,8 +361,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
       // help button next
       var helpPosiAndSize = PositionAndSize(screenWidth - helpPara1, helpPara2, helpPara3, helpPara3, 0.0, 0.0);
-      var helpPosi = getHelpPositionedButton(helpPosiAndSize);
-      buttons.add(helpPosi);
+      //var helpPosi = getHelpPositionedButton(helpPosiAndSize);
+      //buttons.add(helpPosi);
 
       for (var j = 0; j < 16; j++) {
         for (var i = 0; i < 12; i++) {

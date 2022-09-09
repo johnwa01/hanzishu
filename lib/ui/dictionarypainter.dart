@@ -55,14 +55,12 @@ class DictionaryPainter extends BreakoutPainter {
     this.canvas = canvas;
 
     if (this.dicStage == DictionaryStage.firstzis) {
-      displayTextWithValue(getString(96)/*"Basic Character Table"*/, applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
-      // below should match dictionaryPage
-      //var searchPosiAndSize = PositionAndSize(width - 150.0, 5.0, 40.0, 40.0, 0.0, 0.0);
-      //displayTextWithValue("Search", searchPosiAndSize.transX, searchPosiAndSize.transY, searchPosiAndSize.width / 2.0, Colors.lightBlue);
+      // Just keep a height
+      displayTextWithValue("", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
 
       // below should match dictionaryPage
-      var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(5.0), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0); // 5.0
-      displayTextWithValue(getString(114)/*"Help"*/, helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width, Colors.lightBlue);
+      //var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(5.0), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0); // 5.0
+      //displayTextWithValue("", helpPosiAndSize.transX, helpPosiAndSize.transY, helpPosiAndSize.width, Colors.lightBlue);
 
       DisplayFirstZis();
     }
@@ -222,7 +220,13 @@ class DictionaryPainter extends BreakoutPainter {
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
     displayComponentsOrStrokes(ziIndex, posiSize);
     posiSize.transY += fontSize6;
-    displayTypingCode(ziIndex, posiSize);
+
+    if (showBreakoutDetails) {
+      displayTypingCodePlaceholder(posiSize);  // hide when diamond icon is selected
+    }
+    else {
+      displayTypingCode(ziIndex, posiSize);
+    }
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 

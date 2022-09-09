@@ -17,9 +17,11 @@ import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
-  final int firstZiIndex;
+  final int firstOrSearchingZiIndex;
+  DictionaryStage dicStage;
+
   //dicStage = DictionaryStage.searchingzis;
-  DictionarySearchingPage({this.firstZiIndex});
+  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex});
 
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
@@ -30,8 +32,6 @@ class DictionarySearchingPage extends StatefulWidget {
 }
 
 class _DictionarySearchingPageState extends State<DictionarySearchingPage> with SingleTickerProviderStateMixin {
-  //final TextEditingController _editController = TextEditingController();
-  //int searchingZiIndex;
   int firstZiIndex; // different meaning for different stage
   int searchingZiIndex;
   bool shouldDrawCenter;
@@ -91,16 +91,23 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       vsync: this,
     );
 
+    //Not used?
     theCurrentCenterZiId = searchingZiIndex;
 
     setState(() {
-      //searchingZiIndex = searchingZiIndex;  // what for?
       shouldDrawCenter = true;
       compoundZiComponentNum = 0;
 
       searchingZiIndex = 0;
-      dicStage = DictionaryStage.searchingzis;
-      firstZiIndex = widget.firstZiIndex;
+      dicStage = widget.dicStage; //DictionaryStage.searchingzis;
+      if (dicStage == DictionaryStage.searchingzis) {
+        firstZiIndex = widget.firstOrSearchingZiIndex;
+        searchingZiIndex = -1;
+      }
+      else if (dicStage == DictionaryStage.detailedzi ){
+        firstZiIndex = -1;
+        searchingZiIndex = widget.firstOrSearchingZiIndex;
+      }
       showBreakoutDetails = false;
     });
   }

@@ -1095,6 +1095,12 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(typingCode, posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
+  displayTypingCodePlaceholder(PositionAndSize posi) {
+    displayTextWithValue(
+        "", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue("", posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+  }
+
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
     return true;
