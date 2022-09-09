@@ -375,7 +375,7 @@ var theString_en_US = [
   Local(370, "Please remember the table below and type"),
   Local(371, "Please review the tables below and type"),
   Local(372, "Recommend Chrome browser."),
-  Local(373, "Snowball Conversation"),
+  Local(373, "Unit Snowball Conversation"),
   Local(374, "Can not find character: "),
   Local(375, "Result"),
 ];

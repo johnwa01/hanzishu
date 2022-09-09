@@ -104,7 +104,8 @@ class DictionaryManager {
 
   static bool isNonCharacter(int searchingZiId) {
     // in theSearchingZiList
-    return searchingZiId == 0 || searchingZiId == 69 || searchingZiId == 77 || searchingZiId == 160;
+    var searchingZi = theSearchingZiList[searchingZiId].char;
+    return searchingZiId == 0 || searchingZi == '丿' || searchingZi == '丨' || searchingZi == '丶';
   }
 
   static bool isEmpty(int searchingZiId) {

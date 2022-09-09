@@ -73,6 +73,9 @@ class _InputZiPageState extends State<InputZiPage> {
     typingType = widget.typingType;
     theInputZiManager.setCurrentType(typingType);
 
+    // start over every time. not worth the confusion otherwise.
+    theInputZiManager.initCurrentIndex();
+
     setState(() {
       updateCounter = 0;
       showHint = false;

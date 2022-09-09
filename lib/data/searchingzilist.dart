@@ -70,7 +70,7 @@ var theSearchingZiList = [
   SearchingZi(66,"雄", "xióng", "hero",12,["Sa","Vd","125"],"",0,"",""),
   SearchingZi(67,"蔽", "bì", "shield",14,["Wa","217"],"",0,"",""),
   SearchingZi(68,"蕉", "jiāo", "banana",15,["Wa","150"],"",0,"",""),
-  SearchingZi(69,"丨 ", "shù", "character stroke. no meaning",1,["Ka"],"",0,"",""),
+  SearchingZi(69,"丨", "shù", "character stroke. no meaning",1,["Ka"],"",0,"",""),
   SearchingZi(70,"凸", "tū", "protruding; raised",5,["Jf"],"",0,"",""),
   SearchingZi(71,"凹", "āo", "concave",5,["Jm"],"",0,"",""),
   SearchingZi(72,"曲", "qū/qǔ", "bent; curved",6,["Jr"],"",0,"",""),
