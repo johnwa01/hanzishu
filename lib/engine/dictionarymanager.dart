@@ -105,7 +105,8 @@ class DictionaryManager {
   static bool isNonCharacter(int searchingZiId) {
     // in theSearchingZiList
     var searchingZi = theSearchingZiList[searchingZiId].char;
-    return searchingZiId == 0 || searchingZi == '丿' || searchingZi == '丨' || searchingZi == '丶';
+    //TODO：last two values are temp and should be removed when list was fixed.
+    return searchingZiId == 0 || searchingZi == '丿' || searchingZi == '丨' || searchingZi == '丶'|| searchingZi == '巟' || searchingZi == '夗';
   }
 
   static bool isEmpty(int searchingZiId) {
