@@ -1982,6 +1982,7 @@ var theInputZiList=[
   InputZi("nlb", 5492,"脂"),
   InputZi("nlhl", 11798,"帐"),
   InputZi("nlhl", 6327,"胀"),
+  InputZi("nlhl", 5652,"账"),
   InputZi("nlhl", 2365,"胧"),
   InputZi("nlhn", 2425,"腻"),
   InputZi("nlli", 11594,"肥"),
