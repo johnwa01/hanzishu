@@ -382,29 +382,26 @@ var theZiForExpandedGeneralExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", getString(356)), //
   ZiWithComponentsAndStrokes("狞", [], "", ""), //11
   ZiWithComponentsAndStrokes("坞", [], "", ""), //12
-  //ZiWithComponentsAndStrokes("卖", [], "", ""), //13
-  ZiWithComponentsAndStrokes("意", [], "", ""), //14
+  ZiWithComponentsAndStrokes("卖", [], "", ""), //13
+  ZiWithComponentsAndStrokes("拙", [], "", ""), //14 //意
   ZiWithComponentsAndStrokes("庵", [], "", ""), //15
-  ZiWithComponentsAndStrokes("讹", [], "", ""), //21
-  //ZiWithComponentsAndStrokes("客", [], "", ""), //22
+  ZiWithComponentsAndStrokes("柒", [], "", ""), //21 //讹
   //ZiWithComponentsAndStrokes("谢", [], "", ""), //23
-  //ZiWithComponentsAndStrokes("卖", [], "", ""), //24
-  ZiWithComponentsAndStrokes("雇", [], "", ""), //25
+  ZiWithComponentsAndStrokes("忍", [], "", ""), //25 //雇
   ZiWithComponentsAndStrokes("绢", [], "", ""), //31
-  ZiWithComponentsAndStrokes("疮", [], "", ""), //32
-  ZiWithComponentsAndStrokes("烈", [], "", ""), //33
-  ZiWithComponentsAndStrokes("透", [], "", ""), //34
+  ZiWithComponentsAndStrokes("蕊", [], "", ""), //32 //疮
+  ZiWithComponentsAndStrokes("侈", [], "", ""), //33 //烈
+  ZiWithComponentsAndStrokes("荡", [], "", ""), //34 //透
   //ZiWithComponentsAndStrokes("卖", [], "", ""), //35
-  ZiWithComponentsAndStrokes("涨", [], "", ""), //41
-  ZiWithComponentsAndStrokes("馅", [], "", ""), //42
+  //ZiWithComponentsAndStrokes("涨", [], "", ""), //41
+  ZiWithComponentsAndStrokes("箔", [], "", ""), //42 //馅
   ZiWithComponentsAndStrokes("轮", [], "", ""), //43
   ZiWithComponentsAndStrokes("拖", [], "", ""), //44
   ZiWithComponentsAndStrokes("帽", [], "", ""), //51
   ZiWithComponentsAndStrokes("靠", [], "", ""), //52
-  //ZiWithComponentsAndStrokes("卖", [], "", ""), //53
-  //ZiWithComponentsAndStrokes("客", [], "", ""), //54
+  ZiWithComponentsAndStrokes("客", [], "", ""), //54
   ZiWithComponentsAndStrokes("宽", [], "", ""), //61
-  ZiWithComponentsAndStrokes("瓢", [], "", ""), //62
+  ZiWithComponentsAndStrokes("况", [], "", ""), //62 //瓢
 ];
 
 var theZiForAttachedCompExerciseList=[
@@ -502,22 +499,22 @@ var theZiForSubCompExerciseList=[
 var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "SpecialStrokes.png", getString(339)),
   //ZiWithComponentsAndStrokes("歹", [], "", ""),
-  //ZiWithComponentsAndStrokes("日", [], "", ""),
   //ZiWithComponentsAndStrokes("二", [], "", ""),
-  ZiWithComponentsAndStrokes("一", [], "", ""),
+  ZiWithComponentsAndStrokes("日", [], "", ""),
   ZiWithComponentsAndStrokes("十", [], "", ""),
-  ZiWithComponentsAndStrokes("口", [], "", ""),
   //ZiWithComponentsAndStrokes("大", [], "", ""),
-  ZiWithComponentsAndStrokes("世", [], "", ""),
+  ZiWithComponentsAndStrokes("父", [], "", ""),
+  ZiWithComponentsAndStrokes("口", [], "", ""),
+  ZiWithComponentsAndStrokes("下", [], "", ""), //世
+  ZiWithComponentsAndStrokes("田", [], "", ""),
   ZiWithComponentsAndStrokes("我", [], "", ""),
   ZiWithComponentsAndStrokes("三", [], "", ""),
-  ZiWithComponentsAndStrokes("田", [], "", ""),
   //ZiWithComponentsAndStrokes("了", [], "", ""),
   ZiWithComponentsAndStrokes("弓", [], "", ""),
   ZiWithComponentsAndStrokes("尺", [], "", ""),
+  ZiWithComponentsAndStrokes("一", [], "", ""),
   ZiWithComponentsAndStrokes("巾", [], "", ""),
   ZiWithComponentsAndStrokes("内", [], "", ""),
-  ZiWithComponentsAndStrokes("父", [], "", ""),
   ZiWithComponentsAndStrokes("乙", [], "", ""),
   ZiWithComponentsAndStrokes("母", [], "", ""),
   ZiWithComponentsAndStrokes("冉", [], "", ""),
@@ -531,15 +528,15 @@ var theZiForTwoCompExerciseList=[
   ZiWithComponentsAndStrokes("扛", [], "", ""),
   //ZiWithComponentsAndStrokes("多", [], "", ""),
   ZiWithComponentsAndStrokes("六", [], "", ""),
-  ZiWithComponentsAndStrokes("老", [], "", ""),
+  ZiWithComponentsAndStrokes("汗", [], "", ""), //老
   ZiWithComponentsAndStrokes("再", [], "", ""),
   ZiWithComponentsAndStrokes("收", [], "", ""),
-  ZiWithComponentsAndStrokes("笼", [], "", ""),
-  ZiWithComponentsAndStrokes("陈", [], "", ""),
+  ZiWithComponentsAndStrokes("芯", [], "", ""), //笼
+  ZiWithComponentsAndStrokes("尖", [], "", ""), //陈
   ZiWithComponentsAndStrokes("所", [], "", ""),
   ZiWithComponentsAndStrokes("舌", [], "", ""),
   ZiWithComponentsAndStrokes("爷", [], "", ""),
-  ZiWithComponentsAndStrokes("系", [], "", ""),
+  ZiWithComponentsAndStrokes("幼", [], "", ""), //系
   ZiWithComponentsAndStrokes("牺", [], "", ""),
   ZiWithComponentsAndStrokes("明", [], "", ""),
   //ZiWithComponentsAndStrokes("对", [], "", ""),

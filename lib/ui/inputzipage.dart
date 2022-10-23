@@ -54,6 +54,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool hasVerifiedToBeALowerCase = false;
 
+  final stopwatch = Stopwatch()..start();
+
   double getSizeRatio() {
     return Utility.getSizeRatio(screenWidth);
   }
@@ -734,9 +736,10 @@ class _InputZiPageState extends State<InputZiPage> {
     var height = 140.0 * getSizeRatio();
 
     if (typingType == TypingType.LeadComponents) {
-      image = theZiForLeadCompExerciseList[currentIndex].hintImage;
-      width = 350.0 * getSizeRatio();
-      height = 150.0 * getSizeRatio();
+      // Not show since the keyboard is confusion to users
+      //image = theZiForLeadCompExerciseList[currentIndex].hintImage;
+      //width = 350.0 * getSizeRatio();
+      //height = 150.0 * getSizeRatio();
     }
     else if (typingType == TypingType.ExpandedReview) {
       image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
@@ -767,7 +770,7 @@ class _InputZiPageState extends State<InputZiPage> {
       image = theZiForGeneralExerciseList[currentIndex].hintImage;
     }
 
-    if (image.isNotEmpty) {
+    if (image != null && image.isNotEmpty) {
       return Container( //Flexible(
         alignment: Alignment.center,
         child: Image.asset(
@@ -1198,7 +1201,7 @@ class _InputZiPageState extends State<InputZiPage> {
       //  image = theZiForLeadCompExerciseList[currentIndex].hintImage;
       //}
       if (typingType == TypingType.LeadComponents) {
-        image = "GG6.png";
+      //  image = "GG6.png"; // not show to avoid confusion on which keyboard
       }
       else if (typingType == TypingType.ExpandedReview) {
         image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
@@ -1213,7 +1216,7 @@ class _InputZiPageState extends State<InputZiPage> {
         image = theZiForSubCompExerciseList[currentIndex].hintImage;
       }
 
-      if (image.isNotEmpty) {
+      if (image != null && image.isNotEmpty) {
         var arr = image.split(',');
         var image1 = arr[0];
         var image2 = '';
@@ -1385,7 +1388,13 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(119)/*"You are making great progress in typing Chinese characters."*/;
+
+      var elapsed = stopwatch.elapsed;
+      var inMin = elapsed.inMinutes;
+      var extraSec = elapsed.inSeconds % 60;
+      var elapsedStr = inMin.toString() + " " + getString(376).toString() + " " + extraSec.toString() + " " + getString(377) + "! ";
+
+      content = elapsedStr + getString(119)/*"You are making great progress in typing Chinese characters."*/;
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;

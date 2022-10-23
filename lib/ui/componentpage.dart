@@ -41,6 +41,7 @@ class _ComponentPageState extends State<ComponentPage> {
     //theStatisticsManager.initLessonQuizResults();
 
     theComponentManager.setCurrentType(questionType);
+    theComponentManager.initCurrentIndex();
     currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();

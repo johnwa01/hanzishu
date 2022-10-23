@@ -215,7 +215,33 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("6. " + getString(328)/*"Attached Components"*/, textDirection: TextDirection.ltr),
+          title: Text("6. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[8] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.SingleComponent), //InputZiPage(),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("7. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[9] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents), //InputZiPage(),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("8. " + getString(328)/*"Attached Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[5] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -228,7 +254,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("7. " + getString(329)/*"Twin Components"*/, textDirection: TextDirection.ltr),
+          title: Text("9. " + getString(329)/*"Twin Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[6] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -254,32 +280,6 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         */
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("8. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[8] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.SingleComponent), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("9. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[9] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.TwoComponents), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
           title: Text("10. " + getString(333)/*"General Exercises"*/, textDirection: TextDirection.ltr),
