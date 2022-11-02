@@ -5,9 +5,11 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
+import 'package:hanzishu/ui/typingapppage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:html' as html;
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -319,7 +321,37 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            launchTypingAppPageOrHtml();
+          },
+        ),
       ],
     );
+  }
+
+  launchTypingAppPageOrHtml() {
+    if (kIsWeb) {
+      var linkPath = "https://hanzishu.com/zi";
+
+      if (theDefaultLocale == "zh_CN") {
+        linkPath = "https://hanzishu.com/zi/index.html"; // same as /zi
+      }
+      else  if (theDefaultLocale == "en_US") {
+        linkPath = "https://hanzishu.com/zi/index_en.html";
+      }
+
+      html.window.open(linkPath, "name");  //name
+    }
+    else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => TypingAppPage(),
+        ),
+      );
+    }
   }
 }
