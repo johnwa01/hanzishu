@@ -9,7 +9,7 @@ import 'package:hanzishu/ui/typingapppage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'dart:html' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -334,16 +334,7 @@ class _ToolsPageState extends State<ToolsPage> {
 
   launchTypingAppPageOrHtml() {
     if (kIsWeb) {
-      var linkPath = "https://hanzishu.com/zi";
-
-      if (theDefaultLocale == "zh_CN") {
-        linkPath = "https://hanzishu.com/zi/index.html"; // same as /zi
-      }
-      else  if (theDefaultLocale == "en_US") {
-        linkPath = "https://hanzishu.com/zi/index_en.html";
-      }
-
-      html.window.open(linkPath, "name");  //name
+      launchUrl(Uri.parse("https://hanzishu.com/zi"), webOnlyWindowName: '_self');
     }
     else {
       Navigator.push(

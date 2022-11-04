@@ -1394,7 +1394,12 @@ class _InputZiPageState extends State<InputZiPage> {
       var extraSec = elapsed.inSeconds % 60;
       var elapsedStr = inMin.toString() + " " + getString(376).toString() + " " + extraSec.toString() + " " + getString(377) + "! ";
 
-      content = elapsedStr + getString(119)/*"You are making great progress in typing Chinese characters."*/;
+      if (inMin >= 7) {
+        content = elapsedStr + getString(383); /* repeat */
+      }
+      else {
+        content = elapsedStr + getString(119) /*"Wow, you are making great progress in typing Chinese characters. You can now move on to the next exercise!"*/;
+      }
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
