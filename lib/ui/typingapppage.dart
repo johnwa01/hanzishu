@@ -41,19 +41,19 @@ class _TypingAppPageState extends State<TypingAppPage> {
         children: <Widget>[
           Text(
               getString(380)/*"available on Windows and Mac computers"*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(/*color: Colors.blue,*/fontSize: fontSize),
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize),
           Text(
               getString(381)/*"Phone version close to complete"*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(/*color: Colors.blue,*/fontSize: fontSize),
               textAlign: TextAlign.start
           ),
           //SizedBox(height: fontSize),
           Text(
               getString(382)/*"At the same time..."*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize),
+              style: TextStyle(/*color: Colors.blue,*/fontSize: fontSize),
               textAlign: TextAlign.start
           ),
         ]

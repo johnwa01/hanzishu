@@ -7,7 +7,7 @@ var theConversationSnowballList =
   Snowball(1, [Sent('A',1), Sent('B', 1)]),
   Snowball(2, [Sent('A',1), Sent('B', 1), Sent('A', 2), Sent('B', 3), Sent('A', 4)]),
   Snowball(3, [Sent('A',1), Sent('B', 1), Sent('A', 5), Sent('B', 6), Sent(' ', 5), Sent('A', 146)]),
-  Snowball(4, [Sent('A',1), Sent('B', 7), Sent(' ', 5), Sent('A', 6), Sent('B', 8), Sent('A', 8)]),
+  Snowball(4, [Sent('A',1), Sent('B', 7), Sent('A', 5), Sent('B', 6), Sent('A', 8), Sent('B', 8)]),
   Snowball(5, [Sent('A',9), Sent('B', 1), Sent('A', 7), Sent('B', 10), Sent(' ', 5), Sent('A', 6), Sent('B', 8), Sent('A', 8)]),
   Snowball(6, [Sent('A',1), Sent('B', 7), Sent('A', 11), Sent('B', 12), Sent(' ', 5), Sent('A', 6), Sent('B', 8), Sent('A', 8)]),
   Snowball(7, [Sent('A',1), Sent('B', 9), Sent('A', 11), Sent('B', 12), Sent(' ', 5), Sent('A', 6), Sent('B', 13), Sent('A', 14), Sent('B', 8), Sent('A', 8)]),
