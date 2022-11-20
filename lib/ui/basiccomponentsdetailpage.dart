@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:hanzishu/data/phraselist.dart';
+import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/listofzipainter.dart';
-import 'package:hanzishu/ui/inputzipainter.dart';
+import 'package:hanzishu/ui/basiccomponentsdetailpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
-import 'package:hanzishu/engine/zimanager.dart';
 
-class ListOfZiPage extends StatefulWidget {
-  final int lessonId;
-  ListOfZiPage({this.lessonId});
+
+class BasicComponentsDetailPage extends StatefulWidget {
+  //final int lessonId;
+  final int keyGroup;
+  final int keyIndex;
+
+  BasicComponentsDetailPage({this.keyGroup, this.keyIndex});
 
   @override
-  _ListOfZiPageState createState() => _ListOfZiPageState();
+  _BasicComponentsDetailPageState createState() => _BasicComponentsDetailPageState();
 }
 
-class _ListOfZiPageState extends State<ListOfZiPage> {
+class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
   double screenWidth;
   ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
@@ -32,12 +35,14 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
 
   @override
   void dispose() {
-    _scrollController.dispose(); // it is a good practice to dispose the controller
+    _scrollController
+        .dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
 
   double getSizeRatio() {
-    var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
+    var defaultSize = screenWidth /
+        16.0; // equivalent to the original hardcoded value of 25.0
     return defaultSize / 25.0;
   }
 
@@ -45,23 +50,39 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     return value * getSizeRatio();
   }
 
+  Widget getComponentsImageAsset(int keyGroup, int keyIndex) {
+    //if (keyGroup == 0 || keyIndex == 0) {
+    //  return ;
+    //}
+    var fullExpandedComp = theComponentManager
+      .getFullExpandedComponentByGroupAndIndex(keyGroup, keyIndex);
+
+    return Image.asset(
+      "assets/typing/" + fullExpandedComp.imageName,
+      width: applyRatio(100.0),
+      height: applyRatio(130.0),
+      //fit: BoxFit.fitWidth,
+    );
+}
+
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
-    var listOfZiPainter = ListOfZiPainter(
+    var basicComponentsDetailPainter = BasicComponentsDetailPainter(
         lineColor: Colors.amber,
         completeColor: Colors.blueAccent,
-        lessonId: widget.lessonId,
+        keyGroup: widget.keyGroup,
+        keyIndex: widget.keyIndex,
         //completePercent: percentage,
         screenWidth: screenWidth
     );
 
     List<SpeechIconInfo> listOfSpeechIconInfo = List<SpeechIconInfo>();
     // get iconinfo only, isInfoOnly = true
-    listOfZiPainter.displayAllZi(widget.lessonId, true, listOfSpeechIconInfo, contentLength);
+    basicComponentsDetailPainter.displayAllZi(widget.keyGroup, widget.keyIndex, true, listOfSpeechIconInfo, contentLength);
 
     //contentLength = MediaQuery.of(context).size.height; this is inaccurate
 
@@ -69,22 +90,28 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(2)/*"Flashcards"*/),
+        title: Text(getString(384)/*"Basic Components"*/),
       ),
       body: Container(
         child: SingleChildScrollView(
           controller: _scrollController,
           scrollDirection: Axis.vertical,
-            child: CustomPaint(
-                foregroundPainter: listOfZiPainter,
+          child: Column(
+            children: <Widget>[
+              getComponentsImageAsset(widget.keyGroup, widget.keyIndex),
+
+              CustomPaint(
+                foregroundPainter: basicComponentsDetailPainter,
                 size: new Size(screenWidth, contentLength.value),
 
                 child: Center(
                   child: Stack(
-                      children: createHittestButtons(context, listOfSpeechIconInfo),
+                    children: createHittestButtons(context, listOfSpeechIconInfo),
                   ),
                 ),
-            ),
+              ),
+            ]
+          ),
         ),
 
       ),
@@ -97,11 +124,8 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
       textColor: Colors.blueAccent,
       onPressed: () {
         var str;
-        if (speechIconInfo.type == ZiListType.phrase) {
-          str = thePhraseList[speechIconInfo.id].chars;
-        }
-        else {
-          str = theZiManager.getZi(speechIconInfo.id).char;
+        if (speechIconInfo.type == ZiListType.component){
+          str = ComponentManager.getComponent(speechIconInfo.id).charOrNameOfNonchar;
         }
 
         TextToSpeech.speak(str);
@@ -126,7 +150,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     buttons.add (Container(height: contentLength.value, width: screenWidth));  // workaround to avoid infinite size error
 
     for (var i = 0; i < listOfSpeechIconInfo.length; i++) {
-        buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));
+      buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));
     }
 
     return buttons;

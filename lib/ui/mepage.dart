@@ -6,6 +6,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/settingspage.dart';
+import 'package:hanzishu/ui/basiccomponentspage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
 
@@ -122,6 +123,19 @@ class _MePageState extends State<MePage> {
               },
             ),
             getQuizResults(),
+            ListTile(
+              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title: Text(getString(384)/*"Hanzis basic components"*/, textDirection: TextDirection.ltr),
+              //trailing: Image.asset('assets/core/itemicon.png'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BasicComponentsPage(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(140)/*"Glossary"*/, textDirection: TextDirection.ltr),

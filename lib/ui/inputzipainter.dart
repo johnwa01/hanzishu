@@ -5,20 +5,8 @@ import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/utility.dart';
-
-class SpeechIconInfo {
-  bool isPhrase;
-  int id;
-  double xPosi;
-  double yPosi;
-  SpeechIconInfo(isPhrase, int id, double xPosi, double yPosi) {
-    this.isPhrase = isPhrase;
-    this.id = id;
-    this.xPosi = xPosi;
-    this.yPosi = yPosi;
-  }
-}
 
 class InputZiPainter extends BasePainter {
   static var lessonLeftEdge;

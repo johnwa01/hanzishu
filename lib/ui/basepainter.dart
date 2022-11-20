@@ -1068,11 +1068,20 @@ class BasePainter extends CustomPainter{
     }
   }
 
-  // assume a single comp zi. used in zi list in lessons.
-  displayCompStrokes(int ziId, PositionAndSize posi, double ratio) {
-    var compCode = ComponentManager.getCompCodeFromZiId(ziId);
-    displayTextWithValue(getString(87)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    var comp = ComponentManager.getComponentByCode(compCode);
+  // assume a single comp zi or component. used in zi list in lessons and comopnent list.
+  displayCompStrokes(int ziId, ZiListType type, PositionAndSize posi, double ratio) {
+    var comp;
+    displayTextWithValue(
+        getString(87) /*"Strokes"*/ + ": ", posi.transX, posi.transY, posi
+        .charFontSize /*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/,
+        Colors.black);
+    if (type == ZiListType.zi) {
+      var compCode = ComponentManager.getCompCodeFromZiId(ziId);
+      comp = ComponentManager.getComponentByCode(compCode);
+    }
+    else if (type == ZiListType.component) {
+      comp = ComponentManager.getComponent(ziId);
+    }
 
     if (comp != null) {
       drawStrokeZiList(

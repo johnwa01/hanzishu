@@ -1008,4 +1008,16 @@ class ComponentManager {
 
     return subComponents;
   }
+
+  static List<int> getSortedComponentsForCategory(String category) {
+    List<int> sortedCompIds = [];
+    for (var i = 0; i < theComponentList.length; i++) {
+      if (category == theComponentList[i].typingCode.substring(0, 1)) {
+        sortedCompIds.add(i);
+      }
+    }
+    //TODO: sorted the list
+
+    return sortedCompIds;
+  }
 }

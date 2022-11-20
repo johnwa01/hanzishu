@@ -590,3 +590,15 @@ static const List<MaterialColor> primaries = <MaterialColor>[
 ];
 */
 
+class SpeechIconInfo {
+  ZiListType type;
+  int id;
+  double xPosi;
+  double yPosi;
+  SpeechIconInfo(ZiListType type, int id, double xPosi, double yPosi) {
+    this.type = type;
+    this.id = id;
+    this.xPosi = xPosi;
+    this.yPosi = yPosi;
+  }
+}

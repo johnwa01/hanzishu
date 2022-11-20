@@ -10,7 +10,8 @@ enum ZiListType {
   zi,
   searching,
   component,
-  stroke
+  stroke,
+  phrase
 }
 
 class NumberOfZis {

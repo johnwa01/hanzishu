@@ -386,4 +386,5 @@ var theString_en_US = [
   Local(381, "The development of the phone version of the app is close to complete."),
   Local(382, "At the same time, you can use the previous free typing page to type Chinese characters then copy/paste to other programs."),
   Local(383, "Good progress! Suggest you repeat this exercise until you can type faster than 6 or 7 minutes."),
+  Local(384, "Hanzi basic components"),
 ];

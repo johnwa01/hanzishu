@@ -205,6 +205,19 @@ class Component {
     this.subComponents = subComponents;
     this.strokes = strokes;
   }
+
+  // three lines, from top to bottom, middle to side, left first.
+  static List<String> ComponentPositionLetters =['T', 'R', 'E', 'W', 'Q', 'Y', 'U', 'I', 'O', 'P', 'G', 'F', 'D', 'S', 'A', 'H', 'J', 'K', 'L', '', 'B', 'V', 'C', 'X', 'Z', 'N', 'M', '', '', ''];
+
+  static String getComponentCategoryFromGroupAndIndex(int keyGroup, int keyIndex) {
+    if (keyGroup < 1 || keyGroup > 6 || keyIndex < 1 || keyIndex > 5) {
+      return null;
+    }
+
+    var posi = (keyGroup -1) * 5 + keyIndex - 1;
+
+    return ComponentPositionLetters[posi];
+  }
 }
 
 class ZiWithComponentsAndStrokes {
@@ -238,3 +251,4 @@ class ZiIdToCompMap {
     this.compCode = compCode;
   }
 }
+

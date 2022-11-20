@@ -10,19 +10,6 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
-class SpeechIconInfo {
-  bool isPhrase;
-  int id;
-  double xPosi;
-  double yPosi;
-  SpeechIconInfo(isPhrase, int id, double xPosi, double yPosi) {
-    this.isPhrase = isPhrase;
-    this.id = id;
-    this.xPosi = xPosi;
-    this.yPosi = yPosi;
-  }
-}
-
 class ListOfZiPainter extends BasePainter {
   var lessonLeftEdge;
 
@@ -214,7 +201,7 @@ class ListOfZiPainter extends BasePainter {
         if (theZiList[id].isBasicZi()) {
           var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
           var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-          displayCompStrokes(id, posiSize, applyRatio(1.0));
+          displayCompStrokes(id, ZiListType.zi, posiSize, applyRatio(1.0));
         }
         else {
           var searchingZiId = DictionaryManager.getSearchingZiId(
@@ -323,7 +310,7 @@ class ListOfZiPainter extends BasePainter {
     else {
       // save the icon infor.
       var speechIconInfo = SpeechIconInfo(
-          type == CharType.Phrase, id, transX, yPositionWrapper.value);
+          ZiListType.phrase, id, transX, yPositionWrapper.value);
       listOfSpeechIconInfo.add(speechIconInfo);
     }
     transX += applyRatio(30.0);
