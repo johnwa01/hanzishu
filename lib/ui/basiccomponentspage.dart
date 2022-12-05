@@ -14,7 +14,7 @@ class BasicComponentsPage extends StatefulWidget {
 
 class _BasicComponentsPageState extends State<BasicComponentsPage> {
   double screenWidth;
-  ScrollController _scrollController;
+  //ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
   OverlayEntry overlayEntry;
   int previousOverlayGroup = 0;
@@ -27,15 +27,15 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
   @override
   void initState() {
     super.initState();
-    _scrollController = ScrollController()
-      ..addListener(() {
+    //_scrollController = ScrollController()
+    //  ..addListener(() {
         //print("offset = ${_scrollController.offset}");
-      });
+    //  });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose(); // it is a good practice to dispose the controller
+    //_scrollController.dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
 
@@ -54,15 +54,14 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
       body: Container(
         //height: 800.00,
 
-        child: SingleChildScrollView(
-          controller: _scrollController,
-          scrollDirection: Axis.vertical,
-          child: WillPopScope(
+        //child: SingleChildScrollView(
+        //  controller: _scrollController,
+        //  scrollDirection: Axis.vertical,
+        //  child: WillPopScope(
               child: getHelpContentView(context),
-              onWillPop: _onWillPop
-          ),
-        ),
-
+        //      onWillPop: _onWillPop
+        //  ),
+        //),
       ),
     );
   }
@@ -93,7 +92,7 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
           keyGroup, keyIndex).image;
     }
 
-    int lessonId = 1; //TODO
+    int lessonId = 6; //TODO
 
     return FlatButton(
       color: Colors.white,
@@ -103,7 +102,7 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => BasicComponentsDetailPage(keyGroup: keyGroup, keyIndex: keyIndex),
+            builder: (context) => BasicComponentsDetailPage(lessonId: lessonId),
           ),
         );
       },

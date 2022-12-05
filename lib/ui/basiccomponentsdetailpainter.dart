@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/data/phraselist.dart';
+import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
-import 'package:hanzishu/engine/component.dart';
-import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
-
-
+import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 
 class BasicComponentsDetailPainter extends BasePainter {
   var lessonLeftEdge;
@@ -19,16 +19,14 @@ class BasicComponentsDetailPainter extends BasePainter {
 
   Color lineColor;
   Color completeColor;
-  //int lessonId;
-  int keyGroup;
-  int keyIndex;
+  int lessonId;
   double screenWidth;
 
   var breakoutPositions;
   bool isBreakoutPositionsOnly;
 
   BasicComponentsDetailPainter({
-    this.lineColor, this.completeColor, this.keyGroup, this.keyIndex, this.screenWidth
+    this.lineColor, this.completeColor, this.lessonId, this.screenWidth
   });
 
   double getSizeRatio() {
@@ -47,12 +45,10 @@ class BasicComponentsDetailPainter extends BasePainter {
     isBreakoutPositionsOnly = false;
     PrimitiveWrapper contentLength; // not used
     lessonLeftEdge = applyRatio(10.0);
-    int lessonId = 1;
-    displayAllZi(keyGroup, keyIndex, false, null, contentLength);
+    displayAllZi(lessonId, false, null, contentLength);
   }
 
-  displayAllZi(int keyGroup, int keyIndex, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo, PrimitiveWrapper contentLength) {
-    int lessonId = 1; //TODO: temp
+  displayAllZi(int lessonId, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo, PrimitiveWrapper contentLength) {
     var lesson = theLessonList[lessonId];
     int length = 0;
     var yPositionWrapper = PrimitiveWrapper(0.0);  //170.0
@@ -60,30 +56,36 @@ class BasicComponentsDetailPainter extends BasePainter {
       lessonLeftEdge = applyRatio(10.0);
     }
 
-    var categoryLetter = Component.getComponentCategoryFromGroupAndIndex(keyGroup, keyIndex);
-
-    yPositionWrapper.value += applyRatio(20.0);
-    if (!isInfoOnly) {
-        displayTextWithValue(
-            getString(82)/*"Basic Non-Characters (Components)"*/, lessonLeftEdge, yPositionWrapper.value,
+    // for title
+    if (lesson.charsIds.length > 0 || lesson.convCharsIds.length > 0) {
+      yPositionWrapper.value += applyRatio(20.0);
+      if (!isInfoOnly) {
+        displayTextWithValue(getString(81)/*"Basic Characters (Components)"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.brown);  //blue
+                ZiOrCharSize.defaultSize), Colors.brown);
+      }
+      yPositionWrapper.value += (thePositionManager.getCharFontSize(
+          ZiOrCharSize.defaultSize) + applyRatio(15.0));
     }
-    yPositionWrapper.value += (thePositionManager.getCharFontSize(
-        ZiOrCharSize.defaultSize) + applyRatio(15.0));
 
+    var categoryLetter = Component.getComponentCategoryFromGroupAndIndex(1, 1 /*keyGroup, keyIndex*/);
     var sortedCompIds = ComponentManager.getSortedComponentsForCategory(categoryLetter);
-    var count = sortedCompIds.length;
+    length = sortedCompIds.length;
+    if (length > 0) {
+      for (int compId in sortedCompIds) {
+          displayOneZi(yPositionWrapper, compId, CharType.BasicChar, isInfoOnly, listOfSpeechIconInfo);
+      }
 
-    //TODO: use mapped list
-    for (var i= 0; i <= (count-1); i++) {
-        displayOneZi(yPositionWrapper,  sortedCompIds[i]/*TODO: hardcoded for now. charId*/, CharType.BasicChar, isInfoOnly, listOfSpeechIconInfo);
-    }
-
-    if (!isInfoOnly) {
+      if (!isInfoOnly) {
         drawLine(0.0, yPositionWrapper.value, applyRatio(600.0),
             yPositionWrapper.value, Colors.grey, applyRatio(1));
+      }
     }
+
+    if (isInfoOnly) {
+      contentLength.value = yPositionWrapper.value;
+    }
+
   }
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
@@ -94,13 +96,13 @@ class BasicComponentsDetailPainter extends BasePainter {
       yPositionWrapper.value += applyRatio(30.0);
 
       if (!isInfoOnly) {
-        var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-        var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-        displayCompStrokes(id, ZiListType.component, posiSize, applyRatio(1.0));
+          var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+          var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
+          displayCompStrokes(id, ZiListType.component, posiSize, applyRatio(1.0));
       }
 
       var comp = ComponentManager.getComponent(id);
-      if (comp.isChar/*!theZiManager.getZi(id).isStrokeOrNonChar()*/) {
+      if (comp.isChar) {
         var searchingZiIndex = DictionaryManager.getSearchingZiId(
             comp.charOrNameOfNonchar);
         if (searchingZiIndex > 0) {
@@ -127,10 +129,10 @@ class BasicComponentsDetailPainter extends BasePainter {
     var meaning;
 
     var comp = ComponentManager.getComponent(id);
-    if (!isInfoOnly) {
-      drawRootZi(
+      if (!isInfoOnly) {
+        drawRootZi(
             id,
-            ZiListType.component, // .zi
+            ZiListType.component,
             transX,
             yPositionWrapper.value,
             thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
@@ -147,15 +149,15 @@ class BasicComponentsDetailPainter extends BasePainter {
             false,
             Colors.blue,
             true);
-        pinyin = comp.pinyin; //theZiList[id].pinyin;
-        meaning = comp.meaning; //theZiList[id].meaning;
-    }
-    transX +=
-    (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +
-        applyRatio(10.0));
+        pinyin = comp.pinyin;
+        meaning = comp.meaning;
+      }
+      transX +=
+      (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +
+          applyRatio(10.0));
 
     transX = applyRatio(20.0);
-    yPositionWrapper.value += applyRatio(36.0); //33.0
+    yPositionWrapper.value += applyRatio(33.0);
     if (!isInfoOnly) {
       displayTextWithValue(getString(85)/*"Sound"*/ + ": ", transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
