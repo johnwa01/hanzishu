@@ -81,7 +81,7 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
           scrollDirection: Axis.vertical,
           child: CustomPaint(
             foregroundPainter: basicComponentsDetailPainter,
-            size: new Size(screenWidth, contentLength.value),
+            size: new Size(screenWidth, contentLength.value + 30.0), // 30.0 - extra buffer
 
             child: Center(
               child: Stack(

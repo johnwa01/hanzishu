@@ -215,7 +215,8 @@ class BasicComponentsDetailPainter extends BasePainter {
     // display meaning
     if (!isInfoOnly) {
       displayTextWithValue(
-          getString(86)/*"Meaning"*/ + ": ", applyRatio(20.0), yPositionWrapper.value,
+          getString(86) /*"Meaning"*/ + ": ", applyRatio(20.0),
+          yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.black);
       displayTextWithValue(
@@ -223,7 +224,8 @@ class BasicComponentsDetailPainter extends BasePainter {
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.blue);
 
-      checkAndUpdateYPosi(yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
+      checkAndUpdateYPosi(
+          yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
     }
   }
