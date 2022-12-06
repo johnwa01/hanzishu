@@ -947,6 +947,99 @@ class ComponentManager {
     return value;
   }
 
+  static String getLetterByGroupAndIndex(int keyGroup, int keyIndex) {
+    String letter;
+    if (keyGroup == 1) {
+      if (keyIndex == 1) {
+        letter = 'T';
+      }
+      else if (keyIndex == 2) {
+        letter = 'R';
+      }
+      else if (keyIndex == 3) {
+        letter = 'E';
+      }
+      else if (keyIndex == 4) {
+        letter = 'W';
+      }
+      else if (keyIndex == 5) {
+        letter = 'Q';
+      }
+    }
+    else if (keyGroup == 2) {
+      if (keyIndex == 1) {
+        letter = 'Y';
+      }
+      else if (keyIndex == 2) {
+        letter = 'U';
+      }
+      else if (keyIndex == 3) {
+        letter = 'I';
+      }
+      else if (keyIndex == 4) {
+        letter = 'O';
+      }
+      else if (keyIndex == 5) {
+        letter = 'P';
+      }
+    }
+    else if (keyGroup == 3) {
+      if (keyIndex == 1) {
+        letter = 'G';
+      }
+      else if (keyIndex == 2) {
+        letter = 'F';
+      }
+      else if (keyIndex == 3) {
+        letter = 'D';
+      }
+      else if (keyIndex == 4) {
+        letter = 'S';
+      }
+      else if (keyIndex == 5) {
+        letter = 'A';
+      }
+    }
+    else if (keyGroup == 4) {
+      if (keyIndex == 1) {
+        letter = 'H';
+      }
+      else if (keyIndex == 2) {
+        letter = 'J';
+      }
+      else if (keyIndex == 3) {
+        letter = 'K';
+      }
+      else if (keyIndex == 4) {
+        letter = 'L';
+      }
+    }
+    else if (keyGroup == 5) {
+      if (keyIndex == 1) {
+        letter = 'B';
+      }
+      else if (keyIndex == 2) {
+        letter = 'V';
+      }
+      else if (keyIndex == 3) {
+        letter = 'C';
+      }
+      else if (keyIndex == 4) {
+        letter = 'X';
+      }
+    }
+    else if (keyGroup == 6) {
+      if (keyIndex == 1) {
+        letter = 'N';
+      }
+      else if (keyIndex == 2) {
+        letter = 'M';
+      }
+    }
+
+    return letter;
+  }
+
   static String getCompCodeFromZiId(int ziId) {
       return binarySearch2(theZiIdToCompCodeMapList, ziId, 0, theZiIdToCompCodeMapList.length - 1);
       /*
@@ -1016,7 +1109,9 @@ class ComponentManager {
         sortedCompIds.add(i);
       }
     }
+
     //TODO: sorted the list
+    //maybe ok to have zi listed in the front
 
     return sortedCompIds;
   }

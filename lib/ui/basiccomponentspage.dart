@@ -92,19 +92,21 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
           keyGroup, keyIndex).image;
     }
 
-    int lessonId = 6; //TODO
-
     return FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
       padding: EdgeInsets.zero,
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => BasicComponentsDetailPage(lessonId: lessonId),
-          ),
-        );
+        if (keyGroup != 0 && keyIndex != 0) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  BasicComponentsDetailPage(
+                      keyGroup: keyGroup, keyIndex: keyIndex),
+            ),
+          );
+        }
       },
       child: Image.asset(
         "assets/components/L" + image,
