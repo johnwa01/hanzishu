@@ -324,18 +324,18 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 SizedBox(width: 10),
-                getStartingLevel(context),
-                SizedBox(width: 10),
-                Text(getString(307)/*'to'*/),
-                SizedBox(width: 10),
+                //getStartingLevel(context),
+                //SizedBox(width: 10),
+                //Text(getString(307)/*'to'*/),
+                //SizedBox(width: 10),
                 getEndingLevel(context),
                 SizedBox(width: 10),
               ],
             ),
           ),
           SizedBox(height: 40),
-          getLessonRange(context),
-          SizedBox(height: 40),
+          //getLessonRange(context),
+          //SizedBox(height: 40),
           Container(
             child: getStartReview(context), //OpenHelper.getImageButton(context, lessonId, "assets/quiz.png", LessonSection.Quiz),
             padding: EdgeInsets.all(20),
@@ -414,7 +414,10 @@ class _ReviewSelectionPageState extends State<ReviewSelectionPage> {
             endLessonId = _selectedReviewLessonEnding.id;
           }
           var startInternalLessonId = LevelManager.getStartInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId + 1, endLessonId + 1); // lesson id 0 == lesson 1
-          var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId + 1, endLessonId + 1);
+          //var endInternalLessonId = LevelManager.getEndInternalLessonId(_selectedReviewLevelStarting.id, _selectedReviewLevelEnding.id, startLessonId + 1, endLessonId + 1);
+          //NOTE: hard coded to the last lesson of the level, that is, including all the lessons up to the given level.
+          var endInternalLessonId = LevelManager.lastInternalLessonId(_selectedReviewLevelEnding.id);
+
           Navigator.push(
             context,
             MaterialPageRoute(

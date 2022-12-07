@@ -93,7 +93,7 @@ class LevelManager {
     }
 
     var lastLessonId = 0;
-    for (var i = 0; i <= (levelId - 1); i++) {
+    for (var i = 0; i <= levelId; i++) {
       lastLessonId += theLevelList[i].numberOfLessons;
     }
 
