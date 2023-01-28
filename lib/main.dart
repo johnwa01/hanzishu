@@ -23,6 +23,7 @@ import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/ui/drillpage.dart';
 
 import 'dart:io';
 import "package:hanzishu/utility.dart";
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children =
   [
     LessonsPage(),
-    //ReviewSelectionPage(),
+    DrillPage(startLessonId: 1, endLessonId: 10),
     DictionaryPage(),
     ToolsPage(),
     MePage()
@@ -163,6 +164,11 @@ class _MyHomePageState extends State<MyHomePage> {
             label: getString(91)/*'Lessons'*/,
             icon: Image.asset('assets/core/lessonsicon1.png'),
             activeIcon: Image.asset('assets/core/lessonsicon0.png'),
+          ),
+          BottomNavigationBarItem(
+            label: getString(1)/*'Drills'*/,
+            icon: Image.asset('assets/core/dictionaryicon1.png'),
+            activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
           ),
           BottomNavigationBarItem(
             label: getString(92)/*'Dictionary'*/,

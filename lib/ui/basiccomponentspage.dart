@@ -41,9 +41,9 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = Utility.getScreenWidth(context);
+//    screenWidth = Utility.getScreenWidth(context);
     // init positionmanager frame size
-    thePositionManager.setFrameWidth(screenWidth);
+//    thePositionManager.setFrameWidth(screenWidth);
 
     return Scaffold
       (
@@ -121,6 +121,9 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
     var fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
     var fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    var oneWidth = screenWidth / 10.0;
+
     var fontSize = 18.0 * getSizeRatioWithLimit();
     return Column(
       //mainAxisSize: MainAxisSize.min,
@@ -132,137 +135,137 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
 
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(1, 1)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(1, 1), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(2, 1)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(2, 1), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(1, 2)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(1, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(2, 2)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(2, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(1, 3)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(1, 3), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(2, 3)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(2, 3), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(1, 4)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(1, 4), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(2, 4)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(2, 4), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(1, 5)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(1, 5), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(2, 5)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(2, 5), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(3, 5)),
-                Flexible(child: getOneKeyboardButton(3, 4)),
-                Flexible(child: getOneKeyboardButton(3, 3)),
-                Flexible(child: getOneKeyboardButton(3, 2)),
-                Flexible(child: getOneKeyboardButton(3, 1)),
+                SizedBox(child: getOneKeyboardButton(3, 5), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(3, 4), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(3, 3), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(3, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(3, 1), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(4, 1)),
-                Flexible(child: getOneKeyboardButton(4, 2)),
-                Flexible(child: getOneKeyboardButton(4, 3)),
-                Flexible(child: getOneKeyboardButton(4, 4)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(4, 1), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(4, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(4, 3), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(4, 4), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(5, 4)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(5, 4), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(6, 2)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(6, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(5, 3)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(5, 3), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(6, 1)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(6, 1), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
           Row(
               children: <Widget>[
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(5, 2)),
-                Flexible(child: getOneKeyboardButton(5, 1)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(5, 2), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(5, 1), width: oneWidth),
                 //SizedBox(width: fontSize),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
-                Flexible(child: getOneKeyboardButton(0, 0)),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
+                SizedBox(child: getOneKeyboardButton(0, 0), width: oneWidth),
               ]
           ),
         ]

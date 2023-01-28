@@ -33,6 +33,11 @@ class SearchingZi {
   int soundLevel;
   String image;
   String hint;
+  String displaySide;
+  List<int> groupMembers;
+  int parentId;
+  int level;
+  //int levelHSK;
 
   SearchingZi(
       int id,
@@ -44,7 +49,12 @@ class SearchingZi {
       String soundComponent,
       int soundLevel,
       String image,
-      String hint
+      String hint,
+      String displaySide,
+      List<int> groupMembers,
+      int parentId,
+      int level,
+  //    int levelHSK,
     ) {
       this.id = id;
       this.char = char;
@@ -56,6 +66,11 @@ class SearchingZi {
       this.soundLevel = soundLevel;
       this.image = image;
       this.hint = hint;
+      this.displaySide = displaySide;
+      this.groupMembers = groupMembers;
+      this.parentId = parentId;
+      this.level = level;
+  //    this.levelHSK = levelHSK;
   }
 
   bool isSingleComponentZi() {

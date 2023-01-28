@@ -379,6 +379,10 @@ class Utility {
         (rootZiId == TheConst.starCharId);
   }
 
+  static bool isSearchingPseudoZiId(int rootZiId) {
+    return (rootZiId >= 3718 && rootZiId <= 3742); //TODO: finalize it
+  }
+
   static bool isStarChar(int rootZiId) {
     return (rootZiId == TheConst.starCharId);
   }

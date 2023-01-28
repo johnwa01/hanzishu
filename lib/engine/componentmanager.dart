@@ -461,6 +461,7 @@ class ComponentManager {
     return theLeadComponentList[id];
   }
 
+  /*
   static int getComponentIdByCode(String code) {
     var leng = theComponentList.length;
     var comp;
@@ -475,6 +476,7 @@ class ComponentManager {
 
     return -1;
   }
+  */
 
   static Component getComponent(int id) {
     if (id >= theComponentList.length) {
@@ -517,6 +519,10 @@ class ComponentManager {
     */
   }
 
+  static int getComponentIdByCode(String code) {
+    return binarySearchId(theComponentList, code, 0, theComponentList.length - 1);
+  }
+
 /*
   void sample() {
     List<int> arr = [0, 1, 3, 4, 5, 8, 9, 22];
@@ -544,6 +550,25 @@ class ComponentManager {
       }
     }
     return null;
+  }
+
+  static int binarySearchId(List<Component> arr, String doubleByteCode, int min, int max) {
+    if (doubleByteCode == null || doubleByteCode.length == 0) {
+      return -1;
+    }
+
+    if (max >= min) {
+      int mid = ((max + min) / 2).floor();
+      var result = doubleByteCode.compareTo(arr[mid].doubleByteCode);
+      if (result == 0) {
+        return mid;
+      } else if (result > 0) {
+        return binarySearchId(arr, doubleByteCode, mid + 1, max);
+      } else {
+        return binarySearchId(arr, doubleByteCode, min, mid - 1);
+      }
+    }
+    return -1;
   }
 
   int getCurrentComponentId() {

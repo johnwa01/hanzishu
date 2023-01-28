@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
+import 'package:hanzishu/data/componentlist.dart';
+import 'package:hanzishu/data/drillmenulist.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/reviewpainter.dart';
+import 'package:hanzishu/ui/drillpainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
@@ -14,7 +17,7 @@ import 'package:hanzishu/ui/animatedpathpainter.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
-class ReviewPage extends StatefulWidget {
+class DrillPage extends StatefulWidget {
   //final int lessonId;
   final int startLessonId;
   final int endLessonId;
@@ -22,13 +25,13 @@ class ReviewPage extends StatefulWidget {
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
-  ReviewPage({this.startLessonId, this.endLessonId});
+  DrillPage({this.startLessonId, this.endLessonId});
 
   @override
-  _ReviewPageState createState() => _ReviewPageState();
+  _DrillPageState createState() => _DrillPageState();
 }
 
-class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateMixin {
+class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMixin {
   int centerZiId;
   bool shouldDrawCenter;
   double screenWidth;
@@ -42,6 +45,15 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
+
+  ZiListType currentZiListType;
+
+  //List<ReviewLevel> _reviewLevelsEnding = ReviewLevel.getReviewLevelsEnding(0);
+  List<DropdownMenuItem<DrillMenu>> _dropdownDrillMenuItems;
+  DrillMenu _selectedDrillMenu;
+
+  List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
+  DrillMenu _selectedSubMenu;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -68,13 +80,25 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    //theLessonList[theCurrentLessonId].populateReviewMap(1);
+    //theLessonList[theCurrentLessonId].populateDrillMap(1);
 
     // should just run once
     // believe initState only runs once, but added a global variable in case LessonPage has run it already.
     if (!theHavePopulatedLessonsInfo) {
       LessonManager.populateLessonsInfo();
       theHavePopulatedLessonsInfo = true;
+    }
+
+    //theSearchingZiRealFilterList[0] = null;
+    //theSearchingZiRealFilterList[1] = null;
+    //theSearchingZiRealFilterList[2] = null;
+
+    _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
+    _selectedDrillMenu = _dropdownDrillMenuItems[0].value;
+
+    _dropdownSubMenuItems = buildDropdownSubMenuItems();
+    if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
+      _selectedSubMenu = _dropdownSubMenuItems[0].value;
     }
 
     _controller = new AnimationController(
@@ -98,15 +122,6 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     resetCompoundZiAnimation();
   }
 
-  /*
-  double screenHeight(BuildContext context, {double dividedBy = 1, double reducedBy = 0.0}) {
-    return (screenSize(context).height - reducedBy) / dividedBy;
-  }
-  double screenHeightExcludingToolbar(BuildContext context, {double dividedBy = 1}) {
-    return screenHeight(context, dividedBy: dividedBy, reducedBy: kToolbarHeight);
-  }
-  */
-
   void resetCompoundZiAnimation() {
     // re-init
     compoundZiComponentNum = 0;
@@ -122,7 +137,7 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
 
   List<int> getAllZiComponents(int id) {
     if (compoundZiAllComponents.length == 0) {
-      theZiManager.getAllZiComponents(id, compoundZiAllComponents);
+      theZiManager.getAllZiComponents(ZiListType.searching, id, compoundZiAllComponents);
     }
 
     return compoundZiAllComponents;
@@ -133,6 +148,32 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     int compoundZiCurrentComponentId = 0;
     int compoundZiTotalComponentNum = 0;
 
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      List<String> componentCodes = List<String>();
+      if (compoundZiAllComponents == null ||
+          compoundZiAllComponents.length == 0) {
+        DictionaryManager.getAllComponents(centerZiId, componentCodes);
+        DictionaryManager.getComponentIdsFromCodes(
+            componentCodes, compoundZiAllComponents);
+      }
+      //var compList = getAllZiComponents(searchingZiIndex);
+      compoundZiTotalComponentNum = compoundZiAllComponents.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        // after looping through the compoundZiAllComponents.
+        compoundZiCurrentComponentId = centerZiId;
+        currentZiListType = ZiListType.searching;
+        shouldDrawCenter = true;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId =
+        compoundZiAllComponents[compoundZiComponentNum - 1];
+        currentZiListType = ZiListType.component;
+      }
+    }
+    /*
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
       var compList = getAllZiComponents(centerZiId);
@@ -146,42 +187,66 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
         compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
       }
     }
+   */
 
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
-    if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
+    if (compoundZiComponentNum > 0 &&
+        compoundZiComponentNum <= compoundZiTotalComponentNum) {
       compoundZiAnimation();
+    }
+
+    var subMenuUptoId = 0;
+    if (_selectedSubMenu != null) {
+      subMenuUptoId = _selectedSubMenu.id;
     }
 
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text(getString(296)/*"Review"*/),
+        title: Text(getString(296)/*"Drill"*/),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
           //height: 200.0,
           //width: 200.0,
-          child: new Stack(
+            child: new Stack(
               children: <Widget>[
                 new Positioned(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SizedBox(width: 10),
+                      getCategories(context, centerZiId),
+                      //SizedBox(width: 10),
+                      //Text("Test"),
+                      SizedBox(width: 10),
+                      //Text("Results"),
+                      getSubMenus(context, centerZiId),
+                      SizedBox(width: 10),
+                    ],
+                  ),
+                ),
+                new Positioned(
                   child: CustomPaint(
-                    foregroundPainter: ReviewPainter(
+                    foregroundPainter: DrillPainter(
                       Colors.amber,
                       Colors.blueAccent,
                       centerZiId,
                       shouldDrawCenter,
                       screenWidth,
-                      widget.startLessonId,
-                      widget.endLessonId,
+                      widget.startLessonId, //TODO: remove this
+                        subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
                       widget.sidePositionsCache,
                       widget.realGroupMembersCache,
                       widget.centerPositionAndSizeCache,
                       allLearnedZis,
-                        compoundZiCurrentComponentId,
+                      compoundZiCurrentComponentId,
+                      currentZiListType,
+                        _selectedDrillMenu.id
                     ),
                     child: Center(
                       child: Stack(
@@ -199,10 +264,107 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     );
   }
 
+  Widget getCategories(BuildContext context, int centerZiId) {
+    if (centerZiId == 1) {
+      return DropdownButton(
+        value: _selectedDrillMenu,
+        items: _dropdownDrillMenuItems,
+        onChanged: onChangeDropdownDrillItem,
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+
+  Widget getSubMenus(BuildContext context, int centerZiId) {
+    if (centerZiId == 1 && _selectedDrillMenu.id != 1) {
+      return DropdownButton(
+        value: _selectedSubMenu,
+        items: _dropdownSubMenuItems,
+        onChanged: onChangeDropdownSubItem,
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+
+  List<DropdownMenuItem<DrillMenu>> buildDropdownDrillMenuItems(List drillMenuList) {
+    List<DropdownMenuItem<DrillMenu>> items = List();
+    for (DrillMenu drillMenu in drillMenuList) {
+      items.add(
+        DropdownMenuItem(
+          value: drillMenu,
+          child: Text(drillMenu.description),
+        ),
+      );
+    }
+    return items;
+  }
+
+  List<DropdownMenuItem<DrillMenu>> buildDropdownSubMenuItems() {
+    var subMenuList;
+    if (_selectedDrillMenu.id == 1) {
+      return null;
+    }
+    else if (_selectedDrillMenu.id == 2) {
+      subMenuList = theHanzishuSubList;
+    }
+
+    List<DropdownMenuItem<DrillMenu>> items = List();
+
+    for (DrillMenu drillMenu in subMenuList) {
+      items.add(
+        DropdownMenuItem(
+          value: drillMenu,
+          child: Text(drillMenu.description),
+        ),
+      );
+    }
+    return items;
+  }
+
+  onChangeDropdownDrillItem(DrillMenu selectedDrillMenu) {
+    setState(() {
+      _selectedDrillMenu = selectedDrillMenu;
+      _dropdownSubMenuItems = buildDropdownSubMenuItems();
+
+      if (_selectedDrillMenu.id != 1 && theSearchingZiRealFilterList[_selectedDrillMenu.id] == null) {
+        DictionaryManager.populateRealFilterList(_selectedDrillMenu.id);
+      }
+
+      if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
+        _selectedSubMenu = _dropdownSubMenuItems[0].value;
+      }
+    });
+
+    //_reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(_selectedReviewLevelEnding.id);
+    //_dropdownMenuItemsLevelStarting = buildDropdownMenuItemsLevel(_reviewLevelsStarting);
+
+    //if (_selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id) {
+    //  setInitLessons();
+    //}
+  }
+
+  onChangeDropdownSubItem(DrillMenu selectedSubMenu) {
+    setState(() {
+      _selectedSubMenu = selectedSubMenu;
+    });
+
+    //_reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(_selectedReviewLevelEnding.id);
+    //_dropdownMenuItemsLevelStarting = buildDropdownMenuItemsLevel(_reviewLevelsStarting);
+
+    //if (_selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id) {
+    //  setInitLessons();
+    //}
+  }
+
   Widget getAnimatedPathPainter() {
-    if (!theZiManager.isHechenZi(centerZiId)) {
+    //if (!theZiManager.isHechenZi(centerZiId)) {
+    if (theSearchingZiList[centerZiId].composit.length == 1) {
       var posi = thePositionManager.getCenterZiPosi();
-      var strokes = theZiManager.getZi(centerZiId).strokes;
+      var strokes = DictionaryManager.getSingleComponentSearchingZiStrokes(centerZiId);
       return new Positioned(
         top: posi.transY,
         left: posi.transX,
@@ -277,24 +439,31 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
           shouldDrawCenter = true;
         });
 
-        var zi = theZiManager.getZi(currentZiId);
-        TextToSpeech.speak(zi.char);
+        var char = theSearchingZiList[currentZiId].char;
+        TextToSpeech.speak(char);
       },
       onLongPress: () {
         initOverlay();
 
         var partialZiId = currentZiId;
-        ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(ZiListType.zi);
+        ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(ZiListType.searching);
         // navigation would always show the real char
         if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
           partialZiId = theZiManager.getPartialZiId(listTypeWrapper, theCurrentCenterZiId, currentZiId);
         }
 
-        var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak(zi.char);
+        //var zi = theZiManager.getZi(partialZiId);
+        TextToSpeech.speak(theSearchingZiList[partialZiId].char);
 
         if (previousZiId != currentZiId || !haveShowedOverlay) {
-          var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
+          //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
+          var meaning;
+          if (listTypeWrapper.value == ZiListType.searching) {
+            meaning = theSearchingZiList[partialZiId].meaning;
+          }
+          else {
+            meaning = theComponentList[partialZiId].meaning;
+          }
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
           haveShowedOverlay = true;
         }
@@ -323,8 +492,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
       onPressed: () {
         initOverlay();
 
-        var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(zi.char);
+        //var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(theSearchingZiList[ziId].char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -351,17 +520,15 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
           shouldDrawCenter = false;
         });
 
-        var isBasicZi = theZiManager.isBasicZi(ziId);;
-        var zi = theZiManager.getZi(ziId);
-
-        if (isBasicZi) {
+        if (theSearchingZiList[ziId].composit.length <= 1) {
           _startAnimation();
         }
         else {
           compoundZiAnimation();
         }
 
-        TextToSpeech.speak(zi.char);
+        //var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak(theSearchingZiList[ziId].char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -383,46 +550,35 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
 
     thePositionManager.resetPositionIndex();
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.zi, 0, widget.startLessonId, widget.endLessonId, widget.realGroupMembersCache);
-    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.zi, realGroupMembers);
+    var subMenuUptoId = 0;
+    if (_selectedSubMenu != null) {
+      subMenuUptoId = _selectedSubMenu.id;
+    }
+
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, _selectedDrillMenu.id, widget.startLessonId, subMenuUptoId, widget.realGroupMembersCache);
+    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
       //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize;
       //if (centerZiId == 1) {
-        //var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
-        //positionAndSize = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
+      //var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
+      //positionAndSize = thePositionManager.getDrillRootPositionAndSize(rootZiDisplayIndex);
       //}
       //else {
-        positionAndSize = BasePainter.getPositionAndSize(
-            ZiListType.zi, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
+      positionAndSize = BasePainter.getPositionAndSize(
+          ZiListType.searching, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
       //}
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
 
-      thePositionManager.updatePositionIndex(ZiListType.zi, memberZiId);
+      thePositionManager.updatePositionIndex(ZiListType.searching, memberZiId);
       buttons.add(posi);
     }
 
-    /*
-    if (centerZiId == 1) {
-      for (var i = 0; i < 26; i++) {
-        var indexHasZi = thePositionManager.rootIndexHasZi(i, realGroupMembers);
-        if (!indexHasZi) { // draw an empty box
-          var positionAndSize = thePositionManager.getReviewRootPositionAndSize(
-              i);
-          var posi = getPositionedButton(positionAndSize, 0, 0, false);
-
-          //thePositionManager.updatePositionIndex(memberZiId);
-          buttons.add(posi);
-        }
-      }
-    }
-    */
-
     if (centerZiId != 1 ) {
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
-      var newCenterZiId = theZiManager.getParentZiId(ZiListType.zi, centerZiId);
+      var newCenterZiId = theZiManager.getParentZiId(ZiListType.searching, centerZiId);
       //var posiAndSize = theLessonManager.getCenterPositionAndSize();
       var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
@@ -445,8 +601,8 @@ class _ReviewPageState extends State<ReviewPage> with SingleTickerProviderStateM
     return buttons;
   }
 
-  CreateNavigationHitttestButtons(int centerZiId, bool isFromReviewPage, List<Widget> buttons) {
-    var naviMap = PositionManager.getNavigationPathPosi(ZiListType.zi, centerZiId, isFromReviewPage, getSizeRatio());
+  CreateNavigationHitttestButtons(int centerZiId, bool isFromDrillPage, List<Widget> buttons) {
+    var naviMap = PositionManager.getNavigationPathPosi(ZiListType.searching, centerZiId, isFromDrillPage, getSizeRatio());
 
     for (var id in naviMap.keys) {
       var posi = getPositionedButton(naviMap[id], id, id, true);

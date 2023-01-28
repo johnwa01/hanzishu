@@ -231,7 +231,7 @@ class ListOfZiPainter extends BasePainter {
     var posi = PositionAndSize(/*lessonLeftEdge + */ applyRatio(20.0), yPositionWrapper.value,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), 0.0, applyRatio(1.0));
     if(!isInfoOnly) {
-      DisplayHint(id, type == CharType.Phrase, posi);
+      DisplayHint(ZiListType.zi, id, type == CharType.Phrase, posi);
     }
     yPositionWrapper.value += applyRatio(60.0);
 

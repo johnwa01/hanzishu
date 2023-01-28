@@ -35,7 +35,7 @@ class _MePageState extends State<MePage> {
   Widget getQuizResults() {
     var imageSize = 35.0 * getSizeRatioWithLimit();
 
-    if (kIsWeb || Platform.isAndroid) {
+    if (kIsWeb) {
       return Container(width: 0.0, height: 0.0);
     }
     else {

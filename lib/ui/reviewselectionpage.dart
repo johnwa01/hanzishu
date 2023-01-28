@@ -25,7 +25,7 @@ class ReviewLevel {
         //  endingLevels[index] = ReviewLevel(index, getString(292)/*"Ending Unit"*/);
         //}
         //else {
-          level = ReviewLevel(index, getString(9)/*'Unit '*/ + (index + 1).toString());
+          level = ReviewLevel(index, getString(387)/*'Up to unit'*/ + ' ' + (index + 1).toString());
           startingLevels[index] = level;
           endingLevels[index] = level;
         //}

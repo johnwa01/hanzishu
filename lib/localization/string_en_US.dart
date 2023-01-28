@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/localization.dart';
 // NOTE: never change or remove an existing entry here. Just create a new one.
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Character drills"),
+  Local(1, "Drills"),
   Local(2, "Flashcards"),
   Local(3, "Character breakdown"),
   Local(4, "Conversation"),
@@ -11,7 +11,7 @@ var theString_en_US = [
   Local(6, "Quiz"),
   Local(7, "Lesson"),
   Local(8, "Please complete exercises in order."),
-  Local(9, "Up to unit"),
+  Local(9, "Unit"),
   Local(10, "Hanzishu Lessons"),
   Local(11, "Basics"),
   Local(12, "In the classroom"),
@@ -128,7 +128,7 @@ var theString_en_US = [
   Local(123, "Learn the above groups."),
   Local(124, "Learn the above Component-key pairing groups."),
   Local(125, "The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group."),
-  Local(126, "The above chart shows the pairings of the Lead Components of Chinese characters to the English letters in a keyboard. The Lead Components and letters look very similar. The pairings are the foundation of the Hanzishu Input Method！\n\nLet's take a moment to memorize the above Component-key pairings now. After that, click 'Start' to test it out.\n"/*\n\Hints: M = three legs, D = traffic light to left, K = crossing in the middle, H = the only horizontal line, Y = the first (up left) stroke.*/),
+  Local(126, "The above chart shows the pairings of the Lead Components of Chinese characters to the English letters in a keyboard. The Lead Components and letters look very similar. The pairings are the foundation of the Hanzishu Input Method！\n\nLet's take a moment again to memorize the above Component-key pairings now. After that, click 'Continue' to test it out.\n"/*\n\Hints: M = three legs, D = traffic light to left, K = crossing in the middle, H = the only horizontal line, Y = the first (up left) stroke.*/),
   Local(127, ""),
   Local(128, "Please tap or mouse click a key image below that maps the above Component."),
   Local(129, "Remember the above Expanded Components. Then choose their corresponding key."),
@@ -389,4 +389,6 @@ var theString_en_US = [
   Local(384, "Hanzi basic components"),
   Local(385, "Name"),
   Local(386, "group"),
+  Local(387, "Up to unit"),
+  Local(388, "Please learn above content then continue."),
 ];

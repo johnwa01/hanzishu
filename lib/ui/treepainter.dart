@@ -38,10 +38,10 @@ class TreePainter extends BasePainter {
     thePositionManager.setFrameWidth(getFrameWidth());
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
-    drawFrameWithColors(
+    drawFrameWithColors(ZiListType.zi,
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
-    drawZiGroup(centerId, theCurrentLessonId, theCurrentLessonId);
+    drawZiGroup(centerId, ZiListType.zi, 0, theCurrentLessonId, theCurrentLessonId);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only

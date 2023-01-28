@@ -339,8 +339,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         initOverlay();
 
         var partialZiId = currentZiId;
+        ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(ZiListType.zi);
         if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
-          partialZiId = theZiManager.getPartialZiId(theCurrentCenterZiId, currentZiId);
+          partialZiId = theZiManager.getPartialZiId(listTypeWrapper, theCurrentCenterZiId, currentZiId);
         }
 
         var zi = theZiManager.getZi(partialZiId);
@@ -376,21 +377,21 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     //TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
-    var totalSideNumberOfZis = theZiManager.getNumberOfZis(realGroupMembers);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.zi, 0, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
+    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.zi, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
       //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
-      var positionAndSize = BasePainter.getPositionAndSize(memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
+      var positionAndSize = BasePainter.getPositionAndSize(ZiListType.zi, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
-      thePositionManager.updatePositionIndex(memberZiId);
+      thePositionManager.updatePositionIndex(ZiListType.zi, memberZiId);
       buttons.add(posi);
     }
 
     if (centerZiId != 1 ) {
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
-      var newCenterZiId = theZiManager.getParentZiId(centerZiId);
+      var newCenterZiId = theZiManager.getParentZiId(ZiListType.zi, centerZiId);
       var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
       buttons.add(posiCenter);
@@ -412,7 +413,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromReviePage, List<Widget> buttons) {
-    var naviMap = PositionManager.getNavigationPathPosi(centerZiId, isFromReviePage, getSizeRatio());
+    var naviMap = PositionManager.getNavigationPathPosi(ZiListType.zi, centerZiId, isFromReviePage, getSizeRatio());
 
     for (var id in naviMap.keys) {
       var posi = getPositionedButton(naviMap[id], id, id, true);

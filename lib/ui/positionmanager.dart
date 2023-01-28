@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/levelmanager.dart';
@@ -215,15 +216,19 @@ class PositionManager
         charFontSize, charFontSize, charFontSize, 2.0 /* sizeRatio*/);
   }
 
-  PositionAndSize getPositionAndSize(int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {
+  PositionAndSize getPositionAndSize(ZiListType listType, int memberZiId, NumberOfZis sideNumberOfZis/*, isCreationList: Bool*/) {
     var currentDisplayOrder = 0;
     var totalNumber = theBigMaximumNumber;
-
+    String displaySideString;
     //var displayZiInCreationList = isCreationList
-
-    var memberZi = theZiManager.getZi(memberZiId);
-
-    String displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+    if (listType == ZiListType.zi) {
+      var memberZi = theZiManager.getZi(memberZiId);
+      displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(
+          memberZiId, memberZi.displaySide);
+    }
+    else { // searchingZiList
+      displaySideString = theSearchingZiList[memberZiId].displaySide;
+    }
 
     switch (displaySideString) {
       case "l":
@@ -313,9 +318,16 @@ class PositionManager
     theCurrentSideIndexOfZis.bottom = 0;
   }
 
-  void updatePositionIndex(int memberZiId) {
-    var memberZi = theZiManager.getZi(memberZiId);
-    String displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+  void updatePositionIndex(ZiListType listType, int memberZiId) {
+    String displaySideString;
+    if (listType == ZiListType.zi) {
+      var memberZi = theZiManager.getZi(memberZiId);
+      displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(
+          memberZiId, memberZi.displaySide);
+    }
+    else if (listType == ZiListType.searching) {
+      displaySideString = theSearchingZiList[memberZiId].displaySide;
+    }
 
     switch (displaySideString) {
       case "l":
@@ -766,29 +778,35 @@ class PositionManager
     return posi;
   }
 
-  static Map<int, PositionAndSize> getNavigationPathPosi(int ziId, bool isFromReviewPage, double sizeRatio) {
+  static Map<int, PositionAndSize> getNavigationPathPosi(ZiListType listType, int ziId, bool isFromReviewPage, double sizeRatio) {
     var posi = thePositionManager.getTreeNavigationPosi(sizeRatio);
     Map<int, PositionAndSize> naviMap = Map();
-    getOneNaviationPathPosi(0, ziId, posi, isFromReviewPage, naviMap, sizeRatio);
+    getOneNaviationPathPosi(0, listType, ziId, posi, isFromReviewPage, naviMap, sizeRatio);
 
     return naviMap;
   }
 
-  static getOneNaviationPathPosi(int recurLevel, int id, PositionAndSize posi, bool isFromReviewPage, Map<int, PositionAndSize> naviMap, double sizeRatio) {
-    var zi = theZiManager.getZi(id);
-    if (zi.id != 1) // till hit root
-        {
+  static getOneNaviationPathPosi(int recurLevel, ZiListType listType, int id, PositionAndSize posi, bool isFromReviewPage, Map<int, PositionAndSize> naviMap, double sizeRatio) {
+    var zi;
+    if (listType == ZiListType.zi) {
+      zi = theZiManager.getZi(id);
+    }
+    else if (listType == ZiListType.searching) {
+      zi = theSearchingZiList[id];
+    }
+
+    if (zi.id != 1) { // till hit root
       var newRecurLevel = recurLevel + 1;
       var parentId = zi.parentId;
 
-      getOneNaviationPathPosi(newRecurLevel, parentId, posi, isFromReviewPage, naviMap, sizeRatio);
+      getOneNaviationPathPosi(newRecurLevel, listType, parentId, posi, isFromReviewPage, naviMap, sizeRatio);
     }
 
     // for lesson, skip those pseudo ones.
-    if (isFromReviewPage || !Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id)) {
+    if (listType == ZiListType.searching || isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) &&
+          !Utility.isPseudoRootZiId(id))) {
       if (zi.id != 1) {
         posi.transX += 18.0 * sizeRatio; // 23.0
-
         posi.transX += 36.0 * sizeRatio; //15.0
       }
 

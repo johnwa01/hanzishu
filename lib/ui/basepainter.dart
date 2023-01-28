@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/data/phraselist.dart';
 import 'dart:ui';
 import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
+import 'package:hanzishu/data/componentlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/component.dart';
@@ -263,9 +265,19 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(char, transX, transY, charFontSize, color);
   }
 
-  void displayTextForPinyin(int id, double transX, double transY, double charFontSize, Color color, bool trim) {
-    var zi = theZiManager.getZi(id);
-    var char = zi.pinyin;
+  void displayTextForPinyin(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
+    var char;
+    if (listType == ZiListType.zi) {
+      var zi = theZiManager.getZi(id);
+      char = zi.pinyin;
+    }
+    else if (listType == ZiListType.searching) {
+      char = theSearchingZiList[id].pinyin;
+    }
+    else if (listType == ZiListType.component) {
+      char = theComponentList[id].pinyin;
+    }
+
     var displayChar = char;
 
     if (trim && displayChar.length > 7) {
@@ -276,8 +288,14 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(displayChar, transX, transY, charFontSize, color);
   }
 
-  void displayTextForMeaning(int id, double transX, double transY, double charFontSize, Color color, bool trim) {
-    var zi = theZiManager.getZi(id);
+  void displayTextForMeaning(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
+    var zi;
+    if (listType == ZiListType.zi) {
+      zi = theZiManager.getZi(id);
+    }
+    else if (listType == ZiListType.searching) {
+      zi = theSearchingZiList[id];
+    }
     var char = zi.meaning;
 
     var firstMeaning = Utility.getFirstMeaning(char);
@@ -381,7 +399,7 @@ class BasePainter extends CustomPainter{
     }
 
     if (withPinyin && TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi) {
-      displayTextForPinyin(id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800], true);
+      displayTextForPinyin(listType, id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800], true);
     }
 
     if (TheConfig.withSoundAndExplains && hasRootZiLearned) {
@@ -522,7 +540,7 @@ class BasePainter extends CustomPainter{
 
   // currently used for compound zi animation
   void drawCenterZi(int ziId, ZiListType listType) {
-    var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
+    var posiSize = thePositionManager.getPositionAndSizeHelper(listType, "m", 1, PositionManager.theBigMaximumNumber);
     var charColor = Colors.blue;  //[800];
     if (ziId != theCurrentCenterZiId) {
       charColor = Colors.brown;
@@ -551,7 +569,7 @@ class BasePainter extends CustomPainter{
     drawShape(path, Colors.amber, 2.0);
   }
 
-  void drawFrameWithColors(double width, double leftEdge, double topEdge,
+  void drawFrameWithColors(ZiListType listType, double width, double leftEdge, double topEdge,
       MaterialColor centerColor, MaterialColor sideColor, double widthOfLine) {
     var x1 = leftEdge;
     double width1 = width / 3.0;
@@ -579,7 +597,22 @@ class BasePainter extends CustomPainter{
       drawOneFrameLineWithColor([x3, y3, x2, y3]);
       drawOneFrameLineWithColor([x2, y3, x2, y2]);
 
-      if (!Utility.isPseudoRootZiId(centerId) && !Utility.isPseudoNonCharRootZiId(centerId) && !Utility.isStarChar(centerId)) {
+      var showLinesInBetween = true;
+      if (listType == ZiListType.zi) {
+        if (Utility.isPseudoRootZiId(centerId) ||
+            Utility.isPseudoNonCharRootZiId(centerId) ||
+            Utility.isStarChar(centerId)) {
+          showLinesInBetween = false;
+        }
+      }
+      else if (listType == ZiListType.searching) {
+        if (Utility.isSearchingPseudoZiId(centerId)) {
+          showLinesInBetween = false;
+        }
+      }
+
+
+      if (showLinesInBetween) {
         // lines in between
         drawOneFrameLineWithColor([x1, y1, x2, y2]);
         drawOneFrameLineWithColor([x4, y1, x3, y2]);
@@ -605,12 +638,12 @@ class BasePainter extends CustomPainter{
      */
   }
 
-  void displayCenterZiRelated(int id, double charFontSize) {
+  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize) {
     var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
-    displayTextForMeaning(id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
+    displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
     DisplayIcon(iconSpeechStrokes, posiAndSizeSpeech.transX, posiAndSizeSpeech.transY, posiAndSizeSpeech.width, posiAndSizeSpeech.height, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
 
@@ -625,7 +658,7 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     //}
 
-    if (!isFromReviewPage && isCharNewInLesson(id)) {
+    if (listType == ZiListType.zi && !isFromReviewPage && isCharNewInLesson(id)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
           iconNewCharStrokes,
@@ -638,10 +671,10 @@ class BasePainter extends CustomPainter{
     }
 
     var posi = thePositionManager.getHintPosi();
-    DisplayHint(id, false, posi);
+    DisplayHint(listType, id, false, posi);
   }
 
-  void drawZiGroup(int id, int internalStartLessonId, int internalEndLessonId) {
+  void drawZiGroup(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId) {
     var ziColor = Colors.brown;
 
     // one center zi first
@@ -660,34 +693,25 @@ class BasePainter extends CustomPainter{
     //var groupMembers = theLessonManager.getRealGroupMembers(id);
     var groupMembers;
     // hardcode lesson 2 so that it'll have a sequential number order in top layer display
-    groupMembers = getRealGroupMembers(id, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
+    groupMembers = getRealGroupMembers(id, listType, filterId, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
 
     //var phraseZis = theLessonManager.getPhraseZis(id, internalStartLessonId, internalEndLessonId);
     //TODO: including phraseZis
-    totalSideNumberOfZis = theZiManager.getNumberOfZis(groupMembers);
+    totalSideNumberOfZis = theZiManager.getNumberOfZis(listType, groupMembers);
 
     for (var index = 0; index < groupMembers.length; index++) {
       var memberZiId = groupMembers[index];
 
-      var posiSize2;
-      //var posiSize2 = theLessonManager.getPositionAndSize(memberZiId, theTotalSideNumberOfZis/*, isCreationList: false*/);
-      //if (id == 1 && isFromReviewPage) {
-      //  var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
-      //  posiSize2 = thePositionManager.getReviewRootPositionAndSize(rootZiDisplayIndex);
-      //}
-      //else {
-        posiSize2 = getPositionAndSize(memberZiId, totalSideNumberOfZis, sidePositionsCache);
-        //posiSize2 = theLessonManager.getPositionAndSize(memberZiId, totalSideNumberOfZis);
-        //posiSize2 = thePositionManager.getPositionAndSize(
-        //    memberZiId, totalSideNumberOfZis /*, isCreationList: false*/);
-      //}
+      var posiSize2 = getPositionAndSize(listType, memberZiId, totalSideNumberOfZis, sidePositionsCache);
+
       var memberZiLearned = doesZiExistInLearnedMap(memberZiId); //GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
       allMemberZiLearned = allMemberZiLearned && memberZiLearned;
 
       var isSingleColor = false;
-      if (theCurrentCenterZiId == 1) { // the root graph
+      if ((listType == ZiListType.zi && theCurrentCenterZiId == 1) || (listType == ZiListType.searching && theCurrentCenterZiId == 1)) { // the root graph
         isSingleColor = true;
       }
+
       var frameFillColor = Colors.blue; //Colors.white;  //TODO: white and black are treated differently from other colors.
       if (memberZiId == thePreviousCenterZiId) {
         frameFillColor = theDefaultTransparentFillColor;
@@ -697,16 +721,25 @@ class BasePainter extends CustomPainter{
       var partialZiId = memberZiId;
       // exclude the case for lesson 2, id 155.
       //lesson==2, id = 155 ->六  [In the tree, treat it as a basic one. but in word list etc, still keep as multiple component char.
-      if (theIsPartialZiMode && !(theCurrentLessonId == 2 && memberZiId == 155)) {
-        partialZiId = theZiManager.getPartialZiId(id, memberZiId);
+      ZiListTypeWrapper searchingOrCompZiListTypeWrapper = ZiListTypeWrapper(listType); // for searching, the type might change to CompList.
+      if ((listType == ZiListType.searching) ||
+          (listType == ZiListType.zi && theIsPartialZiMode && !(theCurrentLessonId == 2 && memberZiId == 155))) {
+        partialZiId = theZiManager.getPartialZiId(searchingOrCompZiListTypeWrapper, id, memberZiId);
       }
       var oneZiColor = ziColor;
-      if ((ZiManager.getZiComponentCount(memberZiId) > 2 && !theZiManager.isBasicZi(memberZiId)) || theZiManager.isBasicZi(memberZiId)) {
-        oneZiColor = Colors.blue;
+      if (listType == ZiListType.searching) {
+        if (theSearchingZiList[id].composit.length > 1) {
+          oneZiColor = Colors.blue;
+        }
       }
-      drawRootZi(partialZiId, ZiListType.zi, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, oneZiColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
+      else {
+        if ((ZiManager.getZiComponentCount(memberZiId) > 2 && !theZiManager.isBasicZi(memberZiId)) || theZiManager.isBasicZi(memberZiId)) {
+          oneZiColor = Colors.blue;
+        }
+      }
+      drawRootZi(partialZiId, searchingOrCompZiListTypeWrapper.value, posiSize2.transX, posiSize2.transY, posiSize2.width, posiSize2.height, posiSize2.charFontSize, oneZiColor, isSingleColor, posiSize2.lineWidth, /*createFrame*/ true, /*hasRootZiLearned*/ memberZiLearned, withPinyin, frameFillColor, true);
 
-      thePositionManager.updatePositionIndex(memberZiId);
+      thePositionManager.updatePositionIndex(listType, memberZiId);
     }
 
     /*
@@ -732,22 +765,22 @@ class BasePainter extends CustomPainter{
     if (id > 1) {
       //var rootZiLearned = GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
 
-      if (isFromReviewPage && Utility.isPseudoRootZiIdPlusStar(id)) {
+      if (listType == ZiListType.zi && isFromReviewPage && Utility.isPseudoRootZiIdPlusStar(id)) {
         isReviewCenterPseudoZi = true;
       }
-      if (isFromReviewPage && Utility.isPseudoNonCharRootZiId(id)) {
+      if (listType == ZiListType.zi && isFromReviewPage && Utility.isPseudoNonCharRootZiId(id)) {
         isReviewCenterPseudoNonCharZi = true;
       }
 
       // make '*' near the center, otherwise, it'll be in the uppper left corner of the center
-      if (id == 756) { // the * char
+      if (listType == ZiListType.zi && id == 756) { // the * char
         posiSize.transX += posiSize.charFontSize * 0.25;
         posiSize.transY += posiSize.charFontSize / 4 ;
       }
 
       drawRootZi(
             id,
-            ZiListType.zi,
+            listType,
             posiSize.transX,
             posiSize.transY,
             posiSize.width,
@@ -762,12 +795,24 @@ class BasePainter extends CustomPainter{
             Colors.cyan /*TODO*/,
             shouldDrawCenter);
 
-      if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && (id != TheConst.starCharId) ) {
-        displayCenterZiRelated(id, posiSize.charFontSize);
+      var display = false;
+      if (listType == ZiListType.zi) {
+        if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && id != TheConst.starCharId ) {
+         display = true;
+        }
+      }
+      else if (listType == ZiListType.searching) {
+        if (id != 1) { // TODO: exclude more structural items
+          display = true;
+        }
+      }
+
+      if (display) {
+        displayCenterZiRelated(listType, id, posiSize.charFontSize);
       }
 
       // draw navigation path
-      displayNavigationPath(id);
+      displayNavigationPath(listType, id);
 
       isReviewCenterPseudoZi = false;
       isReviewCenterPseudoNonCharZi = false;
@@ -794,14 +839,14 @@ class BasePainter extends CustomPainter{
     return sidePositions[ziId];
   }
 
-  static PositionAndSize getPositionAndSize(int ziId, NumberOfZis totalSideNumberOfZis, Map<int, PositionAndSize> sidePositions) {
+  static PositionAndSize getPositionAndSize(ZiListType listType, int ziId, NumberOfZis totalSideNumberOfZis, Map<int, PositionAndSize> sidePositions) {
     // NOTE: in review mode, the theCurrentLesson might mean the last lesson in the range
     //var currentLesson = theLessonList[theCurrentLessonId];
     // check cache first
     var positionAndSize = getPositionAndSizeFromCache(ziId, sidePositions);
 
     if (positionAndSize == null) {
-      positionAndSize = thePositionManager.getPositionAndSize(ziId, totalSideNumberOfZis);
+      positionAndSize = thePositionManager.getPositionAndSize(listType, ziId, totalSideNumberOfZis);
       addToSidePositionsCache(ziId, positionAndSize, sidePositions);
     }
 
@@ -817,19 +862,26 @@ class BasePainter extends CustomPainter{
     realGroupMembersCache[id] = realGroupMembers;
   }
 
-  static List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
-    var realGroupMembers = getRealGroupMembersFromCache(id, realGroupMembersCache);
+  static List<int> getRealGroupMembers(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
+    var realGroupMembers = null;
+    if (listType == ZiListType.zi) {
+      realGroupMembers = getRealGroupMembersFromCache(id, realGroupMembersCache);
+    }
 
+    //TODO: remove the cache implementation
     //Note: You can temp comment out if/cache for debugging
     if (realGroupMembers == null) {
       // hardcode for lesson 2's number to have a sequential display order
-      if (id == 1 && internalStartLessonId == 2 && internalEndLessonId == internalStartLessonId) {
+      if (listType == ZiListType.zi && id == 1 && internalStartLessonId == 2 && internalEndLessonId == internalStartLessonId) {
         realGroupMembers = [2, 3, 170, 153, 154, 7, 155, 8, 10, 157]; //'6'(155) is manually added here.
       }
       else {
-        realGroupMembers = theZiManager.getRealGroupMembers(id, internalStartLessonId, internalEndLessonId);
+        realGroupMembers = theZiManager.getRealGroupMembers(id, listType, filterId, internalStartLessonId, internalEndLessonId);
       }
-      addToRealGroupMembersCache(id, realGroupMembers, realGroupMembersCache);
+
+      if (listType == ZiListType.zi) {
+        addToRealGroupMembersCache(id, realGroupMembers, realGroupMembersCache);
+      }
     }
 
     return realGroupMembers;
@@ -843,9 +895,12 @@ class BasePainter extends CustomPainter{
     return centerPositionAndSizeCache;
   }
 
-  DisplayHint(int id, bool isPhrase, PositionAndSize posi) {
+  DisplayHint(ZiListType listType, int id, bool isPhrase, PositionAndSize posi) {
     var ziOrPhraseHint;
-    if (isPhrase) {
+    if (listType == ZiListType.searching) {
+      ziOrPhraseHint = theSearchingZiList[id].hint;
+    }
+    else if (isPhrase) {
       ziOrPhraseHint = thePhraseList[id].hint;
     }
     else {
@@ -978,26 +1033,33 @@ class BasePainter extends CustomPainter{
   }
 
   // Note: this path will not change its size regardless of the screen size
-  displayNavigationPath(int ziId) {
+  displayNavigationPath(ZiListType listType, int ziId) {
     var posi = thePositionManager.getTreeNavigationPosi(getSizeRatio());
-    displayOneNaviationPathChar(0, ziId, posi);
+    displayOneNaviationPathChar(0, listType, ziId, posi);
   }
 
-  displayOneNaviationPathChar(int recurLevel, int id, PositionAndSize posi) {
+  displayOneNaviationPathChar(int recurLevel, ZiListType listType, int id, PositionAndSize posi) {
 
       var withPinyin = false;
 
-      var zi = theZiManager.getZi(id);
+      var zi;
+      if (listType == ZiListType.zi) {
+        zi = theZiManager.getZi(id);
+      }
+      else if (listType == ZiListType.searching) {
+        zi = theSearchingZiList[id];
+      }
+
       if (zi.id != 1) // till hit root
         {
         var newRecurLevel = recurLevel + 1;
         var parentId = zi.parentId;
 
-        displayOneNaviationPathChar(newRecurLevel, parentId, posi);
+        displayOneNaviationPathChar(newRecurLevel, listType, parentId, posi);
       }
 
       // for lesson, skip those pseudo ones.
-      if (isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))) {
+      if (listType == ZiListType.searching || isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))) {
         if (zi.id != 1) {
           posi.transX += applyRatio(18.0); // 23.0
           displayTextWithValue(
@@ -1015,7 +1077,7 @@ class BasePainter extends CustomPainter{
 
         drawRootZi(
             id,
-            ZiListType.zi,
+            listType,
             posi.transX,
             posi.transY,
             posi.width,
@@ -1101,13 +1163,13 @@ class BasePainter extends CustomPainter{
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
         getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    displayTextWithValue(typingCode, posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue(typingCode, posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
   displayTypingCodePlaceholder(PositionAndSize posi) {
     displayTextWithValue(
         "", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    displayTextWithValue("", posi.transX + applyRatio(130.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue("", posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
   }
 
   @override

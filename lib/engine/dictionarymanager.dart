@@ -7,6 +7,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/data/componentlist.dart';
+import 'package:hanzishu/data/drillmenulist.dart';
 
 class DictionaryManager {
   static String getChar(int id) {
@@ -381,4 +382,34 @@ class DictionaryManager {
     return typingCode;
   }
   */
+
+  static populateRealFilterList(int id) {
+    if (theSearchingZiRealFilterList[id] != null) {
+      return;
+    }
+
+    var length = theSearchingZiFilterList[id].length; //TODO: need real list
+    List<int> realFilterList = List<int>(length);
+
+    var oneList = theSearchingZiFilterList[id];
+    for (int i = 0; i < length; i++) {
+       realFilterList[i] = oneList[i].strokeCount; //TODO: need a real member
+    }
+
+    for (int j = 0; j < length; j++) {
+      updateFilterSubLevels(j, realFilterList);
+    }
+
+    theSearchingZiRealFilterList[id] = realFilterList;
+  }
+
+  static updateFilterSubLevels(int index, List<int> realFilterList) {
+    var parentId = theSearchingZiList[index].parentId;
+    if (parentId != 0) {
+      if (realFilterList[parentId] > realFilterList[index]) {
+        realFilterList[parentId] = realFilterList[index];
+      }
+      updateFilterSubLevels(parentId, realFilterList);
+    }
+  }
 }

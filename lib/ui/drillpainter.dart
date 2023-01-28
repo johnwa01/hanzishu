@@ -5,10 +5,12 @@ import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
-class ReviewPainter extends BasePainter {
+class DrillPainter extends BasePainter {
   double screenWidth;
+  ZiListType ziListType;
+  int filterId;
 
-  ReviewPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, int filterId) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -21,6 +23,8 @@ class ReviewPainter extends BasePainter {
     this.centerPositionAndSizeCache = centerPositionAndSizeCache;
     this.allLearnedZis = allLearnedZis;
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
+    this.ziListType = ziListType;
+    this.filterId = filterId;
   }
 
   @override
@@ -31,17 +35,17 @@ class ReviewPainter extends BasePainter {
 
     thePositionManager.setFrameWidth(getFrameWidth());
     //if (centerId != 1) {
-      drawFrameWithColors(ZiListType.zi,
-          getFrameWidth(), PositionManager.FrameLeftEdgeSize,
-          PositionManager.FrameTopEdgeSize, Colors.cyan,
-          Colors.lime, BasePainter.FrameLineWidth);
+    drawFrameWithColors(ZiListType.searching,
+        getFrameWidth(), PositionManager.FrameLeftEdgeSize,
+        PositionManager.FrameTopEdgeSize, Colors.cyan,
+        Colors.lime, BasePainter.FrameLineWidth);
     //}
     //?theCurrentCenterZiId = centerId;
-    drawZiGroup(centerId, ZiListType.zi, 0, reviewStartLessonId, reviewEndLessonId);
+    drawZiGroup(centerId, ZiListType.searching, filterId, reviewStartLessonId, reviewEndLessonId);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId, ZiListType.zi);
+      drawCenterZi(compoundZiCurrentComponentId, ziListType);
     }
   }
 

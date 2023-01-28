@@ -107,8 +107,8 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
     );
 
     var posiCenter = Positioned(
-        top: speechIconInfo.yPosi,
-        left: speechIconInfo.xPosi,
+        top: speechIconInfo.yPosi - applyRatio(30.0/4.0),
+        left: speechIconInfo.xPosi - applyRatio(30.0/4.0),
         height: applyRatio(30.0), //posiAndSize.height,
         width: applyRatio(30.0), //posiAndSize.width,
         child: butt

@@ -26,6 +26,7 @@ class _ComponentPageState extends State<ComponentPage> {
   double _progressValue;
   int totalQuestions;
   double screenWidth;
+  int preIndexAtCurrentIndex0;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -42,6 +43,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     theComponentManager.setCurrentType(questionType);
     theComponentManager.initCurrentIndex();
+    preIndexAtCurrentIndex0 = 0;
     currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();
@@ -337,6 +339,11 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getHeaderOfComponentInGroup() {
+    String componentKeyPairingHeaderString = getString(126)/*'Memorize the above Component-key pairings.'*/;
+    if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+      componentKeyPairingHeaderString = getString(388);
+    }
+
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,7 +375,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(width: 20 * getSizeRatioWithLimit()),
                 Flexible (
                   child: Text(
-                      getString(126)/*'Memorize the above Component-key pairings.'*/,
+                      componentKeyPairingHeaderString,
                       style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
@@ -386,7 +393,12 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getHeaderOfComponent() {
     var str;
     if (currentIndex == 0) {
-      str = getString(126)/*'Memorize the above Component-key pairings - 1.'*/;
+      if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
+        str = getString(388); /* learn content then continue*/
+      }
+      else {
+        str = getString(126) /*'Memorize the above Component-key pairings - 1.'*/;
+      }
     }
     else if (currentIndex == 7) {
       str = getString(358)/*'Review - 2.'*/;
@@ -603,7 +615,10 @@ class _ComponentPageState extends State<ComponentPage> {
     */
     else if (questionType == QuestionType.Component) { // for the header only
       var imageName;
-      if (theComponentManager.isHeaderOfRandomComponents()) {
+      if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+        imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+      }
+      else if (theComponentManager.isHeaderOfRandomComponents()) {
          imageName = 'GG6.png';
          //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
       }
@@ -693,7 +708,7 @@ class _ComponentPageState extends State<ComponentPage> {
       String question = getString(128)/*"Please map the Component to its key."*/;
 
       if (questionType == QuestionType.ExpandedComponent) {
-        var hint = theExpandedComponentList[currentIndex].hint;
+        var hint = ""; //TODO: theExpandedComponentList[currentIndex].hint;
         question =
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
@@ -1126,7 +1141,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
 
       var buttonText = getString(285); // Continue
-      if (currentIndex == 0) {
+      if (questionType != QuestionType.Component) {
         buttonText = getString(357); // Let's start
       }
       result += buttonText;
@@ -1144,7 +1159,14 @@ class _ComponentPageState extends State<ComponentPage> {
 
               // prepare for next one
               // Could be done in Build(), but Build won't allow showCompletedDialog() there.
-              currentIndex = theComponentManager.getNextIndex();
+
+              if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+                preIndexAtCurrentIndex0++;
+              }
+              else {
+                currentIndex = theComponentManager.getNextIndex();
+              }
+
               theComponentManager.resetCorrectAnswerPosition();
               //}
               //if (theComponentManager.getCurrentType() == QuestionType.none) {

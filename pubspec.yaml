@@ -351,6 +351,12 @@ flutter:
      - assets/typing/FullComponents.png
      - assets/typing/SpecialStrokes.png
      - assets/typing/Strokes.png
+     - assets/typing/T1.png
+     - assets/typing/T2.png
+     - assets/typing/T3.png
+     - assets/typing/T4.png
+     - assets/typing/T5.png
+     - assets/typing/T6.png
 
   #   - images/a_dot_ham.jpeg
 

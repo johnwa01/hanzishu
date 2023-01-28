@@ -1,4 +1,6 @@
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/drillmenulist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
@@ -12,6 +14,13 @@ enum ZiListType {
   component,
   stroke,
   phrase
+}
+
+class ZiListTypeWrapper {
+  ZiListType value;
+  ZiListTypeWrapper(var value) {
+    this.value = value;
+  }
 }
 
 class NumberOfZis {
@@ -115,12 +124,20 @@ class ZiManager {
   }
 
   // count number of zis in all sides
-  NumberOfZis getNumberOfZis(List<int> groupMembers) {
+  NumberOfZis getNumberOfZis(ZiListType listType, List<int> groupMembers) {
     var numberOfZis = NumberOfZis(0, 0, 0, 0);
 
     for (var memberZiId in groupMembers) {
-      var memberZi = getZi(memberZiId);
-      var displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(memberZiId, memberZi.displaySide);
+      var displaySideString;
+
+      if (listType == ZiListType.zi) {
+        var memberZi = getZi(memberZiId);
+        displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(
+            memberZiId, memberZi.displaySide);
+      }
+      else if (listType == ZiListType.searching) {
+        displaySideString = theSearchingZiList[memberZiId].displaySide;
+      }
 
       switch (displaySideString) {
         case "l":
@@ -149,7 +166,29 @@ class ZiManager {
   }
 
   // consider the case for each lesson
-  List<int> getRealGroupMembers(int id, int internalStartLessonId, int internalEndLessonId) {
+  List<int> getRealGroupMembers(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId) {
+    //TODO: filter by endId
+    if (listType == ZiListType.searching) {
+      if (filterId == 1) { // filterId 1 is the 'All' case
+        return theSearchingZiList[id].groupMembers;
+      }
+      else {
+        List<int> realGroupMembers = [];
+        var filter;
+        var filterMember;
+        var filterValue;
+        for (var memberZiId in theSearchingZiList[id].groupMembers) {
+          filter = theSearchingZiRealFilterList[filterId];
+          filterValue = filter[memberZiId];
+          if (filterValue > 0 && filterValue <= internalEndLessonId) {
+            realGroupMembers.add(memberZiId);
+          }
+        }
+        return realGroupMembers;
+      }
+    }
+
+    // ZiListType.zi
     if (internalStartLessonId == internalEndLessonId) {
       if (id == 1) {
         return LessonManager.getRootMembersForLesson(internalStartLessonId);
@@ -296,69 +335,121 @@ class ZiManager {
   }
 
   // get the rest zi id of the given part
-  int getPartialZiId(int centerZiId, int memberZiId) {
-    var zi = getZi(memberZiId);
-    if (zi.type == "h") {
-      var composites = zi.bodyComposites;
+  int getPartialZiId(ZiListTypeWrapper listTypeWrapper, centerZiId, int memberZiId) {
+    var isHetizi;
+    var composits;
 
-      List<int> compositesIds = [];
-      for (var i = 0; i < composites.length; i++) {
-        compositesIds.add(Utility.StringToInt(composites[i]));
+    if (listTypeWrapper.value == ZiListType.zi) {
+      var zi = getZi(memberZiId);
+      isHetizi = (zi.type == "h");
+      composits = zi.bodyComposites;
+    }
+    else if (listTypeWrapper.value == ZiListType.searching) {
+      isHetizi = (theSearchingZiList[memberZiId].composit.length > 1);
+      composits = theSearchingZiList[memberZiId].composit;
+    }
+
+    if (isHetizi && composits.length == 2) { // only handle the 2 comp case for now
+      // start for searchingZi only
+      var char0 = composits[0].codeUnitAt(0);
+      var substr0IsChars = false;
+      if (char0 < 48 || char0 > 57) { // '0 == 48, '9' == 57
+        substr0IsChars = true;
       }
 
-      if (compositesIds.length == 2) { // only handle the 2 case for now
-        if (compositesIds[0] == centerZiId) {
-          return compositesIds[1];
+      var char1 = composits[1].codeUnitAt(0);
+      var substr1IsChars = false;
+      if (char1 < 48 || char1 > 57) {
+        substr1IsChars = true;
+      }
+
+      if (substr0IsChars && substr1IsChars) {
+        return memberZiId;
+      }
+      else if (substr0IsChars) {
+        listTypeWrapper.value = ZiListType.component;
+        var comp1Id = Utility.StringToInt(composits[1]);
+        if (comp1Id != centerZiId) {
+          return memberZiId;
         }
         else {
-          return compositesIds[0];
+          return ComponentManager.getComponentIdByCode(composits[0]);
         }
+      }
+      else if (substr1IsChars) {
+        listTypeWrapper.value = ZiListType.component;
+        var comp0Id = Utility.StringToInt(composits[0]);
+        if (comp0Id != centerZiId) {
+          return memberZiId;
+        }
+        else {
+          return ComponentManager.getComponentIdByCode(composits[1]);
+        }
+      }
+      // end for searching zi only
+
+      List<int> compositIds = [];
+      for (var i = 0; i < composits.length; i++) {
+        //int compi = Utility.StringToInt(composits[i]);
+        compositIds.add(Utility.StringToInt(composits[i]));
+      }
+
+      if (compositIds[0] == centerZiId) {
+        return compositIds[1];
+      }
+      else {
+        return compositIds[0];
       }
     }
 
     return memberZiId;
   }
 
-  int getParentZiId(int ziId) {
-    var zi = getZi(ziId);
-    return zi.parentId;
+  int getParentZiId(ZiListType listType, int ziId) {
+    var ziOrSearchingZi;
+    if (listType == ZiListType.zi) {
+      ziOrSearchingZi = getZi(ziId);
+    }
+    else if (listType == ZiListType.searching) {
+      ziOrSearchingZi = theSearchingZiList[ziId];
+    }
+
+    return ziOrSearchingZi.parentId;
   }
 
   List<int> getZiComponents(int id) {
     List<int> components = [];
-    var zi = theZiManager.getZi(id);
 
-    // Check whether it's single or combined word
+      var zi = theZiManager.getZi(id);
+      // Check whether it's single or combined word
 
-    if (zi.isBasicZi()/*zi.isSingleBody*/ || zi.bodyComposites.length == 0)
-    {
-      return null;
-    }
-    else //composit zi
-    {
-      var ziCombined = zi.bodyComposites;
-      var i = 0;
-
-      if (ziCombined != null && ziCombined[0] == "Z") {
-        // Normally 2, but could be more.
-        while (i < ziCombined.length) {
-          if (ziCombined[i] == "Z")
+      if (zi.isBasicZi() /*zi.isSingleBody*/ || zi.bodyComposites.length == 0) {
+        return null;
+      }
+      else //composit zi
           {
-            var ziName = ziCombined[i+1];
-            components.add(Utility.StringToInt(ziName));
-           //let memberZiId = StringToInt(str: ziName)!
-          }
+        var ziCombined = zi.bodyComposites;
+        var i = 0;
 
-          i += 7;
+        if (ziCombined != null && ziCombined[0] == "Z") {
+          // Normally 2, but could be more.
+          while (i < ziCombined.length) {
+            if (ziCombined[i] == "Z") {
+              var ziName = ziCombined[i + 1];
+              components.add(Utility.StringToInt(ziName));
+              //let memberZiId = StringToInt(str: ziName)!
+            }
+
+            i += 7;
           }
         }
-      else {  // the new comma separated components for components or strokes
-        while (i < ziCombined.length) {
-          components.add(Utility.StringToInt(ziCombined[i]));
-          i += 1;
+        else { // the new comma separated components for components or strokes
+          while (i < ziCombined.length) {
+            components.add(Utility.StringToInt(ziCombined[i]));
+            i += 1;
+          }
         }
       }
-    }
 
     return components;
   }
