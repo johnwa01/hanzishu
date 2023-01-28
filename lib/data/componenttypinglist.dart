@@ -34,7 +34,7 @@ var theLeadComponentList = [
 var theLeadComponentList = [
   LeadComponent(1, "Oa", "口", true, true, 2, 4, "C24.png", "nmdc", []),
   LeadComponent(2, "Ta", "丁", true, true, 1, 1, "C11.png", "nmdc", []),
-  LeadComponent(3, "Ea", "虐字底", false, true, 1, 3, "C13.png", "nmdc", [4.0,0.45,0.375,8.0,0.9,0.375,4.0,0.45,0.375,8.0,0.45,0.625,8.0,0.45,0.925,8.0,0.9,0.925,4.0,0.3,0.625,8.0,0.45,0.625,8.0,0.975,0.625]),
+  LeadComponent(3, "Ea", "王", false, true, 1, 3, "C13.png", "nmdc", [4.0,0.45,0.375,8.0,0.9,0.375,4.0,0.45,0.375,8.0,0.45,0.625,8.0,0.45,0.925,8.0,0.9,0.925,4.0,0.3,0.625,8.0,0.45,0.625,8.0,0.975,0.625]),
   LeadComponent(4, "Aa", "人", true, true, 3, 5, "C35.png", "nmdc", []),
   LeadComponent(5, "Qa", "田", true, true, 1, 5, "C15.png", "nmdc", []),
   LeadComponent(6, "Ca", "区字框", false, true, 5, 3, "C53.png", "nmdc", [4.0,0.125,0.1,8.0,0.875,0.1,4.0,0.125,0.1,8.0,0.125,0.9,8.0,0.925,0.9]),
@@ -425,13 +425,13 @@ var theZiForAttachedCompExerciseList=[
   ZiWithComponentsAndStrokes("驱", [], "N34.png", ""),
   //ZiWithComponentsAndStrokes("拷", [], "N34.png", ""),
   ZiWithComponentsAndStrokes("鉴", [], "N35.png", ""),
-  ZiWithComponentsAndStrokes("谍", [], "N41.png", ""),
+  //ZiWithComponentsAndStrokes("谍", [], "N41.png", ""), //TODO: hint wrong
   //ZiWithComponentsAndStrokes("硕", [], "N41.png", ""),
   ZiWithComponentsAndStrokes("氨", [], "N42.png", ""),
   ZiWithComponentsAndStrokes("鞭", [], "N43.png", ""),
   ZiWithComponentsAndStrokes("婚", [], "N44.png", ""),
   //ZiWithComponentsAndStrokes("颠", [], "N51.png", ""),
-  ZiWithComponentsAndStrokes("赊", [], "N52.png", ""),
+  //ZiWithComponentsAndStrokes("赊", [], "N52.png", ""), //TODO: hint wrong
   //ZiWithComponentsAndStrokes("铠", [], "N53.png", ""),
   ZiWithComponentsAndStrokes("修", [], "N54.png", ""),
   //ZiWithComponentsAndStrokes("溅", [], "N54.png", ""),
@@ -471,7 +471,7 @@ var theZiForTwinCompExerciseList=[
   //ZiWithComponentsAndStrokes("袍", [], "P53.png", ""),
   ZiWithComponentsAndStrokes("越", [], "P54.png", ""),
   ZiWithComponentsAndStrokes("靖", [], "P61.png", ""),
-  ZiWithComponentsAndStrokes("暴", [], "P62.png", ""),
+  //ZiWithComponentsAndStrokes("暴", [], "P62.png", ""), TODO: hint and last letter
 ];
 
 var theZiForSubCompExerciseList=[

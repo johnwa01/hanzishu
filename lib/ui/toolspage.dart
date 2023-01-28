@@ -204,26 +204,26 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("5. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("6. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
+          title: Text("5. " + getString(331)/*"Single Component"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[8] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => InputZiPage(typingType: TypingType.SingleComponent), //InputZiPage(),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("6. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
               ),
             ).then((val)=>{_getRequests()});
           },

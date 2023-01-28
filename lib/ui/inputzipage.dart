@@ -942,7 +942,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   //),
                 ),
               ),
-              getImageTiedToZi()
+              // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
             ]
           ),
               onWillPop: _onWillPop
@@ -1194,6 +1194,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  // not used anymore
   Widget getImageTiedToZi() {
     var image;
     if (typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents || typingType == TypingType.SubComponents) {

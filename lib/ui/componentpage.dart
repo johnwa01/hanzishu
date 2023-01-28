@@ -708,7 +708,7 @@ class _ComponentPageState extends State<ComponentPage> {
       String question = getString(128)/*"Please map the Component to its key."*/;
 
       if (questionType == QuestionType.ExpandedComponent) {
-        var hint = ""; //TODO: theExpandedComponentList[currentIndex].hint;
+        var hint = theExpandedComponentList[currentIndex].hint;
         question =
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
