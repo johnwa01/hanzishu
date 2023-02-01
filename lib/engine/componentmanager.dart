@@ -35,11 +35,9 @@ class ComponentManager {
     else if (questionType == QuestionType.ExpandedComponent) {
       total = theExpandedComponentList.length;
     }
-    /*
-    else if (questionType == QuestionType.ReviewExpandedComponent) {
-      total = theReviewExpandedComponentList.length;
+    else if (questionType == QuestionType.ShowAttachedComponent) {
+      total = theShowAttachedComponentList.length;
     }
-     */
 
     return total;
   }
@@ -407,13 +405,11 @@ class ComponentManager {
       correctAnswerPosition = getPositionByGroupAndIndex(
           expandedComp.groupNumber, expandedComp.indexInGroup);
     }
-    /*
-    else if (currentQuestionType == QuestionType.ReviewExpandedComponent) {
-      var reviewExpandedComp = theReviewExpandedComponentList[currentIndex];
+    else if (currentQuestionType == QuestionType.ShowAttachedComponent) {
+      var showAttachedComp = theShowAttachedComponentList[currentIndex];
       correctAnswerPosition = getPositionByGroupAndIndex(
-          reviewExpandedComp.groupNumber, reviewExpandedComp.indexInGroup);
+          showAttachedComp.groupNumber, showAttachedComp.indexInGroup);
     }
-     */
 
     return correctAnswerPosition;
   }
@@ -725,6 +721,16 @@ class ComponentManager {
   bool isHeaderOfExpandedComponents() {
     if (currentQuestionType == QuestionType.ExpandedComponent) {
       if (theExpandedComponentList[currentIndex].groupNumber == 0) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  bool isHeaderOfShowAttachedComponents() {
+    if (currentQuestionType == QuestionType.ShowAttachedComponent) {
+      if (theShowAttachedComponentList[currentIndex].groupNumber == 0) {
         return true;
       }
     }

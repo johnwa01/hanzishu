@@ -368,8 +368,8 @@ class ZiManager {
       }
       else if (substr0IsChars) {
         listTypeWrapper.value = ZiListType.component;
-        var comp1Id = Utility.StringToInt(composits[1]);
-        if (comp1Id != centerZiId) {
+        var composit1Id = Utility.StringToInt(composits[1]);
+        if (composit1Id != centerZiId) {
           return memberZiId;
         }
         else {
@@ -378,8 +378,8 @@ class ZiManager {
       }
       else if (substr1IsChars) {
         listTypeWrapper.value = ZiListType.component;
-        var comp0Id = Utility.StringToInt(composits[0]);
-        if (comp0Id != centerZiId) {
+        var composit0Id = Utility.StringToInt(composits[0]);
+        if (composit0Id != centerZiId) {
           return memberZiId;
         }
         else {
@@ -775,5 +775,31 @@ class ZiManager {
     else {
       return ComponentManager.getComponent(id).charOrNameOfNonchar;
     }
+  }
+
+  static bool isSearchingListIDIndexOnly(int searchingListID) {
+    if (searchingListID >= 1 && searchingListID <= 51) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static bool isParentOfASearchingListIDIndexOnly(int searchingListID) {
+    var parentID = theSearchingZiList[searchingListID].parentId;
+    if (parentID >= 1 && parentID <= 51) {
+      return true;
+    }
+
+    return false;
+  }
+
+  static bool isParentOfASearchingListIDPseudo(int searchingListID) {
+      var parentID = theSearchingZiList[searchingListID].parentId;
+      if (parentID >= 27 && parentID <= 51) {
+        return true;
+      }
+
+      return false;
   }
 }

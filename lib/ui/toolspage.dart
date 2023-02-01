@@ -150,7 +150,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => ComponentPage(questionType: QuestionType.ExpandedComponent),
+                builder: (context) => ComponentPage(questionType:QuestionType.ExpandedComponent),
               ),
             ).then((val)=>{_getRequests()});
           },
@@ -217,20 +217,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("6. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("7. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
+          title: Text("6. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[9] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -243,7 +230,33 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("8. " + getString(328)/*"Attached Components"*/, textDirection: TextDirection.ltr),
+          title: Text("7. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("8. " + getString(328)/*"Show attached Components"*/, textDirection: TextDirection.ltr),
+          trailing: exerciseCompleted[2] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComponentPage(questionType: QuestionType.ShowAttachedComponent),
+              ),
+            ).then((val)=>{_getRequests()});
+          },
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("9. " + getString(393)/*"Attached Components exercises"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[5] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -254,19 +267,19 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
-        ListTile(
+        //ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("9. " + getString(329)/*"Twin Components"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[6] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.TwinComponents), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
+        //  title: Text("9. " + getString(329)/*"Twin Components"*/, textDirection: TextDirection.ltr),
+        //  trailing: exerciseCompleted[6] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+        //  onTap: () {
+        //    Navigator.push(
+        //      context,
+        //      MaterialPageRoute(
+        //        builder: (context) => InputZiPage(typingType: TypingType.TwinComponents), //InputZiPage(),
+        //      ),
+        //    ).then((val)=>{_getRequests()});
+        //  },
+        //),
         /*
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),

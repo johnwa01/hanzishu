@@ -207,7 +207,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       (
       appBar: AppBar
         (
-        title: Text(getString(296)/*"Drill"*/),
+        title: Text(getString(1)/*"Drill"*/),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
@@ -452,8 +452,16 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
           partialZiId = theZiManager.getPartialZiId(listTypeWrapper, theCurrentCenterZiId, currentZiId);
         }
 
+        var sideZiOrComp;
+        if (listTypeWrapper.value == ZiListType.component) {
+          sideZiOrComp = theComponentList[partialZiId].charOrNameOfNonchar;
+        }
+        else {
+          sideZiOrComp = theSearchingZiList[partialZiId].char;
+        }
+
         //var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak(theSearchingZiList[partialZiId].char);
+        TextToSpeech.speak(sideZiOrComp);
 
         if (previousZiId != currentZiId || !haveShowedOverlay) {
           //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);

@@ -590,7 +590,7 @@ class BasePainter extends CustomPainter{
     drawOneFrameLineWithColor([x4, y4, x1, y4]);
     drawOneFrameLineWithColor([x1, y4, x1, y1]);
 
-    if (centerId != 1) {
+    if (centerId != 1 || (centerId == 1 && listType == ZiListType.searching)) {
       // inside frame
       drawOneFrameLineWithColor([x2, y2, x3, y2]);
       drawOneFrameLineWithColor([x3, y2, x3, y3]);
@@ -606,7 +606,7 @@ class BasePainter extends CustomPainter{
         }
       }
       else if (listType == ZiListType.searching) {
-        if (Utility.isSearchingPseudoZiId(centerId)) {
+        if (ZiManager.isSearchingListIDIndexOnly(centerId)) {
           showLinesInBetween = false;
         }
       }
@@ -728,7 +728,7 @@ class BasePainter extends CustomPainter{
       }
       var oneZiColor = ziColor;
       if (listType == ZiListType.searching) {
-        if (theSearchingZiList[id].composit.length > 1) {
+        if (theSearchingZiList[memberZiId].composit.length > 2 || ZiManager.isParentOfASearchingListIDIndexOnly(memberZiId)) {
           oneZiColor = Colors.blue;
         }
       }

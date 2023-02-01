@@ -43,7 +43,7 @@ class _MePageState extends State<MePage> {
         leading: Image.asset(
             'assets/core/quizresults.png', width: imageSize, height: imageSize),
         //Icon(Icons.location_city),
-        title: Text("Quiz results", textDirection: TextDirection.ltr),
+        title: Text(getString(267)/*"Quiz results"*/, textDirection: TextDirection.ltr),
         //trailing: Image.asset('assets/core/itemicon.png'),
         //subtitle: Text(
         //  "XXXXXXXXXX",

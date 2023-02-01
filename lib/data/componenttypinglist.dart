@@ -186,7 +186,7 @@ var theExpandedComponentList = [
   ComponentCollection(15, "E43.png", 4, 3, getString(346)/*"crossing at middle"*/),
   ComponentCollection(16, "E52.png", 5, 2, getString(347)/*"split shapes"*/),
   ComponentCollection(17, "E61.png", 6, 1, getString(348)/*"open to bottom"*/),
-  ComponentCollection(18, "E12.png", 1, 2, getString(325)/*"a body with two legs"*/),
+  ComponentCollection(18, "E12.png", 1, 2, getString(325)/*"two legs"*/),
   ComponentCollection(19, "E33.png", 3, 3, getString(326)/*"facing left"*/),
   ComponentCollection(20, "E32.png", 3, 2, getString(349)/*"shelter looking"*/),
   ComponentCollection(21, "E51.png", 5, 1, getString(327)/*"closed shape with horizontal lines"*/),
@@ -402,6 +402,30 @@ var theZiForExpandedGeneralExerciseList=[
   ZiWithComponentsAndStrokes("客", [], "", ""), //54
   ZiWithComponentsAndStrokes("宽", [], "", ""), //61
   ZiWithComponentsAndStrokes("况", [], "", ""), //62 //瓢
+];
+
+var theShowAttachedComponentList = [
+  ComponentCollection(0, "F43.png", 0, 0, "Explaination Text"),
+  ComponentCollection(1, "F24.png", 2, 4, getString(315)/*"closed shape"*/),
+  ComponentCollection(2, "F13.png", 1, 3, getString(316)/*"like E"*/),
+  ComponentCollection(3, "F23.png", 2, 3, getString(342)/*"the verticle line"*/),
+  ComponentCollection(5, "F42.png", 4, 2, getString(318)/*"curve toward bottom left"*/),
+  ComponentCollection(6, "F11.png", 1, 1, getString(319)/*"overall T shape looking"*/),
+  ComponentCollection(7, "F25.png", 2, 5, getString(320)/*"hammer looking"*/),
+  ComponentCollection(8, "F44.png", 4, 4, getString(343)/*"Overall L shape looking"*/),
+  ComponentCollection(9, "F31.png", 3, 1, getString(321)/*"disconnected triangle"*/),
+  ComponentCollection(10, "F62.png", 6, 2, getString(322)/*"a shape with three legs"*/),
+  ComponentCollection(11, "F34.png", 3, 4, getString(323)/*"half circle shape"*/),
+  ComponentCollection(15, "F43.png", 4, 3, getString(346)/*"crossing at middle"*/),
+  ComponentCollection(16, "F52.png", 5, 2, getString(347)/*"split shapes"*/),
+  ComponentCollection(17, "F61.png", 6, 1, getString(348)/*"open to bottom"*/),
+  ComponentCollection(18, "F12.png", 1, 2, getString(325)/*"two legs"*/),
+  ComponentCollection(19, "F33.png", 3, 3, getString(326)/*"facing left"*/),
+  ComponentCollection(20, "F32.png", 3, 2, getString(349)/*"shelter looking"*/),
+  ComponentCollection(21, "F51.png", 5, 1, getString(327)/*"closed shape with horizontal lines"*/),
+  ComponentCollection(22, "F54.png", 5, 4, getString(350)/*"diagonal crossing"*/),
+  ComponentCollection(23, "F15.png", 1, 5, getString(351)/*"closed shape with crossing"*/),
+  ComponentCollection(25, "F35.png", 3, 5, getString(353)/*"upward arrow"*/),
 ];
 
 var theZiForAttachedCompExerciseList=[

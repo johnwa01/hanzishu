@@ -380,7 +380,7 @@ class Utility {
   }
 
   static bool isSearchingPseudoZiId(int rootZiId) {
-    return (rootZiId >= 3718 && rootZiId <= 3742); //TODO: finalize it
+    return (rootZiId >= 3 && rootZiId <= 52); //TODO: finalize it
   }
 
   static bool isStarChar(int rootZiId) {

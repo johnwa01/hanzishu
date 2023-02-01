@@ -5,6 +5,7 @@ enum QuestionType {
   //ComponentInGroup,
   Component,
   ExpandedComponent,
+  ShowAttachedComponent,
   //ReviewExpandedComponent
 }
 

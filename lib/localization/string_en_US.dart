@@ -131,7 +131,7 @@ var theString_en_US = [
   Local(126, "The above chart shows the pairings of the Lead Components of Chinese characters to the English letters in a keyboard. The Lead Components and letters look very similar. The pairings are the foundation of the Hanzishu Input Method！\n\nLet's take a moment again to memorize the above Component-key pairings now. After that, click 'Continue' to test it out.\n"/*\n\Hints: M = three legs, D = traffic light to left, K = crossing in the middle, H = the only horizontal line, Y = the first (up left) stroke.*/),
   Local(127, ""),
   Local(128, "Please tap or mouse click a key image below that maps the above Component."),
-  Local(129, "Remember the above Expanded Components. Then choose their corresponding key."),
+  Local(129, "Please review every one of the above Components carefully, then choose their mapping key."),
   Local(130, "Please choose the key group that matches the above Component group."),
   Local(131, "The above chart shows the Expanded Components for Lead Component '日'（key B). They look similar to their Lead Component and type the same key (letter B).\n\nOver 80% of the characters are consisted of the Expanded Components. Therefore it's very important to remember them!\n\nWe'll go through the Expanded Components for each Lead Component/key."),
   Local(132, "Note: The Expanded Components have similar shapes to their Lead Component."), // TODO: not used
@@ -391,4 +391,9 @@ var theString_en_US = [
   Local(386, "group"),
   Local(387, "Up to unit"),
   Local(388, "Please learn above content then continue."),
+  Local(389, "Study infrequently used components."),
+  Local(390, "Attached components"),
+  Local(391, "WOW！"),
+  Local(392, "You know Attached Components. Next let's do some exercises."),
+  Local(393, "Practice Attached Components"),
 ];

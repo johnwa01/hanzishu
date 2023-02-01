@@ -37,7 +37,7 @@ class SearchingZi {
   List<int> groupMembers;
   int parentId;
   int level;
-  //int levelHSK;
+  int levelHSK;
 
   SearchingZi(
       int id,
@@ -54,7 +54,7 @@ class SearchingZi {
       List<int> groupMembers,
       int parentId,
       int level,
-  //    int levelHSK,
+      int levelHSK
     ) {
       this.id = id;
       this.char = char;
@@ -70,7 +70,7 @@ class SearchingZi {
       this.groupMembers = groupMembers;
       this.parentId = parentId;
       this.level = level;
-  //    this.levelHSK = levelHSK;
+      this.levelHSK = levelHSK;
   }
 
   bool isSingleComponentZi() {

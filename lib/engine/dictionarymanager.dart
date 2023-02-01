@@ -393,9 +393,10 @@ class DictionaryManager {
 
     var oneList = theSearchingZiFilterList[id];
     for (int i = 0; i < length; i++) {
-       realFilterList[i] = oneList[i].strokeCount; //TODO: need a real member
+       realFilterList[i] = oneList[i].level; //TODO: need to generalize, level is for Hanzishu lessons
     }
 
+    //TODO
     for (int j = 0; j < length; j++) {
       updateFilterSubLevels(j, realFilterList);
     }

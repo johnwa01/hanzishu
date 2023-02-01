@@ -99,11 +99,9 @@ class _ComponentPageState extends State<ComponentPage> {
     else if (questionType == QuestionType.ExpandedComponent) {
       title = getString(105)/*'Expanded Components'*/;
     }
-    /*
-    else if (questionType == QuestionType.ReviewExpandedComponent) {
-      title = getString(308)/*'Review Expanded Components'*/;
+    else if (questionType == QuestionType.ShowAttachedComponent) {
+      title = getString(390) /*'Show Attached Components'*/;
     }
-    */
 
     return Scaffold
       (
@@ -168,7 +166,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
     }
     */
-    if(this.questionType == QuestionType.Component  /*|| this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup*/ || this.questionType == QuestionType.ExpandedComponent /*|| this.questionType == QuestionType.ReviewExpandedComponent*/) {
+    if(this.questionType == QuestionType.Component  /*|| this.questionType == QuestionType.ComponentInGroup || this.questionType == QuestionType.ComponentGroup*/ || this.questionType == QuestionType.ExpandedComponent || this.questionType == QuestionType.ShowAttachedComponent) {
 /*
       if (/*this.questionType == QuestionType.ComponentInGroup &&*/ theComponentManager.isHeaderOfComponentInGroup()) {
         if (currentIndex == 0) {
@@ -485,7 +483,7 @@ class _ComponentPageState extends State<ComponentPage> {
       return getQuestionImage();
     }
     */
-    else if (questionType == QuestionType.ExpandedComponent) {
+    else if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ShowAttachedComponent) {
       //if(theComponentManager.isHeaderOfExpandedComponents()) {
       //  return getHeaderOfExpandedComponents();
       //}
@@ -552,17 +550,14 @@ class _ComponentPageState extends State<ComponentPage> {
         var compCollection = theExpandedComponentList[currentIndex];
         var comp = theComponentManager.getComponentByGroupAndIndex(
             compCollection.groupNumber, compCollection.indexInGroup);
-        imagePath =
-            'assets/typing/' + comp.image;
+        imagePath = 'assets/typing/' + comp.image;
       }
-      /*
-      else if (questionType == QuestionType.ReviewExpandedComponent) {
-          var compCollection = theReviewExpandedComponentList[currentIndex];
-          var comp = compCollection.imageName;
-          imagePath =
-              'assets/typing/' + compCollection.imageName;
+      else if (currentIndex > 0 && questionType == QuestionType.ShowAttachedComponent) {
+        var compCollection = theShowAttachedComponentList[currentIndex];
+        var comp = theComponentManager.getComponentByGroupAndIndex(
+            compCollection.groupNumber, compCollection.indexInGroup);
+        imagePath = 'assets/typing/' + comp.image;
       }
-      */
 
       return Container(
           alignment: Alignment.topRight, //topLeft,
@@ -592,6 +587,11 @@ class _ComponentPageState extends State<ComponentPage> {
     */
     if (questionType == QuestionType.ExpandedComponent) {
       imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
+      imageWidth = 160.0 * getSizeRatioWithLimit();
+      imageHeight = 120.0 * getSizeRatioWithLimit();
+    }
+    if (questionType == QuestionType.ShowAttachedComponent) {
+      imagePath = 'assets/typing/' + theShowAttachedComponentList[currentIndex].imageName;
       imageWidth = 160.0 * getSizeRatioWithLimit();
       imageHeight = 120.0 * getSizeRatioWithLimit();
     }
@@ -699,7 +699,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (answeredPosition != AnswerPosition.none && answeredPosition != AnswerPosition.continueNext) {
       var questionSize = 0.0; // size
-      if (questionType == QuestionType.ExpandedComponent) {
+      if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ShowAttachedComponent) {
         questionSize = size * 1.5; // 3.0
       }
       return Container(width:0.0, height: questionSize);
@@ -712,6 +712,12 @@ class _ComponentPageState extends State<ComponentPage> {
         question =
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
+      }
+      if (questionType == QuestionType.ShowAttachedComponent) {
+        var hint = theShowAttachedComponentList[currentIndex].hint;
+        question =
+            getString(129)/*"Guess the Leat and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
+                hint + ")"; //TODO: update the string for this case
       }
       /*
       if (questionType == QuestionType.ReviewExpandedComponent) {
@@ -734,9 +740,16 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getIndividualAnswers(BuildContext context) {
-    if (questionType == QuestionType.ExpandedComponent /*|| questionType == QuestionType.ReviewExpandedComponent*/) {
+    if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ShowAttachedComponent) {
 
-      if (theComponentManager.isHeaderOfExpandedComponents()) {
+      if (theComponentManager.isHeaderOfExpandedComponents() || theComponentManager.isHeaderOfShowAttachedComponents() ) {
+        String headText = "";
+        if (theComponentManager.isHeaderOfExpandedComponents()) {
+          headText =  getString(131); /*"This chart shows the Expanded Components for Lead Component 日（key O). To type an Expanded Component, just type its Lead Component 日（key O)."*/
+        }
+        else if (theComponentManager.isHeaderOfShowAttachedComponents()) {
+          headText = getString(389); //"学习不常用部件";
+        }
 
         return Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -745,7 +758,7 @@ class _ComponentPageState extends State<ComponentPage> {
               Row(
                 children: <Widget>[
                   Flexible(child: Text(
-                     getString(131)/*"This chart shows the Expanded Components for Lead Component 日（key O). To type an Expanded Component, just type its Lead Component 日（key O)."*/,
+                     headText,
                     style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
                     textAlign: TextAlign.start),),
                 ]
@@ -1106,8 +1119,9 @@ class _ComponentPageState extends State<ComponentPage> {
     //bool isThirdHeaderOfGroups = theComponentManager.isThirdHeaderOfGroups();
     bool isHeaderOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
     bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
+    bool isHeaderOfShowAttachedComponents = theComponentManager.isHeaderOfShowAttachedComponents();
 
-    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) /*|| isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isThirdHeaderOfGroups*/ || isHeaderOfRandomComponents || isHeaderOfExpandedComponents) {
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) /*|| isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isThirdHeaderOfGroups*/ || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
       var result = ""; // = "Correct! ";
       /*
       if (isHeaderOfComponentInGroup) {
@@ -1126,7 +1140,7 @@ class _ComponentPageState extends State<ComponentPage> {
         result = "Please read above, then ";
       }
       */
-      if (/*!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups &&*/ !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents) { // skip the first one
+      if (/*!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups &&*/ !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents && !isHeaderOfShowAttachedComponents) { // skip the first one
         //var answerType = theComponentManager.getAnswerType(answeredPosition);
 
         if (answeredPosition !=
@@ -1141,9 +1155,9 @@ class _ComponentPageState extends State<ComponentPage> {
       }
 
       var buttonText = getString(285); // Continue
-      if (questionType != QuestionType.Component) {
-        buttonText = getString(357); // Let's start
-      }
+      //if (questionType != QuestionType.Component) {
+      //  buttonText = getString(357); // Let's start
+      //}
       result += buttonText;
 
       //_updateProgress();
@@ -1221,7 +1235,12 @@ class _ComponentPageState extends State<ComponentPage> {
         title = getString(136)/*"Wow!"*/;
         content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
         theNewlyCompletedTypingExercise = 2;
-     }
+      }
+    if (questionType == QuestionType.ShowAttachedComponent) {
+      title = getString(391)/*"Wow!"*/;
+      content = getString(392)/*"You know your Attached Components! Let’s review it in next exercise."*/;
+      theNewlyCompletedTypingExercise = 7;
+    }
       /*
     if (questionType == QuestionType.ReviewExpandedComponent) {
       title = getString(136)/*"Wow!"*/;

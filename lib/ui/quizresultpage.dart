@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 
 class QuizResultPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _QuizResultPageState extends State<QuizResultPage> {
       (
       appBar: AppBar
         (
-        title: Text("Quiz results"),
+        title: Text(getString(267)), //Quiz results
       ),
       body: Center
         (
