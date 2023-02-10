@@ -383,31 +383,39 @@ class DictionaryManager {
   }
   */
 
-  static populateRealFilterList(int id) {
-    if (theSearchingZiRealFilterList[id] != null) {
+  static InitRealFilterList(int filterId) {
+    if (theSearchingZiRealFilterList[filterId-1] != null) {
       return;
     }
 
-    var length = theSearchingZiFilterList[id].length; //TODO: need real list
-    List<int> realFilterList = List<int>(length);
+    var length = theSearchingZiFilterList[filterId-1].length; //TODO: need real list
+    List<int> realFilterList = List<int>(length); // allocate memory
 
-    var oneList = theSearchingZiFilterList[id];
+    var oneList = theSearchingZiFilterList[filterId-1];
     for (int i = 0; i < length; i++) {
-       realFilterList[i] = oneList[i].level; //TODO: need to generalize, level is for Hanzishu lessons
+      // TODO: make this more generic
+      if (filterId == 2) {
+        realFilterList[i] = oneList[i].level; //for Hanzishu lessons
+      }
+      else if (filterId == 3) {
+        realFilterList[i] = oneList[i].levelHSK;
+      }
     }
 
     //TODO
-    for (int j = 0; j < length; j++) {
-      updateFilterSubLevels(j, realFilterList);
+    for (int j = 0; j < length; j++) { //500
+      if (realFilterList[j] != 0) {
+        updateFilterSubLevels(j, realFilterList);
+      }
     }
 
-    theSearchingZiRealFilterList[id] = realFilterList;
+    theSearchingZiRealFilterList[filterId-1] = realFilterList;
   }
 
   static updateFilterSubLevels(int index, List<int> realFilterList) {
     var parentId = theSearchingZiList[index].parentId;
     if (parentId != 0) {
-      if (realFilterList[parentId] > realFilterList[index]) {
+      if (realFilterList[parentId] > realFilterList[index] || realFilterList[parentId] == 0) {
         realFilterList[parentId] = realFilterList[index];
       }
       updateFilterSubLevels(parentId, realFilterList);

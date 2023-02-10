@@ -643,40 +643,40 @@ class _InputZiPageState extends State<InputZiPage> {
     var title;
     var buttonText = getString(357);
     if (typingType == TypingType.LeadComponents) {
-      str = theZiForLeadCompExerciseList[currentIndex].hintText;
+      str = getString(theZiForLeadCompExerciseList[currentIndex].hintText);
       title = getString(100);
       buttonText = getString(109);
     }
     else if (typingType == TypingType.ExpandedReview) {
-      str = theZiForExpandedReviewExerciseList[currentIndex].hintText;
+      str = getString(theZiForExpandedReviewExerciseList[currentIndex].hintText);
       title = getString(308);
     }
     else if (typingType == TypingType.ExpandedGeneral) {
-      str = theZiForExpandedGeneralExerciseList[currentIndex].hintText;
+      str = getString(theZiForExpandedGeneralExerciseList[currentIndex].hintText);
       title = getString(334);
     }
     else if (typingType == TypingType.AttachedComponents) {
-      str = theZiForAttachedCompExerciseList[currentIndex].hintText;
-      title = getString(328);
+      str = getString(theZiForAttachedCompExerciseList[currentIndex].hintText);
+      title = getString(393);
     }
     else if (typingType == TypingType.TwinComponents) {
-      str = theZiForTwinCompExerciseList[currentIndex].hintText;
+      str = getString(theZiForTwinCompExerciseList[currentIndex].hintText);
       title = getString(329);
     }
     else if (typingType == TypingType.SubComponents) {
-      str = theZiForSubCompExerciseList[currentIndex].hintText;
+      str = getString(theZiForSubCompExerciseList[currentIndex].hintText);
       title = getString(330);
     }
     else if (typingType == TypingType.SingleComponent) {
-      str = theZiForSingleCompExerciseList[currentIndex].hintText;
+      str = getString(theZiForSingleCompExerciseList[currentIndex].hintText);
       title = getString(331);
     }
     else if (typingType == TypingType.TwoComponents) {
-      str = theZiForTwoCompExerciseList[currentIndex].hintText;
+      str = getString(theZiForTwoCompExerciseList[currentIndex].hintText);
       title = getString(332);
     }
     else if (typingType == TypingType.GeneralExercise) {
-      str = theZiForGeneralExerciseList[currentIndex].hintText;
+      str = getString(theZiForGeneralExerciseList[currentIndex].hintText);
       title = getString(333);
     }
 
@@ -1044,7 +1044,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 SizedBox(width: 5.0 * getSizeRatio()), //10.0
                 SizedBox(
                   child: Text(
-                      getString(90)/*"Hint"*/ + ": " + theZiForIntroductionList[currentIndex].hintText ,
+                      getString(90)/*"Hint"*/ + ": " + getString(theZiForIntroductionList[currentIndex].hintText) ,
                       style: TextStyle(fontSize: fontSize),  // fontSize * 1.2
                       textAlign: TextAlign.center   //left
                   ),

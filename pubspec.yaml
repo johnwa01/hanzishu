@@ -377,6 +377,12 @@ flutter:
      - assets/typing/T4.png
      - assets/typing/T5.png
      - assets/typing/T6.png
+     - assets/typing/T1_E.png
+     - assets/typing/T2_E.png
+     - assets/typing/T3_E.png
+     - assets/typing/T4_E.png
+     - assets/typing/T5_E.png
+     - assets/typing/T6_E.png
 
   #   - images/a_dot_ham.jpeg
 

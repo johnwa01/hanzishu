@@ -100,7 +100,7 @@ class _ComponentPageState extends State<ComponentPage> {
       title = getString(105)/*'Expanded Components'*/;
     }
     else if (questionType == QuestionType.ShowAttachedComponent) {
-      title = getString(390) /*'Show Attached Components'*/;
+      title = getString(328) /*'Show Attached Components'*/;
     }
 
     return Scaffold
@@ -374,7 +374,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 Flexible (
                   child: Text(
                       componentKeyPairingHeaderString,
-                      style: TextStyle(fontSize: 15 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
+                      style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)  // 20
                   ),
                 )
               ]
@@ -532,6 +532,7 @@ class _ComponentPageState extends State<ComponentPage> {
     */
   }
 
+/*
   Widget getReviewExpandedComponentChar() {
     var comp = theReviewExpandedComponentList[currentIndex];
     return Text(
@@ -539,6 +540,7 @@ class _ComponentPageState extends State<ComponentPage> {
           style: TextStyle(fontSize: 60.0 * getSizeRatioWithLimit(), fontWeight: FontWeight.bold)
     );
   }
+*/
 
   Widget getResultReminderImage(BuildContext context) {
     String imagePath;
@@ -616,7 +618,14 @@ class _ComponentPageState extends State<ComponentPage> {
     else if (questionType == QuestionType.Component) { // for the header only
       var imageName;
       if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
-        imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+        if (theDefaultLocale == "zh_CN") {
+          imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+        }
+        else { // English
+          imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
+        }
+        imageWidth = 380.0 * getSizeRatioWithLimit();
+        imageHeight = 300.0 * getSizeRatioWithLimit();
       }
       else if (theComponentManager.isHeaderOfRandomComponents()) {
          imageName = 'GG6.png';
@@ -708,13 +717,13 @@ class _ComponentPageState extends State<ComponentPage> {
       String question = getString(128)/*"Please map the Component to its key."*/;
 
       if (questionType == QuestionType.ExpandedComponent) {
-        var hint = theExpandedComponentList[currentIndex].hint;
+        var hint = getString(theExpandedComponentList[currentIndex].hint);
         question =
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
       if (questionType == QuestionType.ShowAttachedComponent) {
-        var hint = theShowAttachedComponentList[currentIndex].hint;
+        var hint = getString(theShowAttachedComponentList[currentIndex].hint);
         question =
             getString(129)/*"Guess the Leat and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")"; //TODO: update the string for this case
@@ -995,8 +1004,7 @@ class _ComponentPageState extends State<ComponentPage> {
         setPositionState(position);
       },
       child: Image.asset(
-        //TODO: temp folder and name
-        "assets/letters/L" + answerDisplayValue + ".png", //+ image,
+        "assets/letters/L" + answerDisplayValue + ".png",
         width: width,
         height: height,
         fit: BoxFit.fitWidth,
@@ -1269,4 +1277,122 @@ class _ComponentPageState extends State<ComponentPage> {
       },
     );
   }
+
+  /*
+  Widget getPreLeadComponentCategory0(BuildContext context) {
+    return Column(
+        children: <Widget>[
+          Row(
+              children: <Widget>[
+                Flexible(child: Text(
+                    "'Mouth' component categories:",
+                    style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
+                    textAlign: TextAlign.start),),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 4.0 * getSizeRatioWithLimit()),
+              ]
+          ),
+          Row(
+              textDirection: TextDirection.ltr,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 12"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 1234567"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 445 44"),
+                  ),
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 4.0 * getSizeRatioWithLimit()),
+              ]
+          ),
+          Row(
+              textDirection: TextDirection.ltr,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 12"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 1234567"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 445 44"),
+                  ),
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 4),
+              ]
+          ),
+          Row(
+              textDirection: TextDirection.ltr,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 12"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 1234567"),
+                  ),
+                ),
+                SizedBox(width: 2),
+                Container(width: 30, height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.contain,
+                    child: Text("Test Text 445 44"),
+                  ),
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 4),
+              ]
+          ),
+        ]
+    );
+  }
+  */
 }

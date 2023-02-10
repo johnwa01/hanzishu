@@ -1,3 +1,4 @@
+//NOTE: this file isn't used any more
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/reviewpage.dart';
 import 'package:hanzishu/variables.dart';

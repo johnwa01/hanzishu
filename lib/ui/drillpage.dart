@@ -311,6 +311,9 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     else if (_selectedDrillMenu.id == 2) {
       subMenuList = theHanzishuSubList;
     }
+    else if (_selectedDrillMenu.id == 3) {
+      subMenuList = theHSKSubList;
+    }
 
     List<DropdownMenuItem<DrillMenu>> items = List();
 
@@ -330,8 +333,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       _selectedDrillMenu = selectedDrillMenu;
       _dropdownSubMenuItems = buildDropdownSubMenuItems();
 
-      if (_selectedDrillMenu.id != 1 && theSearchingZiRealFilterList[_selectedDrillMenu.id] == null) {
-        DictionaryManager.populateRealFilterList(_selectedDrillMenu.id);
+      if (_selectedDrillMenu.id != 1 && theSearchingZiRealFilterList[_selectedDrillMenu.id-1] == null) {
+        DictionaryManager.InitRealFilterList(_selectedDrillMenu.id);
       }
 
       if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {

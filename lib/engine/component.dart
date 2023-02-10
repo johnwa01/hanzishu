@@ -88,14 +88,14 @@ class ComponentCollection {
   String imageName;
   int groupNumber;
   int indexInGroup;
-  String hint; // or character
+  int hint; // String ID
 
   ComponentCollection(
       int id,
       String imageName,
       int groupNumber,
       int indexInGroup,
-      String hint)
+      int hint)
   {
     this.id = id;
     this.imageName = imageName;
@@ -225,13 +225,13 @@ class ZiWithComponentsAndStrokes {
   String zi;
   List<String> componentCodes;
   String hintImage;
-  String hintText;
+  int hintText;
 
   ZiWithComponentsAndStrokes(
       String zi,
       List<String> componentCodes,
       String hintImage,
-      String hintText
+      int hintText
       ) {
     this.zi = zi;
     this.componentCodes = componentCodes;

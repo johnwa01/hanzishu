@@ -252,34 +252,34 @@ class InputZiManager {
     //  instruction = theZiForIntroductionList[currentIndex].hintText;
     //}
     if (typingType == TypingType.LeadComponents) {
-      instruction = theZiForLeadCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForLeadCompExerciseList[currentIndex].hintText);
     }
     //else if (typingType == TypingType.ExpandedInitial) {
     //  instruction = theZiForExpandedInitialExerciseList[currentIndex].hintText;
     //}
     else if (typingType == TypingType.ExpandedReview) {
-      instruction = theZiForExpandedReviewExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForExpandedReviewExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.ExpandedGeneral) {
-      instruction = theZiForExpandedGeneralExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForExpandedGeneralExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.AttachedComponents) {
-      instruction = theZiForAttachedCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForAttachedCompExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.TwinComponents) {
-      instruction = theZiForTwinCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForTwinCompExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.SubComponents) {
-      instruction = theZiForSubCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForSubCompExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.SingleComponent) {
-      instruction = theZiForSingleCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForSingleCompExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.TwoComponents) {
-      instruction = theZiForTwoCompExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForTwoCompExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.GeneralExercise) {
-      instruction = theZiForGeneralExerciseList[currentIndex].hintText;
+      instruction = getString(theZiForGeneralExerciseList[currentIndex].hintText);
     }
     else if (typingType == TypingType.FromLessons) {
       instruction = getString(280)/*"Reminder: You should finish the typing course from the main menu before this exercise."*/;
@@ -296,7 +296,7 @@ class InputZiManager {
       var oneSearchingItem = theSearchingZiList[searchingZiId];
       var components = List<String>();
       DictionaryManager.getAllComponents(searchingZiId, components);
-      return ZiWithComponentsAndStrokes(oneSearchingItem.char, components, "", "");
+      return ZiWithComponentsAndStrokes(oneSearchingItem.char, components, "", 0);
     }
 
     return null;
@@ -345,7 +345,7 @@ class InputZiManager {
           zi.char,
           [""],
           "noimage",
-          "nohelpyet"
+          0/*"nohelpyet"*/
       );
     }
 
@@ -370,7 +370,7 @@ class InputZiManager {
 */
 
   static int getSearchingZiId(int index, int lessonId) {
-    return index * 38 + lessonId;
+    return index * 38 + 51 + lessonId; // where 51 is the last non-char index in the searchingZilist
   }
 
   int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId) {
@@ -429,7 +429,8 @@ class InputZiManager {
     else if (typingType == TypingType.CustomizedTyping) {
       // overall index = 0, 69, 77, 160
       var searchingZiId = getSearchingZiId(currentIndex, lessonId);
-      if (DictionaryManager.isNonCharacter(searchingZiId) || DictionaryManager.isEmpty(searchingZiId)) {
+      // Note: there are 52 index which are not chars
+      if (searchingZiId < 52 || DictionaryManager.isNonCharacter(searchingZiId) || DictionaryManager.isEmpty(searchingZiId)) {
         currentIndex++; // skip to next one
       }
       else if (searchingZiId >= theSearchingZiList.length) {
@@ -548,7 +549,7 @@ class InputZiManager {
     }
     else if (typingType == TypingType.CustomizedTyping) {
       int total = ((theSearchingZiList.length - 1) / 38).truncate();    // 37
-      int remain = (theSearchingZiList.length -1) % 38; // first 30
+      int remain = (theSearchingZiList.length - 1) % 38; // first 30
       if (lessonId <= remain) {
         total += 1;
       }

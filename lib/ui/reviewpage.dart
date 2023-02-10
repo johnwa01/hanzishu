@@ -1,3 +1,4 @@
+// NOTE: this page isn't used anymore
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:ui';

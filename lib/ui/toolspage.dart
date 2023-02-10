@@ -191,7 +191,7 @@ class _ToolsPageState extends State<ToolsPage> {
         */
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("4. " + getString(308)/*"Review Expanded Components"*/, textDirection: TextDirection.ltr),
+          title: Text("4. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[3] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -217,6 +217,10 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
+          title: Text("-------------------", textDirection: TextDirection.ltr),
+        ),
+        ListTile(
+          //leading: Image.asset('assets/core/itemicon.png'),
           title: Text("6. " + getString(332)/*"Two Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[9] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
@@ -228,22 +232,22 @@ class _ToolsPageState extends State<ToolsPage> {
             ).then((val)=>{_getRequests()});
           },
         ),
+        // ListTile(
+        //  //leading: Image.asset('assets/core/itemicon.png'),
+        //  title: Text("7. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
+        //  trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+        //  onTap: () {
+        //    Navigator.push(
+        //      context,
+        //      MaterialPageRoute(
+        //        builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
+        //      ),
+        //    ).then((val)=>{_getRequests()});
+        //  },
+        //),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("7. " + getString(334)/*"Practice Expanded Components"*/, textDirection: TextDirection.ltr),
-          trailing: exerciseCompleted[4] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.ExpandedGeneral), //InputZiPage(),
-              ),
-            ).then((val)=>{_getRequests()});
-          },
-        ),
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("8. " + getString(328)/*"Show attached Components"*/, textDirection: TextDirection.ltr),
+          title: Text("7. " + getString(328)/*"Show attached Components"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[2] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -256,7 +260,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("9. " + getString(393)/*"Attached Components exercises"*/, textDirection: TextDirection.ltr),
+          title: Text("8. " + getString(393)/*"Attached Components exercises"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[5] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -297,7 +301,7 @@ class _ToolsPageState extends State<ToolsPage> {
         */
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("10. " + getString(333)/*"General Exercises"*/, textDirection: TextDirection.ltr),
+          title: Text("9. " + getString(333)/*"General Exercises"*/, textDirection: TextDirection.ltr),
           trailing: exerciseCompleted[10] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

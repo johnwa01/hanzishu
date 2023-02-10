@@ -178,7 +178,7 @@ class ZiManager {
         var filterMember;
         var filterValue;
         for (var memberZiId in theSearchingZiList[id].groupMembers) {
-          filter = theSearchingZiRealFilterList[filterId];
+          filter = theSearchingZiRealFilterList[filterId-1];
           filterValue = filter[memberZiId];
           if (filterValue > 0 && filterValue <= internalEndLessonId) {
             realGroupMembers.add(memberZiId);

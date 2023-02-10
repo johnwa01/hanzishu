@@ -122,19 +122,19 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
-            ListTile(
-              leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(139)/*"Character review"*/, textDirection: TextDirection.ltr),
+            //ListTile(
+            //  leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+            //  title: Text(getString(139)/*"Character review"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ReviewSelectionPage(),
-                  ),
-                );
-              },
-            ),
+            //  onTap: () {
+            //    Navigator.push(
+            //      context,
+            //      MaterialPageRoute(
+            //        builder: (context) => ReviewSelectionPage(),
+            //      ),
+            //    );
+            //  },
+            //),
             getQuizResults(),
             ListTile(
               leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
