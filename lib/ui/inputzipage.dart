@@ -1091,7 +1091,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //  return getComponentAndMapping();
     //}
 
-    String instruction  = InputZiManager.getIntroduction(typingType, currentIndex, lessonId);
+    //String instruction  = InputZiManager.getIntroduction(typingType, currentIndex, lessonId);
 
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
 
@@ -1124,7 +1124,7 @@ class _InputZiPageState extends State<InputZiPage> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           //SizedBox(height: fontSize),
-          getInstruction(instruction),
+      //    getInstruction(instruction),
           //getImageTiedToZi(),
           Row(
               children: <Widget>[

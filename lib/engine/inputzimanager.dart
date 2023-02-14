@@ -246,6 +246,8 @@ class InputZiManager {
         currentCandidatesToUpdate[0], previousFirstPositionList);
   }
 
+  // not used any more
+  /*
   static String getIntroduction(TypingType typingType, int currentIndex, int lessonId) {
     String instruction;
     //if (typingType == TypingType.GiveItATry) {
@@ -287,6 +289,7 @@ class InputZiManager {
 
     return instruction;
   }
+*/
 
   // index 0->100, lessonId == exerciseId -> 1 to 38 (1 based).
   ZiWithComponentsAndStrokes getCustomizedTypingZi(int index, int lessonId) {

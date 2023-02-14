@@ -606,9 +606,9 @@ class BasePainter extends CustomPainter{
         }
       }
       else if (listType == ZiListType.searching) {
-        if (ZiManager.isSearchingListIDIndexOnly(centerId)) {
+        //if (ZiManager.isSearchingListIDIndexOnly(centerId)) {
           showLinesInBetween = false;
-        }
+        //}
       }
 
 

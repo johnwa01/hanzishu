@@ -113,6 +113,8 @@ flutter:
      - assets/core/logoandroid.png
      - assets/core/meicon0.png
      - assets/core/meicon1.png
+     - assets/core/moreicon0.png
+     - assets/core/moreicon1.png
      - assets/core/settings.png
      - assets/core/typing.png
      - assets/core/typingicon0.png
@@ -263,17 +265,13 @@ flutter:
      - assets/typing/E61.png
      - assets/typing/E62.png
      - assets/typing/F11.png
-     - assets/typing/F12.png
-     - assets/typing/F13.png
      - assets/typing/F15.png
      - assets/typing/F23.png
      - assets/typing/F24.png
      - assets/typing/F25.png
      - assets/typing/F31.png
-     - assets/typing/F32.png
      - assets/typing/F33.png
      - assets/typing/F34.png
-     - assets/typing/F35.png
      - assets/typing/F42.png
      - assets/typing/F43.png
      - assets/typing/F44.png
