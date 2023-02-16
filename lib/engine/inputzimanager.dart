@@ -551,8 +551,8 @@ class InputZiManager {
       return theZiForGeneralExerciseList.length;
     }
     else if (typingType == TypingType.CustomizedTyping) {
-      int total = ((theSearchingZiList.length - 1) / 38).truncate();    // 37
-      int remain = (theSearchingZiList.length - 1) % 38; // first 30
+      int total = ((theSearchingZiList.length - 52) / 38).truncate();    // 37
+      int remain = (theSearchingZiList.length - 52) % 38; // first 30
       if (lessonId <= remain) {
         total += 1;
       }

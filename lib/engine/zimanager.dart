@@ -367,22 +367,24 @@ class ZiManager {
         return memberZiId;
       }
       else if (substr0IsChars) {
-        listTypeWrapper.value = ZiListType.component;
+        //listTypeWrapper.value = ZiListType.component;
         var composit1Id = Utility.StringToInt(composits[1]);
         if (composit1Id != centerZiId) {
           return memberZiId;
         }
         else {
+          listTypeWrapper.value = ZiListType.component;
           return ComponentManager.getComponentIdByCode(composits[0]);
         }
       }
       else if (substr1IsChars) {
-        listTypeWrapper.value = ZiListType.component;
+        //listTypeWrapper.value = ZiListType.component;
         var composit0Id = Utility.StringToInt(composits[0]);
         if (composit0Id != centerZiId) {
           return memberZiId;
         }
         else {
+          listTypeWrapper.value = ZiListType.component;
           return ComponentManager.getComponentIdByCode(composits[1]);
         }
       }

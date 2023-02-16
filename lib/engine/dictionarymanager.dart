@@ -403,7 +403,7 @@ class DictionaryManager {
     }
 
     //TODO
-    for (int j = 0; j < length; j++) { //500
+    for (int j = 0; j < length; j++) {
       if (realFilterList[j] != 0) {
         updateFilterSubLevels(j, realFilterList);
       }
