@@ -4,12 +4,12 @@ import 'package:hanzishu/data/searchingzilist.dart';
 //int DrillDescriptionStringID = 10;
 class DrillMenu {
   int id;
-  String description;
+  int stringId; //String description;
 
   DrillMenu(int id,
-      String description) {
+      stringId) {
     this.id = id;
-    this.description = description;
+    this.stringId = stringId;
   }
 }
 
@@ -17,32 +17,32 @@ var theDrillMenuList = [
   //Note: getString here is a static value. code will use its own getString calls in lessonspage.dart
   //Level(0, theNumberOfLessonsInLevels[0], false, getString(BaseLevelDescriptionStringID + 1)/*"Basics"*/),  // level index 0 == level 1
   //Level(1, theNumberOfLessonsInLevels[1], false, getString(BaseLevelDescriptionStringID + 2)/*"In the classroom"*/),
-  DrillMenu(1, "All"),
-  DrillMenu(2, "Hanzishu lessons"),
-  DrillMenu(3, "HSK"),
+  DrillMenu(1, 395),
+  DrillMenu(2, 10),
+  DrillMenu(3, 396),
 ];
 
 var theHanzishuSubList = [
-  DrillMenu(1, "Up to unit 1"),
-  DrillMenu(2, "Up to unit 2"),
-  DrillMenu(3, "Up to unit 3"),
-  DrillMenu(4, "Up to unit 4"),
-  DrillMenu(5, "Up to unit 5"),
-  DrillMenu(6, "Up to unit 6"),
-  DrillMenu(7, "Up to unit 7"),
-  DrillMenu(8, "Up to unit 8"),
-  DrillMenu(9, "Up to unit 9"),
-  DrillMenu(10, "Up to unit 10"),
+  DrillMenu(1, 0), //"Up to unit 1"),
+  DrillMenu(2, 0), //"Up to unit 2"),
+  DrillMenu(3, 0), //"Up to unit 3"),
+  DrillMenu(4, 0), //"Up to unit 4"),
+  DrillMenu(5, 0), //"Up to unit 5"),
+  DrillMenu(6, 0), //"Up to unit 6"),
+  DrillMenu(7, 0), //"Up to unit 7"),
+  DrillMenu(8, 0), //"Up to unit 8"),
+  DrillMenu(9, 0), //"Up to unit 9"),
+  DrillMenu(10, 0), //"Up to unit 10"),
 ];
 
 var theHSKSubList = [
-  DrillMenu(1, "Up to level 1"),
-  DrillMenu(2, "Up to level 2"),
-  DrillMenu(3, "Up to level 3"),
-  DrillMenu(4, "Up to level 4"),
-  DrillMenu(5, "Up to level 5"),
-  DrillMenu(6, "Up to level 6"),
-  DrillMenu(7, "Up to level 7/8/9"),
+  DrillMenu(1, 0), //"Up to level 1"),
+  DrillMenu(2, 0), //"Up to level 2"),
+  DrillMenu(3, 0), //"Up to level 3"),
+  DrillMenu(4, 0), //"Up to level 4"),
+  DrillMenu(5, 0), //"Up to level 5"),
+  DrillMenu(6, 0), //"Up to level 6"),
+  DrillMenu(7, 400), //"Up to level 7/8/9"),
 ];
 
 var theSearchingZiFilterList = [

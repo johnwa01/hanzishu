@@ -398,4 +398,11 @@ var theString_en_US = [
   Local(391, "WOW！"),
   Local(392, "You know all the Components now! Next let's do some exercises."),
   Local(393, "Practice more Components"),
+  Local(394, "Hanzishu drills"),
+  Local(395, "All"),
+  Local(396, "HSK"),
+  Local(397, "Up to "),
+  Local(398, "Unit "),
+  Local(399, "Level "),
+  Local(400, "7/8/9"),
 ];

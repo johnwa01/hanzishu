@@ -21,7 +21,6 @@ class LessonsPage extends StatefulWidget {
 class _LessonsPageState extends State<LessonsPage> {
   bool hasLoadedStorage;
   int newFinishedLessons;
-  String currentLocale;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -48,7 +47,6 @@ class _LessonsPageState extends State<LessonsPage> {
     setState(() {
       this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
-      this.currentLocale = theDefaultLocale;
     });
   }
 
@@ -167,7 +165,6 @@ class _LessonsPageState extends State<LessonsPage> {
                 style: TextStyle(fontSize: 16.0),
               ),
               getSpaceAsNeeded(level),
-              getLanguageSwitchButtonAsNeeded(level),
               //
             ]
           ),
@@ -190,70 +187,6 @@ class _LessonsPageState extends State<LessonsPage> {
     }
 
     return SizedBox(width: 60, height: 0);
-  }
-
-  Widget getLanguageSwitchButtonAsNeeded(int level) {
-    if (level != 1) {
-      return SizedBox(width: 0, height: 0);
-    }
-
-    return TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16.0),
-      ),
-      onPressed: () {
-        setState(() {
-          currentLocale = changeTheDefaultLocale();
-          //currentIndex = 1;
-          //currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
-        });
-      },
-      child: Text(getOppositeDefaultLocale(), /*English/中文*/
-          style: TextStyle(color: Colors.blue)),
-    );
-  }
-
-  String getOppositeDefaultLocale() {
-    int idForLanguageTypeString = 378; /*English/中文*/
-    // according to theDefaultLocale
-    String localString = "";
-
-    switch (theDefaultLocale) {
-      case "en_US":
-        {
-          localString = theString_zh_CN[idForLanguageTypeString].str; // theString_en_US[id].str;
-        }
-        break;
-      case "zh_CN":
-        {
-          localString = theString_en_US[idForLanguageTypeString].str; // theString_zh_CN[id].str;
-        }
-        break;
-      default:
-        {
-        }
-        break;
-    }
-
-    return localString;
-  }
-
-  String changeTheDefaultLocale() {
-    if (theDefaultLocale == "en_US") {
-      theDefaultLocale = "zh_CN";
-    }
-    else if (theDefaultLocale == "zh_CN") {
-      theDefaultLocale = "en_US";
-    }
-
-    theStorageHandler.setLanguage(theDefaultLocale);
-    theStorageHandler.SaveToFile();
-
-    // let main page refresh to pick up the language change for navigation bar items
-    final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
-    navigationBar.onTap(0);
-
-    return theDefaultLocale;
   }
 
   Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount) {

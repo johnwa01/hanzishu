@@ -14,6 +14,8 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
+import 'package:hanzishu/localization/string_en_US.dart';
+import 'package:hanzishu/localization/string_zh_CN.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
@@ -54,6 +56,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
   List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
   DrillMenu _selectedSubMenu;
+
+  String currentLocale;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -111,6 +115,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       centerZiId = theCurrentCenterZiId;
       shouldDrawCenter = true;
       compoundZiComponentNum = 0;
+      this.currentLocale = theDefaultLocale;
     });
   }
 
@@ -207,7 +212,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       (
       appBar: AppBar
         (
-        title: Text(getString(1)/*"Drill"*/),
+        title: Text(getString(394)/*"Hanzishu drill"*/),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
@@ -226,6 +231,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       SizedBox(width: 10),
                       //Text("Results"),
                       getSubMenus(context, centerZiId),
+                      SizedBox(width: 10),
+                      getLanguageSwitchButtonAsNeeded(_selectedDrillMenu.id, centerZiId),
                       SizedBox(width: 10),
                     ],
                   ),
@@ -264,6 +271,72 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     );
   }
 
+  Widget getLanguageSwitchButtonAsNeeded(int selectedDrillMenuId, int centerId) {
+    if (selectedDrillMenuId != 1 || centerId != 1) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 16.0),
+      ),
+      onPressed: () {
+        setState(() {
+          currentLocale = changeTheDefaultLocale();
+          _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
+          _dropdownSubMenuItems = buildDropdownSubMenuItems();
+          //currentIndex = 1;
+          //currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
+        });
+      },
+      child: Text(getOppositeDefaultLocale(), /*English/中文*/
+          style: TextStyle(color: Colors.blue)),
+    );
+  }
+
+  String changeTheDefaultLocale() {
+    if (theDefaultLocale == "en_US") {
+      theDefaultLocale = "zh_CN";
+    }
+    else if (theDefaultLocale == "zh_CN") {
+      theDefaultLocale = "en_US";
+    }
+
+    theStorageHandler.setLanguage(theDefaultLocale);
+    theStorageHandler.SaveToFile();
+
+    // let main page refresh to pick up the language change for navigation bar items
+    final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
+    navigationBar.onTap(0);
+
+    return theDefaultLocale;
+  }
+
+  String getOppositeDefaultLocale() {
+    int idForLanguageTypeString = 378; /*English/中文*/
+    // according to theDefaultLocale
+    String localString = "";
+
+    switch (theDefaultLocale) {
+      case "en_US":
+        {
+          localString = theString_zh_CN[idForLanguageTypeString].str; // theString_en_US[id].str;
+        }
+        break;
+      case "zh_CN":
+        {
+          localString = theString_en_US[idForLanguageTypeString].str; // theString_zh_CN[id].str;
+        }
+        break;
+      default:
+        {
+        }
+        break;
+    }
+
+    return localString;
+  }
+
   Widget getCategories(BuildContext context, int centerZiId) {
     if (centerZiId == 1) {
       return DropdownButton(
@@ -296,7 +369,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       items.add(
         DropdownMenuItem(
           value: drillMenu,
-          child: Text(drillMenu.description),
+          child: Text(getString(drillMenu.stringId)),
         ),
       );
     }
@@ -305,23 +378,35 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
   List<DropdownMenuItem<DrillMenu>> buildDropdownSubMenuItems() {
     var subMenuList;
+    var commonString1 = getString(397);
+    var commonString2 = "";
     if (_selectedDrillMenu.id == 1) {
       return null;
     }
     else if (_selectedDrillMenu.id == 2) {
       subMenuList = theHanzishuSubList;
+      commonString2 = getString(398);
     }
     else if (_selectedDrillMenu.id == 3) {
       subMenuList = theHSKSubList;
+      commonString2 = getString(399);
     }
 
     List<DropdownMenuItem<DrillMenu>> items = List();
 
-    for (DrillMenu drillMenu in subMenuList) {
+    for (var subMenu in subMenuList) {
+      var subString;
+      if (subMenu.stringId != 0) {
+        subString = getString(subMenu.stringId);
+      }
+      else {
+        subString = subMenu.id.toString();
+      }
+
       items.add(
         DropdownMenuItem(
-          value: drillMenu,
-          child: Text(drillMenu.description),
+          value: subMenu,
+          child: Text(commonString1 + commonString2 + subString),
         ),
       );
     }
@@ -330,6 +415,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
   onChangeDropdownDrillItem(DrillMenu selectedDrillMenu) {
     setState(() {
+      _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
       _selectedDrillMenu = selectedDrillMenu;
       _dropdownSubMenuItems = buildDropdownSubMenuItems();
 
@@ -613,11 +699,14 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromDrillPage, List<Widget> buttons) {
-    var naviMap = PositionManager.getNavigationPathPosi(ZiListType.searching, centerZiId, isFromDrillPage, getSizeRatio());
+    if (centerZiId != 1) {
+      var naviMap = PositionManager.getNavigationPathPosi(
+          ZiListType.searching, centerZiId, isFromDrillPage, getSizeRatio());
 
-    for (var id in naviMap.keys) {
-      var posi = getPositionedButton(naviMap[id], id, id, true);
-      buttons.add(posi);
+      for (var id in naviMap.keys) {
+        var posi = getPositionedButton(naviMap[id], id, id, true);
+        buttons.add(posi);
+      }
     }
   }
 }

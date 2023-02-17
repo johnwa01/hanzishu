@@ -899,6 +899,9 @@ class BasePainter extends CustomPainter{
     var ziOrPhraseHint;
     if (listType == ZiListType.searching) {
       ziOrPhraseHint = theSearchingZiList[id].hint;
+      if (ziOrPhraseHint.length == 0) {
+        return;
+      }
     }
     else if (isPhrase) {
       ziOrPhraseHint = thePhraseList[id].hint;
