@@ -540,7 +540,7 @@ class BasePainter extends CustomPainter{
 
   // currently used for compound zi animation
   void drawCenterZi(int ziId, ZiListType listType) {
-    var posiSize = thePositionManager.getPositionAndSizeHelper(listType, "m", 1, PositionManager.theBigMaximumNumber);
+    var posiSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
     var charColor = Colors.blue;  //[800];
     if (ziId != theCurrentCenterZiId) {
       charColor = Colors.brown;
@@ -554,6 +554,7 @@ class BasePainter extends CustomPainter{
     path.moveTo(list[0], list[1]);
     path.lineTo(list[2], list[3]);
     path.moveTo(list[4], list[5]);
+    path.lineTo(list[6], list[7]);
     path.lineTo(list[6], list[7]);
     path.lineTo(list[8], list[9]);
 
@@ -802,7 +803,7 @@ class BasePainter extends CustomPainter{
         }
       }
       else if (listType == ZiListType.searching) {
-        if (id != 1) { // TODO: exclude more structural items
+        if (id >= 52) { // TODO: exclude more structural items
           display = true;
         }
       }
@@ -1151,7 +1152,7 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       drawStrokeZiList(
           comp.strokesString,
-          110.0 * ratio,
+          160.0 * ratio, // 110
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,
@@ -1166,7 +1167,7 @@ class BasePainter extends CustomPainter{
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
         getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    displayTextWithValue(typingCode, posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+    displayTextWithValue(typingCode, posi.transX + applyRatio(230.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue); //170
   }
 
   displayTypingCodePlaceholder(PositionAndSize posi) {

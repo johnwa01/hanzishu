@@ -33,7 +33,13 @@ class BasicComponentsDetailPainter extends BasePainter {
 
   double getSizeRatio() {
     var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
-    return defaultSize / 25.0;
+    var sizeRatio = defaultSize / 25.0;
+
+    if (sizeRatio > 2) {
+      sizeRatio = 2;
+    }
+
+    return sizeRatio;
   }
 
   double applyRatio(double value) {
@@ -62,7 +68,7 @@ class BasicComponentsDetailPainter extends BasePainter {
     yPositionWrapper.value += applyRatio(20.0);
     if (!isInfoOnly) {
       var groupLetter = ComponentManager.getLetterByGroupAndIndex(keyGroup, keyIndex);
-      displayTextWithValue(groupLetter + " " + getString(386) + " " + getString(384)/*"Hanzi Basic Components"*/, lessonLeftEdge, yPositionWrapper.value,
+      displayTextWithValue("'" + groupLetter + "' " + getString(386) + " " + getString(384)/*"Hanzi Basic Components"*/, lessonLeftEdge, yPositionWrapper.value,
           thePositionManager.getCharFontSize(
               ZiOrCharSize.defaultSize), Colors.brown);
     }
@@ -77,6 +83,7 @@ class BasicComponentsDetailPainter extends BasePainter {
           displayOneZi(yPositionWrapper, compId, CharType.BasicChar, isInfoOnly, listOfSpeechIconInfo);
       }
 
+      yPositionWrapper.value += applyRatio(20.0);
       if (!isInfoOnly) {
         drawLine(0.0, yPositionWrapper.value, applyRatio(600.0),
             yPositionWrapper.value, Colors.grey, applyRatio(1));
@@ -90,13 +97,13 @@ class BasicComponentsDetailPainter extends BasePainter {
   }
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
     yPositionWrapper.value += applyRatio(20.0);
-    displayOneZiHelper(id, type, /*lessonLeftEdge +*/ applyRatio(20.0), yPositionWrapper, isInfoOnly, listOfSpeechIconInfo);
+    displayOneZiHelper(id, type, applyRatio(20.0), yPositionWrapper, isInfoOnly, listOfSpeechIconInfo);
 
     yPositionWrapper.value += applyRatio(30.0);
 
     if (!isInfoOnly) {
-      var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
       var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
       displayCompStrokes(id, ZiListType.component, posiSize, applyRatio(1.0));
     }
@@ -108,7 +115,7 @@ class BasicComponentsDetailPainter extends BasePainter {
       if (searchingZiIndex > 0) {
         yPositionWrapper.value += applyRatio(30.0);
         if (!isInfoOnly) {
-          var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+          //var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
           var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
           displayTypingCode(searchingZiIndex, posiSize);
         }
@@ -117,6 +124,7 @@ class BasicComponentsDetailPainter extends BasePainter {
 
     yPositionWrapper.value += applyRatio(30.0);
 
+    yPositionWrapper.value += applyRatio(20.0);
     if (!isInfoOnly) {
       drawLine(lessonLeftEdge + applyRatio(20.0), yPositionWrapper.value, applyRatio(600.0),
           yPositionWrapper.value, Colors.grey, applyRatio(1));
@@ -129,49 +137,49 @@ class BasicComponentsDetailPainter extends BasePainter {
     var meaning;
 
     var comp = ComponentManager.getComponent(id);
-      if (!isInfoOnly) {
-        drawRootZi(
-            id,
-            ZiListType.component,
-            transX,
-            yPositionWrapper.value,
-            thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
-            thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
-            thePositionManager.getCharFontSize(
-                ZiOrCharSize.assembleDissembleSize),
-            Colors.brown, /*isSingleColor:*/
-            false,
-            thePositionManager.getZiLineWidth(
-                ZiOrCharSize.assembleDissembleSize), /*createFrame:*/
-            true,
-            /*hasRootZiLearned:*/
-            false,
-            false,
-            Colors.blue,
-            true);
-        name = comp.charOrNameOfNonchar;
-        pinyin = comp.pinyin;
-        meaning = comp.meaning;
-      }
-      transX +=
-      (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +
-          applyRatio(10.0));
+    if (!isInfoOnly) {
+      drawRootZi(
+          id,
+          ZiListType.component,
+          transX,
+          yPositionWrapper.value,
+          thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
+          thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
+          thePositionManager.getCharFontSize(
+              ZiOrCharSize.assembleDissembleSize),
+          Colors.brown, /*isSingleColor:*/
+          false,
+          thePositionManager.getZiLineWidth(
+              ZiOrCharSize.assembleDissembleSize), /*createFrame:*/
+          true,
+          /*hasRootZiLearned:*/
+          false,
+          false,
+          Colors.blue,
+          true);
+      name = comp.charOrNameOfNonchar;
+      pinyin = comp.pinyin;
+      meaning = comp.meaning;
+    }
+    transX +=
+    (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +
+        applyRatio(10.0));
 
-    yPositionWrapper.value += applyRatio(35.0); //30.0
+    yPositionWrapper.value += applyRatio(50.0); //35.0
 
     // display name
     if (!isInfoOnly) {
       displayTextWithValue(
-          getString(385)/*"Name"*/ + ": ", applyRatio(20.0), yPositionWrapper.value,
+          getString(385) /*"Name"*/ + ": ", applyRatio(20.0),
+          yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.black);
       displayTextWithValue(
-          name, applyRatio(20.0 + 90.0), yPositionWrapper.value,
+          name, applyRatio(20.0 + 160.0), yPositionWrapper.value,  // 20 + 90
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.blue);
-
       checkAndUpdateYPosi(yPositionWrapper, "Name: ", meaning, applyRatio(8.0),
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
+        thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
     }
 
     transX = applyRatio(20.0);
@@ -182,7 +190,7 @@ class BasicComponentsDetailPainter extends BasePainter {
           Colors.black);
     }
 
-    transX += applyRatio(60.0);
+    transX += applyRatio(160.0); //60
     // display speech icon
     if (!isInfoOnly) {
       DisplayIcon(
@@ -220,14 +228,13 @@ class BasicComponentsDetailPainter extends BasePainter {
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.black);
       displayTextWithValue(
-          meaning, applyRatio(20.0 + 90.0), yPositionWrapper.value,
+          meaning, applyRatio(20.0 + 160.0), yPositionWrapper.value, // 20 + 90
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           Colors.blue);
-
       checkAndUpdateYPosi(
           yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
-    }
+      }
   }
 
   checkAndUpdateYPosi(PrimitiveWrapper yPositionWrapper, String prefix, String str, double fontWidth, double fontSize) {

@@ -19,7 +19,8 @@ class DictionaryManager {
   }
 
   static int getSearchingZiId(String char) {
-    for (int i = 0; i < theSearchingZiList.length; i++) {
+    // skip the index chars
+    for (int i = 52; i < theSearchingZiList.length; i++) {
       if (theSearchingZiList[i].char == char) {
         return i;
       }

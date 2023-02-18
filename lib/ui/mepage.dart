@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/glossarypage.dart';
 import 'package:hanzishu/ui/quizresultpage.dart';
-import 'package:hanzishu/ui/reviewselectionpage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;

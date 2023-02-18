@@ -467,7 +467,7 @@ var theZiForAttachedCompExerciseList=[
   //ZiWithComponentsAndStrokes("铠", [], "N53.png", 0),
   ZiWithComponentsAndStrokes("修", [], "N54.png", 0),
   //ZiWithComponentsAndStrokes("溅", [], "N54.png", 0),
-  ZiWithComponentsAndStrokes("满", [], "N61.png", 0),
+  //ZiWithComponentsAndStrokes("满", [], "N61.png", 0), hard to separate two
   //ZiWithComponentsAndStrokes("偏", [], "N61.png", 0),
   //ZiWithComponentsAndStrokes("篇", [], "N61.png", 0), //some font might be wrong
   ZiWithComponentsAndStrokes("藐", [], "N62.png", 0),
@@ -537,48 +537,49 @@ var theZiForSingleCompExerciseList=[
   //ZiWithComponentsAndStrokes("大", [], "", 0),
   ZiWithComponentsAndStrokes("父", [], "", 0),
   ZiWithComponentsAndStrokes("口", [], "", 0),
-  ZiWithComponentsAndStrokes("下", [], "", 0), //世
+  //ZiWithComponentsAndStrokes("下", [], "", 0), //世
   ZiWithComponentsAndStrokes("田", [], "", 0),
-  ZiWithComponentsAndStrokes("我", [], "", 0),
+  ZiWithComponentsAndStrokes("乙", [], "", 0),
+  //ZiWithComponentsAndStrokes("我", [], "", 0),
   ZiWithComponentsAndStrokes("三", [], "", 0),
   //ZiWithComponentsAndStrokes("了", [], "", 0),
-  ZiWithComponentsAndStrokes("弓", [], "", 0),
+  //ZiWithComponentsAndStrokes("弓", [], "", 0),
   ZiWithComponentsAndStrokes("尺", [], "", 0),
   ZiWithComponentsAndStrokes("一", [], "", 0),
   ZiWithComponentsAndStrokes("巾", [], "", 0),
-  ZiWithComponentsAndStrokes("内", [], "", 0),
-  ZiWithComponentsAndStrokes("乙", [], "", 0),
-  ZiWithComponentsAndStrokes("母", [], "", 0),
-  ZiWithComponentsAndStrokes("冉", [], "", 0),
+  //ZiWithComponentsAndStrokes("内", [], "", 0),
+  //ZiWithComponentsAndStrokes("母", [], "", 0), too hard
+  //ZiWithComponentsAndStrokes("冉", [], "", 0),
 ];
 
 var theZiForTwoCompExerciseList=[
-  ZiWithComponentsAndStrokes("键", [], "SpecialStrokes.png", 340),
+  ZiWithComponentsAndStrokes("键", [], "", 340), // SpecialStrokes.png - not show it to make it simple.
   ZiWithComponentsAndStrokes("呆", [], "", 0),
   ZiWithComponentsAndStrokes("岁", [], "", 0),
-  ZiWithComponentsAndStrokes("好", [], "", 0),
+  //ZiWithComponentsAndStrokes("好", [], "", 0),
   ZiWithComponentsAndStrokes("扛", [], "", 0),
   //ZiWithComponentsAndStrokes("多", [], "", 0),
   ZiWithComponentsAndStrokes("六", [], "", 0),
   ZiWithComponentsAndStrokes("汗", [], "", 0), //老
-  ZiWithComponentsAndStrokes("再", [], "", 0),
-  ZiWithComponentsAndStrokes("收", [], "", 0),
+  //ZiWithComponentsAndStrokes("再", [], "", 0),
+  //ZiWithComponentsAndStrokes("收", [], "", 0), too hard for u and separate
   ZiWithComponentsAndStrokes("芯", [], "", 0), //笼
-  ZiWithComponentsAndStrokes("尖", [], "", 0), //陈
-  ZiWithComponentsAndStrokes("所", [], "", 0),
+  //ZiWithComponentsAndStrokes("尖", [], "", 0), //陈
+  //ZiWithComponentsAndStrokes("所", [], "", 0), too hard
   ZiWithComponentsAndStrokes("舌", [], "", 0),
   ZiWithComponentsAndStrokes("爷", [], "", 0),
   ZiWithComponentsAndStrokes("幼", [], "", 0), //系
-  ZiWithComponentsAndStrokes("牺", [], "", 0),
+  //ZiWithComponentsAndStrokes("牺", [], "", 0),
   ZiWithComponentsAndStrokes("明", [], "", 0),
   //ZiWithComponentsAndStrokes("对", [], "", 0),
 ];
 
 var theZiForGeneralExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 341),
+  ZiWithComponentsAndStrokes("客", [], "", 0),
   ZiWithComponentsAndStrokes("你", [], "", 0),
-  ZiWithComponentsAndStrokes("师", [], "", 0),
-  ZiWithComponentsAndStrokes("下", [], "", 0),
+  ZiWithComponentsAndStrokes("移", [], "", 0), //师 left side too  confusing
+  //ZiWithComponentsAndStrokes("下", [], "", 0),
   ZiWithComponentsAndStrokes("没", [], "", 0),
   ZiWithComponentsAndStrokes("叭", [], "", 0),
   ZiWithComponentsAndStrokes("会", [], "", 0),
@@ -586,13 +587,12 @@ var theZiForGeneralExerciseList=[
   ZiWithComponentsAndStrokes("目", [], "", 0),
   ZiWithComponentsAndStrokes("调", [], "", 0),
   ZiWithComponentsAndStrokes("旷", [], "", 0),
-  ZiWithComponentsAndStrokes("掉", [], "", 0),
+  //ZiWithComponentsAndStrokes("掉", [], "", 0),
   ZiWithComponentsAndStrokes("木", [], "", 0),
   ZiWithComponentsAndStrokes("谢", [], "", 0),
-  ZiWithComponentsAndStrokes("公", [], "", 0),
-  ZiWithComponentsAndStrokes("学", [], "", 0),
+  //ZiWithComponentsAndStrokes("公", [], "", 0),
+  //ZiWithComponentsAndStrokes("学", [], "", 0),
   //ZiWithComponentsAndStrokes("引", [], "", 0),
-  ZiWithComponentsAndStrokes("客", [], "", 0),
 ];
 
 //var theComponentList = [
