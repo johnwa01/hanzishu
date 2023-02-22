@@ -7,6 +7,7 @@ import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 
 class ListOfZiPage extends StatefulWidget {
   final int lessonId;
@@ -120,6 +121,29 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     return posiCenter;
   }
 
+  Positioned getPositionedContinueButton() {
+    var butt = FlatButton(
+      color: Colors.brown, //white,
+      textColor: Colors.blueAccent,
+      onPressed: () {
+        theIsBackArrowLessonExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+    );
+
+    var posiCenter = Positioned(
+        top: contentLength.value - (thePositionManager.getCharFontSize(
+            ZiOrCharSize.defaultSize) + applyRatio(1) + applyRatio(15)),
+        left: applyRatio(50.0),
+        height: applyRatio(25.0), //posiAndSize.height,
+        width: applyRatio(150.0), //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
   List<Widget> createHittestButtons(BuildContext context, List<SpeechIconInfo> listOfSpeechIconInfo) {
     List<Widget> buttons = [];
 
@@ -128,6 +152,9 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     for (var i = 0; i < listOfSpeechIconInfo.length; i++) {
         buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));
     }
+
+    // continue button
+    buttons.add(getPositionedContinueButton());
 
     return buttons;
   }

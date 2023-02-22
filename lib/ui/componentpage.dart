@@ -1208,8 +1208,7 @@ class _ComponentPageState extends State<ComponentPage> {
     Widget okButton = FlatButton(
       child: Text(getString(286)/*"OK"*/),
       onPressed: () {
-        Navigator.of(context).pop(); // out this dialog
-        Navigator.of(context).pop(); // to the lesson page
+        Navigator.of(context).pop(); // out this dialog  //Navigator.of(context).pop(); // to the lesson page
       },
     );
 

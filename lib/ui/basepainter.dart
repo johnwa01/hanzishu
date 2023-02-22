@@ -673,6 +673,8 @@ class BasePainter extends CustomPainter{
 
     var posi = thePositionManager.getHintPosi();
     DisplayHint(listType, id, false, posi);
+
+    posi.transY += thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
   }
 
   void drawZiGroup(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId) {
@@ -818,6 +820,13 @@ class BasePainter extends CustomPainter{
       isReviewCenterPseudoZi = false;
       isReviewCenterPseudoNonCharZi = false;
     }
+
+    if (listType == ZiListType.zi) {
+      var posi = thePositionManager.getHintPosi();
+      double yPosi = posi.transY +
+          2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+      DisplayContinueOrSkip(listType, yPosi);
+    }
   }
 
   //void drawCenterZiRelated(int id, double transX, double transY, double charFontSize) {
@@ -920,6 +929,13 @@ class BasePainter extends CustomPainter{
     xPosi.value += applyRatio(55.0); // hardcoded. ignore screenWidth
 
     DisplayHintHelper(ziOrPhraseHint, xPosi, yPosi);
+  }
+
+  // Will have the same result of going to next section, although the display prompt message is different.
+  DisplayContinueOrSkip(ZiListType listType, double yPosi) {
+    displayTextWithValue(getString(285) /*"Continue"*/, 0.0, yPosi,
+        thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+        Colors.black);
   }
 
   checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth, double fontSize) {

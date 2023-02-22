@@ -79,27 +79,24 @@ class _BreakoutPageState extends State<BreakoutPage> {
           controller: _scrollController,
           scrollDirection: Axis.vertical,
           child: WillPopScope(   // just for removing overlay on detecting back arrow
-          child: CustomPaint(
-            foregroundPainter: BreakoutPainter(
-                lineColor: Colors.amber,
-                completeColor: Colors.blueAccent,
-                lessonId: widget.lessonId,
-                //completePercent: percentage,
-                screenWidth: screenWidth
-            ),
-            size: new Size(screenWidth, painterHeight),
-
-            child: Center(
-              child: Stack(
-                  children: createHittestButtons(context)
+              child: CustomPaint(
+                  foregroundPainter: BreakoutPainter(
+                    lineColor: Colors.amber,
+                    completeColor: Colors.blueAccent,
+                    lessonId: widget.lessonId,
+                    //completePercent: percentage,
+                    screenWidth: screenWidth
+                  ),
+                  size: new Size(screenWidth, painterHeight),
+                  child: Center(
+                    child: Stack(
+                      children: createHittestButtons(context)
+                    ),
+                  ),
               ),
-            ),
-
-          ),
-            onWillPop: _onWillPop
+              onWillPop: _onWillPop
           ),
         ),
-
       ),
     );
   }
@@ -199,16 +196,44 @@ class _BreakoutPageState extends State<BreakoutPage> {
           completeColor: Colors.blueAccent,
           lessonId: widget.lessonId,
           screenWidth: screenWidth);
-      Map<int, PositionAndSize> breakoutPositions = painter.getBreakoutPositions(widget.lessonId);
+
+      YPositionWrapper yPositionWrapper = YPositionWrapper(0.0);
+      Map<int, PositionAndSize> breakoutPositions = painter.getBreakoutPositions(widget.lessonId, yPositionWrapper);
    // }
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
+    var painterHeight = yPositionWrapper.yPosi; //MediaQuery.of(context).size.height + 150.0;  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>
       buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
+    // create continue button
+    buttons.add(getPositionedContinueButton(yPositionWrapper));
+
     return buttons;
   }
 
+  Positioned getPositionedContinueButton(YPositionWrapper contentHeight) {
+    var butt = FlatButton(
+      color: Colors.brown, //white,
+      textColor: Colors.blueAccent,
+      onPressed: () {
+        theIsBackArrowLessonExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+    );
+
+    var posiCenter = Positioned(
+        top: contentHeight.yPosi - (thePositionManager.getCharFontSize(
+            ZiOrCharSize.defaultSize) + applyRatio(1) + applyRatio(15)),
+        left: applyRatio(50.0),
+        height: applyRatio(25.0), //posiAndSize.height,
+        width: applyRatio(150.0), //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
 }
+

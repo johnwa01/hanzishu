@@ -389,6 +389,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       buttons.add(posi);
     }
 
+    // add continue button
+    buttons.add(getPositionedContinueButton());
+
     if (centerZiId != 1 ) {
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
       var newCenterZiId = theZiManager.getParentZiId(ZiListType.zi, centerZiId);
@@ -419,5 +422,29 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       var posi = getPositionedButton(naviMap[id], id, id, true);
       buttons.add(posi);
     }
+  }
+
+  Positioned getPositionedContinueButton() {
+    var yPosi = thePositionManager.getHintPosi();
+
+    var butt = FlatButton(
+      color: Colors.brown, //white,
+      textColor: Colors.blueAccent,
+      onPressed: () {
+        theIsBackArrowLessonExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: getSizeRatio()*20.0)),
+    );
+
+    var posiCenter = Positioned(
+        top: yPosi.transY +  2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+        left: getSizeRatio()*0.0,
+        height: getSizeRatio()*25.0, //posiAndSize.height,
+        width: getSizeRatio()*100.0, //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
   }
 }

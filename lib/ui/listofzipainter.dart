@@ -53,6 +53,7 @@ class ListOfZiPainter extends BasePainter {
     if (lessonLeftEdge == null) {
       lessonLeftEdge = applyRatio(10.0);
     }
+    var defaultFontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
 
     // for title
     if (lesson.charsIds.length > 0 || lesson.convCharsIds.length > 0) {
@@ -183,10 +184,17 @@ class ListOfZiPainter extends BasePainter {
       }
     }
 
+    if (!isInfoOnly) {
+      displayTextWithValue(
+          '[' + getString(285) /*"Continue"*/ + ']', applyRatio(50.0),
+          yPositionWrapper.value,
+          defaultFontSize, Colors.black);
+    }
+    yPositionWrapper.value += defaultFontSize + applyRatio(1) + applyRatio(15);
+
     if (isInfoOnly) {
       contentLength.value = yPositionWrapper.value;
     }
-
   }
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
@@ -347,6 +355,13 @@ class ListOfZiPainter extends BasePainter {
       var mul = (len ~/ screenWidth);
       yPositionWrapper.value += fontSize * mul;
     }
+  }
+
+  displayButton(PrimitiveWrapper contentLength) {
+    displayTextWithValue(
+        '[' + getString(285) /*"Continue"*/ + ']', applyRatio(150.0),
+        contentLength.value,
+        applyRatio(15.0), Colors.black);
   }
 
   @override

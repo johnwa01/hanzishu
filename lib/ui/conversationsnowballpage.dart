@@ -75,7 +75,12 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
           controller: _scrollController,
           scrollDirection: Axis.vertical,
           child: WillPopScope(
-              child: getSnowballContent(context),
+              child: Column(
+                  children: <Widget>[
+                    getSnowballContent(context),
+                    getContinue(context),
+                  ]
+              ),
               onWillPop: _onWillPop
           ),
         ),
@@ -152,6 +157,22 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
           Text(sentText, style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
 
         ],
+      ),
+    );
+  }
+
+  Widget getContinue(BuildContext context) {
+    var buttonText = getString(285); // Continue
+
+    return Container(
+      child: FlatButton(
+        child: Text(buttonText, style: TextStyle(fontSize:  getSizeRatioWithLimit() * 18.0),),
+        color: Colors.blueAccent,
+        textColor: Colors.brown,
+        onPressed: () {
+          theIsBackArrowLessonExit = false;
+          Navigator.of(context).pop();
+        },
       ),
     );
   }

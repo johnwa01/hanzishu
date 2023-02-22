@@ -67,11 +67,6 @@ class _ConversationPageState extends State<ConversationPage> {
           //height: 200.0,
           //width: 200.0,
           child: WillPopScope(   // just for removing overlay on detecting back arrow
-            //child: Column(
-              //mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //mainAxisSize:  MainAxisSize.max,
-          //      children: <Widget>[
-          //        Container(
             child: CustomPaint(
               foregroundPainter: ConversationPainter(
                   lineColor: Colors.amber,
@@ -84,22 +79,6 @@ class _ConversationPageState extends State<ConversationPage> {
                 ),
               ),
             ),
-            //      ),
-              /*TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ConversationSnowballPage(lessonId : widget.lessonId),
-                    ),
-                  );},
-                child: Text(getString(114), style: TextStyle(fontWeight: FontWeight. bold)),
-              ),*/
-           // ]
-           // ),
             onWillPop: _onWillPop
           ),
       ),
@@ -206,8 +185,8 @@ class _ConversationPageState extends State<ConversationPage> {
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
         else if (buttonType == ButtonType.launchPage) {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => ConversationSnowballPage(lessonId: theCurrentLessonId)));
+          theIsBackArrowLessonExit = false;
+          Navigator.of(context).pop();
         }
       },
       child:

@@ -7,7 +7,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 class Lesson {
   int id;
   String title;
-  String titleTranslation;
+  int titleId; //String titleTranslation;
   List<int> sentenceList;
   String convChars;
   List<int> convCharsIds;
@@ -44,7 +44,7 @@ class Lesson {
   Lesson(
       int id,
       String title,
-      String titleTranslation,
+      int titleId,
       List<int> sentenceList,
       String convChars,
       List<int> convCharsIds,
@@ -57,7 +57,7 @@ class Lesson {
       List<int> snowballIds) {
     this.id = id;
     this.title = title;
-    this.titleTranslation = titleTranslation;
+    this.titleId = titleId;
     this.sentenceList = sentenceList;
     this.convChars = convChars;
     this.convCharsIds = convCharsIds;

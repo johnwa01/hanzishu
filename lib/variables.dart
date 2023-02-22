@@ -73,4 +73,6 @@ String globalTestDoubleByteCode = "";
 
 GlobalKey globalKeyNav = new GlobalKey(debugLabel: 'btm_app_bar');
 
+bool theIsBackArrowLessonExit = true;
+
 //int theSelectedExerciseNumber = 1;

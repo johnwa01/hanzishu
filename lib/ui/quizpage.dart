@@ -424,6 +424,7 @@ class _QuizPageState extends State<QuizPage> {
     Widget okButton = FlatButton(
       child: Text(getString(286)/*"Ok"*/),
       onPressed: () {
+        theIsBackArrowLessonExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
       },

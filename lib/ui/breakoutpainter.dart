@@ -35,7 +35,7 @@ class BreakoutPainter extends BasePainter {
     this.canvas = canvas;
     //this.width = size.width;
     isBreakoutPositionsOnly = false;
-    displayCharacterDecomposing(lessonId);
+    displayCharacterDecomposing(lessonId, null);
   }
 
   double getSizeRatio() {
@@ -47,17 +47,17 @@ class BreakoutPainter extends BasePainter {
     return value * getSizeRatio();
   }
 
-  Map<int, PositionAndSize> getBreakoutPositions(int lessonId) {
+  Map<int, PositionAndSize> getBreakoutPositions(int lessonId, YPositionWrapper yPositionWrapper) {
     breakoutIndex = 0;
 
     breakoutPositions = theLessonManager.getBreakoutPositions(lessonId);
-    isBreakoutPositionsOnly = true;
 
-    displayCharacterDecomposing(lessonId);
+    isBreakoutPositionsOnly = true;
+    displayCharacterDecomposing(lessonId, yPositionWrapper); //will only display due to above 'true' condition, only calculate contentHeight and positions.
     return breakoutPositions;
   }
 
-  displayCharacterDecomposing(int lessonId) {
+  displayCharacterDecomposing(int lessonId, YPositionWrapper contentHeight) {
     var lesson = theLessonList[lessonId];
 
     var yPositionWrapper = YPositionWrapper(applyRatio(20.0));  //170.0
@@ -73,6 +73,19 @@ class BreakoutPainter extends BasePainter {
       if (zi != null && zi.type == "h") {
         displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.zi, 0, false);
       }
+    }
+
+    var defaultFontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    if (!isBreakoutPositionsOnly) {
+      displayTextWithValue(
+          '[' + getString(285) /*"Continue"*/ + ']', applyRatio(50.0),
+          yPositionWrapper.yPosi,
+          defaultFontSize, Colors.black);
+    }
+    yPositionWrapper.yPosi += defaultFontSize + applyRatio(1) + applyRatio(15);
+
+    if (isBreakoutPositionsOnly) {
+      contentHeight.yPosi = yPositionWrapper.yPosi;
     }
 
     if (!isBreakoutPositionsOnly) {

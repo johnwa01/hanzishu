@@ -1320,6 +1320,7 @@ class _InputZiPageState extends State<InputZiPage> {
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
+        theIsBackArrowLessonExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
       },

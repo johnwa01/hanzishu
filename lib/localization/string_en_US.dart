@@ -11,7 +11,7 @@ var theString_en_US = [
   Local(5, "Typing exercises"),
   Local(6, "Quiz"),
   Local(7, "Lesson"),
-  Local(8, "Please complete exercises in order."),
+  Local(8, "Welcome to lesson "),
   Local(9, "Unit"),
   Local(10, "Hanzishu Lessons"),
   Local(11, "Basics"),
@@ -132,7 +132,7 @@ var theString_en_US = [
   Local(126, "The above chart shows the pairings of the Lead Components of Chinese characters to the English letters in a keyboard. The Lead Components and letters look very similar.\n\nLet's take a moment again to memorize the above Component-key pairings now. After that, click 'Continue' to test it out.\n"),
   Local(127, ""),
   Local(128, "Please tap or mouse click a key image below that maps the above Component."),
-  Local(129, "Please review every one of the above Components carefully, then mouse click or tap their mapping key."),
+  Local(129, "Please review every one of the above Components carefully, then mouse click or tap their mapping key in the screen."),
   Local(130, "Please choose the key group that matches the above Component group."),
   Local(131, "The above chart shows the Components associated with the Lead Component '日'（key B). They look similar to their Lead Component and share the same key (letter B).\n\nWe'll go through the Components for each Lead Component/key."),
   Local(132, "Note: The Expanded Components have similar shapes to their Lead Component."), // TODO: not used
