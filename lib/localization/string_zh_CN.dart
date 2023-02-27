@@ -376,7 +376,7 @@ var theString_zh_CN = [
   Local(370, "请输入"),
   Local(371, "请输入"),
   Local(372, "建议使用Chrome游览器."),
-  Local(373, "单元滚雪球会话"),
+  Local(373, "滚雪球会话"),
   Local(374, "找不到汉字: "),
   Local(375, "结果"),
   Local(376, "分"),
@@ -404,4 +404,8 @@ var theString_zh_CN = [
   Local(398, "单元"),
   Local(399, "水平"),
   Local(400, "7/8/9"),
+  Local(401, "跳过这部份"),
+  Local(402, "继续至下一部份"),
+  Local(403, "捷径"),
+  Local(404, "学习到所有字都打对勾"),
 ];

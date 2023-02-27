@@ -78,7 +78,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
           scrollDirection: Axis.vertical,
             child: CustomPaint(
                 foregroundPainter: listOfZiPainter,
-                size: new Size(screenWidth, contentLength.value),
+                size: new Size(screenWidth, contentLength.value + 40.0),
 
                 child: Center(
                   child: Stack(
@@ -123,8 +123,8 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
 
   Positioned getPositionedContinueButton() {
     var butt = FlatButton(
-      color: Colors.brown, //white,
-      textColor: Colors.blueAccent,
+      color: Colors.blueAccent, //white,
+      textColor: Colors.brown,
       onPressed: () {
         theIsBackArrowLessonExit = false;
         Navigator.of(context).pop();
@@ -153,8 +153,10 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
         buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));
     }
 
-    // continue button
-    buttons.add(getPositionedContinueButton());
+    // Continue button
+    if (theIsFromLessonContinuedSection) {
+      buttons.add(getPositionedContinueButton());
+    }
 
     return buttons;
   }

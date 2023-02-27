@@ -109,6 +109,7 @@ flutter:
      - assets/core/itemicon.png
      - assets/core/keyboard_cn.png
      - assets/core/keyboard_eng.png
+     - assets/core/lessonimage.png
      - assets/core/lessonsicon0.png
      - assets/core/lessonsicon1.png
      - assets/core/logo.jpg

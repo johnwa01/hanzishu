@@ -942,6 +942,12 @@ class _InputZiPageState extends State<InputZiPage> {
                   //),
                 ),
               ),
+              SizedBox(
+                  height: 40.0, //40
+              ),
+              SizedBox(
+                  child: getContinue(),
+              ),
               // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
             ]
           ),
@@ -950,6 +956,24 @@ class _InputZiPageState extends State<InputZiPage> {
         ),
       ),
     );
+  }
+
+  Widget getContinue() {
+    if (theIsFromLessonContinuedSection) {
+      return FlatButton(
+        child: Text(
+          getString(401) /*"Continue"*/, style: TextStyle(fontSize: 20.0),),
+        color: Colors.white,
+        textColor: Colors.blueAccent,
+        onPressed: () {
+          theIsBackArrowLessonExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
   }
 
   Widget getHelpOrProgressIndicator() {

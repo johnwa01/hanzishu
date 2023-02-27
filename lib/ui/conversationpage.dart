@@ -128,8 +128,12 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Positioned getPositionedButton(int id, PositionAndSize posiAndSize, ButtonType buttonType) {
+    var frameColor = Colors.white;
+    if (buttonType == ButtonType.launchPage) {
+      frameColor = Colors.blueAccent;
+    }
     var butt = FlatButton(
-      color: Colors.white,
+      color: frameColor,
       textColor: Colors.blueAccent,
       /*
       onPressed: () {
@@ -282,10 +286,16 @@ class _ConversationPageState extends State<ConversationPage> {
       }
     }
 
-    var xStartPosi = applyRatioWithLimit(50.0);
-    var position = PositionAndSize(
-        xStartPosi, applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80), applyRatioWithLimit(180.0/*temp width*/), applyRatioWithLimit(20.0), 0.0, 0.0);
-    buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
+    // for Continue button
+    if (theIsFromLessonContinuedSection) {
+      var xStartPosi = applyRatioWithLimit(50.0);
+      var position = PositionAndSize(
+          xStartPosi,
+          applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80),
+          applyRatioWithLimit(180.0 /*temp width*/), applyRatioWithLimit(20.0),
+          0.0, 0.0);
+      buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
+    }
 
     return buttons;
   }

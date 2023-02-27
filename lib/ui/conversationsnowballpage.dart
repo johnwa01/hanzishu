@@ -164,16 +164,22 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   Widget getContinue(BuildContext context) {
     var buttonText = getString(285); // Continue
 
-    return Container(
-      child: FlatButton(
-        child: Text(buttonText, style: TextStyle(fontSize:  getSizeRatioWithLimit() * 18.0),),
-        color: Colors.blueAccent,
-        textColor: Colors.brown,
-        onPressed: () {
-          theIsBackArrowLessonExit = false;
-          Navigator.of(context).pop();
-        },
-      ),
-    );
+    if (theIsFromLessonContinuedSection) {
+      return Container(
+        child: FlatButton(
+          child: Text(buttonText,
+            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0),),
+          color: Colors.blueAccent,
+          textColor: Colors.white,
+          onPressed: () {
+            theIsBackArrowLessonExit = false;
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
   }
 }

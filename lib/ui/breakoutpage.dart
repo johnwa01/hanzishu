@@ -207,16 +207,18 @@ class _BreakoutPageState extends State<BreakoutPage> {
     breakoutPositions.forEach((uniqueNumber, position) =>
       buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
-    // create continue button
-    buttons.add(getPositionedContinueButton(yPositionWrapper));
+    // create Continue button
+    if (theIsFromLessonContinuedSection) {
+      buttons.add(getPositionedContinueButton(yPositionWrapper));
+    }
 
     return buttons;
   }
 
   Positioned getPositionedContinueButton(YPositionWrapper contentHeight) {
     var butt = FlatButton(
-      color: Colors.brown, //white,
-      textColor: Colors.blueAccent,
+      color: Colors.blueAccent, //white,
+      textColor: Colors.brown,
       onPressed: () {
         theIsBackArrowLessonExit = false;
         Navigator.of(context).pop();

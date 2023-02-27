@@ -75,4 +75,8 @@ GlobalKey globalKeyNav = new GlobalKey(debugLabel: 'btm_app_bar');
 
 bool theIsBackArrowLessonExit = true;
 
+bool theIsFromLessonContinuedSection = false;
+
+bool theAllZiLearned = false;
+
 //int theSelectedExerciseNumber = 1;

@@ -61,6 +61,7 @@ enum LessonSection {
   Characters,
   Decomposing,
   Conversation,
+  ConversationSnowball,
   Typing,
   Quiz,
   None

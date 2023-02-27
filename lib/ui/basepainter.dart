@@ -688,7 +688,7 @@ class BasePainter extends CustomPainter{
     theCurrentCenterZiId = id;
     theCreatedNumber = 0;
 
-    bool allMemberZiLearned = true;
+    bool allCurrentMemberZiLearned = true;
 
     thePositionManager.resetPositionIndex();
 
@@ -708,7 +708,7 @@ class BasePainter extends CustomPainter{
       var posiSize2 = getPositionAndSize(listType, memberZiId, totalSideNumberOfZis, sidePositionsCache);
 
       var memberZiLearned = doesZiExistInLearnedMap(memberZiId); //GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
-      allMemberZiLearned = allMemberZiLearned && memberZiLearned;
+      allCurrentMemberZiLearned = allCurrentMemberZiLearned && memberZiLearned;
 
       var isSingleColor = false;
       if ((listType == ZiListType.zi && theCurrentCenterZiId == 1) || (listType == ZiListType.searching && theCurrentCenterZiId == 1)) { // the root graph
@@ -757,9 +757,13 @@ class BasePainter extends CustomPainter{
 
     var centerZiAndChildrenLearned = doesZiExistInLearnedMap(id); //GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
     //GeneralManager.checkAndSetHasAllChildrenCompleted(id, theHittestState, theCurrentLessonId);
-    if (!centerZiAndChildrenLearned && allMemberZiLearned) {
+    if (!centerZiAndChildrenLearned && allCurrentMemberZiLearned) {
       centerZiAndChildrenLearned = true;
       setCenterZiLearned(id);
+    }
+
+    if (allCurrentMemberZiLearned && id == 1) {
+      theAllZiLearned = true;
     }
 
     // skip the center zi for id == 1, which is the default empty root zi.
@@ -821,12 +825,22 @@ class BasePainter extends CustomPainter{
       isReviewCenterPseudoNonCharZi = false;
     }
 
-    if (listType == ZiListType.zi) {
-      var posi = thePositionManager.getHintPosi();
-      double yPosi = posi.transY +
-          2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-      DisplayContinueOrSkip(listType, yPosi);
+    if (id == 1 && listType == ZiListType.zi) {
+      displayIntroMessage();
     }
+
+    if (theIsFromLessonContinuedSection) {
+      if (listType == ZiListType.zi) {
+        var posi = thePositionManager.getHintPosi();
+        double yPosi = posi.transY +
+            2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+        DisplayContinueOrSkip(listType, yPosi);
+      }
+    }
+  }
+
+  displayIntroMessage() {
+    displayTextWithValue(getString(404)/*"Study till"*/, 0, 0, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.black);
   }
 
   //void drawCenterZiRelated(int id, double transX, double transY, double charFontSize) {
@@ -933,9 +947,21 @@ class BasePainter extends CustomPainter{
 
   // Will have the same result of going to next section, although the display prompt message is different.
   DisplayContinueOrSkip(ZiListType listType, double yPosi) {
-    displayTextWithValue(getString(285) /*"Continue"*/, 0.0, yPosi,
-        thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        Colors.black);
+    var skipOrContinue;
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    var messageColor = Colors.black;
+    if (theAllZiLearned) {
+      skipOrContinue = getString(402);
+      fontSize *= 1.2;
+      messageColor = Colors.blue;
+    }
+    else {
+      skipOrContinue = getString(401);
+    }
+
+    displayTextWithValue(skipOrContinue /*"Skip"*/, 0.0, yPosi,
+        fontSize,
+        messageColor);
   }
 
   checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth, double fontSize) {

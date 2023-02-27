@@ -77,10 +77,12 @@ class BreakoutPainter extends BasePainter {
 
     var defaultFontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
     if (!isBreakoutPositionsOnly) {
-      displayTextWithValue(
-          '[' + getString(285) /*"Continue"*/ + ']', applyRatio(50.0),
-          yPositionWrapper.yPosi,
-          defaultFontSize, Colors.black);
+      if (theIsFromLessonContinuedSection) {
+        displayTextWithValue(
+            '[' + getString(285) /*"Continue"*/ + ']', applyRatio(50.0),
+            yPositionWrapper.yPosi,
+            defaultFontSize, Colors.white);
+      }
     }
     yPositionWrapper.yPosi += defaultFontSize + applyRatio(1) + applyRatio(15);
 

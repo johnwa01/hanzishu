@@ -6,6 +6,7 @@ import 'package:hanzishu/ui/listofzipage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
+import 'package:hanzishu/ui/conversationsnowballpage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
@@ -16,9 +17,9 @@ class OpenHelper {
     if (lessonSection == LessonSection.None) {
       openLessonPage(context, lessonId);
     }
-    else {
-      openLessonSectionPage(context, lessonId, lessonSection);
-    }
+    //else {
+    //  openLessonSectionPage(context, lessonId, lessonSection);
+    //}
   }
 
   static openLessonPage(BuildContext context, int lessonId) {
@@ -26,6 +27,7 @@ class OpenHelper {
         MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId)));
   }
 
+  /*
   static openLessonSectionPage(BuildContext context, int lessonId, LessonSection lessonSection) {
     switch (lessonSection) {
       case LessonSection.FullCharacterTree:
@@ -40,6 +42,9 @@ class OpenHelper {
       case LessonSection.Conversation:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationPage(lessonId: lessonId)));
         break;
+      case LessonSection.ConversationSnowball:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConversationSnowballPage(lessonId: lessonId)));
+        break;
       case LessonSection.Typing:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId)));
         break;
@@ -50,6 +55,7 @@ class OpenHelper {
         break;
     }
   }
+*/
 
   static Widget getCompletedImage(int lessonNumber) {
     var completed = theStorageHandler.hasLessonCompleted(lessonNumber);
@@ -65,6 +71,20 @@ class OpenHelper {
       return SizedBox(height: 0.0, width: 0.0);
     }
 
+  }
+
+  // not sure why can not return this function instead
+  Widget getAssetImage(String imagePath, double xSize, double ySize) {
+    if (imagePath.length > 0) {
+      return Ink.image(
+        image: AssetImage(imagePath),
+        width: xSize,
+        height: ySize,
+      );
+    }
+    else {
+      return SizedBox(height: 0.0, width: 0.0);
+    }
   }
 
   static Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
@@ -112,11 +132,14 @@ class OpenHelper {
         case LessonSection.Conversation:
           lessonOrSectionName = "4. " + getString(4); //"Conversation";
           break;
+        case LessonSection.ConversationSnowball:
+          lessonOrSectionName = "5. " + getString(373); //"ConversationSnowball";
+          break;
         case LessonSection.Typing:
-          lessonOrSectionName = "5. " + getString(5); //"Typing exercises";
+          lessonOrSectionName = "6. " + getString(5); //"Typing exercises";
           break;
         case LessonSection.Quiz:
-          lessonOrSectionName = "6. " + getString(6); //"Quiz";
+          lessonOrSectionName = "7. " + getString(6); //"Quiz";
           break;
         case LessonSection.None:
           break;

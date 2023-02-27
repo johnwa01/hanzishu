@@ -27,7 +27,7 @@ class _LessonPageState extends State<LessonPage> {
   //_LessonPageState(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage()));
   //}
-
+  double screenWidth;
   int numberOfExercises = 0;
 
   @override
@@ -40,6 +40,10 @@ class _LessonPageState extends State<LessonPage> {
       LessonManager.populateLessonsInfo();
       theHavePopulatedLessonsInfo = true;
     }
+  }
+
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
   _getRequests() async {
@@ -59,6 +63,7 @@ class _LessonPageState extends State<LessonPage> {
       }
       else {
         // reset
+        theIsFromLessonContinuedSection = true; // exit and prepare for next visit
         numberOfExercises = 0;
       }
     //}
@@ -66,6 +71,9 @@ class _LessonPageState extends State<LessonPage> {
 
   @override
   Widget build(BuildContext context) {
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+
+    theIsFromLessonContinuedSection = false;
     theCurrentLessonId = widget.lessonId;
 
     String lessonName = getString(7) /*"Lesson"*/ + " " + theCurrentLessonId.toString() + ": " + getString(BaseLessonTitleTranslationStringID + theLessonList[theCurrentLessonId].titleId)/* + " " + theLessonList[theCurrentLessonId].title*/;
@@ -87,6 +95,7 @@ class _LessonPageState extends State<LessonPage> {
   launchLessonSection(BuildContext context, int lessonId, int lessonSection) {
     switch (lessonSection) {
       case 0:
+        theAllZiLearned = false;
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -163,7 +172,7 @@ class _LessonPageState extends State<LessonPage> {
           //  padding: EdgeInsets.all(5),
           //),
           Container(
-            child: Text(getString(8) + lessonId.toString()/*"Please complete exercises in order."*/, style: TextStyle(fontSize: 16.0),),
+            child: Text(getString(8) + lessonId.toString()/*"Please complete exercises in order."*/, style: TextStyle(fontSize: 20.0),),
             padding: EdgeInsets.all(15),
           ),
           //Container(
@@ -176,9 +185,9 @@ class _LessonPageState extends State<LessonPage> {
             child: //Column(
               //children: [
                 Ink.image(
-                  image: AssetImage("assets/core/characterlist.png"),
-                  width: 130,
-                  height: 80,
+                  image: AssetImage("assets/core/lessonimage.png"),
+                  width: 170, //130
+                  height: 110, //80
                 ),
                 //Text(
                 //  lessonOrSectionName, //lesson.titleTranslation, //"Hello",
@@ -186,43 +195,97 @@ class _LessonPageState extends State<LessonPage> {
                 //),
               //]
             //),
-
-            onTap: () => launchLessonSection(context, 1, 0),
+            onTap: () => { theIsFromLessonContinuedSection = true,
+                        launchLessonSection(context, 1, 0), }
           ),
-/*
+          SizedBox(
+            height: 60.0, //40
+          ),
           Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                OpenHelper.getImageButton(context, lessonId, "assets/core/characterdrill.png", LessonSection.FullCharacterTree, false, 131, 81),
-                OpenHelper.getImageButton(context, lessonId, "assets/core/characterlist.png", LessonSection.Characters, false, 131, 81),
-              ],
-            ),
-            padding: EdgeInsets.all(20),
+            child: Text(getString(403), style: TextStyle(fontSize: 16.0),),
+            //padding: EdgeInsets.all(15),
           ),
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                OpenHelper.getImageButton(context, lessonId, "assets/core/breakout.png", LessonSection.Decomposing, false, 131, 81),
-                OpenHelper.getImageButton(context, lessonId, "assets/core/conversations.png", LessonSection.Conversation, false, 131, 81),
+                getButton(context, lessonId, 0),
+                getButton(context, lessonId, 1),
               ],
             ),
-            padding: EdgeInsets.all(20),
+            //padding: EdgeInsets.all(20),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                getButton(context, lessonId, 2),
+                getButton(context, lessonId, 3),
+              ],
+            ),
+            //padding: EdgeInsets.all(20),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                getButton(context, lessonId, 4),
+                getButton(context, lessonId, 5),
+              ],
+            ),
+            //padding: EdgeInsets.all(20),
           ),
           Container(
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  OpenHelper.getImageButton(context, lessonId, "assets/core/typing.png", LessonSection.Typing, false, 131, 80),
-                  OpenHelper.getImageButton(context, lessonId, "assets/core/quiz.png", LessonSection.Quiz, false, 131,80),
+                  getButton(context, lessonId, 6),
                 ],
             ),
-            padding: EdgeInsets.all(20),
+            //padding: EdgeInsets.all(20),
           ),
-*/
         ]
       ),
     );
+  }
+
+  Widget getButton(BuildContext context, int lessonId, int lessonSection) {
+    String buttonTitle = "";
+    switch (lessonSection) {
+      case 0:
+        buttonTitle = getString(1);
+        break;
+      case 1:
+        buttonTitle = getString(2);
+        break;
+      case 2:
+        buttonTitle = getString(3);
+        break;
+      case 3:
+        buttonTitle = getString(4);
+        break;
+      case 4:
+        buttonTitle = getString(373);
+        break;
+      case 5:
+        buttonTitle = getString(5);
+        break;
+      case 6:
+        buttonTitle = getString(6);
+        break;
+      default:
+        break;
+    }
+
+    var butt = FlatButton(
+      color: Colors.white,
+      textColor: Colors.black,
+      onPressed: () {
+        launchLessonSection(context, lessonId, lessonSection);
+      },
+      child: Text(buttonTitle, style: TextStyle(fontSize: getSizeRatioWithLimit() * 14.0)),
+    );
+
+    return butt;
   }
 }
