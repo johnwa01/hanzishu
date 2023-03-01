@@ -220,7 +220,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       color: Colors.blueAccent, //white,
       textColor: Colors.brown,
       onPressed: () {
-        theIsBackArrowLessonExit = false;
+        theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
       child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
@@ -231,7 +231,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
             ZiOrCharSize.defaultSize) + applyRatio(1) + applyRatio(15)),
         left: applyRatio(50.0),
         height: applyRatio(25.0), //posiAndSize.height,
-        width: applyRatio(150.0), //posiAndSize.width,
+        width: applyRatio(100.0), //posiAndSize.width,
         child: butt
     );
 

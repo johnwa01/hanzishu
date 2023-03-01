@@ -189,7 +189,7 @@ class _ConversationPageState extends State<ConversationPage> {
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
         else if (buttonType == ButtonType.launchPage) {
-          theIsBackArrowLessonExit = false;
+          theIsBackArrowExit = false;
           Navigator.of(context).pop();
         }
       },
@@ -292,7 +292,7 @@ class _ConversationPageState extends State<ConversationPage> {
       var position = PositionAndSize(
           xStartPosi,
           applyRatioWithLimit(100.0 + 130.0 * (sentenceLength - 1) + 80),
-          applyRatioWithLimit(180.0 /*temp width*/), applyRatioWithLimit(20.0),
+          applyRatioWithLimit(100.0 /*temp width*/), applyRatioWithLimit(20.0),
           0.0, 0.0);
       buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
     }

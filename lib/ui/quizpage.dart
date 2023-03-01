@@ -95,12 +95,16 @@ class _QuizPageState extends State<QuizPage> {
   Widget getQuizWizard(BuildContext context) {
     return Column(
         children: <Widget>[
-          Container(
-            //       padding: EdgeInsets.all(30),
-          ),
+          //Container(
+          //  padding: EdgeInsets.all(5),
+          //),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.all(25 * getSizeRatio()),
+            padding: EdgeInsets.only(top: 10 * getSizeRatio(), left: 10 * getSizeRatio(), right: 10 * getSizeRatio()), //25
+          ),
+          Container(
+            alignment: Alignment.topRight,
+            child: getSkipThisSection(),
           ),
           Container(
             child: getQuestion(context),
@@ -378,6 +382,23 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
+  Widget getSkipThisSection() {
+    if (theIsFromLessonContinuedSection) {
+      return FlatButton(
+        child: Text(
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
+        color: Colors.white,
+        textColor: Colors.blueAccent,
+        onPressed: () {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
 
   Widget getContinue(BuildContext context) {
     if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
@@ -424,7 +445,7 @@ class _QuizPageState extends State<QuizPage> {
     Widget okButton = FlatButton(
       child: Text(getString(286)/*"Ok"*/),
       onPressed: () {
-        theIsBackArrowLessonExit = false;
+        theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
       },

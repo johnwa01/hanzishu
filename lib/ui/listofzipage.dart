@@ -126,7 +126,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
       color: Colors.blueAccent, //white,
       textColor: Colors.brown,
       onPressed: () {
-        theIsBackArrowLessonExit = false;
+        theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
       child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
@@ -137,7 +137,29 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
             ZiOrCharSize.defaultSize) + applyRatio(1) + applyRatio(15)),
         left: applyRatio(50.0),
         height: applyRatio(25.0), //posiAndSize.height,
-        width: applyRatio(150.0), //posiAndSize.width,
+        width: applyRatio(100.0), //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedSkipButton() {
+    var butt = FlatButton(
+      color: Colors.blueAccent, //white,
+      textColor: Colors.brown,
+      onPressed: () {
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+    );
+
+    var posiCenter = Positioned(
+        top: applyRatio(10.0),
+        left: applyRatio(screenWidth - 100.0),
+        height: thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize) * 1.4, //posiAndSize.height,
+        width: applyRatio(90.0), //posiAndSize.width,
         child: butt
     );
 
@@ -156,6 +178,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
     // Continue button
     if (theIsFromLessonContinuedSection) {
       buttons.add(getPositionedContinueButton());
+      buttons.add(getPositionedSkipButton());
     }
 
     return buttons;

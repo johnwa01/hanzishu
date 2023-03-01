@@ -17,7 +17,7 @@ class ToolsPage extends StatefulWidget {
 }
 
 class _ToolsPageState extends State<ToolsPage> {
-  var exerciseCompleted = [false, false, false, false, false, false, false, false, false, false, false];
+  //var exerciseCompleted = [false, false, false, false, false, false, false, false, false, false, false];
 
   int numberOfExercises = 0;
 
@@ -37,19 +37,28 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   _getRequests() async {
-    if (theNewlyCompletedTypingExercise != -1) {
-      exerciseCompleted[theNewlyCompletedTypingExercise] = true;
-      theNewlyCompletedTypingExercise = -1;
+    //if (theNewlyCompletedTypingExercise != -1) {
+      //exerciseCompleted[theNewlyCompletedTypingExercise] = true;
+      //theNewlyCompletedTypingExercise = -1;
 
       //setState(() {
         // force refresh every time to make sure to pick up completed icon
         this.numberOfExercises += 1;
       //});
 
-      if (numberOfExercises <= 8) {
+      if (!theIsBackArrowExit && this.numberOfExercises <= 7) {
+        // reinit
+        theIsBackArrowExit = true;
         LaunchExercise(this.numberOfExercises);
       }
-    }
+      else {
+        // init all variables
+        // either true back arrow or all done
+        theIsBackArrowExit = true;
+        theIsFromTypingContinuedSection = false;
+        this.numberOfExercises = 0;
+      }
+    //}
   }
 
   LaunchExercise(int exerciseNumber) {
@@ -131,6 +140,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 8:
         Navigator.push(
           context,
@@ -141,6 +151,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        */
       default:
         break;
     }
@@ -173,6 +184,8 @@ class _ToolsPageState extends State<ToolsPage> {
           title: Image.asset(keyboardImageName, width: 100, height: 70),
           //trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
+            //TODO: can take this as a parameter to the typing and component pages.
+            theIsFromTypingContinuedSection = true;
             LaunchExercise(0);
           },
         ),

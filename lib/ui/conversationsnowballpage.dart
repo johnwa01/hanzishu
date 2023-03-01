@@ -172,7 +172,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
           color: Colors.blueAccent,
           textColor: Colors.white,
           onPressed: () {
-            theIsBackArrowLessonExit = false;
+            theIsBackArrowExit = false;
             Navigator.of(context).pop();
           },
         ),

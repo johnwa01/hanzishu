@@ -56,14 +56,15 @@ class _LessonPageState extends State<LessonPage> {
       this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowLessonExit && numberOfExercises <= 6) {
+      if (!theIsBackArrowExit && numberOfExercises <= 6) {
         // re-init for next section's action
-        theIsBackArrowLessonExit = true;
+        theIsBackArrowExit = true;
         launchLessonSection(context, theCurrentLessonId, numberOfExercises);
       }
       else {
         // reset
-        theIsFromLessonContinuedSection = true; // exit and prepare for next visit
+        theIsFromLessonContinuedSection = false; // exit and prepare for next visit
+        theIsBackArrowExit = true;
         numberOfExercises = 0;
       }
     //}
@@ -73,7 +74,7 @@ class _LessonPageState extends State<LessonPage> {
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
-    theIsFromLessonContinuedSection = false;
+    //theIsFromLessonContinuedSection = false;
     theCurrentLessonId = widget.lessonId;
 
     String lessonName = getString(7) /*"Lesson"*/ + " " + theCurrentLessonId.toString() + ": " + getString(BaseLessonTitleTranslationStringID + theLessonList[theCurrentLessonId].titleId)/* + " " + theLessonList[theCurrentLessonId].title*/;

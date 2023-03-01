@@ -691,6 +691,10 @@ class _InputZiPageState extends State<InputZiPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: fontSize1),
+            Container(
+              alignment: Alignment.topRight,
+              child: getSkipThisSection(),
+            ),
             Text(
                 str,
                 //getString(110)/*"The Component Input Method breaks up a Chinese Character into Components and types in the mapped letters on the English keyboard."*/,
@@ -902,6 +906,10 @@ class _InputZiPageState extends State<InputZiPage> {
             children: <Widget>[
               //Spacer(),
               getHelpOrProgressIndicator(),
+              Container(
+                alignment: Alignment.topRight,
+                child: getSkipThisSection(),
+              ),
               getComponentRelated(),
               SizedBox(
                   width: double.infinity,
@@ -945,9 +953,9 @@ class _InputZiPageState extends State<InputZiPage> {
               SizedBox(
                   height: 40.0, //40
               ),
-              SizedBox(
-                  child: getContinue(),
-              ),
+              //SizedBox(
+              //    child: getContinue(),
+              //),
               // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
             ]
           ),
@@ -958,15 +966,15 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Widget getContinue() {
-    if (theIsFromLessonContinuedSection) {
+  Widget getSkipThisSection() {
+    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection) {
       return FlatButton(
         child: Text(
-          getString(401) /*"Continue"*/, style: TextStyle(fontSize: 20.0),),
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
         color: Colors.white,
         textColor: Colors.blueAccent,
         onPressed: () {
-          theIsBackArrowLessonExit = false;
+          theIsBackArrowExit = false;
           Navigator.of(context).pop();
         },
       );
@@ -975,6 +983,25 @@ class _InputZiPageState extends State<InputZiPage> {
       return SizedBox(width: 0, height: 0);
     }
   }
+  /*
+  Widget getContinue() {
+    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection) {
+      return FlatButton(
+        child: Text(
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
+        color: Colors.white,
+        textColor: Colors.blueAccent,
+        onPressed: () {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+*/
 
   Widget getHelpOrProgressIndicator() {
     if (typingType == TypingType.FreeTyping) {
@@ -1344,7 +1371,7 @@ class _InputZiPageState extends State<InputZiPage> {
     Widget okButton = FlatButton(
       child: Text("OK"),
       onPressed: () {
-        theIsBackArrowLessonExit = false;
+        theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
       },
@@ -1363,7 +1390,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.LeadComponents) {
       title = getString(115)/*"Good job!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 1;
+      //theNewlyCompletedTypingExercise = 1;
     }
     /*
     else if (typingType == TypingType.ExpandedInitial) {
@@ -1375,43 +1402,45 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.ExpandedReview) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 3;
+      //theNewlyCompletedTypingExercise = 3;
     }
     else if (typingType == TypingType.ExpandedGeneral) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 4;
+      //theNewlyCompletedTypingExercise = 4;
     }
     else if (typingType == TypingType.AttachedComponents) {
       title = getString(118)/*"Congratulations!"*/;
-      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 5;
+      content = getString(355)/*"You have completed all exercises! You can ..."*/;
+      //theNewlyCompletedTypingExercise = 5;
     }
     else if (typingType == TypingType.TwinComponents) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 6;
+      //theNewlyCompletedTypingExercise = 6;
     }
     else if (typingType == TypingType.SubComponents) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 7;
+      //theNewlyCompletedTypingExercise = 7;
     }
     else if (typingType == TypingType.SingleComponent) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 8;
+      //theNewlyCompletedTypingExercise = 8;
     }
     else if (typingType == TypingType.TwoComponents) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 9;
+      //theNewlyCompletedTypingExercise = 9;
     }
+    /*
     else if (typingType == TypingType.GeneralExercise) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(355)/*"You have completed this exercise! Please move on to the next one."*/;
       theNewlyCompletedTypingExercise = 10;
     }
+    */
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(115)/*"Good job!"*/;
 

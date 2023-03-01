@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 var theString_zh_CN = [
   Local(0, "未知"),
   Local(1, "识字钻"),
-  Local(2, "抽认卡"),
+  Local(2, "字卡"),
   Local(3, "汉字分解"),
   Local(4, "对话"),
   Local(5, "打字练习"),
@@ -101,7 +101,7 @@ var theString_zh_CN = [
   Local(96, "首字表"),
   Local(97, "部件"),
   Local(98, "汉字树拼形输入法"),
-  Local(99, "九个练习教会你汉字树拼形输入法 \n\n[请将你的电脑/手机设置在英文输入模式下。"),
+  Local(99, "汉字树拼形输入法教程 \n\n[请将你的电脑/手机设置在英文输入模式下。"),
   Local(100, "试试看"),
   Local(101, "部件与键盘配对组"),
   Local(102, "按组记忆"),

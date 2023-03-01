@@ -433,7 +433,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       color: Colors.white,
       textColor: Colors.brown,
       onPressed: () {
-        theIsBackArrowLessonExit = false;
+        theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
       child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
@@ -445,7 +445,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         left: getSizeRatio() * 0.0,
         height: getSizeRatio() * 25.0,
         //posiAndSize.height,
-        width: getSizeRatio() * 200.0,
+        width: getSizeRatio() * 100.0,
         //posiAndSize.width,
         child: butt
     );

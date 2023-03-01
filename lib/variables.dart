@@ -34,7 +34,7 @@ var thePreviousCenterZiId = 0;
 
 //var theLessonsPage;
 bool theHasNewlyCompletedLesson = false;
-int theNewlyCompletedTypingExercise = -1;
+//int theNewlyCompletedTypingExercise = -1;
 
 var theDefaultLocale = "en_US";
 
@@ -73,9 +73,9 @@ String globalTestDoubleByteCode = "";
 
 GlobalKey globalKeyNav = new GlobalKey(debugLabel: 'btm_app_bar');
 
-bool theIsBackArrowLessonExit = true;
-
+bool theIsBackArrowExit = true;
 bool theIsFromLessonContinuedSection = false;
+bool theIsFromTypingContinuedSection = false;
 
 bool theAllZiLearned = false;
 

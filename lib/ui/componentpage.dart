@@ -27,6 +27,7 @@ class _ComponentPageState extends State<ComponentPage> {
   int totalQuestions;
   double screenWidth;
   int preIndexAtCurrentIndex0;
+  bool wasLastAnswerCorrect;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -49,6 +50,7 @@ class _ComponentPageState extends State<ComponentPage> {
     //theStatisticsManager.initLessonQuizResults();
 
     totalQuestions = theComponentManager.getTotalQuestions(widget.questionType);
+    wasLastAnswerCorrect = false;
 
     setState(() {
       answeredPosition = AnswerPosition.none;
@@ -117,15 +119,37 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  Widget getSkipThisSection() {
+    if (theIsFromTypingContinuedSection) {
+      return FlatButton(
+        child: Text(
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
+        color: Colors.white,
+        textColor: Colors.blueAccent,
+        onPressed: () {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+
   Widget getComponentWizard(BuildContext context) {
     return Column(
         children: <Widget>[
           Container(
-            padding: EdgeInsets.all(5.0 * getSizeRatioWithLimit()), //10.0
+            padding: EdgeInsets.all(10.0 * getSizeRatioWithLimit()), //5.0
           ),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.all(10 * getSizeRatioWithLimit()),
+            padding: EdgeInsets.only(left: 10 * getSizeRatioWithLimit(), right: 10 * getSizeRatioWithLimit()),
+          ),
+          Container(
+            alignment: Alignment.topRight,
+             child: getSkipThisSection(),
           ),
           Container(
             child: getQuestion(context),
@@ -714,18 +738,25 @@ class _ComponentPageState extends State<ComponentPage> {
       return Container(width:0.0, height: questionSize);
     }
     else {
-      String question = getString(128)/*"Please map the Component to its key."*/;
+      String question = "";
+      if (wasLastAnswerCorrect) {
+        question = getString(284)/*"Correct. "*/;
+      }
+
+      if (questionType == QuestionType.Component) {
+        question += getString(128) /*"Please map the Component to its key."*/;
+      }
 
       if (questionType == QuestionType.ExpandedComponent) {
         var hint = getString(theExpandedComponentList[currentIndex].hint);
-        question =
+        question +=
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
       if (questionType == QuestionType.ShowAttachedComponent) {
         var hint = getString(theShowAttachedComponentList[currentIndex].hint);
-        question =
-            getString(129)/*"Guess the Leat and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
+        question +=
+            getString(129)/*"Guess the Lead and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")"; //TODO: update the string for this case
       }
       /*
@@ -1002,6 +1033,15 @@ class _ComponentPageState extends State<ComponentPage> {
       padding: EdgeInsets.all(2.0), //EdgeInsets.zero,
       onPressed: () {
         setPositionState(position);
+        wasLastAnswerCorrect = false;
+
+        if (answeredPosition == theComponentManager.getCorrectAnswerPosition()) {
+          wasLastAnswerCorrect = true;
+          // if correct, directly move to next question
+          setState(() {
+            runContinueLogic();
+          });
+        }
       },
       child: Image.asset(
         "assets/letters/L" + answerDisplayValue + ".png",
@@ -1148,11 +1188,17 @@ class _ComponentPageState extends State<ComponentPage> {
         result = "Please read above, then ";
       }
       */
+
+      bool isCorrectAnswer = true;
+
       if (/*!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups &&*/ !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents && !isHeaderOfShowAttachedComponents) { // skip the first one
         //var answerType = theComponentManager.getAnswerType(answeredPosition);
 
-        if (answeredPosition !=
-            theComponentManager.getCorrectAnswerPosition()) {
+        if (answeredPosition != theComponentManager.getCorrectAnswerPosition()) {
+          isCorrectAnswer = false;
+        }
+
+        if (!isCorrectAnswer) {
           //TODO: theStatisticsManager.incrementLessonQuizResult(false);
           result = getString(283)/*"Incorrect. "*/;
         }
@@ -1170,36 +1216,48 @@ class _ComponentPageState extends State<ComponentPage> {
 
       //_updateProgress();
 
-      return Container(
-        child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit()),),
-          color: Colors.blueAccent, // Colors.brown,
-          textColor: Colors.white,
-          onPressed: () {
-            setState(() {
-              setPositionState(AnswerPosition.continueNext);
+      if (!isCorrectAnswer || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
+        return Container(
+          child: FlatButton(
+            child: Text(result,
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit()),),
+            color: Colors.blueAccent, // Colors.brown,
+            textColor: Colors.white,
+            onPressed: () {
+              setState(() {
+                runContinueLogic();
+              });
+            },
+          ),
+        );
+      }
+      else { // correct answer - will not happen actually
+      //  setState(() {
+      //    runContinueLogic();
+      //  });
+        return SizedBox(width: 0, height: 0);
+      }
+    }
+  }
 
-              // prepare for next one
-              // Could be done in Build(), but Build won't allow showCompletedDialog() there.
+  runContinueLogic() {
+    setPositionState(AnswerPosition.continueNext);
+    // prepare for next one
+    // Could be done in Build(), but Build won't allow showCompletedDialog() there.
 
-              if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
-                preIndexAtCurrentIndex0++;
-              }
-              else {
-                currentIndex = theComponentManager.getNextIndex();
-              }
+    if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+      preIndexAtCurrentIndex0++;
+    }
+    else {
+      currentIndex = theComponentManager.getNextIndex();
+    }
 
-              theComponentManager.resetCorrectAnswerPosition();
-              //}
-              //if (theComponentManager.getCurrentType() == QuestionType.none) {
-              if (currentIndex == -1) {
-                theComponentManager.initCurrentIndex();
-                showCompletedDialog(context);
-              }
-            });
-          },
-        ),
-      );
+    theComponentManager.resetCorrectAnswerPosition();
+    //}
+    //if (theComponentManager.getCurrentType() == QuestionType.none) {
+    if (currentIndex == -1) {
+      theComponentManager.initCurrentIndex();
+      showCompletedDialog(context);
     }
   }
 
@@ -1208,7 +1266,9 @@ class _ComponentPageState extends State<ComponentPage> {
     Widget okButton = FlatButton(
       child: Text(getString(286)/*"OK"*/),
       onPressed: () {
-        Navigator.of(context).pop(); // out this dialog  //Navigator.of(context).pop(); // to the lesson page
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop(); // out of this dialog first
+        Navigator.of(context).pop(); // then to the lesson page
       },
     );
 
@@ -1236,17 +1296,17 @@ class _ComponentPageState extends State<ComponentPage> {
       if (questionType == QuestionType.Component) {
         title = getString(134)/*"Way to go!"*/;
         content = getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
-        theNewlyCompletedTypingExercise = 0;
+        //theNewlyCompletedTypingExercise = 0;
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
         content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
-        theNewlyCompletedTypingExercise = 2;
+        //theNewlyCompletedTypingExercise = 2;
       }
     if (questionType == QuestionType.ShowAttachedComponent) {
       title = getString(391)/*"Wow!"*/;
       content = getString(392)/*"You know your Attached Components! Let’s review it in next exercise."*/;
-      theNewlyCompletedTypingExercise = 7;
+      //theNewlyCompletedTypingExercise = 7;
     }
       /*
     if (questionType == QuestionType.ReviewExpandedComponent) {
