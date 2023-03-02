@@ -324,7 +324,8 @@ var theZiForExpandedReviewExerciseList=[
   ZiWithComponentsAndStrokes("叁", [], "E31.png,E41.png", 0),
   ZiWithComponentsAndStrokes("坞", [], "E43.png,E34.png", 0),
   //ZiWithComponentsAndStrokes("鸭", [], "E15.png,E34.png", 0),
-  ZiWithComponentsAndStrokes("描", [], "E41.png,E61.png", 0),//蕾
+  //ZiWithComponentsAndStrokes("描", [], "E41.png,E61.png", 0),//蕾
+  ZiWithComponentsAndStrokes("谓", [], "E41.png,E61.png", 0),
   ZiWithComponentsAndStrokes("佐", [], "E24.png,E61.png", 0),
   ZiWithComponentsAndStrokes("悟", [], "E23.png,E34.png", 0),
   ZiWithComponentsAndStrokes("诏", [], "E21.png,E25.png", 0),
@@ -440,8 +441,9 @@ var theZiForAttachedCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], ""/*N32.png*/, 336),
   ZiWithComponentsAndStrokes("痰", [], "N32.png", 0),
   ZiWithComponentsAndStrokes("到", [], "N31.png", 0),
-  ZiWithComponentsAndStrokes("雅", [], "N11.png", 0),
+  //ZiWithComponentsAndStrokes("雅", [], "N11.png", 0),
   //ZiWithComponentsAndStrokes("捧", [], "N12.png", 0),
+  ZiWithComponentsAndStrokes("吼", [], "N12.png", 0),
   ZiWithComponentsAndStrokes("晚", [], "N12.png", 0),
   ZiWithComponentsAndStrokes("聪", [], "N13.png", 0),
   ZiWithComponentsAndStrokes("碘", [], "N15.png", 0),
@@ -460,15 +462,15 @@ var theZiForAttachedCompExerciseList=[
   //ZiWithComponentsAndStrokes("谍", [], "N41.png", 0), //TODO: hint wrong
   //ZiWithComponentsAndStrokes("硕", [], "N41.png", 0),
   ZiWithComponentsAndStrokes("氨", [], "N42.png", 0),
-  ZiWithComponentsAndStrokes("鞭", [], "N43.png", 0),
+  //ZiWithComponentsAndStrokes("鞭", [], "N43.png", 0),
   ZiWithComponentsAndStrokes("婚", [], "N44.png", 0),
   //ZiWithComponentsAndStrokes("颠", [], "N51.png", 0),
   //ZiWithComponentsAndStrokes("赊", [], "N52.png", 0), //TODO: hint wrong
   //ZiWithComponentsAndStrokes("铠", [], "N53.png", 0),
-  ZiWithComponentsAndStrokes("修", [], "N54.png", 0),
+  //ZiWithComponentsAndStrokes("修", [], "N54.png", 0),
   //ZiWithComponentsAndStrokes("溅", [], "N54.png", 0),
   //ZiWithComponentsAndStrokes("满", [], "N61.png", 0), hard to separate two
-  //ZiWithComponentsAndStrokes("偏", [], "N61.png", 0),
+  ZiWithComponentsAndStrokes("偏", [], "N61.png", 0),
   //ZiWithComponentsAndStrokes("篇", [], "N61.png", 0), //some font might be wrong
   ZiWithComponentsAndStrokes("藐", [], "N62.png", 0),
   //ZiWithComponentsAndStrokes("漾", [], "N62.png", 0),
@@ -557,7 +559,7 @@ var theZiForTwoCompExerciseList=[
   ZiWithComponentsAndStrokes("呆", [], "", 0),
   ZiWithComponentsAndStrokes("岁", [], "", 0),
   //ZiWithComponentsAndStrokes("好", [], "", 0),
-  ZiWithComponentsAndStrokes("扛", [], "", 0),
+  //ZiWithComponentsAndStrokes("扛", [], "", 0),
   //ZiWithComponentsAndStrokes("多", [], "", 0),
   ZiWithComponentsAndStrokes("六", [], "", 0),
   ZiWithComponentsAndStrokes("汗", [], "", 0), //老
@@ -571,6 +573,7 @@ var theZiForTwoCompExerciseList=[
   ZiWithComponentsAndStrokes("幼", [], "", 0), //系
   //ZiWithComponentsAndStrokes("牺", [], "", 0),
   ZiWithComponentsAndStrokes("明", [], "", 0),
+  ZiWithComponentsAndStrokes("汁", [], "", 0),
   //ZiWithComponentsAndStrokes("对", [], "", 0),
 ];
 

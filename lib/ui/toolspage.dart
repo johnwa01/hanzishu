@@ -46,7 +46,7 @@ class _ToolsPageState extends State<ToolsPage> {
         this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowExit && this.numberOfExercises <= 7) {
+      if (!theIsBackArrowExit && this.numberOfExercises <= 8) {
         // reinit
         theIsBackArrowExit = true;
         LaunchExercise(this.numberOfExercises);
@@ -140,7 +140,6 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
       case 8:
         Navigator.push(
           context,
@@ -151,7 +150,6 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        */
       default:
         break;
     }

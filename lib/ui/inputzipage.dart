@@ -1411,7 +1411,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.AttachedComponents) {
       title = getString(118)/*"Congratulations!"*/;
-      content = getString(355)/*"You have completed all exercises! You can ..."*/;
+      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
       //theNewlyCompletedTypingExercise = 5;
     }
     else if (typingType == TypingType.TwinComponents) {
@@ -1434,13 +1434,11 @@ class _InputZiPageState extends State<InputZiPage> {
       content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
       //theNewlyCompletedTypingExercise = 9;
     }
-    /*
     else if (typingType == TypingType.GeneralExercise) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(355)/*"You have completed this exercise! Please move on to the next one."*/;
-      theNewlyCompletedTypingExercise = 10;
+      //theNewlyCompletedTypingExercise = 10;
     }
-    */
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(115)/*"Good job!"*/;
 
