@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/componentpainter.dart';
 import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 
@@ -162,9 +163,12 @@ class _ComponentPageState extends State<ComponentPage> {
           Container(
             padding: EdgeInsets.only(top: 15.0 * getSizeRatioWithLimit()), //5.0
           ),
-          Container(
-            child: getContinue(context),
-            padding: EdgeInsets.all(5),
+          Row(
+            children: <Widget>[
+              Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+              SizedBox(width: 50.00 * getSizeRatioWithLimit()),
+              Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+            ]
           ),
         ]
     );
@@ -743,18 +747,25 @@ class _ComponentPageState extends State<ComponentPage> {
         question = getString(284)/*"Correct. "*/;
       }
 
+      var hint;
       if (questionType == QuestionType.Component) {
-        question += getString(128) /*"Please map the Component to its key."*/;
+        var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(currentIndex);
+        question += getString(128); /*"Please map the Component to its key."*/
+        if (leadCompIndex >= 0) {
+          hint = getString(theLeadComponentList[leadCompIndex].hint);
+          question += " (" +
+                  getString(90) /*"Hint"*/ + ": " +
+                  hint + ")";
+        }
       }
-
-      if (questionType == QuestionType.ExpandedComponent) {
-        var hint = getString(theExpandedComponentList[currentIndex].hint);
+      else if (questionType == QuestionType.ExpandedComponent) {
+        hint = getString(theExpandedComponentList[currentIndex].hint);
         question +=
             getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")";
       }
-      if (questionType == QuestionType.ShowAttachedComponent) {
-        var hint = getString(theShowAttachedComponentList[currentIndex].hint);
+      else if (questionType == QuestionType.ShowAttachedComponent) {
+        hint = getString(theShowAttachedComponentList[currentIndex].hint);
         question +=
             getString(129)/*"Guess the Lead and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
                 hint + ")"; //TODO: update the string for this case
@@ -1169,7 +1180,7 @@ class _ComponentPageState extends State<ComponentPage> {
     bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
     bool isHeaderOfShowAttachedComponents = theComponentManager.isHeaderOfShowAttachedComponents();
 
-    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) /*|| isHeaderOfComponentInGroup || isFirstHeaderOfGroups || isSecondHeaderOfGroups || isThirdHeaderOfGroups*/ || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition) || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
       var result = ""; // = "Correct! ";
       /*
       if (isHeaderOfComponentInGroup) {
@@ -1191,7 +1202,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
       bool isCorrectAnswer = true;
 
-      if (/*!isHeaderOfComponentInGroup && !isFirstHeaderOfGroups && !isSecondHeaderOfGroups && !isThirdHeaderOfGroups &&*/ !isHeaderOfRandomComponents && !isHeaderOfExpandedComponents && !isHeaderOfShowAttachedComponents) { // skip the first one
+      if (!isHeaderOfRandomComponents && !isHeaderOfExpandedComponents && !isHeaderOfShowAttachedComponents) { // skip the first one
         //var answerType = theComponentManager.getAnswerType(answeredPosition);
 
         if (answeredPosition != theComponentManager.getCorrectAnswerPosition()) {
@@ -1238,6 +1249,42 @@ class _ComponentPageState extends State<ComponentPage> {
         return SizedBox(width: 0, height: 0);
       }
     }
+  }
+
+  Widget getPrevious(BuildContext context) {
+    bool isHeaderOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
+    bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
+    bool isHeaderOfShowAttachedComponents = theComponentManager.isHeaderOfShowAttachedComponents();
+
+      var result = getString(405); // "Previous one"
+
+      //skip the first real question
+      if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1)) {
+        return Container(
+          child: FlatButton(
+            child: Text(result,
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit()),),
+            color: Colors.grey, // Colors.brown,
+            textColor: Colors.white,
+            onPressed: () {
+              setPositionState(AnswerPosition.continueNext);
+              theComponentManager.resetCorrectAnswerPosition();
+              //answeredPosition = AnswerPosition.none;
+              setState(() {
+                if (currentIndex >= 1) {
+                  currentIndex = theComponentManager.getPreviousIndex();
+                }
+                else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1) {
+                  preIndexAtCurrentIndex0--;
+                }
+              });
+            },
+          ),
+        );
+      }
+      else { // correct answer - will not happen actually
+        return SizedBox(width: 0, height: 0);
+      }
   }
 
   runContinueLogic() {

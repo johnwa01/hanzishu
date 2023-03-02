@@ -143,6 +143,7 @@ class LeadComponent {
   int indexInGroup;
   String image;
   String strokesString;
+  int hint;
   List<double> strokes;
 
 
@@ -156,6 +157,7 @@ class LeadComponent {
     int indexInGroup,
         String image,
         String strokesString,
+      int hint,
       List<double> strokes)
   {
       this.id = id;
@@ -167,6 +169,7 @@ class LeadComponent {
       this.indexInGroup = indexInGroup;
       this.image = image;
       this.strokesString = strokesString;
+      this.hint = hint;
       this.strokes = strokes;
   }
 }

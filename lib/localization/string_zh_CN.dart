@@ -408,4 +408,5 @@ var theString_zh_CN = [
   Local(402, "继续至下一部份"),
   Local(403, "捷径"),
   Local(404, "学习到所有字都打对勾"),
+  Local(405, "前一个"),
 ];

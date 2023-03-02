@@ -71,6 +71,21 @@ class ComponentManager {
     return true;
   }
 
+  static int getHintIndexOfGivenComponent(int randomComponentListIndex) {
+    var randomComp = theRandomComponentList[randomComponentListIndex];
+    var groupId = randomComp.groupNumber;
+    var internalId = randomComp.indexInGroup;
+
+    for (int i = 0; i < theLeadComponentList.length; i++) {
+      var leadComp = theLeadComponentList[i];
+      if (leadComp.groupNumber == groupId && leadComp.indexInGroup == internalId) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
   bool isAGroupAnswerType(AnswerPosition answerPosition) {
     if (answerPosition == AnswerPosition.groupPosition1 ||
         answerPosition == AnswerPosition.groupPosition2 ||
@@ -430,6 +445,15 @@ class ComponentManager {
   int getNextIndex() {
     currentIndex++;
     if (currentIndex >= getTotalQuestions(currentQuestionType)) {
+      return -1;
+    }
+
+    return currentIndex;
+  }
+
+  int getPreviousIndex() {
+    currentIndex--;
+    if (currentIndex < 0 && currentIndex >= getTotalQuestions(currentQuestionType)) {
       return -1;
     }
 
