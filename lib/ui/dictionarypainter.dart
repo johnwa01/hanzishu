@@ -146,6 +146,7 @@ class DictionaryPainter extends BreakoutPainter {
     thePositionManager.setFrameWidth(getFrameWidth());
 
     //var defaultFontSize = applyRatio(25.0);
+    //NOTE: match the definitions in dictionarysearchingpage.dart
     var fontSize1 = applyRatio(1.0);
     var fontSize2 = applyRatio(2.0);
     var fontSize3 = applyRatio(10.0);
@@ -233,7 +234,7 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue(getString(304)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black);
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
-    displayCharBreakout(ziIndex, isGetPositionOnly);
+    var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
   }
 
   displayComponentsOrStrokes(int searchingZiId, PositionAndSize posi) {
@@ -279,7 +280,7 @@ class DictionaryPainter extends BreakoutPainter {
     */
   }
 
-  displayCharBreakout(int ziId, bool isGetPositionOnly) {
+  double displayCharBreakout(int ziId, bool isGetPositionOnly) {
     breakoutIndex = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
@@ -287,6 +288,8 @@ class DictionaryPainter extends BreakoutPainter {
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails);
+
+    return yPositionWrapper.yPosi;
   }
 
   displayWholeStrokes() {

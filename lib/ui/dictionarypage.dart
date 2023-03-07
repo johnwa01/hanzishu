@@ -234,7 +234,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           builder: (context) =>
               DictionarySearchingPage(
                   dicStage: DictionaryStage.detailedzi,
-                  firstOrSearchingZiIndex: ziId),
+                  firstOrSearchingZiIndex: ziId,
+                  flashcardList: null),
         ),
       );
     }
@@ -293,7 +294,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DictionarySearchingPage(dicStage: DictionaryStage.searchingzis, firstOrSearchingZiIndex: ziIndex),
+                builder: (context) => DictionarySearchingPage(dicStage: DictionaryStage.searchingzis, firstOrSearchingZiIndex: ziIndex, flashcardList: null,),
               ),
             );
           }

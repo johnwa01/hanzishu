@@ -6,6 +6,7 @@ import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/settingspage.dart';
 import 'package:hanzishu/ui/basiccomponentspage.dart';
+import 'package:hanzishu/ui/flashcardpage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
 
@@ -109,7 +110,7 @@ class _MePageState extends State<MePage> {
             //  textAlign: TextAlign.center,
             //),
             ListTile(
-              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/breakout.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(384)/*"Hanzi basic components"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
@@ -121,19 +122,19 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
-            //ListTile(
-            //  leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-            //  title: Text(getString(139)/*"Character review"*/, textDirection: TextDirection.ltr),
+            ListTile(
+              leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title: Text(getString(406)/*"Customized flashcard"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
-            //  onTap: () {
-            //    Navigator.push(
-            //      context,
-            //      MaterialPageRoute(
-            //        builder: (context) => ReviewSelectionPage(),
-            //      ),
-            //    );
-            //  },
-            //),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => FlashcardPage(),
+                  ),
+                );
+              },
+            ),
             getQuizResults(),
             ListTile(
               leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),

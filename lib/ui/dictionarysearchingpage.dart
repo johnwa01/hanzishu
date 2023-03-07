@@ -17,11 +17,12 @@ import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
-  final int firstOrSearchingZiIndex;
   DictionaryStage dicStage;
+  final int firstOrSearchingZiIndex;
+  String flashcardList;
 
   //dicStage = DictionaryStage.searchingzis;
-  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex});
+  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex, this.flashcardList});
 
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
@@ -49,10 +50,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   int compoundZiCurrentComponentId;
   var currentZiListType = ZiListType.searching;
   bool showBreakoutDetails;
+  String flashcardList;
+  int flashcardIndex;
 
-  getSizeRatio() {
+  double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
     return defaultFontSize / 25.0; // ratio over original hard coded value
+  }
+
+  double applyRatio(double value) {
+    return value * getSizeRatio();
   }
 
   void _startAnimation() {
@@ -93,6 +100,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     //Not used?
     theCurrentCenterZiId = searchingZiIndex;
+    flashcardList = widget.flashcardList;
+    flashcardIndex = 0;
 
     setState(() {
       shouldDrawCenter = true;
@@ -106,7 +115,12 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       }
       else if (dicStage == DictionaryStage.detailedzi ){
         firstZiIndex = -1;
-        searchingZiIndex = widget.firstOrSearchingZiIndex;
+        if (flashcardList != null && flashcardList.length > 0) {
+          searchingZiIndex = DictionaryManager.getSearchingZiId(flashcardList[flashcardIndex]);
+        }
+        else {
+          searchingZiIndex = widget.firstOrSearchingZiIndex;
+        }
       }
       showBreakoutDetails = false;
     });
@@ -181,11 +195,19 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       compoundZiAnimation();
     }
 
+    var title;
+    if (flashcardList == null) {
+      title = getString(95); /*Hanzishu Dictionary*/
+    }
+    else {
+      title = getString(406); /*Customized Flashcards*/
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text(getString(95)/*"First Character Dictionary"*/),  //汉字树一触字典
+        title: Text(title),  //汉字树字典/Customized Flashcards
       ),
       body: Container(
           child: WillPopScope(
@@ -738,6 +760,92 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     breakoutPositions.forEach((uniqueNumber, position) =>
         buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
+    // Next flashcard button, match dictionarypainter's definition
+    if (flashcardList != null) {
+      var fontSize4 = applyRatio(20.0);
+      var fontSize8 = applyRatio(115.0);
+      var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 1.1,
+          getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3,
+          fontSize4 * 6, fontSize4 * 1.2, 10.0, 10.0);
+      buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
+    }
+
     return buttons;
+  }
+
+  double getHighestBreakoutYPosi( Map<int, PositionAndSize> breakoutPositions) {
+    double highestValue = 0;;
+    for (var values in breakoutPositions.values) {
+      if (values.transY > highestValue) {
+        highestValue = values.transY;
+      }
+    }
+
+    return highestValue;
+  }
+
+  Widget getNextFlashcardButton(PositionAndSize posiAndSize) {
+    var butt = FlatButton(
+      color: Colors.blueAccent,
+      textColor: Colors.white,
+      onPressed: () {
+        clearOverlayEntry();
+        flashcardIndex++;
+        if (flashcardList != null && flashcardList.length > 0 && flashcardIndex < flashcardList.length) {
+          setState(() {
+            searchingZiIndex =
+                DictionaryManager.getSearchingZiId(
+                    flashcardList[flashcardIndex]);
+          });
+        }
+        else {
+          showCompletedDialog(context);
+        }
+      },
+      child: Text(getString(138) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio()),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+
+  showCompletedDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text(getString(286)/*"OK"*/),
+      onPressed: () {
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop(); // out of this dialog first
+        Navigator.of(context).pop(); // then to the lesson page
+      },
+    );
+
+    String title = getString(115)/*"Good job!"*/;
+    String content = getString(407)/*"You have go through all the flashcards!"*/;
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
