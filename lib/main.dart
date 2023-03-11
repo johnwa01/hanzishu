@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
@@ -127,7 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children =
   [
-    DrillPage(startLessonId: 1, endLessonId: 10),
+    DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
     DictionaryPage(),
     ToolsPage(),
     LessonsPage(),

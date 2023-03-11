@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
@@ -41,7 +42,7 @@ class TreePainter extends BasePainter {
     drawFrameWithColors(ZiListType.zi,
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
-    drawZiGroup(centerId, ZiListType.zi, 0, theCurrentLessonId, theCurrentLessonId);
+    drawZiGroup(centerId, ZiListType.zi, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only

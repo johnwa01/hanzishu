@@ -78,7 +78,7 @@ class _ToolsPageState extends State<ToolsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(typingType: TypingType.LeadComponents,
-                    lessonId: 0), //InputZiPage(),
+                    lessonId: 0, wordsStudy: null), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;

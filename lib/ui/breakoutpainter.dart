@@ -79,7 +79,7 @@ class BreakoutPainter extends BasePainter {
     if (!isBreakoutPositionsOnly) {
       if (theIsFromLessonContinuedSection) {
         displayTextWithValue(
-            '[' + getString(285) /*"Continue"*/ + ']', applyRatio(50.0),
+            getString(285) /*"Continue"*/, applyRatio(50.0),
             yPositionWrapper.yPosi,
             defaultFontSize, Colors.white);
       }

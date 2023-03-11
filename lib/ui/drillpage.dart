@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/drillpainter.dart';
 import 'package:hanzishu/utility.dart';
@@ -21,19 +22,23 @@ import 'package:hanzishu/localization/string_zh_CN.dart';
 
 class DrillPage extends StatefulWidget {
   //final int lessonId;
-  final int startLessonId;
-  final int endLessonId;
+  final DrillCategory drillCategory; //startLessonId;
+  final int subItemId; //endLessonId;
+  final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
-  DrillPage({this.startLessonId, this.endLessonId});
+  DrillPage({this.drillCategory, this.subItemId, this.customString});
 
   @override
   _DrillPageState createState() => _DrillPageState();
 }
 
 class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMixin {
+  DrillCategory drillCategory; //startLessonId;
+  int subItemId; //endLessonId;
+  String customString;
   int centerZiId;
   bool shouldDrawCenter;
   double screenWidth;
@@ -91,6 +96,15 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     if (!theHavePopulatedLessonsInfo) {
       LessonManager.populateLessonsInfo();
       theHavePopulatedLessonsInfo = true;
+    }
+
+    drillCategory = widget.drillCategory;
+    subItemId = widget.subItemId;
+    customString = widget.customString;
+    theAllZiLearned = false;
+
+    if (drillCategory == DrillCategory.custom) {
+      DictionaryManager.InitRealFilterList(DrillCategory.custom, customString);
     }
 
     //theSearchingZiRealFilterList[0] = null;
@@ -178,21 +192,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         currentZiListType = ZiListType.component;
       }
     }
-    /*
-    // compound zi is animating.
-    if (compoundZiComponentNum > 0) {
-      var compList = getAllZiComponents(centerZiId);
-      compoundZiTotalComponentNum = compList.length;
-
-      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
-        compoundZiCurrentComponentId = centerZiId;
-        resetCompoundZiAnimation();
-      }
-      else {
-        compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
-      }
-    }
-   */
 
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
@@ -203,9 +202,13 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       compoundZiAnimation();
     }
 
-    var subMenuUptoId = 0;
-    if (_selectedSubMenu != null) {
-      subMenuUptoId = _selectedSubMenu.id;
+    //var subMenuUptoId = 0;
+    if (drillCategory != DrillCategory.custom && _selectedSubMenu != null) {
+      /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
+    }
+
+    if (drillCategory != DrillCategory.custom) {
+      drillCategory = getCategoryFromSelectedDrillMenu(_selectedDrillMenu.id);
     }
 
     return Scaffold
@@ -225,14 +228,14 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       SizedBox(width: 10),
-                      getCategories(context, centerZiId),
+                      getCategories(context, centerZiId, drillCategory),
                       //SizedBox(width: 10),
                       //Text("Test"),
                       SizedBox(width: 10),
                       //Text("Results"),
                       getSubMenus(context, centerZiId),
                       SizedBox(width: 10),
-                      getLanguageSwitchButtonAsNeeded(_selectedDrillMenu.id, centerZiId),
+                      getLanguageSwitchButtonAsNeeded(drillCategory, centerZiId),
                       SizedBox(width: 10),
                     ],
                   ),
@@ -245,15 +248,15 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       centerZiId,
                       shouldDrawCenter,
                       screenWidth,
-                      widget.startLessonId, //TODO: remove this
-                        subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
+                      0, //widget.startLessonId, //TODO: remove this
+                        subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
                       widget.sidePositionsCache,
                       widget.realGroupMembersCache,
                       widget.centerPositionAndSizeCache,
                       allLearnedZis,
                       compoundZiCurrentComponentId,
                       currentZiListType,
-                        _selectedDrillMenu.id
+                        drillCategory//  _selectedDrillMenu.id
                     ),
                     child: Center(
                       child: Stack(
@@ -271,8 +274,29 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     );
   }
 
-  Widget getLanguageSwitchButtonAsNeeded(int selectedDrillMenuId, int centerId) {
-    if (selectedDrillMenuId != 1 || centerId != 1) {
+  DrillCategory getCategoryFromSelectedDrillMenu(int selectedDrillMenuId) {
+    var category;
+
+    switch (selectedDrillMenuId) {
+      case 1:
+        category = DrillCategory.all;
+        break;
+      case 2:
+        category = DrillCategory.hanzishu;
+        break;
+      case 3:
+        category = DrillCategory.hsk;
+        break;
+      default:
+        category = DrillCategory.all;
+        break;
+    }
+
+    return category;
+  }
+
+  Widget getLanguageSwitchButtonAsNeeded(DrillCategory drillCategory, int centerId) {
+    if (drillCategory != DrillCategory.all || centerId != 1) {
       return SizedBox(width: 0, height: 0);
     }
 
@@ -337,8 +361,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     return localString;
   }
 
-  Widget getCategories(BuildContext context, int centerZiId) {
-    if (centerZiId == 1) {
+  Widget getCategories(BuildContext context, int centerZiId, DrillCategory drillCategory) {
+    if (centerZiId == 1 && drillCategory != DrillCategory.custom) {
       return DropdownButton(
         value: _selectedDrillMenu,
         items: _dropdownDrillMenuItems,
@@ -417,14 +441,17 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     setState(() {
       _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
       _selectedDrillMenu = selectedDrillMenu;
+      drillCategory = getCategoryFromSelectedDrillMenu(_selectedDrillMenu.id);
       _dropdownSubMenuItems = buildDropdownSubMenuItems();
 
       if (_selectedDrillMenu.id != 1 && theSearchingZiRealFilterList[_selectedDrillMenu.id-1] == null) {
-        DictionaryManager.InitRealFilterList(_selectedDrillMenu.id);
+
+        DictionaryManager.InitRealFilterList(drillCategory, null);
       }
 
       if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
         _selectedSubMenu = _dropdownSubMenuItems[0].value;
+        subItemId = _selectedSubMenu.id;
       }
     });
 
@@ -439,6 +466,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   onChangeDropdownSubItem(DrillMenu selectedSubMenu) {
     setState(() {
       _selectedSubMenu = selectedSubMenu;
+      subItemId = _selectedSubMenu.id;
     });
 
     //_reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(_selectedReviewLevelEnding.id);
@@ -511,6 +539,39 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
             )
         ));
     overlayState.insert(overlayEntry);
+  }
+
+  Positioned getPositionedContinueButton() {
+    var yPosi = 0.0;
+
+    var buttonColor = Colors.white;
+    if (theAllZiLearned) {
+      buttonColor = Colors.blue;
+    }
+
+    var butt = FlatButton(
+      color: buttonColor, //Colors.white,
+      textColor: Colors.brown,
+      onPressed: () {
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
+    );
+
+    // NOTE: match the basepainting's drawZiGroup
+    var posiCenter = Positioned(
+        top: yPosi, //yPosi.transY +
+        //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+        left: screenWidth - 55.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
+        height: /*getSizeRatio() */ 33.0,
+        //posiAndSize.height,
+        width: /*getSizeRatio() */ 55.0, // 100.0
+        //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
   }
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
@@ -647,12 +708,12 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
     thePositionManager.resetPositionIndex();
 
-    var subMenuUptoId = 0;
-    if (_selectedSubMenu != null) {
-      subMenuUptoId = _selectedSubMenu.id;
+    //var subMenuUptoId = 0;
+    if (drillCategory != DrillCategory.custom && _selectedSubMenu != null) {
+      /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
     }
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, _selectedDrillMenu.id, widget.startLessonId, subMenuUptoId, widget.realGroupMembersCache);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, 0/*widget.startLessonId*/, subItemId/*subMenuUptoId*/, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -695,7 +756,42 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
     CreateNavigationHitttestButtons(centerZiId, true, buttons);
 
+    // skip and next section button
+    if (drillCategory == DrillCategory.custom) {
+      buttons.add(getPositionedContinueButton());
+    }
+
     return buttons;
+  }
+
+  //TODO: not sure to use this or not
+  showCompletedDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text(getString(286)/*"OK"*/),
+      onPressed: () {
+      },
+    );
+
+    String title = getString(115)/*"Good job!"*/;
+    String content = getString(407)/*"You have go through all the flashcards!"*/;
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(title),
+      content: Text(content),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromDrillPage, List<Widget> buttons) {

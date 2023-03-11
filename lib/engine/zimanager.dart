@@ -3,6 +3,8 @@ import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/data/drillmenulist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
@@ -166,10 +168,10 @@ class ZiManager {
   }
 
   // consider the case for each lesson
-  List<int> getRealGroupMembers(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId) {
+  List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     //TODO: filter by endId
     if (listType == ZiListType.searching) {
-      if (filterId == 1) { // filterId 1 is the 'All' case
+      if (drillCategory == DrillCategory.all) {
         return theSearchingZiList[id].groupMembers;
       }
       else {
@@ -178,7 +180,7 @@ class ZiManager {
         var filterMember;
         var filterValue;
         for (var memberZiId in theSearchingZiList[id].groupMembers) {
-          filter = theSearchingZiRealFilterList[filterId-1];
+          filter = getRealFilterList(drillCategory); //theSearchingZiRealFilterList[filterId-1];
           filterValue = filter[memberZiId];
           if (filterValue > 0 && filterValue <= internalEndLessonId) {
             realGroupMembers.add(memberZiId);
@@ -226,6 +228,75 @@ class ZiManager {
     //List<int> getRealGroupMembersFromCache(int id, int lessonId)
     //addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId)
     return lessonGroupMembers;
+  }
+
+  List<SearchingZi> getOriginalDrillFilterList(DrillCategory drillCategory) {
+    if (drillCategory == DrillCategory.all || drillCategory == DrillCategory.custom) {
+      return null;
+    }
+
+    var filterList;
+    switch(drillCategory) {
+      //case DrillCategory.all:
+      case DrillCategory.hanzishu:
+        filterList = theSearchingZiFilterList[1];
+        break;
+      case DrillCategory.hsk:
+        filterList = theSearchingZiFilterList[2];
+        break;
+      //case DrillCategory.custom:
+      default:
+        filterList = theSearchingZiFilterList[0];
+        break;
+    }
+
+    return filterList;
+  }
+
+  List<int> getRealFilterList(DrillCategory drillCategory) {
+    var filterList;
+    switch(drillCategory) {
+      case DrillCategory.all:
+        filterList = theSearchingZiRealFilterList[0];
+        break;
+      case DrillCategory.hanzishu:
+        filterList = theSearchingZiRealFilterList[1];
+        break;
+      case DrillCategory.hsk:
+        filterList = theSearchingZiRealFilterList[2];
+        break;
+      case DrillCategory.custom:
+        filterList = theSearchingZiRealFilterList[3];
+        break;
+      default:
+        filterList = theSearchingZiRealFilterList[0];
+        break;
+    }
+
+    return filterList;
+  }
+
+  static int getFilterIndexByCategory(DrillCategory drillCategory) {
+    var filterIndex;
+    switch(drillCategory) {
+      case DrillCategory.all:
+        filterIndex = 0;
+        break;
+      case DrillCategory.hanzishu:
+        filterIndex = 1;
+        break;
+      case DrillCategory.hsk:
+        filterIndex = 2;
+        break;
+      case DrillCategory.custom:
+        filterIndex = 3;
+        break;
+      default:
+        filterIndex = 0;
+        break;
+    }
+
+    return filterIndex;
   }
 
   static bool isNonCharWithOneCharName(int id) {

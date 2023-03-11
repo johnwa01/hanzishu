@@ -9,6 +9,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
@@ -677,7 +678,7 @@ class BasePainter extends CustomPainter{
     posi.transY += thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
   }
 
-  void drawZiGroup(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId) {
+  void drawZiGroup(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     var ziColor = Colors.brown;
 
     // one center zi first
@@ -696,7 +697,7 @@ class BasePainter extends CustomPainter{
     //var groupMembers = theLessonManager.getRealGroupMembers(id);
     var groupMembers;
     // hardcode lesson 2 so that it'll have a sequential number order in top layer display
-    groupMembers = getRealGroupMembers(id, listType, filterId, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
+    groupMembers = getRealGroupMembers(id, listType, drillCategory, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
 
     //var phraseZis = theLessonManager.getPhraseZis(id, internalStartLessonId, internalEndLessonId);
     //TODO: including phraseZis
@@ -825,17 +826,18 @@ class BasePainter extends CustomPainter{
       isReviewCenterPseudoNonCharZi = false;
     }
 
-    if (id == 1 && listType == ZiListType.zi) {
+    if (id == 1 && (drillCategory == DrillCategory.custom || listType == ZiListType.zi)) {
       displayIntroMessage();
     }
 
-    if (theIsFromLessonContinuedSection) {
-      if (listType == ZiListType.zi) {
-        var posi = thePositionManager.getHintPosi();
-        double yPosi = posi.transY +
-            2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-        DisplayContinueOrSkip(listType, yPosi);
-      }
+    if ((drillCategory == DrillCategory.custom) || (theIsFromLessonContinuedSection && listType == ZiListType.zi)) {
+        //var posi = thePositionManager.getHintPosi();
+        // Need to match the DrillPage & TreePage sizes
+        double xPosi = width - 55.0;
+        double yPosi = 0.0;
+        //double yPosi = posi.transY +
+            //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+        DisplayContinueOrSkip(listType, xPosi, yPosi);
     }
   }
 
@@ -886,7 +888,7 @@ class BasePainter extends CustomPainter{
     realGroupMembersCache[id] = realGroupMembers;
   }
 
-  static List<int> getRealGroupMembers(int id, ZiListType listType, int filterId, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
+  static List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, Map<int, List<int>>realGroupMembersCache) {
     var realGroupMembers = null;
     if (listType == ZiListType.zi) {
       realGroupMembers = getRealGroupMembersFromCache(id, realGroupMembersCache);
@@ -900,7 +902,7 @@ class BasePainter extends CustomPainter{
         realGroupMembers = [2, 3, 170, 153, 154, 7, 155, 8, 10, 157]; //'6'(155) is manually added here.
       }
       else {
-        realGroupMembers = theZiManager.getRealGroupMembers(id, listType, filterId, internalStartLessonId, internalEndLessonId);
+        realGroupMembers = theZiManager.getRealGroupMembers(id, listType, drillCategory, internalStartLessonId, internalEndLessonId);
       }
 
       if (listType == ZiListType.zi) {
@@ -946,20 +948,21 @@ class BasePainter extends CustomPainter{
   }
 
   // Will have the same result of going to next section, although the display prompt message is different.
-  DisplayContinueOrSkip(ZiListType listType, double yPosi) {
+  DisplayContinueOrSkip(ZiListType listType, double xPosi, double yPosi) {
     var skipOrContinue;
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
     var messageColor = Colors.black;
     if (theAllZiLearned) {
       skipOrContinue = getString(402);
-      fontSize *= 1.2;
-      messageColor = Colors.blue;
+      fontSize /= 1.1;
+      //messageColor = Colors.white;
     }
     else {
+      fontSize /= 1.3;
       skipOrContinue = getString(401);
     }
 
-    displayTextWithValue(skipOrContinue /*"Skip"*/, 0.0, yPosi,
+    displayTextWithValue(skipOrContinue /*"Skip or continue"*/, xPosi, yPosi,
         fontSize,
         messageColor);
   }

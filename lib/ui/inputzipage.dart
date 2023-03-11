@@ -19,7 +19,8 @@ import 'dart:io';
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
   final int lessonId;
-  InputZiPage({this.typingType, this.lessonId});
+  final String wordsStudy;
+  InputZiPage({this.typingType, this.lessonId, this.wordsStudy});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
@@ -28,6 +29,7 @@ class _InputZiPageState extends State<InputZiPage> {
   ScrollController _scrollController;
   TypingType typingType;
   int lessonId;
+  String wordsStudy;
   int currentIndex;
   BuildContext currentBuildContext;
   double _progressValue;
@@ -73,6 +75,7 @@ class _InputZiPageState extends State<InputZiPage> {
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
     typingType = widget.typingType;
+    wordsStudy = widget.wordsStudy;
     theInputZiManager.setCurrentType(typingType);
 
     // start over every time. not worth the confusion otherwise.

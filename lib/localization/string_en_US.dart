@@ -406,11 +406,12 @@ var theString_en_US = [
   Local(399, "Level "),
   Local(400, "7/8/9"),
   Local(401, "Skip section"),
-  Local(402, "Continue to next section"),
+  Local(402, "Next section"),
   Local(403, "Shortcuts"),
   Local(404, "Study till all are check-marked"),
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
   Local(407, "You have completed all the flashcards!"),
   Local(408, "Copy/paste or type below all your words:"),
+  Local(409, "Study customized words"),
 ];

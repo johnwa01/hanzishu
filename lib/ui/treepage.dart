@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/engine/zimanager.dart';
@@ -70,6 +71,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     );
 
     theCurrentCenterZiId = 1;
+    theAllZiLearned = false;
 
     setState(() {
       centerZiId = theCurrentCenterZiId;
@@ -377,7 +379,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     //TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.zi, 0, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.zi, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.zi, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -427,10 +429,16 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   }
 
   Positioned getPositionedContinueButton() {
-    var yPosi = thePositionManager.getHintPosi();
+
+    var yPosi = 0.0; //thePositionManager.getHintPosi();
+
+    var buttonColor = Colors.white;
+    if (theAllZiLearned) {
+      buttonColor = Colors.blue;
+    }
 
     var butt = FlatButton(
-      color: Colors.white,
+      color: buttonColor, //Colors.white,
       textColor: Colors.brown,
       onPressed: () {
         theIsBackArrowExit = false;
@@ -440,12 +448,12 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     );
 
     var posiCenter = Positioned(
-        top: yPosi.transY +
-            2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        left: getSizeRatio() * 0.0,
-        height: getSizeRatio() * 25.0,
+        top: yPosi, //yPosi.transY +
+            //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+        left: screenWidth - 55.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
+        height: /*getSizeRatio() */ 33.0,
         //posiAndSize.height,
-        width: getSizeRatio() * 100.0,
+        width: /*getSizeRatio() */ 55.0, // 100.0
         //posiAndSize.width,
         child: butt
     );

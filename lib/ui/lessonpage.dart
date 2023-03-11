@@ -146,7 +146,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId)
+                InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null,)
           ),
         ).then((val) => {_getRequests()});
         break;

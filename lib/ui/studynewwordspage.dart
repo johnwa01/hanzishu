@@ -1,5 +1,7 @@
+
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/variables.dart';
@@ -8,22 +10,25 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/ui/drillpage.dart';
+import 'package:hanzishu/ui/inputzipage.dart';
 
-class FlashcardPage extends StatefulWidget {
+class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
   @override
-  _FlashcardPageState createState() => _FlashcardPageState();
+  _StudyCustomizedWordsPageState createState() => _StudyCustomizedWordsPageState();
 }
 
-class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProviderStateMixin {
+class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> with SingleTickerProviderStateMixin {
   int searchingZiIndex;
   bool shouldDrawCenter;
   double screenWidth;
@@ -76,7 +81,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
     if (!theIsBackArrowExit && this.currentIndex <= inputText.length) {
       // reinit
       theIsBackArrowExit = true;
-      launchZi(this.currentIndex);
+      launchContent(this.currentIndex);
     }
     else {
       // init all variables
@@ -124,7 +129,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
         (
         appBar: AppBar
           (
-          title: Text(getString(406)/*"Customized flashcards"*/),
+          title: Text(getString(409)/*"Customized customized words"*/),
         ),
         body: Container(
             child: WillPopScope(
@@ -132,12 +137,12 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
                     children: <Widget>[
                       SizedBox(height: 40 * getSizeRatioWithLimit()),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          Text(getString(408)/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                          //SizedBox(width: 30 * getSizeRatioWithLimit()),
-                        ]
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            SizedBox(width: 10 * getSizeRatioWithLimit()),
+                            Text(getString(408)/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
+                            //SizedBox(width: 30 * getSizeRatioWithLimit()),
+                          ]
                       ),
                       SizedBox(height: 10 * getSizeRatioWithLimit()),
                       Row(
@@ -205,62 +210,87 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
   processInputs() {
     //var latestValue;
     var ziId = -1;
+    //TODO: contentIndex++
     if (_controller.value.text != null && _controller.value.text.length != 0) {
       inputText = _controller.value.text;
-
-      launchZi(0);
+      launchContent(0);
     }
     else {
       // assert
     }
   }
 
-  launchZi(int index) {
-      //var ziId = DictionaryManager.getSearchingZiId("灵"/*inputText[index]*/);
-      //inputText = "灵巧的"; //TODO
-      if (inputText != null && inputText.length > 0) {
-        _controller.clear();
-        FocusScope.of(context).unfocus();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                DictionarySearchingPage(
-                    dicStage: DictionaryStage.detailedzi,
-                    firstOrSearchingZiIndex: -1,
-                    flashcardList: inputText),
-          ),
-        );
+  launchContent(int contentIndex) {
+    //var ziId = DictionaryManager.getSearchingZiId("灵"/*inputText[index]*/);
+    inputText = "灵巧的"; //TODO
+    if (inputText != null && inputText.length > 0) {
+      _controller.clear();
+      FocusScope.of(context).unfocus();
+      switch (contentIndex) {
+        case 0:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DrillPage(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
+            ),
+          ).then((val) => {_getRequests()});
+          break;
+        case 1:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  DictionarySearchingPage(
+                      dicStage: DictionaryStage.detailedzi,
+                      firstOrSearchingZiIndex: -1,
+                      flashcardList: inputText),
+            ),
+          ).then((val) => {_getRequests()});
+          break;
+        case 2:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  InputZiPage(
+                      typingType: TypingType.WordsStudy, lessonId: 0, wordsStudy: inputText),
+            ),
+          ).then((val) => {_getRequests()});
+          break;
+        default:
+          break;
       }
-      else {
-        _controller.clear();
-        FocusScope.of(context).unfocus();
-        // set up the button
-        Widget okButton = FlatButton(
-          child: Text(getString(286)/*Ok*/),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        );
+    }
+    else {
+      _controller.clear();
+      FocusScope.of(context).unfocus();
+      // set up the button
+      Widget okButton = FlatButton(
+        child: Text(getString(286)/*Ok*/),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
 
-        // set up the AlertDialog
-        AlertDialog alert = AlertDialog(
-          title: Text(getString(375)/*Result*/),
-          content: Text(
-              getString(374)/*cannot find: */ + inputText[index] + "."),
-          actions: [
-            okButton,
-          ],
-        );
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text(getString(375)/*Result*/),
+        content: Text(
+            getString(374)/*cannot find: */ + inputText + "."),
+        actions: [
+          okButton,
+        ],
+      );
 
-        // show the dialog
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
-      }
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
   }
 
   Future<bool>_onWillPop() {

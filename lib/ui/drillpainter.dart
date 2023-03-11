@@ -3,14 +3,15 @@ import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class DrillPainter extends BasePainter {
   double screenWidth;
   ZiListType ziListType;
-  int filterId;
+  DrillCategory drillCategory; //int filterId;
 
-  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, int filterId) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -24,7 +25,7 @@ class DrillPainter extends BasePainter {
     this.allLearnedZis = allLearnedZis;
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
     this.ziListType = ziListType;
-    this.filterId = filterId;
+    this.drillCategory = drillCategory; //this.filterId = filterId;
   }
 
   @override
@@ -41,7 +42,7 @@ class DrillPainter extends BasePainter {
         Colors.lime, BasePainter.FrameLineWidth);
     //}
     //?theCurrentCenterZiId = centerId;
-    drawZiGroup(centerId, ZiListType.searching, filterId, reviewStartLessonId, reviewEndLessonId);
+    drawZiGroup(centerId, ZiListType.searching, drillCategory, reviewStartLessonId, reviewEndLessonId);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only

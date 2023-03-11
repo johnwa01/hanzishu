@@ -46,9 +46,10 @@ var theHSKSubList = [
 ];
 
 var theSearchingZiFilterList = [
-  null,
-  theSearchingZiList,
-  theSearchingZiList,
+  null, //all
+  theSearchingZiList, //hanzishu
+  theSearchingZiList, //hsk
+  null //custom
 ];
 
 List<List<int>> theSearchingZiRealFilterList = new List<List<int>>(theSearchingZiFilterList.length);

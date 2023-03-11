@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/settingspage.dart';
 import 'package:hanzishu/ui/basiccomponentspage.dart';
 import 'package:hanzishu/ui/flashcardpage.dart';
+import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
 
@@ -123,7 +124,7 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/characterreview.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              leading: Image.asset('assets/core/characterlist.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(406)/*"Customized flashcard"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
@@ -131,6 +132,20 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => FlashcardPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Image.asset('assets/core/characterdrill.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title: Text(getString(409)/*"Study new words"*/, textDirection: TextDirection.ltr),
+              //trailing: Image.asset('assets/core/itemicon.png'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        StudyCustomizedWordsPage(),
                   ),
                 );
               },
