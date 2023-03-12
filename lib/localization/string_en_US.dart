@@ -414,4 +414,5 @@ var theString_en_US = [
   Local(407, "You have completed all the flashcards!"),
   Local(408, "Copy/paste or type below all your words:"),
   Local(409, "Study customized words"),
+  Local(410, "You have completed typing exercises."),
 ];

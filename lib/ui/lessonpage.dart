@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/utility.dart';
@@ -155,7 +156,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                QuizPage(lessonId: lessonId),
+                QuizPage(quizTextbook: QuizTextbook.hanzishu, lessonId: lessonId, wordsStudy: null),
           ),
         ).then((val) => {_getRequests()});
         break;

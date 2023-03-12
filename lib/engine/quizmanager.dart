@@ -4,6 +4,12 @@ import 'package:hanzishu/data/phraselist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/variables.dart';
 
+enum QuizTextbook {
+  hanzishu,
+  wordsStudy,
+  //yuwen
+}
+
 enum QuizCategory {
   meaning,
   sound

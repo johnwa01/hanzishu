@@ -7,10 +7,12 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 
 class QuizPage extends StatefulWidget {
+  final QuizTextbook quizTextbook;
   final int lessonId;
+  final String wordsStudy;
   bool isChars = true;
 
-  QuizPage({this.lessonId});
+  QuizPage({this.quizTextbook, this.lessonId, this.wordsStudy});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -19,7 +21,9 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   double screenWidth;
   AnswerPosition answerPosition;
+  QuizTextbook quizTextbook;
   int lessonId;
+  String wordsStudy;
   int index;
   double _progressValue;
   int totalMeaningAndSoundQuestions;
@@ -37,6 +41,8 @@ class _QuizPageState extends State<QuizPage> {
     //TODO
     //theStatisticsManager.initLessonQuizResults();
     lessonId = widget.lessonId;
+    quizTextbook = widget.quizTextbook;
+    wordsStudy = widget.wordsStudy;
     theQuizManager.initValues();
     index = theQuizManager.getFirstIndex(lessonId); //TODO: lessonId
 

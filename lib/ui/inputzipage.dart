@@ -72,11 +72,11 @@ class _InputZiPageState extends State<InputZiPage> {
 
     _controller.addListener(handleKeyInput);
     _progressValue = 0.0;
-    totalQuestions =
-        theInputZiManager.getTotal(widget.typingType, widget.lessonId);
     typingType = widget.typingType;
     wordsStudy = widget.wordsStudy;
-    theInputZiManager.setCurrentType(typingType);
+    theInputZiManager.setCurrentType(typingType, wordsStudy);
+    totalQuestions =
+        theInputZiManager.getTotal(widget.typingType, widget.lessonId);
 
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
@@ -879,9 +879,12 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(112)/*'Customized exercises'*/;
     }
+    else if (typingType == TypingType.WordsStudy) {
+      title = getString(409)/*'Study customized words'*/;
+    }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.WordsStudy && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -970,7 +973,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection) {
+    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.WordsStudy) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
@@ -1460,6 +1463,10 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
       content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
+    }
+    else if (typingType == TypingType.WordsStudy) {
+      title = getString(115)/*"Good job!"*/;
+      content = getString(410)/*"You have completed typing exercises."*/;
     }
 
     // set up the AlertDialog

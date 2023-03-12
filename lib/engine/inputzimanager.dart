@@ -16,16 +16,18 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
+  String wordsStudy;
 //  TypingType typingType;
 
   TypingType getCurrentType() {
     return currentTypingType;
   }
 
-  setCurrentType(TypingType currentType) {
+  setCurrentType(TypingType currentType, String wordsStudy) {
     if (currentTypingType != currentType) {
       currentTypingType = currentType;
       currentIndex = 0;
+      this.wordsStudy = wordsStudy;
     }
   }
 
@@ -351,6 +353,9 @@ class InputZiManager {
           0/*"nohelpyet"*/
       );
     }
+    else if (typingType == TypingType.WordsStudy) {
+      return ZiWithComponentsAndStrokes(wordsStudy[index], [""], "", 0);
+    }
 
     return null;
   }
@@ -447,6 +452,12 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
+    else if (typingType == TypingType.WordsStudy) {
+      //var lesson = theLessonManager.getLesson(lessonId);
+      if (currentIndex >= wordsStudy.length) {
+        currentIndex = -1;
+      }
+    }
 
     return currentIndex;
   }
@@ -512,6 +523,10 @@ class InputZiManager {
       zi = theLessonManager.getChar(lessonId, currentIndex);
       result = typingResult.contains(zi.char);
     }
+    else if (typingType == TypingType.WordsStudy) {
+      var char = wordsStudy[currentIndex];
+      result = typingResult.contains(char);
+    }
 
     return result;
   }
@@ -561,6 +576,9 @@ class InputZiManager {
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);
       return lesson.convCharsIds.length + lesson.charsIds.length;
+    }
+    else if (typingType == TypingType.WordsStudy) {
+      return wordsStudy.length;
     }
 
     return -1;

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/quizmanager.dart';
 import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/variables.dart';
@@ -18,6 +19,7 @@ import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/drillpage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
+import 'package:hanzishu/ui/quizpage.dart';
 
 class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
@@ -255,6 +257,15 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
               builder: (context) =>
                   InputZiPage(
                       typingType: TypingType.WordsStudy, lessonId: 0, wordsStudy: inputText),
+            ),
+          ).then((val) => {_getRequests()});
+          break;
+        case 3:
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: -1, wordsStudy: inputText),
             ),
           ).then((val) => {_getRequests()});
           break;
