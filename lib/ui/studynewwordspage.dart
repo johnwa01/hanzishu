@@ -80,7 +80,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   _getRequests() async {
     this.currentIndex += 1;
 
-    if (!theIsBackArrowExit && this.currentIndex <= inputText.length) {
+    if (!theIsBackArrowExit && this.currentIndex <= 3) { //TODO: 3 is the number of current subtasks in study new words
       // reinit
       theIsBackArrowExit = true;
       launchContent(this.currentIndex);
@@ -215,19 +215,59 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     //TODO: contentIndex++
     if (_controller.value.text != null && _controller.value.text.length != 0) {
       inputText = _controller.value.text;
-      launchContent(0);
+
+      if (inputText != null && inputText.length > 0) {
+        var resultStr = DictionaryManager.validateChars(inputText);
+        if (resultStr.length == 0) {
+          showInvalidInputDialog();
+        }
+        else {
+          if (resultStr.length != inputText.length) {
+            inputText = resultStr;
+          }
+
+          //inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+          // TODO: Check content of inputText.
+          launchContent(0);
+        }
+      }
     }
     else {
       // assert
     }
   }
 
+  showInvalidInputDialog() {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text(getString(286)/*Ok*/),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(getString(375)/*Result*/),
+      content: Text(
+          getString(374)/*cannot find: */ + inputText + "."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   launchContent(int contentIndex) {
-    //var ziId = DictionaryManager.getSearchingZiId("灵"/*inputText[index]*/);
-    inputText = "灵巧的"; //TODO
-    if (inputText != null && inputText.length > 0) {
-      _controller.clear();
-      FocusScope.of(context).unfocus();
+      //_controller.clear();
+      //FocusScope.of(context).unfocus();
       switch (contentIndex) {
         case 0:
           Navigator.push(
@@ -246,7 +286,8 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                   DictionarySearchingPage(
                       dicStage: DictionaryStage.detailedzi,
                       firstOrSearchingZiIndex: -1,
-                      flashcardList: inputText),
+                      flashcardList: inputText,
+                      dicCaller: DicCaller.WordsStudy),
             ),
           ).then((val) => {_getRequests()});
           break;
@@ -265,42 +306,12 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: -1, wordsStudy: inputText),
+                  QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText),
             ),
           ).then((val) => {_getRequests()});
           break;
         default:
           break;
-      }
-    }
-    else {
-      _controller.clear();
-      FocusScope.of(context).unfocus();
-      // set up the button
-      Widget okButton = FlatButton(
-        child: Text(getString(286)/*Ok*/),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text(getString(375)/*Result*/),
-        content: Text(
-            getString(374)/*cannot find: */ + inputText + "."),
-        actions: [
-          okButton,
-        ],
-      );
-
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
     }
   }
 

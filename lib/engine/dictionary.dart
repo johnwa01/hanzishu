@@ -9,6 +9,12 @@ enum DictionaryStage {
   chineseHelp
 }
 
+enum DicCaller {
+  Dictionary,
+  Flashcard,
+  WordsStudy
+}
+
 class FirstZi {
   String char;
   int searchingZiId;

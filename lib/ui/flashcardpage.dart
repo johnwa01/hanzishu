@@ -207,8 +207,18 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
     var ziId = -1;
     if (_controller.value.text != null && _controller.value.text.length != 0) {
       inputText = _controller.value.text;
+      var resultStr = DictionaryManager.validateChars(inputText);
+      if (resultStr.length == 0) {
+        showInvalidInputDialog();
+      }
+      else {
+        if (resultStr.length != inputText.length) {
+          inputText = resultStr;
+        }
 
-      launchZi(0);
+        //inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+        launchZi(0);
+      }
     }
     else {
       // assert
@@ -219,8 +229,8 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
       //var ziId = DictionaryManager.getSearchingZiId("灵"/*inputText[index]*/);
       //inputText = "灵巧的"; //TODO
       if (inputText != null && inputText.length > 0) {
-        _controller.clear();
-        FocusScope.of(context).unfocus();
+        //_controller.clear();
+        //FocusScope.of(context).unfocus();
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -228,39 +238,44 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
                 DictionarySearchingPage(
                     dicStage: DictionaryStage.detailedzi,
                     firstOrSearchingZiIndex: -1,
-                    flashcardList: inputText),
+                    flashcardList: inputText,
+                    dicCaller: DicCaller.Flashcard),
           ),
         );
       }
       else {
-        _controller.clear();
-        FocusScope.of(context).unfocus();
-        // set up the button
-        Widget okButton = FlatButton(
-          child: Text(getString(286)/*Ok*/),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        );
-
-        // set up the AlertDialog
-        AlertDialog alert = AlertDialog(
-          title: Text(getString(375)/*Result*/),
-          content: Text(
-              getString(374)/*cannot find: */ + inputText[index] + "."),
-          actions: [
-            okButton,
-          ],
-        );
-
-        // show the dialog
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return alert;
-          },
-        );
+        //_controller.clear();
+        //FocusScope.of(context).unfocus();
+        showInvalidInputDialog();
       }
+  }
+
+  showInvalidInputDialog() {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text(getString(286)/*Ok*/),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(getString(375)/*Result*/),
+      content: Text(
+          getString(374)/*cannot find: */ + inputText + "."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   Future<bool>_onWillPop() {

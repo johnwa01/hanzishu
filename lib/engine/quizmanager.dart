@@ -1,8 +1,12 @@
 import 'dart:math';
+import 'package:flutter/material.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/phraselist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
+import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 
 enum QuizTextbook {
   hanzishu,
@@ -63,8 +67,10 @@ class QuizManager {
   //static String thePinyinB = "pinyinB";
   //static String thePinyinC = "pinyinC";
 
+  var currentQuizTextbook;
   var minUpperRange = 5; // 0 based, so 5+1=6
   var currentLesson = 0;
+  var currentWordsStudy;
   var currentCategory = QuizCategory.meaning;
   var currentType = QuizType.chars; // starting with 1, 0 for no more
   var nextIndexForCurrentType = 0;
@@ -72,13 +78,17 @@ class QuizManager {
   List<String> currentValues = ["", "", "", ""];
   List<int> currentValuesNonCharIds = [0, 0, 0, 0];
   var correctPosition = 0;
+
   //TODO: remove following two variables since they are handled in UI?
   var soundIconPressed = false;
   var answered = false;
+
   //TODO: init to calculate the max number of zi up to a certain lessons
   //TODO: add an Answered variable so that no further action
 
-  initValues() {
+  initValues(QuizTextbook quizTextbook, String wordsStudy) {
+    currentQuizTextbook = quizTextbook;
+    currentWordsStudy = wordsStudy;
     currentLesson = 0;
     currentCategory = QuizCategory.meaning;
     currentType = QuizType.chars; // starting with 1, 0 for no more
@@ -99,7 +109,7 @@ class QuizManager {
     soundIconPressed = state;
   }
 
-  bool isAnswered(){
+  bool isAnswered() {
     return answered;
   }
 
@@ -115,12 +125,16 @@ class QuizManager {
     currentCategory = category;
   }
 
-  int getFirstIndex(int lessonId) {
+  int getFirstIndex(QuizTextbook quizTextbook, int lessonId) {
+    var index = 0;
+
+    if (quizTextbook == QuizTextbook.wordsStudy) {
+      return index;
+    }
+
     currentLesson = lessonId;
 
     currentCategory = QuizCategory.meaning;
-
-    var index = 0;
 
     var lesson = theLessonList[lessonId];
 
@@ -148,10 +162,16 @@ class QuizManager {
     return index;
   }
 
-  int getTotalQuestions(int lessonId) {
+  int getTotalQuestions(QuizTextbook quizTextbook, int lessonId) {
+    if (quizTextbook == QuizTextbook.wordsStudy) {
+      return currentWordsStudy.length;
+    }
+
     var lesson = theLessonList[lessonId];
 
-    return lesson.convCharsIds.length + lesson.charsIds.length + lesson.comps.length + lesson.phraseIds.length + lesson.sentenceList.length;
+    return lesson.convCharsIds.length + lesson.charsIds.length +
+        lesson.comps.length + lesson.phraseIds.length +
+        lesson.sentenceList.length;
   }
 
   // zis, phrases or conversations
@@ -204,33 +224,38 @@ class QuizManager {
   resetCurrentTypeToNext() {
     var nextType = currentType;
 
-    switch (currentType) {
-      case QuizType.none:
-        nextType = QuizType.chars;
-        break;
-      case QuizType.chars:
-        nextType = QuizType.basicChars;
-        break;
-      case QuizType.basicChars:
-        nextType = QuizType.nonChars;
-        break;
-      case QuizType.nonChars:
-        nextType = QuizType.phrases;
-        break;
-      case QuizType.phrases:
-        nextType = QuizType.conversations;
-        break;
-      case QuizType.conversations:
-        if (currentCategory == QuizCategory.meaning) {
-          currentCategory = QuizCategory.sound;
+    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      nextType = QuizType.none;
+    }
+    else {
+      switch (currentType) {
+        case QuizType.none:
           nextType = QuizType.chars;
-        }
-        else {  // already in sound category
-          nextType = QuizType.none;
-        }
-        break;
+          break;
+        case QuizType.chars:
+          nextType = QuizType.basicChars;
+          break;
+        case QuizType.basicChars:
+          nextType = QuizType.nonChars;
+          break;
+        case QuizType.nonChars:
+          nextType = QuizType.phrases;
+          break;
+        case QuizType.phrases:
+          nextType = QuizType.conversations;
+          break;
+        case QuizType.conversations:
+          if (currentCategory == QuizCategory.meaning) {
+            currentCategory = QuizCategory.sound;
+            nextType = QuizType.chars;
+          }
+          else { // already in sound category
+            nextType = QuizType.none;
+          }
+          break;
       //default:
       //    nextType = QuizType.chars
+      }
     }
 
     currentType = nextType;
@@ -263,8 +288,8 @@ class QuizManager {
         return lesson.sentenceList;
       case QuizType.none:
         return lesson.comps; // temp, no need
-      //default:
-      //    break
+    //default:
+    //    break
     }
   }
 
@@ -277,8 +302,14 @@ class QuizManager {
   }
 
   int getNextIndexForCurrentType() {
-    var list = getCurrentTypeList();
-    var max = list.length;
+    var max;
+    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      max = currentWordsStudy.length;
+    }
+    else {
+      var list = getCurrentTypeList();
+      max = list.length;
+    }
 
     nextIndexForCurrentType += 1;
 
@@ -335,55 +366,66 @@ class QuizManager {
     currentValuesNonCharIds[3] = id3;
   }
 
-  String getOneValueById(QuizCategory category, QuizType type, int id, bool usedForQuestion) {
+  String getOneValueById(QuizTextbook quizTextbook, QuizCategory category, QuizType type, int id,
+      bool usedForQuestion) {
     var value = "";
 
     if (category == QuizCategory.sound || usedForQuestion) {
-      switch (type) {
-        case QuizType.basicChars:
-          var zi = theZiManager.getZi(id);
-          value = zi.char;
-          break;
-        case QuizType.chars:
-          var zi = theZiManager.getZi(id);
-          value = zi.char;
-          break;
-        case QuizType.nonChars:
-          var zi = theZiManager.getZi(id);
-          value = zi.char;
-          break;
-        case QuizType.phrases:
-          value = thePhraseList[id].chars;
-          break;
-        case QuizType.conversations:
-          value = theSentenceList[id].conv;
-          break;
-        case QuizType.none:
-          break;
+      if (quizTextbook == QuizTextbook.wordsStudy) {
+        value = theSearchingZiList[id].char;
+      }
+      else {
+        switch (type) {
+          case QuizType.basicChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.chars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.nonChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.phrases:
+            value = thePhraseList[id].chars;
+            break;
+          case QuizType.conversations:
+            value = theSentenceList[id].conv;
+            break;
+          case QuizType.none:
+            break;
+        }
       }
     }
     else if (category == QuizCategory.meaning) {
-      switch (type) {
-        case QuizType.basicChars:
-          var zi = theZiManager.getZi(id);
-          value = zi.meaning;
-          break;
-        case QuizType.chars:
-          var zi = theZiManager.getZi(id);
-          value = zi.meaning;
-          break;
-        case QuizType.nonChars:
-          var zi = theZiManager.getZi(id);
-          value = zi.meaning;
-          break;
-        case QuizType.phrases:
-          value = thePhraseList[id].meaning;
-          break;
-        case QuizType.conversations:
-          value = theSentenceList[id].trans;
-          break;
-        case QuizType.none:
-          break;
+      if (quizTextbook == QuizTextbook.wordsStudy) {
+        value = theSearchingZiList[id].meaning;
+      }
+      else {
+        switch (type) {
+          case QuizType.basicChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.meaning;
+            break;
+          case QuizType.chars:
+            var zi = theZiManager.getZi(id);
+            value = zi.meaning;
+            break;
+          case QuizType.nonChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.meaning;
+            break;
+          case QuizType.phrases:
+            value = thePhraseList[id].meaning;
+            break;
+          case QuizType.conversations:
+            value = theSentenceList[id].trans;
+            break;
+          case QuizType.none:
+            break;
+        }
       }
     }
 
@@ -431,55 +473,82 @@ class QuizManager {
     var count = getTypeList(type).length;
     if (count == 0 || lessonIdAndIndex.indexDiff >= count) {
       lessonIdAndIndex.indexDiff -= count;
-      findNeighborLessonAndIndex(type, lessonIdAndIndex /*lessonId: &lessonIdHere, indexDiff: &indexDiff*/);
+      findNeighborLessonAndIndex(type,
+          lessonIdAndIndex /*lessonId: &lessonIdHere, indexDiff: &indexDiff*/);
     }
 
     return getIdByIndexInLesson(type, lessonIdAndIndex);
   }
 
   // the index in lesson
-  String getOneValueByIndexInLessons(QuizCategory category, QuizType type, int index, bool usedForQuestion) {
+  String getOneValueByIndexInLessons(QuizCategory category, QuizType type,
+      int index, bool usedForQuestion) {
     var typeToUse = type;
-    if (category == QuizCategory.meaning && type == QuizType.nonChars && !usedForQuestion) {
+    if (category == QuizCategory.meaning && type == QuizType.nonChars &&
+        !usedForQuestion) {
       // since most nonChars don't have meaning. We want to use the meanings from same or close lessons
       typeToUse = QuizType.basicChars;
     }
 
     var id = getIdByIndexInLessons(category, typeToUse, index);
 
-    return getOneValueById(currentCategory, typeToUse, id, usedForQuestion);
+    return getOneValueById(currentQuizTextbook, currentCategory, typeToUse, id, usedForQuestion);
   }
 
-  String getOneValueByIndexInLesson(QuizCategory category, QuizType type, int index, bool usedForQuestion) {
-    var lessonIdAndIndex = LessonAndIndex(currentLesson, index);
-    var id = getIdByIndexInLesson(type, lessonIdAndIndex);
+  String getOneValueByIndexInLesson(QuizTextbook quizTextbook, QuizCategory category, QuizType type,
+      int index, bool usedForQuestion) {
+    var id;
+    if (quizTextbook == QuizTextbook.wordsStudy) {
+      id = getSearchingZiIdByWordsStudyIndex(index);
+    }
+    else {
+      var lessonIdAndIndex = LessonAndIndex(currentLesson, index);
+      id = getIdByIndexInLesson(type, lessonIdAndIndex);
+    }
 
-    return getOneValueById(category, type, id, usedForQuestion);
+    return getOneValueById(currentQuizTextbook, category, type, id, usedForQuestion);
+  }
+
+  int getSearchingZiIdByWordsStudyIndex(int index) {
+    var char = currentWordsStudy[index];
+    return DictionaryManager.getSearchingZiId(char);
   }
 
   // TODO: add id type paraqmeter, meaning/translation para
   List<String> getUpdatedValues(int index, bool isMeaning) {
-    initCurrentValuesNonCharIds();
+    if (currentQuizTextbook != QuizTextbook.wordsStudy) {
+      initCurrentValuesNonCharIds();
+    }
 
     //currentIndex = index
-    var list = getCurrentTypeList();
-    var upperRange = list.length - 1;
-    if (upperRange < minUpperRange) {
-      upperRange = minUpperRange;
+    var upperRange;
+    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      upperRange = 3750; // TODO: const value. searchingZiList length with at least 50 extra entries
+    }
+    else {
+      var list = getCurrentTypeList();
+      upperRange = list.length - 1;
+      if (upperRange < minUpperRange) {
+        upperRange = minUpperRange;
+      }
     }
 
     //let zi = theZiManager.getZi(id: index)
 
-    currentValues[0] = getOneValueByIndexInLesson(currentCategory, currentType, index, true);   //zi!.char
+    currentValues[0] = getOneValueByIndexInLesson(
+          currentQuizTextbook, currentCategory, currentType, index, true); //zi!.char
+
     //if (isMeaning) {
     //setNonCharId(zi: zi!, index: 0)
     //}
     var nonCharId0 = 0;
     if (currentType == QuizType.nonChars) {
-      nonCharId0 = getIdByIndexInLessons(QuizCategory.meaning, QuizType.nonChars, index);
+      nonCharId0 =
+          getIdByIndexInLessons(QuizCategory.meaning, QuizType.nonChars, index);
     }
 
-    if (currentType == QuizType.nonChars && currentCategory == QuizCategory.meaning) {
+    if (currentType == QuizType.nonChars &&
+        currentCategory == QuizCategory.meaning) {
       setNonCharId(nonCharId0);
     }
 
@@ -488,28 +557,44 @@ class QuizManager {
     correctPosition = 1 + rand.nextInt(3 - 1);
 
     // 1 based position when creating randon number
-    var wrongPositionI = QuizManager.getARandomNumber(upperRange, index, index);
-    var wrongPositionJ = QuizManager.getARandomNumber(upperRange, index, wrongPositionI);
+    var wrongPositionI = theQuizManager.getARandomNumber(
+        upperRange, index, index);
+    var wrongPositionJ = theQuizManager.getARandomNumber(
+        upperRange, index, wrongPositionI);
 
     // make then 0 based
     //wrongPositionI -= 1
     //wrongPositionJ -= 1
 
     //let ziI = theZiManager.getZi(id: wrongPositionI)
-    var valueI = getOneValueByIndexInLessons(currentCategory, currentType, wrongPositionI, false);
-    var valueJ = getOneValueByIndexInLessons(currentCategory, currentType, wrongPositionJ, false);
+    var valueI;
+    var valueJ;
+    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      valueI = getOneValueById(currentQuizTextbook, currentCategory, currentType, wrongPositionI, false);
+      valueJ = getOneValueById(currentQuizTextbook, currentCategory, currentType, wrongPositionJ, false);
+    }
+    else {
+      valueI = getOneValueByIndexInLessons(
+          currentCategory, currentType, wrongPositionI, false);
+      valueJ = getOneValueByIndexInLessons(
+          currentCategory, currentType, wrongPositionJ, false);
+    }
     //let ziJ = theZiManager.getZi(id: wrongPositionJ)
 
     var nonCharIdI = 0;
     var nonCharIdJ = 0;
-    if (currentType == QuizType.nonChars && currentCategory == QuizCategory.sound) {
-      nonCharIdI = getIdByIndexInLessons(QuizCategory.sound, QuizType.nonChars, wrongPositionI);
-      nonCharIdJ = getIdByIndexInLessons(QuizCategory.sound, QuizType.nonChars, wrongPositionJ);
+    if (currentType == QuizType.nonChars &&
+        currentCategory == QuizCategory.sound) {
+      nonCharIdI = getIdByIndexInLessons(
+          QuizCategory.sound, QuizType.nonChars, wrongPositionI);
+      nonCharIdJ = getIdByIndexInLessons(
+          QuizCategory.sound, QuizType.nonChars, wrongPositionJ);
     }
 
     var correctText = currentValues[0];
     if (isMeaning) {
-      correctText = getOneValueByIndexInLesson(currentCategory, currentType, index, false);
+        correctText = getOneValueByIndexInLesson(
+            currentQuizTextbook, currentCategory, currentType, index, false);
     }
 
     if (correctPosition == 1) {
@@ -519,7 +604,8 @@ class QuizManager {
       currentValues[2] = valueI;
       currentValues[3] = valueJ;
 
-      if (currentType == QuizType.nonChars && currentCategory == QuizCategory.sound) {
+      if (currentType == QuizType.nonChars &&
+          currentCategory == QuizCategory.sound) {
         setNonCharIds(nonCharId0, nonCharIdI, nonCharIdJ);
       }
     }
@@ -530,7 +616,8 @@ class QuizManager {
       currentValues[1] = valueI;
       currentValues[3] = valueJ;
 
-      if (currentType == QuizType.nonChars && currentCategory == QuizCategory.sound) {
+      if (currentType == QuizType.nonChars &&
+          currentCategory == QuizCategory.sound) {
         setNonCharIds(nonCharIdI, nonCharId0, nonCharIdJ);
       }
     }
@@ -541,7 +628,8 @@ class QuizManager {
       currentValues[1] = valueI;
       currentValues[2] = valueJ;
 
-      if (currentType == QuizType.nonChars && currentCategory == QuizCategory.sound) {
+      if (currentType == QuizType.nonChars &&
+          currentCategory == QuizCategory.sound) {
         setNonCharIds(nonCharIdI, nonCharIdJ, nonCharId0);
       }
     }
@@ -550,7 +638,7 @@ class QuizManager {
   }
 
   List<String> getCurrentValues() {
-  return currentValues;
+    return currentValues;
   }
 
   List<int> getCurrentValuesNonCharIds() {
@@ -569,7 +657,7 @@ class QuizManager {
   }
 */
 
-  static int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
+  int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
     var chosen = true;
     var number = 0;
 
@@ -577,12 +665,36 @@ class QuizManager {
 
     while (chosen) {
       number = rand.nextInt(upperRange);
-      if ( number != chosenNumber1 && number != chosenNumber2 ) {
+
+      if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+        if (number < 52) {
+          continue; // not valid with those special index words
+        }
+        number = getNextIndexUnderHskLevel(number, 6); // max
+      }
+
+      if (number != chosenNumber1 && number != chosenNumber2) {
         chosen = false;
       }
     }
 
     return number;
+  }
+
+  // guarantee the index less than the max at least 50 to insure a valid value
+  int getNextIndexUnderHskLevel(int index, int maxLevelHsk) {
+    bool isHigherThanMax = true;
+
+    while (isHigherThanMax) {
+      if (theSearchingZiList[index].levelHSK <= maxLevelHsk) {
+        isHigherThanMax = false;
+      }
+      else {
+        index++;
+      }
+    }
+
+    return index;
   }
 
   /*

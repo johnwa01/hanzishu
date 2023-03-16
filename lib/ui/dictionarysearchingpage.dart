@@ -7,6 +7,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
@@ -19,10 +20,11 @@ import 'package:hanzishu/engine/zimanager.dart';
 class DictionarySearchingPage extends StatefulWidget {
   DictionaryStage dicStage;
   final int firstOrSearchingZiIndex;
-  String flashcardList;
+  final String flashcardList;
+  final DicCaller dicCaller;
 
   //dicStage = DictionaryStage.searchingzis;
-  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex, this.flashcardList});
+  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex, this.flashcardList, this.dicCaller});
 
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
@@ -52,6 +54,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   bool showBreakoutDetails;
   String flashcardList;
   int flashcardIndex;
+  DicCaller dicCaller;
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -102,6 +105,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     theCurrentCenterZiId = searchingZiIndex;
     flashcardList = widget.flashcardList;
     flashcardIndex = 0;
+    dicCaller = widget.dicCaller;
 
     setState(() {
       shouldDrawCenter = true;
@@ -677,7 +681,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var breakdownPosi = getPositionedBreakdownButton(breakdownPositionAndSize);
       buttons.add(breakdownPosi);
 
-      CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
+      if (dicCaller != DicCaller.WordsStudy && dicCaller != DicCaller.Flashcard) {
+        CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
+      }
+
       createBreakoutHittestButtons(context, buttons);
 
       var ratio =  getSizeRatio();
@@ -770,6 +777,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
     }
 
+    if (dicCaller == DicCaller.WordsStudy) {
+      buttons.add(getSkipThisSection());
+    }
+
     return buttons;
   }
 
@@ -816,6 +827,29 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     return posiCenter;
   }
 
+  Widget getSkipThisSection() {
+    var butt = FlatButton(
+        child: Text(
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
+        color: Colors.white,
+        textColor: Colors.blueAccent,
+        onPressed: () {
+          clearOverlayEntry();
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+
+    var posiCenter = Positioned(
+        top: 0.0, //y
+        left: screenWidth - applyRatio(80.0),
+        height: applyRatio(40.0),
+        width: applyRatio(85.0),
+        child: butt
+    );
+
+    return posiCenter;
+  }
 
   showCompletedDialog(BuildContext context) {
     // set up the button

@@ -471,4 +471,21 @@ class DictionaryManager {
       updateFilterSubLevels(parentId, realFilterList);
     }
   }
+
+  static String validateChars(String str) {
+    String tempStr = "";
+    int strLength = str.length;
+
+    int listLength = theSearchingZiList.length;
+    for (int i = 52; i < listLength; i++) { // TODO: real words start at index 52.
+      for (int j = 0; j < strLength; j++) {
+        if (theSearchingZiList[i].char == str[j]) {
+          tempStr += str[j];
+          break;
+        }
+      }
+    }
+
+    return tempStr;
+  }
 }

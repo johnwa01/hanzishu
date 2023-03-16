@@ -43,12 +43,14 @@ class _QuizPageState extends State<QuizPage> {
     lessonId = widget.lessonId;
     quizTextbook = widget.quizTextbook;
     wordsStudy = widget.wordsStudy;
-    theQuizManager.initValues();
-    index = theQuizManager.getFirstIndex(lessonId); //TODO: lessonId
+    theQuizManager.initValues(quizTextbook, wordsStudy);
+    index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
-    theStatisticsManager.initLessonQuizResults();
+    //if (quizTextbook != QuizTextbook.wordsStudy) {
+      theStatisticsManager.initLessonQuizResults();
+    //}
 
-    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(lessonId) * 2;
+    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId) * 2;
 
     setState(() {
       answerPosition = AnswerPosition.none;
@@ -389,7 +391,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection) {
+    if (theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.wordsStudy) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),

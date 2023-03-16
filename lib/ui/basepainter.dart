@@ -833,7 +833,7 @@ class BasePainter extends CustomPainter{
     if ((drillCategory == DrillCategory.custom) || (theIsFromLessonContinuedSection && listType == ZiListType.zi)) {
         //var posi = thePositionManager.getHintPosi();
         // Need to match the DrillPage & TreePage sizes
-        double xPosi = width - 55.0;
+        double xPosi = width - 80.0;
         double yPosi = 0.0;
         //double yPosi = posi.transY +
             //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
