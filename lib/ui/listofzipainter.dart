@@ -185,18 +185,19 @@ class ListOfZiPainter extends BasePainter {
     }
 
     if (theIsFromLessonContinuedSection) {
+      /*
       if (!isInfoOnly) {
         displayTextWithValue(
             getString(285) /*"Continue"*/, applyRatio(50.0),
             yPositionWrapper.value,
             defaultFontSize, Colors.white);
-
         //skip section text
         displayTextWithValue(
             getString(401) /*"Skip section"*/, applyRatio(screenWidth - 100.0),
             applyRatio(10.0),
             defaultFontSize, Colors.white);
       }
+      */
       yPositionWrapper.value +=
           defaultFontSize + applyRatio(1) + applyRatio(15);
     }

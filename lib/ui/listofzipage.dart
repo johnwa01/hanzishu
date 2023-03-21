@@ -123,13 +123,13 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
 
   Positioned getPositionedContinueButton() {
     var butt = FlatButton(
-      color: Colors.blueAccent, //white,
-      textColor: Colors.brown,
+      color: Colors.blueAccent,
+      textColor: Colors.white, //brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text(getString(285), style: TextStyle(fontSize: applyRatio(20.0))),
     );
 
     var posiCenter = Positioned(
@@ -147,19 +147,19 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
   Positioned getPositionedSkipButton() {
     var butt = FlatButton(
       color: Colors.blueAccent, //white,
-      textColor: Colors.brown,
+      textColor: Colors.white, //brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text(getString(401), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
     );
 
     var posiCenter = Positioned(
-        top: applyRatio(10.0),
-        left: applyRatio(screenWidth - 100.0),
-        height: thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize) * 1.4, //posiAndSize.height,
-        width: applyRatio(90.0), //posiAndSize.width,
+        top: 10.0, //applyRatio(10.0),
+        left: screenWidth - 100, //applyRatio(screenWidth - 100.0),
+        height: thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize) * 1.2, //posiAndSize.height,
+        width: 90.0, //applyRatio(90.0), //posiAndSize.width,
         child: butt
     );
 

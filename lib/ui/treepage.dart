@@ -450,10 +450,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var posiCenter = Positioned(
         top: yPosi, //yPosi.transY +
             //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        left: screenWidth - 55.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
+        left: screenWidth - 80.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
         height: /*getSizeRatio() */ 33.0,
         //posiAndSize.height,
-        width: /*getSizeRatio() */ 55.0, // 100.0
+        width: /*getSizeRatio() */ 80.0, // 100.0
         //posiAndSize.width,
         child: butt
     );
