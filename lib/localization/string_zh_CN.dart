@@ -352,7 +352,7 @@ var theString_zh_CN = [
   Local(346, "'十'形"),
   Local(347, "分开的腿"),
   Local(348, "朝南"),
-  Local(349, "朝东南"),
+  Local(349, "'F'形"),
   Local(350, "交叉腿"),
   Local(351, "四张嘴"),
   Local(352, "'点'作为第一个笔画"),

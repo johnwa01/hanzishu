@@ -353,7 +353,7 @@ var theString_en_US = [
   Local(346, "'cross' shape"),
   Local(347, "separated legs"),
   Local(348, "open to south"),
-  Local(349, "open to southeast"),
+  Local(349, "F shape"),
   Local(350, "crossed legs"),
   Local(351, "four mouths"),
   Local(352, "'dot' as the first stroke"),

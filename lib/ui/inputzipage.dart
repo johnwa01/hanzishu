@@ -1165,6 +1165,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var promptStr = getString(113) + "： "; //"Please type"
     var promptWidth = 65;
+    /*
     if (!showHint) {
       if (typingType == TypingType.ExpandedReview) {
         promptWidth = 180;
@@ -1175,6 +1176,7 @@ class _InputZiPageState extends State<InputZiPage> {
         promptStr = getString(370) + ": "; //"Please remember the table below and type:";
       }
     }
+    */
 
     return WillPopScope(
       child: Column(
