@@ -10,6 +10,7 @@ import 'package:hanzishu/ui/flashcardpage.dart';
 import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/ui/introductionpage.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -110,6 +111,18 @@ class _MePageState extends State<MePage> {
             //  textDirection: TextDirection.rtl,
             //  textAlign: TextAlign.center,
             //),
+            ListTile(
+              leading: Image.asset('assets/core/conversations.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title:  Text(getString(411)/*"Hanzishu Introduction"*/, textDirection: TextDirection.ltr),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => IntroductionPage(),
+                  ),
+                );
+              },
+            ),
             ListTile(
               leading: Image.asset('assets/core/breakout.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(384)/*"Hanzi basic components"*/, textDirection: TextDirection.ltr),

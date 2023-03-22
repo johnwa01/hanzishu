@@ -10,6 +10,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/drillpainter.dart';
+import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
@@ -522,7 +523,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     });
   }
 
-  showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
+  showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning) {
     initOverlay();
     var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
 
@@ -532,7 +533,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
             top: posiY,
             left: adjustedXValue,
             child: FlatButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0),),
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
               color: Colors.blueAccent,
               textColor: Colors.white,
               onPressed: () {},
@@ -615,14 +616,15 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
         if (previousZiId != currentZiId || !haveShowedOverlay) {
           //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
-          var meaning;
+          var pinyinAndMeaning;
           if (listTypeWrapper.value == ZiListType.searching) {
-            meaning = theSearchingZiList[partialZiId].meaning;
+            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theSearchingZiList[partialZiId].pinyin, theSearchingZiList[partialZiId].meaning);
           }
           else {
-            meaning = theComponentList[partialZiId].meaning;
+            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theComponentList[partialZiId].pinyin, theComponentList[partialZiId].meaning);
           }
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
           haveShowedOverlay = true;
         }
         else if (haveShowedOverlay) {

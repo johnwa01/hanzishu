@@ -684,7 +684,7 @@ class BasePainter extends CustomPainter{
     // one center zi first
     var posiSize = getCenterPositionAndSize(centerPositionAndSizeCache); //thePositionManager.getPositionAndSizeHelper("m", 1, BigMaximumNumber/*, isCreationList: true*/);
 
-    var withPinyin = true;
+    var withPinyin = false;
 
     theCurrentCenterZiId = id;
     theCreatedNumber = 0;

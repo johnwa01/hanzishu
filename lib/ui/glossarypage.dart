@@ -186,17 +186,17 @@ class _GlossaryPageState extends State<GlossaryPage> {
               textAlign: TextAlign.start
           ),
           SizedBox(height: fontSize3),
-          Text(
-              getString(227)/*"Expanded Components"*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              getString(228)/*"The Components that stem from a Lead Component. Expanded Components usually have a similar shape to its Lead Component."*/,
-              style: TextStyle(fontSize: fontSize3),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: fontSize3),
+          //Text(
+          //    getString(227)/*"Expanded Components"*/,
+          //    style: TextStyle(color: Colors.blue, fontSize: fontSize2),
+          //    textAlign: TextAlign.start
+          //),
+          //Text(
+          //    getString(228)/*"The Components that stem from a Lead Component. Expanded Components usually have a similar shape to its Lead Component."*/,
+          //    style: TextStyle(fontSize: fontSize3),
+          //    textAlign: TextAlign.start
+          //),
+          //SizedBox(height: fontSize3),
           Text(
               getString(229)/*"Select Shift+ any key except z to show the Expanded Components while typing."*/,
               style: TextStyle(fontSize: fontSize3),
