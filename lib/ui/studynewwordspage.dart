@@ -17,7 +17,7 @@ import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/ui/drillpage.dart';
+import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 
@@ -274,7 +274,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  DrillPage(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
+                  DrillPageCore(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
             ),
           ).then((val) => {_getRequests()});
           break;

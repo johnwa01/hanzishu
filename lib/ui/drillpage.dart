@@ -15,6 +15,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
+import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
@@ -43,7 +44,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   int centerZiId;
   bool shouldDrawCenter;
   double screenWidth;
-  OverlayEntry overlayEntry;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
@@ -138,29 +138,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   void dispose() {
     _controller.dispose();
     super.dispose();
-
-    resetCompoundZiAnimation();
-  }
-
-  void resetCompoundZiAnimation() {
-    // re-init
-    compoundZiComponentNum = 0;
-    if (compoundZiAllComponents.length > 0) {
-      compoundZiAllComponents.clear(); //removeRange(0, compList.length - 1);
-    }
-
-    if (compoundZiAnimationTimer != null) {
-      compoundZiAnimationTimer.cancel();
-      compoundZiAnimationTimer = null;
-    }
-  }
-
-  List<int> getAllZiComponents(int id) {
-    if (compoundZiAllComponents.length == 0) {
-      theZiManager.getAllZiComponents(ZiListType.searching, id, compoundZiAllComponents);
-    }
-
-    return compoundZiAllComponents;
   }
 
   @override
@@ -185,7 +162,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         compoundZiCurrentComponentId = centerZiId;
         currentZiListType = ZiListType.searching;
         shouldDrawCenter = true;
-        resetCompoundZiAnimation();
       }
       else {
         compoundZiCurrentComponentId =
@@ -197,11 +173,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
-
-    if (compoundZiComponentNum > 0 &&
-        compoundZiComponentNum <= compoundZiTotalComponentNum) {
-      compoundZiAnimation();
-    }
 
     //var subMenuUptoId = 0;
     if (drillCategory != DrillCategory.custom && _selectedSubMenu != null) {
@@ -222,11 +193,17 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         child: WillPopScope(   // just for removing overlay on detecting back arrow
           //height: 200.0,
           //width: 200.0,
-            child: new Stack(
-              children: <Widget>[
-                new Positioned(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end/*spaceBetween*/,
+                  children: <Widget>[
+                    getLanguageSwitchButtonAsNeeded(drillCategory, centerZiId),
+                  ]
+                ),
+                SizedBox(height: 20),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center, //spaceBetween,
                     children: <Widget>[
                       SizedBox(width: 10),
                       getCategories(context, centerZiId, drillCategory),
@@ -236,37 +213,34 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       //Text("Results"),
                       getSubMenus(context, centerZiId),
                       SizedBox(width: 10),
-                      getLanguageSwitchButtonAsNeeded(drillCategory, centerZiId),
-                      SizedBox(width: 10),
+                      //SizedBox(width: 10),
                     ],
                   ),
+                SizedBox(height: 40),
+                /*
+                FlatButton(
+                    color: Colors.blueAccent, //white,
+                    textColor: Colors.white, //brown,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: DrillCategory.all, subItemId: 0, customString: null)));
+                    },
+                    child: Text(getString(301), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
                 ),
-                new Positioned(
-                  child: CustomPaint(
-                    foregroundPainter: DrillPainter(
-                      Colors.amber,
-                      Colors.blueAccent,
-                      centerZiId,
-                      shouldDrawCenter,
-                      screenWidth,
-                      0, //widget.startLessonId, //TODO: remove this
-                        subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
-                      widget.sidePositionsCache,
-                      widget.realGroupMembersCache,
-                      widget.centerPositionAndSizeCache,
-                      allLearnedZis,
-                      compoundZiCurrentComponentId,
-                      currentZiListType,
-                        drillCategory//  _selectedDrillMenu.id
+                */
+                InkWell(
+                    child: //Column(
+                    //children: [
+                    Ink.image(
+                      image: AssetImage("assets/core/lessonimage.png"),
+                      width: 170, //130
+                      height: 110, //80
                     ),
-                    child: Center(
-                      child: Stack(
-                          children: createHittestButtons(context)
-                      ),
-                    ),
-                  ),
+                    onTap: () => {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, subItemId: subItemId, customString: null))),
+                    }
                 ),
-                getAnimatedPathPainter(),
               ],
             ),
             onWillPop: _onWillPop
@@ -297,9 +271,9 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   }
 
   Widget getLanguageSwitchButtonAsNeeded(DrillCategory drillCategory, int centerId) {
-    if (drillCategory != DrillCategory.all || centerId != 1) {
-      return SizedBox(width: 0, height: 0);
-    }
+    //if (drillCategory != DrillCategory.all || centerId != 1) {
+    //  return SizedBox(width: 0, height: 0);
+    //}
 
     return TextButton(
       style: TextButton.styleFrom(
@@ -455,13 +429,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         subItemId = _selectedSubMenu.id;
       }
     });
-
-    //_reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(_selectedReviewLevelEnding.id);
-    //_dropdownMenuItemsLevelStarting = buildDropdownMenuItemsLevel(_reviewLevelsStarting);
-
-    //if (_selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id) {
-    //  setInitLessons();
-    //}
   }
 
   onChangeDropdownSubItem(DrillMenu selectedSubMenu) {
@@ -469,342 +436,9 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       _selectedSubMenu = selectedSubMenu;
       subItemId = _selectedSubMenu.id;
     });
-
-    //_reviewLevelsStarting = ReviewLevel.getReviewLevelsStarting(_selectedReviewLevelEnding.id);
-    //_dropdownMenuItemsLevelStarting = buildDropdownMenuItemsLevel(_reviewLevelsStarting);
-
-    //if (_selectedReviewLevelStarting.id == _selectedReviewLevelEnding.id) {
-    //  setInitLessons();
-    //}
-  }
-
-  Widget getAnimatedPathPainter() {
-    //if (!theZiManager.isHechenZi(centerZiId)) {
-    if (theSearchingZiList[centerZiId].composit.length == 1) {
-      var posi = thePositionManager.getCenterZiPosi();
-      var strokes = DictionaryManager.getSingleComponentSearchingZiStrokes(centerZiId);
-      return new Positioned(
-        top: posi.transY,
-        left: posi.transX,
-        height: posi.height,
-        width: posi.width,
-        child: new CustomPaint(
-          foregroundPainter: new AnimatedPathPainter(_controller, strokes),
-        ),
-      );
-    }
-    else {
-      // no need to create above.
-      return Container(width: 0.0, height: 0.0);
-    }
-  }
-
-  initOverlay() {
-    if (overlayEntry != null) {
-      overlayEntry.remove();
-      overlayEntry = null;
-      theDicOverlayEntry = null;
-    }
   }
 
   Future<bool>_onWillPop() {
-    initOverlay();
-
     return Future.value(true);
-  }
-
-  //NOTE: setState within the Timer so that it'll trigger this function to be called repeatedly.
-  void  compoundZiAnimation() {
-    const oneSec = const Duration(seconds: 1);
-    compoundZiAnimationTimer = new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
-      setState(() {
-        compoundZiComponentNum += 1;
-      });
-    });
-  }
-
-  showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning) {
-    initOverlay();
-    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
-
-    OverlayState overlayState = Overlay.of(context);
-    overlayEntry = OverlayEntry(
-        builder: (context) =>Positioned(
-            top: posiY,
-            left: adjustedXValue,
-            child: FlatButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
-              onPressed: () {},
-            )
-        ));
-    overlayState.insert(overlayEntry);
-  }
-
-  Positioned getPositionedContinueButton() {
-    var yPosi = 0.0;
-
-    var buttonColor = Colors.white;
-    if (theAllZiLearned) {
-      buttonColor = Colors.blue;
-    }
-
-    var butt = FlatButton(
-      color: buttonColor, //Colors.white,
-      textColor: Colors.brown,
-      onPressed: () {
-        theIsBackArrowExit = false;
-        Navigator.of(context).pop();
-      },
-      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
-    );
-
-    // NOTE: match the basepainting's drawZiGroup
-    var posiCenter = Positioned(
-        top: yPosi, //yPosi.transY +
-        //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        left: screenWidth - 80.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
-        height: /*getSizeRatio() */ 50.0,
-        //posiAndSize.height,
-        width: /*getSizeRatio() */ 80.0, // 100.0
-        //posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-
-  Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
-    var butt = FlatButton(
-      color: Colors.white, // buttonColor,
-      textColor: Colors.blueAccent,
-      onPressed: () {
-        initOverlay();
-
-        _clearAnimation();
-        resetCompoundZiAnimation();
-
-        setState(() {
-          centerZiId = newCenterZiId;
-          shouldDrawCenter = true;
-        });
-
-        var char = theSearchingZiList[currentZiId].char;
-        TextToSpeech.speak(char);
-      },
-      onLongPress: () {
-        initOverlay();
-
-        var partialZiId = currentZiId;
-        ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(ZiListType.searching);
-        // navigation would always show the real char
-        if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
-          partialZiId = theZiManager.getPartialZiId(listTypeWrapper, theCurrentCenterZiId, currentZiId);
-        }
-
-        var sideZiOrComp;
-        if (listTypeWrapper.value == ZiListType.component) {
-          sideZiOrComp = theComponentList[partialZiId].charOrNameOfNonchar;
-        }
-        else {
-          sideZiOrComp = theSearchingZiList[partialZiId].char;
-        }
-
-        //var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak(sideZiOrComp);
-
-        if (previousZiId != currentZiId || !haveShowedOverlay) {
-          //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
-          var pinyinAndMeaning;
-          if (listTypeWrapper.value == ZiListType.searching) {
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theSearchingZiList[partialZiId].pinyin, theSearchingZiList[partialZiId].meaning);
-          }
-          else {
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theComponentList[partialZiId].pinyin, theComponentList[partialZiId].meaning);
-          }
-
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
-          haveShowedOverlay = true;
-        }
-        else if (haveShowedOverlay) {
-          haveShowedOverlay = false;
-        }
-
-        previousZiId = currentZiId;
-      },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
-    );
-
-    var posiCenter = Positioned(
-        top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-
-  Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
-      onPressed: () {
-        initOverlay();
-
-        //var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(theSearchingZiList[ziId].char);
-      },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
-    );
-
-    var posiCenter = Positioned(
-        top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-
-  Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
-      onPressed: () {
-        initOverlay();
-
-        resetCompoundZiAnimation();
-
-        setState(() {
-          shouldDrawCenter = false;
-        });
-
-        if (theSearchingZiList[ziId].composit.length <= 1) {
-          _startAnimation();
-        }
-        else {
-          compoundZiAnimation();
-        }
-
-        //var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(theSearchingZiList[ziId].char);
-      },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
-    );
-
-    var posiCenter = Positioned(
-        top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-
-  List<Widget> createHittestButtons(BuildContext context) {
-    List<Widget> buttons = [];
-    //TextToSpeech.speak('你好');
-
-    thePositionManager.resetPositionIndex();
-
-    //var subMenuUptoId = 0;
-    if (drillCategory != DrillCategory.custom && _selectedSubMenu != null) {
-      /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
-    }
-
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, 0/*widget.startLessonId*/, subItemId/*subMenuUptoId*/, widget.realGroupMembersCache);
-    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
-    for (var i = 0; i < realGroupMembers.length; i++) {
-      var memberZiId = realGroupMembers[i];
-      //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
-      var positionAndSize;
-      //if (centerZiId == 1) {
-      //var rootZiDisplayIndex = thePositionManager.getRootZiDisplayIndex(memberZiId);
-      //positionAndSize = thePositionManager.getDrillRootPositionAndSize(rootZiDisplayIndex);
-      //}
-      //else {
-      positionAndSize = BasePainter.getPositionAndSize(
-          ZiListType.searching, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
-      //}
-
-      var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
-
-      thePositionManager.updatePositionIndex(ZiListType.searching, memberZiId);
-      buttons.add(posi);
-    }
-
-    if (centerZiId != 1 ) {
-      //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
-      var newCenterZiId = theZiManager.getParentZiId(ZiListType.searching, centerZiId);
-      //var posiAndSize = theLessonManager.getCenterPositionAndSize();
-      var posiAndSize = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
-      var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
-
-      buttons.add(posiCenter);
-    }
-
-    // draw speech icon
-    var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
-    var speechPosiCenter = getPositionedSpeechButton(posiAndSizeSpeech, centerZiId);
-    buttons.add(speechPosiCenter);
-
-    // draw bihua icon
-    var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
-    var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, centerZiId);
-    buttons.add(drawBihuaPosiCenter);
-
-    CreateNavigationHitttestButtons(centerZiId, true, buttons);
-
-    // skip and next section button
-    if (drillCategory == DrillCategory.custom) {
-      buttons.add(getPositionedContinueButton());
-    }
-
-    return buttons;
-  }
-
-  //TODO: not sure to use this or not
-  showCompletedDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text(getString(286)/*"OK"*/),
-      onPressed: () {
-      },
-    );
-
-    String title = getString(115)/*"Good job!"*/;
-    String content = getString(407)/*"You have go through all the flashcards!"*/;
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  CreateNavigationHitttestButtons(int centerZiId, bool isFromDrillPage, List<Widget> buttons) {
-    if (centerZiId != 1) {
-      var naviMap = PositionManager.getNavigationPathPosi(
-          ZiListType.searching, centerZiId, isFromDrillPage, getSizeRatio());
-
-      for (var id in naviMap.keys) {
-        var posi = getPositionedButton(naviMap[id], id, id, true);
-        buttons.add(posi);
-      }
-    }
   }
 }
