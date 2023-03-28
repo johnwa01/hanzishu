@@ -1455,7 +1455,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var extraSec = elapsed.inSeconds % 60;
       var elapsedStr = inMin.toString() + " " + getString(376).toString() + " " + extraSec.toString() + " " + getString(377) + "! ";
 
-      if (inMin >= 7) {
+      if (inMin >= 10) {
         content = elapsedStr + getString(383); /* repeat */
       }
       else {

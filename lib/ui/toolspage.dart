@@ -179,7 +179,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Image.asset(keyboardImageName, width: 100, height: 70),
+          leading: Image.asset(keyboardImageName, width: 100, height: 70),
           //trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
           onTap: () {
             //TODO: can take this as a parameter to the typing and component pages.
