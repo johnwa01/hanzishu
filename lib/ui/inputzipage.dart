@@ -882,9 +882,12 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.WordsStudy) {
       title = getString(409)/*'Study customized words'*/;
     }
+    else if (typingType == TypingType.ComponentTyping) {
+      title = getString(413)/*'Practice typing by component characteristics'*/;
+    }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.WordsStudy && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.WordsStudy && typingType != TypingType.ComponentTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -1150,7 +1153,16 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //String instruction  = InputZiManager.getIntroduction(typingType, currentIndex, lessonId);
 
-    var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
+    var char;
+    if (typingType == TypingType.ComponentTyping) {
+      char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+    }
+    else {
+      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
+          typingType, currentIndex, lessonId);
+      char = zi.zi;
+    }
+
 
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
@@ -1159,7 +1171,7 @@ class _InputZiPageState extends State<InputZiPage> {
         completeColor: Colors.blueAccent,
         screenWidth: screenWidth, //350 /*TODO: temp*/
         showHint: this.showHint,
-        char: zi.zi,
+        char: char, //zi.zi,
         typingType: typingType
     );
 
@@ -1199,7 +1211,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 SizedBox(
                   width: 35.0 * getSizeRatio(), //50
                   child: Text(
-                      zi.zi,
+                      char, //zi.zi,
                       style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                       textAlign: TextAlign.left
                   ),
@@ -1466,7 +1478,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(115)/*"Good job!"*/;
       content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.WordsStudy || typingType == TypingType.ComponentTyping) {
       title = getString(115)/*"Good job!"*/;
       content = getString(410)/*"You have completed typing exercises."*/;
     }

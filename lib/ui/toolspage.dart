@@ -5,6 +5,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
+import 'package:hanzishu/ui/typingcomponentselectionpage.dart';
 import 'package:hanzishu/ui/typingapppage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
@@ -130,6 +131,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 7:
         Navigator.push(
           context,
@@ -140,7 +142,8 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 8:
+         */
+      case 7:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -188,14 +191,25 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
+          title: Text("2. " + getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TypingComponentSelectionPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
+          title: Text("3. " + getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => TpyingSelectionPage(),
+                builder: (context) => TypingSelectionPage(),
               ),
             );
           },

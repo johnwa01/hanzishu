@@ -256,3 +256,19 @@ class ZiIdToCompMap {
   }
 }
 
+class ComponentCategoryStringIdAndTypingChars {
+  int stringId;
+  String letter;
+  String chars;
+
+  ComponentCategoryStringIdAndTypingChars(
+      int stringId,
+      String letter,
+      String chars)
+  {
+    this.stringId = stringId;
+    this.letter = letter;
+    this.chars = chars;
+  }
+}
+

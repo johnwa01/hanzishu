@@ -458,6 +458,11 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
+    else if (typingType == TypingType.ComponentTyping) {
+      if (currentIndex >= theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length) {
+        currentIndex = -1;
+      }
+    }
 
     return currentIndex;
   }
@@ -527,6 +532,10 @@ class InputZiManager {
       var char = wordsStudy[currentIndex];
       result = typingResult.contains(char);
     }
+    else if (typingType == TypingType.ComponentTyping) {
+      var char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+      result = typingResult.contains(char);
+    }
 
     return result;
   }
@@ -579,6 +588,9 @@ class InputZiManager {
     }
     else if (typingType == TypingType.WordsStudy) {
       return wordsStudy.length;
+    }
+    else if (typingType == TypingType.ComponentTyping) {
+      return theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length;
     }
 
     return -1;

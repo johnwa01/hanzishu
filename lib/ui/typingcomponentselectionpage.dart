@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
+import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 
@@ -8,7 +9,7 @@ import 'package:hanzishu/variables.dart';
 class ComponentExerciseNumber {
   int id;
   String name;
-  static int totalExercises = 38; // roughly 98 chars a exercises.
+  static int totalExercises = 25; // roughly 4 to 30 chars a exercises.
 
   ComponentExerciseNumber(this.id, this.name);
 
@@ -16,9 +17,15 @@ class ComponentExerciseNumber {
 
   static populateInitialNumbers() {
     if (exerciseNumbers[0] == null) {
+      var onePair;
+      var descriptionString;
+      var stringAndCharsPair;
       for (var index = 0; index <= totalExercises - 1; index++) {
-        var level = ComponentExerciseNumber(index + 1, (index + 1).toString());
-        exerciseNumbers[index] = level;
+        onePair = theComponentCategoryStringIdAndTypingCharsList[index];
+        descriptionString = getString(onePair.stringId) + " （" + onePair.letter + ")";
+        // Following is the index, not stringId -- different from ComponentCategoryStringIdAndTypingChars
+        stringAndCharsPair = ComponentExerciseNumber(index, descriptionString);
+        exerciseNumbers[index] = stringAndCharsPair;
       }
     }
   }
@@ -31,12 +38,12 @@ class ComponentExerciseNumber {
   }
 }
 
-class TpyingComponentSelectionPage extends StatefulWidget {
+class TypingComponentSelectionPage extends StatefulWidget {
   @override
   _TypingSelectionPageState createState() => _TypingSelectionPageState();
 }
 
-class _TypingSelectionPageState extends State<TpyingComponentSelectionPage> {
+class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
   double screenWidth;
   List<ComponentExerciseNumber> _exerciseNumbers = ComponentExerciseNumber.getComponentExerciseNumbers();
   List<DropdownMenuItem<ComponentExerciseNumber>> _dropdownMenuItemsNumber;
@@ -100,7 +107,7 @@ class _TypingSelectionPageState extends State<TpyingComponentSelectionPage> {
             padding: EdgeInsets.all(30 * getSizeRatioWithLimit()),
           ),
           Text(
-              getString(289)/*"Practice typing 3,800 Characters in 38 exercises"*/,
+              getString(414)/*"Practice typing of a few hundred Characters ..."*/,
               style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()),
               textAlign: TextAlign.start
           ),
@@ -144,7 +151,7 @@ class _TypingSelectionPageState extends State<TpyingComponentSelectionPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.CustomizedTyping, lessonId: _selectedComponentExerciseNumber.id), // TODO: hardcoded
+              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id),
             ),
           );
         },

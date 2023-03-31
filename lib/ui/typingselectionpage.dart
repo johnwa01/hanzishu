@@ -31,12 +31,12 @@ class ExerciseNumber {
   }
 }
 
-class TpyingSelectionPage extends StatefulWidget {
+class TypingSelectionPage extends StatefulWidget {
   @override
   _TypingSelectionPageState createState() => _TypingSelectionPageState();
 }
 
-class _TypingSelectionPageState extends State<TpyingSelectionPage> {
+class _TypingSelectionPageState extends State<TypingSelectionPage> {
   double screenWidth;
   List<ExerciseNumber> _exerciseNumbers = ExerciseNumber.getExerciseNumbers();
   List<DropdownMenuItem<ExerciseNumber>> _dropdownMenuItemsNumber;

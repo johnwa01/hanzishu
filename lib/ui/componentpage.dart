@@ -1348,13 +1348,13 @@ class _ComponentPageState extends State<ComponentPage> {
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
         content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
-        //theNewlyCompletedTypingExercise = 2;
+         //theNewlyCompletedTypingExercise = 2;
       }
-    if (questionType == QuestionType.ShowAttachedComponent) {
-      title = getString(391)/*"Wow!"*/;
-      content = getString(392)/*"You know your Attached Components! Let’s review it in next exercise."*/;
-      //theNewlyCompletedTypingExercise = 7;
-    }
+      if (questionType == QuestionType.ShowAttachedComponent) {
+        title = getString(391)/*"Wow!"*/;
+        content = getString(392)/*"You know your Attached Components! Let’s review it in next exercise."*/;
+        //theNewlyCompletedTypingExercise = 7;
+      }
       /*
     if (questionType == QuestionType.ReviewExpandedComponent) {
       title = getString(136)/*"Wow!"*/;

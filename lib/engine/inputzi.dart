@@ -17,6 +17,7 @@ enum TypingType {
   FromLessons,
   FreeTyping,
   WordsStudy,
+  ComponentTyping,
 }
 
 class InputZi {
