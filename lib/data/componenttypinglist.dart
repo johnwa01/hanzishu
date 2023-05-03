@@ -287,7 +287,7 @@ var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("框", [], "", 0),
   ZiWithComponentsAndStrokes("苔", [], "", 0),
   ZiWithComponentsAndStrokes("苦", [], "", 0),
-  ZiWithComponentsAndStrokes("架", [], "", 0),
+  //ZiWithComponentsAndStrokes("架", [], "", 0),
   ZiWithComponentsAndStrokes("岗", [], "", 0),
   ZiWithComponentsAndStrokes("谷", [], "", 0),
   //ZiWithComponentsAndStrokes("向", [], "", 0),

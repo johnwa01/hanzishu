@@ -168,12 +168,12 @@ class _ToolsPageState extends State<ToolsPage> {
     }
 
     var keyboardImageName;
-    if (theDefaultLocale == "zh_CN") {
-      keyboardImageName = 'assets/core/keyboard_cn.png';
-    }
-    else { // en_US
-      keyboardImageName = 'assets/core/keyboard_eng.png';
-    }
+    //if (theDefaultLocale == "zh_CN") {
+      keyboardImageName = 'assets/core/typing.png'; //'assets/core/keyboard_cn.png';
+    //}
+    //else { // en_US
+    //  keyboardImageName = 'assets/core/keyboard_eng.png';
+    //}
 
     return ListView(
       children: <Widget>[
@@ -182,8 +182,9 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          leading: Image.asset(keyboardImageName, width: 100, height: 70),
+          leading: Image.asset(keyboardImageName, width: 50, height: 40),
           //trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
+          title: Text("1. " + getString(415)/*"Hanzishu puzzle typing course"*/, textDirection: TextDirection.ltr),
           onTap: () {
             //TODO: can take this as a parameter to the typing and component pages.
             theIsFromTypingContinuedSection = true;

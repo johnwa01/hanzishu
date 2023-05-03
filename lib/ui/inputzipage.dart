@@ -794,7 +794,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    theCurrentZiCandidates = theDefaultZiCandidates; // set it to default
+    if (!showHint) {
+      theCurrentZiCandidates = theDefaultZiCandidates;
+    } // set it to default
 
     typingType = widget.typingType; //theComponentManager.getCurrentType();
     lessonId = widget.lessonId;
@@ -1228,6 +1230,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
                       setState(() {
                         showHint = true;
+                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
                     child: Text(
@@ -1467,12 +1470,12 @@ class _InputZiPageState extends State<InputZiPage> {
       var extraSec = elapsed.inSeconds % 60;
       var elapsedStr = inMin.toString() + " " + getString(376).toString() + " " + extraSec.toString() + " " + getString(377) + "! ";
 
-      if (inMin >= 10) {
+      //if (inMin >= 10) {
         content = elapsedStr + getString(383); /* repeat */
-      }
-      else {
-        content = elapsedStr + getString(119) /*"Wow, you are making great progress in typing Chinese characters. You can now move on to the next exercise!"*/;
-      }
+      //}
+      //else {
+      //  content = elapsedStr + getString(119) /*"Wow, you are making great progress in typing Chinese characters. You can now move on to the next exercise!"*/;
+      //}
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
