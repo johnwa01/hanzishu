@@ -16,7 +16,7 @@ class ComponentExerciseNumber {
   static List<ComponentExerciseNumber> exerciseNumbers = List<ComponentExerciseNumber>(totalExercises);
 
   static populateInitialNumbers() {
-    if (exerciseNumbers[0] == null) {
+    //if (exerciseNumbers[0] == null) {
       var onePair;
       var descriptionString;
       var stringAndCharsPair;
@@ -27,7 +27,7 @@ class ComponentExerciseNumber {
         stringAndCharsPair = ComponentExerciseNumber(index, descriptionString);
         exerciseNumbers[index] = stringAndCharsPair;
       }
-    }
+    //}
   }
 
   // note: selected ReveiwNumber instance has to be the same one as in the list.
@@ -45,14 +45,14 @@ class TypingComponentSelectionPage extends StatefulWidget {
 
 class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
   double screenWidth;
-  List<ComponentExerciseNumber> _exerciseNumbers = ComponentExerciseNumber.getComponentExerciseNumbers();
+  //List<ComponentExerciseNumber> _exerciseNumbers; // = ComponentExerciseNumber.getComponentExerciseNumbers();
   List<DropdownMenuItem<ComponentExerciseNumber>> _dropdownMenuItemsNumber;
   ComponentExerciseNumber _selectedComponentExerciseNumber;
 
   @override
   void initState() {
-    _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(_exerciseNumbers);
-    _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    //_dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(_exerciseNumbers);
+    //_selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
 
     super.initState();
   }
@@ -61,7 +61,9 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
     return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
-  List<DropdownMenuItem<ComponentExerciseNumber>> buildDropdownMenuItemsNumber(List exerciseNumbers) {
+  List<DropdownMenuItem<ComponentExerciseNumber>> buildDropdownMenuItemsNumber(/*List exerciseNumbers*/) {
+    List exerciseNumbers = ComponentExerciseNumber.getComponentExerciseNumbers();
+
     List<DropdownMenuItem<ComponentExerciseNumber>> items = List();
     for (ComponentExerciseNumber exerciseNumber in exerciseNumbers) {
       items.add(
@@ -80,6 +82,10 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
     //_selectedComponentExerciseNumber.id = theSelectedComponentExerciseNumber;
     //_selectedComponentExerciseNumber.name = '1';
     screenWidth = Utility.getScreenWidth(context);
+
+    // due to localization, has to do it every build instead of init
+    _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(/*_exerciseNumbers*/);
+    _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
 
     return Scaffold
       (

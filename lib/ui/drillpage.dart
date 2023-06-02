@@ -183,6 +183,11 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       drillCategory = getCategoryFromSelectedDrillMenu(_selectedDrillMenu.id);
     }
 
+    var imageName = "assets/core/chardrill_eng.png";
+    if (theDefaultLocale == "zh_CN") {
+      imageName = "assets/core/chardrill_cn.png";
+    }
+
     return Scaffold
       (
       appBar: AppBar
@@ -216,7 +221,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       //SizedBox(width: 10),
                     ],
                   ),
-                SizedBox(height: 40),
+                SizedBox(height: 10),
                 /*
                 FlatButton(
                     color: Colors.blueAccent, //white,
@@ -232,7 +237,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                     child: //Column(
                     //children: [
                     Ink.image(
-                      image: AssetImage("assets/core/lessonimage.png"),
+                      image: AssetImage(imageName),
                       width: 170, //130
                       height: 110, //80
                     ),
@@ -240,6 +245,16 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, subItemId: subItemId, customString: null))),
                     }
+                ),
+                SizedBox(height: 30),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center/*spaceBetween*/,
+                    children: <Widget>[
+                      //SizedBox(width: 40),
+                      SizedBox(width: 300, child: Text(getString(417)/*"For dictionary, typing method, lessons and more, choose the options in the bottom."*/, /*English/中文*/
+                          style: TextStyle(color: Colors.blue))),
+                      //SizedBox(width: 40),
+                    ]
                 ),
               ],
             ),

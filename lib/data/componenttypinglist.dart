@@ -37,16 +37,16 @@ var theLeadComponentList = [
   LeadComponent(3, "Ea", "王", false, true, 1, 3, "C13.png", "nmdc", 316/*"like E"*/, [4.0,0.45,0.375,8.0,0.9,0.375,4.0,0.45,0.375,8.0,0.45,0.625,8.0,0.45,0.925,8.0,0.9,0.925,4.0,0.3,0.625,8.0,0.45,0.625,8.0,0.975,0.625]),
   LeadComponent(4, "Aa", "人", true, true, 3, 5, "C35.png", "nmdc", 353/*"upward arrow"*/, []),
   LeadComponent(5, "Qa", "田", true, true, 1, 5, "C15.png", "nmdc", 351/*"closed shape with crossing"*/, []),
-  LeadComponent(6, "Ca", "区字框", false, true, 5, 3, "C53.png", "nmdc", 317/*"open to right"*/, [4.0,0.125,0.1,8.0,0.875,0.1,4.0,0.125,0.1,8.0,0.125,0.9,8.0,0.925,0.9]),
+  LeadComponent(6, "Ca", "区字Da框", false, true, 5, 3, "C53.png", "nmdc", 317/*"open to right"*/, [4.0,0.125,0.1,8.0,0.875,0.1,4.0,0.125,0.1,8.0,0.125,0.9,8.0,0.925,0.9]),
   LeadComponent(7, "Ua", "画字框", true, true, 2, 2, "C22.png", "nmdc", 345/*"open to top"*/, [4.0,0.125,0.25,8.0,0.125,0.85,8.0,0.875,0.85,8.0,0.875,0.25]),
   LeadComponent(8, "Ia", "竖", false, true, 2, 3, "C23.png", "nmdc", 342/*"the verticle line"*/, [4.0,0.5,0.0,8.0,0.5,1.0]),
-  LeadComponent(9, "Ro", "尺", true, true, 1, 2, "C12.png", "nmdc", 325/*"two legs"*/, []),
+  LeadComponent(9, "Ra", "尺", true, true, 1, 2, "C12.png", "nmdc", 325/*"two legs"*/, []),
   LeadComponent(10, "Pa", "单耳", false, true, 2, 5, "C25.png", "nmdc", 320/*"hammer looking"*/, [4.0,0.475,0.05,8.0,0.475,0.975,4.0,0.475,0.05,8.0,0.8,0.05,8.0,0.8,0.225,8.0,0.7875,0.25,8.0,0.75,0.275,8.0,0.6,0.3]),
   LeadComponent(11, "Ga", "厶", false, true, 3, 1, "C31.png", "nmdc", 321/*"disconnected triangle"*/, [4.0,0.7,0.075,8.0,0.65,0.25,8.0,0.625,0.35,8.0,0.575,0.45,8.0,0.5375,0.55,8.0,0.5,0.65,8.0,0.45,0.725,8.0,0.375,0.825,8.0,0.85,0.725,4.0,0.725,0.4125,8.0,0.7625,0.55,8.0,0.8125,0.65,8.0,0.85,0.725,8.0,0.9,0.875]),
   LeadComponent(12, "Fa", "厂", true, true, 3, 2, "C32.png", "nmdc", 349/*"shelter looking"*/, []),
-  LeadComponent(13, "Da", "雪字底", false, true, 3, 3, "C33.png", "nmdc", 326/*"facing left"*/, [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875]),
+  LeadComponent(13, "Da", "中", false, true, 3, 3, "C33.png", "nmdc", 326/*"facing left"*/, [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875]),
   LeadComponent(14, "Sa", "弓", true, true, 3, 4, "C34.png", "nmdc", 323/*"half circle shape"*/, []),
-  LeadComponent(15, "Wa", "三", true, true, 1, 4, "C14.png", "nmdc", 324/*"mountain like shape"*/, []),
+  LeadComponent(15, "Wa", "学字头", true, true, 1, 4, "C14.png", "nmdc", 324/*"mountain like shape"*/, []),
   LeadComponent(16, "Ha", "一", true, true, 4, 1, "C41.png", "nmdc", 344/*"the horizontal line"*/, []),
   LeadComponent(17, "Ja", "撇", false, true, 4, 2, "C42.png", "nmdc", 318/*"curve toward bottom left"*/, [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92]),
   LeadComponent(18, "Ka", "十", true, true, 4, 3, "C43.png", "nmdc", 346/*"crossing at middle"*/, []),
@@ -414,8 +414,8 @@ var theZiForExpandedGeneralExerciseList=[
 ];
 
 var theShowAttachedComponentList = [
-  ComponentCollection(0, "F43.png", 0, 0, 0/*"Explaination Text - string id*/),
-  ComponentCollection(1, "F24.png", 2, 4, 315/*"closed shape"*/),
+  ComponentCollection(0, "F51.png", 0, 0, 0/*"Explaination Text - string id*/),
+  //ComponentCollection(1, "F24.png", 2, 4, 315/*"closed shape"*/),
   //ComponentCollection(2, "F13.png", 1, 3, 316/*"like E"*/),
   ComponentCollection(3, "F23.png", 2, 3, 342/*"the verticle line"*/),
   ComponentCollection(5, "F42.png", 4, 2, 318/*"curve toward bottom left"*/),
@@ -426,7 +426,7 @@ var theShowAttachedComponentList = [
   ComponentCollection(9, "F31.png", 3, 1, 321/*"disconnected triangle"*/),
   ComponentCollection(10, "F62.png", 6, 2, 322/*"a shape with three legs"*/),
   ComponentCollection(11, "F34.png", 3, 4, 323/*"half circle shape"*/),
-  ComponentCollection(15, "F43.png", 4, 3, 346/*"crossing at middle"*/),
+  //ComponentCollection(15, "F43.png", 4, 3, 346/*"crossing at middle"*/),
   ComponentCollection(16, "F52.png", 5, 2, 347/*"split shapes"*/),
   ComponentCollection(17, "F61.png", 6, 1, 348/*"open to bottom"*/),
   //ComponentCollection(18, "F12.png", 1, 2, 325/*"two legs"*/),
@@ -600,31 +600,34 @@ var theZiForGeneralExerciseList=[
 ];
 
 var theComponentCategoryStringIdAndTypingCharsList=[
-  ComponentCategoryStringIdAndTypingChars(315, "O", "口四凸中串虫皿史吏束柬石言西酉黑熏革事禹"), // one mouth
+  ComponentCategoryStringIdAndTypingChars(315, "O", "口凸石言"), // one mouth
   ComponentCategoryStringIdAndTypingChars(327, "B", "日曰白臼母目自且身艮耳帽衰棺埠值唧殷基"), // two mouths
+  ComponentCategoryStringIdAndTypingChars(326, "D", "中串虫史吏束柬皿四西酉黑熏革事禹徊勤囊腰临置曾兔"), // mouth with teeth
   ComponentCategoryStringIdAndTypingChars(351, "Q", "田由甲申电里果毋鬼曳更禺重曲惯龟阐碑嫂穗碘槽"), // four mouths
-  ComponentCategoryStringIdAndTypingChars(317, "C", "巨臣亡枢宦"), // east
-  ComponentCategoryStringIdAndTypingChars(326, "D", "尹聿秉丑兜灵剥帚侯睁肃逮庚庸捷凄谦"), // west
-  ComponentCategoryStringIdAndTypingChars(348, "N", "门贝见巾冉内肉而雨两甫月丹舟册同周奂滑遍沛制憋离肾徊勤囊腰临置曾兔"), // south
-  ComponentCategoryStringIdAndTypingChars(345, "U", "凹廿甘画收"), // north
-  ComponentCategoryStringIdAndTypingChars(343, "L", "毛七匕己已巳巴也屯乙飞心瓦氏民气世弋断乱延花沏皆凯创甩迅贰"), // northeast
-  ComponentCategoryStringIdAndTypingChars(323, "S", "刁习夕歹专弓丐司敢今蛋甬劲然烫忽黎巧写驰呜鸣"), // southwest
+  ComponentCategoryStringIdAndTypingChars(345, "U", "凹廿甘画收山缶拙逆"), // north
+  ComponentCategoryStringIdAndTypingChars(348, "N", "门贝见巾冉内肉而雨两甫月丹舟册同周奂滑遍沛制憋离肾索"), // south
+  ComponentCategoryStringIdAndTypingChars(317, "C", "巨臣亡枢宦尹聿秉丑兜灵剥帚侯睁肃逮庚庸捷凄谦"), // open to sides
+
   ComponentCategoryStringIdAndTypingChars(353, "A", "人入火个金食臾大犬夫央夷椿筷"), // human legs
   ComponentCategoryStringIdAndTypingChars(350, "X", "乂文丈女戈戋又皮父我戊戢必龙及攸烧降夜越葱"), // cross legs
   ComponentCategoryStringIdAndTypingChars(325, "R", "尺几久九丸兀枫抚沈溉痹"), // strange legs
   ComponentCategoryStringIdAndTypingChars(322, "M", "木本未末耒米求禾爪水永豕象承小示乐东不炼剥潘茶聚缘琢刺恭"), // three legs
   ComponentCategoryStringIdAndTypingChars(347, "V", "八儿兆川州非竹剿孪弈师挤渊丞登舆鼎侃鼠"), // separated legs
-  ComponentCategoryStringIdAndTypingChars(324, "W", "山缶拙逆"), // mountain
-  ComponentCategoryStringIdAndTypingChars(320, "P", "刀尸力为户书韦弗万方乃卫楣陪却哪溜顾假所姊弟"), // knife shape
+
+  ComponentCategoryStringIdAndTypingChars(320, "P", "刀尸力为户书韦弗万方乃卫楣陪却哪溜顾假姊弟"), // knife shape
   ComponentCategoryStringIdAndTypingChars(319, "T", "丁于牙乎了子孑予矛下手坷"), // T shape
   ComponentCategoryStringIdAndTypingChars(346, "K", "十土士干千牛才寸车年丰羊洗渚降技晴择"), // cross shape
-  ComponentCategoryStringIdAndTypingChars(316, "E", "王玉五工亚垂疟糕集御"), // 工 shape
-  ComponentCategoryStringIdAndTypingChars(349, "F", "厂广斤斥丘后痊鹿泼畴拜搓判滤佑须浓"), // cliff shape
+  ComponentCategoryStringIdAndTypingChars(316, "E", "王玉五工亚垂二三疟糕集御"), // 工 shape
+  ComponentCategoryStringIdAndTypingChars(349, "F", "厂广斤斥丘后痊鹿泼畴拜搓判滤佑须浓所"), // cliff shape
   ComponentCategoryStringIdAndTypingChars(321, "G", "幺乡衣长拚层拟展亥终丝紧缘髦袁派祭"), // triangle
-  ComponentCategoryStringIdAndTypingChars(342, "I", "卜爿上止业攸创览卓性将背涉尚面延胥犀"), // vertical
-  ComponentCategoryStringIdAndTypingChars(344, "H", "井一二三莽带舞散媾"), // horizontal
-  ComponentCategoryStringIdAndTypingChars(318, "J", "片劣吻须债徒受段疙锌临简昂泖印玺角馅猪貌"), // arc
-  ComponentCategoryStringIdAndTypingChars(352, "Y", "之丫立仪养道返设均实兑班畜温兴蛇索热函祸衩前鬲"), // dot
+
+  ComponentCategoryStringIdAndTypingChars(342, "I", "卜爿上止业攸创览卓性将背涉尚面延胥犀债徒"), // vertical
+  ComponentCategoryStringIdAndTypingChars(344, "H", "井一莽带舞散媾"), // horizontal
+  ComponentCategoryStringIdAndTypingChars(318, "J", "片劣吻须受段疙锌临简昂泖印玺角馅猪貌"), // arc
+  ComponentCategoryStringIdAndTypingChars(324, "W", "仪养均兑温实兴热"), // linear dots
+  ComponentCategoryStringIdAndTypingChars(352, "Y", "之丫立道班蛇函祸衩前鬲"), // other dots
+  ComponentCategoryStringIdAndTypingChars(343, "L", "毛七匕己已巳巴也屯乙飞心瓦氏民气世弋断乱延花沏皆凯创甩迅贰"), // northeast
+  ComponentCategoryStringIdAndTypingChars(323, "S", "刁习夕歹专弓丐司敢今蛋甬劲然烫忽黎巧写驰呜鸣"), // southwest
 ];
 
 //var theComponentList = [

@@ -423,10 +423,10 @@ class _ComponentPageState extends State<ComponentPage> {
     var str;
     if (currentIndex == 0) {
       if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 0) {
-        str = getString(388); /* learn content then continue*/
+        str = ''; //getString(388); /* learn content then continue*/
       }
       else if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
-        str = getString(416); /* learn content & mapping then continue*/
+        str = ''; //getString(416); /* learn content & mapping then continue*/
       }
       else {
         str = getString(126) /*'Memorize the above Component-key pairings - 1.'*/;
@@ -1358,7 +1358,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       if (questionType == QuestionType.ShowAttachedComponent) {
         title = getString(391)/*"Wow!"*/;
-        content = getString(392)/*"You know your Attached Components! Let’s review it in next exercise."*/;
+        content = getString(355)/*"You know your Attached Components! Let’s review it in next exercise."*/;
         //theNewlyCompletedTypingExercise = 7;
       }
       /*

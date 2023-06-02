@@ -101,6 +101,8 @@ flutter:
      - assets/core/characterdrill.png
      - assets/core/characterlist.png
      - assets/core/characterreview.png
+     - assets/core/chardrill_cn.png
+     - assets/core/chardrill_eng.png
      - assets/core/completedicon.png
      - assets/core/conversations.png
      - assets/core/dictionaryicon0.png
@@ -269,17 +271,16 @@ flutter:
      - assets/typing/E62.png
      - assets/typing/F15.png
      - assets/typing/F23.png
-     - assets/typing/F24.png
      - assets/typing/F25.png
      - assets/typing/F31.png
      - assets/typing/F32.png
      - assets/typing/F33.png
      - assets/typing/F34.png
      - assets/typing/F42.png
-     - assets/typing/F43.png
      - assets/typing/F44.png
      - assets/typing/F51.png
      - assets/typing/F52.png
+     - assets/typing/F53.png
      - assets/typing/F54.png
      - assets/typing/F61.png
      - assets/typing/F62.png
