@@ -421,5 +421,5 @@ var theString_en_US = [
   Local(414, "Practice typing of all components by their characteristics."),
   Local(415, "Hanzishu puzzle typing course"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),
-  Local(417, "For dictionary, typing method, lessons and more, choose the options in the bottom."),
+  Local(417, "For dictionary, typing method, lessons and more, choose the options from the bottom."),
 ];

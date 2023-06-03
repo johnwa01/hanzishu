@@ -237,7 +237,7 @@ class _InputZiPageState extends State<InputZiPage> {
         imageName = fullExpandedComponent.imageName;
         imageLeft = 150.0 * getSizeRatio();
         imageWidth = 100.0 * getSizeRatio();
-        imageHeight = 135.0 * getSizeRatio();
+        imageHeight = 150.0 * getSizeRatio(); //135
       }
       fullPath = "assets/typing/" + imageName;
 
