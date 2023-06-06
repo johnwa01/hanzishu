@@ -146,7 +146,7 @@ var theString_en_US = [
   Local(140, "Glossary"),
   Local(141, "Privacy policy & contact us"),
   Local(142, "About the Hanzishu Dictionary"),
-  Local(143, "The Hanzishu Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group."),
+  Local(143, "The Hanzishu Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters and 50,000 phrases, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group."),
   Local(144, "Navigate the Hanzishu Dictionary"),
   Local(145, "Open the Basic Character Table"),
   Local(146, "Tap the first Basic Character contained in the Character that you are searching for"),
@@ -422,4 +422,6 @@ var theString_en_US = [
   Local(415, "Hanzishu puzzle typing course"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),
   Local(417, "For dictionary, typing method, lessons and more, choose the options from the bottom."),
+  Local(418, "Phrases"),
+  Local(419, "There are no phrases for this character in this system ."),
 ];

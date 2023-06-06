@@ -184,7 +184,7 @@ class _ToolsPageState extends State<ToolsPage> {
           //leading: Image.asset('assets/core/itemicon.png'),
           leading: Image.asset(keyboardImageName, width: 50, height: 40),
           //trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          title: Text("1. " + getString(415)/*"Hanzishu puzzle typing course"*/, textDirection: TextDirection.ltr),
+          title: Text(/*"1. " + */getString(415)/*"Hanzishu puzzle typing course"*/, textDirection: TextDirection.ltr),
           onTap: () {
             //TODO: can take this as a parameter to the typing and component pages.
             theIsFromTypingContinuedSection = true;
@@ -192,7 +192,7 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          title: Text("2. " + getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
+          title: Text(/*"2. " + */getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
           onTap: () {
             Navigator.push(
               context,
@@ -204,7 +204,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text("3. " + getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
+          title: Text(/*"3. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(

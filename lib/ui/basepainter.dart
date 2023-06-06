@@ -786,6 +786,18 @@ class BasePainter extends CustomPainter{
         posiSize.transY += posiSize.charFontSize / 4 ;
       }
 
+      var display = false;
+      if (listType == ZiListType.zi) {
+        if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && id != TheConst.starCharId ) {
+          display = true;
+        }
+      }
+      else if (listType == ZiListType.searching) {
+        if (id >= 52) { // TODO: exclude more structural items
+          display = true;
+        }
+      }
+
       drawRootZi(
             id,
             listType,
@@ -799,21 +811,9 @@ class BasePainter extends CustomPainter{
             posiSize.lineWidth, /*createFrame:*/
             true,
             centerZiAndChildrenLearned,
-            withPinyin,
+            display, //withPinyin
             Colors.cyan /*TODO*/,
             shouldDrawCenter);
-
-      var display = false;
-      if (listType == ZiListType.zi) {
-        if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && id != TheConst.starCharId ) {
-         display = true;
-        }
-      }
-      else if (listType == ZiListType.searching) {
-        if (id >= 52) { // TODO: exclude more structural items
-          display = true;
-        }
-      }
 
       if (display) {
         displayCenterZiRelated(listType, id, posiSize.charFontSize);

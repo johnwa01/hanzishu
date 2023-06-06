@@ -16,6 +16,7 @@ import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/ui/zigrouppage.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
   DictionaryStage dicStage;
@@ -555,6 +556,28 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     return posiCenter;
   }
 
+  Positioned getPositionedDrawZiGroupButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        clearOverlayEntry();
+        resetCompoundZiAnimation();
+
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ZiGroupPage(ziId: ziId)));
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
   CreateNavigationHitttestButtons(DictionaryStage stage, List<Widget> buttons) {
     var defaultFontSize = screenWidth / 16.0;     // was hardcoded 25.0, use it as the standard
     var fontSize1 = defaultFontSize * (5.0 / 25.0);
@@ -692,6 +715,13 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var posiAndSizeBihua = PositionManager.getDicAnimationBrushPositionAndSize(animatedZiPosi, ratio);
       var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, searchingZiIndex);
       buttons.add(drawBihuaPosiCenter);
+
+      // for zigroup
+      var posiAndSizeZiGroup = posiAndSizeBihua;
+      posiAndSizeZiGroup.transX += 100;
+      posiAndSizeZiGroup.width += 50*ratio;
+      var drawZiGroupPosiCenter = getPositionedDrawZiGroupButton(posiAndSizeZiGroup, searchingZiIndex);
+      buttons.add(drawZiGroupPosiCenter);
     }
     else if (dicStage == DictionaryStage.help) {
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);

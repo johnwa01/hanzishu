@@ -210,6 +210,20 @@ class DictionaryPainter extends BreakoutPainter {
         Colors.amber,
         fontSize2);
 
+    // for related ZiGroups
+    /*
+    DisplayIcon(
+        iconPenStrokes,
+        posiAndSizeBihua.transX + 100,
+        posiAndSizeBihua.transY,
+        posiAndSizeBihua.width,
+        posiAndSizeBihua.height,
+        Colors.amber,
+        fontSize2);
+    */
+
+    displayTextWithValue("[" + getString(418)/*"Phrase"*/ + "]", posiAndSizeBihua.transX + 100, posiAndSizeBihua.transY, fontSize4, Colors.black);
+
     //Need to match the yPosi in DictionaryPage.
     displayTextWithValue(getString(85)/*"Sound"*/ + ": ", fontSize3, fontSize9, fontSize4, Colors.black);
     DisplayIcon(iconSpeechStrokes, fontSize7, fontSize9, fontSize4, fontSize4, Colors.amber/*MaterialColor ofColor*/, fontSize2/*ziLineWidth*/);
