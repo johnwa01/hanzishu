@@ -389,7 +389,7 @@ var theString_en_US = [
   Local(381, "The development of the phone version of the app is close to complete."),
   Local(382, "At the same time, you can use the previous free typing page to type Chinese words then copy/paste to other programs."),
   Local(383, "Before moving to the next one, suggest you repeat this exercise until your progress is not obvious."),
-  Local(384, "Hanzi basic components"),
+  Local(384, "Chinese alphabets"),
   Local(385, "Name"),
   Local(386, "group"),
   Local(387, "Up to unit"),
