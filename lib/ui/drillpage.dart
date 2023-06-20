@@ -20,7 +20,9 @@ import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
-//import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/privacypolicy.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
 
 class DrillPage extends StatefulWidget {
   //final int lessonId;
@@ -256,12 +258,31 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       //SizedBox(width: 40),
                     ]
                 ),
+                SizedBox(height: 30),
+                getEnlighteningClasses(),
               ],
             ),
             onWillPop: _onWillPop
         ),
       ),
     );
+  }
+
+  Widget getEnlighteningClasses() { 
+    if (kIsWeb) {
+      return FlatButton(
+        color: Colors.blueAccent, //white,
+        textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/lesson"),
+              webOnlyWindowName: '_self');
+        },
+        child: Text(getString(420) /*"Hanzishu classes"*/,
+            style: TextStyle(fontSize: 16.0 /*applyRatio(20.0)*/)),
+      );
+    }
+
+    return SizedBox(width: 0, height: 0);
   }
 
   DrillCategory getCategoryFromSelectedDrillMenu(int selectedDrillMenuId) {

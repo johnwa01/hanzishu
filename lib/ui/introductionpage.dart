@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
 
 class IntroductionPage extends StatefulWidget {
   IntroductionPage();
@@ -97,7 +99,24 @@ class _IntroductionPageState extends State<IntroductionPage> {
               style: TextStyle(color: Colors.blue, fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
+          SizedBox(height: fontSize1),
+          getHanzishuHistoryLink(),
+
         ]
     );
+  }
+
+  Widget getHanzishuHistoryLink() {
+    if (kIsWeb)
+      return FlatButton(
+        color: Colors.blueAccent, //white,
+        textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/publish/history.htm"), webOnlyWindowName: '_self');
+        },
+        child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+      );
+
+    return SizedBox(width: 0, height: 0);
   }
 }
