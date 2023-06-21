@@ -259,7 +259,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                     ]
                 ),
                 SizedBox(height: 30),
-                getEnlighteningClasses(),
+                //getEnlighteningClasses(),
               ],
             ),
             onWillPop: _onWillPop

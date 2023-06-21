@@ -124,19 +124,16 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
-
-            /*
-            ListTile(
-              leading: Image.asset('assets/core/itemicon.png'),
-              title: Text(getString(420)/*"Hanzishu classes"*/, textDirection: TextDirection.ltr),
-              onTap: () {
-                if (kIsWeb) {
-                  launchUrl(Uri.parse("https://hanzishu.com/lesson"), webOnlyWindowName: '_self');
-                }
-              },
-            ),
-            */
-
+            if (kIsWeb)
+              ListTile(
+                leading: Image.asset('assets/core/itemicon.png'),
+                title: Text(getString(420) /*"Hanzishu classes"*/,
+                    textDirection: TextDirection.ltr),
+                onTap: () {
+                    launchUrl(Uri.parse("https://hanzishu.com/lesson"),
+                        webOnlyWindowName: '_self');
+                },
+              ),
             ListTile(
               leading: Image.asset('assets/core/breakout.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(384)/*"Hanzi basic components"*/, textDirection: TextDirection.ltr),

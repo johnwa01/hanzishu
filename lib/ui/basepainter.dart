@@ -1149,7 +1149,7 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(getString(97)/*"Components"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
     drawComponentZiList(
         comps,
-        135.0 * ratio, //160
+        185.0 * ratio,  //135
         posi.transY,
         posi.charFontSize * 1.3,
         posi.charFontSize * 1.3,
