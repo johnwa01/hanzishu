@@ -2922,7 +2922,7 @@ var theInputZiList=[
   InputZi("tqis", 22937,"抽"),
   InputZi("tqnk", 9401,"押"),
   InputZi("tqx", 12537,"搜"),
-  InputZi("tRes", 9225,"捷"),
+  InputZi("tres", 9225,"捷"),
   InputZi("trjl", 47543,"执"),
   InputZi("trk", 3233,"垫"),
   InputZi("trp", 10477,"抛"),

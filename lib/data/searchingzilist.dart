@@ -764,7 +764,7 @@ var theSearchingZiList = [
   SearchingZi(760,"铃", "líng", "bell",10,["Sl","686"],"",0,"","","l",[],686,0,5),
   SearchingZi(761,"徐", "xú", "slowly; gently; surname",10,["Lh","712"],"",0,"","","l",[],712,0,7),
   SearchingZi(762,"途", "tú", "way; road; route",10,["712","Ml"],"",0,"","","b",[],712,0,4),
-  SearchingZi(763,"拿", "ná", "hold; take",10,["673","52","1435","2683"],"",0,"","","u",[],2683,0,1),
+  SearchingZi(763,"拿", "ná", "hold; take",10,["691","2683"],"",0,"","","u",[],2683,0,1),
   SearchingZi(764,"敛", "liàn", "restrain; hold back",10,["713","Sj"],"",0,"","","r",[],713,0,7),
   SearchingZi(765,"耸", "sǒng", "towering; lofty",10,["676","3445"],"",0,"","","u",[],3445,0,7),
   SearchingZi(766,"脊", "jǐ", "spine",10,["Mn","673","Ud"],"",0,"","","u",[],40,0,7),

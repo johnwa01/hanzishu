@@ -85,7 +85,13 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
 
     // due to localization, has to do it every build instead of init
     _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(/*_exerciseNumbers*/);
-    _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    if (_selectedComponentExerciseNumber == null) {
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    }
+    else {
+      // _select* has to map to one in the current _dropdown*
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[_selectedComponentExerciseNumber.id].value;
+    }
 
     return Scaffold
       (

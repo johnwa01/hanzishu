@@ -44,7 +44,8 @@ class DrillPainter extends BasePainter {
     //?theCurrentCenterZiId = centerId;
     drawZiGroup(centerId, ZiListType.searching, drillCategory, reviewStartLessonId, reviewEndLessonId);
 
-    if (compoundZiCurrentComponentId > 0) {
+    // component list starts from 0, unlike zi list
+    if (compoundZiCurrentComponentId >= 0) {
       // for compound zi animation action only
       drawCenterZi(compoundZiCurrentComponentId, ziListType);
     }

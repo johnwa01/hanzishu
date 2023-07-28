@@ -601,12 +601,12 @@ var theZiForGeneralExerciseList=[
 
 var theComponentCategoryStringIdAndTypingCharsList=[
   ComponentCategoryStringIdAndTypingChars(315, "O", "口凸石言"), // one mouth
-  ComponentCategoryStringIdAndTypingChars(327, "B", "日曰白臼母目自且身艮耳帽衰棺埠值唧殷基"), // two mouths
+  ComponentCategoryStringIdAndTypingChars(327, "B", "日曰白臼母目自且身艮耳帽衰棺埠值唧殷"), // two mouths
   ComponentCategoryStringIdAndTypingChars(326, "D", "中串虫史吏束柬皿四西酉黑熏革事禹徊勤囊腰临置曾兔"), // mouth with teeth
   ComponentCategoryStringIdAndTypingChars(351, "Q", "田由甲申电里果毋鬼曳更禺重曲惯龟阐碑嫂穗碘槽"), // four mouths
   ComponentCategoryStringIdAndTypingChars(345, "U", "凹廿甘画收山缶拙逆"), // north
   ComponentCategoryStringIdAndTypingChars(348, "N", "门贝见巾冉内肉而雨两甫月丹舟册同周奂滑遍沛制憋离肾索"), // south
-  ComponentCategoryStringIdAndTypingChars(317, "C", "巨臣亡枢宦尹聿秉丑兜灵剥帚侯睁肃逮庚庸捷凄谦"), // open to sides
+  ComponentCategoryStringIdAndTypingChars(317, "C", "巨臣亡枢宦"), // open to sides
 
   ComponentCategoryStringIdAndTypingChars(353, "A", "人入火个金食臾大犬夫央夷椿筷"), // human legs
   ComponentCategoryStringIdAndTypingChars(350, "X", "乂文丈女戈戋又皮父我戊戢必龙及攸烧降夜越葱"), // cross legs
@@ -614,20 +614,20 @@ var theComponentCategoryStringIdAndTypingCharsList=[
   ComponentCategoryStringIdAndTypingChars(322, "M", "木本未末耒米求禾爪水永豕象承小示乐东不炼剥潘茶聚缘琢刺恭"), // three legs
   ComponentCategoryStringIdAndTypingChars(347, "V", "八儿兆川州非竹剿孪弈师挤渊丞登舆鼎侃鼠"), // separated legs
 
-  ComponentCategoryStringIdAndTypingChars(320, "P", "刀尸力为户书韦弗万方乃卫楣陪却哪溜顾假姊弟"), // knife shape
+  ComponentCategoryStringIdAndTypingChars(320, "P", "刀尸力为户书韦弗万方乃卫楣陪却哪溜顾假姊弟尹聿秉丑睁肃逮庚庸捷凄谦"), // knife shape
   ComponentCategoryStringIdAndTypingChars(319, "T", "丁于牙乎了子孑予矛下手坷"), // T shape
   ComponentCategoryStringIdAndTypingChars(346, "K", "十土士干千牛才寸车年丰羊洗渚降技晴择"), // cross shape
-  ComponentCategoryStringIdAndTypingChars(316, "E", "王玉五工亚垂二三疟糕集御"), // 工 shape
+  ComponentCategoryStringIdAndTypingChars(316, "E", "王玉五工亚垂一二三疟糕集御"), // 工 shape
   ComponentCategoryStringIdAndTypingChars(349, "F", "厂广斤斥丘后痊鹿泼畴拜搓判滤佑须浓所"), // cliff shape
   ComponentCategoryStringIdAndTypingChars(321, "G", "幺乡衣长拚层拟展亥终丝紧缘髦袁派祭"), // triangle
 
   ComponentCategoryStringIdAndTypingChars(342, "I", "卜爿上止业攸创览卓性将背涉尚面延胥犀债徒"), // vertical
-  ComponentCategoryStringIdAndTypingChars(344, "H", "井一莽带舞散媾"), // horizontal
+  ComponentCategoryStringIdAndTypingChars(344, "H", "井莽带舞散媾基"), // horizontal
   ComponentCategoryStringIdAndTypingChars(318, "J", "片劣吻须受段疙锌临简昂泖印玺角馅猪貌"), // arc
   ComponentCategoryStringIdAndTypingChars(324, "W", "仪养均兑温实兴热"), // linear dots
   ComponentCategoryStringIdAndTypingChars(352, "Y", "之丫立道班蛇函祸衩前鬲"), // other dots
   ComponentCategoryStringIdAndTypingChars(343, "L", "毛七匕己已巳巴也屯乙飞心瓦氏民气世弋断乱延花沏皆凯创甩迅贰"), // northeast
-  ComponentCategoryStringIdAndTypingChars(323, "S", "刁习夕歹专弓丐司敢今蛋甬劲然烫忽黎巧写驰呜鸣"), // southwest
+  ComponentCategoryStringIdAndTypingChars(323, "S", "刁习夕歹专弓丐司敢今蛋甬劲然烫忽黎巧写驰呜鸣兜剥帚侯"), // southwest
 ];
 
 //var theComponentList = [

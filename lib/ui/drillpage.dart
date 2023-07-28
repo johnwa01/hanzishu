@@ -144,7 +144,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
   @override
   Widget build(BuildContext context) {
-    int compoundZiCurrentComponentId = 0;
+    int compoundZiCurrentComponentId = -1;
     int compoundZiTotalComponentNum = 0;
 
     // compound zi is animating.

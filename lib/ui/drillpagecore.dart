@@ -166,7 +166,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    int compoundZiCurrentComponentId = 0;
+    int compoundZiCurrentComponentId = -1;
     int compoundZiTotalComponentNum = 0;
 
     // compound zi is animating.
@@ -366,6 +366,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   //NOTE: setState within the Timer so that it'll trigger this function to be called repeatedly.
+  // Not really an animation, just set a timer to display a component in the center, after time, display next component in the center, etc.
   void  compoundZiAnimation() {
     const oneSec = const Duration(seconds: 1);
     compoundZiAnimationTimer = new Timer(oneSec, () {     //timeout(oneSec, (Timer t) {   //periodic
