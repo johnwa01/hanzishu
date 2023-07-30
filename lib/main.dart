@@ -128,10 +128,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children =
   [
-    DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
-    DictionaryPage(),
-    ToolsPage(),
     LessonsPage(),
+    DictionaryPage(),
+    DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
+    ToolsPage(),
     MePage()
   ];
 
@@ -162,9 +162,9 @@ class _MyHomePageState extends State<MyHomePage> {
         unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
-            label: getString(1)/*'Drills'*/,
-            icon: Image.asset('assets/core/meicon1.png'),
-            activeIcon: Image.asset('assets/core/meicon0.png'),
+            label: getString(91)/*'Lessons'*/,
+            icon: Image.asset('assets/core/lessonsicon1.png'),
+            activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
             label: getString(92)/*'Dictionary'*/,
@@ -172,14 +172,14 @@ class _MyHomePageState extends State<MyHomePage> {
             activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
           ),
           BottomNavigationBarItem(
+            label: getString(1)/*'Drills'*/,
+            icon: Image.asset('assets/core/meicon1.png'),
+            activeIcon: Image.asset('assets/core/meicon0.png'),
+          ),
+          BottomNavigationBarItem(
             label: getString(93)/*'Typing'*/,
             icon: Image.asset('assets/core/typingicon1.png'),
             activeIcon: Image.asset('assets/core/typingicon0.png'),
-          ),
-          BottomNavigationBarItem(
-            label: getString(91)/*'Lessons'*/,
-            icon: Image.asset('assets/core/lessonsicon1.png'),
-            activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
             label: getString(94)/*'Me'*/,

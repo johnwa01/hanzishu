@@ -65,8 +65,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
   DrillMenu _selectedSubMenu;
 
-  String currentLocale;
-
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
     return defaultFontSize / 25.0; // ratio over original hard coded value
@@ -132,7 +130,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       centerZiId = theCurrentCenterZiId;
       shouldDrawCenter = true;
       compoundZiComponentNum = 0;
-      this.currentLocale = theDefaultLocale;
     });
   }
 
@@ -202,12 +199,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
           //width: 200.0,
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end/*spaceBetween*/,
-                  children: <Widget>[
-                    getLanguageSwitchButtonAsNeeded(drillCategory, centerZiId),
-                  ]
-                ),
                 SizedBox(height: 20),
                 Row(
                     mainAxisAlignment: MainAxisAlignment.center, //spaceBetween,
@@ -248,17 +239,17 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                         MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, subItemId: subItemId, customString: null))),
                     }
                 ),
-                SizedBox(height: 30),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center/*spaceBetween*/,
-                    children: <Widget>[
+                //SizedBox(height: 30),
+                //Row(
+                //    mainAxisAlignment: MainAxisAlignment.center/*spaceBetween*/,
+                //    children: <Widget>[
                       //SizedBox(width: 40),
-                      SizedBox(width: 300, child: Text(getString(417)/*"For dictionary, typing method, lessons and more, choose the options in the bottom."*/, /*English/中文*/
-                          style: TextStyle(color: Colors.blue))),
+                //      SizedBox(width: 300, child: Text(getString(417)/*"For dictionary, typing method, lessons and more, choose the options in the bottom."*/, /*English/中文*/
+                //          style: TextStyle(color: Colors.blue))),
                       //SizedBox(width: 40),
-                    ]
-                ),
-                SizedBox(height: 30),
+                //    ]
+                //),
+                //SizedBox(height: 30),
                 //getEnlighteningClasses(),
               ],
             ),
@@ -304,72 +295,6 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     }
 
     return category;
-  }
-
-  Widget getLanguageSwitchButtonAsNeeded(DrillCategory drillCategory, int centerId) {
-    //if (drillCategory != DrillCategory.all || centerId != 1) {
-    //  return SizedBox(width: 0, height: 0);
-    //}
-
-    return TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16.0),
-      ),
-      onPressed: () {
-        setState(() {
-          currentLocale = changeTheDefaultLocale();
-          _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
-          _dropdownSubMenuItems = buildDropdownSubMenuItems();
-          //currentIndex = 1;
-          //currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
-        });
-      },
-      child: Text(getOppositeDefaultLocale(), /*English/中文*/
-          style: TextStyle(color: Colors.blue)),
-    );
-  }
-
-  String changeTheDefaultLocale() {
-    if (theDefaultLocale == "en_US") {
-      theDefaultLocale = "zh_CN";
-    }
-    else if (theDefaultLocale == "zh_CN") {
-      theDefaultLocale = "en_US";
-    }
-
-    theStorageHandler.setLanguage(theDefaultLocale);
-    theStorageHandler.SaveToFile();
-
-    // let main page refresh to pick up the language change for navigation bar items
-    final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
-    navigationBar.onTap(0);
-
-    return theDefaultLocale;
-  }
-
-  String getOppositeDefaultLocale() {
-    int idForLanguageTypeString = 378; /*English/中文*/
-    // according to theDefaultLocale
-    String localString = "";
-
-    switch (theDefaultLocale) {
-      case "en_US":
-        {
-          localString = theString_zh_CN[idForLanguageTypeString].str; // theString_en_US[id].str;
-        }
-        break;
-      case "zh_CN":
-        {
-          localString = theString_en_US[idForLanguageTypeString].str; // theString_zh_CN[id].str;
-        }
-        break;
-      default:
-        {
-        }
-        break;
-    }
-
-    return localString;
   }
 
   Widget getCategories(BuildContext context, int centerZiId, DrillCategory drillCategory) {
