@@ -17,6 +17,7 @@ enum ButtonType {
   phrase,
   specialPhrase,
   sound,
+  translationSound,
   launchPage
 }
 
@@ -163,12 +164,12 @@ class _ConversationPageState extends State<ConversationPage> {
       onPressed: () {
         if (buttonType == ButtonType.sound) {
           var conv = lesson.getSentence(id);
-          TextToSpeech.speak(conv);
+          TextToSpeech.speak("zh-CN", conv);
         }
         else if (buttonType == ButtonType.char) {
           var zi = theZiManager.getZi(id);
           if (zi != null) {
-            TextToSpeech.speak(zi.char);
+            TextToSpeech.speak("zh-CN", zi.char);
           }
 
           var meaning = ZiManager.getPinyinAndMeaning(id);
@@ -183,10 +184,14 @@ class _ConversationPageState extends State<ConversationPage> {
             phrase = theSpecialPhraseList[id];
           }
 
-          TextToSpeech.speak(phrase.chars);
+          TextToSpeech.speak("zh-CN", phrase.chars);
 
           var meaning = phrase.getPinyinAndMeaning();
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        }
+        if (buttonType == ButtonType.translationSound) {
+          var sent = lesson.getRealSentence(id);
+          TextToSpeech.speak("en-US", sent.trans);
         }
         else if (buttonType == ButtonType.launchPage) {
           theIsBackArrowExit = false;
@@ -231,6 +236,9 @@ class _ConversationPageState extends State<ConversationPage> {
           buttons.add(getPositionedButton(id, position, ButtonType.char));
         }
       }
+
+      var positionTranslation = PositionAndSize(applyRatioWithLimit(50.0), applyRatioWithLimit(33.0 + 130.0 * j + 33.0), applyRatioWithLimit(8.0 * theSentenceList[sentId].trans.length), applyRatioWithLimit(20.0), 0.0, 0.0);
+      buttons.add(getPositionedButton(j, positionTranslation, ButtonType.translationSound));
 
       ButtonType buttonType;
       var previousChar = '|';

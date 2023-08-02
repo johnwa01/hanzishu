@@ -351,7 +351,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           char = theSearchingZiList[ziIndex].char;
         }
 
-        TextToSpeech.speak(char);
+        TextToSpeech.speak("zh-CN", char);
 
         setState(() {
           if (dicStage == DictionaryStage.firstzis) {
@@ -385,7 +385,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           pinyinAndMeaning = Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
         }
 
-        TextToSpeech.speak(char);
+        TextToSpeech.speak("zh-CN", char);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
@@ -454,7 +454,29 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         clearOverlayEntry();
 
         var searchingZi = theSearchingZiList[searchingZiId];
-        TextToSpeech.speak(searchingZi.char);
+        TextToSpeech.speak("zh-CN", searchingZi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedTranslationSpeechButton(PositionAndSize posiAndSize, int searchingZiId) {
+    var butt = FlatButton(
+      onPressed: () {
+        clearOverlayEntry();
+
+        var searchingZi = theSearchingZiList[searchingZiId];
+        TextToSpeech.speak("en-US", searchingZi.meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
@@ -540,7 +562,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         }
 
         var zi = DictionaryManager.getSearchingZi(ziId);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
     );
@@ -700,6 +722,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var posi = getPositionedSpeechButton(positionAndSize, searchingZiIndex);
       buttons.add(posi);
 
+      var searchingZi = theSearchingZiList[searchingZiIndex];
+      var positionAndSizesTrans = PositionAndSize(valuePara1 + 0.5 * defaultFontSize, valuePara2 + 1.4 * defaultFontSize, startXSize * searchingZi.meaning.length / 1.95, startXSize * 1.2, 0.0, 0.0);
+      var posiTrans = getPositionedTranslationSpeechButton(positionAndSizesTrans, searchingZiIndex);
+      buttons.add(posiTrans);
+
       var breakdownPositionAndSize = PositionAndSize(115.0 * 1.1 * getSizeRatio(), 362.0 * getSizeRatio(), 20.0 * getSizeRatio(), 20.0 * getSizeRatio(), 0.0, 0.0);
       var breakdownPosi = getPositionedBreakdownButton(breakdownPositionAndSize);
       buttons.add(breakdownPosi);
@@ -751,7 +778,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         //var zi = theZiManager.getZi(id);
         //var searchingZi = DictionaryManager.getSearchingZi(id);
         var char = ZiManager.getOneChar(id, listType);
-        TextToSpeech.speak(char);
+        TextToSpeech.speak("zh-CN", char);
         var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
         //var meaning = ZiManager.getPinyinAndMeaning(id);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);

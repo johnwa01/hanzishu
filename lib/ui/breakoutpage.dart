@@ -157,7 +157,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
 
         var scrollOffset = _scrollController.offset;
         var zi = theZiManager.getZi(id);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
 
         if (previousZiId != id || !haveShowedOverlay) {
           var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);

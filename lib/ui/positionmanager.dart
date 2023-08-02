@@ -177,6 +177,16 @@ class PositionManager
     return PositionAndSize(xPosi2 + charFontSize * 0.35,  yPosi3 - charFontSize * 0.4, charFontSize * 0.27, charFontSize * 0.27, 0.0, 0.0);
   }
 
+  PositionAndSize getMeaningTextSpeechPosi() {
+    // Bihua icon
+    var xPosi2 = getFrameXPosition(2);
+    var xPosi3 = getFrameXPosition(3);
+    var yPosi3 = getFrameYPosition(3);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi2 + charFontSize * 0.35,  yPosi3 - charFontSize * 0.4, xPosi3 - xPosi2 - charFontSize * 0.35 * 2, charFontSize * 0.30, 0.0, 0.0);
+  }
+
   PositionAndSize getCenterBihuaPosi() {
     // Bihua icon
     var xPosi3 = getFrameXPosition(3);

@@ -444,7 +444,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         });
 
         var char = theSearchingZiList[currentZiId].char;
-        TextToSpeech.speak(char);
+        TextToSpeech.speak("zh-CN", char);
       },
       onLongPress: () {
         initOverlay();
@@ -465,7 +465,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         }
 
         //var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak(sideZiOrComp);
+        TextToSpeech.speak("zh-CN", sideZiOrComp);
 
         if (previousZiId != currentZiId || !haveShowedOverlay) {
           //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
@@ -506,7 +506,29 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         initOverlay();
 
         //var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(theSearchingZiList[ziId].char);
+        TextToSpeech.speak("zh-CN", theSearchingZiList[ziId].char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedMeaningSpeakButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+
+        //var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak("en-US", theSearchingZiList[ziId].meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -541,7 +563,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         }
 
         //var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(theSearchingZiList[ziId].char);
+        TextToSpeech.speak("zh-CN", theSearchingZiList[ziId].char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -603,6 +625,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var speechPosiCenter = getPositionedSpeechButton(posiAndSizeSpeech, centerZiId);
     buttons.add(speechPosiCenter);
+
+    // draw meaning 'button'
+    var posiAndSizeMeaningSpeak = thePositionManager.getMeaningTextSpeechPosi();
+    var meaningTextSpeechButton = getPositionedMeaningSpeakButton(posiAndSizeMeaningSpeak, centerZiId);
+    buttons.add(meaningTextSpeechButton);
 
     // draw bihua icon
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();

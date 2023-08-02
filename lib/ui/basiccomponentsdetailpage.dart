@@ -101,7 +101,7 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
       textColor: Colors.blueAccent,
       onPressed: () {
         var str = ComponentManager.getComponent(speechIconInfo.id).charOrNameOfNonchar;
-        TextToSpeech.speak(str);
+        TextToSpeech.speak("zh-CN", str);
       },
       child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
     );

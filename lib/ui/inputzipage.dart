@@ -370,7 +370,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // pronounce the typed char
     if (typingType != TypingType.FreeTyping) {
       var typedZiString = InputZiManager.getCandidateZiString(selectionIndex);
-      TextToSpeech.speak(typedZiString);
+      TextToSpeech.speak("zh-CN", typedZiString);
     }
 
     var newText = getInputText(selectionIndex, isFromNumber);

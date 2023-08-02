@@ -1,6 +1,7 @@
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
@@ -391,6 +392,10 @@ class Lesson {
     return str;
   }
 */
+
+  Sentence getRealSentence(int index) {
+    return theSentenceList[sentenceList[index]];
+  }
 
   String getSentence(int index) {
     return theSentenceList[sentenceList[index]].conv;

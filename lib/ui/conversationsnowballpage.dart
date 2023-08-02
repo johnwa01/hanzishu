@@ -146,7 +146,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
               ),
               color: Colors.cyan, //Colors.green,
               onPressed: () {
-                TextToSpeech.speak(sentText);
+                TextToSpeech.speak("zh-CN", sentText);
                 //setState(() {
                   //setPositionState(AnswerPosition.soundIcon);
                 //});

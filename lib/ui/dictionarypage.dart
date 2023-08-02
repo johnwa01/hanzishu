@@ -286,7 +286,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           char = theSearchingZiList[searchingZiId].char;
         }
 
-        TextToSpeech.speak(char);
+        TextToSpeech.speak("zh-CN", char);
 
         setState(() {
           if (dicStage == DictionaryStage.firstzis) {

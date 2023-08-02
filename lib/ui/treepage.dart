@@ -251,7 +251,29 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         //resetCompoundZiAnimation();
 
         var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height,
+        width: posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getPositionedMeaningSpeakButton(PositionAndSize posiAndSize, int ziId) {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+
+        var zi = theZiManager.getZi(ziId);
+        TextToSpeech.speak("en-US", zi.meaning);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -286,7 +308,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         }
 
         var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -335,7 +357,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         });
 
         var zi = theZiManager.getZi(currentZiId);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
       },
       onLongPress: () {
         initOverlay();
@@ -347,7 +369,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         }
 
         var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak(zi.char);
+        TextToSpeech.speak("zh-CN", zi.char);
 
         if (previousZiId != currentZiId || !haveShowedOverlay) {
           var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
@@ -407,6 +429,11 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
       var speechPosiCenter = getPositionedSpeechButton(posiAndSizeSpeech, centerZiId);
       buttons.add(speechPosiCenter);
+
+      // draw meaning 'button'
+      var posiAndSizeMeaningSpeak = thePositionManager.getMeaningTextSpeechPosi();
+      var meaningTextSpeechButton = getPositionedMeaningSpeakButton(posiAndSizeMeaningSpeak, centerZiId);
+      buttons.add(meaningTextSpeechButton);
 
       // draw bihua icon
       var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();

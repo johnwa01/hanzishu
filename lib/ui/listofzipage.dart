@@ -105,7 +105,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
           str = theZiManager.getZi(speechIconInfo.id).char;
         }
 
-        TextToSpeech.speak(str);
+        TextToSpeech.speak("zh-CN", str);
       },
       child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
     );

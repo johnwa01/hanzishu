@@ -166,7 +166,7 @@ class _QuizPageState extends State<QuizPage> {
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {
-              TextToSpeech.speak(currentValues[0]);
+              TextToSpeech.speak("zh-CN", currentValues[0]);
               setState(() {
                 setPositionState(AnswerPosition.soundIcon);
               });
