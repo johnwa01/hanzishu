@@ -5,6 +5,17 @@ import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
+class CourseMenu {
+  int id;
+  int stringId; //String description;
+
+  CourseMenu(int id,
+      stringId) {
+    this.id = id;
+    this.stringId = stringId;
+  }
+}
+
 class Lesson {
   int id;
   String title;

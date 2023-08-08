@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/fileio.dart';
+import 'package:hanzishu/engine/lesson.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 
@@ -10,6 +11,7 @@ import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
+import 'package:hanzishu/ui/soundpaintpage.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -17,12 +19,31 @@ class LessonsPage extends StatefulWidget {
   @override
   _LessonsPageState createState() => _LessonsPageState();
 }
+/*
+enum CourseCategory {
+  puzzleCourse,
+  soundPaintingCourse,
+}
+*/
+
+var courseMenuList = [
+  // allocate local language during run time
+  CourseMenu(1, 10),
+  CourseMenu(2, 422),
+];
 
 class _LessonsPageState extends State<LessonsPage> {
   bool hasLoadedStorage;
   int newFinishedLessons;
 
   String currentLocale;
+
+  double screenWidth;
+
+  List<DropdownMenuItem<CourseMenu>> _dropdownCourseMenuItems;
+  CourseMenu _selectedCourseMenu;
+
+  int currentSoundPaintingSection;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -42,6 +63,10 @@ class _LessonsPageState extends State<LessonsPage> {
        50, 51, 53,
        54, 55, 57, 59, 60];
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
   @override
   void initState() {
     super.initState();
@@ -49,6 +74,9 @@ class _LessonsPageState extends State<LessonsPage> {
     setState(() {
       this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
+      currentSoundPaintingSection = 0;
+      _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
+      _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
     });
   }
 
@@ -93,6 +121,8 @@ class _LessonsPageState extends State<LessonsPage> {
     // do here so that it'll refresh the lessonspage to reflect the lesson completed status from storage.
     // also away from the main thread I think.
     // do it only once
+    screenWidth = Utility.getScreenWidth(context);
+
     handleStorage();
 
     return Scaffold
@@ -103,43 +133,99 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       body: Center
         (
-        child: ListView.builder(
-          itemCount/*itemExtent*/: lessons.length,
-          itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-            int lessonCount = 1;
-
-            // assume last row has one item
-            if (index == lessons.length - 1) {
-              lessonCount = 1;  // have to specify the number of last row
-            }
-            else if (index < lessons.length - 1) {
-              lessonCount = lessons[index + 1] - lessons[index];
-            }
-
-            int level = 1;
-            //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-            if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
-
-                if (index == 0) {level = 1;}
-                else if (index == 6) { level = 2;}
-                else if (index == 10) { level = 3;}
-                else if (index == 13) { level = 4;}
-                else if (index == 16) { level = 5;}
-                else if (index == 20) { level = 6;}
-                else if (index == 23) { level = 7;}
-                else if (index == 26) { level = 8;}
-                else if (index == 30) { level = 9;}
-                else if (index == 33) { level = 10;}
-                //else if (index == 34) { level = 10;}
-                //return getLevel(context, level);
-                return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);
-              }
-              else {
-                return getButtonRow(context, lessons[index], lessonCount);
-              }
-            }
-          ),
+        child: getCoursePage(),
       ),
+    );
+  }
+
+  Widget getCoursePage() {
+    if (_selectedCourseMenu.id == 1) {
+      return getHanzishuLessons();
+    }
+    else {
+      return getSoundPaintingCourse();
+    }
+  }
+
+  Widget getSoundPaintingCourse() {
+    return ListView.builder(
+        itemCount/*itemExtent*/: 6,
+        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+            return getSoundPaintingOptionButton(index);
+        },
+    );
+  }
+
+  Widget getSoundPaintingOptionButton(int index) {
+    Text optionText;
+    if (index == 1) {
+      return getCourseType(context, 0);
+    }
+    else if (index == 2) {
+      optionText = Text(getString(423), style: TextStyle(color: Colors.lightBlue));
+    }
+    else if (index == 3) {
+      optionText =  Text(getString(424), style: TextStyle(color: Colors.lightBlue));
+    }
+    else if (index == 4) {
+      optionText =  Text(getString(425), style: TextStyle(color: Colors.lightBlue));
+    }
+    else if (index == 5) {
+      optionText =  Text(getString(426), style: TextStyle(color: Colors.lightBlue));
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => SoundPaintPage()));
+        // launch subpage here
+        //setState() {
+        //  currentSoundPaintingSection = index;
+        //}
+      },
+      child: optionText,
+    );
+  }
+
+  Widget getHanzishuLessons() {
+    return ListView.builder(
+        itemCount/*itemExtent*/: lessons.length,
+        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+          int lessonCount = 1;
+
+          // assume last row has one item
+          if (index == lessons.length - 1) {
+            lessonCount = 1;  // have to specify the number of last row
+          }
+          else if (index < lessons.length - 1) {
+            lessonCount = lessons[index + 1] - lessons[index];
+          }
+
+          int level = 1;
+          //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
+          if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
+
+            if (index == 0) {level = 1;}
+            else if (index == 6) { level = 2;}
+            else if (index == 10) { level = 3;}
+            else if (index == 13) { level = 4;}
+            else if (index == 16) { level = 5;}
+            else if (index == 20) { level = 6;}
+            else if (index == 23) { level = 7;}
+            else if (index == 26) { level = 8;}
+            else if (index == 30) { level = 9;}
+            else if (index == 33) { level = 10;}
+            //else if (index == 34) { level = 10;}
+            //return getLevel(context, level);
+            return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);
+          }
+          else {
+            return getButtonRow(context, lessons[index], lessonCount);
+          }
+        }
     );
   }
 
@@ -151,6 +237,19 @@ class _LessonsPageState extends State<LessonsPage> {
     else {
       return Divider(color: Colors.black);
     }
+  }
+
+  List<DropdownMenuItem<CourseMenu>> buildDropdownCourseMenuItems(List courseMenuList) {
+    List<DropdownMenuItem<CourseMenu>> items = List();
+    for (CourseMenu courseMenu in courseMenuList) {
+      items.add(
+        DropdownMenuItem(
+          value: courseMenu,
+          child: Text(getString(courseMenu.stringId)),
+        ),
+      );
+    }
+    return items;
   }
 
   Widget getButtonRowWithLevelBegin(BuildContext context, int lessonNumber, int lessonCount, int level) {
@@ -166,7 +265,9 @@ class _LessonsPageState extends State<LessonsPage> {
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 16.0),
               ),
-              getSpaceAsNeeded(level),
+              SizedBox(width: 40, height: 0),
+              getCourseType(context, level),
+              //getSpaceAsNeeded(level),
               getLanguageSwitchButtonAsNeeded(level),
               //
             ]
@@ -342,4 +443,23 @@ class _LessonsPageState extends State<LessonsPage> {
           onTap: () => openPage(context, lessonNumber),
         );
     }
+
+  Widget getCourseType(BuildContext context, int level) {
+      if (level > 1) {
+        return SizedBox(width: 0, height: 0);
+      }
+
+      return DropdownButton(
+        value: _selectedCourseMenu,
+        items: _dropdownCourseMenuItems,
+        onChanged: onChangeDropdownCourseItem,
+      );
+  }
+
+  onChangeDropdownCourseItem(CourseMenu selectedCourseMenu) {
+    setState(() {
+      _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
+      _selectedCourseMenu = selectedCourseMenu;
+    });
+  }
 }
