@@ -7,7 +7,10 @@ import 'package:hanzishu/engine/soundpaintmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 
 class SoundPaintPage extends StatefulWidget {
-  SoundPaintPage();
+  final SoundCategory currentSoundCategory;
+  final int currentSoundViewIndex;
+
+  SoundPaintPage(this.currentSoundCategory, this.currentSoundViewIndex);
 
   @override
   _SoundPaintPageState createState() => _SoundPaintPageState();
@@ -21,7 +24,9 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
-  int currentSoundViewIndex = 1;
+  SoundCategory currentSoundCategory;
+  int currentSoundViewIndex;
+  int currentSoundViewSubIndex = 1; // not used yet
 
   /*
   double getSizeRatioWithLimit() {
@@ -36,6 +41,9 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
   @override
   void initState() {
     super.initState();
+    currentSoundCategory = widget.currentSoundCategory;
+    currentSoundViewIndex = widget.currentSoundViewIndex;
+
     _scrollController = ScrollController()
       ..addListener(() {
         //print("offset = ${_scrollController.offset}");
@@ -58,7 +66,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(423)/*"音画入门"*/),
+        title: Text(getString(423)/*"画音入门"*/),
       ),
       body: Container(
         //height: 800.00,
@@ -67,7 +75,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
           controller: _scrollController,
           scrollDirection: Axis.vertical,
           child: WillPopScope(
-              child: getSoundPaintView(context, currentSoundViewIndex),
+              child: getSoundPaintView(context),
               onWillPop: _onWillPop
           ),
         ),
@@ -143,7 +151,25 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
     );
   }
 
-  Widget getSoundPaintView(BuildContext context, soundViewIndex) {
+  Widget getSoundPaintView(BuildContext context) {
+    if (currentSoundCategory == SoundCategory.intro) {
+      return getPaintIntro(context, currentSoundViewIndex);
+    }
+    else if (currentSoundViewIndex == 0) {
+      return getPaintIndex(context);
+    }
+    else if (currentSoundCategory == SoundCategory.erGe) {
+      return getErGe(context);
+    }
+    else if (currentSoundCategory == SoundCategory.tongYao) {
+      return getTongYao(context);
+    }
+    else if (currentSoundCategory == SoundCategory.tongHua) {
+      return getTongHua(context);
+    }
+  }
+
+  Widget getPaintIntro(BuildContext context, int soundViewIndex) {
     var fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
     var fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
@@ -273,6 +299,101 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  Widget getPaintIndex(context) {
+    return ListView.builder(
+            shrinkWrap: true,
+            itemCount/*itemExtent*/: 25,
+            itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+              return getButtonRow(context, index);
+            }
+    );
+  }
+
+  Widget getButtonRow(BuildContext context, int index) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: getRowSections(context, index),
+      ),
+      padding: EdgeInsets.all(20),
+    );
+  }
+
+  List<Widget> getRowSections(BuildContext context, int index) {
+    List<Widget> sections = [];
+
+    var path;
+
+    if (SoundCategory.erGe == currentSoundCategory) {
+      path = "assets/lessons/L1.png";
+    }
+    if (SoundCategory.tongYao == currentSoundCategory) {
+      path = "assets/lessons/L8.png";
+    }
+    if (SoundCategory.tongHua == currentSoundCategory) {
+      path = "assets/lessons/L10.png";
+    }
+
+    sections.add(Container(child: getImageButton(context, index * 4 + 1, path, 60, 60)));
+    sections.add(Container(child: getImageButton(context, index  * 4 + 2, path, 60, 60)));
+    sections.add(Container(child: getImageButton(context, index  * 4 + 3, path, 60, 60)));
+    sections.add(Container(child: getImageButton(context, index * 4 + 4, path, 60, 60)));
+
+    return sections;
+  }
+
+  Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, double xSize, double ySize) {
+    return InkWell(
+      child: Column(
+          children: [
+            Ink.image(
+              image: AssetImage(imagePath),
+              width: xSize,
+              height: ySize,
+            ),
+            Text(
+              lessonNumber.toString(),
+              style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+            ),
+          ]
+      ),
+
+      onTap: () {
+        setState(() {
+          currentSoundViewIndex = lessonNumber;
+        });
+      }
+
+      );
+  }
+
+  Widget getErGe(context) {
+    return Image.asset(
+      "assets/paintge/erge" + currentSoundViewIndex.toString() + ".png",
+      width: 300.0 * getSizeRatioWithLimit(),  // 350
+      height: 500.0 * getSizeRatioWithLimit(), // 150
+      fit: BoxFit.fitWidth,
+    );
+  }
+
+  Widget getTongYao(context) {
+    return Image.asset(
+      "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + ".png",
+      width: 300.0 * getSizeRatioWithLimit(),  // 350
+      height: 500.0 * getSizeRatioWithLimit(), // 150
+      fit: BoxFit.fitWidth,
+    );
+  }
+
+  Widget getTongHua(context) {
+    return Image.asset(
+      "assets/painthua/tonghua" + currentSoundViewIndex.toString() + "_1.png",
+      width: 300.0 * getSizeRatioWithLimit(),  // 350
+      height: 500.0 * getSizeRatioWithLimit(), // 150
+      fit: BoxFit.fitWidth,
     );
   }
 }

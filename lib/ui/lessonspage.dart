@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/lesson.dart';
+import 'package:hanzishu/engine/soundpaintmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 
@@ -22,7 +23,7 @@ class LessonsPage extends StatefulWidget {
 /*
 enum CourseCategory {
   puzzleCourse,
-  soundPaintingCourse,
+  soundPaintCourse,
 }
 */
 
@@ -43,7 +44,7 @@ class _LessonsPageState extends State<LessonsPage> {
   List<DropdownMenuItem<CourseMenu>> _dropdownCourseMenuItems;
   CourseMenu _selectedCourseMenu;
 
-  int currentSoundPaintingSection;
+  int currentSoundPaintSection;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -74,7 +75,7 @@ class _LessonsPageState extends State<LessonsPage> {
     setState(() {
       this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
-      currentSoundPaintingSection = 0;
+      currentSoundPaintSection = 0;
       _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
       _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
     });
@@ -143,35 +144,43 @@ class _LessonsPageState extends State<LessonsPage> {
       return getHanzishuLessons();
     }
     else {
-      return getSoundPaintingCourse();
+      return getSoundPaintCourse();
     }
   }
 
-  Widget getSoundPaintingCourse() {
+  Widget getSoundPaintCourse() {
     return ListView.builder(
         itemCount/*itemExtent*/: 6,
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-            return getSoundPaintingOptionButton(index);
+            return getSoundPaintOptionButton(index);
         },
     );
   }
 
-  Widget getSoundPaintingOptionButton(int index) {
+  Widget getSoundPaintOptionButton(int index) {
     Text optionText;
+    SoundCategory soundCategory;
+    int soundViewIndex = 0;
+
     if (index == 1) {
       return getCourseType(context, 0);
     }
     else if (index == 2) {
       optionText = Text(getString(423), style: TextStyle(color: Colors.lightBlue));
+      soundCategory = SoundCategory.intro;
+      soundViewIndex = 1;
     }
     else if (index == 3) {
       optionText =  Text(getString(424), style: TextStyle(color: Colors.lightBlue));
+      soundCategory = SoundCategory.erGe;
     }
     else if (index == 4) {
       optionText =  Text(getString(425), style: TextStyle(color: Colors.lightBlue));
+      soundCategory = SoundCategory.tongYao;
     }
     else if (index == 5) {
       optionText =  Text(getString(426), style: TextStyle(color: Colors.lightBlue));
+      soundCategory = SoundCategory.tongHua;
     }
 
     return TextButton(
@@ -180,11 +189,7 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SoundPaintPage()));
-        // launch subpage here
-        //setState() {
-        //  currentSoundPaintingSection = index;
-        //}
+              MaterialPageRoute(builder: (context) => SoundPaintPage(soundCategory, soundViewIndex)));
       },
       child: optionText,
     );

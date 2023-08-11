@@ -1,5 +1,13 @@
 import 'package:hanzishu/data/soundpaintlist.dart';
 
+enum SoundCategory {
+  intro,
+  erGe,
+  tongYao,
+  tongHua
+}
+
+
 class SoundPaintManager {
   static final SoundPaintManager _soundPaintManager = SoundPaintManager._internal();
   factory SoundPaintManager() {

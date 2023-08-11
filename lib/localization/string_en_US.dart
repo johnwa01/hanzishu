@@ -427,7 +427,7 @@ var theString_en_US = [
   Local(419, "There are no phrases for this word in this system ."),
   Local(420, "Hanzishu Chinese Enlightening Classes"),
   Local(421, "Hanzishu's past and present history"),
-  Local(422, "Sound Painting"),
+  Local(422, "Paint Sound"),
   Local(423, "Introduction of sound painting"),
   Local(424, "Children's song"),
   Local(425, "Children's folk"),
