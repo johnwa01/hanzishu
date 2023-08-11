@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/lesson.dart';
-import 'package:hanzishu/engine/soundpaintmanager.dart';
+import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 
@@ -12,7 +12,7 @@ import 'package:hanzishu/ui/lessonpage.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
-import 'package:hanzishu/ui/soundpaintpage.dart';
+import 'package:hanzishu/ui/paintsoundpage.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -144,20 +144,20 @@ class _LessonsPageState extends State<LessonsPage> {
       return getHanzishuLessons();
     }
     else {
-      return getSoundPaintCourse();
+      return getPaintSoundCourse();
     }
   }
 
-  Widget getSoundPaintCourse() {
+  Widget getPaintSoundCourse() {
     return ListView.builder(
         itemCount/*itemExtent*/: 6,
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-            return getSoundPaintOptionButton(index);
+            return getPaintSoundOptionButton(index);
         },
     );
   }
 
-  Widget getSoundPaintOptionButton(int index) {
+  Widget getPaintSoundOptionButton(int index) {
     Text optionText;
     SoundCategory soundCategory;
     int soundViewIndex = 0;
@@ -189,7 +189,7 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => SoundPaintPage(soundCategory, soundViewIndex)));
+              MaterialPageRoute(builder: (context) => PaintSoundPage(soundCategory, soundViewIndex)));
       },
       child: optionText,
     );

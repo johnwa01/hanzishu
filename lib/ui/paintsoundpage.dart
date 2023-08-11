@@ -3,20 +3,20 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/engine/soundpaintmanager.dart';
+import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 
-class SoundPaintPage extends StatefulWidget {
+class PaintSoundPage extends StatefulWidget {
   final SoundCategory currentSoundCategory;
   final int currentSoundViewIndex;
 
-  SoundPaintPage(this.currentSoundCategory, this.currentSoundViewIndex);
+  PaintSoundPage(this.currentSoundCategory, this.currentSoundViewIndex);
 
   @override
-  _SoundPaintPageState createState() => _SoundPaintPageState();
+  _PaintSoundPageState createState() => _PaintSoundPageState();
 }
 
-class _SoundPaintPageState extends State<SoundPaintPage> {
+class _PaintSoundPageState extends State<PaintSoundPage> {
   double screenWidth;
   ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
@@ -75,7 +75,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
           controller: _scrollController,
           scrollDirection: Axis.vertical,
           child: WillPopScope(
-              child: getSoundPaintView(context),
+              child: getPaintSoundView(context),
               onWillPop: _onWillPop
           ),
         ),
@@ -130,7 +130,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
 
   Widget getOneKeyboardButton(int keyGroup, int keyIndex)
   {
-    var imageIndex = SoundPaintManager.getXIndex(keyGroup, keyIndex);
+    var imageIndex = PaintSoundManager.getXIndex(keyGroup, keyIndex);
 
     return FlatButton(
       color: Colors.white,
@@ -140,7 +140,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
         //initOverlay();
 
         //showOverlay(context, keyGroup, keyIndex);
-        TextToSpeech.speak("zh-CN", SoundPaintManager.getXChar(keyGroup, keyIndex));
+        TextToSpeech.speak("zh-CN", PaintSoundManager.getXChar(keyGroup, keyIndex));
       },
       child: Image.asset(
         "assets/paintx/x" + imageIndex.toString() + ".png",
@@ -151,7 +151,7 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
     );
   }
 
-  Widget getSoundPaintView(BuildContext context) {
+  Widget getPaintSoundView(BuildContext context) {
     if (currentSoundCategory == SoundCategory.intro) {
       return getPaintIntro(context, currentSoundViewIndex);
     }
@@ -181,9 +181,9 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
         children: <Widget>[
           SizedBox(height: fontSize2 / 2),
           Text(
-           getString(427)/*"点击每个"*/,
-           style: TextStyle(color: Colors.blue, fontSize: fontSize1),
-           textAlign: TextAlign.start
+              getString(427)/*"点击每个"*/,
+              style: TextStyle(color: Colors.blue, fontSize: fontSize1),
+              textAlign: TextAlign.start
           ),
           getOneRow(soundViewIndex, 1),
           getOneRow(soundViewIndex, 3),
@@ -280,8 +280,8 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
     String content;
 
     //if (typingType == TypingType.LeadComponents) {
-      title = getString(115)/*"Good job!"*/;
-      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+    title = getString(115)/*"Good job!"*/;
+    content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
     //}
 
     // set up the AlertDialog
@@ -304,11 +304,11 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
 
   Widget getPaintIndex(context) {
     return ListView.builder(
-            shrinkWrap: true,
-            itemCount/*itemExtent*/: 25,
-            itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-              return getButtonRow(context, index);
-            }
+        shrinkWrap: true,
+        itemCount/*itemExtent*/: 25,
+        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+          return getButtonRow(context, index);
+        }
     );
   }
 
@@ -347,27 +347,27 @@ class _SoundPaintPageState extends State<SoundPaintPage> {
 
   Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, double xSize, double ySize) {
     return InkWell(
-      child: Column(
-          children: [
-            Ink.image(
-              image: AssetImage(imagePath),
-              width: xSize,
-              height: ySize,
-            ),
-            Text(
-              lessonNumber.toString(),
-              style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
-            ),
-          ]
-      ),
+        child: Column(
+            children: [
+              Ink.image(
+                image: AssetImage(imagePath),
+                width: xSize,
+                height: ySize,
+              ),
+              Text(
+                lessonNumber.toString(),
+                style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+              ),
+            ]
+        ),
 
-      onTap: () {
-        setState(() {
-          currentSoundViewIndex = lessonNumber;
-        });
-      }
+        onTap: () {
+          setState(() {
+            currentSoundViewIndex = lessonNumber;
+          });
+        }
 
-      );
+    );
   }
 
   Widget getErGe(context) {
