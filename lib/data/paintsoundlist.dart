@@ -5,7 +5,7 @@ var theSoundPaintList = [
   "豆芽包米栽柳桃树梨木杯盘糖枣老莲"
 ];
 
-var theTongHuaPages = [
+var theTongHuaPageCount = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -15,5 +15,18 @@ var theTongHuaPages = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 5,
+  1, 1, 1, 1, 1, 1, 1, 1, 1, 4,
+];
+
+var theTongYaoHasSecondPage = [
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, false, false, false, false, false,
+  false, false, false, false, false, true, false, false, false, false,
 ];

@@ -1,6 +1,7 @@
 import 'package:hanzishu/data/paintsoundlist.dart';
 
 enum SoundCategory {
+  hanzishuLessons,
   intro,
   erGe,
   tongYao,
@@ -22,5 +23,9 @@ class PaintSoundManager {
 
   static String getXChar(int group, int indexInGroup) {
     return theSoundPaintList[group -1][indexInGroup-1];
+  }
+
+  static getTongHuaPageCount(int pageNumber) {
+    return theTongHuaPageCount[pageNumber -1];
   }
 }

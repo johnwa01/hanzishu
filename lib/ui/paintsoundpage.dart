@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/quizmanager.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/data/paintsoundlist.dart';
 
 class PaintSoundPage extends StatefulWidget {
   final SoundCategory currentSoundCategory;
@@ -25,8 +27,9 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   int previousOverlayIndex = 0;
 
   SoundCategory currentSoundCategory;
-  int currentSoundViewIndex;
-  int currentSoundViewSubIndex = 1; // not used yet
+  int currentSoundViewIndex = 1;
+  int currentSoundViewSubIndex = 1;
+  int MaxIntroSoundView = 2; // temp number for now
 
   /*
   double getSizeRatioWithLimit() {
@@ -143,7 +146,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         TextToSpeech.speak("zh-CN", PaintSoundManager.getXChar(keyGroup, keyIndex));
       },
       child: Image.asset(
-        "assets/paintx/x" + imageIndex.toString() + ".png",
+        "assets/paintx/x1_" + imageIndex.toString() + ".png",
         width: 150.0 * getSizeRatioWithLimit(),
         height: 55.0 * getSizeRatioWithLimit(),
         fit: BoxFit.fitWidth,
@@ -153,11 +156,11 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   Widget getPaintSoundView(BuildContext context) {
     if (currentSoundCategory == SoundCategory.intro) {
-      return getPaintIntro(context, currentSoundViewIndex);
+      return getPaintIntro(context, currentSoundViewSubIndex);
     }
-    else if (currentSoundViewIndex == 0) {
-      return getPaintIndex(context);
-    }
+    //else if (currentSoundViewIndex == 0) {
+    //  return getPaintIndex(context);
+    //}
     else if (currentSoundCategory == SoundCategory.erGe) {
       return getErGe(context);
     }
@@ -212,27 +215,47 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getNextButton() {
+    var buttonText = getString(138);
+
+    if ((currentSoundCategory == SoundCategory.tongHua &&  currentSoundViewSubIndex == theTongHuaPageCount[currentSoundViewIndex-1]) ||
+        (currentSoundCategory == SoundCategory.intro &&  currentSoundViewSubIndex == MaxIntroSoundView))
+    {
+      buttonText = getString(428);
+    }
+
     return TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
       ),
       onPressed: () {
-        if (currentSoundViewIndex < 2) { // where 2 is the total
-          setState(() {
-            currentSoundViewIndex += 1;
-          });
+        if (currentSoundCategory == SoundCategory.intro) {
+          if (currentSoundViewSubIndex < MaxIntroSoundView) {
+            setState(() {
+              currentSoundViewSubIndex += 1;
+            });
+          }
+          else {
+            showCompletedDialog(context);
+          }
         }
-        else {
-          showCompletedDialog(context);
+        else if (currentSoundCategory == SoundCategory.tongHua){
+          if (currentSoundViewSubIndex < theTongHuaPageCount[currentSoundViewIndex-1]) {
+            setState(() {
+              currentSoundViewSubIndex += 1;
+            });
+          }
+          else {
+            showCompletedDialog(context);
+          }
         }
       },
-      child: Text(getString(138),
+      child: Text(buttonText,
           style: TextStyle(color: Colors.lightBlue)),
     );
   }
 
   Widget getPreviousButton() {
-    if (currentSoundViewIndex == 1) {
+    if (currentSoundViewIndex == 1 || currentSoundViewSubIndex == 1) {
       return SizedBox(height: 0.0, width: 0.0);
     }
 
@@ -241,14 +264,20 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
       ),
       onPressed: () {
-        if (currentSoundViewIndex > 1) {
-          setState(() {
-            currentSoundViewIndex -= 1;
-          });
+        if (currentSoundCategory == SoundCategory.intro || currentSoundCategory == SoundCategory.tongHua) {
+          if (currentSoundViewSubIndex > 1) {
+            setState(() {
+              currentSoundViewSubIndex -= 1;
+            });
+          }
         }
-        else {
-          showCompletedDialog(context);
-        }
+        //else if (currentSoundCategory == SoundCategory.tongHua){
+        //  if (currentSoundViewSubIndex > 1) {
+        //    setState(() {
+        //      currentSoundViewSubIndex -= 1;
+        //    });
+        //  }
+        //}
       },
       child: Text(getString(405),
           style: TextStyle(color: Colors.lightBlue)),
@@ -302,74 +331,6 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     );
   }
 
-  Widget getPaintIndex(context) {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount/*itemExtent*/: 25,
-        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-          return getButtonRow(context, index);
-        }
-    );
-  }
-
-  Widget getButtonRow(BuildContext context, int index) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: getRowSections(context, index),
-      ),
-      padding: EdgeInsets.all(20),
-    );
-  }
-
-  List<Widget> getRowSections(BuildContext context, int index) {
-    List<Widget> sections = [];
-
-    var path;
-
-    if (SoundCategory.erGe == currentSoundCategory) {
-      path = "assets/lessons/L1.png";
-    }
-    if (SoundCategory.tongYao == currentSoundCategory) {
-      path = "assets/lessons/L8.png";
-    }
-    if (SoundCategory.tongHua == currentSoundCategory) {
-      path = "assets/lessons/L10.png";
-    }
-
-    sections.add(Container(child: getImageButton(context, index * 4 + 1, path, 60, 60)));
-    sections.add(Container(child: getImageButton(context, index  * 4 + 2, path, 60, 60)));
-    sections.add(Container(child: getImageButton(context, index  * 4 + 3, path, 60, 60)));
-    sections.add(Container(child: getImageButton(context, index * 4 + 4, path, 60, 60)));
-
-    return sections;
-  }
-
-  Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, double xSize, double ySize) {
-    return InkWell(
-        child: Column(
-            children: [
-              Ink.image(
-                image: AssetImage(imagePath),
-                width: xSize,
-                height: ySize,
-              ),
-              Text(
-                lessonNumber.toString(),
-                style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
-              ),
-            ]
-        ),
-
-        onTap: () {
-          setState(() {
-            currentSoundViewIndex = lessonNumber;
-          });
-        }
-
-    );
-  }
-
   Widget getErGe(context) {
     return Image.asset(
       "assets/paintge/erge" + currentSoundViewIndex.toString() + ".png",
@@ -380,20 +341,53 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getTongYao(context) {
-    return Image.asset(
-      "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + ".png",
-      width: 300.0 * getSizeRatioWithLimit(),  // 350
-      height: 500.0 * getSizeRatioWithLimit(), // 150
-      fit: BoxFit.fitWidth,
+    return Column(
+      //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 10),
+          //Text(
+          //    getString(427)/*"点击每个"*/,
+          //    style: TextStyle(color: Colors.blue, fontSize: fontSize1),
+          //    textAlign: TextAlign.start
+          //),
+          Image.asset(
+            "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + ".png",
+            width: 300.0 * getSizeRatioWithLimit(),  // 350
+            height: 500.0 * getSizeRatioWithLimit(), // 150
+            fit: BoxFit.fitWidth,
+          ),
+          getSecondTongYaoImage(),
+        ]
     );
   }
 
+  Widget getSecondTongYaoImage() {
+    if (theTongYaoHasSecondPage[currentSoundViewIndex - 1] == true) {
+      return Image.asset(
+        "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + "_2.png",
+        width: 300.0 * getSizeRatioWithLimit(), // 350
+        height: 500.0 * getSizeRatioWithLimit(), // 150
+        fit: BoxFit.fitWidth,
+      );
+    }
+    else {
+      return SizedBox(height: 0.0, width: 0.0);;
+    }
+  }
+
   Widget getTongHua(context) {
-    return Image.asset(
-      "assets/painthua/tonghua" + currentSoundViewIndex.toString() + "_1.png",
-      width: 300.0 * getSizeRatioWithLimit(),  // 350
-      height: 500.0 * getSizeRatioWithLimit(), // 150
-      fit: BoxFit.fitWidth,
+    return Column(
+        children: [
+          Image.asset(
+            "assets/painthua/tonghua" + currentSoundViewIndex.toString() + "_" + currentSoundViewSubIndex.toString() + ".png",
+            width: 300.0 * getSizeRatioWithLimit(),  // 350
+            height: 500.0 * getSizeRatioWithLimit(), // 150
+            fit: BoxFit.fitWidth,
+          ),
+          getContinueAndBackButtons(),
+        ]
     );
   }
 }

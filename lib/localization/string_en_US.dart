@@ -428,9 +428,10 @@ var theString_en_US = [
   Local(420, "Hanzishu Chinese Enlightening Classes"),
   Local(421, "Hanzishu's past and present history"),
   Local(422, "Paint Sound"),
-  Local(423, "Introduction of paint sound"),
+  Local(423, "Intro of paint sound"),
   Local(424, "Children's song"),
   Local(425, "Children's folk"),
   Local(426, "Fairy tale"),
   Local(427, "Click each drawing and learn its sound:"),
+  Local(428, "Exit this lesson"),
 ];

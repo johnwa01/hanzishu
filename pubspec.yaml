@@ -218,39 +218,39 @@ flutter:
      - assets/letters/LG4.png
      - assets/letters/LG5.png
      - assets/letters/LG6.png
-     - assets/paintx/x1.png
-     - assets/paintx/x2.png
-     - assets/paintx/x3.png
-     - assets/paintx/x4.png
-     - assets/paintx/x5.png
-     - assets/paintx/x6.png
-     - assets/paintx/x7.png
-     - assets/paintx/x8.png
-     - assets/paintx/x9.png
-     - assets/paintx/x10.png
-     - assets/paintx/x11.png
-     - assets/paintx/x12.png
-     - assets/paintx/x13.png
-     - assets/paintx/x14.png
-     - assets/paintx/x15.png
-     - assets/paintx/x16.png
-     - assets/paintx/x16.png
-     - assets/paintx/x17.png
-     - assets/paintx/x18.png
-     - assets/paintx/x19.png
-     - assets/paintx/x20.png
-     - assets/paintx/x21.png
-     - assets/paintx/x22.png
-     - assets/paintx/x23.png
-     - assets/paintx/x24.png
-     - assets/paintx/x25.png
-     - assets/paintx/x26.png
-     - assets/paintx/x27.png
-     - assets/paintx/x28.png
-     - assets/paintx/x29.png
-     - assets/paintx/x30.png
-     - assets/paintx/x31.png
-     - assets/paintx/x32.png
+     - assets/paintx/x1_1.png
+     - assets/paintx/x1_2.png
+     - assets/paintx/x1_3.png
+     - assets/paintx/x1_4.png
+     - assets/paintx/x1_5.png
+     - assets/paintx/x1_6.png
+     - assets/paintx/x1_7.png
+     - assets/paintx/x1_8.png
+     - assets/paintx/x1_9.png
+     - assets/paintx/x1_10.png
+     - assets/paintx/x1_11.png
+     - assets/paintx/x1_12.png
+     - assets/paintx/x1_13.png
+     - assets/paintx/x1_14.png
+     - assets/paintx/x1_15.png
+     - assets/paintx/x1_16.png
+     - assets/paintx/x1_16.png
+     - assets/paintx/x1_17.png
+     - assets/paintx/x1_18.png
+     - assets/paintx/x1_19.png
+     - assets/paintx/x1_20.png
+     - assets/paintx/x1_21.png
+     - assets/paintx/x1_22.png
+     - assets/paintx/x1_23.png
+     - assets/paintx/x1_24.png
+     - assets/paintx/x1_25.png
+     - assets/paintx/x1_26.png
+     - assets/paintx/x1_27.png
+     - assets/paintx/x1_28.png
+     - assets/paintx/x1_29.png
+     - assets/paintx/x1_30.png
+     - assets/paintx/x1_31.png
+     - assets/paintx/x1_32.png
      - assets/paintge/erge1.png
      - assets/paintge/erge2.png
      - assets/paintge/erge3.png
@@ -454,7 +454,6 @@ flutter:
      - assets/painthua/tonghua100_2.png
      - assets/painthua/tonghua100_3.png
      - assets/painthua/tonghua100_4.png
-     - assets/painthua/tonghua100_5.png
      - assets/paintyao/tongyao1.png
      - assets/paintyao/tongyao2.png
      - assets/paintyao/tongyao3.png
@@ -551,6 +550,7 @@ flutter:
      - assets/paintyao/tongyao94.png
      - assets/paintyao/tongyao95.png
      - assets/paintyao/tongyao96.png
+     - assets/paintyao/tongyao96_2.png
      - assets/paintyao/tongyao97.png
      - assets/paintyao/tongyao98.png
      - assets/paintyao/tongyao99.png

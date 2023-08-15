@@ -20,17 +20,14 @@ class LessonsPage extends StatefulWidget {
   @override
   _LessonsPageState createState() => _LessonsPageState();
 }
-/*
-enum CourseCategory {
-  puzzleCourse,
-  soundPaintCourse,
-}
-*/
 
 var courseMenuList = [
   // allocate local language during run time
   CourseMenu(1, 10),
-  CourseMenu(2, 422),
+  CourseMenu(2, 423),
+  CourseMenu(3, 424),
+  CourseMenu(4, 425),
+  CourseMenu(5, 426),
 ];
 
 class _LessonsPageState extends State<LessonsPage> {
@@ -45,6 +42,7 @@ class _LessonsPageState extends State<LessonsPage> {
   CourseMenu _selectedCourseMenu;
 
   int currentSoundPaintSection;
+  SoundCategory currentSoundCategory;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -75,6 +73,7 @@ class _LessonsPageState extends State<LessonsPage> {
     setState(() {
       this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
+      currentSoundCategory = SoundCategory.hanzishuLessons;
       currentSoundPaintSection = 0;
       _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
       _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
@@ -143,56 +142,18 @@ class _LessonsPageState extends State<LessonsPage> {
     if (_selectedCourseMenu.id == 1) {
       return getHanzishuLessons();
     }
-    else {
-      return getPaintSoundCourse();
+    else if (_selectedCourseMenu.id == 2) {
+      return getPaintIndex(context, SoundCategory.intro);
     }
-  }
-
-  Widget getPaintSoundCourse() {
-    return ListView.builder(
-        itemCount/*itemExtent*/: 6,
-        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-            return getPaintSoundOptionButton(index);
-        },
-    );
-  }
-
-  Widget getPaintSoundOptionButton(int index) {
-    Text optionText;
-    SoundCategory soundCategory;
-    int soundViewIndex = 0;
-
-    if (index == 1) {
-      return getCourseType(context, 0);
+    else if (_selectedCourseMenu.id == 3) {
+      return getPaintIndex(context, SoundCategory.erGe);
     }
-    else if (index == 2) {
-      optionText = Text(getString(423), style: TextStyle(color: Colors.lightBlue));
-      soundCategory = SoundCategory.intro;
-      soundViewIndex = 1;
+    else if (_selectedCourseMenu.id == 4) {
+      return getPaintIndex(context, SoundCategory.tongYao);
     }
-    else if (index == 3) {
-      optionText =  Text(getString(424), style: TextStyle(color: Colors.lightBlue));
-      soundCategory = SoundCategory.erGe;
+    else if (_selectedCourseMenu.id == 5) {
+      return getPaintIndex(context, SoundCategory.tongHua);
     }
-    else if (index == 4) {
-      optionText =  Text(getString(425), style: TextStyle(color: Colors.lightBlue));
-      soundCategory = SoundCategory.tongYao;
-    }
-    else if (index == 5) {
-      optionText =  Text(getString(426), style: TextStyle(color: Colors.lightBlue));
-      soundCategory = SoundCategory.tongHua;
-    }
-
-    return TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-      ),
-      onPressed: () {
-          Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => PaintSoundPage(soundCategory, soundViewIndex)));
-      },
-      child: optionText,
-    );
   }
 
   Widget getHanzishuLessons() {
@@ -265,13 +226,14 @@ class _LessonsPageState extends State<LessonsPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
+              getCourseType(context, level),
+              SizedBox(width: 30, height: 0),
               Text(
                 getString(9)/*"Unit"*/ + " " + '$level' + ": " + getString(BaseLevelDescriptionStringID + level)/*theLevelList[level].description*/,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(width: 40, height: 0),
-              getCourseType(context, level),
+              SizedBox(width: 30, height: 0),
               //getSpaceAsNeeded(level),
               getLanguageSwitchButtonAsNeeded(level),
               //
@@ -450,7 +412,7 @@ class _LessonsPageState extends State<LessonsPage> {
     }
 
   Widget getCourseType(BuildContext context, int level) {
-      if (level > 1) {
+      if (currentSoundCategory == SoundCategory.hanzishuLessons && level > 1) {
         return SizedBox(width: 0, height: 0);
       }
 
@@ -466,5 +428,106 @@ class _LessonsPageState extends State<LessonsPage> {
       _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
       _selectedCourseMenu = selectedCourseMenu;
     });
+  }
+
+  Widget getPaintIndex(BuildContext context, SoundCategory soundCategory) {
+    currentSoundCategory = soundCategory;
+    var count = 26; // one extra for pulldown menu
+    var courseType;
+
+    if (soundCategory == SoundCategory.intro) {
+      count = 3; // where 1 is the temp number for intro buttons, will be 2
+      courseType = 2;
+    }
+    else if (soundCategory == SoundCategory.erGe) {
+      courseType = 3;
+    }
+    else if (soundCategory == SoundCategory.tongYao) {
+      courseType = 4;
+    }
+    else if (soundCategory == SoundCategory.tongHua) {
+      courseType = 5;
+    }
+
+    return ListView.builder(
+        shrinkWrap: true,
+        itemCount/*itemExtent*/: count,
+        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+          if (index == 0) {
+            return getCourseType(context, courseType); // level
+          }
+          else {
+            return getSoundButtonRow(context, index);
+          }
+        }
+    );
+  }
+
+  Widget getSoundButtonRow(BuildContext context, int index) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: getPaintRowSections(context, index),
+      ),
+      padding: EdgeInsets.all(20),
+    );
+  }
+
+  List<Widget> getPaintRowSections(BuildContext context, int index) {
+    List<Widget> sections = [];
+
+    var path;
+
+    if (SoundCategory.intro == currentSoundCategory) {
+      path = "assets/lessons/L8.png";
+    }
+    if (SoundCategory.erGe == currentSoundCategory) {
+      path = "assets/lessons/L1.png";
+    }
+    else if (SoundCategory.tongYao == currentSoundCategory) {
+      path = "assets/lessons/L8.png";
+    }
+    else if (SoundCategory.tongHua == currentSoundCategory) {
+      path = "assets/lessons/L10.png";
+    }
+
+    sections.add(Container(child: getPaintImageButton(context, (index - 1) * 4 + 1, path, 60, 60)));
+    if (SoundCategory.intro != currentSoundCategory) {
+      sections.add(Container(
+          child: getPaintImageButton(context, (index - 1) * 4 + 2, path, 60, 60)));
+      sections.add(Container(
+          child: getPaintImageButton(context, (index - 1) * 4 + 3, path, 60, 60)));
+      sections.add(Container(
+          child: getPaintImageButton(context, (index - 1) * 4 + 4, path, 60, 60)));
+    }
+
+    return sections;
+  }
+
+  Widget getPaintImageButton(BuildContext context, int lessonNumber, String imagePath, double xSize, double ySize) {
+    return InkWell(
+        child: Column(
+            children: [
+              Ink.image(
+                image: AssetImage(imagePath),
+                width: xSize,
+                height: ySize,
+              ),
+              Text(
+                lessonNumber.toString(),
+                style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+              ),
+            ]
+        ),
+
+        onTap: () {
+          setState(() {
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => PaintSoundPage(currentSoundCategory, lessonNumber)));
+          });
+        }
+
+    );
   }
 }
