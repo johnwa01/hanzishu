@@ -236,14 +236,16 @@ class QuizManager {
           nextType = QuizType.basicChars;
           break;
         case QuizType.basicChars:
-          nextType = QuizType.nonChars;
-          break;
-        case QuizType.nonChars:
-          nextType = QuizType.phrases;
-          break;
-        case QuizType.phrases:
+          //nextType = QuizType.nonChars;
+          //nextType = QuizType.phrases;
           nextType = QuizType.conversations;
           break;
+        //case QuizType.nonChars:
+        //  nextType = QuizType.phrases;
+        //  break;
+        //case QuizType.phrases:
+        //  nextType = QuizType.conversations;
+        //  break;
         case QuizType.conversations:
           if (currentCategory == QuizCategory.meaning) {
             currentCategory = QuizCategory.sound;

@@ -267,6 +267,7 @@ class LessonManager {
       }
     }
 
+    //TODO:  Not to display those
     if (lesson.comps.length > 0 && !rootMembers.contains(TheConst.starCharId)) {
       rootMembers.add(TheConst.starCharId);  // the * member
     }

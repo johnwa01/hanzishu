@@ -97,6 +97,15 @@ class _LessonPageState extends State<LessonPage> {
   launchLessonSection(BuildContext context, int lessonId, int lessonSection) {
     switch (lessonSection) {
       case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ConversationPage(lessonId: lessonId),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 1:
         theAllZiLearned = false;
         Navigator.push(
           context,
@@ -106,7 +115,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 1:
+      case 2:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -115,7 +124,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 2:
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -124,21 +133,12 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 3:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                ConversationPage(lessonId: lessonId),
-          ),
-        ).then((val) => {_getRequests()});
-        break;
       case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ConversationSnowballPage(lessonId: lessonId), //InputZiPage(),
+              builder: (context) =>
+                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null,)
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -147,7 +147,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null,)
+                ConversationSnowballPage(lessonId: lessonId), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -255,22 +255,22 @@ class _LessonPageState extends State<LessonPage> {
     String buttonTitle = "";
     switch (lessonSection) {
       case 0:
-        buttonTitle = getString(1);
-        break;
-      case 1:
-        buttonTitle = getString(2);
-        break;
-      case 2:
-        buttonTitle = getString(3);
-        break;
-      case 3:
         buttonTitle = getString(4);
         break;
+      case 1:
+        buttonTitle = getString(1);
+        break;
+      case 2:
+        buttonTitle = getString(2);
+        break;
+      case 3:
+        buttonTitle = getString(3);
+        break;
       case 4:
-        buttonTitle = getString(373);
+        buttonTitle = getString(5);
         break;
       case 5:
-        buttonTitle = getString(5);
+        buttonTitle = getString(373);
         break;
       case 6:
         buttonTitle = getString(6);

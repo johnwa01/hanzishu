@@ -137,7 +137,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
             ZiOrCharSize.defaultSize) + applyRatio(1) + applyRatio(15)),
         left: applyRatio(50.0),
         height: applyRatio(25.0), //posiAndSize.height,
-        width: applyRatio(100.0), //posiAndSize.width,
+        width: applyRatio(140.0), //posiAndSize.width,
         child: butt
     );
 

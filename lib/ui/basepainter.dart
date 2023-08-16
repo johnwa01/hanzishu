@@ -268,9 +268,13 @@ class BasePainter extends CustomPainter{
 
   void displayTextForPinyin(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
     var char;
+    var isZiListRealChar = true;
     if (listType == ZiListType.zi) {
       var zi = theZiManager.getZi(id);
       char = zi.pinyin;
+      if (zi.char != null && zi.char.length > 1) {
+        isZiListRealChar = false;  // for non-char, don't produce sound or display pinyin
+      }
     }
     else if (listType == ZiListType.searching) {
       char = theSearchingZiList[id].pinyin;
@@ -286,7 +290,9 @@ class BasePainter extends CustomPainter{
       displayChar += "...";
     }
 
-    displayTextWithValue(displayChar, transX, transY, charFontSize, color);
+    //if (isZiListRealChar) { // Only display pinyin for real char, not non-char
+    //  displayTextWithValue(displayChar, transX, transY, charFontSize, color);
+    //}
   }
 
   void displayTextForMeaning(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
@@ -647,7 +653,24 @@ class BasePainter extends CustomPainter{
 
     displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
-    DisplayIcon(iconSpeechStrokes, posiAndSizeSpeech.transX, posiAndSizeSpeech.transY, posiAndSizeSpeech.width, posiAndSizeSpeech.height, Colors.amber/*MaterialColor ofColor*/, 2.0/*ziLineWidth*/);
+    var displaySpeechIcon = true;
+    if (listType == ZiListType.zi) {
+      var zi = theZiManager.getZi(id);
+      if (zi != null && zi.char != null && zi.char.length > 1) {
+        displaySpeechIcon = false;
+      }
+    }
+
+    if (displaySpeechIcon) {
+      DisplayIcon(
+          iconSpeechStrokes,
+          posiAndSizeSpeech.transX,
+          posiAndSizeSpeech.transY,
+          posiAndSizeSpeech.width,
+          posiAndSizeSpeech.height,
+          Colors.amber /*MaterialColor ofColor*/,
+          2.0 /*ziLineWidth*/);
+    }
 
     //if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
       DisplayIcon(

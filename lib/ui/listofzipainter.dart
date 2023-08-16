@@ -97,6 +97,7 @@ class ListOfZiPainter extends BasePainter {
       }
     }
 
+    /*
     length = lesson.comps.length;
     if (length > 0) {
       yPositionWrapper.value += applyRatio(20.0);
@@ -118,6 +119,7 @@ class ListOfZiPainter extends BasePainter {
             yPositionWrapper.value, Colors.grey, applyRatio(1));
       }
     }
+    */
 
     // for title only. could be empty title, but better than mixed with the previous content
     if (lesson.charsIds.length > 0 || lesson.convCharsIds.length > 0) {
@@ -162,6 +164,7 @@ class ListOfZiPainter extends BasePainter {
       }
     }
 
+    /* Not display them anymore to focus on words
     length = lesson.phraseIds.length;
     if (length > 0) {
       yPositionWrapper.value += applyRatio(20.0);
@@ -183,6 +186,7 @@ class ListOfZiPainter extends BasePainter {
             yPositionWrapper.value, Colors.grey, applyRatio(1));
       }
     }
+    */
 
     if (theIsFromLessonContinuedSection) {
       /*
