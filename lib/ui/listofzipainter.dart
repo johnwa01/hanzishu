@@ -332,7 +332,7 @@ class ListOfZiPainter extends BasePainter {
     else {
       // save the icon infor.
       var speechIconInfo = SpeechIconInfo(
-          ZiListType.phrase, id, transX, yPositionWrapper.value);
+          ZiListType.zi, id, transX, yPositionWrapper.value);
       listOfSpeechIconInfo.add(speechIconInfo);
     }
     transX += applyRatio(30.0);
