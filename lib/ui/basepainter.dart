@@ -290,9 +290,9 @@ class BasePainter extends CustomPainter{
       displayChar += "...";
     }
 
-    //if (isZiListRealChar) { // Only display pinyin for real char, not non-char
-    //  displayTextWithValue(displayChar, transX, transY, charFontSize, color);
-    //}
+    if (isZiListRealChar) { // Only display pinyin for real char, not non-char
+      displayTextWithValue(displayChar, transX, transY, charFontSize, color);
+    }
   }
 
   void displayTextForMeaning(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {

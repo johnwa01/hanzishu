@@ -23,11 +23,11 @@ class LessonsPage extends StatefulWidget {
 
 var courseMenuList = [
   // allocate local language during run time
-  CourseMenu(1, 10),
-  CourseMenu(2, 423),
-  CourseMenu(3, 424),
-  CourseMenu(4, 425),
-  CourseMenu(5, 426),
+  CourseMenu(1, 429),
+  //CourseMenu(2, 423),
+  //CourseMenu(3, 424),
+  //CourseMenu(4, 425),
+  //CourseMenu(5, 426),
 ];
 
 class _LessonsPageState extends State<LessonsPage> {
@@ -227,13 +227,13 @@ class _LessonsPageState extends State<LessonsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
               getCourseType(context, level),
-              SizedBox(width: 30, height: 0),
+              //SizedBox(width: 30, height: 0),
               Text(
                 getString(9)/*"Unit"*/ + " " + '$level' + ": " + getString(BaseLevelDescriptionStringID + level)/*theLevelList[level].description*/,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 16.0),
               ),
-              SizedBox(width: 30, height: 0),
+              //SizedBox(width: 30, height: 0),
               //getSpaceAsNeeded(level),
               getLanguageSwitchButtonAsNeeded(level),
               //

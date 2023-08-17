@@ -7,6 +7,15 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/data/paintsoundlist.dart';
+import 'package:hanzishu/ui/dictionarysearchingpage.dart';
+import 'package:hanzishu/ui/drillpagecore.dart';
+import 'package:hanzishu/ui/inputzipage.dart';
+import 'package:hanzishu/ui/quizpage.dart';
+import 'package:hanzishu/ui/dictionarypage.dart';
+import 'package:hanzishu/engine/drill.dart';
+import 'dart:async';
+import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 
 class PaintSoundPage extends StatefulWidget {
   final SoundCategory currentSoundCategory;
@@ -30,7 +39,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   int currentSoundViewIndex = 1;
   int currentSoundViewSubIndex = 1;
   int MaxIntroSoundView = 2; // temp number for now
-
+  int currentStudyIndex = 0;
   /*
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -359,6 +368,17 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
             fit: BoxFit.fitWidth,
           ),
           getSecondTongYaoImage(),
+          getDetailedStudies(),
+        ]
+    );
+  }
+
+  Widget getDetailedStudies() {
+    return Row(
+        children: <Widget>[
+          getReadAloud(context),
+          getWordStudyButton(),
+          getDictionaryButton(),
         ]
     );
   }
@@ -389,5 +409,127 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           getContinueAndBackButtons(),
         ]
     );
+  }
+
+  launchContent(int contentIndex) {
+    String inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+    switch (contentIndex) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DrillPageCore(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DictionarySearchingPage(
+                    dicStage: DictionaryStage.detailedzi,
+                    firstOrSearchingZiIndex: -1,
+                    flashcardList: inputText,
+                    dicCaller: DicCaller.WordsStudy),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(
+                    typingType: TypingType.WordsStudy, lessonId: 0, wordsStudy: inputText),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      default:
+        break;
+    }
+  }
+
+  _getRequests() async {
+    this.currentStudyIndex += 1;
+
+    if (!theIsBackArrowExit && this.currentStudyIndex <= 3) { //TODO: 3 is the number of current subtasks in study new words
+      // reinit
+      theIsBackArrowExit = true;
+      launchContent(this.currentStudyIndex);
+    }
+    else {
+      // init all variables
+      // either true back arrow or all done
+      theIsBackArrowExit = true;
+      //theIsFromTypingContinuedSection = false;
+      this.currentStudyIndex = 0;
+    }
+    //}
+  }
+
+  Widget getWordStudyButton() {
+    var buttonText = getString(430);
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        launchContent(0);
+      },
+      child: Text(buttonText,
+          style: TextStyle(color: Colors.lightBlue)),
+    );
+  }
+
+  Widget getDictionaryButton() {
+    var buttonText = getString(92);
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DictionaryPage(),
+          ),
+        );
+      },
+      child: Text(buttonText,
+          style: TextStyle(color: Colors.lightBlue)),
+    );
+  }
+
+  Widget getReadAloud(BuildContext context) {
+      var currentValues = "今天有点累人, 明天再看好吗？";
+
+      return Container(
+          height: 60.0 * getSizeRatioWithLimit(), //180
+          width: 60.0 * getSizeRatioWithLimit(),
+          child: IconButton(
+            icon: Icon(
+              Icons.volume_up,
+              size: 60.0 * getSizeRatioWithLimit(),   // 150
+            ),
+            color: Colors.cyan, //Colors.green,
+            onPressed: () {
+              TextToSpeech.speak("zh-CN", currentValues);
+            },
+          )
+      );
   }
 }

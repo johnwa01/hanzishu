@@ -226,7 +226,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             inputText = resultStr;
           }
 
-          //inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+          inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
           // TODO: Check content of inputText.
           launchContent(0);
         }
