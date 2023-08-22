@@ -42,7 +42,7 @@ class TreePainter extends BasePainter {
     drawFrameWithColors(ZiListType.zi,
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
-    drawZiGroup(centerId, ZiListType.zi, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId);
+    drawZiGroup(centerId, ZiListType.zi, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only

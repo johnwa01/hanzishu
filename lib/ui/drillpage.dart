@@ -236,7 +236,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                     ),
                     onTap: () => {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, subItemId: subItemId, customString: null))),
+                        MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, startingCenterZiId: 1, subItemId: subItemId, customString: null))),
                     }
                 ),
                 //SizedBox(height: 30),

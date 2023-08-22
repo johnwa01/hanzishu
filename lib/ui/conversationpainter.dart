@@ -94,7 +94,7 @@ class ConversationPainter extends BasePainter {
           if (previousChar == '|' || Utility.specialChar(previousChar)) {
             // complete the whole separation block after "|"
             if ((separationCount = Utility.findSeparationCount(convWithSeparation, i)) == 1) {
-              id = ZiManager.findIdFromChar(oneSeparation);
+              id = ZiManager.findIdFromChar(ZiListType.zi, oneSeparation);
               if (id != -1) {
                 var firstMeaning = Utility.getFirstMeaning(theZiList[id].char);
                 if (firstMeaning != "了") {

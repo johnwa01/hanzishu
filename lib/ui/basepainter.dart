@@ -701,7 +701,7 @@ class BasePainter extends CustomPainter{
     posi.transY += thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
   }
 
-  void drawZiGroup(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
+  void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     var ziColor = Colors.brown;
 
     // one center zi first
@@ -710,6 +710,7 @@ class BasePainter extends CustomPainter{
     var withPinyin = false;
 
     theCurrentCenterZiId = id;
+
     theCreatedNumber = 0;
 
     bool allCurrentMemberZiLearned = true;
@@ -843,7 +844,8 @@ class BasePainter extends CustomPainter{
       }
 
       // draw navigation path
-      displayNavigationPath(listType, id);
+      // skip a zi if it's in the parent path of startingCenterZiId
+      displayNavigationPath(listType, id, startingCenterZiId);
 
       isReviewCenterPseudoZi = false;
       isReviewCenterPseudoNonCharZi = false;
@@ -1105,12 +1107,12 @@ class BasePainter extends CustomPainter{
   }
 
   // Note: this path will not change its size regardless of the screen size
-  displayNavigationPath(ZiListType listType, int ziId) {
+  displayNavigationPath(ZiListType listType, int ziId, int startingCenterZiId) {
     var posi = thePositionManager.getTreeNavigationPosi(getSizeRatio());
-    displayOneNaviationPathChar(0, listType, ziId, posi);
+    displayOneNaviationPathChar(0, listType, ziId, startingCenterZiId, posi);
   }
 
-  displayOneNaviationPathChar(int recurLevel, ZiListType listType, int id, PositionAndSize posi) {
+  displayOneNaviationPathChar(int recurLevel, ZiListType listType, int id, startingCenterZiId, PositionAndSize posi) {
 
       var withPinyin = false;
 
@@ -1127,7 +1129,7 @@ class BasePainter extends CustomPainter{
         var newRecurLevel = recurLevel + 1;
         var parentId = zi.parentId;
 
-        displayOneNaviationPathChar(newRecurLevel, listType, parentId, posi);
+        displayOneNaviationPathChar(newRecurLevel, listType, parentId, startingCenterZiId, posi);
       }
 
       // for lesson, skip those pseudo ones.
@@ -1147,22 +1149,24 @@ class BasePainter extends CustomPainter{
           createFrame = true;
         }
 
-        drawRootZi(
-            id,
-            listType,
-            posi.transX,
-            posi.transY,
-            posi.width,
-            posi.height,
-            posi.charFontSize,
-            Colors.brown,
-            false,
-            posi.lineWidth,
-            createFrame,
-            false,
-            withPinyin,
-            frameFillColor,
-            true);
+        if (!theZiManager.isADistantParentOf(listType, startingCenterZiId, id)) {
+          drawRootZi(
+              id,
+              listType,
+              posi.transX,
+              posi.transY,
+              posi.width,
+              posi.height,
+              posi.charFontSize,
+              Colors.brown,
+              false,
+              posi.lineWidth,
+              createFrame,
+              false,
+              withPinyin,
+              frameFillColor,
+              true);
+        }
       }
   }
 

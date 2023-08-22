@@ -7,6 +7,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/data/paintsoundlist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
@@ -16,6 +17,7 @@ import 'package:hanzishu/engine/drill.dart';
 import 'dart:async';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 
 class PaintSoundPage extends StatefulWidget {
   final SoundCategory currentSoundCategory;
@@ -110,34 +112,23 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     return Future.value(true);
   }
 
-  showOverlay(BuildContext context, keyGroup, keyIndex) {
+  showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning) {
     initOverlay();
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
 
-    if (!(keyGroup == 0 && keyIndex == 0) && !(previousOverlayGroup == keyGroup && previousOverlayIndex == keyIndex)) {
-      var fullExpandedComp = theComponentManager
-          .getFullExpandedComponentByGroupAndIndex(keyGroup, keyIndex);
-
-      OverlayState overlayState = Overlay.of(context);
-      overlayEntry = OverlayEntry(
-          builder: (context) =>
-              Positioned(
-                top: 30 * getSizeRatioWithLimit(), // 30 is the minimum value without being partially covered
-                left: 100.0 * getSizeRatioWithLimit(), //posiX,
-                child: Image.asset(
-                  "assets/typing/" + fullExpandedComp.imageName,
-                  width: 100.0 * getSizeRatioWithLimit(),
-                  height: 130.0 * getSizeRatioWithLimit(),
-                  //fit: BoxFit.fitWidth,
-                ),
-              ));
-      overlayState.insert(overlayEntry);
-      previousOverlayGroup = keyGroup;
-      previousOverlayIndex = keyIndex;
-    }
-    else {
-      previousOverlayGroup = 0;
-      previousOverlayIndex = 0;
-    }
+    OverlayState overlayState = Overlay.of(context);
+    overlayEntry = OverlayEntry(
+        builder: (context) =>Positioned(
+            top: posiY,
+            left: adjustedXValue,
+            child: FlatButton(
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
+              color: Colors.blueAccent,
+              textColor: Colors.white,
+              onPressed: () {},
+            )
+        ));
+    overlayState.insert(overlayEntry);
   }
 
   Widget getOneKeyboardButton(int keyGroup, int keyIndex)
@@ -355,6 +346,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
+          Text(getString(432)/*"Read aloud"*/),
           SizedBox(height: 10),
           //Text(
           //    getString(427)/*"点击每个"*/,
@@ -363,11 +355,12 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           //),
           Image.asset(
             "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + ".png",
-            width: 300.0 * getSizeRatioWithLimit(),  // 350
-            height: 500.0 * getSizeRatioWithLimit(), // 150
+            width: 380.0 * getSizeRatioWithLimit(),  // 350
+            height: 550.0 * getSizeRatioWithLimit(), // 150
             fit: BoxFit.fitWidth,
           ),
-          getSecondTongYaoImage(),
+          //getSecondTongYaoImage(),
+          getLessonText(theTongYaoLessonText),
           getDetailedStudies(),
         ]
     );
@@ -376,13 +369,15 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   Widget getDetailedStudies() {
     return Row(
         children: <Widget>[
-          getReadAloud(context),
+          getReadAloud(theTongYaoLessonText),
           getWordStudyButton(),
+          getExpandedWordButton("申"),
           getDictionaryButton(),
         ]
     );
   }
 
+  /*
   Widget getSecondTongYaoImage() {
     if (theTongYaoHasSecondPage[currentSoundViewIndex - 1] == true) {
       return Image.asset(
@@ -396,6 +391,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
       return SizedBox(height: 0.0, width: 0.0);;
     }
   }
+  */
 
   Widget getTongHua(context) {
     return Column(
@@ -419,7 +415,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
+                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, customString: inputText),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -489,7 +485,30 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         launchContent(0);
       },
       child: Text(buttonText,
-          style: TextStyle(color: Colors.lightBlue)),
+          style: TextStyle(color: Colors.brown)),
+    );
+  }
+
+  Widget getExpandedWordButton(String char) {
+    var buttonText = getString(431);
+
+    var startingCenterZiId = ZiManager.findIdFromChar(ZiListType.searching, char);
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: startingCenterZiId, subItemId: 0, customString: null),
+          ),
+        );
+      },
+      child: Text(buttonText,
+          style: TextStyle(color: Colors.brown)), // lightBlue
     );
   }
 
@@ -510,12 +529,16 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         );
       },
       child: Text(buttonText,
-          style: TextStyle(color: Colors.lightBlue)),
+          style: TextStyle(color: Colors.brown)),
     );
   }
 
-  Widget getReadAloud(BuildContext context) {
-      var currentValues = "今天有点累人, 明天再看好吗？";
+  Widget getReadAloud(List<String> text) {
+      //var currentValues = "今天有点累人, 明天再看好吗？";
+      String fullText = "";
+      for(int i=0; i< text.length; i++) {
+        fullText += text[i];
+      }
 
       return Container(
           height: 60.0 * getSizeRatioWithLimit(), //180
@@ -523,13 +546,98 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           child: IconButton(
             icon: Icon(
               Icons.volume_up,
-              size: 60.0 * getSizeRatioWithLimit(),   // 150
+              size: 45.0 * getSizeRatioWithLimit(),   // 150
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {
-              TextToSpeech.speak("zh-CN", currentValues);
+              TextToSpeech.speak("zh-CN", fullText);
             },
           )
       );
+  }
+
+  Widget getLessonText(List<String> text) {
+    var fontSize = 18.0 * getSizeRatioWithLimit();
+    return Column(
+      //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:
+          getTextRows(text),
+    );
+  }
+
+  List<Widget> getTextRows(List<String> text) {
+    var fontSize = 18.0 * getSizeRatioWithLimit();
+    List<Widget> wizardsAndButtons = [];
+    wizardsAndButtons.add(SizedBox(height: fontSize / 2));
+    //wizardsAndButtons.add(Text(
+    //  getString(427)/*"点击每个"*/,
+    //  style: TextStyle(color: Colors.blue, fontSize: fontSize),
+    //  textAlign: TextAlign.start
+    //));
+
+    for (int i = 0; i < text.length; i++) {
+      wizardsAndButtons.add(getOneTextRow(text[i]));
+    }
+
+    return wizardsAndButtons;
+  }
+
+  Widget getOneTextRow(String text) {
+    var fontSize = 18.0 * getSizeRatioWithLimit();
+    List<Widget> buttons = [];
+
+    return Row(
+        children: //<Widget>[
+          getTextWordButtons(text)
+        //]
+    );
+  }
+
+  List<Widget> getTextWordButtons(String rowText) {
+    List<Widget> buttons = [];
+    buttons.add(Flexible(child: getReadOneRowAloud(rowText)));
+    for (int i = 0; i < rowText.length; i++) {
+      buttons.add(Flexible(child: getTextWordButton(rowText[i])));
+    }
+
+    return buttons;
+  }
+
+  Widget getTextWordButton(String text) {
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 30.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        initOverlay();
+        TextToSpeech.speak("zh-CN", text);
+      },
+      onLongPress: () {
+        TextToSpeech.speak("zh-CN", text);
+        var ziId = ZiManager.findIdFromChar(ZiListType.searching, text);
+        showOverlay(context, 150 * getSizeRatioWithLimit(), 200 * getSizeRatioWithLimit(), "[" + theSearchingZiList[ziId].pinyin + "] " + theSearchingZiList[ziId].meaning);
+      },
+      child: Text(text,
+          style: TextStyle(color: Colors.lightBlue)),
+    );
+  }
+
+  Widget getReadOneRowAloud(String rowText) {
+    return Container(
+        height: 30.0 * getSizeRatioWithLimit(), //180
+        width: 30.0 * getSizeRatioWithLimit(),
+        child: IconButton(
+          icon: Icon(
+            Icons.volume_up,
+            size: 30.0 * getSizeRatioWithLimit(),   // 150
+          ),
+          color: Colors.cyan, //Colors.green,
+          onPressed: () {
+            TextToSpeech.speak("zh-CN", rowText);
+          },
+        )
+    );
   }
 }

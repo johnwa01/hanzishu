@@ -83,10 +83,22 @@ class ZiManager {
     return null;
   }
 
-  static int findIdFromChar(String char) {
-    for (var eachZi in theZiList) {
-      if (eachZi.char.runes.length == 1 && eachZi.char.runes.first == char.runes.first) {
-        return eachZi.id;
+  static int findIdFromChar(ZiListType listType, String char) {
+    if (listType == ZiListType.zi) {
+      for (var eachZi in theZiList) {
+        if (eachZi.char.runes.length == 1 &&
+            eachZi.char.runes.first == char.runes.first) {
+          return eachZi.id;
+        }
+      }
+    }
+    else if (listType == ZiListType.searching) {
+      for (int i = 52; i < theSearchingZiList.length; i++) {
+        var saerchingZi = theSearchingZiList[i];
+        if (saerchingZi.char.runes.length == 1 &&
+            saerchingZi.char.runes.first == char.runes.first) {
+          return saerchingZi.id;
+        }
       }
     }
 
@@ -488,6 +500,43 @@ class ZiManager {
     }
 
     return ziOrSearchingZi.parentId;
+  }
+
+  // check whether ziToCheckParent is in the parent path of ziId
+  bool isADistantParentOf(ZiListType listType, int startingCenterZiId, int ziToCheckParent) {
+    if (startingCenterZiId == ziToCheckParent) {
+      return false;
+    }
+
+    var ziOrSearchingZi;
+    if (listType == ZiListType.zi) {
+      ziOrSearchingZi = getZi(startingCenterZiId);
+    }
+    else if (listType == ZiListType.searching) {
+      ziOrSearchingZi = theSearchingZiList[startingCenterZiId];
+    }
+
+    while (true) {
+      if (ziOrSearchingZi.id == 1) {
+        return false;
+      }
+
+      if (ziOrSearchingZi.id == ziToCheckParent) {
+        return true;
+      }
+      else {
+        var parent = ziOrSearchingZi.parentId;
+
+        if (listType == ZiListType.zi) {
+          ziOrSearchingZi = getZi(parent);
+        }
+        else if (listType == ZiListType.searching) {
+          ziOrSearchingZi = theSearchingZiList[parent];
+        }
+      }
+    }
+
+    return false;
   }
 
   List<int> getZiComponents(int id) {

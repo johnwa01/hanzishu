@@ -229,7 +229,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
-        var id = ZiManager.findIdFromChar(oneChar);
+        var id = ZiManager.findIdFromChar(ZiListType.zi, oneChar);
         if (id != -1) {
           var position = PositionAndSize(
               applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 130.0 * j), applyRatioWithLimit(28.0), applyRatioWithLimit(28.0), 0.0, 0.0);
@@ -260,7 +260,7 @@ class _ConversationPageState extends State<ConversationPage> {
             if ((separationCount =
                 Utility.findSeparationCount(convWithSeparation, i)) == 1) {
               width = applyRatioWithLimit(25.0); //20.0;
-              id = ZiManager.findIdFromChar(oneSeparation);
+              id = ZiManager.findIdFromChar(ZiListType.zi, oneSeparation);
               buttonType = ButtonType.char;
             }
             else {

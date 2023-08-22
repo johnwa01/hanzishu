@@ -436,4 +436,6 @@ var theString_en_US = [
   Local(428, "Exit this lesson"),
   Local(429, "Enlightenment: Conversation"),
   Local(430, "Exercises"),
+  Local(431, "Expanded"),
+  Local(432, "Please read aloud the following children's folk story, and point finger at each word while reading."),
 ];

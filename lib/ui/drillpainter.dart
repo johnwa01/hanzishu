@@ -10,8 +10,9 @@ class DrillPainter extends BasePainter {
   double screenWidth;
   ZiListType ziListType;
   DrillCategory drillCategory; //int filterId;
+  int startingCenterZiId;
 
-  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory, int startingCenterZiId) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -26,6 +27,7 @@ class DrillPainter extends BasePainter {
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
     this.ziListType = ziListType;
     this.drillCategory = drillCategory; //this.filterId = filterId;
+    this.startingCenterZiId = startingCenterZiId;
   }
 
   @override
@@ -42,7 +44,7 @@ class DrillPainter extends BasePainter {
         Colors.lime, BasePainter.FrameLineWidth);
     //}
     //?theCurrentCenterZiId = centerId;
-    drawZiGroup(centerId, ZiListType.searching, drillCategory, reviewStartLessonId, reviewEndLessonId);
+    drawZiGroup(centerId, ZiListType.searching, startingCenterZiId, drillCategory, reviewStartLessonId, reviewEndLessonId);
 
     // component list starts from 0, unlike zi list
     if (compoundZiCurrentComponentId >= 0) {

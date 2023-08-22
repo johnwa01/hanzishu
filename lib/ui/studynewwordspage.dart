@@ -274,7 +274,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  DrillPageCore(drillCategory: DrillCategory.custom, subItemId: 1, customString: inputText),
+                  DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, customString: inputText),
             ),
           ).then((val) => {_getRequests()});
           break;

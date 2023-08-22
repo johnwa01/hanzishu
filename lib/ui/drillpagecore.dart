@@ -25,13 +25,14 @@ import 'package:hanzishu/localization/string_zh_CN.dart';
 class DrillPageCore extends StatefulWidget {
   //final int lessonId;
   final DrillCategory drillCategory; //startLessonId;
+  final int startingCenterZiId;
   final int subItemId; //endLessonId;
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
-  DrillPageCore({this.drillCategory, this.subItemId, this.customString});
+  DrillPageCore({this.drillCategory, this.startingCenterZiId, this.subItemId, this.customString});
 
   @override
   _DrillPageCoreState createState() => _DrillPageCoreState();
@@ -39,6 +40,7 @@ class DrillPageCore extends StatefulWidget {
 
 class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProviderStateMixin {
   DrillCategory drillCategory; //startLessonId;
+  int startingCenterZiId;
   int subItemId; //endLessonId;
   String customString;
   int centerZiId;
@@ -101,6 +103,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     }
 
     drillCategory = widget.drillCategory;
+    startingCenterZiId = widget.startingCenterZiId;
     subItemId = widget.subItemId;
     customString = widget.customString;
     theAllZiLearned = false;
@@ -126,7 +129,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       vsync: this,
     );
 
-    theCurrentCenterZiId = 1;
+    theCurrentCenterZiId = startingCenterZiId;
     setState(() {
       centerZiId = theCurrentCenterZiId;
       shouldDrawCenter = true;
@@ -241,7 +244,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         allLearnedZis,
                         compoundZiCurrentComponentId,
                         currentZiListType,
-                        drillCategory//  _selectedDrillMenu.id
+                        drillCategory,
+                        startingCenterZiId
                     ),
                     child: Center(
                       child: Stack(
@@ -438,13 +442,16 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         _clearAnimation();
         resetCompoundZiAnimation();
 
-        setState(() {
-          centerZiId = newCenterZiId;
-          shouldDrawCenter = true;
-        });
+        // make sure it doesn't go beyond the startingCenterZiId. do nothing in that case.
+        if (!theZiManager.isADistantParentOf(ZiListType.searching, startingCenterZiId, newCenterZiId)) {
+          setState(() {
+            centerZiId = newCenterZiId;
+            shouldDrawCenter = true;
+          });
 
-        var char = theSearchingZiList[currentZiId].char;
-        TextToSpeech.speak("zh-CN", char);
+          var char = theSearchingZiList[currentZiId].char;
+          TextToSpeech.speak("zh-CN", char);
+        }
       },
       onLongPress: () {
         initOverlay();

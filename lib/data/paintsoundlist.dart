@@ -30,3 +30,7 @@ var theTongYaoHasSecondPage = [
   false, false, false, false, false, false, false, false, false, false,
   false, false, false, false, false, true, false, false, false, false,
 ];
+
+var theTongYaoLessonText = [
+  "三十三层天", "世上三十三层天，", "天上住着活神仙，", "神仙本是凡人做，", "看你意志坚不坚。"
+];

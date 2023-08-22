@@ -90,7 +90,12 @@ class QuizManager {
     currentQuizTextbook = quizTextbook;
     currentWordsStudy = wordsStudy;
     currentLesson = 0;
+
     currentCategory = QuizCategory.meaning;
+    //if (currentQuizTextbook == QuizTextbook.wordsStudy && paint sound) {
+    //  currentCategory = QuizCategory.sound;
+    //}
+
     currentType = QuizType.chars; // starting with 1, 0 for no more
     nextIndexForCurrentType = 0;
     currentIndex = 0;
@@ -225,7 +230,13 @@ class QuizManager {
     var nextType = currentType;
 
     if (currentQuizTextbook == QuizTextbook.wordsStudy) {
-      nextType = QuizType.none;
+      if (currentCategory == QuizCategory.meaning) {
+        currentCategory = QuizCategory.sound;
+        nextType = QuizType.chars;
+      }
+      else { // already in sound category
+        nextType = QuizType.none;
+      }
     }
     else {
       switch (currentType) {
