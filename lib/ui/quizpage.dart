@@ -10,9 +10,10 @@ class QuizPage extends StatefulWidget {
   final QuizTextbook quizTextbook;
   final int lessonId;
   final String wordsStudy;
+  final bool fromPaintSound;
   bool isChars = true;
 
-  QuizPage({this.quizTextbook, this.lessonId, this.wordsStudy});
+  QuizPage({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -24,6 +25,7 @@ class _QuizPageState extends State<QuizPage> {
   QuizTextbook quizTextbook;
   int lessonId;
   String wordsStudy;
+  bool fromPaintSound;
   int index;
   double _progressValue;
   int totalMeaningAndSoundQuestions;
@@ -43,6 +45,7 @@ class _QuizPageState extends State<QuizPage> {
     lessonId = widget.lessonId;
     quizTextbook = widget.quizTextbook;
     wordsStudy = widget.wordsStudy;
+    fromPaintSound = widget.fromPaintSound;
     theQuizManager.initValues(quizTextbook, wordsStudy);
     index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
@@ -51,6 +54,10 @@ class _QuizPageState extends State<QuizPage> {
     //}
 
     totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId) * 2;
+
+    if (fromPaintSound == true) {
+      theQuizManager.setCurrentCategory(QuizCategory.sound);
+    }
 
     setState(() {
       answerPosition = AnswerPosition.none;
@@ -64,13 +71,16 @@ class _QuizPageState extends State<QuizPage> {
     //}
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    //bool isCurrentCategoryMeaning = theQuizManager.getCurrentCategory() == QuizCategory.meaning;
+    //if (fromPaintSound) {
+    //  isCurrentCategoryMeaning = false; // directly skip to the sound category
+    //}
 
     QuizType currentType = theQuizManager.getCurrentType();
     if (answerPosition == AnswerPosition.continueNext ||
         answerPosition == AnswerPosition.none) {
         // get values ready
-        theQuizManager.getUpdatedValues(
-          index, theQuizManager.getCurrentCategory() == QuizCategory.meaning);
+        theQuizManager.getUpdatedValues(index, theQuizManager.getCurrentCategory() == QuizCategory.meaning);
         theQuizManager.getCurrentValuesNonCharIds();
       //currentCategory = theQuizManager.getCurrentCategory();
       currentType = theQuizManager.getCurrentType();
@@ -471,8 +481,10 @@ class _QuizPageState extends State<QuizPage> {
       title = "Congratulation!";
       content = "You have passed this quiz with a score of " + corStr + "!";
       // save the info to storage
-      updateCompleteStatus();
-      theHasNewlyCompletedLesson = true;
+      if (quizTextbook != QuizTextbook.wordsStudy) {
+        updateCompleteStatus();
+        theHasNewlyCompletedLesson = true;
+      }
     }
     else {
       title = "Good effort!";

@@ -306,7 +306,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText),
+                  QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText, fromPaintSound: false),
             ),
           ).then((val) => {_getRequests()});
           break;

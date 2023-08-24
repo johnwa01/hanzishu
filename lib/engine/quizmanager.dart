@@ -222,6 +222,10 @@ class QuizManager {
   }
 
   bool isCurrentTypeEmpty() {
+    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      return currentWordsStudy.length == 0;
+    }
+
     var list = getCurrentTypeList();
     return list.length == 0;
   }
@@ -232,7 +236,7 @@ class QuizManager {
     if (currentQuizTextbook == QuizTextbook.wordsStudy) {
       if (currentCategory == QuizCategory.meaning) {
         currentCategory = QuizCategory.sound;
-        nextType = QuizType.chars;
+        //nextType = QuizType.chars;
       }
       else { // already in sound category
         nextType = QuizType.none;
@@ -311,7 +315,7 @@ class QuizManager {
   }
 
   List<int> getTypeList(QuizType type) {
-    return getTypeListForLesson(type, currentLesson);
+      return getTypeListForLesson(type, currentLesson);
   }
 
   int getNextIndexForCurrentType() {

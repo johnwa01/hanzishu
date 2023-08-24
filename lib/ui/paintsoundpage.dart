@@ -447,7 +447,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText),
+                QuizPage(quizTextbook: QuizTextbook.wordsStudy, lessonId: 0, wordsStudy: inputText, fromPaintSound: true),
           ),
         ).then((val) => {_getRequests()});
         break;
