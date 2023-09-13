@@ -331,6 +331,9 @@ class Utility {
     if (listType == ZiListType.searching) {
       return breakoutIndex * baseNumber + searchingBaseNumber + id;
     }
+    else if (listType == ZiListType.custom) {
+      return breakoutIndex * baseNumber + id;
+    }
     else if (listType == ZiListType.component) {
       return breakoutIndex * baseNumber + componentBaseNumber + id;
     }

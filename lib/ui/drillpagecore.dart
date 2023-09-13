@@ -442,10 +442,23 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         _clearAnimation();
         resetCompoundZiAnimation();
 
+        bool setParentTo1 = false;
+        if (drillCategory == DrillCategory.custom) {
+          // during going back toward root. skip the pseudo zi
+          if (currentZiId != 1 && ZiManager.parentIdEqual1(DrillCategory.custom, newCenterZiId)) {
+            setParentTo1 = true;
+          }
+        }
+
         // make sure it doesn't go beyond the startingCenterZiId. do nothing in that case.
         if (!theZiManager.isADistantParentOf(ZiListType.searching, startingCenterZiId, newCenterZiId)) {
           setState(() {
-            centerZiId = newCenterZiId;
+            if (setParentTo1) {
+              centerZiId = 1;
+            }
+            else {
+              centerZiId = newCenterZiId;
+            }
             shouldDrawCenter = true;
           });
 

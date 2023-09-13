@@ -19,13 +19,14 @@ class BreakoutPainter extends BasePainter {
   Color lineColor;
   Color completeColor;
   int lessonId;
+  String wordsStudy;
   double screenWidth;
 
   var breakoutPositions;
   bool isBreakoutPositionsOnly;
 
   BreakoutPainter({
-    this.lineColor, this.completeColor, this.lessonId, this.screenWidth
+    this.lineColor, this.completeColor, this.lessonId, this.wordsStudy, this.screenWidth
   });
 
   @override
@@ -62,16 +63,43 @@ class BreakoutPainter extends BasePainter {
 
     var yPositionWrapper = YPositionWrapper(applyRatio(20.0));  //170.0
 
-    for (var i = 0; i <= (lesson.convCharsIds.length - 1); i++) {
+
+    ZiListType ziListType;
+    if (lessonId == 0) {
+      ziListType = ZiListType.searching;
+      var wordsStudyLength = wordsStudy.length;
+      // only do it once, including position only
+      if (lesson.convCharsIds.length == 0) {
+        for (int i = 0; i < wordsStudyLength; i++) {
+          lesson.convCharsIds.add(
+              ZiManager.findIdFromChar(ZiListType.searching, wordsStudy[i]));
+        }
+      }
+    }
+    else {
+      ziListType = ZiListType.zi;
+    }
+    var wordsLength = lesson.convCharsIds.length - 1;
+
+    for (var i = 0; i <= wordsLength; i++) {
       if (!isBreakoutPositionsOnly && i != 0) {
         drawLine(applyRatio(10.0), yPositionWrapper.yPosi - applyRatio(20.0),
             applyRatio(600.0), yPositionWrapper.yPosi - applyRatio(20.0),
             Colors.amber, applyRatio(1));
       }
+
       var ziId = lesson.convCharsIds[i];
-      var zi = theZiManager.getZi(ziId);
-      if (zi != null && zi.type == "h") {
-        displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.zi, 0, false);
+      var zi;
+      if (ziListType == ZiListType.zi) {
+        zi = theZiManager.getZi(ziId);
+      }
+      //else { // custom
+      //  ziId = i;
+      //}
+
+      if (ziListType == ZiListType.searching || (zi != null && zi.type == "h")) {
+        displayOneCharDissembling(
+            yPositionWrapper, ziId, ziListType, 0, false);
       }
     }
 
@@ -163,6 +191,12 @@ class BreakoutPainter extends BasePainter {
         else if (listType == ZiListType.component) {
           ziOrComp = theComponentList[id];
         }
+        //else if (listType == ZiListType.custom) {
+          // show detail is not used currently for custom
+        //  var searchingZiId = ZiManager.findIdFromChar(listType, wordsStudy[id]);
+        //  ziOrComp = theSearchingZiList[searchingZiId];
+        //}
+
         if (ziOrComp != null) {
           String pinyinAndMeaning = Zi.formatPinyinAndMeaning(
               ziOrComp.pinyin, ziOrComp.meaning);
@@ -175,7 +209,7 @@ class BreakoutPainter extends BasePainter {
 
     theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
 
-    var composits = getComposits(id, listType);
+    var composits = getComposits(id, listType, wordsStudy);
 
     if (composits != null && composits.length > 0)
     {
@@ -192,12 +226,16 @@ class BreakoutPainter extends BasePainter {
     }
   }
 
-  List<IdAndListTypePair> getComposits(int id, ZiListType listType) {
+  List<IdAndListTypePair> getComposits(int id, ZiListType listType, String wordsStudy) {
     List<IdAndListTypePair> pairList = [];
 
     if (listType == ZiListType.searching) {
       return theDictionaryManager.getComposits(id);
     }
+    //else if (listType == ZiListType.custom) {
+    //  var searchingZiId = ZiManager.findIdFromChar(ZiListType.searching, wordsStudy[id]);
+    //  return theDictionaryManager.getComposits(searchingZiId);
+    //}
     else if (listType == ZiListType.zi) {
       var zi = theZiManager.getZi(id);
       if (zi.type == "h")

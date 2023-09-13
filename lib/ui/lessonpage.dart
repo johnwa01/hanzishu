@@ -57,14 +57,14 @@ class _LessonPageState extends State<LessonPage> {
       this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowExit && numberOfExercises <= 6) {
+      if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 6) {
         // re-init for next section's action
         theIsBackArrowExit = true;
         launchLessonSection(context, theCurrentLessonId, numberOfExercises);
       }
       else {
         // reset
-        theIsFromLessonContinuedSection = false; // exit and prepare for next visit
+        theIsFromLessonContinuedSection = false; // exit and prepare for next main visit
         theIsBackArrowExit = true;
         numberOfExercises = 0;
       }
@@ -129,7 +129,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                BreakoutPage(lessonId: lessonId),
+                BreakoutPage(lessonId: lessonId, wordsStudy: ""),
           ),
         ).then((val) => {_getRequests()});
         break;

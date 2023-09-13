@@ -33,7 +33,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
   //     0.0, 0.0, "");
   FocusNode _textNode = new FocusNode();
 
-  TextEditingController _controller = new TextEditingController(text: "");
+  TextEditingController _controller = new TextEditingController(text: "您份成");
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -216,7 +216,6 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
           inputText = resultStr;
         }
 
-        //inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
         launchZi(0);
       }
     }

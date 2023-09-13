@@ -13,6 +13,7 @@ import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
+import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'dart:async';
 import 'package:hanzishu/engine/dictionary.dart';
@@ -40,7 +41,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   SoundCategory currentSoundCategory;
   int currentSoundViewIndex = 1;
   int currentSoundViewSubIndex = 1;
-  int MaxIntroSoundView = 2; // temp number for now
+  int MaxIntroSoundView = 13; // temp number for 200
   int currentStudyIndex = 0;
   /*
   double getSizeRatioWithLimit() {
@@ -76,11 +77,25 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
+    var label;
+    if (currentSoundCategory == SoundCategory.intro) {
+      label = getString(423)/*"Paint sound symbols"*/;
+    }
+    else if (currentSoundCategory == SoundCategory.erGe) {
+      label = getString(424)/*"Children's songs"*/;
+    }
+    else if (currentSoundCategory == SoundCategory.tongYao) {
+      label = getString(425)/*"Children's folks"*/;
+    }
+    else if (currentSoundCategory == SoundCategory.tongHua) {
+      label = getString(426)/*"Children's fairy tales"*/;
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text(getString(423)/*"画音入门"*/),
+        title: Text(label),
       ),
       body: Container(
         //height: 800.00,
@@ -134,6 +149,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   Widget getOneKeyboardButton(int keyGroup, int keyIndex)
   {
     var imageIndex = PaintSoundManager.getXIndex(keyGroup, keyIndex);
+    var path = "assets/paintx/x1_";
+    if (currentSoundViewIndex == 2) {
+      path = "assets/paintx/x2_";
+    }
 
     return FlatButton(
       color: Colors.white,
@@ -143,13 +162,13 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         //initOverlay();
 
         //showOverlay(context, keyGroup, keyIndex);
-        TextToSpeech.speak("zh-CN", PaintSoundManager.getXChar(keyGroup, keyIndex));
+        TextToSpeech.speakWithRate("zh-CN", PaintSoundManager.getXChar(keyGroup, keyIndex), 0.1);
       },
       child: Image.asset(
-        "assets/paintx/x1_" + imageIndex.toString() + ".png",
-        width: 150.0 * getSizeRatioWithLimit(),
-        height: 55.0 * getSizeRatioWithLimit(),
-        fit: BoxFit.fitWidth,
+        path + imageIndex.toString() + ".png",
+        //width: 150.0 * getSizeRatioWithLimit(),
+        //height: 55.0 * getSizeRatioWithLimit(),
+        //fit: BoxFit.fitWidth,
       ),
     );
   }
@@ -162,10 +181,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     //  return getPaintIndex(context);
     //}
     else if (currentSoundCategory == SoundCategory.erGe) {
-      return getErGe(context);
+      return getErGeOrTongYao(context);
     }
     else if (currentSoundCategory == SoundCategory.tongYao) {
-      return getTongYao(context);
+      return getErGeOrTongYao(context);
     }
     else if (currentSoundCategory == SoundCategory.tongHua) {
       return getTongHua(context);
@@ -177,6 +196,8 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     var fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
     var fontSize = 18.0 * getSizeRatioWithLimit();
+    var heightGap = 10.0 * getSizeRatioWithLimit();
+
     return Column(
       //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -189,12 +210,19 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
               textAlign: TextAlign.start
           ),
           getOneRow(soundViewIndex, 1),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 3),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 5),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 7),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 9),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 11),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 13),
+          SizedBox(height: heightGap),
           getOneRow(soundViewIndex, 15),
 
           getContinueAndBackButtons(),
@@ -203,19 +231,23 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getOneRow(int groupIndex, int indexInGroup) {
+    if (groupIndex == 13 && indexInGroup > 8) {
+      return SizedBox(height: 0, width: 0);
+    }
+
     var fontSize = 18.0 * getSizeRatioWithLimit();
 
     return Row(
         children: <Widget>[
           Flexible(child: getOneKeyboardButton(groupIndex, indexInGroup)),
-          SizedBox(width: fontSize),
+          SizedBox(width: fontSize * 5),
           Flexible(child: getOneKeyboardButton(groupIndex, indexInGroup + 1)),
         ]
     );
   }
 
   Widget getNextButton() {
-    var buttonText = getString(138);
+    var buttonText = getString(434);
 
     if ((currentSoundCategory == SoundCategory.tongHua &&  currentSoundViewSubIndex == theTongHuaPageCount[currentSoundViewIndex-1]) ||
         (currentSoundCategory == SoundCategory.intro &&  currentSoundViewSubIndex == MaxIntroSoundView))
@@ -255,7 +287,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getPreviousButton() {
-    if (currentSoundViewIndex == 1 || currentSoundViewSubIndex == 1) {
+    if (/*currentSoundViewIndex == 1 || */currentSoundViewSubIndex == 1) {
       return SizedBox(height: 0.0, width: 0.0);
     }
 
@@ -279,7 +311,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         //  }
         //}
       },
-      child: Text(getString(405),
+      child: Text(getString(433),
           style: TextStyle(color: Colors.lightBlue)),
     );
   }
@@ -331,7 +363,8 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     );
   }
 
-  Widget getErGe(context) {
+/*
+  Widget getErGe(BuildContext context) {
     return Image.asset(
       "assets/paintge/erge" + currentSoundViewIndex.toString() + ".png",
       width: 300.0 * getSizeRatioWithLimit(),  // 350
@@ -339,8 +372,9 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
       fit: BoxFit.fitWidth,
     );
   }
+*/
 
-  Widget getTongYao(context) {
+  Widget getErGeOrTongYao(BuildContext context) {
     return Column(
       //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -353,25 +387,61 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           //    style: TextStyle(color: Colors.blue, fontSize: fontSize1),
           //    textAlign: TextAlign.start
           //),
+          getPaintImage(),
+          /*
           Image.asset(
             "assets/paintyao/tongyao" + currentSoundViewIndex.toString() + ".png",
             width: 380.0 * getSizeRatioWithLimit(),  // 350
             height: 550.0 * getSizeRatioWithLimit(), // 150
             fit: BoxFit.fitWidth,
           ),
+          */
           //getSecondTongYaoImage(),
-          getLessonText(theTongYaoLessonText),
+          getLessonText(),
           getDetailedStudies(),
         ]
     );
   }
 
+  Widget getPaintImage() {
+    var path;
+    if (currentSoundCategory == SoundCategory.tongYao) {
+      path = "assets/paintyao/tongyao";
+    }
+    else if (currentSoundCategory == SoundCategory.erGe) {
+      path = "assets/paintge/erge";
+    }
+
+    return Image.asset(
+      path + currentSoundViewIndex.toString() + ".png",
+      width: screenWidth * getSizeRatioWithLimit(),  // 350
+      //height: 550.0 * getSizeRatioWithLimit(), // 150
+      fit: BoxFit.fitWidth,
+    );
+  }
+
   Widget getDetailedStudies() {
+    var lessonText;
+    var ExpandedWord;
+
+    if (currentSoundCategory == SoundCategory.tongYao) {
+      lessonText = theTongYaoLessonText[currentSoundViewIndex-1];
+      ExpandedWord = theTongYaoExpandedWord;
+    }
+    else if (currentSoundCategory == SoundCategory.erGe) {
+      lessonText = theErGeLessonText[currentSoundViewIndex-1];
+      ExpandedWord = theErGeExpandedWord;
+    }
+    else if (currentSoundCategory == SoundCategory.tongHua) {
+      lessonText = [""];
+      ExpandedWord = theTongHuaExpandedWord;
+    }
+
     return Row(
         children: <Widget>[
-          getReadAloud(theTongYaoLessonText),
+          getReadAloud(lessonText),
           getWordStudyButton(),
-          getExpandedWordButton("申"),
+          getExpandedWordButton(ExpandedWord[currentSoundViewIndex-1]),   //"申" - one word per lesson only
           getDictionaryButton(),
         ]
     );
@@ -398,17 +468,29 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         children: [
           Image.asset(
             "assets/painthua/tonghua" + currentSoundViewIndex.toString() + "_" + currentSoundViewSubIndex.toString() + ".png",
-            width: 300.0 * getSizeRatioWithLimit(),  // 350
-            height: 500.0 * getSizeRatioWithLimit(), // 150
+            width: screenWidth * getSizeRatioWithLimit(),  // 350
+            //height: 500.0 * getSizeRatioWithLimit(), // 150
             fit: BoxFit.fitWidth,
           ),
           getContinueAndBackButtons(),
+          getDetailedStudies(),
         ]
     );
   }
 
   launchContent(int contentIndex) {
-    String inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+    //String inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
+    var inputText;
+    if (currentSoundCategory == SoundCategory.erGe) {
+      inputText = theErGeWords[currentSoundViewIndex-1];
+    }
+    else if (currentSoundCategory == SoundCategory.tongYao) {
+      inputText = theTongYaoWords[currentSoundViewIndex-1];
+    }
+    else if (currentSoundCategory == SoundCategory.tongHua) {
+      inputText = theTongHuaWords[currentSoundViewIndex-1];
+    }
+
     switch (contentIndex) {
       case 0:
         Navigator.push(
@@ -433,6 +515,17 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         ).then((val) => {_getRequests()});
         break;
       case 2:
+        // should add this to BreakoutPage parameter
+        theIsFromLessonContinuedSection = true;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                BreakoutPage(lessonId: 0, wordsStudy: inputText),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -442,7 +535,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 3:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -475,6 +568,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getWordStudyButton() {
+    if (currentSoundCategory == SoundCategory.tongHua && currentSoundViewSubIndex < theTongHuaPageCount[currentSoundViewIndex - 1]) {
+      return SizedBox(height: 0.0, width: 0.0);
+    }
+
     var buttonText = getString(430);
 
     return TextButton(
@@ -490,6 +587,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   }
 
   Widget getExpandedWordButton(String char) {
+    if (currentSoundCategory == SoundCategory.tongHua && currentSoundViewSubIndex < theTongHuaPageCount[currentSoundViewIndex - 1]) {
+      return SizedBox(height: 0.0, width: 0.0);
+    }
+
     var buttonText = getString(431);
 
     var startingCenterZiId = ZiManager.findIdFromChar(ZiListType.searching, char);
@@ -535,6 +636,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   Widget getReadAloud(List<String> text) {
       //var currentValues = "今天有点累人, 明天再看好吗？";
+      if (currentSoundCategory == SoundCategory.tongHua/* && text.length == 0 && text[0].length == 0*/) {
+        return SizedBox(height: 0.0, width: 0.0);
+      }
+
       String fullText = "";
       for(int i=0; i< text.length; i++) {
         fullText += text[i];
@@ -550,13 +655,22 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {
-              TextToSpeech.speak("zh-CN", fullText);
+              // 0.5 is the standard rate
+              TextToSpeech.speakWithRate("zh-CN", fullText, 0.1);
             },
           )
       );
   }
 
-  Widget getLessonText(List<String> text) {
+  Widget getLessonText() {
+    var text;
+    if (currentSoundCategory == SoundCategory.erGe) {
+      text = theErGeLessonText[currentSoundViewIndex-1];
+    }
+    else if (currentSoundCategory == SoundCategory.tongYao) {
+      text = theTongYaoLessonText[currentSoundViewIndex-1];;
+    }
+
     var fontSize = 18.0 * getSizeRatioWithLimit();
     return Column(
       //mainAxisSize: MainAxisSize.min,
@@ -612,10 +726,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
       ),
       onPressed: () {
         initOverlay();
-        TextToSpeech.speak("zh-CN", text);
+        TextToSpeech.speakWithRate("zh-CN", text, 0.1);
       },
       onLongPress: () {
-        TextToSpeech.speak("zh-CN", text);
+        TextToSpeech.speakWithRate("zh-CN", text, 0.1);
         var ziId = ZiManager.findIdFromChar(ZiListType.searching, text);
         showOverlay(context, 150 * getSizeRatioWithLimit(), 200 * getSizeRatioWithLimit(), "[" + theSearchingZiList[ziId].pinyin + "] " + theSearchingZiList[ziId].meaning);
       },
@@ -635,7 +749,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           ),
           color: Colors.cyan, //Colors.green,
           onPressed: () {
-            TextToSpeech.speak("zh-CN", rowText);
+            TextToSpeech.speakWithRate("zh-CN", rowText, 0.1);
           },
         )
     );

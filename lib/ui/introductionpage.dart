@@ -101,7 +101,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           ),
           SizedBox(height: fontSize1),
           getHanzishuHistoryLink(),
-
+          getMakaylaHanzishuDiaryLink(),
         ]
     );
   }
@@ -110,11 +110,25 @@ class _IntroductionPageState extends State<IntroductionPage> {
     if (kIsWeb)
       return FlatButton(
         color: Colors.blueAccent, //white,
-        textColor: Colors.brown, //brown,
+        textColor: Colors.brown, //blue,
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish/history.htm"), webOnlyWindowName: '_self');
         },
         child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+      );
+
+    return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getMakaylaHanzishuDiaryLink() {
+    if (kIsWeb)
+      return FlatButton(
+        color: Colors.blueAccent, //white,
+        textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/lesson/makaylahanzishudiary.htm"), webOnlyWindowName: '_self');
+        },
+        child: Text(getString(435)/*"Makayla Hanzishu Diary"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
       );
 
     return SizedBox(width: 0, height: 0);

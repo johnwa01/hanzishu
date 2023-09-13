@@ -123,6 +123,10 @@ class _LessonsPageState extends State<LessonsPage> {
     // do it only once
     screenWidth = Utility.getScreenWidth(context);
 
+    // make sure it picks up the right locale
+    _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
+//    _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
+
     handleStorage();
 
     return Scaffold
@@ -264,6 +268,7 @@ class _LessonsPageState extends State<LessonsPage> {
       onPressed: () {
         setState(() {
           currentLocale = changeTheDefaultLocale();
+          _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
         });
       },
       child: Text(getOppositeDefaultLocale(), /*English/中文*/
@@ -477,28 +482,38 @@ class _LessonsPageState extends State<LessonsPage> {
     List<Widget> sections = [];
 
     var path;
+    var indexBase;
 
     if (SoundCategory.intro == currentSoundCategory) {
-      path = "assets/lessons/L8.png";
+      if (index == 1) {
+        path = "assets/paintx/x1_1.png";
+      }
+      else if (index == 2) {
+        path = "assets/paintx/x2_56.png";
+      }
+      indexBase = index - 1;
     }
     if (SoundCategory.erGe == currentSoundCategory) {
-      path = "assets/lessons/L1.png";
+      path = "assets/lessons/L58.png";
+      indexBase = (index - 1) * 4;
     }
     else if (SoundCategory.tongYao == currentSoundCategory) {
-      path = "assets/lessons/L8.png";
+      path = "assets/lessons/L59.png";
+      indexBase = (index - 1) * 4;
     }
     else if (SoundCategory.tongHua == currentSoundCategory) {
-      path = "assets/lessons/L10.png";
+      path = "assets/lessons/L60.png";
+      indexBase = (index - 1) * 4;
     }
 
-    sections.add(Container(child: getPaintImageButton(context, (index - 1) * 4 + 1, path, 60, 60)));
+    sections.add(Container(child: getPaintImageButton(context, indexBase + 1, path, 60, 60)));
     if (SoundCategory.intro != currentSoundCategory) {
       sections.add(Container(
-          child: getPaintImageButton(context, (index - 1) * 4 + 2, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 2, path, 60, 60)));
       sections.add(Container(
-          child: getPaintImageButton(context, (index - 1) * 4 + 3, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 3, path, 60, 60)));
       sections.add(Container(
-          child: getPaintImageButton(context, (index - 1) * 4 + 4, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 4, path, 60, 60)));
     }
 
     return sections;

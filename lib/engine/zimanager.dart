@@ -15,7 +15,8 @@ enum ZiListType {
   searching,
   component,
   stroke,
-  phrase
+  phrase,
+  custom
 }
 
 class ZiListTypeWrapper {
@@ -191,7 +192,18 @@ class ZiManager {
         var filter;
         var filterMember;
         var filterValue;
-        for (var memberZiId in theSearchingZiList[id].groupMembers) {
+        List<int> tempGroupMembers = [];
+        var groupMembers = theSearchingZiList[id].groupMembers;
+        if (drillCategory == DrillCategory.custom && id == 1) { // skip the pseudo layer from root level
+          var tmpMembers;
+          for (var memberId in groupMembers) {
+            tmpMembers = theSearchingZiList[memberId].groupMembers;
+            tempGroupMembers.addAll(tmpMembers);
+          }
+          groupMembers = tempGroupMembers;
+        }
+
+        for (var memberZiId in groupMembers) {
           filter = getRealFilterList(drillCategory); //theSearchingZiRealFilterList[filterId-1];
           filterValue = filter[memberZiId];
           if (filterValue > 0 && filterValue <= internalEndLessonId) {
@@ -240,6 +252,14 @@ class ZiManager {
     //List<int> getRealGroupMembersFromCache(int id, int lessonId)
     //addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId)
     return lessonGroupMembers;
+  }
+
+  static bool parentIdEqual1(DrillCategory category, int ziId) {
+    if (category == DrillCategory.custom) {
+      return theSearchingZiList[ziId].parentId == 1;
+    }
+
+    return false;
   }
 
   List<SearchingZi> getOriginalDrillFilterList(DrillCategory drillCategory) {

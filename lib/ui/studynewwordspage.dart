@@ -20,6 +20,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
+import 'package:hanzishu/ui/breakoutpage.dart';
 
 class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
@@ -40,7 +41,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   //     0.0, 0.0, "");
   FocusNode _textNode = new FocusNode();
 
-  TextEditingController _controller = new TextEditingController(text: "");
+  TextEditingController _controller = new TextEditingController(text: "您份成");
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -226,8 +227,6 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             inputText = resultStr;
           }
 
-          inputText = "灵巧的"; //TODO: uncomment this line to test under Android simulator
-          // TODO: Check content of inputText.
           launchContent(0);
         }
       }
@@ -292,6 +291,17 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
           ).then((val) => {_getRequests()});
           break;
         case 2:
+        // should add this to BreakoutPage parameter
+          theIsFromLessonContinuedSection = true;
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  BreakoutPage(lessonId: 0, wordsStudy: inputText),
+            ),
+          ).then((val) => {_getRequests()});
+          break;
+        case 3:
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -301,7 +311,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             ),
           ).then((val) => {_getRequests()});
           break;
-        case 3:
+        case 4:
           Navigator.push(
             context,
             MaterialPageRoute(

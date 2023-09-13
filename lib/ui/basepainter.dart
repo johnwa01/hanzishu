@@ -259,6 +259,9 @@ class BasePainter extends CustomPainter{
     else if (listType == ZiListType.component) {
       char = ComponentManager.getComponent(id).charOrNameOfNonchar;
     }
+    //else if (listType == ZiListType.custom) {
+    //  char = wordsStudy[id];
+    //}
     else {
       return;
     }
@@ -368,6 +371,9 @@ class BasePainter extends CustomPainter{
             .getZi(id)
             .strokes;
       }
+    }
+    else if (listType == ZiListType.custom) {
+      //null
     }
     else if (listType == ZiListType.stroke) {
 
@@ -728,6 +734,11 @@ class BasePainter extends CustomPainter{
     totalSideNumberOfZis = theZiManager.getNumberOfZis(listType, groupMembers);
 
     for (var index = 0; index < groupMembers.length; index++) {
+      //for lesson's tree, we no longer display * and any char under it
+      if (listType == ZiListType.zi && groupMembers[index] == 756) {
+        continue;
+      }
+
       var memberZiId = groupMembers[index];
 
       var posiSize2 = getPositionAndSize(listType, memberZiId, totalSideNumberOfZis, sidePositionsCache);

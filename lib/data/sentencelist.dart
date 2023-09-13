@@ -12,7 +12,7 @@ Sentence(4, "七八九十", "Seven, eight, nine, ten", 2, null, [], "七|八|九
   Sentence(6, "我十五岁了。", "I'm fifteen years old.", 3, null, [], "我|十五岁|了。"),
 Sentence(7, "老师好！", "Hello, teacher!", 4, null, [], "老师|好！"),
 Sentence(8, "再见!", "Goodbye!", 4, null, [], "再|见。"),
-  Sentence(9, "您好！", "Hello!", 5, null, [], "您|好！"),
+  Sentence(9, "您好！", "Hello!", 1, null, [], "您|好！"),
   Sentence(10, "同学们好！", "Hello students!", 5, null, [], "同学们|好！"),
   Sentence(11, "谢谢。", "Thank you.", 6, null, [], "谢|谢！"),
   Sentence(12, "不客气。", "You are welcome.", 6, null, [], "不|客气。"),
@@ -156,4 +156,5 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(149, "昨天天气真好。", "", 62, null, [], ""),
   Sentence(150, "北京一年有几个季节？", "", 62, null, [], ""),
   Sentence(151, "麦克，你好！", "", 62, null, [], ""),
+  Sentence(152, "早上好！", "", 5, null, [], ""),
 ];

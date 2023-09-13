@@ -6,10 +6,12 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class BreakoutPage extends StatefulWidget {
   final int lessonId;
-  BreakoutPage({this.lessonId});
+  final String wordsStudy;
+  BreakoutPage({this.lessonId, this.wordsStudy});
 
   @override
   _BreakoutPageState createState() => _BreakoutPageState();
@@ -17,6 +19,7 @@ class BreakoutPage extends StatefulWidget {
 
 class _BreakoutPageState extends State<BreakoutPage> {
   //int centerZiId;
+  String wordsStudy;
   double screenWidth;
   OverlayEntry overlayEntry;
   ScrollController _scrollController;
@@ -85,6 +88,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
                     completeColor: Colors.blueAccent,
                     lessonId: widget.lessonId,
                     //completePercent: percentage,
+                      wordsStudy: widget.wordsStudy,
                     screenWidth: screenWidth
                   ),
                   size: new Size(screenWidth, painterHeight),
@@ -156,8 +160,17 @@ class _BreakoutPageState extends State<BreakoutPage> {
         initOverlay();
 
         var scrollOffset = _scrollController.offset;
-        var zi = theZiManager.getZi(id);
-        TextToSpeech.speak("zh-CN", zi.char);
+        var char;
+        if (listType == ZiListType.zi) {
+          var zi = theZiManager.getZi(id);
+          char = zi.char;
+        }
+        else if (listType == ZiListType.searching) {
+          var searchingZi = DictionaryManager.getSearchingZi(id);
+          char = searchingZi.char;
+        }
+
+        TextToSpeech.speak("zh-CN", char);
 
         if (previousZiId != id || !haveShowedOverlay) {
           var meaning = ZiManager.getOnePinyinAndMeaning(id, listType);
@@ -195,6 +208,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
           lineColor: Colors.amber,
           completeColor: Colors.blueAccent,
           lessonId: widget.lessonId,
+          wordsStudy: widget.wordsStudy,
           screenWidth: screenWidth);
 
       YPositionWrapper yPositionWrapper = YPositionWrapper(0.0);

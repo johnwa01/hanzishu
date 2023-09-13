@@ -116,9 +116,9 @@ class LessonManager {
     populateLessonsList();
     theSentenceManager.populateSubcharsAndComponents();
     populateConvCharsAndCharsList();
-    populateComps();
+//    populateComps();
     populateConvCharsIds();
-    populateCharsIds();
+//    populateCharsIds();
     //theLessonsInitialized = true;
   }
 
