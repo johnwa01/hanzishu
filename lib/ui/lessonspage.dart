@@ -24,10 +24,10 @@ class LessonsPage extends StatefulWidget {
 var courseMenuList = [
   // allocate local language during run time
   CourseMenu(1, 429),
-  CourseMenu(2, 423),
-  CourseMenu(3, 424),
-  CourseMenu(4, 425),
-  CourseMenu(5, 426),
+  //CourseMenu(2, 423),
+  //CourseMenu(3, 424),
+  //CourseMenu(4, 425),
+  //CourseMenu(5, 426),
 ];
 
 class _LessonsPageState extends State<LessonsPage> {
