@@ -414,7 +414,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
     return Image.asset(
       path + currentSoundViewIndex.toString() + ".png",
-      width: screenWidth * getSizeRatioWithLimit(),  // 350
+      width: 350 /*screenWidth*/ * getSizeRatioWithLimit(),  // 350
       //height: 550.0 * getSizeRatioWithLimit(), // 150
       fit: BoxFit.fitWidth,
     );
