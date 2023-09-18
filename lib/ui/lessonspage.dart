@@ -24,8 +24,8 @@ class LessonsPage extends StatefulWidget {
 var courseMenuList = [
   // allocate local language during run time
   CourseMenu(1, 429),
-  CourseMenu(2, 423),
-  CourseMenu(3, 424),
+  //CourseMenu(2, 423),
+  //CourseMenu(3, 424),
   //CourseMenu(4, 425),
   //CourseMenu(5, 426),
 ];
@@ -403,7 +403,7 @@ class _LessonsPageState extends State<LessonsPage> {
                 Row(
                     children: [
                       Text(
-                        getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                        lessonNumber.toString() + ". " + getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),
                       OpenHelper.getCompletedImage(lessonNumber),

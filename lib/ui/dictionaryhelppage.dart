@@ -160,63 +160,62 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
           ),
           SizedBox(height: TheConst.fontSizes[2]),
           Text(
-              getString(144)/*"Navigate the First Character Dictionary"*/,
+              getString(144)/*""*/,
               style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	" + getString(145)/*"Open the Basic Character Table"*/,
+              "    " + getString(145)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   • " + getString(146)/*"Tap the first Basic Character of the Character that you are searching for"*/,
+              "    " + getString(146)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	" + getString(147)/*"Select the Character from the list. Note: If it’s not there, the dictionary doesn’t support this character."*/,
+              "        " + getString(147)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	" + getString(148)/*"View the detailed information about the Character"*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: TheConst.fontSizes[2]),
-          Text(
-              getString(149)/*"Identify the Character’s first Basic Character"*/,
-              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "   •	" + getString(150)/*"Ex: Character 你 -> Basic Character 小 (the first and only Basic Character)"*/,
+              "            " + getString(148)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	" + getString(151)/*"If a Character’s first Basic Character is 口, but it contains other Basic Characters, select the next Basic Character"*/,
+              "        " + getString(149)/*""*/,
+              style: TextStyle(fontSize: TheConst.fontSizes[1]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "            " + getString(150)/*"Ex:"*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	" + getString(152)/*"Ex: 听 -> 斤 (skip 口)"*/,
+              "        " + getString(151)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   •	" + getString(153)/*"If a Character doesn’t contain any Basic Characters, select the Character’s first stroke (in group 1)"*/,
+              "            " + getString(152)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	" + getString(154)/*"Ex: Character 扎 -> Stroke 一 "*/,
+              "            " + getString(153)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
           Text(
-              "   	 o	" + getString(155)/*"Ex: Character 丝 -> Stroke 乙. Note: all fold strokes map to 乙."*/,
+              "    " + getString(154)/*""*/,
+              style: TextStyle(fontSize: TheConst.fontSizes[2]),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "        " + getString(155)/*"Ex: "*/,
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
