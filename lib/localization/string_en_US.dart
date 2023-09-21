@@ -417,9 +417,9 @@ var theString_en_US = [
   Local(409, "Study customized words"),
   Local(410, "You have completed this component typing exercise. Please move on to next one."),
   Local(411, "Hanzishu Introduction"),
-  Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words.\n\nYou will learn Chinese fast through this system. Non-Chinese heritage students should start from conversation, and Chinese heritage students should start from beginner children's song section directly.\n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
+  Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words. You will learn Chinese fast through this system. \n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
   //Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words.\n\nThe Hanzishu puzzle typing method, dictionary, word puzzle, and conversational lessons were invented and developed by Microsoft Senior Engineer John Zhongqi Wang. The Paint Sound symbols and lessons were invented by children education expert Kang Baoling.\n\nYou will learn Chinese fast through this system. Non-Chinese heritage students should start from conversation, and Chinese heritage students should start from Paint Sound section directly.\n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
-  Local(413, "Typing exercises for words containing single Chinese alphabet "), //"Typing exercises by component characteristics"),
+  Local(413, "Typing exercises for words containing single Chinese alphabet "), //"Typing exercises by component characteristics"
   Local(414, "Practice typing of all components by their characteristics."),
   Local(415, "Hanzishu puzzle typing course"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),
@@ -441,5 +441,7 @@ var theString_en_US = [
   Local(432, "Please read aloud the following lesson, and point finger at each word while reading."),
   Local(433, "Previouw page"),
   Local(434, "Next page"),
-  Local(435, "Makayla Hanzishu Diary"),
+  Local(435, "Makayla Chinese Learning Diary"),
+  Local(436, "Hazishu puzzle typing method and Chinese teaching"),
+  Local(437, "Pinyin does no good to international Chinese teaching"),
 ];

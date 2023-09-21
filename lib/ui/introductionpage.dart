@@ -102,6 +102,8 @@ class _IntroductionPageState extends State<IntroductionPage> {
           SizedBox(height: fontSize1),
           getHanzishuHistoryLink(),
           getMakaylaHanzishuDiaryLink(),
+          getPinyinNotGoodForTeachingLink(),
+          getInputMethodAndTeachingLink(),
         ]
     );
   }
@@ -112,7 +114,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
         color: Colors.blueAccent, //white,
         textColor: Colors.brown, //blue,
         onPressed: () {
-          launchUrl(Uri.parse("https://hanzishu.com/publish/history.htm"), webOnlyWindowName: '_self');
+          launchUrl(Uri.parse("https://mp.weixin.qq.com/s/veT0HxXO3R_YTHvOUAnPLQ"), webOnlyWindowName: '_self');
         },
         child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
       );
@@ -129,6 +131,34 @@ class _IntroductionPageState extends State<IntroductionPage> {
           launchUrl(Uri.parse("https://hanzishu.com/lesson/makaylahanzishudiary.htm"), webOnlyWindowName: '_self');
         },
         child: Text(getString(435)/*"Makayla Hanzishu Diary"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+      );
+
+    return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getPinyinNotGoodForTeachingLink() {
+    if (kIsWeb)
+      return FlatButton(
+        color: Colors.blueAccent, //white,
+        textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://mp.weixin.qq.com/s/m7QIBYtX3NC8Bhq4gFemMg"), webOnlyWindowName: '_self');
+        },
+        child: Text(getString(437)/*"Pinyin does no good to international Chinese teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+      );
+
+    return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getInputMethodAndTeachingLink() {
+    if (kIsWeb)
+      return FlatButton(
+        color: Colors.blueAccent, //white,
+        textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/publish/inputmethodandteaching.htm"), webOnlyWindowName: '_self');
+        },
+        child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
       );
 
     return SizedBox(width: 0, height: 0);
