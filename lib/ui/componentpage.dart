@@ -152,6 +152,7 @@ class _ComponentPageState extends State<ComponentPage> {
             alignment: Alignment.topRight,
              child: getSkipThisSection(),
           ),
+          getHintText(),
           Container(
             child: getQuestion(context),
             padding: EdgeInsets.all(2 * getSizeRatioWithLimit()),
@@ -737,6 +738,39 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  Widget getHintText() {
+    var hint;
+      if (questionType == QuestionType.Component) {
+        var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(
+            currentIndex);
+
+        if (leadCompIndex >= 0) {
+          hint = getString(theLeadComponentList[leadCompIndex].hint);
+        }
+      }
+      else if (questionType == QuestionType.ExpandedComponent) {
+        if (currentIndex > 0) {
+          hint = getString(theExpandedComponentList[currentIndex].hint);
+        }
+      }
+      else if (questionType == QuestionType.ShowAttachedComponent) {
+        if (currentIndex > 0) {
+          hint = getString(theShowAttachedComponentList[currentIndex].hint);
+        }
+      }
+
+      if (hint != null) {
+        return Text(
+            hint,
+            style: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit(),
+                fontWeight: FontWeight.bold)
+        );
+      }
+      else {
+        return SizedBox(width: 0, height: 0);
+      }
+  }
+
   Widget getAnswerQuestion() {
     double size = 15.0 * getSizeRatioWithLimit(); // 18
 
@@ -753,28 +787,28 @@ class _ComponentPageState extends State<ComponentPage> {
         question = getString(284)/*"Correct. "*/;
       }
 
-      var hint;
+      //var hint;
       if (questionType == QuestionType.Component) {
         var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(currentIndex);
         question += getString(128); /*"Please map the Component to its key."*/
-        if (leadCompIndex >= 0) {
-          hint = getString(theLeadComponentList[leadCompIndex].hint);
-          question += " (" +
-                  getString(90) /*"Hint"*/ + ": " +
-                  hint + ")";
-        }
+        //if (leadCompIndex >= 0) {
+        //  hint = getString(theLeadComponentList[leadCompIndex].hint);
+        //  question += " (" +
+        //          getString(90) /*"Hint"*/ + ": " +
+        //          hint + ")";
+        //}
       }
       else if (questionType == QuestionType.ExpandedComponent) {
-        hint = getString(theExpandedComponentList[currentIndex].hint);
+        //hint = getString(theExpandedComponentList[currentIndex].hint);
         question +=
-            getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
-                hint + ")";
+            getString(129)/*"Guess the Lead Component and corresponding key for these Expanded Components."*/ /*+ " (" + getString(90)"Hint" + ": " +
+                hint + ")"*/;
       }
       else if (questionType == QuestionType.ShowAttachedComponent) {
-        hint = getString(theShowAttachedComponentList[currentIndex].hint);
+        //hint = getString(theShowAttachedComponentList[currentIndex].hint);
         question +=
-            getString(129)/*"Guess the Lead and corresponding key for these Expanded Components."*/ + " (" + getString(90)/*"Hint"*/ + ": " +
-                hint + ")"; //TODO: update the string for this case
+            getString(129)/*"Guess the Lead and corresponding key for these Expanded Components."*/ /*+ " (" + getString(90)"Hint" + ": " +
+                hint + ")"*/; //TODO: update the string for this case
       }
       /*
       if (questionType == QuestionType.ReviewExpandedComponent) {
