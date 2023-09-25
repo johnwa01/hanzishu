@@ -735,7 +735,7 @@ class BasePainter extends CustomPainter{
 
     for (var index = 0; index < groupMembers.length; index++) {
       //for lesson's tree, we no longer display * and any char under it
-      if (listType == ZiListType.zi && groupMembers[index] == 756) {
+      if (listType == ZiListType.zi && groupMembers[index] == TheConst.starCharId) {
         continue;
       }
 
@@ -816,7 +816,7 @@ class BasePainter extends CustomPainter{
       }
 
       // make '*' near the center, otherwise, it'll be in the uppper left corner of the center
-      if (listType == ZiListType.zi && id == 756) { // the * char
+      if (listType == ZiListType.zi && id == TheConst.starCharId) { // the * char
         posiSize.transX += posiSize.charFontSize * 0.25;
         posiSize.transY += posiSize.charFontSize / 4 ;
       }

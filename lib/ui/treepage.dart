@@ -405,6 +405,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.zi, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
+      if (memberZiId == TheConst.starCharId) {
+        continue;
+      }
       //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
       var positionAndSize = BasePainter.getPositionAndSize(ZiListType.zi, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 

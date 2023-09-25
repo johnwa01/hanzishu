@@ -231,19 +231,20 @@ class ZiManager {
 
     var showZi = false;
     for (var memberZiId in groupMembers) {
-      showZi = false;
-      //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
+        showZi = false;
+        //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
         //showZi = showZiForLessonId(memberZiId, theCurrentLessonId);
-      //}
-      //else {
-      //  var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
-      //  var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
-        showZi = showZiForLessons(memberZiId, internalStartLessonId, internalEndLessonId);
-      //}
+        //}
+        //else {
+        //  var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
+        //  var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
+        showZi = showZiForLessons(
+            memberZiId, internalStartLessonId, internalEndLessonId);
+        //}
 
-      if (showZi) {
-        lessonGroupMembers.add(memberZiId);
-      }
+        if (showZi) {
+          lessonGroupMembers.add(memberZiId);
+        }
     }
 
     //TODO: same to internalEndLessonId's memory of internalEndLesson.getRealGroupMembers(id); addToRealGroupMembersMap(id, groupMembers);
