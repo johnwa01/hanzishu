@@ -234,6 +234,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
       color: Colors.blueAccent, //white,
       textColor: Colors.brown,
       onPressed: () {
+        initOverlay();
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
