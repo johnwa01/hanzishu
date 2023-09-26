@@ -441,4 +441,5 @@ var theString_zh_CN = [
   Local(435, "Makayla学中文日记"),
   Local(436, "汉字字形输入法和中文教学"),
   Local(437, "拼音不利于国际中文教学"),
+  Local(438, "提示2"),
 ];

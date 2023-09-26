@@ -13,11 +13,12 @@ class InputZiHintPainter extends BasePainter {
   Color completeColor;
   double screenWidth;
   bool showHint;
+  bool showFullHint;
   String char;
   TypingType typingType;
 
   InputZiHintPainter({
-    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.char, this.typingType
+    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.showFullHint, this.char, this.typingType
   });
 
   @override
@@ -25,7 +26,7 @@ class InputZiHintPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth; // set the base class width variable
 
-    if (showHint) {
+    if (showHint || showFullHint) {
       displayHintMessage(15.0 * getSizeRatio(), char);  // 18.0
     }
     else {
@@ -165,14 +166,17 @@ class InputZiHintPainter extends BasePainter {
       drawComponentZi(comp, xPosi, 0.0, size, size, size, Colors.blue, true, 1);
 
       xPosi += size * 1.2;
-      displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
-      xPosi += halfSize / 1.5;
-      var typingCode = ComponentManager.getTypingCode(comp);
-      displayTextWithValue(typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+      if (showFullHint) {
+        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
+        xPosi += halfSize / 1.5;
+        var typingCode = ComponentManager.getTypingCode(comp);
+        displayTextWithValue(
+            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
 
-      xPosi += size; //* 1.2;
-      displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
-      //xPosi += halfSize / 1.5;
+        xPosi += size; //* 1.2;
+        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+        //xPosi += halfSize / 1.5;
+      }
     }
 
     if (subComponents != null) {
@@ -195,14 +199,16 @@ class InputZiHintPainter extends BasePainter {
             1);
 
         xPosi += size * 1.2;
-        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
-        xPosi += halfSize / 1.5;
-        var typingCode = ComponentManager.getTypingCode(comp);
+        if (showFullHint) {
+          displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
+          xPosi += halfSize / 1.5;
+          var typingCode = ComponentManager.getTypingCode(comp);
 
-        displayTextWithValue(
-            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
-        xPosi += size;
-        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+          displayTextWithValue(
+              typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+          xPosi += size;
+          displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+        }
       }
     }
   }

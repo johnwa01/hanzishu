@@ -444,4 +444,5 @@ var theString_en_US = [
   Local(435, "Makayla Chinese Learning Diary"),
   Local(436, "Hazishu puzzle typing method and Chinese teaching"),
   Local(437, "Pinyin does no good to international Chinese teaching"),
+  Local(438, "Hint2"),
 ];

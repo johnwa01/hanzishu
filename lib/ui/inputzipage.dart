@@ -46,6 +46,7 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousText = "";
   List<String> ziCandidates;
   bool showHint = false;
+  bool showFullHint = false;
 
   OverlayEntry overlayEntry;
   int dismissCount = 0;
@@ -84,6 +85,7 @@ class _InputZiPageState extends State<InputZiPage> {
     setState(() {
       updateCounter = 0;
       showHint = false;
+      showFullHint = false;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
     });
   }
@@ -397,6 +399,7 @@ class _InputZiPageState extends State<InputZiPage> {
     previousEndComposing = -1;
 
     showHint = false;
+    showFullHint = false;
 
     checkAndUpdateCurrentIndex();
 
@@ -794,7 +797,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!showHint) {
+    if (!showHint && !showFullHint) {
       theCurrentZiCandidates = theDefaultZiCandidates;
     } // set it to default
 
@@ -898,6 +901,9 @@ class _InputZiPageState extends State<InputZiPage> {
       editFieldFontRatio /= 1.3;
     }
 
+    var promptStr = getString(113) + "： "; //"Please type"
+    var fontSize = 13.0 * getSizeRatio();     //15.0
+
     return Scaffold
       (
       appBar: AppBar
@@ -921,6 +927,13 @@ class _InputZiPageState extends State<InputZiPage> {
                 alignment: Alignment.topRight,
                 child: getSkipThisSection(),
               ),
+              //Container(
+              Text(
+                    promptStr,
+                    style: TextStyle(fontSize: fontSize * 1.2),
+                    textAlign: TextAlign.left
+                ),
+              //),
               getComponentRelated(),
               SizedBox(
                   width: double.infinity,
@@ -1052,13 +1065,7 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getComponentAndMapping() {
     var fontSize = 15.0 * getSizeRatio();
     var zi = theInputZiManager.getZiWithComponentsAndStrokes(typingType, currentIndex, lessonId);
-/*
-    var inputZiHintPainter = InputZiHintPainter(
-        lineColor: Colors.amber,
-        completeColor: Colors.blueAccent,
-        screenWidth: screenWidth //350 /*TODO: temp*/
-    );
-*/
+
     var sizeRatio = getSizeRatio();
     if (0.80 < sizeRatio && sizeRatio < 0.83) {
       // dp = 320 or below. special case iPod touch 7 which ratio is 0.816. have to make the image size smaller
@@ -1165,7 +1172,6 @@ class _InputZiPageState extends State<InputZiPage> {
       char = zi.zi;
     }
 
-
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
     var inputZiHintPainter = InputZiHintPainter(
@@ -1173,12 +1179,13 @@ class _InputZiPageState extends State<InputZiPage> {
         completeColor: Colors.blueAccent,
         screenWidth: screenWidth, //350 /*TODO: temp*/
         showHint: this.showHint,
+        showFullHint: this.showFullHint,
         char: char, //zi.zi,
         typingType: typingType
     );
 
-    var promptStr = getString(113) + "： "; //"Please type"
-    var promptWidth = 65;
+    //var promptStr = getString(113) + "： "; //"Please type"
+    //var promptWidth = 65;
     /*
     if (!showHint) {
       if (typingType == TypingType.ExpandedReview) {
@@ -1201,15 +1208,15 @@ class _InputZiPageState extends State<InputZiPage> {
           //getImageTiedToZi(),
           Row(
               children: <Widget>[
-                SizedBox(
-                  width: promptWidth * getSizeRatio(), //130 //55
-                  child: Text(
-                      promptStr,
-                      style: TextStyle(fontSize: fontSize * 1.2),
-                      textAlign: TextAlign.left
-                  ),
-                ),
-                //SizedBox(width: fontSize),
+                //SizedBox(
+                //  width: promptWidth * getSizeRatio(), //130 //55
+                //  child: Text(
+                //      promptStr,
+                //      style: TextStyle(fontSize: fontSize * 1.2),
+                //      textAlign: TextAlign.left
+                //  ),
+                //),
+                SizedBox(width: fontSize),
                 SizedBox(
                   width: 35.0 * getSizeRatio(), //50
                   child: Text(
@@ -1220,7 +1227,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
                 //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
-                  width: 45.0 * getSizeRatio(),
+                  width: 50.0 * getSizeRatio(),
                   child: FlatButton(
                     color: Colors.white,
                     textColor: Colors.blueAccent,
@@ -1234,9 +1241,32 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      "[" + getString(90) + "]"/*"Hint"*/,
+                      "[" + getString(90) + "]"/*"Hint1"*/,
                       style: TextStyle(fontSize: fontSize * 1.2), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
+                    ),
+                  ),
+                ),
+                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
+                SizedBox(
+                  width: 50.0 * getSizeRatio(),
+                  child: FlatButton(
+                    color: Colors.white,
+                    textColor: Colors.blueAccent,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      initOverlay();
+
+                      setState(() {
+                        showHint = true;
+                        showFullHint = true;
+                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                      });
+                    },
+                    child: Text(
+                        "[" + getString(438) + "]"/*"Hint2"*/,
+                        style: TextStyle(fontSize: fontSize * 1.2), // 1.6
+                        textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
