@@ -40,6 +40,25 @@ class InputZi {
   }
 }
 
+class PinyinInputZi {
+  String pinyin;
+  String zi;
+  String typingCode;
+  int usageFrequency;
+
+  PinyinInputZi(
+      String pinyin,
+      String zi,
+      String typingCode,
+      int usageFrequency,
+      ) {
+    this.pinyin = pinyin;
+    this.zi = zi;
+    this.typingCode = typingCode;
+    this.usageFrequency = usageFrequency;
+  }
+}
+
 /*
 class InputZiOverlayParameters {
     TypingType type;

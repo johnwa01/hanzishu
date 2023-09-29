@@ -1,0 +1,28 @@
+import 'package:hanzishu/engine/inputzi.dart';
+
+var thePinyinInputZiList=[
+  PinyinInputZi("aa", "众","dne", 67),
+  PinyinInputZi("aa", "飙", "xne", 66),
+  PinyinInputZi("aan", "耸", "knd", 65),
+  PinyinInputZi("aan", "俎", "nmd", 64),
+  PinyinInputZi("aan", "套", "kkk", 63),
+  PinyinInputZi("aan", "烘", "nnn", 62),
+  PinyinInputZi("aan", "企", "iii", 61),
+  PinyinInputZi("aang", "替", "aab", 60),
+  PinyinInputZi("aang", "丛", "aae", 59),
+  PinyinInputZi("aang", "金", "aae", 58),
+  PinyinInputZi("aang", "个", "aai", 57),
+  PinyinInputZi("ba", "众","dne", 90),
+  PinyinInputZi("ba", "飙", "xne", 89),
+  PinyinInputZi("ban", "耸", "knd", 88),
+  PinyinInputZi("ban", "俎", "nmd", 87),
+  PinyinInputZi("ban", "套", "kkk", 86),
+  PinyinInputZi("ban", "烘", "nnn", 85),
+  PinyinInputZi("ban", "企", "iii", 84),
+  PinyinInputZi("bang", "替", "aab", 83),
+  PinyinInputZi("bang", "丛", "aae", 82),
+  PinyinInputZi("bang", "金", "aae", 81),
+  PinyinInputZi("bang", "个", "aai", 80),
+  PinyinInputZi("can", "烘", "nnn", 50),
+  PinyinInputZi("caw", "企", "iii", 49),
+];
