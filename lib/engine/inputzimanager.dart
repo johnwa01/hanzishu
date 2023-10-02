@@ -2,6 +2,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/data/inputzilist.dart';
+import 'package:hanzishu/data/pinyininputzilist.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:math';
@@ -155,16 +156,55 @@ class InputZiManager {
   // the only public method for this feature
   // current input as input, and a string as the output
   static List<String> getZiCandidates(String input) {
-    var first = findFirst(input);
-    var currentInputCodeLength = input.length;
-    if (first != -1) {
-      var last = findLast(first, input);
-      if (last != -1) {
-        return getZiCandidatesHelper(first, last, currentInputCodeLength);
+    if (isPinyinInput(input)) {
+      if (input.length == 1) {
+        return null;
+      }
+      return getZiCandidatesFromPinyinList(input.substring(1));
+    }
+    else {
+      var first = findFirst(input);
+      var currentInputCodeLength = input.length;
+      if (first != -1) {
+        var last = findLast(first, input);
+        if (last != -1) {
+          return getZiCandidatesHelper(first, last, currentInputCodeLength);
+        }
+      }
+
+      return null;
+    }
+  }
+
+  static List<String> getZiCandidatesFromPinyinList(String pinyin) {
+    //typingCandidates.clear();
+    List<String> pinyinCandidates = [];
+
+    int start = 0;
+    int end = thePinyinInputZiList.length;
+
+    for (var i = start; i < end; i++) {
+      var oneInputZi = thePinyinInputZiList[i];
+      if (oneInputZi.pinyin.length >= pinyin.length) {
+        if (oneInputZi.pinyin.startsWith(pinyin)) {
+          pinyinCandidates.add(oneInputZi.zi);
+        }
+      }
+      //updateCandidates(oneInputZi, typingCandidates, currentInputCodeLength);
+    }
+
+    return pinyinCandidates;
+    //return convertZiListToStringList(typingCandidates);
+  }
+
+  static bool isPinyinInput(String input) {
+    if (input.length >= 1) {
+      if(input[0] == 'z') {
+        return true;
       }
     }
 
-    return null;
+    return false;
   }
 
   static InputZi getFirstZiCandidate() {
@@ -237,10 +277,8 @@ class InputZiManager {
       return;
     }
 
-    if (candidateExistsInFirstPositionList(
-        currentCandidatesToUpdate[0], previousFirstPositionList)) {
-      pushANeverFirstToFirst(
-          currentCandidatesToUpdate, previousFirstPositionList);
+    if (candidateExistsInFirstPositionList(currentCandidatesToUpdate[0], previousFirstPositionList)) {
+          pushANeverFirstToFirst(currentCandidatesToUpdate, previousFirstPositionList);
     }
 
     // push the new first into the firstPostion list

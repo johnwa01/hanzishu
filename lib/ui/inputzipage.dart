@@ -44,7 +44,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousEndSelection = -1;
   String initialControllerTextValue; // = "unlikelyIniStr876";
   String previousText = "";
-  List<String> ziCandidates;
+  //List<String> ziCandidates;
   bool showHint = false;
   bool showFullHint = false;
 
@@ -56,6 +56,9 @@ class _InputZiPageState extends State<InputZiPage> {
   String previousOverlayLetter = "";
 
   bool hasVerifiedToBeALowerCase = false;
+
+  int candidatesIndex = 0;
+  List<String> fullZiCandidates;
 
   final stopwatch = Stopwatch()..start();
 
@@ -496,6 +499,8 @@ class _InputZiPageState extends State<InputZiPage> {
     latestInputKeyLetter = getLatestInputLetter();
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
+      candidatesIndex = 0;
+
       initOverlay();
 
       setPreviousComposing();
@@ -511,6 +516,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (isFromDeletion) {
+      candidatesIndex = 0;
       initOverlay();
       if (_controller.text.length == 0) {
         // don't allow to remove the default character value of '>' at the beginning to work around an Android issue as described earlier
@@ -535,8 +541,21 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
-    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) { // space key
-      showOverlay(context, latestInputKeyLetter);
+    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter) /*|| Utility.isArrow(latestInputKeyLetter)*/) { // space key
+      if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) {
+        showOverlay(context, latestInputKeyLetter);
+      }
+      /*
+      else if (Utility.isForwardArrow(latestInputKeyLetter)) {
+        candidatesIndex++;
+      }
+      else if (Utility.isBackArrow(latestInputKeyLetter)) {
+        if (candidatesIndex > 0) {
+          candidatesIndex--;
+        }
+      }
+      */
+
       setPreviousComposing();
 
       // prepare the previousText ahead of time so that the overlay won't be over written by dup runs
@@ -565,9 +584,15 @@ class _InputZiPageState extends State<InputZiPage> {
                 start: previousStartComposing, end: previousEndComposing),
             selection: TextSelection.collapsed(offset: selectionPosi));
       }
+
+      if (Utility.isArrow(latestInputKeyLetter)) {
+        //theCurrentZiCandidates.clear();
+        //theCurrentZiCandidates.add('艰');
+      }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
+        candidatesIndex = 0;
         initOverlay();
       }
 
@@ -576,6 +601,7 @@ class _InputZiPageState extends State<InputZiPage> {
           getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
+      candidatesIndex = 0;
       hasVerifiedToBeALowerCase = true;
       initOverlay();
       setPreviousComposing();
@@ -611,6 +637,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else {
       initOverlay();
+      candidatesIndex = 0;
       previousStartComposing = -1;
       previousEndComposing = -1;
       theCurrentZiCandidates = theDefaultZiCandidates;

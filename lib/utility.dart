@@ -511,6 +511,29 @@ class Utility {
     return count;
   }
 
+  static bool isArrow(String input) {
+    if(input == '<' || input == '>') {
+      return true;
+    }
+
+    return false;
+  }
+
+  static bool isForwardArrow(String input) {
+    if(input == '>') {
+      return true;
+    }
+
+    return false;
+  }
+
+  static bool isBackArrow(String input) {
+    if(input == '<') {
+      return true;
+    }
+
+    return false;
+  }
   // var newStr = replaceCharAt("hello", 1, "E") //usage
 }
 
