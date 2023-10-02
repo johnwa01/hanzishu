@@ -37,7 +37,7 @@ class _InputZiPageState extends State<InputZiPage> {
   double screenWidth;
 
   // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
-  TextEditingController _controller = new TextEditingController(text: ">");
+  TextEditingController _controller = new TextEditingController(text: "");
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
@@ -518,13 +518,15 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (isFromDeletion) {
       candidatesIndex = 0;
       initOverlay();
+      /*
       if (_controller.text.length == 0) {
         // don't allow to remove the default character value of '>' at the beginning to work around an Android issue as described earlier
         _controller.value = _controller.value.copyWith(text: '>',
             composing: TextRange.empty,
             selection: TextSelection.collapsed(offset: 1));
       }
-      else if ((previousEndComposing - previousStartComposing) > 1) {
+      */
+      /*else */if ((previousEndComposing - previousStartComposing) > 1) {
         previousEndComposing--;
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
