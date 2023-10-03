@@ -192,6 +192,7 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
           title: Text(/*"2. " + */getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
           onTap: () {
             Navigator.push(
@@ -203,7 +204,7 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
+          leading: Image.asset('assets/core/itemicon.png'),
           title: Text(/*"3. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
@@ -216,8 +217,8 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(108)/*"Free typing and help"*/, textDirection: TextDirection.ltr),
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -229,7 +230,19 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiHelpPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
           title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
           onTap: () {
             launchTypingAppPageOrHtml();

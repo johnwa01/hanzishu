@@ -18,6 +18,7 @@ class InputZiManager {
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
   String wordsStudy;
+  List<int> pinyinLetterIndex;
 //  TypingType typingType;
 
   TypingType getCurrentType() {
@@ -176,12 +177,35 @@ class InputZiManager {
     }
   }
 
+  List<int> getPinyinListIndex() {
+    if (pinyinLetterIndex == null) {
+      int letterStartingIndex = 1;
+      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (int i = 1; i < thePinyinInputZiList.length; i++) {
+        if (thePinyinInputZiList[i].pinyin[0] != thePinyinInputZiList[i-1].pinyin[0]) {
+          pinyinLetterIndex[letterStartingIndex++] = i;
+        }
+      }
+      pinyinLetterIndex[25] = thePinyinInputZiList.length;
+    }
+
+    return pinyinLetterIndex;
+  }
+
+  static int getLetterIndex(String letter) {
+
+    return (letter[0].codeUnitAt(0) - 'a'.codeUnitAt(0));
+  }
+
   static List<String> getZiCandidatesFromPinyinList(String pinyin) {
     //typingCandidates.clear();
     List<String> pinyinCandidates = [];
 
-    int start = 0;
-    int end = thePinyinInputZiList.length;
+    var listIndex = theInputZiManager.getPinyinListIndex();
+    var id = getLetterIndex(pinyin.substring(0, 1));
+
+    int start = listIndex[id];
+    int end = listIndex[id+1];
 
     for (var i = start; i < end; i++) {
       var oneInputZi = thePinyinInputZiList[i];
@@ -632,5 +656,22 @@ class InputZiManager {
     }
 
     return -1;
+  }
+
+  static getCurrentFromFullZiCandidates(List<String>fullCandidates, int groupIndex) {
+    List<String> currentCandidates = [];
+    int starting = groupIndex * maxTypingCandidates;
+    int ending = (groupIndex + 1) * maxTypingCandidates;
+
+    for (int i = starting; i < ending; i++) {
+      if (i < fullCandidates.length) {
+        currentCandidates.add(fullCandidates[i]);
+      }
+      else {
+        break;
+      }
+    }
+
+    return currentCandidates;
   }
 }

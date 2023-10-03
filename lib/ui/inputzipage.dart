@@ -57,7 +57,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool hasVerifiedToBeALowerCase = false;
 
-  int candidatesIndex = 0;
+  int candidateGroupIndex = 0;
+  //For one specific typing string like "ooo", to be used by < or > action
   List<String> fullZiCandidates;
 
   final stopwatch = Stopwatch()..start();
@@ -388,6 +389,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var candidateCharLength = theCurrentZiCandidates[selectionIndex].length;
     // reset the candidate. might set to global ini value
+    fullZiCandidates = theDefaultZiCandidates;
     theCurrentZiCandidates = theDefaultZiCandidates;
 
     var selectionPosi = getCursorPosition(
@@ -499,7 +501,7 @@ class _InputZiPageState extends State<InputZiPage> {
     latestInputKeyLetter = getLatestInputLetter();
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      candidatesIndex = 0;
+      candidateGroupIndex = 0;
 
       initOverlay();
 
@@ -516,7 +518,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (isFromDeletion) {
-      candidatesIndex = 0;
+      candidateGroupIndex = 0;
       initOverlay();
       /*
       if (_controller.text.length == 0) {
@@ -543,20 +545,20 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
-    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter) /*|| Utility.isArrow(latestInputKeyLetter)*/) { // space key
+    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter) || Utility.isArrow(latestInputKeyLetter)) { // space key
       if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) {
         showOverlay(context, latestInputKeyLetter);
       }
-      /*
       else if (Utility.isForwardArrow(latestInputKeyLetter)) {
-        candidatesIndex++;
-      }
-      else if (Utility.isBackArrow(latestInputKeyLetter)) {
-        if (candidatesIndex > 0) {
-          candidatesIndex--;
+        if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates.length) {
+          candidateGroupIndex++;
         }
       }
-      */
+      else if (Utility.isBackArrow(latestInputKeyLetter)) {
+        if (candidateGroupIndex > 0) {
+          candidateGroupIndex--;
+        }
+      }
 
       setPreviousComposing();
 
@@ -588,13 +590,12 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       if (Utility.isArrow(latestInputKeyLetter)) {
-        //theCurrentZiCandidates.clear();
-        //theCurrentZiCandidates.add('艰');
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
-        candidatesIndex = 0;
+        candidateGroupIndex = 0;
         initOverlay();
       }
 
@@ -603,17 +604,17 @@ class _InputZiPageState extends State<InputZiPage> {
           getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
-      candidatesIndex = 0;
+      candidateGroupIndex = 0;
       hasVerifiedToBeALowerCase = true;
       initOverlay();
       setPreviousComposing();
 
       var composingText = getFullComposingText(
           previousStartComposing, previousEndComposing);
-      theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
+      fullZiCandidates = InputZiManager.getZiCandidates(composingText);
       InputZiManager.updateFirstCandidate(
-          theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
-
+          fullZiCandidates, InputZiManager.previousFirstPositionList);
+      theCurrentZiCandidates = fullZiCandidates;
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;
@@ -639,7 +640,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else {
       initOverlay();
-      candidatesIndex = 0;
+      candidateGroupIndex = 0;
       previousStartComposing = -1;
       previousEndComposing = -1;
       theCurrentZiCandidates = theDefaultZiCandidates;
@@ -847,7 +848,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     int maxNumberOfLines;
     if (typingType == TypingType.FreeTyping) {
-      maxNumberOfLines = 4;  //
+      maxNumberOfLines = 10;  // 4
       editFontSize = 26 * getSizeRatio();
     }
     else {
@@ -930,9 +931,6 @@ class _InputZiPageState extends State<InputZiPage> {
       editFieldFontRatio /= 1.3;
     }
 
-    var promptStr = getString(113) + "： "; //"Please type"
-    var fontSize = 13.0 * getSizeRatio();     //15.0
-
     return Scaffold
       (
       appBar: AppBar
@@ -956,13 +954,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 alignment: Alignment.topRight,
                 child: getSkipThisSection(),
               ),
-              //Container(
-              Text(
-                    promptStr,
-                    style: TextStyle(fontSize: fontSize * 1.2),
-                    textAlign: TextAlign.left
-                ),
-              //),
+              getInputPrompt(),
               getComponentRelated(),
               SizedBox(
                   width: double.infinity,
@@ -973,6 +965,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     controller: _controller,
                     focusNode: _textNode,
                     autofocus: true,
+                      cursorColor: Colors.black,
                     //autocorrect: false,
                     //enableSuggestions: false,
                     decoration: InputDecoration(
@@ -1058,6 +1051,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getHelpOrProgressIndicator() {
     if (typingType == TypingType.FreeTyping) {
+      return SizedBox(width: 0.0, height: 0.0);
+
+      /*
       return SizedBox(
         //width: double.infinity,
         //height: 30,
@@ -1079,6 +1075,7 @@ class _InputZiPageState extends State<InputZiPage> {
         ),
         //TODO: put a help button at the right end
       );
+       */
     }
     else {
       return Container( // x and progress bard
@@ -1170,6 +1167,46 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  Widget getInputPrompt() {
+    // an empty box
+    if (typingType == TypingType.FreeTyping) {
+      return Container(width: 0.0, height: 0.0);
+    }
+
+    var promptStr = getString(113) + "： "; //"Please type"
+    var fontSize = 13.0 * getSizeRatio();     //15.0
+
+    var char;
+    if (typingType == TypingType.ComponentTyping) {
+      char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+    }
+    else {
+      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
+          typingType, currentIndex, lessonId);
+      char = zi.zi;
+    }
+
+    return Row(
+        children: <Widget>[
+
+          SizedBox(width: fontSize),
+          Text(
+              promptStr,
+              style: TextStyle(fontSize: fontSize * 1.2),
+              textAlign: TextAlign.left
+          ),
+          SizedBox(
+            width: 35.0 * getSizeRatio(), //50
+            child: Text(
+                char, //zi.zi,
+                style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                textAlign: TextAlign.left
+            ),
+          ),
+        ]
+    );
+  }
+
   Widget getComponentRelated() {
     if (currentIndex < 0) {
       return Container(width:0.0, height: 0.0);
@@ -1246,15 +1283,6 @@ class _InputZiPageState extends State<InputZiPage> {
                 //  ),
                 //),
                 SizedBox(width: fontSize),
-                SizedBox(
-                  width: 35.0 * getSizeRatio(), //50
-                  child: Text(
-                      char, //zi.zi,
-                      style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
-                      textAlign: TextAlign.left
-                  ),
-                ),
-                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
                   width: 50.0 * getSizeRatio(),
                   child: FlatButton(

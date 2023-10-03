@@ -111,7 +111,7 @@ var theString_en_US = [
   Local(105, "Learn Chinese alphabets"),
   Local(106, "Typing exercises"),
   Local(107, "Typing exercises for commonly used Chinese words"),
-  Local(108, "Free typing and help"),
+  Local(108, "Editor"),
   Local(109, "Try a few"),
   Local(110, "Part 2:\n\nLet's try a few.\n\nFor example, to type a word '品', you break it up into ZiGroupPages '口', '口', and '口', then type 'O', 'O', and 'O', then choose '品' from the candidate list below the editing field by typing its number or mouse/tap it.\n\nIf having difficulty, you can use [Hint] next to the word.\n\n"),
   Local(111, "Reference this chart to visualize how Chinese alphabets are mapped to English letters. The five single-stroke Chinese alphabets sit in the two middle columns, so try to read from middle to two sides."),
@@ -435,7 +435,7 @@ var theString_en_US = [
   Local(426, "Advanced： Fairy tales"),
   Local(427, "Click each drawing and learn its sound:"),
   Local(428, "Exit this lesson"),
-  Local(429, "Enlightenment: Conversation"),
+  Local(429, "Beginner: Conversation"),
   Local(430, "Exercises"),
   Local(431, "Expanded"),
   Local(432, "Please read aloud the following lesson, and point finger at each word while reading."),
@@ -445,4 +445,5 @@ var theString_en_US = [
   Local(436, "Hazishu puzzle typing method and Chinese teaching"),
   Local(437, "Pinyin does no good to international Chinese teaching"),
   Local(438, "Hint2"),
+  Local(439, "Introduction to Hanzishu Puzzle Typing"),
 ];
