@@ -21,41 +21,41 @@ enum TypingType {
 }
 
 class InputZi {
+  String zi;
   String doubleByteCode;
   int usageFrequency;
-  String zi;
  // String pinyin;
 
 
   InputZi(
+      String zi,
       String doubleByteCode,
       int usageFrequency,
-      String zi,
    //   String pinyin,
       ) {
+    this.zi = zi;
     this.doubleByteCode = doubleByteCode;
     this.usageFrequency = usageFrequency;
-    this.zi = zi;
    // this.pinyin = pinyin;
   }
 }
 
 class PinyinInputZi {
-  String pinyin;
   String zi;
-  String typingCode;
+  String pinyin;
   int usageFrequency;
+  String typingCode;
 
   PinyinInputZi(
-      String pinyin,
       String zi,
-      String typingCode,
+      String pinyin,
       int usageFrequency,
+      String typingCode,
       ) {
-    this.pinyin = pinyin;
     this.zi = zi;
-    this.typingCode = typingCode;
+    this.pinyin = pinyin;
     this.usageFrequency = usageFrequency;
+    this.typingCode = typingCode;
   }
 }
 

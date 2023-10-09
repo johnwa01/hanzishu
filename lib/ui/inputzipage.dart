@@ -441,11 +441,13 @@ class _InputZiPageState extends State<InputZiPage> {
     // Note: For each event, the system might send message multiple times.
     // This logic filters out the extra top level calls to this function, as well as the
     // calls triggered by code below but before the controller text is changed.
+
     isFromDeletion = false;
+
     // Will always blocks if same text as the previous one. Only setting initialControllerTextValue in this if/else block.
     // We don't support clicking of same upper case letter multi-times. We simply ignore the later clicks. Otherwise the logic is too complicated
     // due to repeated Flutter messages and same text value.
-    if (_controller.text == initialControllerTextValue) {
+    if (_controller.text == initialControllerTextValue && !InputZiManager.isLastLetterArrow(_controller.text)) {
       // this is due to repeated Flutter messages.
       if (initialControllerTextValue != previousText) {
         // set this _controller.value to be the same as the one we processed in the following code. This way, it won't show the wrong value to UI.
@@ -550,8 +552,12 @@ class _InputZiPageState extends State<InputZiPage> {
         showOverlay(context, latestInputKeyLetter);
       }
       else if (Utility.isForwardArrow(latestInputKeyLetter)) {
-        if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates.length) {
-          candidateGroupIndex++;
+        // if just '>', no candidates yet, there skip
+        if (_controller.text.length != 1) {
+          if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
+              fullZiCandidates.length) {
+            candidateGroupIndex++;
+          }
         }
       }
       else if (Utility.isBackArrow(latestInputKeyLetter)) {

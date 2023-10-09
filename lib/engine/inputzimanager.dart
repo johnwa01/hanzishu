@@ -19,6 +19,7 @@ class InputZiManager {
   static int maxTypingCandidates = 7; //20;
   String wordsStudy;
   List<int> pinyinLetterIndex;
+  List<int> inputCodeLetterIndex;
 //  TypingType typingType;
 
   TypingType getCurrentType() {
@@ -164,6 +165,8 @@ class InputZiManager {
       return getZiCandidatesFromPinyinList(input.substring(1));
     }
     else {
+      return getZiCandidatesFromInputZiList(input);
+      /*
       var first = findFirst(input);
       var currentInputCodeLength = input.length;
       if (first != -1) {
@@ -174,28 +177,48 @@ class InputZiManager {
       }
 
       return null;
+      */
     }
   }
 
   List<int> getPinyinListIndex() {
     if (pinyinLetterIndex == null) {
       int letterStartingIndex = 1;
-      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      // 26 + 1 = 27
+      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       for (int i = 1; i < thePinyinInputZiList.length; i++) {
         if (thePinyinInputZiList[i].pinyin[0] != thePinyinInputZiList[i-1].pinyin[0]) {
           pinyinLetterIndex[letterStartingIndex++] = i;
         }
       }
-      pinyinLetterIndex[25] = thePinyinInputZiList.length;
+      pinyinLetterIndex[26] = thePinyinInputZiList.length;
     }
 
     return pinyinLetterIndex;
+  }
+
+  List<int> getInputZiListIndex() {
+    if (inputCodeLetterIndex == null) {
+      int letterStartingIndex = 1;
+      // 25 + 1 = 26
+      inputCodeLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      for (int i = 1; i < theInputZiList.length; i++) {
+        if (theInputZiList[i].doubleByteCode[0] != theInputZiList[i-1].doubleByteCode[0]) {
+          inputCodeLetterIndex[letterStartingIndex++] = i;
+        }
+      }
+      inputCodeLetterIndex[25] = theInputZiList.length;
+    }
+
+    return inputCodeLetterIndex;
   }
 
   static int getLetterIndex(String letter) {
 
     return (letter[0].codeUnitAt(0) - 'a'.codeUnitAt(0));
   }
+
+
 
   static List<String> getZiCandidatesFromPinyinList(String pinyin) {
     //typingCandidates.clear();
@@ -207,18 +230,61 @@ class InputZiManager {
     int start = listIndex[id];
     int end = listIndex[id+1];
 
+    var pinyinLength = pinyin.length;
+
     for (var i = start; i < end; i++) {
       var oneInputZi = thePinyinInputZiList[i];
-      if (oneInputZi.pinyin.length >= pinyin.length) {
+      if (oneInputZi.pinyin.length == pinyinLength) {
         if (oneInputZi.pinyin.startsWith(pinyin)) {
           pinyinCandidates.add(oneInputZi.zi);
         }
       }
-      //updateCandidates(oneInputZi, typingCandidates, currentInputCodeLength);
+    }
+
+    for (var i = start; i < end; i++) {
+      var oneInputZi = thePinyinInputZiList[i];
+      if (oneInputZi.pinyin.length > pinyinLength) {
+        if (oneInputZi.pinyin.startsWith(pinyin)) {
+          pinyinCandidates.add(oneInputZi.zi);
+        }
+      }
     }
 
     return pinyinCandidates;
     //return convertZiListToStringList(typingCandidates);
+  }
+
+  static List<String> getZiCandidatesFromInputZiList(String input) {
+    //typingCandidates.clear();
+    List<String> inputCandidates = [];
+
+    var listIndex = theInputZiManager.getInputZiListIndex();
+    var id = getLetterIndex(input.substring(0, 1));
+
+    int start = listIndex[id];
+    int end = listIndex[id+1];
+
+    var inputLength = input.length;
+
+    for (var i = start; i < end; i++) {
+      var oneInputZi = theInputZiList[i];
+      if (oneInputZi.doubleByteCode.length == inputLength) {
+        if (oneInputZi.doubleByteCode.startsWith(input)) {
+          inputCandidates.add(oneInputZi.zi);
+        }
+      }
+    }
+
+    for (var i = start; i < end; i++) {
+      var oneInputZi = theInputZiList[i];
+      if (oneInputZi.doubleByteCode.length > inputLength) {
+        if (oneInputZi.doubleByteCode.startsWith(input)) {
+          inputCandidates.add(oneInputZi.zi);
+        }
+      }
+    }
+
+    return inputCandidates;
   }
 
   static bool isPinyinInput(String input) {
@@ -673,5 +739,14 @@ class InputZiManager {
     }
 
     return currentCandidates;
+  }
+
+  static bool isLastLetterArrow(String str) {
+    var textLen = str.length;
+    if (textLen < 1) {
+      return false;
+    }
+
+    return Utility.isArrow(str[str.length - 1]);
   }
 }
