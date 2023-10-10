@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/sentence.dart';
 var theConversationSnowballList =
 [
   Snowball(0, [Sent('A',1)]), // non-lesson
-  Snowball(1, [Sent('A',1), Sent('B', 1)]),
+  Snowball(1, [Sent('A',1), Sent('B', 9), Sent('A', 154)]),
   Snowball(2, [Sent('A',1), Sent('B', 1), Sent('A', 2), Sent('B', 3), Sent('A', 4)]),
   Snowball(3, [Sent('A',1), Sent('B', 1), Sent('A', 5), Sent('B', 6), Sent(' ', 5), Sent('A', 146)]),
   Snowball(4, [Sent('A',1), Sent('B', 7), Sent('A', 5), Sent('B', 6), Sent('A', 8), Sent('B', 8)]),

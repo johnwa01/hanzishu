@@ -157,4 +157,5 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(150, "北京一年有几个季节？", "", 62, null, [], ""),
   Sentence(151, "麦克，你好！", "", 62, null, [], ""),
   Sentence(152, "早上好！", "", 5, null, [], ""),
+  Sentence(153, "小心。", "Be careful!", 1, null, [], "小|心！"),
 ];

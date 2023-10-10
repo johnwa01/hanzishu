@@ -138,7 +138,7 @@ class LessonManager {
             theLessonList[j].convChars += char; // String.fromCharCode(eachChar); //eachChar.toString();
           }
         }
-
+/*
         for (var eachChar in theSentenceList[k].chars.str.runes) {
           var char = String.fromCharCode(eachChar);
           if (!Utility.specialChar(char) && !charExists(j, char))
@@ -146,6 +146,7 @@ class LessonManager {
             theLessonList[j].chars += char; //String.fromCharCode(eachChar);   //eachChar.toString();
           }
         }
+*/
       }
     }
   }
