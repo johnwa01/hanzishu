@@ -181,17 +181,22 @@ class InputZiManager {
     }
   }
 
+  int getPinyinIndexByValue(String oneLetter) {
+
+    return 0;
+  }
+
   List<int> getPinyinListIndex() {
     if (pinyinLetterIndex == null) {
       int letterStartingIndex = 1;
-      // 26 + 1 = 27
-      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      // 23 + 1 = 24, 'i' 'u' 'v'don't exist in Pinyin as the first letter
+      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       for (int i = 1; i < thePinyinInputZiList.length; i++) {
         if (thePinyinInputZiList[i].pinyin[0] != thePinyinInputZiList[i-1].pinyin[0]) {
           pinyinLetterIndex[letterStartingIndex++] = i;
         }
       }
-      pinyinLetterIndex[26] = thePinyinInputZiList.length;
+      pinyinLetterIndex[23] = thePinyinInputZiList.length;
     }
 
     return pinyinLetterIndex;
@@ -214,20 +219,38 @@ class InputZiManager {
   }
 
   static int getLetterIndex(String letter) {
-
     return (letter[0].codeUnitAt(0) - 'a'.codeUnitAt(0));
+  }
+
+  static int getPinyinLetterIndex(String letter) {
+    int adjustment = 0;
+
+    int diff = letter[0].codeUnitAt(0) - 'a'.codeUnitAt(0);
+
+    // need to skip 'i'  'u' 'v'which don't start in Pinyin
+    if (diff >= 8 && diff <= 19) { //'i' to 't'
+      diff--;
+    }
+    else if (diff == 20) { // 'u'
+      diff -= 2;
+    }
+    else if (diff >= 21) { // 'v' and above
+      diff -= 3;
+    }
+
+    return diff;
   }
 
 
 
   static List<String> getZiCandidatesFromPinyinList(String pinyin) {
     //typingCandidates.clear();
-    List<String> pinyinCandidates = [];
+    List<String> pinyinCandidates =[];
 
     var listIndex = theInputZiManager.getPinyinListIndex();
-    var id = getLetterIndex(pinyin.substring(0, 1));
+    var id = getPinyinLetterIndex(pinyin.substring(0, 1));
 
-    int start = listIndex[id];
+    int start= listIndex[id];
     int end = listIndex[id+1];
 
     var pinyinLength = pinyin.length;
