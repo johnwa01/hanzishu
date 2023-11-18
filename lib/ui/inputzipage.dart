@@ -61,6 +61,8 @@ class _InputZiPageState extends State<InputZiPage> {
   //For one specific typing string like "ooo", to be used by < or > action
   List<String> fullZiCandidates;
 
+  bool isFromArrowCandidate = false;
+
   final stopwatch = Stopwatch()..start();
 
   double getSizeRatio() {
@@ -369,8 +371,39 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  void handleArrowCandidate(int selectionIndex) {
+    if (selectionIndex == (InputZiManager.maxTypingCandidates+1)) { // '>'
+      // if empty text, therefore no non-default candidates yet, then skip
+      if (_controller.text.length > 0) {
+        if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
+            fullZiCandidates.length) {
+          candidateGroupIndex++;
+          setState(() {
+            theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
+            isFromArrowCandidate = true;
+            updateCounter++;
+          });
+        }
+      }
+    }
+    else if (selectionIndex == InputZiManager.maxTypingCandidates) { // '<'
+      if (candidateGroupIndex > 0) {
+        candidateGroupIndex--;
+        setState(() {
+          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
+          isFromArrowCandidate = true;
+          updateCounter++;
+        });
+      }
+    }
+  }
+
   void setTextByChosenZiIndex(int selectionIndex, bool isFromCharCandidateList,
       bool isFromOverlay, bool isFromNumber) {
+    if (isFromCharCandidateList && selectionIndex >= InputZiManager.maxTypingCandidates) {
+      return handleArrowCandidate(selectionIndex);
+    }
+
     hasVerifiedToBeALowerCase = false;
 
     // pronounce the typed char
@@ -552,7 +585,7 @@ class _InputZiPageState extends State<InputZiPage> {
         showOverlay(context, latestInputKeyLetter);
       }
       else if (Utility.isForwardArrow(latestInputKeyLetter)) {
-        // if just '>', no candidates yet, there skip
+        // if just '>' char with text length of 1, no non-default candidates yet, there skip
         if (_controller.text.length != 1) {
           if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
               fullZiCandidates.length) {
@@ -833,7 +866,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!showHint && !showFullHint) {
+    if (!showHint && !showFullHint && !isFromArrowCandidate) {
       theCurrentZiCandidates = theDefaultZiCandidates;
     } // set it to default
 
@@ -867,9 +900,20 @@ class _InputZiPageState extends State<InputZiPage> {
     //   typingType = widget.typingType; //theComponentManager.getCurrentType();
 //    theInputZiManager.setCurrentType(typingType); //TODO: should pass as a parameter in painter?
 
+    var leftArrowColor = Colors.black; // inito to grey? typing doesn't go through build, therefore won't update here.
+    //TODO: make it right.
+    //if (candidateGroupIndex == 0) {
+    //  leftArrowColor = Colors.grey;
+    //}
+
+    var rightArrowColor = Colors.black;
+    //if ((fullZiCandidates != null) && ((candidateGroupIndex + 1) == (fullZiCandidates.length % InputZiManager.maxTypingCandidates))) {
+    //  rightArrowColor = Colors.grey;
+    //}
+
     var inputZiPainter = InputZiPainter(
-        lineColor: Colors.amber,
-        completeColor: Colors.blueAccent,
+        lineColor: leftArrowColor,
+        completeColor: rightArrowColor,
         lessonId: lessonId, /*TODO: temp*/
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
@@ -1443,6 +1487,13 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
+    if (candidateIndex == InputZiManager.maxTypingCandidates) { // left arrow
+      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio();
+    }
+    else if (candidateIndex == (InputZiManager.maxTypingCandidates + 1)) { // right arrow
+      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio() + 30.0 * getSizeRatio();
+    }
+
     var butt = FlatButton(
       color: Colors.white,
       textColor: Colors.blueAccent,
@@ -1461,7 +1512,7 @@ class _InputZiPageState extends State<InputZiPage> {
         child: butt
     );
 
-    xPosi.value += (30.0 * getSizeRatio() * zi.length + 23.0 * getSizeRatio());
+    xPosi.value += (30.0 * getSizeRatio() * zi.length + 18.0 * getSizeRatio());
 
     return posiCenter;
   }
@@ -1478,6 +1529,9 @@ class _InputZiPageState extends State<InputZiPage> {
         buttons.add(getZiCandidateButton(xPosi, i, ziCandidates[i]));
       }
     }
+
+    buttons.add(getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates, '<'));
+    buttons.add(getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates + 1, '>'));
 
     return buttons;
   }
