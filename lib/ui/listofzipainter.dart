@@ -61,7 +61,7 @@ class ListOfZiPainter extends BasePainter {
       if (!isInfoOnly) {
         displayTextWithValue(getString(81)/*"Basic Characters (Components)"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.brown);
+                ZiOrCharSize.defaultSize), Colors.brown, false);
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + applyRatio(15.0));
@@ -128,7 +128,7 @@ class ListOfZiPainter extends BasePainter {
         displayTextWithValue(
             getString(83)/*"Characters"*/, lessonLeftEdge, yPositionWrapper.value,
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.defaultSize), Colors.brown);
+                ZiOrCharSize.defaultSize), Colors.brown, false);
       }
       yPositionWrapper.value += (thePositionManager.getCharFontSize(
           ZiOrCharSize.defaultSize) + applyRatio(15.0));
@@ -272,7 +272,7 @@ class ListOfZiPainter extends BasePainter {
         displayTextWithValue(thePhraseList[id].chars, transX,
             yPositionWrapper.value - applyRatio(20.0),
             thePositionManager.getCharFontSize(
-                ZiOrCharSize.assembleDissembleSize), Colors.blue);
+                ZiOrCharSize.assembleDissembleSize), Colors.blue, false);
         pinyin = thePhraseList[id].getPinyin();
         meaning = thePhraseList[id].meaning;
       }
@@ -314,7 +314,7 @@ class ListOfZiPainter extends BasePainter {
     if (!isInfoOnly) {
       displayTextWithValue(getString(85)/*"Sound"*/ + ": ", transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black);
+          Colors.black, false);
     }
 
     transX += applyRatio(60.0);
@@ -341,7 +341,7 @@ class ListOfZiPainter extends BasePainter {
     if (!isInfoOnly) {
       displayTextWithValue(pinyin, transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue);
+          Colors.blue, false);
       transX += (8.0 * pinyin.length + applyRatio(10.0));
     }
 
@@ -352,11 +352,11 @@ class ListOfZiPainter extends BasePainter {
       displayTextWithValue(
           getString(86)/*"Meaning"*/ + ": ", applyRatio(20.0), yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black);
+          Colors.black, false);
       displayTextWithValue(
           meaning, applyRatio(20.0 + 90.0), yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue);
+          Colors.blue, false);
 
       checkAndUpdateYPosi(yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
@@ -375,7 +375,7 @@ class ListOfZiPainter extends BasePainter {
     displayTextWithValue(
         '[' + getString(285) /*"Continue"*/ + ']', applyRatio(150.0),
         contentLength.value,
-        applyRatio(15.0), Colors.black);
+        applyRatio(15.0), Colors.black, false);
   }
 
   @override

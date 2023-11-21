@@ -44,7 +44,7 @@ class InputZiHintPainter extends BasePainter {
       note = getString(282)/*"Note: Type uppercase letter A to Y to show Expanded Components. Type Z to show mapping."*/;
     }
 
-    displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue); // 18.0
+    displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue, false); // 18.0
   }
 
   /*
@@ -167,14 +167,14 @@ class InputZiHintPainter extends BasePainter {
 
       xPosi += size * 1.2;
       if (showFullHint) {
-        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
+        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
         displayTextWithValue(
-            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue, false);
 
         xPosi += size; //* 1.2;
-        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
         //xPosi += halfSize / 1.5;
       }
     }
@@ -200,14 +200,14 @@ class InputZiHintPainter extends BasePainter {
 
         xPosi += size * 1.2;
         if (showFullHint) {
-          displayTextWithValue('(', xPosi, 0.0, size, Colors.blue);
+          displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
           xPosi += halfSize / 1.5;
           var typingCode = ComponentManager.getTypingCode(comp);
 
           displayTextWithValue(
-              typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue);
+              typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue, false);
           xPosi += size;
-          displayTextWithValue(')', xPosi, 0.0, size, Colors.blue);
+          displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
         }
       }
     }

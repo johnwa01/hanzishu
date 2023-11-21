@@ -112,6 +112,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 5:
         Navigator.push(
           context,
@@ -131,7 +132,6 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
       case 7:
         Navigator.push(
           context,
@@ -142,7 +142,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 7:
+      case 8:
         Navigator.push(
           context,
           MaterialPageRoute(

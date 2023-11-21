@@ -70,7 +70,7 @@ class BasicComponentsDetailPainter extends BasePainter {
       var groupLetter = ComponentManager.getLetterByGroupAndIndex(keyGroup, keyIndex);
       displayTextWithValue("'" + groupLetter + "' " + getString(386) + " " + getString(384)/*"Hanzi Basic Components"*/, lessonLeftEdge, yPositionWrapper.value,
           thePositionManager.getCharFontSize(
-              ZiOrCharSize.defaultSize), Colors.brown);
+              ZiOrCharSize.defaultSize), Colors.brown, false);
     }
     yPositionWrapper.value += (thePositionManager.getCharFontSize(
         ZiOrCharSize.defaultSize) + applyRatio(15.0));
@@ -173,11 +173,11 @@ class BasicComponentsDetailPainter extends BasePainter {
           getString(385) /*"Name"*/ + ": ", applyRatio(20.0),
           yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black);
+          Colors.black, false);
       displayTextWithValue(
           name, applyRatio(20.0 + 160.0), yPositionWrapper.value,  // 20 + 90
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue);
+          Colors.blue, false);
       checkAndUpdateYPosi(yPositionWrapper, "Name: ", meaning, applyRatio(8.0),
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
     }
@@ -187,7 +187,7 @@ class BasicComponentsDetailPainter extends BasePainter {
     if (!isInfoOnly) {
       displayTextWithValue(getString(85)/*"Sound"*/ + ": ", transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black);
+          Colors.black, false);
     }
 
     transX += applyRatio(160.0); //60
@@ -214,7 +214,7 @@ class BasicComponentsDetailPainter extends BasePainter {
     if (!isInfoOnly) {
       displayTextWithValue(pinyin, transX, yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue);
+          Colors.blue, false);
       transX += (8.0 * pinyin.length + applyRatio(10.0));
     }
 
@@ -226,11 +226,11 @@ class BasicComponentsDetailPainter extends BasePainter {
           getString(86) /*"Meaning"*/ + ": ", applyRatio(20.0),
           yPositionWrapper.value,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black);
+          Colors.black, false);
       displayTextWithValue(
           meaning, applyRatio(20.0 + 160.0), yPositionWrapper.value, // 20 + 90
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue);
+          Colors.blue, false);
       checkAndUpdateYPosi(
           yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));

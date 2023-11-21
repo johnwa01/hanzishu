@@ -1,6 +1,8 @@
 import 'dart:io';
 //import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:hanzishu/engine/drill.dart';
+
 //TODO: create theManagers
 var theLessonManager;
 var theZiManager;
@@ -80,3 +82,4 @@ bool theIsFromTypingContinuedSection = false;
 bool theAllZiLearned = false;
 
 //int theSelectedExerciseNumber = 1;
+

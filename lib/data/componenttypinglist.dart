@@ -168,9 +168,9 @@ var theRandomComponentList = [
 ];
 
 var theExpandedComponentList = [
-  ComponentCollection(0, "E51.png", 0, 0, 0/*"Explaination Text"*/),
+  ComponentCollection(0, "E24.png", 0, 0, 0/*"Explaination Text"*/),
   ComponentCollection(1, "E24.png", 2, 4, 315/*"closed shape"*/),
-  ComponentCollection(2, "E13.png", 1, 3, 316/*"like E"*/),
+  ComponentCollection(21, "E51.png", 5, 1, 327/*"closed shape with horizontal lines"*/),
   ComponentCollection(3, "E23.png", 2, 3, 342/*"the verticle line"*/),
   ComponentCollection(4, "E53.png", 5, 3, 317/*"open to right"*/),
   ComponentCollection(5, "E42.png", 4, 2, 318/*"curve toward bottom left"*/),
@@ -180,6 +180,7 @@ var theExpandedComponentList = [
   ComponentCollection(9, "E31.png", 3, 1, 321/*"disconnected triangle"*/),
   ComponentCollection(10, "E62.png", 6, 2, 322/*"a shape with three legs"*/),
   ComponentCollection(11, "E34.png", 3, 4, 323/*"half circle shape"*/),
+  ComponentCollection(2, "E13.png", 1, 3, 316/*"like E"*/),
   ComponentCollection(12, "E41.png", 4, 1, 344/*"the horizontal line"*/),
   ComponentCollection(13, "E14.png", 1, 4, 324/*"mountain like shape"*/),
   ComponentCollection(14, "E22.png", 2, 2, 345/*"open to top"*/),
@@ -189,7 +190,6 @@ var theExpandedComponentList = [
   ComponentCollection(18, "E12.png", 1, 2, 325/*"two legs"*/),
   ComponentCollection(19, "E33.png", 3, 3, 326/*"facing left"*/),
   ComponentCollection(20, "E32.png", 3, 2, 349/*"shelter looking"*/),
-  ComponentCollection(21, "E51.png", 5, 1, 327/*"closed shape with horizontal lines"*/),
   ComponentCollection(22, "E54.png", 5, 4, 350/*"diagonal crossing"*/),
   ComponentCollection(23, "E15.png", 1, 5, 351/*"closed shape with crossing"*/),
   ComponentCollection(24, "E21.png", 2, 1, 352/*"the first stroke"*/),
@@ -283,7 +283,7 @@ var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("网", [], "", 0),
   //ZiWithComponentsAndStrokes("命", [], "", 0),
   //ZiWithComponentsAndStrokes("晌", [], "", 0),
-  ZiWithComponentsAndStrokes("松", [], "", 0),
+  //ZiWithComponentsAndStrokes("松", [], "", 0),
   //ZiWithComponentsAndStrokes("框", [], "", 0),
   //ZiWithComponentsAndStrokes("苔", [], "", 0),
   ZiWithComponentsAndStrokes("苦", [], "", 0),
@@ -291,7 +291,7 @@ var theZiForLeadCompExerciseList=[
   //ZiWithComponentsAndStrokes("岗", [], "", 0),
   ZiWithComponentsAndStrokes("谷", [], "", 0),
   //ZiWithComponentsAndStrokes("向", [], "", 0),
-  ZiWithComponentsAndStrokes("枯", [], "", 0),
+  //ZiWithComponentsAndStrokes("枯", [], "", 0),
 
   /*
   ZiWithComponentsAndStrokes("双", ["Na", "Na"], "500.png", ""),
@@ -540,20 +540,24 @@ var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("十", [], "", 0),
   //ZiWithComponentsAndStrokes("大", [], "", 0),
   ////ZiWithComponentsAndStrokes("父", [], "", 0),
-  ZiWithComponentsAndStrokes("口", [], "", 0),
+  //ZiWithComponentsAndStrokes("口", [], "", 0),
   //ZiWithComponentsAndStrokes("下", [], "", 0), //世
   ZiWithComponentsAndStrokes("田", [], "", 0),
-  ZiWithComponentsAndStrokes("乙", [], "", 0),
+  //ZiWithComponentsAndStrokes("乙", [], "", 0),
   //ZiWithComponentsAndStrokes("我", [], "", 0),
   ZiWithComponentsAndStrokes("三", [], "", 0),
   //ZiWithComponentsAndStrokes("了", [], "", 0),
   //ZiWithComponentsAndStrokes("弓", [], "", 0),
   ////ZiWithComponentsAndStrokes("尺", [], "", 0),
-  ZiWithComponentsAndStrokes("一", [], "", 0),
+  //ZiWithComponentsAndStrokes("一", [], "", 0),
   ////ZiWithComponentsAndStrokes("巾", [], "", 0),
   //ZiWithComponentsAndStrokes("内", [], "", 0),
   //ZiWithComponentsAndStrokes("母", [], "", 0), too hard
   //ZiWithComponentsAndStrokes("冉", [], "", 0),
+
+  // two components
+  ZiWithComponentsAndStrokes("明", [], "", 0),
+  ZiWithComponentsAndStrokes("六", [], "", 0),
 ];
 
 var theZiForTwoCompExerciseList=[

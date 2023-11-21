@@ -57,12 +57,12 @@ class InputZiComponentPainter extends BasePainter {
     y += 100.0;
     String text = "Please type: ";
 
-    displayTextWithValue(text, x, y, 20.0, Colors.blue);
+    displayTextWithValue(text, x, y, 20.0, Colors.blue, false);
     x += 110.0;
     text = zi.zi;
-    displayTextWithValue(text, x, y - 25.0, 40.0, Colors.blue);
+    displayTextWithValue(text, x, y - 25.0, 40.0, Colors.blue, false);
     x += 55.0;
-    displayTextWithValue(". Hint: ", x, y, 20.0, Colors.blue);
+    displayTextWithValue(". Hint: ", x, y, 20.0, Colors.blue, false);
     x += 60.0;
 
     for (int i = 0; i < length; i++) {

@@ -56,7 +56,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     if (this.dicStage == DictionaryStage.firstzis) {
       // Just keep a height
-      displayTextWithValue("", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey); // 20
+      displayTextWithValue("", applyRatio(20.0), applyRatio(5.0), applyRatio(20.0), Colors.blueGrey, false); // 20
 
       // below should match dictionaryPage
       //var helpPosiAndSize = PositionAndSize(width - applyRatio(65.0), applyRatio(5.0), applyRatio(20.0), applyRatio(20.0), 0.0, 0.0); // 5.0
@@ -117,16 +117,16 @@ class DictionaryPainter extends BreakoutPainter {
       //}
 
       if (firstZiIndex >= 0) {
-        displayTextWithValue("<-", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent);
+        displayTextWithValue("<-", fontSize3, fontSize1, defaultFontSize, Colors.blueAccent, false);
         var searchingZiIndex = theFirstZiList[firstZiIndex].searchingZiId;
         displayTextWithValue(
             theSearchingZiList[searchingZiIndex].char, fontSize4, fontSize1, defaultFontSize,
-            Colors.blueAccent);
+            Colors.blueAccent, false);
       }
     }
     else if (stage == DictionaryStage.help) {
       //var searchingId = theFirstZiList[firstZiIndex].searchingZiId;
-      displayTextWithValue(getString(114)/*"Help"*/, fontSize4, fontSize1, defaultFontSize, Colors.blueAccent);
+      displayTextWithValue(getString(114)/*"Help"*/, fontSize4, fontSize1, defaultFontSize, Colors.blueAccent, false);
     }
 /*
     if (stage == DictionaryStage.detailedzi) {
@@ -137,9 +137,9 @@ class DictionaryPainter extends BreakoutPainter {
   }
 
   DisplayHelpPath() {
-    displayTextWithValue("@", 10.0, 5.0, 25.0, Colors.blueAccent);
-    displayTextWithValue("->", 35.0, 5.0, 20.0, Colors.blueAccent);
-    displayTextWithValue(getString(114)/*"Help"*/, 60.0, 5.0, 20.0, Colors.blueAccent);
+    displayTextWithValue("@", 10.0, 5.0, 25.0, Colors.blueAccent, false);
+    displayTextWithValue("->", 35.0, 5.0, 20.0, Colors.blueAccent, false);
+    displayTextWithValue(getString(114)/*"Help"*/, 60.0, 5.0, 20.0, Colors.blueAccent, false);
   }
 
   DisplayDetailedZi(int ziIndex) {
@@ -180,7 +180,7 @@ class DictionaryPainter extends BreakoutPainter {
       // in this case, compoundZiCurrentComponentId is actually the id of a searchingZi itself (not a component), that is, detailedZi.
       if (compoundZiCurrentComponentId > 0 && shouldDrawCenter) {
         var ziChar = DictionaryManager.getChar(compoundZiCurrentComponentId);
-        displayTextWithValue(ziChar, posi.transX, posi.transY + fontSize5 * 0.7, posi.charFontSize, charColor);
+        displayTextWithValue(ziChar, posi.transX, posi.transY + fontSize5 * 0.7, posi.charFontSize, charColor, false);
       }
     }
     else {
@@ -222,15 +222,15 @@ class DictionaryPainter extends BreakoutPainter {
         fontSize2);
     */
 
-    displayTextWithValue("[" + getString(418)/*"Phrase"*/ + "]", posiAndSizeBihua.transX + 100, posiAndSizeBihua.transY, fontSize4, Colors.black);
+    displayTextWithValue("[" + getString(418)/*"Phrase"*/ + "]", posiAndSizeBihua.transX + 100, posiAndSizeBihua.transY, fontSize4, Colors.black, false);
 
     //Need to match the yPosi in DictionaryPage.
-    displayTextWithValue(getString(85)/*"Sound"*/ + ": ", fontSize3, fontSize9, fontSize4, Colors.black);
+    displayTextWithValue(getString(85)/*"Sound"*/ + ": ", fontSize3, fontSize9, fontSize4, Colors.black, false);
     DisplayIcon(iconSpeechStrokes, fontSize7, fontSize9, fontSize4, fontSize4, Colors.amber/*MaterialColor ofColor*/, fontSize2/*ziLineWidth*/);
-    displayTextWithValue(detailedZi.pinyin, fontSize8 * 1.1, fontSize9, fontSize4, Colors.blue);
+    displayTextWithValue(detailedZi.pinyin, fontSize8 * 1.1, fontSize9, fontSize4, Colors.blue, false);
 
-    displayTextWithValue(getString(86)/*"Meaning"*/ + ": ", fontSize3, fontSize10, fontSize4, Colors.black);
-    displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue);
+    displayTextWithValue(getString(86)/*"Meaning"*/ + ": ", fontSize3, fontSize10, fontSize4, Colors.black, false);
+    displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue, false);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
     displayComponentsOrStrokes(ziIndex, posiSize);
@@ -245,7 +245,7 @@ class DictionaryPainter extends BreakoutPainter {
 
     //displayTextWithValue("Hint: ", 10.0, 350.0, 20.0, Colors.blue); // pictograph image will show up here as well
 
-    displayTextWithValue(getString(304)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black);
+    displayTextWithValue(getString(304)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black, false);
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
     var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
@@ -355,7 +355,7 @@ class DictionaryPainter extends BreakoutPainter {
           yPosi =  startYSize + j * (defaultFontSize + fillerSize) - defaultFontSize * 0.25;
         }
 
-        displayTextWithValue(charStr, smallFontSize + i * (defaultFontSize + fillerSize), yPosi, fontSize, textColor);
+        displayTextWithValue(charStr, smallFontSize + i * (defaultFontSize + fillerSize), yPosi, fontSize, textColor, false);
       }
     }
   }
@@ -426,13 +426,13 @@ class DictionaryPainter extends BreakoutPainter {
 
         if ((previousStrokeCount == 0 && currentStrokeCount != previousStrokeCount) || (newCharCount >= minCharsForStrokeIndex && currentStrokeCount != previousStrokeCount)) {
           strokeIndexStr = "(" + currentStrokeCount.toString() + ")";
-          displayTextWithValue(strokeIndexStr, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/, strokeIndexFontSize, Colors.brown);
+          displayTextWithValue(strokeIndexStr, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height /*- startPosition.charFontSize * 0.25*/, strokeIndexFontSize, Colors.brown, false);
           newCharCount = 0;
           previousStrokeCount = currentStrokeCount;
         }
         else {
           //displayTextWithValue(searchingZi.char, 20.0 + i * 30.0, 90.0 + j * 30.0 - 25.0 * 0.25, 25.0, Colors.blueAccent);
-          displayTextWithValue(searchingZi.char, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height - startPosition.charFontSize * 0.25, startPosition.charFontSize, Colors.blueAccent);
+          displayTextWithValue(searchingZi.char, startPosition.transX + i * startPosition.width, startPosition.transY + j * startPosition.height - startPosition.charFontSize * 0.25, startPosition.charFontSize, Colors.blueAccent, false);
           newCharCount++;
           previousStrokeCount = currentStrokeCount;
           searchingZiId++;

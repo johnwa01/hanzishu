@@ -44,7 +44,7 @@ class DrillPainter extends BasePainter {
         Colors.lime, BasePainter.FrameLineWidth);
     //}
     //?theCurrentCenterZiId = centerId;
-    drawZiGroup(centerId, ZiListType.searching, startingCenterZiId, drillCategory, reviewStartLessonId, reviewEndLessonId);
+    drawZiGroup(centerId, ZiListType.searching, startingCenterZiId, drillCategory, reviewStartLessonId, reviewEndLessonId, null);
 
     // component list starts from 0, unlike zi list
     if (compoundZiCurrentComponentId >= 0) {

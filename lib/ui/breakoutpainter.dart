@@ -109,7 +109,7 @@ class BreakoutPainter extends BasePainter {
         displayTextWithValue(
             getString(285) /*"Continue"*/, applyRatio(50.0),
             yPositionWrapper.yPosi,
-            defaultFontSize, Colors.white);
+            defaultFontSize, Colors.white, false);
       }
     }
     yPositionWrapper.yPosi += defaultFontSize + applyRatio(1) + applyRatio(15);
@@ -202,7 +202,7 @@ class BreakoutPainter extends BasePainter {
               ziOrComp.pinyin, ziOrComp.meaning);
           displayTextWithValue(
               pinyinAndMeaning, posiSize2.transX + posiSize2.charFontSize * 1.1,
-              posiSize2.transY, posiSize2.charFontSize / 1.7, Colors.blue);
+              posiSize2.transY, posiSize2.charFontSize / 1.7, Colors.blue, false);
         }
       }
     }

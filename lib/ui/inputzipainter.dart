@@ -46,16 +46,16 @@ class InputZiPainter extends BasePainter {
       var widthSizeRatio = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
            displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRatio);
-           displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black);
+           displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
            x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 18.0 * widthSizeRatio);
       }
 
       x = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 12.0)* getSizeRatio();
 
-      displayTextWithValue('<', x, 0.0, 30.0 * getSizeRatio(), this.lineColor);
+      displayTextWithValue('<', x, 0.0, 30.0 * getSizeRatio(), this.lineColor, false);
       x += (20.0 + 14.0) * getSizeRatio();
 
-      displayTextWithValue('>', x, 0.0, 30.0 * getSizeRatio(), this.completeColor);
+      displayTextWithValue('>', x, 0.0, 30.0 * getSizeRatio(), this.completeColor, false);
 
       /* Temp: for testing component stroke drawing only
       if (globalTestDoubleByteCode.length == 2) {
@@ -92,7 +92,7 @@ class InputZiPainter extends BasePainter {
   }
 
   displayOneCandidate(String candidate, double x, double y, double fontSize) {
-    displayTextWithValue(candidate, x, y, fontSize, Colors.blue);
+    displayTextWithValue(candidate, x, y, fontSize, Colors.blue, false);
   }
 
   @override

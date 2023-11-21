@@ -1596,7 +1596,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.SingleComponent) {
       title = getString(118)/*"Congratulations!"*/;
-      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      content = getString(355)/*"You have completed this typing course! ..."*/;
       //theNewlyCompletedTypingExercise = 8;
     }
     else if (typingType == TypingType.TwoComponents) {

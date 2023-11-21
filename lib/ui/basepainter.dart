@@ -266,7 +266,7 @@ class BasePainter extends CustomPainter{
       return;
     }
 
-    displayTextWithValue(char, transX, transY, charFontSize, color);
+    displayTextWithValue(char, transX, transY, charFontSize, color, false);
   }
 
   void displayTextForPinyin(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
@@ -294,7 +294,7 @@ class BasePainter extends CustomPainter{
     }
 
     if (isZiListRealChar) { // Only display pinyin for real char, not non-char
-      displayTextWithValue(displayChar, transX, transY, charFontSize, color);
+      displayTextWithValue(displayChar, transX, transY, charFontSize, color, false);
     }
   }
 
@@ -316,10 +316,10 @@ class BasePainter extends CustomPainter{
       displayMeaning += "...";
     }
 
-    displayTextWithValue(displayMeaning, transX, transY, charFontSize, color);
+    displayTextWithValue(displayMeaning, transX, transY, charFontSize, color, false);
   }
 
-  void displayTextWithValue(var char, double transX, double transY, double charFontSize, Color color) {
+  void displayTextWithValue(var char, double transX, double transY, double charFontSize, Color color, bool underline) {
     // shouldn't put such thing under a very basic function
     /*
     if (isReviewCenterPseudoZi) {
@@ -341,7 +341,16 @@ class BasePainter extends CustomPainter{
     }
     */
 
-    TextSpan span = TextSpan(style: TextStyle(color: color/*Colors.blue[800]*/, fontSize: charFontSize/*, fontFamily: 'Roboto'*/), text: char);
+    TextSpan span;
+    if (underline) {
+      span = TextSpan(style: TextStyle(color: color /*Colors.blue[800]*/,
+          fontSize: charFontSize /*, fontFamily: 'Roboto'*/,
+          decoration: TextDecoration.underline), text: char);
+    }
+    else {
+      span = TextSpan(style: TextStyle(color: color /*Colors.blue[800]*/,
+          fontSize: charFontSize /*, fontFamily: 'Roboto'*/), text: char);
+    }
     //TextPainter tp = TextPainter(span, TextDirection.ltr);
     var tp = TextPainter(text: span, textDirection: TextDirection.ltr);
     tp.layout(
@@ -447,7 +456,7 @@ class BasePainter extends CustomPainter{
             ziLineWidth);
     }
     else {
-        displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800]);
+        displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800], false);
     }
   }
 
@@ -482,7 +491,7 @@ class BasePainter extends CustomPainter{
       }
       else {
         displayTextWithValue(
-            char, transX, transY - 3.0, charFontSize, ofColor); // adjust a bit against baseZi
+            char, transX, transY - 3.0, charFontSize, ofColor, false); // adjust a bit against baseZi
       }
     }
   }
@@ -652,7 +661,7 @@ class BasePainter extends CustomPainter{
      */
   }
 
-  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize) {
+  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelated centerZiRelated) {
     var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
@@ -701,13 +710,122 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     }
 
-    var posi = thePositionManager.getHintPosi();
-    DisplayHint(listType, id, false, posi);
-
-    posi.transY += thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    displayCenterZiRelatedBottum(listType, id, centerZiRelated);
   }
 
-  void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
+  void displayCenterZiRelatedBottum(ZiListType listType, int id, CenterZiRelated centerZiRelated) {
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    if (centerZiRelated.drawBreakdown) {
+      // drawBreakdown
+      posi.transY += 2 * (2 * fontSize);
+    }
+    else {
+      DisplayHint(listType, id, false, posi);
+
+      posi.transY += 2 * fontSize;
+      displayZiStructure(posi, centerZiRelated);
+
+      posi.transY += 2 * fontSize;
+      displayComponentCount(posi, centerZiRelated);
+    }
+
+    posi.transY += 2 * fontSize;
+    displayWordBreakdown(posi, centerZiRelated);
+  }
+
+  void displayZiStructure(PositionAndSize posi, CenterZiRelated centerZiRelated) {
+    displayTextWithValue("5. Word structure?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+    // 'l' converts to index, no real change.
+    var structureIndex = CenterZiRelated.getIndexByStructureValue(centerZiRelated.structureReal);
+    var col0 = Colors.blue;
+    var col1 = Colors.blue;
+    if (centerZiRelated.structureAccuratePosition == 0) {
+      if (centerZiRelated.structureSelectPosition == 0) {
+        col0 = Colors.green;
+      }
+      else if (centerZiRelated.structureSelectPosition == 1) {
+        col1 = Colors.red;
+      }
+
+      displayTextWithValue(
+          CenterZiRelated.structure[structureIndex] /*"Single part"*/,
+          posi.transX + CenterZiRelated.position[0], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col0, true);
+      displayTextWithValue(
+          CenterZiRelated.structure[centerZiRelated.structureWrongIndex] /*"Left & right"*/,
+          posi.transX + CenterZiRelated.position[1], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col1, true);
+    }
+    else { // accuratePosition == 1 (the second one)
+      if (centerZiRelated.structureSelectPosition == 0) {
+        col0 = Colors.red;
+      }
+      else if (centerZiRelated.structureSelectPosition == 1) {
+        col1 = Colors.green;
+      }
+
+      displayTextWithValue(
+          CenterZiRelated.structure[centerZiRelated.structureWrongIndex] /*"Left & right"*/,
+          posi.transX + CenterZiRelated.position[0], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col0, true);
+      displayTextWithValue(
+          CenterZiRelated.structure[structureIndex] /*"Single part"*/,
+          posi.transX + CenterZiRelated.position[1], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col1, true);
+    }
+  }
+
+  void displayComponentCount(PositionAndSize posi, CenterZiRelated centerZiRelated) {
+    displayTextWithValue("6. Component count?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+    var col0 = Colors.blue;
+    var col1 = Colors.blue;
+    if (centerZiRelated.compCountAccuratePosition == 0) {
+      if (centerZiRelated.compCountSelectPosition == 0) {
+        col0 = Colors.green;
+      }
+      else if (centerZiRelated.compCountSelectPosition == 1) {
+        col1 = Colors.red;
+      }
+
+      displayTextWithValue(
+          centerZiRelated.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelated.position[2], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col0, true);
+      displayTextWithValue(
+          centerZiRelated.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelated.position[3], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col1, true);
+    }
+    else {
+      if (centerZiRelated.compCountSelectPosition == 0) {
+        col0 = Colors.red;
+      }
+      else if (centerZiRelated.compCountSelectPosition == 1) {
+        col1 = Colors.green;
+      }
+
+      displayTextWithValue(
+          centerZiRelated.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelated.position[2], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col0, true);
+      displayTextWithValue(
+          centerZiRelated.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelated.position[3], posi.transY,
+          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+          col1, true);
+    }
+  }
+
+  void displayWordBreakdown(PositionAndSize posi, CenterZiRelated centerZiRelated) {
+    displayTextWithValue("7. ", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+    displayTextWithValue("Word breakdown", posi.transX + CenterZiRelated.position[4], posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
+  }
+
+  void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, CenterZiRelated centerZiRelated) {
     var ziColor = Colors.brown;
 
     // one center zi first
@@ -851,7 +969,7 @@ class BasePainter extends CustomPainter{
             shouldDrawCenter);
 
       if (display) {
-        displayCenterZiRelated(listType, id, posiSize.charFontSize);
+        displayCenterZiRelated(listType, id, posiSize.charFontSize, centerZiRelated);
       }
 
       // draw navigation path
@@ -878,7 +996,7 @@ class BasePainter extends CustomPainter{
   }
 
   displayIntroMessage() {
-    displayTextWithValue(getString(404)/*"Study till"*/, 0, 0, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.black);
+    displayTextWithValue(getString(404)/*"Study till"*/, 0, 0, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.black, false);
   }
 
   //void drawCenterZiRelated(int id, double transX, double transY, double charFontSize) {
@@ -972,9 +1090,9 @@ class BasePainter extends CustomPainter{
       ziOrPhraseHint = theZiManager.getZi(id).origin;
     }
 
-    displayTextWithValue(getString(90)/*"Hint"*/ + ": ", posi.transX, posi.transY,
+    displayTextWithValue('4. ' + getString(90)/*"Hint"*/ + ': ', posi.transX, posi.transY,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-        Colors.black);
+        Colors.brown, false);
 
     PrimitiveWrapper xPosi = PrimitiveWrapper(posi.transX);
     PrimitiveWrapper yPosi = PrimitiveWrapper(posi.transY);
@@ -1000,7 +1118,7 @@ class BasePainter extends CustomPainter{
 
     displayTextWithValue(skipOrContinue /*"Skip or continue"*/, xPosi, yPosi,
         fontSize,
-        messageColor);
+        messageColor, false);
   }
 
   checkAndUpdateSubstrStartPosition(String str, PrimitiveWrapper xPosi, PrimitiveWrapper yPosi, double fontWidth, double fontSize) {
@@ -1045,7 +1163,7 @@ class BasePainter extends CustomPainter{
         //var stringBeforeIndex = hint[..<indexStart];
         var realStringBeforeIndex = hint.substring(0, indexStart); //String(stringBeforeIndex);
         checkAndUpdateSubstrStartPosition(realStringBeforeIndex, xPosi, yPosi, applyRatio(8.0), defaultFontSize);
-        displayTextWithValue(realStringBeforeIndex, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+        displayTextWithValue(realStringBeforeIndex, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false);
         HintSubstringContainsZi(realStringBeforeIndex, xPosi, yPosi, defaultFontSize);
 
         // find the next "]"
@@ -1060,12 +1178,12 @@ class BasePainter extends CustomPainter{
 
           if (id != -1) {
             checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0), defaultFontSize);
-            displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
+            displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
             xPosi.value += applyRatio(7.0);
 
             drawRootZi(id, ZiListType.zi, xPosi.value, yPosi.value, applyRatio(13.0), applyRatio(13.0), applyRatio(11.0)/*thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize)*/, Colors.blue, false, 1.5, false, false, false, Colors.blue, true);
             xPosi.value += applyRatio(13.0);
-            displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue);
+            displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
 
             xPosi.value += applyRatio(8.0);
           }
@@ -1083,7 +1201,7 @@ class BasePainter extends CustomPainter{
     else {
       //checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, 8.0);
       checkAndUpdateSubstrStartPosition(hint, xPosi, yPosi, applyRatio(8.0), defaultFontSize);
-      displayTextWithValue(hint, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+      displayTextWithValue(hint, xPosi.value, yPosi.value, defaultFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false);
       HintSubstringContainsZi(hint, xPosi, yPosi, defaultFontSize);
     }
   }
@@ -1149,7 +1267,7 @@ class BasePainter extends CustomPainter{
           posi.transX += applyRatio(18.0); // 23.0
           displayTextWithValue(
               " -> ", posi.transX, posi.transY - posi.charFontSize * 0.3,
-              posi.charFontSize, Colors.brown);
+              posi.charFontSize, Colors.brown, false);
           posi.transX += applyRatio(36.0); //15.0
         }
 
@@ -1184,7 +1302,7 @@ class BasePainter extends CustomPainter{
   displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, comps);
-    displayTextWithValue(getString(97)/*"Components"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(getString(97)/*"Components"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
     drawComponentZiList(
         comps,
         185.0 * ratio,  //135
@@ -1200,7 +1318,7 @@ class BasePainter extends CustomPainter{
   // assume a single comp zi. used in dictionary.
   displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio) {
     var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
-    displayTextWithValue(getString(88)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
+    displayTextWithValue(getString(88)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
     var comp = ComponentManager.getComponentByCode(comps[0]);
 
     if (comp.strokesString.length > 0) {
@@ -1223,7 +1341,7 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(
         getString(87) /*"Strokes"*/ + ": ", posi.transX, posi.transY, posi
         .charFontSize /*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/,
-        Colors.black);
+        Colors.black, false);
     if (type == ZiListType.zi) {
       var compCode = ComponentManager.getCompCodeFromZiId(ziId);
       comp = ComponentManager.getComponentByCode(compCode);
@@ -1249,14 +1367,14 @@ class BasePainter extends CustomPainter{
   displayTypingCode(int searchingZiIndex, PositionAndSize posi) {
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
-        getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    displayTextWithValue(typingCode, posi.transX + applyRatio(230.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue); //170
+        getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
+    displayTextWithValue(typingCode, posi.transX + applyRatio(230.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false); //170
   }
 
   displayTypingCodePlaceholder(PositionAndSize posi) {
     displayTextWithValue(
-        "", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black);
-    displayTextWithValue("", posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue);
+        "", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
+    displayTextWithValue("", posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false);
   }
 
   @override

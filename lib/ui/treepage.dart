@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'dart:ui';
 import 'dart:async';
+import 'dart:math';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/treepainter.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/basepainter.dart';
+import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
 
 class TreePage extends StatefulWidget {
@@ -38,6 +42,11 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   bool shouldDrawCenter;
   double screenWidth;
   OverlayEntry overlayEntry;
+
+  int centerRelatedButtonUpdates = 0;
+
+  CenterZiRelated currentCenterZiRelated = CenterZiRelated(
+      'l', 0, 0, 2, 1, 1, 0, 2, false);
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -152,7 +161,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       widget.centerPositionAndSizeCache, //sidePositions: widget.sidePositions
       allLearnedZis,
       newInLesson,
-        compoundZiCurrentComponentId
+        compoundZiCurrentComponentId,
+        currentCenterZiRelated
     );
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
@@ -354,6 +364,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
             centerZiId = TheConst.starCharId;   // skip the pseudo layer for treepage.
           }
           shouldDrawCenter = true;
+
+          // convert to searching zi id first. The two lists will merge eventually.
+          var searchingZiId = ZiManager.findIdFromChar(ZiListType.searching, theZiList[centerZiId].char);
+          CenterZiRelated.initBottumCenterZiRelated(searchingZiId, currentCenterZiRelated);
         });
 
         var zi = theZiManager.getZi(currentZiId);
@@ -442,11 +456,173 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
       var drawBihuaPosiCenter = getPositionedDrawBihuaButton(posiAndSizeBihua, centerZiId);
       buttons.add(drawBihuaPosiCenter);
+
+      // centerZiRelatedBottom 'buttons'
+      createdBottumCenterZiRelatedButtons(buttons);
     }
 
     CreateNavigationHitttestButtons(centerZiId, false, buttons);
 
     return buttons;
+  }
+
+  // move it to Engine's drill class
+  createdBottumCenterZiRelatedButtons(List<Widget> buttons) {
+    var drawCenterZiStructure0 = getCenterZiStructure0Button();
+    buttons.add(drawCenterZiStructure0);
+
+    var drawCenterZiStructure1 = getCenterZiStructure1Button();
+    buttons.add(drawCenterZiStructure1);
+
+    buttons.add(getCenterZiCompCount0Button());
+
+    buttons.add(getCenterZiCompCount1Button());
+
+    buttons.add(getCenterZiWordBreakdownButton());
+  }
+
+  Widget getCenterZiStructure0Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelated.structureSelectPosition = 0;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * fontSize;
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelated.position[0],
+        height: fontSize,
+        width: CenterZiRelated.position[1] - CenterZiRelated.position[0] - 20,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiStructure1Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelated.structureSelectPosition = 1;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * fontSize;
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelated.position[1],
+        height: fontSize,
+        width: CenterZiRelated.position[1] - CenterZiRelated.position[0] - 20, // assume similar width
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiCompCount0Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelated.compCountSelectPosition = 0;
+
+        setState(() {
+
+          centerRelatedButtonUpdates++;
+        });
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * (2 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelated.position[2],
+        height: fontSize,
+        width: 40,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiCompCount1Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelated.compCountSelectPosition = 1;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * (2 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelated.position[3],
+        height: fontSize,
+        width: 40,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiWordBreakdownButton() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+
+        currentCenterZiRelated.drawBreakdown = currentCenterZiRelated.drawBreakdown ? false : true;
+        setState(() {
+            centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 3 * (2 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelated.position[4],
+        height: fontSize,
+        width: 150,
+        child: butt
+    );
+
+    return posiCenter;
   }
 
   CreateNavigationHitttestButtons(int centerZiId, bool isFromReviePage, List<Widget> buttons) {
