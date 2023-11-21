@@ -13,6 +13,8 @@ import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/zi.dart';
 
 class BasePainter extends CustomPainter{
   static double FrameLineWidth = 1.0;
@@ -1375,6 +1377,111 @@ class BasePainter extends CustomPainter{
     displayTextWithValue(
         "", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
     displayTextWithValue("", posi.transX + applyRatio(170.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false);
+  }
+
+  displayOneCharDissembling(YPositionWrapper yPositionWrapper, int ziId, ZiListType listType, int maxRecurLevel, bool showBreakoutDetails, bool isBreakoutPositionsOnly, Map<int, PositionAndSize> breakoutPositions) {
+    LessonManager.clearComponentsStructure();
+    //if (lessonLeftEdge == null) {
+      var lessonLeftEdge = applyRatio(10.0);
+    //}
+
+    var breakoutIndex = PrimitiveWrapper(0);
+
+    drawZiAndComponentsDissembling(0, 0, ziId, listType, lessonLeftEdge, yPositionWrapper.yPosi, showBreakoutDetails, isBreakoutPositionsOnly, breakoutIndex, breakoutPositions);
+
+    yPositionWrapper.yPosi += applyRatio(20.0);
+    yPositionWrapper.yPosi = LessonManager.getNextYPosition(yPositionWrapper.yPosi);
+  }
+
+  // for dissembly only
+  drawZiAndComponentsDissembling(int recurLevel, int indexInLevel, int id, ZiListType listType, double transX, double transY, bool showBreakoutDetails, bool isBreakoutPositionsOnly, PrimitiveWrapper breakoutIndex, Map<int, PositionAndSize> breakoutPositions) {
+    // note: didn't apply sizeRatio to height/width. a bit better without applying it.
+    var posiSize2 = PositionAndSize(transX, transY, thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize), thePositionManager.getZiLineWidth(ZiOrCharSize.assembleDissembleSize));
+
+    var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
+    var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
+
+    if (recurLevel > 0) {
+      if (theCurrentZiComponents[recurLevel] < theCurrentZiComponents[recurLevel-1]-1) {
+        theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel-1]-1;
+      }
+
+      if (!isBreakoutPositionsOnly) {
+        drawLine(transX - applyRatio(89.0-40.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel-1]-1), transX - applyRatio(10.0), transY + analyzeZiYGap + (analyzeZiYSize + analyzeZiYGap) * (theCurrentZiComponents[recurLevel]), Colors.amber, applyRatio(2));
+      }
+    }
+
+    posiSize2.transY += (analyzeZiYSize + analyzeZiYGap) *
+        (theCurrentZiComponents[recurLevel]);
+
+    if (isBreakoutPositionsOnly) {
+      breakoutIndex.value += 1;
+      //posiSize2.width *= getSizeRatio();
+      //posiSize2.height *= getSizeRatio();
+      breakoutPositions[Utility.getUniqueNumberFromId(breakoutIndex.value, id, listType)] = posiSize2;
+    }
+    else {
+      var withPinyin = false;
+
+      drawRootZi(
+          id,
+          listType, //ZiListType.zi,
+          posiSize2.transX,
+          posiSize2.transY,
+          posiSize2.width,
+          posiSize2.height,
+          posiSize2.charFontSize,
+          Colors.brown, /*isSingleColor:*/
+          false,
+          posiSize2.lineWidth, /*createFrame:*/
+          true,
+          /*hasRootZiLearned:*/
+          false,
+          withPinyin,
+          Colors.blue,
+          true);
+
+      if (showBreakoutDetails && recurLevel == 1) {
+        var ziOrComp;
+        if (listType == ZiListType.searching) {
+          ziOrComp = theSearchingZiList[id];
+        }
+        else if (listType == ZiListType.component) {
+          ziOrComp = theComponentList[id];
+        }
+        //else if (listType == ZiListType.custom) {
+        // show detail is not used currently for custom
+        //  var searchingZiId = ZiManager.findIdFromChar(listType, wordsStudy[id]);
+        //  ziOrComp = theSearchingZiList[searchingZiId];
+        //}
+
+        if (ziOrComp != null) {
+          String pinyinAndMeaning = Zi.formatPinyinAndMeaning(
+              ziOrComp.pinyin, ziOrComp.meaning);
+          displayTextWithValue(
+              pinyinAndMeaning, posiSize2.transX + posiSize2.charFontSize * 1.1,
+              posiSize2.transY, posiSize2.charFontSize / 1.7, Colors.blue, false);
+        }
+      }
+    }
+
+    theCurrentZiComponents[recurLevel] = theCurrentZiComponents[recurLevel] + 1;
+
+    var composits = ZiManager.getComposits(id, listType/*, wordsStudy*/);
+
+    if (composits != null && composits.length > 0)
+    {
+      var newRecurLevel = recurLevel + 1;
+
+      // if showBreakoutDetails, stop at recurLevel 1
+      if (!showBreakoutDetails || (showBreakoutDetails && newRecurLevel <= 1)) {
+        var size = 89.0 * getSizeRatio(); //100 // length of each layer
+        for (var i = 0; i < composits.length; i++) {
+          drawZiAndComponentsDissembling(newRecurLevel, i, composits[i].id, composits[i].listType, posiSize2.transX + size, transY, showBreakoutDetails, isBreakoutPositionsOnly, breakoutIndex, breakoutPositions); // transY is the original value
+        }
+      }
+
+    }
   }
 
   @override

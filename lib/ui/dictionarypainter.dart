@@ -295,13 +295,13 @@ class DictionaryPainter extends BreakoutPainter {
   }
 
   double displayCharBreakout(int ziId, bool isGetPositionOnly) {
-    breakoutIndex = 0;
+    //breakoutIndex.value = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
     var fontSize1 = applyRatio(396.0); //425.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
-    displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails);
+    displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails, isBreakoutPositionsOnly, breakoutPositions);
 
     return yPositionWrapper.yPosi;
   }
@@ -311,7 +311,7 @@ class DictionaryPainter extends BreakoutPainter {
   }
 
   Map<int, PositionAndSize> getDicBreakoutPositions(int ziId) {
-    breakoutIndex = 0;
+    //breakoutIndex.value = 0;
 
     // give it a space, which will be filled up by a run of displayCharBreakout later with no show
     breakoutPositions = dicBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);

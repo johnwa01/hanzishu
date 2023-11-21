@@ -945,4 +945,32 @@ class ZiManager {
 
       return false;
   }
+
+  static List<IdAndListTypePair> getComposits(int id, ZiListType listType/*, String wordsStudy*/) {
+    List<IdAndListTypePair> pairList = [];
+
+    if (listType == ZiListType.searching) {
+      return theDictionaryManager.getComposits(id);
+    }
+    //else if (listType == ZiListType.custom) {
+    //  var searchingZiId = ZiManager.findIdFromChar(ZiListType.searching, wordsStudy[id]);
+    //  return theDictionaryManager.getComposits(searchingZiId);
+    //}
+    else if (listType == ZiListType.zi) {
+      var zi = theZiManager.getZi(id);
+      if (zi.type == "h")
+      {
+        var composits = theZiManager.getZiComponents(id);
+        var count = composits.length;
+        if (count > 0) {
+          for (var i = 0; i < count; i++) {
+            pairList.add(IdAndListTypePair(composits[i], ZiListType.zi));
+          }
+          return pairList;
+        }
+      }
+    }
+
+    return null;
+  }
 }
