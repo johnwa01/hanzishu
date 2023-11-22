@@ -294,7 +294,7 @@ class DictionaryPainter extends BreakoutPainter {
     */
   }
 
-  double displayCharBreakout(int ziId, bool isGetPositionOnly) {
+  double displayCharBreakout(int ziId, bool isGetPositionOnly, ) {
     //breakoutIndex.value = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
@@ -317,7 +317,7 @@ class DictionaryPainter extends BreakoutPainter {
     breakoutPositions = dicBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
     isBreakoutPositionsOnly = true;
 
-    displayCharBreakout(ziId, true);
+    displayCharBreakout(ziId, true); // get positions only
     return breakoutPositions;
   }
 

@@ -5,11 +5,12 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/ui/breakoutpainter.dart';
+import 'package:hanzishu/utility.dart';
 
 class TreePainter extends BasePainter {
   double screenWidth;
   CenterZiRelated centerZiRelated;
+  Map<int, PositionAndSize> treeBreakoutPositions = Map();
   //Animation<double> _animation; // not used ?
 
   TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson, int compoundZiCurrentComponentId, CenterZiRelated centerZiRelated) {
@@ -45,12 +46,35 @@ class TreePainter extends BasePainter {
     drawFrameWithColors(ZiListType.zi,
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
+
+    centerZiRelated.breakoutPositions = treeBreakoutPositions;
     drawZiGroup(centerId, ZiListType.zi, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, centerZiRelated);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
       drawCenterZi(compoundZiCurrentComponentId, ZiListType.zi);
     }
+  }
+
+  Map<int, PositionAndSize> getDrillBreakoutPositions() { // searchingZi id has been assigned in currentCenterZiRelated
+      // give it a space, which will be filled up by a run of displayCharBreakout later with no show
+      centerZiRelated.breakoutPositions = treeBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
+      bool isBreakoutPositionsOnly = true;
+
+      var posi = thePositionManager.getHintPosi();
+      var yPositionWrapper = YPositionWrapper(posi.transY);
+
+      displayOneCharDissembling(
+          yPositionWrapper,
+          centerZiRelated.searchingZiId,
+          ZiListType.searching,
+          0,
+          false,
+          isBreakoutPositionsOnly,
+          centerZiRelated.breakoutPositions);
+
+      //displayCharBreakout(ziId, true); // get positions only
+      return treeBreakoutPositions;
   }
 
   double getFrameWidth() {

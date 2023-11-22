@@ -46,12 +46,18 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
   int centerRelatedButtonUpdates = 0;
 
   CenterZiRelated currentCenterZiRelated = CenterZiRelated(
-      'l', 0, 0, 2, 1, 1, 0, 2, false);
+      -1, 'l', 0, 0, 2, 1, 1, 0, 2, false, null);
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
     return defaultFontSize / 25.0; // ratio over original hard coded value
   }
+
+/*
+  double applyRatio(double value) {
+    return value * getSizeRatio();
+  }
+*/
 
   void _startAnimation() {
     _controller.stop();
@@ -367,6 +373,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
           // convert to searching zi id first. The two lists will merge eventually.
           var searchingZiId = ZiManager.findIdFromChar(ZiListType.searching, theZiList[centerZiId].char);
+          currentCenterZiRelated.searchingZiId = searchingZiId;
           CenterZiRelated.initBottumCenterZiRelated(searchingZiId, currentCenterZiRelated);
         });
 
@@ -459,6 +466,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
       // centerZiRelatedBottom 'buttons'
       createdBottumCenterZiRelatedButtons(buttons);
+
+      if (currentCenterZiRelated.drawBreakdown) {
+        createDrillBreakoutHittestButtons(context, buttons);
+      }
     }
 
     CreateNavigationHitttestButtons(centerZiId, false, buttons);
@@ -665,5 +676,91 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     );
 
     return posiCenter;
+  }
+
+  Positioned getDrillBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+    var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+    var listType = Utility.getListType(uniqueNumber, id);
+
+    var butt = FlatButton(
+      color: Colors.white,
+      textColor: Colors.blueAccent,
+
+      onPressed: () {
+        //var scrollOffset = _scrollController.offset;
+        //var zi = theZiManager.getZi(id);
+        //var searchingZi = DictionaryManager.getSearchingZi(id);
+        var char = ZiManager.getOneChar(id, listType);
+        TextToSpeech.speak("zh-CN", char);
+        var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
+        //var meaning = ZiManager.getPinyinAndMeaning(id);
+        showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height * 1.3, // not sure why the hittest area is smaller than the char. so use 1.3
+        width: posiAndSize.width * 1.3,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  List<Widget> createDrillBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
+    int compoundZiCurrentComponentId = 0;
+    int compoundZiTotalComponentNum = 0;
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      var compList = getAllZiComponents(centerZiId);
+      compoundZiTotalComponentNum = compList.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        compoundZiCurrentComponentId = centerZiId;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
+      }
+    }
+
+    treePainter = new TreePainter(
+        Colors.amber, //lineColor: Colors.amber,
+        Colors.blueAccent, //completeColor: Colors.blueAccent,
+        centerZiId, //centerId: centerZiId,
+        shouldDrawCenter,
+        screenWidth, //width: screenWidth,
+        widget.sidePositionsCache,
+        widget.realGroupMembersCache,
+        widget.centerPositionAndSizeCache, //sidePositions: widget.sidePositions
+        allLearnedZis,
+        newInLesson,
+        compoundZiCurrentComponentId,
+        currentCenterZiRelated
+    );
+
+    var breakoutPositions = treePainter. getDrillBreakoutPositions();
+
+    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
+    buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
+
+    breakoutPositions.forEach((uniqueNumber, position) =>
+        buttons.add(getDrillBreakoutPositionedButton(uniqueNumber, position)));
+
+    return buttons;
+  }
+
+  double getDrillHighestBreakoutYPosi( Map<int, PositionAndSize> breakoutPositions) {
+    double highestValue = 0;;
+    for (var values in breakoutPositions.values) {
+      if (values.transY > highestValue) {
+        highestValue = values.transY;
+      }
+    }
+
+    return highestValue;
   }
 }

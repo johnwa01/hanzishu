@@ -16,6 +16,7 @@ enum DrillCategory {
 class CenterZiRelated {
   static List<double> position = [160.0, 275.0, 200.0, 275.0, 20.0];
   static List<String> structure = ["Single part", "left & right", "top & down", "wrapped"];
+  int searchingZiId;
 
   String structureReal;
   int structureAccuratePosition; // 0,1
@@ -29,7 +30,10 @@ class CenterZiRelated {
 
   bool drawBreakdown;
 
+  var breakoutPositions;
+
   CenterZiRelated(
+      int searchingZiId,
       String structureReal,
       int structureAccuratePosition,
       int structureWrongIndex,
@@ -38,7 +42,9 @@ class CenterZiRelated {
       int compCountAccuratePosition,
       int compCountWrongValue,
       int compCountSelectPosition,
-      bool drawBreakdown) {
+      bool drawBreakdown,
+      var breakoutPositions) {
+    this.searchingZiId = searchingZiId;
     this.structureReal = structureReal;
     this.structureAccuratePosition = structureAccuratePosition;
     this.structureWrongIndex = structureWrongIndex;
@@ -48,6 +54,7 @@ class CenterZiRelated {
     this.compCountWrongValue = compCountWrongValue;
     this.compCountSelectPosition = compCountSelectPosition;
     this.drawBreakdown = drawBreakdown;
+    this.breakoutPositions = breakoutPositions;
   }
 
   static int getIndexByStructureValue(String structure) {

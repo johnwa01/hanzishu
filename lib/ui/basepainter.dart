@@ -733,7 +733,7 @@ class BasePainter extends CustomPainter{
     }
 
     posi.transY += 2 * fontSize;
-    displayWordBreakdown(posi, centerZiRelated);
+    displayWordBreakdown(listType, id, posi, centerZiRelated);
   }
 
   void displayZiStructure(PositionAndSize posi, CenterZiRelated centerZiRelated) {
@@ -822,7 +822,22 @@ class BasePainter extends CustomPainter{
     }
   }
 
-  void displayWordBreakdown(PositionAndSize posi, CenterZiRelated centerZiRelated) {
+  void displayWordBreakdown(ZiListType listType, int id, PositionAndSize posi, CenterZiRelated centerZiRelated) {
+    if ((centerZiRelated.drawBreakdown)) {
+      var posi = thePositionManager.getHintPosi();
+      var yPositionWrapper = YPositionWrapper(posi.transY);
+
+      bool isBreakoutPositionsOnly = false;
+      displayOneCharDissembling(
+          yPositionWrapper,
+          centerZiRelated.searchingZiId,
+          ZiListType.searching,
+          0,
+          false,
+          isBreakoutPositionsOnly,
+          centerZiRelated.breakoutPositions);
+    }
+
     displayTextWithValue("7. ", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
     displayTextWithValue("Word breakdown", posi.transX + CenterZiRelated.position[4], posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
   }
