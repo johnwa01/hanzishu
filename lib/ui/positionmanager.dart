@@ -202,11 +202,22 @@ class PositionManager
     var yPosi4 = getFrameYPosition(4);
     var charFontSize = getCharFontSize(ZiOrCharSize.defaultSize);
 
-    return PositionAndSize(xPosi1, yPosi4 + charFontSize,
-        charFontSize, charFontSize, 0.0, 0.0);
+    return PositionAndSize(xPosi1, yPosi4/* + charFontSize*/,
+        charFontSize, charFontSize, 20.0, 0.0);
   }
 
   PositionAndSize getNewCharIconPosi() {
+    // speech icon
+    var xPosi3 = getFrameXPosition(3);
+    var yPosi2 = getFrameYPosition(2);
+    var charFontSize = getCharFontSize(ZiOrCharSize.centerSize);
+
+    return PositionAndSize(xPosi3 - charFontSize * 0.35, yPosi2 + charFontSize * 0.1,
+        charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
+  }
+
+  /* left bottom corner of the frame
+  PositionAndSize getLearnedCharIconPosi() {
     // speech icon
     var xPosi2 = getFrameXPosition(2);
     var yPosi3 = getFrameYPosition(3);
@@ -215,6 +226,7 @@ class PositionManager
     return PositionAndSize(xPosi2 + charFontSize * 0.05, yPosi3 - charFontSize * 0.4,
         charFontSize * 0.3, charFontSize * 0.3, 0.0, 0.0);
   }
+  */
 
   PositionAndSize getTreeNavigationPosi(double sizeRatio) {
     var xPosi1 = getFrameXPosition(1);

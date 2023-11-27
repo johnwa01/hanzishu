@@ -45,8 +45,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
   int centerRelatedButtonUpdates = 0;
 
-  CenterZiRelated currentCenterZiRelated = CenterZiRelated(
-      -1, 'l', 0, 0, 2, 1, 1, 0, 2, false, null);
+  CenterZiRelatedBottum currentCenterZiRelatedBottum = CenterZiRelatedBottum(
+      -1, 'l', 0, 0, -1, 1, 1, 0, -1, false, null);
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -168,7 +168,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       allLearnedZis,
       newInLesson,
         compoundZiCurrentComponentId,
-        currentCenterZiRelated
+        currentCenterZiRelatedBottum
     );
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {
@@ -296,9 +296,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
+        left: posiAndSize.transX - 10.0,  // including the number '3'
+        height: posiAndSize.height + 10.0,
+        width: posiAndSize.width + 10.0,
         child: butt
     );
 
@@ -372,9 +372,13 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           shouldDrawCenter = true;
 
           // convert to searching zi id first. The two lists will merge eventually.
-          var searchingZiId = ZiManager.findIdFromChar(ZiListType.searching, theZiList[centerZiId].char);
-          currentCenterZiRelated.searchingZiId = searchingZiId;
-          CenterZiRelated.initBottumCenterZiRelated(searchingZiId, currentCenterZiRelated);
+          if (centerZiId != 1) {
+            var searchingZiId = ZiManager.findIdFromChar(
+                ZiListType.searching, theZiList[centerZiId].char);
+            currentCenterZiRelatedBottum.searchingZiId = searchingZiId;
+            CenterZiRelatedBottum.initCenterZiRelatedBottum(
+                searchingZiId, currentCenterZiRelatedBottum);
+          }
         });
 
         var zi = theZiManager.getZi(currentZiId);
@@ -465,9 +469,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       buttons.add(drawBihuaPosiCenter);
 
       // centerZiRelatedBottom 'buttons'
-      createdBottumCenterZiRelatedButtons(buttons);
+      createdCenterZiRelatedBottumButtons(buttons);
 
-      if (currentCenterZiRelated.drawBreakdown) {
+      if (currentCenterZiRelatedBottum.drawBreakdown) {
         createDrillBreakoutHittestButtons(context, buttons);
       }
     }
@@ -477,8 +481,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return buttons;
   }
 
-  // move it to Engine's drill class
-  createdBottumCenterZiRelatedButtons(List<Widget> buttons) {
+  createdCenterZiRelatedBottumButtons(List<Widget> buttons) {
     var drawCenterZiStructure0 = getCenterZiStructure0Button();
     buttons.add(drawCenterZiStructure0);
 
@@ -496,7 +499,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
-        currentCenterZiRelated.structureSelectPosition = 0;
+        currentCenterZiRelatedBottum.structureSelectPosition = 0;
 
         setState(() {
           centerRelatedButtonUpdates++;
@@ -511,9 +514,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelated.position[0],
-        height: fontSize,
-        width: CenterZiRelated.position[1] - CenterZiRelated.position[0] - 20,
+        left: posi.transX + CenterZiRelatedBottum.position[0] - 10.0,
+        height: fontSize * 1.3,
+        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20,
         child: butt
     );
 
@@ -524,7 +527,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
-        currentCenterZiRelated.structureSelectPosition = 1;
+        currentCenterZiRelatedBottum.structureSelectPosition = 1;
 
         setState(() {
           centerRelatedButtonUpdates++;
@@ -540,9 +543,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelated.position[1],
-        height: fontSize,
-        width: CenterZiRelated.position[1] - CenterZiRelated.position[0] - 20, // assume similar width
+        left: posi.transX + CenterZiRelatedBottum.position[1] - 10.0,
+        height: fontSize * 1.3,
+        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20, // assume similar width
         child: butt
     );
 
@@ -553,7 +556,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
-        currentCenterZiRelated.compCountSelectPosition = 0;
+        currentCenterZiRelatedBottum.compCountSelectPosition = 0;
 
         setState(() {
 
@@ -565,13 +568,13 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * (2 * fontSize);
+    posi.transY += (3 * fontSize);
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelated.position[2],
-        height: fontSize,
-        width: 40,
+        left: posi.transX + CenterZiRelatedBottum.position[2] - 10.0,
+        height: fontSize * 1.3,
+        width: 40, // ok to be fixed length here since just 1 digit
         child: butt
     );
 
@@ -582,7 +585,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
-        currentCenterZiRelated.compCountSelectPosition = 1;
+        currentCenterZiRelatedBottum.compCountSelectPosition = 1;
 
         setState(() {
           centerRelatedButtonUpdates++;
@@ -594,13 +597,13 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * (2 * fontSize);
+    posi.transY += (3 * fontSize);
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelated.position[3],
-        height: fontSize,
-        width: 40,
+        left: posi.transX + CenterZiRelatedBottum.position[3] - 10.0,
+        height: fontSize * 1.3,
+        width: 40, // ok to be fixed length here since just 1 digit
         child: butt
     );
 
@@ -612,7 +615,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       onPressed: () {
         initOverlay();
 
-        currentCenterZiRelated.drawBreakdown = currentCenterZiRelated.drawBreakdown ? false : true;
+        currentCenterZiRelatedBottum.drawBreakdown = currentCenterZiRelatedBottum.drawBreakdown ? false : true;
         setState(() {
             centerRelatedButtonUpdates++;
         });
@@ -623,13 +626,13 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 3 * (2 * fontSize);
+    posi.transY += (4 * fontSize);
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelated.position[4],
-        height: fontSize,
-        width: 150,
+        left: posi.transX + CenterZiRelatedBottum.position[4],
+        height: fontSize * 1.3,
+        width: 100,
         child: butt
     );
 
@@ -687,14 +690,23 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       textColor: Colors.blueAccent,
 
       onPressed: () {
+        initOverlay();
         //var scrollOffset = _scrollController.offset;
         //var zi = theZiManager.getZi(id);
         //var searchingZi = DictionaryManager.getSearchingZi(id);
         var char = ZiManager.getOneChar(id, listType);
         TextToSpeech.speak("zh-CN", char);
-        var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
-        //var meaning = ZiManager.getPinyinAndMeaning(id);
-        showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
+        if (previousZiId != id || !haveShowedOverlay) {
+          var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
+          //var meaning = ZiManager.getPinyinAndMeaning(id);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
+          haveShowedOverlay = true;
+        }
+        else if (haveShowedOverlay) {
+          haveShowedOverlay = false;
+        }
+
+        previousZiId = id;
       },
       child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
     );
@@ -739,10 +751,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         allLearnedZis,
         newInLesson,
         compoundZiCurrentComponentId,
-        currentCenterZiRelated
+        currentCenterZiRelatedBottum
     );
 
-    var breakoutPositions = treePainter. getDrillBreakoutPositions();
+    var breakoutPositions = treePainter.getDrillBreakoutPositions();
 
     var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error

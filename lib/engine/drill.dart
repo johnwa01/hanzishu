@@ -13,9 +13,10 @@ enum DrillCategory {
 
 
 
-class CenterZiRelated {
-  static List<double> position = [160.0, 275.0, 200.0, 275.0, 20.0];
-  static List<String> structure = ["Single part", "left & right", "top & down", "wrapped"];
+class CenterZiRelatedBottum {
+  static List<double> position = [160.0, 275.0, 230.0, 305.0, 20.0];
+  //static List<String> structure = ["Single part", "left & right", "top & down", "wrapped"];
+  static List<int> structure = [441, 442, 443, 444/*"Single part", "left & right", "top & down", "wrapped"*/];
   int searchingZiId;
 
   String structureReal;
@@ -32,7 +33,7 @@ class CenterZiRelated {
 
   var breakoutPositions;
 
-  CenterZiRelated(
+  CenterZiRelatedBottum(
       int searchingZiId,
       String structureReal,
       int structureAccuratePosition,
@@ -100,20 +101,23 @@ class CenterZiRelated {
     }
   }
 
-  static void initBottumCenterZiRelated(int centerZiId, CenterZiRelated centerZiRelated) {
-    centerZiRelated.structureReal = theSearchingZiList[centerZiId].structure;
+  static void initCenterZiRelatedBottum(int centerZiId, CenterZiRelatedBottum centerZiRelatedBottum) {
+    centerZiRelatedBottum.structureReal = theSearchingZiList[centerZiId].structure;
     // decide accurate position for structure
     Random rand = Random();
     //rand.nextInt(2); // avoid always 0 value for the first call in next line
-    centerZiRelated.structureAccuratePosition = rand.nextInt(2);
-    var realStrucutureIndex = CenterZiRelated.getIndexByStructureValue(centerZiRelated.structureReal);
-    centerZiRelated.structureWrongIndex =   CenterZiRelated.getWrongStructureIndex(realStrucutureIndex);
+    centerZiRelatedBottum.structureAccuratePosition = rand.nextInt(2);
+    var realStrucutureIndex = CenterZiRelatedBottum.getIndexByStructureValue(centerZiRelatedBottum.structureReal);
+    centerZiRelatedBottum.structureWrongIndex =   CenterZiRelatedBottum.getWrongStructureIndex(realStrucutureIndex);
 
     var components = List<String>();
     DictionaryManager.getAllComponents(centerZiId, components);
-    centerZiRelated.compCountReal = components.length;
+    centerZiRelatedBottum.compCountReal = components.length;
 
-    centerZiRelated.compCountAccuratePosition = rand.nextInt(2);
-    centerZiRelated.compCountWrongValue = CenterZiRelated.getCompCountWrongValue(centerZiRelated.compCountReal);
+    centerZiRelatedBottum.compCountAccuratePosition = rand.nextInt(2);
+    centerZiRelatedBottum.compCountWrongValue = CenterZiRelatedBottum.getCompCountWrongValue(centerZiRelatedBottum.compCountReal);
+    centerZiRelatedBottum.structureSelectPosition = -1;
+    centerZiRelatedBottum.compCountSelectPosition = -1;
+    centerZiRelatedBottum.drawBreakdown = false;
   }
 }

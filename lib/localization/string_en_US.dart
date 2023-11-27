@@ -447,4 +447,11 @@ var theString_en_US = [
   Local(437, "Pinyin does no good to international Chinese teaching"),
   Local(438, "Hint2"),
   Local(439, "Introduction to Hanzishu Puzzle Typing"),
+  Local(440, "Word structure"),
+  Local(441, "Single part"),
+  Local(442, "left & right"),
+  Local(443, "top & down"),
+  Local(444, "wrapped"),
+  Local(445, "Chinese alphabet count"),
+  Local(446, "Breakdown"),
 ];

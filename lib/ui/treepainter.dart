@@ -9,11 +9,11 @@ import 'package:hanzishu/utility.dart';
 
 class TreePainter extends BasePainter {
   double screenWidth;
-  CenterZiRelated centerZiRelated;
+  CenterZiRelatedBottum centerZiRelatedBottum;
   Map<int, PositionAndSize> treeBreakoutPositions = Map();
   //Animation<double> _animation; // not used ?
 
-  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson, int compoundZiCurrentComponentId, CenterZiRelated centerZiRelated) {
+  TreePainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>>realGroupMembersCache,   PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, Map<int, bool> newInLesson, int compoundZiCurrentComponentId, CenterZiRelatedBottum centerZiRelatedBottum) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId;
@@ -25,7 +25,7 @@ class TreePainter extends BasePainter {
     this.allLearnedZis = allLearnedZis;
     this.newInLesson = newInLesson;
     this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
-    this.centerZiRelated = centerZiRelated;
+    this.centerZiRelatedBottum = centerZiRelatedBottum;
     //this._progress = _progress;
   }
 
@@ -47,8 +47,8 @@ class TreePainter extends BasePainter {
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
 
-    centerZiRelated.breakoutPositions = treeBreakoutPositions;
-    drawZiGroup(centerId, ZiListType.zi, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, centerZiRelated);
+    centerZiRelatedBottum.breakoutPositions = treeBreakoutPositions;
+    drawZiGroup(centerId, ZiListType.zi, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, centerZiRelatedBottum);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
@@ -58,7 +58,7 @@ class TreePainter extends BasePainter {
 
   Map<int, PositionAndSize> getDrillBreakoutPositions() { // searchingZi id has been assigned in currentCenterZiRelated
       // give it a space, which will be filled up by a run of displayCharBreakout later with no show
-      centerZiRelated.breakoutPositions = treeBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
+      centerZiRelatedBottum.breakoutPositions = treeBreakoutPositions; //theLessonManager.getBreakoutPositions(lessonId);
       bool isBreakoutPositionsOnly = true;
 
       var posi = thePositionManager.getHintPosi();
@@ -66,12 +66,12 @@ class TreePainter extends BasePainter {
 
       displayOneCharDissembling(
           yPositionWrapper,
-          centerZiRelated.searchingZiId,
+          centerZiRelatedBottum.searchingZiId,
           ZiListType.searching,
           0,
           false,
           isBreakoutPositionsOnly,
-          centerZiRelated.breakoutPositions);
+          centerZiRelatedBottum.breakoutPositions);
 
       //displayCharBreakout(ziId, true); // get positions only
       return treeBreakoutPositions;

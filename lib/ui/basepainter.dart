@@ -25,9 +25,12 @@ class BasePainter extends CustomPainter{
       .cyan; //UIColor(red: 0.7294, green: 0.9882, blue: 0.8941, alpha: 0.5);
 
   List<double> iconSpeechStrokes = [4.0, 0.25, 0.5, 8.0, 0.25,0.25, 8.0, 0.5, 0.25, 8.0, 0.75, 0.0, 8.0, 0.75, 1.0, 8.0, 0.5, 0.75, 8.0, 0.25, 0.75, 8.0, 0.25, 0.5];
+  List<double> iconSpeechStrokesWithNumber = [4.0, 0.25, 0.5, 8.0, 0.25,0.25, 8.0, 0.5, 0.25, 8.0, 0.75, 0.0, 8.0, 0.75, 1.0, 8.0, 0.5, 0.75, 8.0, 0.25, 0.75, 8.0, 0.25, 0.5, 4.0, 0.0, 0.65, 8.0, 0.1, 0.55, 8.0, 0.1, 1.0, 4.0, 0.0, 1.0, 8.0, 0.25, 1.0];
   List<double> iconPenStrokes = [4.0, 0.375, 0.125, 8.0, 1.0, 0.75, 8.0, 0.75, 1, 8.0, 0.125, 0.375, 8.0, 0.125, 0.125, 8.0, 0.375, 0.125, 8.0, 0.125, 0.375];
+  List<double> iconPenStrokesWithNumber = [4.0, 0.375, 0.125, 8.0, 1.0, 0.75, 8.0, 0.75, 1, 8.0, 0.125, 0.375, 8.0, 0.125, 0.125, 8.0, 0.375, 0.125, 8.0, 0.125, 0.375,4.0,0.0,0.7,8.0,0.15,0.6,8.0,0.3,0.75,8.0,0.0,1.0,8.0,0.4,1.0];
   List<double> iconZiLearnedStrokes = [4.0, 0.125, 0.5, 8.0, 0.375, 0.75, 8.0, 0.875, 0.25];
-  List<double> iconNewCharStrokes = [4.0, 0.0, 0.5, 8.0, 0.75, 0.25, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5];
+  List<double> iconTriangleStrokes = [4.0, 0.0, 0.5, 8.0, 0.75, 0.25, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5]; // not used currently
+  List<double> iconNewCharStrokes = [4.0, 0.35, 0.9, 8.0, 0.1,0.6, 8.0, 0.45, 0.775, 8.0, 0.25, 0.475, 4.0, 0.425, 0.3, 8.0, 0.325, 0.4, 8.0, 0.55, 0.675, 8.0, 0.65, 0.575, 4.0, 0.425, 0.525, 8.0, 0.525, 0.425, 4.0, 0.5, 0.25, 8.0, 0.75, 0.5, 8.0, 0.65, 0.2, 8.0, 0.9, 0.35, 8.0, 0.75, 0.025];
   List<double> iconBreakdownStrokes = [4.0, 0.5, 0.0, 8.0, 1.0, 0.5, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5, 8.0, 0.5, 0.0];
 
   bool isFromReviewPage = false;
@@ -663,11 +666,12 @@ class BasePainter extends CustomPainter{
      */
   }
 
-  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelated centerZiRelated) {
+  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelatedBottum centerZiRelatedBottum) {
     var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
+    displayTextWithValue("3", posiAndSizeMeaning.transX - 10.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.blue[800], false);
     displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
     var displaySpeechIcon = true;
@@ -680,7 +684,7 @@ class BasePainter extends CustomPainter{
 
     if (displaySpeechIcon) {
       DisplayIcon(
-          iconSpeechStrokes,
+          iconSpeechStrokesWithNumber,
           posiAndSizeSpeech.transX,
           posiAndSizeSpeech.transY,
           posiAndSizeSpeech.width,
@@ -691,7 +695,7 @@ class BasePainter extends CustomPainter{
 
     //if (theZiManager.getZiType(id) == 'b') {   //TODO: 'j' for basic zi char
       DisplayIcon(
-          iconPenStrokes,
+          iconPenStrokesWithNumber,
           posiAndSizeBihua.transX,
           posiAndSizeBihua.transY,
           posiAndSizeBihua.width,
@@ -708,141 +712,147 @@ class BasePainter extends CustomPainter{
           posiNewChar.transY,
           posiNewChar.width,
           posiNewChar.height,
-          Colors.amber /*MaterialColor ofColor*/,
+          Colors.red, //amber /*MaterialColor ofColor*/,
           2.0 /*ziLineWidth*/);
     }
 
-    displayCenterZiRelatedBottum(listType, id, centerZiRelated);
+    displayCenterZiRelatedBottum(listType, id, centerZiRelatedBottum);
   }
 
-  void displayCenterZiRelatedBottum(ZiListType listType, int id, CenterZiRelated centerZiRelated) {
+  void displayCenterZiRelatedBottum(ZiListType listType, int id, CenterZiRelatedBottum centerZiRelatedBottum) {
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    if (centerZiRelated.drawBreakdown) {
+    if (centerZiRelatedBottum.drawBreakdown) {
       // drawBreakdown
-      posi.transY += 2 * (2 * fontSize);
+      posi.transY += (3 * fontSize);
     }
     else {
       DisplayHint(listType, id, false, posi);
 
-      posi.transY += 2 * fontSize;
-      displayZiStructure(posi, centerZiRelated);
+      posi.transY += (2 * fontSize);
+      displayZiStructure(posi, centerZiRelatedBottum);
 
-      posi.transY += 2 * fontSize;
-      displayComponentCount(posi, centerZiRelated);
+      posi.transY += fontSize;
+      displayComponentCount(posi, centerZiRelatedBottum);
     }
 
-    posi.transY += 2 * fontSize;
-    displayWordBreakdown(listType, id, posi, centerZiRelated);
+    posi.transY += fontSize;
+    displayWordBreakdown(/*listType, id,*/ posi, centerZiRelatedBottum);
   }
 
-  void displayZiStructure(PositionAndSize posi, CenterZiRelated centerZiRelated) {
-    displayTextWithValue("5. Word structure?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+  void displayZiStructure(PositionAndSize posi, CenterZiRelatedBottum centerZiRelatedBottum) {
+    displayTextWithValue("5. " + getString(440) /*Word structure*/ + "?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
     // 'l' converts to index, no real change.
-    var structureIndex = CenterZiRelated.getIndexByStructureValue(centerZiRelated.structureReal);
+    var structureIndex = CenterZiRelatedBottum.getIndexByStructureValue(centerZiRelatedBottum.structureReal);
     var col0 = Colors.blue;
     var col1 = Colors.blue;
-    if (centerZiRelated.structureAccuratePosition == 0) {
-      if (centerZiRelated.structureSelectPosition == 0) {
+    if (centerZiRelatedBottum.structureAccuratePosition == 0) {
+      if (centerZiRelatedBottum.structureSelectPosition == 0) {
         col0 = Colors.green;
       }
-      else if (centerZiRelated.structureSelectPosition == 1) {
+      else if (centerZiRelatedBottum.structureSelectPosition == 1) {
         col1 = Colors.red;
       }
 
       displayTextWithValue(
-          CenterZiRelated.structure[structureIndex] /*"Single part"*/,
-          posi.transX + CenterZiRelated.position[0], posi.transY,
+          getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
+          posi.transX + CenterZiRelatedBottum.position[0], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          CenterZiRelated.structure[centerZiRelated.structureWrongIndex] /*"Left & right"*/,
-          posi.transX + CenterZiRelated.position[1], posi.transY,
+          getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
+          posi.transX + CenterZiRelatedBottum.position[1], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
     else { // accuratePosition == 1 (the second one)
-      if (centerZiRelated.structureSelectPosition == 0) {
+      if (centerZiRelatedBottum.structureSelectPosition == 0) {
         col0 = Colors.red;
       }
-      else if (centerZiRelated.structureSelectPosition == 1) {
+      else if (centerZiRelatedBottum.structureSelectPosition == 1) {
         col1 = Colors.green;
       }
 
       displayTextWithValue(
-          CenterZiRelated.structure[centerZiRelated.structureWrongIndex] /*"Left & right"*/,
-          posi.transX + CenterZiRelated.position[0], posi.transY,
+          getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
+          posi.transX + CenterZiRelatedBottum.position[0], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          CenterZiRelated.structure[structureIndex] /*"Single part"*/,
-          posi.transX + CenterZiRelated.position[1], posi.transY,
+          getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
+          posi.transX + CenterZiRelatedBottum.position[1], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
   }
 
-  void displayComponentCount(PositionAndSize posi, CenterZiRelated centerZiRelated) {
-    displayTextWithValue("6. Component count?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+  void displayComponentCount(PositionAndSize posi, CenterZiRelatedBottum centerZiRelatedBottum) {
+    displayTextWithValue("6. " + getString(445) /*Chinese alphabet count*/ + "?", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
     var col0 = Colors.blue;
     var col1 = Colors.blue;
-    if (centerZiRelated.compCountAccuratePosition == 0) {
-      if (centerZiRelated.compCountSelectPosition == 0) {
+    if (centerZiRelatedBottum.compCountAccuratePosition == 0) {
+      if (centerZiRelatedBottum.compCountSelectPosition == 0) {
         col0 = Colors.green;
       }
-      else if (centerZiRelated.compCountSelectPosition == 1) {
+      else if (centerZiRelatedBottum.compCountSelectPosition == 1) {
         col1 = Colors.red;
       }
 
       displayTextWithValue(
-          centerZiRelated.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelated.position[2], posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[2], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelated.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelated.position[3], posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[3], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
     else {
-      if (centerZiRelated.compCountSelectPosition == 0) {
+      if (centerZiRelatedBottum.compCountSelectPosition == 0) {
         col0 = Colors.red;
       }
-      else if (centerZiRelated.compCountSelectPosition == 1) {
+      else if (centerZiRelatedBottum.compCountSelectPosition == 1) {
         col1 = Colors.green;
       }
 
       displayTextWithValue(
-          centerZiRelated.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelated.position[2], posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[2], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelated.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelated.position[3], posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[3], posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
   }
 
-  void displayWordBreakdown(ZiListType listType, int id, PositionAndSize posi, CenterZiRelated centerZiRelated) {
+  void displayWordBreakdown(/*ZiListType listType, int id,*/ PositionAndSize posi, CenterZiRelatedBottum centerZiRelated) {
     if ((centerZiRelated.drawBreakdown)) {
       var posi = thePositionManager.getHintPosi();
       var yPositionWrapper = YPositionWrapper(posi.transY);
 
-      bool isBreakoutPositionsOnly = false;
-      displayOneCharDissembling(
-          yPositionWrapper,
-          centerZiRelated.searchingZiId,
-          ZiListType.searching,
-          0,
-          false,
-          isBreakoutPositionsOnly,
-          centerZiRelated.breakoutPositions);
+      if (centerZiRelated.compCountReal == 1) {
+
+        displayStrokes(centerZiRelated.searchingZiId, posi, getSizeRatio());
+      }
+      else {
+        bool isBreakoutPositionsOnly = false;
+        displayOneCharDissembling(
+            yPositionWrapper,
+            centerZiRelated.searchingZiId,
+            ZiListType.searching,
+            0,
+            false,
+            isBreakoutPositionsOnly,
+            centerZiRelated.breakoutPositions);
+      }
     }
 
     displayTextWithValue("7. ", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
-    displayTextWithValue("Word breakdown", posi.transX + CenterZiRelated.position[4], posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
+    displayTextWithValue(getString(446)/*"Breakdown"*/, posi.transX + CenterZiRelatedBottum.position[4], posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
   }
 
-  void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, CenterZiRelated centerZiRelated) {
+  void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, CenterZiRelatedBottum centerZiRelatedBottum) {
     var ziColor = Colors.brown;
 
     // one center zi first
@@ -986,7 +996,7 @@ class BasePainter extends CustomPainter{
             shouldDrawCenter);
 
       if (display) {
-        displayCenterZiRelated(listType, id, posiSize.charFontSize, centerZiRelated);
+        displayCenterZiRelated(listType, id, posiSize.charFontSize, centerZiRelatedBottum);
       }
 
       // draw navigation path

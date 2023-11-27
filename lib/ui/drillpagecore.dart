@@ -40,6 +40,7 @@ class DrillPageCore extends StatefulWidget {
 
 class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProviderStateMixin {
   DrillCategory drillCategory; //startLessonId;
+  DrillPainter drillPainter;
   int startingCenterZiId;
   int subItemId; //endLessonId;
   String customString;
@@ -67,6 +68,13 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   DrillMenu _selectedSubMenu;
 
   String currentLocale;
+
+  CenterZiRelatedBottum centerZiRelatedBottum;
+
+  int centerRelatedButtonUpdates = 0;
+
+  CenterZiRelatedBottum currentCenterZiRelatedBottum = CenterZiRelatedBottum(
+      -1, 'l', 0, 0, -1, 1, 1, 0, -1, false, null);
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -245,7 +253,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         compoundZiCurrentComponentId,
                         currentZiListType,
                         drillCategory,
-                        startingCenterZiId
+                        startingCenterZiId,
+                        currentCenterZiRelatedBottum
                     ),
                     child: Center(
                       child: Stack(
@@ -460,6 +469,13 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
               centerZiId = newCenterZiId;
             }
             shouldDrawCenter = true;
+
+            if (centerZiId != 1) {
+              var searchingZiId = centerZiId; // drill is for searching zi already
+              currentCenterZiRelatedBottum.searchingZiId = searchingZiId;
+              CenterZiRelatedBottum.initCenterZiRelatedBottum(
+                  searchingZiId, currentCenterZiRelatedBottum);
+            }
           });
 
           var char = theSearchingZiList[currentZiId].char;
@@ -555,9 +571,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
+        left: posiAndSize.transX - 10.0,
+        height: posiAndSize.height + 10.0,
+        width: posiAndSize.width + 10.0,
         child: butt
     );
 
@@ -639,6 +655,13 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
 
       buttons.add(posiCenter);
+
+      // centerZiRelatedBottom 'buttons'
+      createdCenterZiRelatedBottumButtons(buttons);
+
+      if (currentCenterZiRelatedBottum.drawBreakdown) {
+        createDrillBreakoutHittestButtons(context, buttons);
+      }
     }
 
     // draw speech icon
@@ -706,5 +729,262 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         buttons.add(posi);
       }
     }
+  }
+
+  createdCenterZiRelatedBottumButtons(List<Widget> buttons) {
+    var drawCenterZiStructure0 = getCenterZiStructure0Button();
+    buttons.add(drawCenterZiStructure0);
+
+    var drawCenterZiStructure1 = getCenterZiStructure1Button();
+    buttons.add(drawCenterZiStructure1);
+
+    buttons.add(getCenterZiCompCount0Button());
+
+    buttons.add(getCenterZiCompCount1Button());
+
+    buttons.add(getCenterZiWordBreakdownButton());
+  }
+
+  Widget getCenterZiStructure0Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelatedBottum.structureSelectPosition = 0;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * fontSize;
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelatedBottum.position[0] - 10.0,
+        height: fontSize * 1.3,
+        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiStructure1Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelatedBottum.structureSelectPosition = 1;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += 2 * fontSize;
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelatedBottum.position[1] - 10.0,
+        height: fontSize * 1.3,
+        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20, // assume similar width
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiCompCount0Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelatedBottum.compCountSelectPosition = 0;
+
+        setState(() {
+
+          centerRelatedButtonUpdates++;
+        });
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += (3 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelatedBottum.position[2] - 10.0,
+        height: fontSize * 1.3,
+        width: 40, // ok to be fixed length here since just 1 digit
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiCompCount1Button() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+        currentCenterZiRelatedBottum.compCountSelectPosition = 1;
+
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += (3 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelatedBottum.position[3] - 10.0,
+        height: fontSize * 1.3,
+        width: 40, // ok to be fixed length here since just 1 digit
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Widget getCenterZiWordBreakdownButton() {
+    var butt = FlatButton(
+      onPressed: () {
+        initOverlay();
+
+        currentCenterZiRelatedBottum.drawBreakdown = currentCenterZiRelatedBottum.drawBreakdown ? false : true;
+        setState(() {
+          centerRelatedButtonUpdates++;
+        });
+
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0),),
+    );
+
+    var posi = thePositionManager.getHintPosi();
+    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+    posi.transY += (4 * fontSize);
+
+    var posiCenter = Positioned(
+        top: posi.transY,
+        left: posi.transX + CenterZiRelatedBottum.position[4],
+        height: fontSize * 1.3,
+        width: 100,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  Positioned getDrillBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+    var id = Utility.getIdFromUniqueNumber(uniqueNumber);
+    var listType = Utility.getListType(uniqueNumber, id);
+
+    var butt = FlatButton(
+      color: Colors.white,
+      textColor: Colors.blueAccent,
+
+      onPressed: () {
+        initOverlay();
+        //var scrollOffset = _scrollController.offset;
+        //var zi = theZiManager.getZi(id);
+        //var searchingZi = DictionaryManager.getSearchingZi(id);
+        var char = ZiManager.getOneChar(id, listType);
+        TextToSpeech.speak("zh-CN", char);
+        if (previousZiId != id || !haveShowedOverlay) {
+          var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
+          //var meaning = ZiManager.getPinyinAndMeaning(id);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
+          haveShowedOverlay = true;
+        }
+        else if (haveShowedOverlay) {
+          haveShowedOverlay = false;
+        }
+
+        previousZiId = id;
+      },
+      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
+    );
+
+    var posiCenter = Positioned(
+        top: posiAndSize.transY,
+        left: posiAndSize.transX,
+        height: posiAndSize.height * 1.3, // not sure why the hittest area is smaller than the char. so use 1.3
+        width: posiAndSize.width * 1.3,
+        child: butt
+    );
+
+    return posiCenter;
+  }
+
+  List<Widget> createDrillBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
+    int compoundZiCurrentComponentId = 0;
+    int compoundZiTotalComponentNum = 0;
+    // compound zi is animating.
+    if (compoundZiComponentNum > 0) {
+      var compList = getAllZiComponents(centerZiId);
+      compoundZiTotalComponentNum = compList.length;
+
+      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
+        compoundZiCurrentComponentId = centerZiId;
+        resetCompoundZiAnimation();
+      }
+      else {
+        compoundZiCurrentComponentId = compList[compoundZiComponentNum - 1];
+      }
+    }
+
+    drillPainter = new DrillPainter(
+    Colors.amber,
+    Colors.blueAccent,
+    centerZiId,
+    shouldDrawCenter,
+    screenWidth,
+    0, //widget.startLessonId, //TODO: remove this
+    subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
+    widget.sidePositionsCache,
+    widget.realGroupMembersCache,
+    widget.centerPositionAndSizeCache,
+    allLearnedZis,
+    compoundZiCurrentComponentId,
+    currentZiListType,
+    drillCategory,
+    startingCenterZiId,
+        currentCenterZiRelatedBottum
+    );
+
+    var breakoutPositions = drillPainter.getDrillBreakoutPositions();
+
+    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
+    buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
+
+    breakoutPositions.forEach((uniqueNumber, position) =>
+        buttons.add(getDrillBreakoutPositionedButton(uniqueNumber, position)));
+
+    return buttons;
+  }
+
+  double getDrillHighestBreakoutYPosi( Map<int, PositionAndSize> breakoutPositions) {
+    double highestValue = 0;;
+    for (var values in breakoutPositions.values) {
+      if (values.transY > highestValue) {
+        highestValue = values.transY;
+      }
+    }
+
+    return highestValue;
   }
 }
