@@ -124,6 +124,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 3:
         Navigator.push(
           context,
@@ -133,7 +134,8 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+        */
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -142,7 +144,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 5:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -151,7 +153,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 6:
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -237,15 +239,6 @@ class _LessonPageState extends State<LessonPage> {
             ),
             //padding: EdgeInsets.all(20),
           ),
-          Container(
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  getButton(context, lessonId, 6),
-                ],
-            ),
-            //padding: EdgeInsets.all(20),
-          ),
         ]
       ),
     );
@@ -264,15 +257,12 @@ class _LessonPageState extends State<LessonPage> {
         buttonTitle = getString(2);
         break;
       case 3:
-        buttonTitle = getString(3);
-        break;
-      case 4:
         buttonTitle = getString(5);
         break;
-      case 5:
+      case 4:
         buttonTitle = getString(373);
         break;
-      case 6:
+      case 5:
         buttonTitle = getString(6);
         break;
       default:

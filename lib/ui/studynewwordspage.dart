@@ -290,6 +290,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             ),
           ).then((val) => {_getRequests()});
           break;
+          /*
         case 2:
         // should add this to BreakoutPage parameter
           theIsFromLessonContinuedSection = true;
@@ -301,7 +302,8 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             ),
           ).then((val) => {_getRequests()});
           break;
-        case 3:
+          */
+        case 2:
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -311,7 +313,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             ),
           ).then((val) => {_getRequests()});
           break;
-        case 4:
+        case 3:
           Navigator.push(
             context,
             MaterialPageRoute(
