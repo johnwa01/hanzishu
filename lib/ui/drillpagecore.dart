@@ -81,6 +81,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
   void _startAnimation() {
     _controller.stop();
     _controller.reset();
@@ -764,9 +768,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[0] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[0] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20,
+        width: (CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20) * getSizeRatioWithLimit(),
         child: butt
     );
 
@@ -793,9 +797,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[1] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[1] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20, // assume similar width
+        width: (CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20) * getSizeRatioWithLimit(), // assume similar width
         child: butt
     );
 
@@ -822,9 +826,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[2] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[2] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 40, // ok to be fixed length here since just 1 digit
+        width: 40 * getSizeRatioWithLimit(),
         child: butt
     );
 
@@ -851,9 +855,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[3] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[3] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 40, // ok to be fixed length here since just 1 digit
+        width: 40 * getSizeRatioWithLimit(), // ok to be fixed length here since just 1 digit
         child: butt
     );
 
@@ -880,9 +884,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[4],
+        left: (posi.transX + CenterZiRelatedBottum.position[4]) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 100,
+        width: 100 * getSizeRatioWithLimit(),
         child: butt
     );
 

@@ -671,7 +671,7 @@ class BasePainter extends CustomPainter{
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
-    displayTextWithValue("3", posiAndSizeMeaning.transX - 10.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.blue[800], false);
+    displayTextWithValue("3", posiAndSizeMeaning.transX - 10.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.amber, false);
     displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
     var displaySpeechIcon = true;
@@ -727,7 +727,7 @@ class BasePainter extends CustomPainter{
       posi.transY += (3 * fontSize);
     }
     else {
-      DisplayHint(listType, id, false, posi);
+      DisplayHint(listType, id, false, posi, true);
 
       posi.transY += (2 * fontSize);
       displayZiStructure(posi, centerZiRelatedBottum);
@@ -756,12 +756,12 @@ class BasePainter extends CustomPainter{
 
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
-          posi.transX + CenterZiRelatedBottum.position[0], posi.transY,
+          posi.transX + CenterZiRelatedBottum.position[0] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
-          posi.transX + CenterZiRelatedBottum.position[1], posi.transY,
+          posi.transX + CenterZiRelatedBottum.position[1] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -775,12 +775,12 @@ class BasePainter extends CustomPainter{
 
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
-          posi.transX + CenterZiRelatedBottum.position[0], posi.transY,
+          posi.transX + CenterZiRelatedBottum.position[0] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
-          posi.transX + CenterZiRelatedBottum.position[1], posi.transY,
+          posi.transX + CenterZiRelatedBottum.position[1] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -799,11 +799,11 @@ class BasePainter extends CustomPainter{
       }
 
       displayTextWithValue(
-          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[2], posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[2] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[3], posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[3] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -816,11 +816,11 @@ class BasePainter extends CustomPainter{
       }
 
       displayTextWithValue(
-          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[2], posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[2] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[3], posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[3] * getSizeRatioWithLimit(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -1102,7 +1102,7 @@ class BasePainter extends CustomPainter{
     return centerPositionAndSizeCache;
   }
 
-  DisplayHint(ZiListType listType, int id, bool isPhrase, PositionAndSize posi) {
+  DisplayHint(ZiListType listType, int id, bool isPhrase, PositionAndSize posi, bool withIndex) {
     var ziOrPhraseHint;
     if (listType == ZiListType.searching) {
       ziOrPhraseHint = theSearchingZiList[id].hint;
@@ -1117,7 +1117,9 @@ class BasePainter extends CustomPainter{
       ziOrPhraseHint = theZiManager.getZi(id).origin;
     }
 
-    displayTextWithValue('4. ' + getString(90)/*"Hint"*/ + ': ', posi.transX, posi.transY,
+    var hintHeader = withIndex ? ('4. ' + getString(90)/*"Hint"*/ + ': ') : (getString(90)/*"Hint"*/ + ': ');
+
+    displayTextWithValue(hintHeader, posi.transX, posi.transY,
         thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
         Colors.brown, false);
 

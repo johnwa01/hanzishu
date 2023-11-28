@@ -53,6 +53,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth);
+  }
+
 /*
   double applyRatio(double value) {
     return value * getSizeRatio();
@@ -469,10 +473,10 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
       buttons.add(drawBihuaPosiCenter);
 
       // centerZiRelatedBottom 'buttons'
-      createdCenterZiRelatedBottumButtons(buttons);
+      createdTreeCenterZiRelatedBottumButtons(buttons);
 
       if (currentCenterZiRelatedBottum.drawBreakdown) {
-        createDrillBreakoutHittestButtons(context, buttons);
+        createTreeDrillBreakoutHittestButtons(context, buttons);
       }
     }
 
@@ -481,21 +485,21 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return buttons;
   }
 
-  createdCenterZiRelatedBottumButtons(List<Widget> buttons) {
-    var drawCenterZiStructure0 = getCenterZiStructure0Button();
+  createdTreeCenterZiRelatedBottumButtons(List<Widget> buttons) {
+    var drawCenterZiStructure0 = getTreeCenterZiStructure0Button();
     buttons.add(drawCenterZiStructure0);
 
-    var drawCenterZiStructure1 = getCenterZiStructure1Button();
+    var drawCenterZiStructure1 = getTreeCenterZiStructure1Button();
     buttons.add(drawCenterZiStructure1);
 
-    buttons.add(getCenterZiCompCount0Button());
+    buttons.add(getTreeCenterZiCompCount0Button());
 
-    buttons.add(getCenterZiCompCount1Button());
+    buttons.add(getTreeCenterZiCompCount1Button());
 
-    buttons.add(getCenterZiWordBreakdownButton());
+    buttons.add(getTreeCenterZiWordBreakdownButton());
   }
 
-  Widget getCenterZiStructure0Button() {
+  Widget getTreeCenterZiStructure0Button() {
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
@@ -514,16 +518,16 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[0] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[0] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20,
+        width: (CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20) * getSizeRatioWithLimit(),
         child: butt
     );
 
     return posiCenter;
   }
 
-  Widget getCenterZiStructure1Button() {
+  Widget getTreeCenterZiStructure1Button() {
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
@@ -543,16 +547,16 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[1] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[1] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20, // assume similar width
+        width: (CenterZiRelatedBottum.position[1] - CenterZiRelatedBottum.position[0] - 20) * getSizeRatioWithLimit(), // assume similar width
         child: butt
     );
 
     return posiCenter;
   }
 
-  Widget getCenterZiCompCount0Button() {
+  Widget getTreeCenterZiCompCount0Button() {
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
@@ -572,16 +576,16 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[2] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[2] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 40, // ok to be fixed length here since just 1 digit
+        width: 40 * getSizeRatioWithLimit(),
         child: butt
     );
 
     return posiCenter;
   }
 
-  Widget getCenterZiCompCount1Button() {
+  Widget getTreeCenterZiCompCount1Button() {
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
@@ -601,16 +605,16 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[3] - 10.0,
+        left: (posi.transX + CenterZiRelatedBottum.position[3] - 10.0) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 40, // ok to be fixed length here since just 1 digit
+        width: 40 * getSizeRatioWithLimit(),
         child: butt
     );
 
     return posiCenter;
   }
 
-  Widget getCenterZiWordBreakdownButton() {
+  Widget getTreeCenterZiWordBreakdownButton() {
     var butt = FlatButton(
       onPressed: () {
         initOverlay();
@@ -630,9 +634,9 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posiCenter = Positioned(
         top: posi.transY,
-        left: posi.transX + CenterZiRelatedBottum.position[4],
+        left: (posi.transX + CenterZiRelatedBottum.position[4]) * getSizeRatioWithLimit(),
         height: fontSize * 1.3,
-        width: 100,
+        width: 100 * getSizeRatioWithLimit(),
         child: butt
     );
 
@@ -681,7 +685,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return posiCenter;
   }
 
-  Positioned getDrillBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
+  Positioned getTreeDrillBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
     var listType = Utility.getListType(uniqueNumber, id);
 
@@ -722,7 +726,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return posiCenter;
   }
 
-  List<Widget> createDrillBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
+  List<Widget> createTreeDrillBreakoutHittestButtons(BuildContext context, List<Widget> buttons) {
     int compoundZiCurrentComponentId = 0;
     int compoundZiTotalComponentNum = 0;
     // compound zi is animating.
@@ -760,12 +764,12 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>
-        buttons.add(getDrillBreakoutPositionedButton(uniqueNumber, position)));
+        buttons.add(getTreeDrillBreakoutPositionedButton(uniqueNumber, position)));
 
     return buttons;
   }
 
-  double getDrillHighestBreakoutYPosi( Map<int, PositionAndSize> breakoutPositions) {
+  double getTreeDrillHighestBreakoutYPosi( Map<int, PositionAndSize> breakoutPositions) {
     double highestValue = 0;;
     for (var values in breakoutPositions.values) {
       if (values.transY > highestValue) {

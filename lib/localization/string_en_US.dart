@@ -449,9 +449,9 @@ var theString_en_US = [
   Local(439, "Introduction to Hanzishu Puzzle Typing"),
   Local(440, "Word structure"),
   Local(441, "Single part"),
-  Local(442, "left & right"),
-  Local(443, "top & down"),
-  Local(444, "wrapped"),
+  Local(442, "Left & right"),
+  Local(443, "Top & down"),
+  Local(444, "Wrapped"),
   Local(445, "Chinese alphabet count"),
   Local(446, "Breakdown"),
 ];

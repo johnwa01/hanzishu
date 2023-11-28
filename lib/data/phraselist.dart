@@ -158,7 +158,15 @@ Phrase(142, "西单", "", "Xidan", "west (西) single (单) "),
   Phrase(152, "她们", "", "they", "plural (们) of she（她) "),
   Phrase(153, "几月", "", "which month", "how many (几) month（月) "),
   Phrase(154, "八月", "", "August", "eight (八) month（月) "),
-  Phrase(155, "下雪", "", "Snow", "Falling (下) snow（雪) "),
+  Phrase(155, "下雪", "", "snow", "falling (下) snow（雪) "),
+  Phrase(156, "每天", "", "everyday", "every(每) day（天) "),
+  Phrase(157, "都在", "", "always", "always (都) are（在) "),
+  Phrase(158, "进步", "", "progess", "advance (进) steps（步) "),
+  Phrase(159, "松树", "", "pine （松）tree（树）", ""),
+  Phrase(160, "故宫", "", "the Forbidden City", "ancient（故）palace（宫）"),
+  Phrase(161, "地坛", "", "earth altar", "earth（地）altar（坛）"),
+  Phrase(162, "早晨", "", "early morning", "early（早）morning（晨）"),
+  Phrase(163, "旅馆", "", "hotel", "place（馆）for travel（旅）"),
 ];
 
 List<Phrase> theSpecialPhraseList =
