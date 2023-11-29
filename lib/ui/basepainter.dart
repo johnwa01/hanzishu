@@ -37,7 +37,7 @@ class BasePainter extends CustomPainter{
 
   Color lineColor;
   Color completeColor;
-  double width;  //screenWidth
+  double width;  //screenWidth or frame width from inherited classes
   int centerId;
   bool shouldDrawCenter;
 
@@ -59,7 +59,7 @@ class BasePainter extends CustomPainter{
   //BasePainter({this.lineColor, this.completeColor, this.centerId, this.shouldDrawCenter, this.width, this.sidePositionsCache, this.realGroupMembersCache, this.centerPositionAndSizeCache});
 
   double getSizeRatio() {
-    // Note: assume screenWidth has considered the height to screen ratio already, that is, might be narrowed areadly
+    // Note: assume screenWidth has considered the height to screen ratio already, that is, might be narrowed alreadly
     //       from the actual screen size if height to width ratio is lower than the minimum.
     return Utility.getSizeRatio(width);
   }
@@ -68,6 +68,8 @@ class BasePainter extends CustomPainter{
     return value * getSizeRatio();
   }
 
+  // These two are used by inherited classes only.
+  // The functions here should never use these since width is passed from inherited classes only
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(width);
   }
@@ -671,7 +673,7 @@ class BasePainter extends CustomPainter{
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
-    displayTextWithValue("3", posiAndSizeMeaning.transX - 10.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.amber, false);
+    displayTextWithValue("3", posiAndSizeMeaning.transX - 15.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.amber, false);
     displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
 
     var displaySpeechIcon = true;
@@ -737,7 +739,8 @@ class BasePainter extends CustomPainter{
     }
 
     posi.transY += fontSize;
-    displayWordBreakdown(/*listType, id,*/ posi, centerZiRelatedBottum);
+    // TODO: turn on after fixing hit button position bug in web version
+    //displayWordBreakdown(/*listType, id,*/ posi, centerZiRelatedBottum);
   }
 
   void displayZiStructure(PositionAndSize posi, CenterZiRelatedBottum centerZiRelatedBottum) {
@@ -756,12 +759,12 @@ class BasePainter extends CustomPainter{
 
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
-          posi.transX + CenterZiRelatedBottum.position[0] * getSizeRatioWithLimit(), posi.transY,
+          (posi.transX + CenterZiRelatedBottum.position[0]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
-          posi.transX + CenterZiRelatedBottum.position[1] * getSizeRatioWithLimit(), posi.transY,
+          (posi.transX + CenterZiRelatedBottum.position[1]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -775,12 +778,12 @@ class BasePainter extends CustomPainter{
 
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[centerZiRelatedBottum.structureWrongIndex]) /*"Left & right"*/,
-          posi.transX + CenterZiRelatedBottum.position[0] * getSizeRatioWithLimit(), posi.transY,
+          (posi.transX + CenterZiRelatedBottum.position[0]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
           getString(CenterZiRelatedBottum.structure[structureIndex]) /*"Single part"*/,
-          posi.transX + CenterZiRelatedBottum.position[1] * getSizeRatioWithLimit(), posi.transY,
+          (posi.transX + CenterZiRelatedBottum.position[1]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -799,11 +802,11 @@ class BasePainter extends CustomPainter{
       }
 
       displayTextWithValue(
-          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[2] * getSizeRatioWithLimit(), posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, (posi.transX + CenterZiRelatedBottum.position[2]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[3] * getSizeRatioWithLimit(), posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, (posi.transX + CenterZiRelatedBottum.position[3]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -816,11 +819,11 @@ class BasePainter extends CustomPainter{
       }
 
       displayTextWithValue(
-          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, posi.transX + CenterZiRelatedBottum.position[2] * getSizeRatioWithLimit(), posi.transY,
+          centerZiRelatedBottum.compCountWrongValue.toString()/*"3"*/, (posi.transX + CenterZiRelatedBottum.position[2]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col0, true);
       displayTextWithValue(
-          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, posi.transX + CenterZiRelatedBottum.position[3] * getSizeRatioWithLimit(), posi.transY,
+          centerZiRelatedBottum.compCountReal.toString()/*"2"*/, (posi.transX + CenterZiRelatedBottum.position[3]) * getSizeRatio(), posi.transY,
           thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
           col1, true);
     }
@@ -848,8 +851,8 @@ class BasePainter extends CustomPainter{
       }
     }
 
-    displayTextWithValue("7. ", posi.transX, posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
-    displayTextWithValue(getString(446)/*"Breakdown"*/, posi.transX + CenterZiRelatedBottum.position[4], posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
+    displayTextWithValue("7. ", posi.transX * getSizeRatio(), posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, false);
+    displayTextWithValue(getString(446)/*"Breakdown"*/, (posi.transX + CenterZiRelatedBottum.position[4]) * getSizeRatio(), posi.transY, thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), Colors.brown, true);
   }
 
   void drawZiGroup(int id, ZiListType listType, int startingCenterZiId, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, CenterZiRelatedBottum centerZiRelatedBottum) {
