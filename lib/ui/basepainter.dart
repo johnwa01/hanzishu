@@ -1165,7 +1165,7 @@ class BasePainter extends CustomPainter{
     // if str too long, just let it do it. This is mainly to avoid issue for Char drawing.
     if ((xPosi.value > (width / 2)) && ((xPosi.value + strSize) > width)) {
       xPosi.value = /*20.0 + */ applyRatio(55.0);
-      yPosi.value += fontSize * 1.3; // move to next line with gap
+      yPosi.value += fontSize * 1.0; //1.3; // move to next line with gap
     }
   }
 
@@ -1251,7 +1251,8 @@ class BasePainter extends CustomPainter{
       if (count >= 2) {
         xPosi.value += applyRatio(25.0); // some buffer at the end of screen. appears not enough space for this case
       }
-      yPosi.value += fontSize * 1.3; // fontSize has ratio already
+      // 1.0 or 1.3 doesn't seem matter here, strange.
+      yPosi.value += fontSize * 1.0; //1.3; // fontSize has ratio already
     }
   }
 

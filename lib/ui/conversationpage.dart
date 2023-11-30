@@ -136,32 +136,33 @@ class _ConversationPageState extends State<ConversationPage> {
     var butt = FlatButton(
       color: frameColor,
       textColor: Colors.blueAccent,
-      /*
+
       onPressed: () {
         initOverlay();
 
         if (buttonType == ButtonType.sound) {
           var conv = lesson.getSentence(id);
-          TextToSpeech.speak(conv);
+          TextToSpeech.speak("zh-CN", conv);
         }
         else if (buttonType == ButtonType.char){
           var zi = theZiManager.getZi(id);
-          TextToSpeech.speak(zi.char);
-
-          var meaning = ZiManager.getPinyinAndMeaning(id);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+          TextToSpeech.speak("zh-CN", zi.char);
         }
         else if (buttonType == ButtonType.phrase){
           var phrase = thePhraseList[id];
-          TextToSpeech.speak(phrase.chars);
-
-          var meaning = phrase.getPinyinAndMeaning();
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+          TextToSpeech.speak("zh-CN", phrase.chars);
+          //shortcut for sound only!
+        }
+        if (buttonType == ButtonType.translationSound) {
+          var sent = lesson.getRealSentence(id);
+          TextToSpeech.speak("en-US", sent.trans);
+        }
+        else if (buttonType == ButtonType.launchPage) {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
         }
       },
       onLongPress: () {
-      */
-      onPressed: () {
         if (buttonType == ButtonType.sound) {
           var conv = lesson.getSentence(id);
           TextToSpeech.speak("zh-CN", conv);
@@ -189,7 +190,7 @@ class _ConversationPageState extends State<ConversationPage> {
           var meaning = phrase.getPinyinAndMeaning();
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         }
-        if (buttonType == ButtonType.translationSound) {
+        else if (buttonType == ButtonType.translationSound) {
           var sent = lesson.getRealSentence(id);
           TextToSpeech.speak("en-US", sent.trans);
         }
