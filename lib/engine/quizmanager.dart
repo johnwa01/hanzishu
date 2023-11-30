@@ -248,13 +248,14 @@ class QuizManager {
           nextType = QuizType.chars;
           break;
         case QuizType.chars:
-          nextType = QuizType.basicChars;
-          break;
-        case QuizType.basicChars:
-          //nextType = QuizType.nonChars;
-          //nextType = QuizType.phrases;
+          //nextType = QuizType.basicChars;
           nextType = QuizType.conversations;
           break;
+        //case QuizType.basicChars:
+          //nextType = QuizType.nonChars;
+          //nextType = QuizType.phrases;
+       //   nextType = QuizType.conversations;
+        //  break;
         //case QuizType.nonChars:
         //  nextType = QuizType.phrases;
         //  break;

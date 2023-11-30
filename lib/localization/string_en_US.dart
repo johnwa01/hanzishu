@@ -450,7 +450,7 @@ var theString_en_US = [
   Local(440, "Word structure"),
   Local(441, "Single part"),
   Local(442, "Left & right"),
-  Local(443, "Top & down"),
+  Local(443, "Up & down"),
   Local(444, "Wrapped"),
   Local(445, "Chinese alphabet count"),
   Local(446, "Breakdown"),
