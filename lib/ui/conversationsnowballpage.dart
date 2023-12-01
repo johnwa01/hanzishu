@@ -4,8 +4,10 @@ import 'package:hanzishu/data/sentencelist.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/conversationsnowballlist.dart';
 
@@ -29,6 +31,8 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   OverlayEntry overlayEntry;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
+  PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
+      0.0, 0.0, "");
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -43,8 +47,16 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       });
   }
 
+  initOverlay() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+  }
+
   @override
   void dispose() {
+    initOverlay();
     _scrollController
         .dispose(); // it is a good practice to dispose the controller
     super.dispose();
@@ -96,10 +108,10 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   Widget getSnowballContent(BuildContext context) {
     return Column(
       //mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
 
-        children: getRows(lessonId),
+      children: getRows(lessonId),
     );
   }
 
@@ -110,17 +122,23 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     var sents = theConversationSnowballList[snowballId].sents;
 
 
-
     for (var i = 0; i < sents.length; i++) {
-      widgets.add(getOneRow(sents[i]));
+      widgets.add(getOneRow(sents[i], i));
     }
 
     return widgets;
   }
 
-  Widget getOneRow(Sent oneSent) {
-    var sentText = theSentenceList[oneSent.sentenceId].conv;
+  Widget getOneRow(Sent oneSent, int rowIndex) {
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: getRowButtons(oneSent, rowIndex)
+      ),
+    );
+  }
 
+  List<Widget> getRowButtons(Sent oneSent, int rowIndex) {
     var label;
     if (oneSent.player == ' ') {
       label = oneSent.player + ' ';
@@ -129,36 +147,60 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       label = oneSent.player + ':';
     }
 
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(width: 10 * getSizeRatioWithLimit()),
-          Text(label, style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
-          SizedBox(width: 10 * getSizeRatioWithLimit()),
-          Container(
-            height: 25.0 * getSizeRatioWithLimit(), //180
-            width: 25.0 * getSizeRatioWithLimit(),
-            child: IconButton(
-              icon: Icon(
-                Icons.volume_up,
-                size: 25.0 * getSizeRatioWithLimit(),   // 150
-              ),
-              color: Colors.cyan, //Colors.green,
-              onPressed: () {
-                TextToSpeech.speak("zh-CN", sentText);
-                //setState(() {
-                  //setPositionState(AnswerPosition.soundIcon);
-                //});
-              },
-            )
-          ),
-          SizedBox(width: 15 * getSizeRatioWithLimit()),
-          Text(sentText, style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
+    var sentText = theSentenceList[oneSent.sentenceId].conv;
 
-        ],
-      ),
+    List<Widget> buttons = [];
+    buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    buttons.add(Text(
+        label, style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),));
+    buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    var oneIcon = Container(
+          height: 25.0 * getSizeRatioWithLimit(), //180
+          width: 25.0 * getSizeRatioWithLimit(),
+          child: IconButton(
+            icon: Icon(
+              Icons.volume_up,
+              size: 25.0 * getSizeRatioWithLimit(), // 150
+            ),
+            color: Colors.cyan, //Colors.green,
+            onPressed: () {
+              initOverlay();
+              TextToSpeech.speak("zh-CN", sentText);
+            },
+          )
     );
+    buttons.add(oneIcon);
+    buttons.add(SizedBox(width: 15 * getSizeRatioWithLimit()));
+    //Text(sentText,
+    //  style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
+
+    for (int i = 0; i < sentText.length; i++) {
+      var butt = TextButton(
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(fontSize: 25.0 * getSizeRatioWithLimit()),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: EdgeInsets.fromLTRB(2.5, 0.0, 2.5, 0.0)
+        ),
+        onPressed: () {
+            initOverlay();
+            TextToSpeech.speak("zh-CN", sentText[i]);
+        },
+        onLongPress: () {
+          initOverlay();
+          TextToSpeech.speak("zh-CN", sentText[i]);
+          var ziId = ZiManager.findIdFromChar(ZiListType.zi, sentText[i]);
+          var meaning = ZiManager.getPinyinAndMeaning(ziId);
+          var posiAndSize = PositionAndSize((150.0 + rowIndex) * getSizeRatioWithLimit(), (85.0 + (rowIndex * 25)) * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 0.0, 0.0);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        },
+        child: Text(sentText[i],
+            style: TextStyle(color: Colors.blue)),
+      );
+      buttons.add(Container(child: butt));
+    }
+
+    return buttons;
   }
 
   Widget getContinue(BuildContext context) {
@@ -180,6 +222,50 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
     else {
       return SizedBox(width: 0, height: 0);
+    }
+  }
+
+  showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
+    initOverlay();
+
+    if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
+      var screenWidth = Utility.getScreenWidth(context);
+      var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+
+      OverlayState overlayState = Overlay.of(context);
+      overlayEntry = OverlayEntry(
+          builder: (context) =>
+              Positioned(
+                  top: posiY,
+                  left: adjustedXValue,
+                  /*
+                  child: FlatButton(
+                    child: Text(meaning, style: TextStyle(fontSize: getSizeRatioWithLimit() * 20.0),),
+                    color: Colors.blueAccent,
+                    textColor: Colors.white,
+                    onPressed: () {},
+                  )*/
+
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.blueAccent, //Colors.red.shade50,
+                      textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        padding: EdgeInsets.fromLTRB(2.5, 0.0, 2.5, 0.0),
+                      ),
+                     onPressed: () {
+                        initOverlay();
+                        },
+                      child: Text(meaning,
+                          style: TextStyle(color: Colors.white)),
+                  )
+              ));
+      overlayState.insert(overlayEntry);
+      previousPositionAndMeaning.set(posiX, posiY, meaning);
+    }
+    else {
+      previousPositionAndMeaning.set(0.0, 0.0, "");
     }
   }
 }

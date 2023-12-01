@@ -93,6 +93,13 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
   }
 
+  initOverlay() {
+    if (overlayEntry != null) {
+      overlayEntry.remove();
+      overlayEntry = null;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -307,7 +314,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                       child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
                       color: Colors.blueAccent,
                       textColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () {initOverlay();},
                     )
                 ));
         overlayState.insert(overlayEntry);

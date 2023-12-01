@@ -402,7 +402,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
               child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
               color: Colors.blueAccent,
               textColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {initOverlay();},
             )
         ));
     overlayState.insert(overlayEntry);

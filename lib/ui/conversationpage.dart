@@ -90,7 +90,7 @@ class _ConversationPageState extends State<ConversationPage> {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
-      theDicOverlayEntry = null;
+      theDicOverlayEntry = null; //TODO: not used here, remove?
     }
   }
 
@@ -117,7 +117,7 @@ class _ConversationPageState extends State<ConversationPage> {
                     child: Text(meaning, style: TextStyle(fontSize: applyRatioWithLimit(20.0)),),
                     color: Colors.blueAccent,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: () {initOverlay();},
                   )
               ));
       overlayState.insert(overlayEntry);

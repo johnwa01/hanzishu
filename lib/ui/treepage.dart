@@ -253,7 +253,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
           child: Text(meaning, style: TextStyle(fontSize: 20.0),),
           color: Colors.blueAccent,
           textColor: Colors.white,
-          onPressed: () {},
+          onPressed: () {initOverlay();},
         )
       ));
     overlayState.insert(overlayEntry);

@@ -133,7 +133,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
               child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
               color: Colors.blueAccent,
               textColor: Colors.white,
-              onPressed: () {},
+              onPressed: () {initOverlay();},
             )
         ));
     overlayState.insert(overlayEntry);
