@@ -152,15 +152,15 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     List<Widget> buttons = [];
     buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
     buttons.add(Text(
-        label, style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),));
+        label, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit()),));
     buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
     var oneIcon = Container(
-          height: 25.0 * getSizeRatioWithLimit(), //180
-          width: 25.0 * getSizeRatioWithLimit(),
+          height: 20.0 * getSizeRatioWithLimit(), //180
+          width: 20.0 * getSizeRatioWithLimit(),
           child: IconButton(
             icon: Icon(
               Icons.volume_up,
-              size: 25.0 * getSizeRatioWithLimit(), // 150
+              size: 20.0 * getSizeRatioWithLimit(), // 150
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {

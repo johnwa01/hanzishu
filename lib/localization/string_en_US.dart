@@ -9,7 +9,7 @@ var theString_en_US = [
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
   Local(5, "Typing exercises"),
-  Local(6, "Quiz"),
+  Local(6, "Challenge"), // Quiz
   Local(7, "Lesson"),
   Local(8, "Welcome to lesson "),
   Local(9, "Unit"),
@@ -258,7 +258,7 @@ var theString_en_US = [
   Local(252, "Demonstrates pronunciation and provides speaking practice. Tapping a word displays its overlay information."),
   Local(253, "Typing exercises"),
   Local(254, "Practice for typing the word using the Hanzishu puzzle typing method."),
-  Local(255, "Quiz"),
+  Local(255, "Challenge"), // Quiz
   Local(256, "Reviews the lesson."),
   Local(257, "Dictionary"),
   Local(258, "View all the words based on the Hanzishu Dictionary method which groups words by their Basic words. Contains nearly 3,800 words."),
@@ -270,7 +270,7 @@ var theString_en_US = [
   Local(264, "Hanzishu's other tools."),
   Local(265, "Word review"),
   Local(266, "Review the words according to the lessons and the units that they were first introduced."),
-  Local(267, "Quiz results"),
+  Local(267, "Challenge results"), // Quiz
   Local(268, "Records of the quizzes that you have taken"),
   Local(269, "Icons"),
   Local(270, "Triangle"),

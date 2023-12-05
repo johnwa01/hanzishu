@@ -1236,6 +1236,8 @@ class _InputZiPageState extends State<InputZiPage> {
       char = zi.zi;
     }
 
+    TextToSpeech.speak("zh-CN", char);
+
     return Row(
         children: <Widget>[
 

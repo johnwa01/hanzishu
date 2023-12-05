@@ -316,6 +316,17 @@ class QuizManager {
       return getTypeListForLesson(type, currentLesson);
   }
 
+  bool isLastSentenceIncludedOne(QuizType type) {
+    var sentenceList = getTypeList(type);
+    var sentId = sentenceList[sentenceList.length - 1];
+    var sent = theSentenceList[sentId];
+    if (sent.conv[0] == "[") {
+      return true;
+    }
+
+    return false;
+  }
+
   int getNextIndexForCurrentType() {
     var max;
     if (currentQuizTextbook == QuizTextbook.wordsStudy) {
@@ -328,8 +339,14 @@ class QuizManager {
 
     nextIndexForCurrentType += 1;
 
+    var isLastSentenceAndIncludedOne = false;
+    if (currentType == QuizType.conversations && nextIndexForCurrentType == (getCurrentTypeList().length - 1)) {
+      // only check last sentence in current lesson
+      isLastSentenceAndIncludedOne = isLastSentenceIncludedOne(currentType);
+    }
+
     // prepare for next one
-    if (nextIndexForCurrentType >= max) {
+    if (nextIndexForCurrentType >= max || isLastSentenceAndIncludedOne) {
       nextIndexForCurrentType = 0;
       resetCurrentTypeToNextNonEmptyTypeOrNone();
 
@@ -486,6 +503,16 @@ class QuizManager {
     //var indexDiff = index;
     var lessonIdAndIndex = LessonAndIndex(currentLesson, index);
     var count = getTypeList(type).length;
+
+    //var isLastSentenceAndIncludedOne = false;
+    if (currentType == QuizType.conversations && index >= (getCurrentTypeList().length - 1)) {
+      // only check last sentence in current lesson
+      //isLastSentenceAndIncludedOne = isLastSentenceIncludedOne(currentType);
+      if (isLastSentenceIncludedOne(currentType)) {
+        count -= 1; // exclude the last sentence
+      }
+    }
+
     if (count == 0 || lessonIdAndIndex.indexDiff >= count) {
       lessonIdAndIndex.indexDiff -= count;
       findNeighborLessonAndIndex(type,
@@ -545,6 +572,9 @@ class QuizManager {
       upperRange = list.length - 1;
       if (upperRange < minUpperRange) {
         upperRange = minUpperRange;
+        //if (currentType == QuizType.conversations) {
+        //  upperRange -= 1;
+        //}
       }
     }
 

@@ -167,6 +167,7 @@ Phrase(142, "西单", "", "Xidan", "west (西) single (单) "),
   Phrase(161, "地坛", "", "earth altar", "earth（地）altar（坛）"),
   Phrase(162, "早晨", "", "early morning", "early（早）morning（晨）"),
   Phrase(163, "旅馆", "", "hotel", "place（馆）for travel（旅）"),
+  Phrase(164, "女子", "", "woman", ""),
 ];
 
 List<Phrase> theSpecialPhraseList =
