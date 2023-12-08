@@ -277,6 +277,9 @@ class ZiManager {
       case DrillCategory.hsk:
         filterList = theSearchingZiFilterList[2];
         break;
+      case DrillCategory.hskTest:
+        filterList = theSearchingZiFilterList[3];
+        break;
       //case DrillCategory.custom:
       default:
         filterList = theSearchingZiFilterList[0];

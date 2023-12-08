@@ -6,6 +6,7 @@ enum DrillCategory {
   all,
   hanzishu,
   hsk,
+  hskTest,
   custom,
   yuwen,
   yuwenLesson

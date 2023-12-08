@@ -4,6 +4,7 @@ import 'package:hanzishu/data/componentlist.dart';
 import 'package:hanzishu/data/drillmenulist.dart';
 import 'dart:ui';
 import 'dart:async';
+import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
@@ -13,6 +14,7 @@ import 'package:hanzishu/ui/drillpainter.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
+import 'package:hanzishu/ui/standardexam.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
@@ -235,8 +237,20 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       height: 110, //80
                     ),
                     onTap: () => {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => DrillPageCore(drillCategory: drillCategory, startingCenterZiId: 1, subItemId: subItemId, customString: null))),
+                      if (drillCategory == DrillCategory.hskTest) {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                                StandardExam(drillCategory: drillCategory,
+                                    subItemId: 1/*TODO: subItemId*/, quizCategory: QuizCategory.meaning))),
+                      }
+                      else {
+                          Navigator.of(context).push(
+                              MaterialPageRoute(builder: (context) =>
+                                  DrillPageCore(drillCategory: drillCategory,
+                                      startingCenterZiId: 1,
+                                      subItemId: subItemId,
+                                      customString: null))),
+                      }
                     }
                 ),
                 //SizedBox(height: 30),
@@ -288,6 +302,9 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         break;
       case 3:
         category = DrillCategory.hsk;
+        break;
+      case 4:
+        category = DrillCategory.hskTest;
         break;
       default:
         category = DrillCategory.all;
@@ -349,6 +366,10 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     }
     else if (_selectedDrillMenu.id == 3) {
       subMenuList = theHSKSubList;
+      commonString2 = getString(399);
+    }
+    else if (_selectedDrillMenu.id == 4) {
+      subMenuList = theHSKTestSubList;
       commonString2 = getString(399);
     }
 

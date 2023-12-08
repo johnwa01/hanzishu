@@ -20,6 +20,7 @@ var theDrillMenuList = [
   DrillMenu(1, 395),
   DrillMenu(2, 10),
   DrillMenu(3, 396),
+  DrillMenu(4, 447),
 ];
 
 var theHanzishuSubList = [
@@ -45,10 +46,21 @@ var theHSKSubList = [
   DrillMenu(7, 400), //"Up to level 7/8/9"),
 ];
 
+var theHSKTestSubList = [
+  DrillMenu(1, 0), //"level 1"),
+  DrillMenu(2, 0), //"level 2"),
+  DrillMenu(3, 0), //"level 3"),
+  DrillMenu(4, 0), //"level 4"),
+  DrillMenu(5, 0), //"level 5"),
+  DrillMenu(6, 0), //"level 6"),
+  DrillMenu(7, 400), //"level 7/8/9"),
+];
+
 var theSearchingZiFilterList = [
   null, //all
   theSearchingZiList, //hanzishu
   theSearchingZiList, //hsk
+  theSearchingZiList, //hskTest
   null //custom
 ];
 

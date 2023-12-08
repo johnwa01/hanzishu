@@ -11,7 +11,6 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 enum QuizTextbook {
   hanzishu,
   wordsStudy,
-  //yuwen
 }
 
 enum QuizCategory {

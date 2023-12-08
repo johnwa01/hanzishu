@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
@@ -99,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theComponentManager = ComponentManager();
     theStrokeManager = StrokeManager();
     theDictionaryManager = DictionaryManager();
+    theStandardExamManager = StandardExamManager();
 
     theStatisticsManager.init(null);
 

@@ -423,6 +423,11 @@ class DictionaryManager {
         realFilterList[j] = oneList[j].levelHSK;
       }
     }
+    else if (drillCategory == DrillCategory.hskTest) {
+      for (int k = 0; k < length; k++) {
+        realFilterList[k] = oneList[k].levelHSK;
+      }
+    }
     else if (drillCategory == DrillCategory.custom) {
       // create the list // filterId
       var customFilterIndex = ZiManager.getFilterIndexByCategory(drillCategory);

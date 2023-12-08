@@ -449,6 +449,7 @@ var theString_zh_CN = [
   Local(442, "左右"),
   Local(443, "上下"),
   Local(444, "包围"),
-  Local(445, "中文字母数"),
+  Local(445, "中文部件数"),
   Local(446, "拆分"),
+  Local(447, "HSK汉字测试"),
 ];
