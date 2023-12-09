@@ -241,7 +241,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
                                 StandardExam(drillCategory: drillCategory,
-                                    subItemId: 1/*TODO: subItemId*/, quizCategory: QuizCategory.meaning))),
+                                    subItemId: subItemId, quizCategory: QuizCategory.meaning))),
                       }
                       else {
                           Navigator.of(context).push(
@@ -370,6 +370,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     }
     else if (_selectedDrillMenu.id == 4) {
       subMenuList = theHSKTestSubList;
+      commonString1 = "";
       commonString2 = getString(399);
     }
 

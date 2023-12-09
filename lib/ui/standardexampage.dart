@@ -143,16 +143,16 @@ class _StandardExamState extends State<StandardExam> {
   }
 
   Widget getAnswers(BuildContext context) {
-        return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              getZiContainer(AnswerPosition.positionA),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getZiContainer(AnswerPosition.positionB),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getZiContainer(AnswerPosition.positionC),
-            ]
-        );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          getZiContainer(AnswerPosition.positionA),
+          SizedBox(height: 5.0 * getSizeRatio()),
+          getZiContainer(AnswerPosition.positionB),
+          SizedBox(height: 5.0 * getSizeRatio()),
+          getZiContainer(AnswerPosition.positionC),
+        ]
+    );
   }
 
   setPositionState(AnswerPosition position) {
@@ -306,8 +306,8 @@ class _StandardExamState extends State<StandardExam> {
       title = "Congratulation!";
       content = "You have passed this quiz with a score of " + corStr + "!";
 
-        updateCompleteStatus();
-        theHasNewlyCompletedLesson = true;
+      updateCompleteStatus();
+      theHasNewlyCompletedLesson = true;
     }
     else {
       title = "Good effort!";

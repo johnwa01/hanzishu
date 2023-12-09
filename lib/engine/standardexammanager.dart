@@ -1,12 +1,15 @@
 import 'dart:math';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 
 
 class StandardExamManager {
   DrillCategory currentDrillCategory;
-  int currentDrillSubMenu = 0;
+  int currentSubItemId = 0;
   QuizCategory currentQuizCategory;
+
+  static int maxExamNumber = 30;
 
   int currentId = 0;
 
@@ -17,26 +20,34 @@ class StandardExamManager {
   var minUpperRange = 5; // 0 based, so 5+1=6
 
   List<String> fullSubList = ['灵', '覃', '阶', '敢', '因', '众', '醒', '已', '啥'];
-  List<String> testSubList = ['覃', '阶', '敢', '众', '醒', '已', '啥'];
+  /*
+  List<List<String>> testSubLists = [['覃', '阶', '敢', '众', '醒', '已', '啥'],
+    ['阶', '敢', '众', '醒', '已', '啥'],
+    ['敢', '众', '醒', '已', '啥'],
+    ['众', '醒', '已', '啥'],
+    ['醒', '已', '啥', '已', '啥'],
+    ['敢', '众', '醒', '已', '啥']];*/
+
+  List<List<String>> testSubLists = [[], [], [], [], [], [], []];
 
   initValues(DrillCategory drillCategory, int subItemId, QuizCategory quizCategory) {
     // set all ini values for this drillCategory
     currentDrillCategory = drillCategory;
-    currentDrillSubMenu = subItemId;
+    currentSubItemId = subItemId;
     currentQuizCategory = quizCategory;
 
     currentId = 0;
     currentValues = ["", "", "", ""];
     correctPosition = 0;
 
-    createFullSubList(subItemId);
+    //createFullSubList(subItemId);
 
     // create a random list of n values in a submenu
     createTestSubList(subItemId);
   }
 
   int getTotalQuestions() {
-    return testSubList.length;
+    return maxExamNumber; //testSubLists[currentSubItemId - 1].length;
   }
 
   List<String> getCurrentValues() {
@@ -44,11 +55,15 @@ class StandardExamManager {
   }
 
   int getNext() {
-    return getNextHelper(currentDrillSubMenu);
+    return getNextHelper(currentSubItemId);
   }
 
   int getNextHelper(int drillSubMenu) {
-    if (currentId < (testSubList.length - 1)) {
+    if (currentId < (testSubLists[currentSubItemId - 1].length - 1)) {
+      if (currentId >= maxExamNumber) {
+        return -1;
+      }
+
       currentId++;
       return currentId;
     }
@@ -57,11 +72,18 @@ class StandardExamManager {
   }
 
   createFullSubList(int drillSubMenu) {
-    return fullSubList;
+    //return fullSubList;
   }
 
   createTestSubList(int drillSubMenu) {
-    return testSubList;
+    var hskLevel;
+    for (int i = 52; i < theSearchingZiList.length; i++) {
+      hskLevel = theSearchingZiList[i].levelHSK;
+      if (hskLevel >= 1 && hskLevel <= 7) {
+        testSubLists[hskLevel - 1].add(theSearchingZiList[i].char);
+      }
+    }
+    //return testSubLists[0];
   }
 
   int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
@@ -86,7 +108,7 @@ class StandardExamManager {
   }
 
   List<String> getTypeList(QuizType type) {
-    return createTestSubList(currentDrillSubMenu);
+    return testSubLists[currentSubItemId - 1];;
   }
 
   String getOneValueById(int id) {
