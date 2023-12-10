@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 
 
@@ -9,13 +10,13 @@ class StandardExamManager {
   int currentSubItemId = 0;
   QuizCategory currentQuizCategory;
 
-  static int maxExamNumber = 30;
+  static int maxExamNumber = 10; //30;
 
   int currentId = 0;
 
   var currentType = QuizType.chars; // only supported type for HSK etc
 
-  List<String> currentValues = ["", "", "", ""];
+  List<SearchingZi> currentValues = [null, null, null, null];
   var correctPosition = 0;
   var minUpperRange = 5; // 0 based, so 5+1=6
 
@@ -28,7 +29,7 @@ class StandardExamManager {
     ['醒', '已', '啥', '已', '啥'],
     ['敢', '众', '醒', '已', '啥']];*/
 
-  List<List<String>> testSubLists = [[], [], [], [], [], [], []];
+  List<List<SearchingZi>> testSubLists = [[], [], [], [], [], [], []];
 
   initValues(DrillCategory drillCategory, int subItemId, QuizCategory quizCategory) {
     // set all ini values for this drillCategory
@@ -37,7 +38,7 @@ class StandardExamManager {
     currentQuizCategory = quizCategory;
 
     currentId = 0;
-    currentValues = ["", "", "", ""];
+    currentValues = [null, null, null, null];
     correctPosition = 0;
 
     //createFullSubList(subItemId);
@@ -50,7 +51,7 @@ class StandardExamManager {
     return maxExamNumber; //testSubLists[currentSubItemId - 1].length;
   }
 
-  List<String> getCurrentValues() {
+  List<SearchingZi> getCurrentValues() {
     return currentValues;
   }
 
@@ -80,7 +81,7 @@ class StandardExamManager {
     for (int i = 52; i < theSearchingZiList.length; i++) {
       hskLevel = theSearchingZiList[i].levelHSK;
       if (hskLevel >= 1 && hskLevel <= 7) {
-        testSubLists[hskLevel - 1].add(theSearchingZiList[i].char);
+        testSubLists[hskLevel - 1].add(theSearchingZiList[i]);
       }
     }
     //return testSubLists[0];
@@ -103,17 +104,17 @@ class StandardExamManager {
     return number;
   }
 
-  List<String> getCurrentTypeList() {
+  List<SearchingZi> getCurrentTypeList() {
     return getTypeList(currentType);
   }
 
-  List<String> getTypeList(QuizType type) {
+  List<SearchingZi> getTypeList(QuizType type) {
     return testSubLists[currentSubItemId - 1];;
   }
 
-  String getOneValueById(int id) {
+  SearchingZi getOneValueById(int id) {
     var currentList = getCurrentTypeList();
-    return currentList[id];
+      return currentList[id];
   }
 
   int getCorrectPosition() {
@@ -140,7 +141,7 @@ class StandardExamManager {
     return position;
   }
 
-  List<String> getUpdatedValues(/*int index, bool isMeaning*/) {
+  List<SearchingZi> getUpdatedValues(/*int index, bool isMeaning*/) {
     var upperRange;
 
       var list = getCurrentTypeList();
@@ -148,6 +149,8 @@ class StandardExamManager {
       if (upperRange < minUpperRange) {
         upperRange = minUpperRange;
       }
+
+
 
     currentValues[0] = getOneValueById(currentId);
     var nonCharId0 = 0;

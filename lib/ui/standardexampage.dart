@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/quizpainter.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/standardexammanager.dart';
@@ -8,23 +9,25 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 
-class StandardExam extends StatefulWidget {
+class StandardExamPage extends StatefulWidget {
   bool isChars = true;
 
   DrillCategory drillCategory;
   final int subItemId;
   QuizCategory quizCategory;
 
-  StandardExam({this.drillCategory, this.subItemId, this.quizCategory});
-  //StandardExam({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
+  StandardExamPage({this.drillCategory, this.subItemId, this.quizCategory});
+  //StandardExamPage({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
 
   @override
-  _StandardExamState createState() => _StandardExamState();
+  _StandardExamPageState createState() => _StandardExamPageState();
 }
 
-class _StandardExamState extends State<StandardExam> {
+class _StandardExamPageState extends State<StandardExamPage> {
   // No need to show drillCategory and subItem
   double screenWidth;
+  QuizCategory quizCategory;
+  int currentIndex;
 
   AnswerPosition answerPosition;
   QuizTextbook quizTextbook;
@@ -44,6 +47,7 @@ class _StandardExamState extends State<StandardExam> {
   void initState() {
     super.initState();
     _progressValue = 0.0;
+    quizCategory = widget.quizCategory;
 
     theStandardExamManager.initValues(widget.drillCategory, widget.subItemId, widget.quizCategory);
 
@@ -52,7 +56,7 @@ class _StandardExamState extends State<StandardExam> {
     theStatisticsManager.initLessonQuizResults();
 
     setState(() {
-      answerPosition = AnswerPosition.none;
+      index = 0;
     });
   }
 
@@ -62,20 +66,8 @@ class _StandardExamState extends State<StandardExam> {
     // Only support this type for now.
     QuizType currentType = QuizType.chars; //theQuizManager.getCurrentType();
 
-    if (answerPosition == AnswerPosition.continueNext ||
-        answerPosition == AnswerPosition.none) {
       // tell manager to get values ready
       theStandardExamManager.getUpdatedValues();
-
-      var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-      _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
-    }
-
-    if ( index == -1 /*currentType == QuizType.none*/) {
-      // Completed the quiz. Save the quiz results and go back to lesson page.
-      theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
-      // Navigator.of(context).pop(); Note: let showCompletedDialog() to pop back together.
-    }
 
     return Scaffold
       (
@@ -115,10 +107,6 @@ class _StandardExamState extends State<StandardExam> {
           Container(
             padding: EdgeInsets.all(18 * getSizeRatio()), //
           ),
-          Container(
-            child: getContinue(context),
-            //        padding: EdgeInsets.all(10),
-          ),
         ]
     );
   }
@@ -139,31 +127,41 @@ class _StandardExamState extends State<StandardExam> {
   Widget getQuestion(BuildContext context) {
     var currentValues = theStandardExamManager.getCurrentValues();
 
-    return getZiContainer(AnswerPosition.center);
+    return getText(AnswerPosition.center);
   }
 
   Widget getAnswers(BuildContext context) {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: <Widget>[
-          getZiContainer(AnswerPosition.positionA),
-          SizedBox(height: 5.0 * getSizeRatio()),
-          getZiContainer(AnswerPosition.positionB),
-          SizedBox(height: 5.0 * getSizeRatio()),
-          getZiContainer(AnswerPosition.positionC),
-        ]
-    );
-  }
-
-  setPositionState(AnswerPosition position) {
-    if (answerPosition != position) {
-      setState(() {
-        answerPosition = position;
-      });
+    if (quizCategory ==
+        QuizCategory.meaning) { // phrases and sentences
+      return IntrinsicWidth(
+        child: Column(
+          //textDirection: TextDirection.ltr,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              getText(AnswerPosition.positionA),
+              SizedBox(height: 5.0 * getSizeRatio()),
+              getText(AnswerPosition.positionB),
+              SizedBox(height: 5.0 * getSizeRatio()),
+              getText(AnswerPosition.positionC),
+            ]
+        ),
+      );
+    }
+    else {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            getText(AnswerPosition.positionA),
+            SizedBox(height: 5.0 * getSizeRatio()),
+            getText(AnswerPosition.positionB),
+            SizedBox(height: 5.0 * getSizeRatio()),
+            getText(AnswerPosition.positionC),
+          ]
+      );
     }
   }
 
-  String getValue(AnswerPosition position) {
+  SearchingZi getValue(AnswerPosition position) {
     var value;
     var currentValues = theStandardExamManager.getCurrentValues();
 
@@ -189,7 +187,7 @@ class _StandardExamState extends State<StandardExam> {
         }
         break;
       default:
-        value = '';
+        value = null;
     }
 
     return value;
@@ -197,10 +195,12 @@ class _StandardExamState extends State<StandardExam> {
 
   Widget getText(AnswerPosition position) {
     var value = getValue(position);
+    var strValue = "";
     var fontSize = 30.0 * getSizeRatio(); // 35.0
     var currentType = theQuizManager.getCurrentType();
 
     if (position == AnswerPosition.center) {
+      strValue = value.char;
       if (currentType == QuizType.nonChars || currentType == QuizType.chars || currentType == QuizType.basicChars) {
         fontSize = 120.0 * getSizeRatio(); //60.0;
       }
@@ -211,13 +211,12 @@ class _StandardExamState extends State<StandardExam> {
 
     var backgroundColor = Colors.white;  // make it a non-material color first
     backgroundColor = Colors.blueAccent;
-    if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
-      //backgroundColor = Colors.blueAccent;
-      if (position == theStandardExamManager.getCorrectAnswerPosition()) {
-        backgroundColor = Colors.greenAccent;
+    if (position == AnswerPosition.positionA || position == AnswerPosition.positionB || position == AnswerPosition.positionC) {
+      if (quizCategory == QuizCategory.meaning) {
+        strValue = value.meaning;
       }
-      else if (position == answerPosition) {
-        backgroundColor = Colors.redAccent;
+      else {
+        strValue = value.char;
       }
     }
 
@@ -232,56 +231,43 @@ class _StandardExamState extends State<StandardExam> {
 
     return Container(
       child: FlatButton(
-        child: Text(value, style: TextStyle(fontSize: fontSize),),
+        child: Text(strValue, style: TextStyle(fontSize: fontSize),),
         color: backgroundColor, //color,
         textColor: textColor, //Colors.white,
         onPressed: () {
-          setPositionState(position);
+          //setPositionState(position);
+          answerPosition = position;
+
+          //if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
+            if (answerPosition !=
+                theStandardExamManager.getCorrectAnswerPosition()) {
+              theStatisticsManager.incrementLessonQuizResult(false);
+            }
+            else {
+              theStatisticsManager.incrementLessonQuizResult(true);
+            }
+          //}
+
+          //setPositionState(AnswerPosition.continueNext);
+
+          //theStandardExamManager.getUpdatedValues();
+          var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+          _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
+
+          setState(() {
+            index = theStandardExamManager.getNext();
+          });
+
+          if (index == -1) {
+                 //  theStorageHandler.updateOneLessonStatus(lessonId, true);
+                 //  theStorageHandler.SaveToFile();
+            //theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
+            showCompletedDialog(context);
+          }
         },
       ),
       //padding: EdgeInsets.all(20),
     );
-  }
-
-  Widget getZiContainer(AnswerPosition position) {
-    return getText(position);
-  }
-
-  Widget getContinue(BuildContext context) {
-    if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
-      var result; // = "Correct! ";
-      if (answerPosition != theStandardExamManager.getCorrectAnswerPosition()) {
-        theStatisticsManager.incrementLessonQuizResult(false);
-        result = getString(283)/*"Incorrect. "*/;
-      }
-      else {
-        theStatisticsManager.incrementLessonQuizResult(true);
-        result = getString(284)/*"Correct! "*/;
-      }
-
-      result += getString(285)/*"Continue"*/;
-
-      //_updateProgress();
-
-      return Container(
-        child: FlatButton(
-          child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(),)),
-          color: Colors.cyan,    //blueAccent,
-          textColor: Colors.white,
-          onPressed: () {
-            setState(() {
-              setPositionState(AnswerPosition.continueNext);
-
-              index = theStandardExamManager.getNext();
-              //}
-              if (index == -1) {
-                showCompletedDialog(context);
-              }
-            });
-          },
-        ),
-      );
-    }
   }
 
   showCompletedDialog(BuildContext context) {

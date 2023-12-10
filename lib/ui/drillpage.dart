@@ -14,7 +14,7 @@ import 'package:hanzishu/ui/drillpainter.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/ui/standardexam.dart';
+import 'package:hanzishu/ui/standardexampage.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
@@ -240,7 +240,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       if (drillCategory == DrillCategory.hskTest) {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
-                                StandardExam(drillCategory: drillCategory,
+                                StandardExamPage(drillCategory: drillCategory,
                                     subItemId: subItemId, quizCategory: QuizCategory.meaning))),
                       }
                       else {
