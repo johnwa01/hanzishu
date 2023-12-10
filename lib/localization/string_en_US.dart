@@ -454,5 +454,6 @@ var theString_en_US = [
   Local(444, "Wrapped"),
   Local(445, "Chinese alphabet count"),
   Local(446, "Breakdown"),
-  Local(447, "HSK Hanzi Test"),
+  Local(447, "HSK Hanzi Test（Pronunciation）"),
+  Local(448, "HSK Hanzi Test（Meaning）"),
 ];

@@ -21,6 +21,7 @@ var theDrillMenuList = [
   DrillMenu(2, 10),
   DrillMenu(3, 396),
   DrillMenu(4, 447),
+  DrillMenu(5, 448),
 ];
 
 var theHanzishuSubList = [
@@ -60,7 +61,8 @@ var theSearchingZiFilterList = [
   null, //all
   theSearchingZiList, //hanzishu
   theSearchingZiList, //hsk
-  theSearchingZiList, //hskTest
+  theSearchingZiList, //hskTestSound
+  theSearchingZiList, //hskTestMeaning
   null //custom
 ];
 

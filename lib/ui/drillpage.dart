@@ -237,11 +237,17 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       height: 110, //80
                     ),
                     onTap: () => {
-                      if (drillCategory == DrillCategory.hskTest) {
+                      if(drillCategory == DrillCategory.hskTestSound) {
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
                                 StandardExamPage(drillCategory: drillCategory,
-                                    subItemId: subItemId, quizCategory: QuizCategory.meaning))),
+                                    subItemId: subItemId, quizCategory: QuizCategory.sound))),
+                      }
+                      else if(drillCategory == DrillCategory.hskTestMeaning) {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) =>
+                            StandardExamPage(drillCategory: drillCategory,
+                            subItemId: subItemId, quizCategory: QuizCategory.meaning))),
                       }
                       else {
                           Navigator.of(context).push(
@@ -304,7 +310,10 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         category = DrillCategory.hsk;
         break;
       case 4:
-        category = DrillCategory.hskTest;
+        category = DrillCategory.hskTestSound;
+        break;
+      case 5:
+        category = DrillCategory.hskTestMeaning;
         break;
       default:
         category = DrillCategory.all;
@@ -369,6 +378,11 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       commonString2 = getString(399);
     }
     else if (_selectedDrillMenu.id == 4) {
+      subMenuList = theHSKTestSubList;
+      commonString1 = "";
+      commonString2 = getString(399);
+    }
+    else if (_selectedDrillMenu.id == 5) {
       subMenuList = theHSKTestSubList;
       commonString1 = "";
       commonString2 = getString(399);

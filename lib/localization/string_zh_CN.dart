@@ -451,5 +451,6 @@ var theString_zh_CN = [
   Local(444, "包围"),
   Local(445, "中文部件数"),
   Local(446, "拆分"),
-  Local(447, "HSK汉字测试"),
+  Local(447, "HSK汉字识字测试（读音)"),
+  Local(448, "HSK汉字识字测试（字义)"),
 ];

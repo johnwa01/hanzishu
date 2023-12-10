@@ -292,8 +292,8 @@ class _StandardExamPageState extends State<StandardExamPage> {
       title = "Congratulation!";
       content = "You have passed this quiz with a score of " + corStr + "!";
 
-      updateCompleteStatus();
-      theHasNewlyCompletedLesson = true;
+      //updateCompleteStatus();
+      //theHasNewlyCompletedLesson = true;
     }
     else {
       title = "Good effort!";
@@ -318,6 +318,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
     );
   }
 
+  /*
   updateCompleteStatus() {
     //var wasCompleted = theStorageHandler.hasLessonCompleted(lessonId);
     //if (!wasCompleted) {
@@ -325,4 +326,5 @@ class _StandardExamPageState extends State<StandardExamPage> {
     //  theStorageHandler.SaveToFile();
     //}
   }
+  */
 }
