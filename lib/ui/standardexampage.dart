@@ -29,6 +29,8 @@ class _StandardExamPageState extends State<StandardExamPage> {
   QuizCategory quizCategory;
   int currentIndex;
 
+  //bool isSoundAnswered;
+
   AnswerPosition answerPosition;
   QuizTextbook quizTextbook;
   int lessonId;
@@ -48,6 +50,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
     super.initState();
     _progressValue = 0.0;
     quizCategory = widget.quizCategory;
+    //isSoundAnswered = false;
 
     theStandardExamManager.initValues(widget.drillCategory, widget.subItemId, widget.quizCategory);
 
@@ -131,15 +134,17 @@ class _StandardExamPageState extends State<StandardExamPage> {
   }
 
   Widget getAnswers(BuildContext context) {
+    /*
     if (quizCategory == QuizCategory.sound) {
       String strValue = getValue(AnswerPosition.positionA).char;
       strValue += getValue(AnswerPosition.positionB).char;
       strValue += getValue(AnswerPosition.positionC).char;
       TextToSpeech.speakWithRate("zh-CN", strValue, 0.1);
     }
+    */
 
-    //if (quizCategory ==
-    //    QuizCategory.meaning) { // phrases and sentences
+    if (quizCategory ==
+        QuizCategory.meaning) { // phrases and sentences
       return IntrinsicWidth(
         child: Column(
           //textDirection: TextDirection.ltr,
@@ -151,11 +156,33 @@ class _StandardExamPageState extends State<StandardExamPage> {
               SizedBox(height: 5.0 * getSizeRatio()),
               getText(AnswerPosition.positionC),
             ]
-        ),
+        )
       );
-    //}
-    /*
+    }
     else {
+      return Column(
+        //textDirection: TextDirection.ltr,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                getSoundImage(AnswerPosition.positionA),
+                SizedBox(height: 5.0 * getSizeRatio()),
+                getSoundImage(AnswerPosition.positionB),
+                SizedBox(height: 5.0 * getSizeRatio()),
+                getSoundImage(AnswerPosition.positionC),
+              ]
+          ),
+          SizedBox(height: 10.0 * getSizeRatio()),
+          getSoundABCText(),
+        ]
+      );
+    }
+  }
+
+  Widget getSoundABCText() {
+    //if (isSoundAnswered) {
       return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -166,8 +193,10 @@ class _StandardExamPageState extends State<StandardExamPage> {
             getText(AnswerPosition.positionC),
           ]
       );
-    }
-    */
+    //}
+    //else {
+    //  return SizedBox(width: 0, height: 0);
+    //}
   }
 
   SearchingZi getValue(AnswerPosition position) {
@@ -227,13 +256,13 @@ class _StandardExamPageState extends State<StandardExamPage> {
       else {
         //strValue = value.char;
         if (position == AnswerPosition.positionA) {
-          strValue = "1st word";
+          strValue = "A";
         }
         else if (position == AnswerPosition.positionB) {
-          strValue = "2nd word";
+          strValue = "B";
         }
         else if (position == AnswerPosition.positionC) {
-          strValue = "3rd word";
+          strValue = "C";
         }
       }
     }
@@ -253,10 +282,11 @@ class _StandardExamPageState extends State<StandardExamPage> {
         color: backgroundColor, //color,
         textColor: textColor, //Colors.white,
         onPressed: () {
-          //setPositionState(position);
-          answerPosition = position;
+          if (position != AnswerPosition.center) {
+            //setPositionState(position);
+            answerPosition = position;
 
-          //if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
+            //if (answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB || answerPosition == AnswerPosition.positionC) {
             if (answerPosition !=
                 theStandardExamManager.getCorrectAnswerPosition()) {
               theStatisticsManager.incrementLessonQuizResult(false);
@@ -264,27 +294,53 @@ class _StandardExamPageState extends State<StandardExamPage> {
             else {
               theStatisticsManager.incrementLessonQuizResult(true);
             }
-          //}
+            //}
 
-          //setPositionState(AnswerPosition.continueNext);
+            //setPositionState(AnswerPosition.continueNext);
 
-          //theStandardExamManager.getUpdatedValues();
-          var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-          _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
+            //theStandardExamManager.getUpdatedValues();
+            var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+            _progressValue =
+                lessonQuizResult.answ / totalMeaningAndSoundQuestions;
 
-          setState(() {
-            index = theStandardExamManager.getNext();
-          });
+            //isSoundAnswered = false;
+            setState(() {
+              index = theStandardExamManager.getNext();
+            });
 
-          if (index == -1) {
-                 //  theStorageHandler.updateOneLessonStatus(lessonId, true);
-                 //  theStorageHandler.SaveToFile();
-            //theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
-            showCompletedDialog(context);
+            if (index == -1) {
+              //  theStorageHandler.updateOneLessonStatus(lessonId, true);
+              //  theStorageHandler.SaveToFile();
+              //theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
+              showCompletedDialog(context);
+            }
           }
         },
       ),
       //padding: EdgeInsets.all(20),
+    );
+  }
+
+  Widget getSoundImage(AnswerPosition position) {
+    var value = getValue(position);
+
+    return Container(
+        height: 50.0 * getSizeRatio(), //180
+        width: 50.0 * getSizeRatio(),
+        child: IconButton(
+          icon: Icon(
+            Icons.volume_up,
+            size: 50.0 * getSizeRatio(),   // 150
+          ),
+          color: Colors.cyan, //Colors.green,
+          onPressed: () {
+            TextToSpeech.speak("zh-CN", value.char);
+
+            //setState(() {
+              //isSoundAnswered = true;
+            //});
+          },
+        )
     );
   }
 
