@@ -131,8 +131,15 @@ class _StandardExamPageState extends State<StandardExamPage> {
   }
 
   Widget getAnswers(BuildContext context) {
-    if (quizCategory ==
-        QuizCategory.meaning) { // phrases and sentences
+    if (quizCategory == QuizCategory.sound) {
+      String strValue = getValue(AnswerPosition.positionA).char;
+      strValue += getValue(AnswerPosition.positionB).char;
+      strValue += getValue(AnswerPosition.positionC).char;
+      TextToSpeech.speakWithRate("zh-CN", strValue, 0.1);
+    }
+
+    //if (quizCategory ==
+    //    QuizCategory.meaning) { // phrases and sentences
       return IntrinsicWidth(
         child: Column(
           //textDirection: TextDirection.ltr,
@@ -146,7 +153,8 @@ class _StandardExamPageState extends State<StandardExamPage> {
             ]
         ),
       );
-    }
+    //}
+    /*
     else {
       return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -159,6 +167,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
           ]
       );
     }
+    */
   }
 
   SearchingZi getValue(AnswerPosition position) {
@@ -216,7 +225,16 @@ class _StandardExamPageState extends State<StandardExamPage> {
         strValue = value.meaning;
       }
       else {
-        strValue = value.char;
+        //strValue = value.char;
+        if (position == AnswerPosition.positionA) {
+          strValue = "1st word";
+        }
+        else if (position == AnswerPosition.positionB) {
+          strValue = "2nd word";
+        }
+        else if (position == AnswerPosition.positionC) {
+          strValue = "3rd word";
+        }
       }
     }
 
