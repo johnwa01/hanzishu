@@ -400,7 +400,7 @@ var theString_zh_CN = [
   Local(393, "练习更多部件"),
   Local(394, "汉字树拼形识字"),
   Local(395, "全部 [3,800字]"),
-  Local(396, "HSK"),
+  Local(396, "HSK学习汉字"),
   Local(397, "至"),
   Local(398, "单元"),
   Local(399, "水平"),
@@ -451,6 +451,6 @@ var theString_zh_CN = [
   Local(444, "包围"),
   Local(445, "中文部件数"),
   Local(446, "拆分"),
-  Local(447, "HSK汉字识字测试（读音)"),
-  Local(448, "HSK汉字识字测试（字义)"),
+  Local(447, "HSK汉字识字量测试（读音)"),
+  Local(448, "HSK汉字识字量测试（字义)"),
 ];

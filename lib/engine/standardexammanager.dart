@@ -10,15 +10,18 @@ class StandardExamManager {
   int currentSubItemId = 0;
   QuizCategory currentQuizCategory;
 
-  static int maxExamNumber = 10; //30;
+  static int maxExamNumber = 30;
 
-  int currentId = 0;
+  int currentCount = 0;
+  int currentId;
 
   var currentType = QuizType.chars; // only supported type for HSK etc
 
   List<SearchingZi> currentValues = [null, null, null, null];
   var correctPosition = 0;
   var minUpperRange = 5; // 0 based, so 5+1=6
+
+  List<int> usedIDs;
 
   List<String> fullSubList = ['灵', '覃', '阶', '敢', '因', '众', '醒', '已', '啥'];
   /*
@@ -37,14 +40,17 @@ class StandardExamManager {
     currentSubItemId = subItemId;
     currentQuizCategory = quizCategory;
 
-    currentId = 0;
+    currentCount = 0;
     currentValues = [null, null, null, null];
     correctPosition = 0;
+    usedIDs = [];
 
     //createFullSubList(subItemId);
 
-    // create a random list of n values in a submenu
+    // create submenu lists from the general menu
     createTestSubList(subItemId);
+
+    currentId = getNext();
   }
 
   int getTotalQuestions() {
@@ -54,18 +60,35 @@ class StandardExamManager {
   List<SearchingZi> getCurrentValues() {
     return currentValues;
   }
-
+/*
+  int getInitId(int drillSubMenu) {
+      var upperRange = getUpperRange();
+      return getARandomNumber(
+          upperRange, -1, -1);
+  }
+*/
   int getNext() {
     return getNextHelper(currentSubItemId);
   }
 
   int getNextHelper(int drillSubMenu) {
-    if (currentId < (testSubLists[currentSubItemId - 1].length - 1)) {
-      if (currentId >= maxExamNumber) {
+    if (currentCount < (testSubLists[currentSubItemId - 1].length - 1)) {
+      if (currentCount >= maxExamNumber) {
         return -1;
       }
 
-      currentId++;
+      currentCount++;
+      var upperRange = getUpperRange();
+
+      bool isAUsedId = true;
+      while(isAUsedId) {
+        currentId = getARandomNumber(
+            upperRange, -1, -1);
+        if (!usedIDs.contains(currentId)) {
+          isAUsedId = false;
+        }
+      }
+
       return currentId;
     }
 
@@ -141,16 +164,20 @@ class StandardExamManager {
     return position;
   }
 
-  List<SearchingZi> getUpdatedValues(/*int index, bool isMeaning*/) {
+  int getUpperRange() {
     var upperRange;
 
-      var list = getCurrentTypeList();
-      upperRange = list.length - 1;
-      if (upperRange < minUpperRange) {
-        upperRange = minUpperRange;
-      }
+    var list = getCurrentTypeList();
+    upperRange = list.length - 1;
+    if (upperRange < minUpperRange) {
+      upperRange = minUpperRange;
+    }
 
+    return upperRange;
+  }
 
+  List<SearchingZi> getUpdatedValues(/*int index, bool isMeaning*/) {
+    var upperRange = getUpperRange();
 
     currentValues[0] = getOneValueById(currentId);
     var nonCharId0 = 0;
@@ -159,7 +186,7 @@ class StandardExamManager {
     // 1 based.
     correctPosition = 1 + rand.nextInt(3 - 1);
 
-    // 1 based position when creating randon number
+    // 0 based position when creating randon number
     var wrongPositionI = getARandomNumber(
         upperRange, currentId, currentId);
     var wrongPositionJ = getARandomNumber(
