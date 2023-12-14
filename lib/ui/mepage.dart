@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/ui/settingspage.dart';
 import 'package:hanzishu/ui/basiccomponentspage.dart';
 import 'package:hanzishu/ui/flashcardpage.dart';
+import 'package:hanzishu/ui/practicesheetpage.dart';
 import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
@@ -170,6 +171,20 @@ class _MePageState extends State<MePage> {
                   MaterialPageRoute(
                     builder: (context) =>
                         StudyCustomizedWordsPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Image.asset('assets/core/characterdrill.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              title: Text(getString(449)/*"Hanzi practice sheet"*/, textDirection: TextDirection.ltr),
+              //trailing: Image.asset('assets/core/itemicon.png'),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        PracticeSheetPage(),
                   ),
                 );
               },

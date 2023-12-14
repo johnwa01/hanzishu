@@ -106,6 +106,16 @@ class ZiManager {
     return -1;  // not found
   }
 
+  static SearchingZi findSearchingZiFromChar(String char) {
+    var index = findIdFromChar(ZiListType.searching, char);
+    if (index == -1) {
+      return null;
+    }
+    else {
+      return theSearchingZiList[index];
+    }
+  }
+
   bool isIdAZi(String idName) {
     var id = Utility.StringToInt(idName);
     if (id != null) {

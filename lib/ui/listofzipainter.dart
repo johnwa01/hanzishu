@@ -230,7 +230,7 @@ class ListOfZiPainter extends BasePainter {
               theZiList[id].char);
           if (searchingZiId != -1) {
             var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-            displayFullComponents(searchingZiId, posiSize, applyRatio(1.0));
+            displayFullComponents(searchingZiId, posiSize, applyRatio(1.0), true);
           }
         }
       }

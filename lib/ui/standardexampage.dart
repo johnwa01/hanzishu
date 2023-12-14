@@ -65,7 +65,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = Utility.getScreenWidth(context);
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     // Only support this type for now.
     QuizType currentType = QuizType.chars; //theQuizManager.getCurrentType();
 

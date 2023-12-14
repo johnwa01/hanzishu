@@ -233,7 +233,7 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue, false);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
-    displayComponentsOrStrokes(ziIndex, posiSize);
+    displayComponentsOrStrokes(ziIndex, posiSize, true);
     posiSize.transY += fontSize6;
 
     if (showBreakoutDetails) {
@@ -251,8 +251,9 @@ class DictionaryPainter extends BreakoutPainter {
     var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
   }
 
+  /*
   displayComponentsOrStrokes(int searchingZiId, PositionAndSize posi) {
-    var isSingleCompZi = DictionaryManager.isSingleCompZi(searchingZiIndex);
+    var isSingleCompZi = DictionaryManager.isSingleCompZi(searchingZiId);
 
     if (isSingleCompZi) {
       displayStrokes(searchingZiId, posi, getSizeRatio());
@@ -260,39 +261,8 @@ class DictionaryPainter extends BreakoutPainter {
     else {
       displayFullComponents(searchingZiId, posi, getSizeRatio());
     }
-
-    /*
-    var comps = List<String>();
-    DictionaryManager.getAllComponents(searchingZiId, comps);
-    if (comps.length == 1) {
-      displayTextWithValue("[Strokes] ", 10.0, yPosi, 20.0, Colors.blue);
-      var comp = ComponentManager.getComponentByCode(comps[0]);
-      drawStrokeZiList(
-          comp.strokesString,
-          130.0,
-          yPosi,
-          20.0,
-          20.0,
-          20.0,
-          this.lineColor,
-          true,
-          20.0 * 0.05);
-    }
-    else {
-      displayTextWithValue("[Components] ", 10.0, yPosi, 20.0, Colors.blue);
-      drawComponentZiList(
-          comps,
-          160.0,
-          yPosi,
-          20.0,
-          20.0,
-          20.0,
-          this.lineColor,
-          true,
-          20.0 * 0.05);
-    }
-    */
   }
+  */
 
   double displayCharBreakout(int ziId, bool isGetPositionOnly, ) {
     //breakoutIndex.value = 0;

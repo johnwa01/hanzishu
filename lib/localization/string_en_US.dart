@@ -401,7 +401,7 @@ var theString_en_US = [
   Local(392, "You know all the Components now! Next let's do some exercises."),
   Local(393, "Practice more Components"),
   Local(394, "Hanzishu word puzzle"),
-  Local(395, "All [3,800 words]"),
+  Local(395, "All commonly used Hanzi [3,800 words]"),
   Local(396, "HSK Hanzi Study"),
   Local(397, "Up to "),
   Local(398, "Unit "),
@@ -456,4 +456,5 @@ var theString_en_US = [
   Local(446, "Breakdown"),
   Local(447, "HSK Hanzi Exam（Pronunciation）"),
   Local(448, "HSK Hanzi Exam（Meaning）"),
+  Local(449, "Hanzi practice sheet"),
 ];

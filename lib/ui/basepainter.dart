@@ -542,13 +542,21 @@ class BasePainter extends CustomPainter{
   }
 
   // strokeString is a series of strokeCodes.
-  void drawStrokeZiList(String strokeString, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
+  void drawStrokeZiList(String strokeString, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth, bool withHeader)
   {
     var xPosi = PrimitiveWrapper(transX);
     var yPosi = PrimitiveWrapper(transY);
 
-    if (strokeString.length > 0) {
-      for (int i = 0; i < strokeString.length; i++) {
+    var length = strokeString.length;
+    var maxStrokeLength = 5;
+    if (!withHeader) {
+      if (length > maxStrokeLength) {
+        length = maxStrokeLength;
+      }
+    }
+
+    if (length > 0) {
+      for (int i = 0; i < length; i++) {
         // Pass charFontSize instead of fontWidth. normally double the fontWidth, therefore leave plenty of space between strokes
         checkAndUpdateSubstrStartPositionSimple(' ', xPosi, yPosi, charFontSize);
         drawStrokeZi(
@@ -591,12 +599,12 @@ class BasePainter extends CustomPainter{
   }
   */
 
-  void drawOneFrameLineWithColor(List<double> list) {
+  void drawOneFrameLineWithColor(List<double> list, MaterialColor lineColor, double lineSize) {
     var path = Path();
     path.moveTo(list[0], list[1]);
     path.lineTo(list[2], list[3]);
 
-    drawShape(path, Colors.amber, 2.0);
+    drawShape(path, lineColor /*Colors.amber*/, lineSize);
   }
 
   void drawFrameWithColors(ZiListType listType, double width, double leftEdge, double topEdge,
@@ -615,17 +623,17 @@ class BasePainter extends CustomPainter{
     var y4 = y3 + height1 * 0.9;
 
     // outer frame
-    drawOneFrameLineWithColor([x1, y1, x4, y1]);
-    drawOneFrameLineWithColor([x4, y1, x4, y4]);
-    drawOneFrameLineWithColor([x4, y4, x1, y4]);
-    drawOneFrameLineWithColor([x1, y4, x1, y1]);
+    drawOneFrameLineWithColor([x1, y1, x4, y1], Colors.amber, 2.0);
+    drawOneFrameLineWithColor([x4, y1, x4, y4], Colors.amber, 2.0);
+    drawOneFrameLineWithColor([x4, y4, x1, y4], Colors.amber, 2.0);
+    drawOneFrameLineWithColor([x1, y4, x1, y1], Colors.amber, 2.0);
 
     if (centerId != 1 || (centerId == 1 && listType == ZiListType.searching)) {
       // inside frame
-      drawOneFrameLineWithColor([x2, y2, x3, y2]);
-      drawOneFrameLineWithColor([x3, y2, x3, y3]);
-      drawOneFrameLineWithColor([x3, y3, x2, y3]);
-      drawOneFrameLineWithColor([x2, y3, x2, y2]);
+      drawOneFrameLineWithColor([x2, y2, x3, y2], Colors.amber, 2.0);
+      drawOneFrameLineWithColor([x3, y2, x3, y3], Colors.amber, 2.0);
+      drawOneFrameLineWithColor([x3, y3, x2, y3], Colors.amber, 2.0);
+      drawOneFrameLineWithColor([x2, y3, x2, y2], Colors.amber, 2.0);
 
       var showLinesInBetween = true;
       if (listType == ZiListType.zi) {
@@ -644,10 +652,10 @@ class BasePainter extends CustomPainter{
 
       if (showLinesInBetween) {
         // lines in between
-        drawOneFrameLineWithColor([x1, y1, x2, y2]);
-        drawOneFrameLineWithColor([x4, y1, x3, y2]);
-        drawOneFrameLineWithColor([x4, y4, x3, y3]);
-        drawOneFrameLineWithColor([x1, y4, x2, y3]);
+        drawOneFrameLineWithColor([x1, y1, x2, y2], Colors.amber, 2.0);
+        drawOneFrameLineWithColor([x4, y1, x3, y2], Colors.amber, 2.0);
+        drawOneFrameLineWithColor([x4, y4, x3, y3], Colors.amber, 2.0);
+        drawOneFrameLineWithColor([x1, y4, x2, y3], Colors.amber, 2.0);
       }
     }
     /*
@@ -836,7 +844,7 @@ class BasePainter extends CustomPainter{
 
       if (centerZiRelated.compCountReal == 1) {
 
-        displayStrokes(centerZiRelated.searchingZiId, posi, getSizeRatio());
+        displayStrokes(centerZiRelated.searchingZiId, posi, getSizeRatio(), true);
       }
       else {
         bool isBreakoutPositionsOnly = false;
@@ -1332,13 +1340,24 @@ class BasePainter extends CustomPainter{
       }
   }
 
-  displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio) {
+  displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio, bool withHeader) {
     var comps = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, comps);
-    displayTextWithValue(getString(97)/*"Components"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
+    if (withHeader) {
+      displayTextWithValue(
+          getString(97) /*"Components"*/ + ": ", posi.transX, posi.transY, posi
+          .charFontSize /*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/,
+          Colors.black, false);
+    }
+
+    var xStartPosi = 185.0;
+    if (!withHeader) {
+      xStartPosi = 20.0;
+    }
+
     drawComponentZiList(
         comps,
-        185.0 * ratio,  //135
+        xStartPosi * ratio,  //135
         posi.transY,
         posi.charFontSize * 1.3,
         posi.charFontSize * 1.3,
@@ -1348,23 +1367,46 @@ class BasePainter extends CustomPainter{
         posi.charFontSize * 0.07);
   }
 
+  displayComponentsOrStrokes(int searchingZiId, PositionAndSize posi, bool withHeader) {
+    var isSingleCompZi = DictionaryManager.isSingleCompZi(searchingZiId);
+
+    if (isSingleCompZi) {
+      displayStrokes(searchingZiId, posi, getSizeRatio(), withHeader);
+    }
+    else {
+      displayFullComponents(searchingZiId, posi, getSizeRatio(), withHeader);
+    }
+  }
+
   // assume a single comp zi. used in dictionary.
-  displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio) {
+  displayStrokes(int searchingZiIndex, PositionAndSize posi, double ratio, bool withHeader) {
     var comps = DictionaryManager.getSearchingZi(searchingZiIndex).composit; //theSearchingZiList[searchingZiIndex].composit;
-    displayTextWithValue(getString(88)/*"Strokes"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
+    if (withHeader) {
+      displayTextWithValue(
+          getString(88) /*"Strokes"*/ + ": ", posi.transX, posi.transY, posi
+          .charFontSize /*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/,
+          Colors.black, false);
+    }
+
     var comp = ComponentManager.getComponentByCode(comps[0]);
+
+    var xStartPosi = 110.0;
+    if (!withHeader) {
+      xStartPosi = 20.0;
+    }
 
     if (comp.strokesString.length > 0) {
       drawStrokeZiList(
           comp.strokesString,
-          110.0 * ratio,
+          xStartPosi * ratio,
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
           Colors.blue,  //cyan, //this.lineColor,
           true,
-          posi.charFontSize * 0.07);
+          posi.charFontSize * 0.07,
+          withHeader);
     }
   }
 
@@ -1393,7 +1435,8 @@ class BasePainter extends CustomPainter{
           posi.charFontSize * 1.3, //thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize), //20.0,
           Colors.blue,   //cyan, //this.lineColor,
           true,
-          posi.charFontSize * 0.07);
+          posi.charFontSize * 0.07,
+          true);
     }
   }
 

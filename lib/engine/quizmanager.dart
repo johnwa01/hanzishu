@@ -319,7 +319,8 @@ class QuizManager {
     var sentenceList = getTypeList(type);
     var sentId = sentenceList[sentenceList.length - 1];
     var sent = theSentenceList[sentId];
-    if (sent.conv[0] == "[") {
+    // Note： use the Pinyin's left bracket
+    if (sent.conv[0] == "【") {
       return true;
     }
 
