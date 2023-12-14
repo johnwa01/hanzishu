@@ -453,5 +453,5 @@ var theString_zh_CN = [
   Local(446, "拆分"),
   Local(447, "HSK汉字识字量测试（读音)"),
   Local(448, "HSK汉字识字量测试（字义)"),
-  Local(449, "汉字练习纸"),
+  Local(449, "汉字练习纸生成器"),
 ];

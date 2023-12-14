@@ -503,13 +503,20 @@ class BasePainter extends CustomPainter{
     }
   }
 
-  void drawComponentZiList(List<String> components, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth) {
+  void drawComponentZiList(List<String> components, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth, bool withHeader) {
     // handle this special case. want to treat left side of 踢 as 足 as whole, but display comp correctly.
     if (components.length > 2 && components[0] == "Ja" && components[1] == "Ng") {
       components[1] = "Ai"; // replace the bottom component for 足 in display
     }
 
-    for (int i = 0; i < components.length; i++) {
+    var length = components.length;
+    if (!withHeader) {
+      if (length > 6) {
+        length = 6; // maximum components for hanzi practice sheet
+      }
+    }
+
+    for (int i = 0; i < length; i++) {
       drawComponentZi(
             components[i],
             transX + widthX * i,
@@ -548,7 +555,7 @@ class BasePainter extends CustomPainter{
     var yPosi = PrimitiveWrapper(transY);
 
     var length = strokeString.length;
-    var maxStrokeLength = 5;
+    var maxStrokeLength = 6;
     if (!withHeader) {
       if (length > maxStrokeLength) {
         length = maxStrokeLength;
@@ -1364,7 +1371,8 @@ class BasePainter extends CustomPainter{
         posi.charFontSize * 1.3,
         Colors.blue, // cyan, //this.lineColor,
         true,
-        posi.charFontSize * 0.07);
+        posi.charFontSize * 0.07,
+        withHeader);
   }
 
   displayComponentsOrStrokes(int searchingZiId, PositionAndSize posi, bool withHeader) {

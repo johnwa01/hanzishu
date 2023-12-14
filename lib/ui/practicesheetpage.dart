@@ -6,13 +6,7 @@ import 'dart:async';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
-import 'package:hanzishu/engine/dictionary.dart';
-import 'package:hanzishu/ui/dictionarypainter.dart';
-import 'package:hanzishu/ui/dictionaryhelppage.dart';
-import 'package:hanzishu/ui/dictionarysearchingpage.dart';
-import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class PracticeSheetPage extends StatefulWidget {
@@ -28,13 +22,10 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
   int searchingZiIndex;
   bool shouldDrawCenter;
   double screenWidth;
-  //DictionaryStage dicStage;
-  //OverlayEntry overlayEntry;
-  // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
-  //     0.0, 0.0, "");
+
   FocusNode _textNode = new FocusNode();
 
-  TextEditingController _controller = new TextEditingController(text: "汉字树大练习纸");
+  TextEditingController _controller = new TextEditingController(text: "合体字练习部件非笔画");
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -54,7 +45,6 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
     super.initState();
 
     theCurrentCenterZiId = searchingZiIndex;
-    //_controller.addListener(handleKeyInput);
 
     setState(() {
       searchingZiIndex = searchingZiIndex;
@@ -62,7 +52,6 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
       compoundZiComponentNum = 0;
 
       searchingZiIndex = 0;
-      //dicStage = DictionaryStage.firstzis;
     });
   }
 
@@ -148,10 +137,6 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
                             width: 280 * getSizeRatioWithLimit(), //double.infinity,
                             //height: 120,
                             child: TextField(
-                              //decoration: InputDecoration(
-                              //hintText: 'Test text',
-                              //),
-
                               autocorrect: false,
                               enableSuggestions: false,
                               controller: _controller,
@@ -236,17 +221,10 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
         MaterialPageRoute(
           builder: (context) =>
               PracticeSheetCorePage(flashcardList: inputText),
-              //DictionarySearchingPage(
-              //    dicStage: DictionaryStage.detailedzi,
-              //    firstOrSearchingZiIndex: -1,
-              //    flashcardList: inputText,
-              //    dicCaller: DicCaller.PracticeSheet),
         ),
       );
     }
     else {
-      //_controller.clear();
-      //FocusScope.of(context).unfocus();
       showInvalidInputDialog();
     }
   }

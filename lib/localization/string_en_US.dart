@@ -456,5 +456,5 @@ var theString_en_US = [
   Local(446, "Breakdown"),
   Local(447, "HSK Hanzi Exam（Pronunciation）"),
   Local(448, "HSK Hanzi Exam（Meaning）"),
-  Local(449, "Hanzi practice sheet"),
+  Local(449, "Hanzi practice sheet generator"),
 ];

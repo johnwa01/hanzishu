@@ -1,51 +1,18 @@
-
 import 'package:flutter/material.dart';
-import 'package:hanzishu/data/searchingzilist.dart';
 import 'dart:ui';
-import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/data/firstzilist.dart';
-import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/basepainter.dart';
-import 'package:hanzishu/engine/dictionarymanager.dart';
+
 
 class PracticeSheetPainter extends BasePainter {
-  Color lineColor;
-  //double screenWidth; == width in basepainter
-  //PracticeSheetStage dicStage;
-  int firstZiIndex;  // different meaning for different stage
-  int searchingZiIndex;
   BuildContext context;
-  int compoundZiCurrentComponentId;
-  ZiListType ziListType;
-  bool showBreakoutDetails;
   String ziList;
 
-  //static int firstZiCount = theFirstZiList.length; // started with 0
-  //static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
-  //static int minCharsForStrokeIndex = 15;
-
-  //Map<int, PositionAndSize> dicBreakoutPositions = Map();
-
-  PracticeSheetPainter(String ziList, /*Color lineColor,*/ double screenWidth/*, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter, bool showBreakoutDetails*/) {
-   /*
-    this.lineColor = lineColor;
-    */
+  PracticeSheetPainter(String ziList, double screenWidth) {
     this.ziList = ziList;
     this.width = screenWidth;
-    /*
-    //this.dicStage = dicStage;
-
-    this.firstZiIndex = firstZiIndex;
-    this.searchingZiIndex = searchingZiIndex;
-    this.context = context;
-    this.compoundZiCurrentComponentId = compoundZiCurrentComponentId;
-    this.ziListType = ziListType;
-    this.shouldDrawCenter = shouldDrawCenter;
-    this.showBreakoutDetails = showBreakoutDetails;
-    */
   }
 
   double getSizeRatio() {
@@ -60,22 +27,10 @@ class PracticeSheetPainter extends BasePainter {
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-
-    //else if (this.dicStage == PracticeSheetStage.detailedzi) {
-      //DisplayNavigationPath(PracticeSheetStage.detailedzi);
-      //displayTextWithValue("Character:", 10.0, 5.0, 25.0, Colors.blueAccent);
-      DrawSheet(ziList/*"汉字树练习纸"*/);
-    //}
+    DrawSheet(ziList);
   }
 
   DrawSheet(String zis) {
-//    thePositionManager.setFrameWidth(getFrameWidth());
-
-    //var defaultFontSize = applyRatio(25.0);
-    //NOTE: match the definitions in dictionarysearchingpage.dart
-
-    //var detailedZi = theSearchingZiList[ziIndex];
-
     var xStartPosi = 150.0;
     var yStartPosi = 25.0;
     var fontSize = 40.0;
@@ -127,7 +82,7 @@ class PracticeSheetPainter extends BasePainter {
       posi.transY += (fontSize + yExtraSpace);
     }
 
-    displayTextWithValue("https://hanzishu.com", xStartPosi + httpExtraStart, posi.transY + yExtraSpace, posi.charFontSize/4.0, Colors.grey, false);
+    displayTextWithValue("汉字练习纸生成器：https://hanzishu.com", xStartPosi, posi.transY + yExtraSpace, posi.charFontSize/4.0, Colors.blueGrey, false);
   }
 
   DrawOneGridAndZi(String oneZi, Color ziColor,  PositionAndSize posi, bool drawZi) {
