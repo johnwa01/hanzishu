@@ -34,6 +34,8 @@ class StandardExamManager {
 
   List<List<SearchingZi>> testSubLists = [[], [], [], [], [], [], []];
 
+  static List<int> hskZiCounts = [300, 300, 300, 300, 300, 300, 1200]; // 7 levels
+
   initValues(DrillCategory drillCategory, int subItemId, QuizCategory quizCategory) {
     // set all ini values for this drillCategory
     currentDrillCategory = drillCategory;

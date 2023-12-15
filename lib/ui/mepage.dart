@@ -184,7 +184,7 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        PracticeSheetPage(),
+                        PracticeSheetPage(initZis: null),
                   ),
                 );
               },

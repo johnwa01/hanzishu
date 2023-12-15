@@ -18,7 +18,7 @@ var theDrillMenuList = [
   //Level(0, theNumberOfLessonsInLevels[0], false, getString(BaseLevelDescriptionStringID + 1)/*"Basics"*/),  // level index 0 == level 1
   //Level(1, theNumberOfLessonsInLevels[1], false, getString(BaseLevelDescriptionStringID + 2)/*"In the classroom"*/),
   DrillMenu(1, 395),
-  DrillMenu(2, 10),
+  DrillMenu(2, 450),
   DrillMenu(3, 396),
   DrillMenu(4, 447),
   DrillMenu(5, 448),

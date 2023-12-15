@@ -13,6 +13,9 @@ class PracticeSheetPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
+  String initZis;
+
+  PracticeSheetPage({this.initZis});
 
   @override
   _PracticeSheetPageState createState() => _PracticeSheetPageState();
@@ -23,9 +26,10 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
   bool shouldDrawCenter;
   double screenWidth;
 
+
   FocusNode _textNode = new FocusNode();
 
-  TextEditingController _controller = new TextEditingController(text: "合体字练习部件非笔画");
+  TextEditingController _controller;
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -35,6 +39,8 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
 
   String inputText;
   int currentIndex = 0;
+
+  bool gridShowZi = true;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -47,11 +53,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
     theCurrentCenterZiId = searchingZiIndex;
 
     setState(() {
-      searchingZiIndex = searchingZiIndex;
-      shouldDrawCenter = true;
-      compoundZiComponentNum = 0;
-
-      searchingZiIndex = 0;
+      gridShowZi = true;
     });
   }
 
@@ -80,34 +82,15 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    compoundZiCurrentComponentId = searchingZiIndex;
-    int compoundZiTotalComponentNum = 0;
-
-    // TODO: components don't seem relative here
-    // compound zi is animating.
-    if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
-      if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
-        DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
-        DictionaryManager.getComponentIdsFromCodes(
-            componentCodes, compoundZiAllComponents);
-      }
-      //var compList = getAllZiComponents(searchingZiIndex);
-      compoundZiTotalComponentNum = compoundZiAllComponents.length;
-
-      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
-        // after looping through the compoundZiAllComponents.
-        compoundZiCurrentComponentId = searchingZiIndex;
-        currentZiListType = ZiListType.searching;
-        shouldDrawCenter = true;
-      }
-      else {
-        compoundZiCurrentComponentId = compoundZiAllComponents[compoundZiComponentNum - 1];
-        currentZiListType = ZiListType.component;
-      }
-    }
-
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    var initString = widget.initZis;
+    if (initString == null) {
+      initString = "合体字练习部件非笔画";
+    }
+    _controller = new TextEditingController(text: initString);
+
+    /*"Grid shows Hanzi"*/
+    var gridShowOrNotShowZiString = gridShowZi ? getString(452) : getString(453);/*"Grid (not) show Hanzi"*/;
 
     try {
       return Scaffold
@@ -126,7 +109,19 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
                           children: <Widget>[
                             SizedBox(width: 10 * getSizeRatioWithLimit()),
                             Text(getString(408)/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                            //SizedBox(width: 30 * getSizeRatioWithLimit()),
+                            SizedBox(width: 15 * getSizeRatioWithLimit()),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  gridShowZi = gridShowZi ? false : true;
+                                });
+                              },
+                              child: Text(gridShowOrNotShowZiString,
+                                  style: TextStyle(color: Colors.lightBlue)),
+                            ),
                           ]
                       ),
                       SizedBox(height: 10 * getSizeRatioWithLimit()),
@@ -220,7 +215,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
         context,
         MaterialPageRoute(
           builder: (context) =>
-              PracticeSheetCorePage(flashcardList: inputText),
+              PracticeSheetCorePage(flashcardList: inputText, gridShowZi: gridShowZi),
         ),
       );
     }

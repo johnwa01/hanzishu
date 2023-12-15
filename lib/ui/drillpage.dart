@@ -259,6 +259,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                       }
                     }
                 ),
+                SizedBox(height: 30),
+                getNotes(),
                 //SizedBox(height: 30),
                 //Row(
                 //    mainAxisAlignment: MainAxisAlignment.center/*spaceBetween*/,
@@ -279,7 +281,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     );
   }
 
-  Widget getEnlighteningClasses() { 
+  Widget getEnlighteningClasses() {
     if (kIsWeb) {
       return FlatButton(
         color: Colors.blueAccent, //white,
@@ -321,6 +323,50 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     }
 
     return category;
+  }
+
+  Widget getNotes() {
+    var fontSize1 = 14.0;
+
+    return Column(
+      //mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: fontSize1 / 2),
+          Text(
+            getString(451)/*""*/,
+            style: TextStyle(/*color: Colors.blue,*/ fontSize: fontSize1),
+              textAlign: TextAlign.start
+            ),
+          SizedBox(height: fontSize1 / 2),
+          Text(
+            "      " + getString(395)/*""*/,
+              style: TextStyle(fontSize: fontSize1),
+              textAlign: TextAlign.start
+            ),
+          Text(
+              "      " + getString(450)/*""*/,
+              style: TextStyle(/*color: Colors.blue,*/ fontSize: fontSize1),
+                textAlign: TextAlign.start
+            ),
+          Text(
+              "      " + getString(396)/*""*/,
+              style: TextStyle(/*color: Colors.blue,*/ fontSize: fontSize1),
+              textAlign: TextAlign.start
+          ),
+          Text(
+              "      " + getString(447)/*""*/,
+              style: TextStyle(fontSize: fontSize1),
+              textAlign: TextAlign.start
+            ),
+              Text(
+                  "      " + getString(448)/*""*/,
+                  style: TextStyle(fontSize: fontSize1),
+                  textAlign: TextAlign.start
+                ),
+        ]
+    );
   }
 
   Widget getCategories(BuildContext context, int centerZiId, DrillCategory drillCategory) {

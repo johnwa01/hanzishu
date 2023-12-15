@@ -9,10 +9,12 @@ import 'package:hanzishu/ui/basepainter.dart';
 class PracticeSheetPainter extends BasePainter {
   BuildContext context;
   String ziList;
+  bool gridShowZi;
 
-  PracticeSheetPainter(String ziList, double screenWidth) {
+  PracticeSheetPainter(String ziList, double screenWidth, bool gridShowZi) {
     this.ziList = ziList;
     this.width = screenWidth;
+    this.gridShowZi = gridShowZi;
   }
 
   double getSizeRatio() {
@@ -27,15 +29,15 @@ class PracticeSheetPainter extends BasePainter {
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-    DrawSheet(ziList);
+    DrawSheet(ziList, gridShowZi);
   }
 
-  DrawSheet(String zis) {
+  DrawSheet(String zis, bool gridShowZi) {
     var xStartPosi = 150.0;
     var yStartPosi = 25.0;
     var fontSize = 40.0;
     var pinyinStart = 20.0;
-    var pinyinYShift = 10.0;
+    var pinyinYShift = 5.0;
     var compYShift = 18.0;
     var oneZiSpace = fontSize + 5.0;
     var httpExtraStart = 110.0;
@@ -56,16 +58,27 @@ class PracticeSheetPainter extends BasePainter {
           oneWord = null;
         }
         else {
+          var gridShowZiSpace = 0.0;
+          if (!gridShowZi) {
+            displayTextWithValue(
+                oneWord, pinyinStart, posi.transY + pinyinYShift,
+                posi.charFontSize / 2.0, Colors.black, false);
+            gridShowZiSpace += 30.0;
+          }
           displayTextWithValue(
-              searchingZi.pinyin, pinyinStart, posi.transY + pinyinYShift,
+              searchingZi.pinyin, pinyinStart + gridShowZiSpace, posi.transY + pinyinYShift,
               posi.charFontSize / 2.0, Colors.black, false);
           compPosi = PositionAndSize(
-              pinyinStart, posi.transY + compYShift + (fontSize / 2.5),
-              fontSize / 2.5, fontSize / 2.5, fontSize / 2.5, 0.0);
+              pinyinStart, posi.transY + compYShift + (fontSize / 2.8),
+              fontSize / 2.8, fontSize / 2.8, fontSize / 2.8, 0.0);
           displayComponentsOrStrokes(searchingZi.id, compPosi, false);
         }
       }
       else {
+        oneWord = null;
+      }
+
+      if (!gridShowZi) {
         oneWord = null;
       }
 

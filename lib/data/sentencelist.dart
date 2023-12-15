@@ -211,7 +211,7 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(202, "【】", "Small", 61, null, [], ""),
   Sentence(203, "【长合】", "Long | combination", 40, null, [], ""),
   Sentence(204, "【式】", "style", 41, null, [], ""),
-  Sentence(205, "【禺臣至】", "monkey | official | to arrive", 42, null, [], ""),
+  Sentence(205, "【禺臣至】", "monkey | official | arrive", 42, null, [], ""),
   Sentence(206, "【王狂免】", "Wang （a surname) or king | Crazyly | escape", 43, null, [], ""),
   Sentence(207, "【厂则】", "Factory rule", 44, null, [], ""),
   Sentence(208, "【吕成】", "Lu (a surname) | completed ", 45, null, [], ""),

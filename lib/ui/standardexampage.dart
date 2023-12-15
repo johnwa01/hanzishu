@@ -27,6 +27,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
   // No need to show drillCategory and subItem
   double screenWidth;
   QuizCategory quizCategory;
+  int subItemId;
   int currentIndex;
 
   //bool isSoundAnswered;
@@ -50,6 +51,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
     super.initState();
     _progressValue = 0.0;
     quizCategory = widget.quizCategory;
+    subItemId = widget.subItemId;
     //isSoundAnswered = false;
 
     theStandardExamManager.initValues(widget.drillCategory, widget.subItemId, widget.quizCategory);
@@ -356,23 +358,19 @@ class _StandardExamPageState extends State<StandardExamPage> {
     );
 
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
-    var corStr = correctPercent.toStringAsFixed(1);
+    //var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
+    var subCountPerLevel = StandardExamManager.hskZiCounts[subItemId-1];
+    var diff = lessonQuizResult.cor - (lessonQuizResult.answ / 3);
+    diff = (diff >= 0) ? diff : 0;
+    double correctEstimate = subCountPerLevel * diff / (lessonQuizResult.answ * 2 / 3);
+    var corStr = correctEstimate.toStringAsFixed(0);
 
-    String title;
-    String content;
-
-    if (correctPercent >= 70.0 * getSizeRatio()) {
-      title = "Congratulation!";
-      content = "You have passed this quiz with a score of " + corStr + "!";
-
-      //updateCompleteStatus();
-      //theHasNewlyCompletedLesson = true;
+    String  title = "Good effort!";
+    String levelString = subItemId.toString();
+    if (subItemId == 7) {
+      levelString = "7/8/9";
     }
-    else {
-      title = "Good effort!";
-      content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
-    }
+    String  content = "Out of " + subCountPerLevel.toString() + " Hanzis in level " + levelString + ", it's estimated that you know about " + corStr + ".";
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(

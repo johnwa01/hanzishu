@@ -12,8 +12,9 @@ import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
 import 'package:hanzishu/ui/conversationsnowballpage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
+import 'package:hanzishu/ui/practicesheetpage.dart';
 import 'package:hanzishu/engine/inputzi.dart';
-import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/data/zilist.dart';
 
 class LessonPage extends StatefulWidget {
   final int lessonId;
@@ -162,9 +163,30 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+      case 6:
+        var initZis = getConvCharsForLesson(lessonId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PracticeSheetPage(initZis: initZis),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
       default:
         break;
     }
+  }
+
+  String getConvCharsForLesson(int lessonId) {
+    String initZis = '';
+    var lesson = theLessonManager.getLesson(lessonId);
+    var length = lesson.convCharsIds.length;
+    for (int i = 0; i < length; i++) {
+      initZis += theZiList[lesson.convCharsIds[i]].char;
+    }
+
+    return initZis;
   }
 
   Widget getLessonSections(BuildContext context, int lessonId) {
@@ -239,6 +261,15 @@ class _LessonPageState extends State<LessonPage> {
             ),
             //padding: EdgeInsets.all(20),
           ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                getButton(context, lessonId, 6),
+              ],
+            ),
+            //padding: EdgeInsets.all(20),
+          ),
         ]
       ),
     );
@@ -264,6 +295,9 @@ class _LessonPageState extends State<LessonPage> {
         break;
       case 5:
         buttonTitle = getString(6) + "!";
+        break;
+      case 6:
+        buttonTitle = getString(454);
         break;
       default:
         break;

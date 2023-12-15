@@ -6,7 +6,8 @@ import 'package:hanzishu/ui/practicesheetpainter.dart';
 
 class PracticeSheetCorePage extends StatefulWidget {
   String flashcardList;
-  PracticeSheetCorePage({this.flashcardList});
+  bool gridShowZi;
+  PracticeSheetCorePage({this.flashcardList, this.gridShowZi});
 
   @override
   _PracticeSheetCorePageState createState() => _PracticeSheetCorePageState();
@@ -15,6 +16,7 @@ class PracticeSheetCorePage extends StatefulWidget {
 class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with SingleTickerProviderStateMixin {
   double screenWidth;
   String flashcardList;
+  bool gridShowZi;
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -30,6 +32,7 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
     super.initState();
 
     flashcardList = widget.flashcardList;
+    gridShowZi = widget.gridShowZi;
   }
 
   @override
@@ -55,7 +58,7 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
                   children: <Widget>[
                     new Positioned(
                       child: CustomPaint(
-                        foregroundPainter: PracticeSheetPainter(flashcardList, screenWidth
+                        foregroundPainter: PracticeSheetPainter(flashcardList, screenWidth, gridShowZi
                         ),
                       ),
                     ),
