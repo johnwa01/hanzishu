@@ -43,6 +43,8 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    //var realBrowserSize = Utility.getScreenWidth(context);
+    //bool isPhoneBrowser = (realBrowserSize < 850.0) ? true : false;
 
     var title = getString(449); /*Hanzi practice sheet*/
 

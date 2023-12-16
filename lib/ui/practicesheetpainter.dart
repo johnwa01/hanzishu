@@ -4,12 +4,14 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/basepainter.dart';
-
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter/foundation.dart';
 
 class PracticeSheetPainter extends BasePainter {
   BuildContext context;
   String ziList;
   bool gridShowZi;
+  //final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
 
   PracticeSheetPainter(String ziList, double screenWidth, bool gridShowZi) {
     this.ziList = ziList;
@@ -65,8 +67,14 @@ class PracticeSheetPainter extends BasePainter {
                 posi.charFontSize / 2.0, Colors.black, false);
             gridShowZiSpace += 30.0;
           }
+          var pinyin = searchingZi.pinyin;
+          var index = pinyin.indexOf('/');
+          if (index > 0) {
+            pinyin = pinyin.substring(0, index);
+          }
+
           displayTextWithValue(
-              searchingZi.pinyin, pinyinStart + gridShowZiSpace, posi.transY + pinyinYShift,
+              pinyin, pinyinStart + gridShowZiSpace, posi.transY + pinyinYShift,
               posi.charFontSize / 2.0, Colors.black, false);
           compPosi = PositionAndSize(
               pinyinStart, posi.transY + compYShift + (fontSize / 2.8),
