@@ -25,6 +25,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
   int searchingZiIndex;
   bool shouldDrawCenter;
   double screenWidth;
+  String initZis;
 
 
   FocusNode _textNode = new FocusNode();
@@ -83,11 +84,11 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-    var initString = widget.initZis;
-    if (initString == null) {
-      initString = "合体字练习部件非笔画";
-    }
-    _controller = new TextEditingController(text: initString);
+    initZis = widget.initZis;
+    //if (initZis == null) {
+    //  initZis = "合体字练习部件非笔画";
+    //}
+    _controller = new TextEditingController(text: initZis);
 
     /*"Grid shows Hanzi"*/
     var gridShowOrNotShowZiString = gridShowZi ? getString(452) : getString(453);/*"Grid (not) show Hanzi"*/;

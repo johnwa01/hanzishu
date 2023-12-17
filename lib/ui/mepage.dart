@@ -176,7 +176,7 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/characterdrill.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+              leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(449)/*"Hanzi practice sheet"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),
               onTap: () {
@@ -184,7 +184,7 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        PracticeSheetPage(initZis: null),
+                        PracticeSheetPage(initZis: "合体字练习部件非笔画"),
                   ),
                 );
               },

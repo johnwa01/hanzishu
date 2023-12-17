@@ -64,7 +64,6 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
                         ),
                       ),
                     ),
-                    //getAnimatedPathPainter(),
                   ]
               ),
               onWillPop: _onWillPop

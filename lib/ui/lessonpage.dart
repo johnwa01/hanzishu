@@ -212,8 +212,8 @@ class _LessonPageState extends State<LessonPage> {
               //children: [
                 Ink.image(
                   image: AssetImage("assets/core/lessonimage.png"),
-                  width: 170, //130
-                  height: 110, //80
+                  width: 170 * getSizeRatioWithLimit(), //130
+                  height: 110 * getSizeRatioWithLimit(), //80
                 ),
                 //Text(
                 //  lessonOrSectionName, //lesson.titleTranslation, //"Hello",

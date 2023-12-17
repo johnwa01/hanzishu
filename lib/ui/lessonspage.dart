@@ -506,14 +506,14 @@ class _LessonsPageState extends State<LessonsPage> {
       indexBase = (index - 1) * 4;
     }
 
-    sections.add(Container(child: getPaintImageButton(context, indexBase + 1, path, 60, 60)));
+    sections.add(Container(child: getPaintImageButton(context, indexBase + 1, path, 60 * getSizeRatioWithLimit(), 60 * getSizeRatioWithLimit())));
     if (SoundCategory.intro != currentSoundCategory) {
       sections.add(Container(
-          child: getPaintImageButton(context, indexBase + 2, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 2, path, 60 * getSizeRatioWithLimit(), 60 * getSizeRatioWithLimit())));
       sections.add(Container(
-          child: getPaintImageButton(context, indexBase + 3, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 3, path, 60 * getSizeRatioWithLimit(), 60 * getSizeRatioWithLimit())));
       sections.add(Container(
-          child: getPaintImageButton(context, indexBase + 4, path, 60, 60)));
+          child: getPaintImageButton(context, indexBase + 4, path, 60 * getSizeRatioWithLimit(), 60 * getSizeRatioWithLimit())));
     }
 
     return sections;

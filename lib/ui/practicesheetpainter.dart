@@ -11,7 +11,8 @@ class PracticeSheetPainter extends BasePainter {
   BuildContext context;
   String ziList;
   bool gridShowZi;
-  //final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+  final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+  //final isWebRunningIniOS = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS);
 
   PracticeSheetPainter(String ziList, double screenWidth, bool gridShowZi) {
     this.ziList = ziList;
@@ -35,15 +36,16 @@ class PracticeSheetPainter extends BasePainter {
   }
 
   DrawSheet(String zis, bool gridShowZi) {
-    var xStartPosi = 150.0;
-    var yStartPosi = 25.0;
-    var fontSize = 40.0;
-    var pinyinStart = 20.0;
-    var pinyinYShift = 5.0;
-    var compYShift = 18.0;
-    var oneZiSpace = fontSize + 5.0;
-    var httpExtraStart = 110.0;
-    var yExtraSpace = 10.0;
+    var xStartPosi = 150.0 * getSizeRatio();
+    var yStartPosi = 25.0 * getSizeRatio();
+    var fontSize = 40.0 * getSizeRatio();
+    var pinyinStart = 20.0 * getSizeRatio();
+    var pinyinYShift = 5.0 * getSizeRatio();
+    var compYShift = 18.0 * getSizeRatio();
+    var oneZiSpace = fontSize + 5.0 * getSizeRatio();
+    var httpExtraStart = 110.0 * getSizeRatio();
+    var yExtraSpace = 10.0 * getSizeRatio();
+    var gridZiSpace = 30.0 * getSizeRatio();
 
     var posi = PositionAndSize(xStartPosi, yStartPosi, fontSize, fontSize, fontSize, 0.0);
     var oneWord;
@@ -65,7 +67,7 @@ class PracticeSheetPainter extends BasePainter {
             displayTextWithValue(
                 oneWord, pinyinStart, posi.transY + pinyinYShift,
                 posi.charFontSize / 2.0, Colors.black, false);
-            gridShowZiSpace += 30.0;
+            gridShowZiSpace += gridZiSpace;
           }
           var pinyin = searchingZi.pinyin;
           var index = pinyin.indexOf('/');
@@ -109,7 +111,13 @@ class PracticeSheetPainter extends BasePainter {
   DrawOneGridAndZi(String oneZi, Color ziColor,  PositionAndSize posi, bool drawZi) {
     var posiOri = PositionAndSize(posi.transX, posi.transY, posi.width, posi.height, posi.charFontSize, posi.lineWidth);
 
-    posiOri.transY += posiOri.charFontSize * 0.30;
+    if(isWebMobile) {
+      posiOri.transY += posiOri.charFontSize * 0.1;
+    }
+    else {
+      posiOri.transY += posiOri.charFontSize * 0.30;
+    }
+
     DrawZiGrid(posiOri);
 
     if (drawZi && oneZi != null) {
@@ -122,13 +130,15 @@ class PracticeSheetPainter extends BasePainter {
     drawOneFrameLineWithColor([posi.transX + posi.charFontSize, posi.transY, posi.transX + posi.charFontSize, posi.transY + posi.charFontSize], Colors.lightBlue, 1.0);
     drawOneFrameLineWithColor([posi.transX + posi.charFontSize, posi.transY + posi.charFontSize, posi.transX, posi.transY + posi.charFontSize], Colors.lightBlue, 1.0);
     drawOneFrameLineWithColor([posi.transX, posi.transY + posi.charFontSize, posi.transX, posi.transY], Colors.lightBlue, 1.0);
-    drawOneFrameLineWithColor([posi.transX, posi.transY, posi.transX + posi.charFontSize, posi.transY + posi.charFontSize], Colors.lightBlue, 1.0);
-    drawOneFrameLineWithColor([posi.transX + posi.charFontSize, posi.transY, posi.transX, posi.transY + posi.charFontSize], Colors.lightBlue, 1.0);
+    drawOneFrameLineWithColor([posi.transX, posi.transY + posi.charFontSize / 2.0, posi.transX + posi.charFontSize, posi.transY + posi.charFontSize / 2.0], Colors.lightBlue, 1.0);
+    drawOneFrameLineWithColor([posi.transX + posi.charFontSize / 2.0, posi.transY, posi.transX + posi.charFontSize / 2.0, posi.transY + posi.charFontSize], Colors.lightBlue, 1.0);
   }
 
+  /*
   double getFrameWidth() {
     return width - 10.0;
   }
+  */
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
