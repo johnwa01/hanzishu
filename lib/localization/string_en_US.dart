@@ -140,7 +140,7 @@ var theString_en_US = [
   Local(134, "Way to go!"),
   Local(135, "You know your Chinese alphabets! Let’s test your knowledge with some guided typing."),
   Local(136, "Wow!"),
-  Local(137, "You know your Chinese alphabets! Let’s review it in next exercise."),
+  Local(137, "You know all the Chinese alphabets! Let’s review it in next exercise."),
   Local(138, "Next"),
   Local(139, "Word drill Hanzishu lesson review"),
   Local(140, "Glossary"),
