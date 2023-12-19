@@ -511,8 +511,8 @@ class BasePainter extends CustomPainter{
 
     var length = components.length;
     if (!withHeader) {
-      if (length > 6) {
-        length = 6; // maximum components for hanzi practice sheet
+      if (length > 4) {
+        length = 4; // maximum components for hanzi practice sheet
       }
     }
 
@@ -555,7 +555,7 @@ class BasePainter extends CustomPainter{
     var yPosi = PrimitiveWrapper(transY);
 
     var length = strokeString.length;
-    var maxStrokeLength = 6;
+    var maxStrokeLength = 4;
     if (!withHeader) {
       if (length > maxStrokeLength) {
         length = maxStrokeLength;

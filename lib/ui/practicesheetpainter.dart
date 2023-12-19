@@ -36,7 +36,7 @@ class PracticeSheetPainter extends BasePainter {
   }
 
   DrawSheet(String zis, bool gridShowZi) {
-    var xStartPosi = 150.0 * getSizeRatio();
+    var xStartPosi = 105.0 * getSizeRatio();
     var yStartPosi = 25.0 * getSizeRatio();
     var fontSize = 40.0 * getSizeRatio();
     var pinyinStart = 20.0 * getSizeRatio();
@@ -97,6 +97,8 @@ class PracticeSheetPainter extends BasePainter {
       DrawOneGridAndZi(oneWord, Colors.grey, posi, true);
       posi.transX += oneZiSpace;
       DrawOneGridAndZi(oneWord, Colors.grey, posi, true);
+      posi.transX += oneZiSpace;
+      DrawOneGridAndZi(oneWord, Colors.grey, posi, false);
       posi.transX += oneZiSpace;
       DrawOneGridAndZi(oneWord, Colors.grey, posi, false);
       posi.transX += oneZiSpace;

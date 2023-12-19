@@ -324,7 +324,7 @@ var theString_en_US = [
   Local(317, "Open right"),
   Local(318, "Arc as the first stroke"),
   Local(319, "'T' shape"),
-  Local(320, "'卩' shape"),
+  Local(320, "'P' shape"),
   Local(321, "Triangle shape"),
   Local(322, "Three legs"),
   Local(323, "Open left"),
