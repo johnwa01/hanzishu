@@ -153,9 +153,9 @@ class _StandardExamPageState extends State<StandardExamPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               getText(AnswerPosition.positionA),
-              SizedBox(height: 5.0 * getSizeRatio()),
+              SizedBox(height: 15.0 * getSizeRatio()),
               getText(AnswerPosition.positionB),
-              SizedBox(height: 5.0 * getSizeRatio()),
+              SizedBox(height: 15.0 * getSizeRatio()),
               getText(AnswerPosition.positionC),
             ]
         )
@@ -170,9 +170,9 @@ class _StandardExamPageState extends State<StandardExamPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getSoundImage(AnswerPosition.positionA),
-                SizedBox(height: 5.0 * getSizeRatio()),
+                SizedBox(height: 15.0 * getSizeRatio()),
                 getSoundImage(AnswerPosition.positionB),
-                SizedBox(height: 5.0 * getSizeRatio()),
+                SizedBox(height: 15.0 * getSizeRatio()),
                 getSoundImage(AnswerPosition.positionC),
               ]
           ),
