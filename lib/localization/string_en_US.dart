@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Word Puzzle"),
+  Local(1, "Learn/Test Hanzi"),
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -454,12 +454,14 @@ var theString_en_US = [
   Local(444, "Wrapped"),
   Local(445, "Chinese alphabet count"),
   Local(446, "Breakdown"),
-  Local(447, "HSK Hanzi Exam (Sound)"),
-  Local(448, "HSK Hanzi Exam(Meaning)"),
+  Local(447, "Test Hanzi Sound"),
+  Local(448, "Test Hanzi Meaning"),
   Local(449, "Hanzi practice sheet generator"),
   Local(450, "Hanzishu unit review"),
   Local(451, "Notes: The above pulldown menu contains following items:"),
   Local(452, "Show Hanzi"),
   Local(453, "Not show Hanzi"),
   Local(454, "Hanzi practice sheet"),
+  Local(455, "HSK Hanzi"),
+  Local(456, "Learn Hanzi"),
 ];

@@ -20,7 +20,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/toolspage.dart';
 import 'package:hanzishu/ui/mepage.dart';
-
+import 'package:hanzishu/ui/wordpage.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
@@ -132,7 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     DictionaryPage(),
-    DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
+    WordPage(),
+    //DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
     ToolsPage(),
     MePage()
   ];
