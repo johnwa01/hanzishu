@@ -28,6 +28,8 @@ class _StandardExamPageState extends State<StandardExamPage> {
   double screenWidth;
   QuizCategory quizCategory;
   int subItemId;
+  int internalStartItemId;
+  int internalEndItemId;
   int currentIndex;
 
   //bool isSoundAnswered;
@@ -75,11 +77,46 @@ class _StandardExamPageState extends State<StandardExamPage> {
       // tell manager to get values ready
       theStandardExamManager.getUpdatedValues();
 
+    var title;
+    if (drillCategory == DrillCategory.hsk) {
+      if (quizCategory == QuizCategory.sound) {
+        if (subItemId == 0) {
+          title = getString(455) + " - " /*+ getString(459) + " - "*/ +
+              getString(447);
+        }
+        else {
+          title = getString(455) + " " + getString(399) + subItemId.toString() +
+              " - " + getString(447);
+        }
+      }
+      else if (quizCategory == QuizCategory.meaning) {
+        if (subItemId == 0) {
+          title = getString(455) + " - " /*+ getString(459) + " - "*/ +
+              getString(448);
+        }
+        else {
+          title = getString(455) + " " + getString(399) + subItemId.toString() +
+              " - " + getString(448);
+        }
+      }
+    }
+    else if (drillCategory == DrillCategory.all) {
+      if (quizCategory == QuizCategory.sound) {
+        title = getString(447);
+      }
+      else if (quizCategory == QuizCategory.meaning) {
+        title = getString(448);
+      }
+    }
+    else {
+      title = getString(6)/*"Quiz")*/;
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text(getString(6)/*"Quiz")*/),
+        title: Text(title),
       ),
       body: Center
         (

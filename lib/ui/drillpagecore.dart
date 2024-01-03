@@ -43,6 +43,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   DrillPainter drillPainter;
   int startingCenterZiId;
   int subItemId; //endLessonId;
+  int internalStartItemId;
+  int internalEndItemId;
   String customString;
   int centerZiId;
   bool shouldDrawCenter;
@@ -116,8 +118,15 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     customString = widget.customString;
     theAllZiLearned = false;
 
+    internalStartItemId = subItemId;
+    internalEndItemId = subItemId;
+    if (drillCategory == DrillCategory.hsk && subItemId == 0) {
+      internalStartItemId = 1;
+      internalEndItemId = 7;
+    }
+
     //if (drillCategory == DrillCategory.custom) {
-      theDictionaryManager.InitRealFilterList(drillCategory, subItemId, subItemId, customString);
+      theDictionaryManager.InitRealFilterList(drillCategory, internalStartItemId, internalEndItemId, customString);
     //}
 
     //theSearchingZiRealFilterList[0] = null;
@@ -224,11 +233,32 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     //  drillCategory = getCategoryFromSelectedDrillMenu(_selectedDrillMenu.id);
     //}
 
+    var titleText = getString(394)/*"Hanzishu drill"*/;
+    if (drillCategory == DrillCategory.hsk) {
+
+    }
+
+    var title;
+    if (drillCategory == DrillCategory.hsk) {
+      if (subItemId == 0) {
+        title = getString(455) + " - " /*+ getString(459) + " - "*/ + getString(456);
+      }
+      else {
+        title = getString(455) + " " + getString(399) + subItemId.toString() + " - " + getString(456);
+      }
+    }
+    else if (drillCategory == DrillCategory.all) {
+      title = getString(456); // "Learn Hanzi"
+    }
+    else {
+      title = getString(394)/*"Hanzishu drill"*/;
+    }
+
     return Scaffold
       (
       appBar: AppBar
         (
-        title: Text(getString(394)/*"Hanzishu drill"*/),
+        title: Text(title),
       ),
       body: Container(
         child: WillPopScope(   // just for removing overlay on detecting back arrow
@@ -244,8 +274,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         centerZiId,
                         shouldDrawCenter,
                         screenWidth,
-                        subItemId, //widget.startLessonId
-                        subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
+                        internalStartItemId, //widget.startLessonId
+                        internalEndItemId, //widget.endLessonId
                         widget.sidePositionsCache,
                         widget.realGroupMembersCache,
                         widget.centerPositionAndSizeCache,
@@ -626,7 +656,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
     }
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, subItemId/*widget.startLessonId*/, subItemId/*subMenuUptoId*/, widget.realGroupMembersCache);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, internalStartItemId, internalEndItemId, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];

@@ -141,11 +141,12 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
-
+/*
     var imageName = "assets/core/chardrill_eng.png";
     if (theDefaultLocale == "zh_CN") {
       imageName = "assets/core/chardrill_cn.png";
     }
+*/
 
     var title;
     if (drillCategory == DrillCategory.hsk) {
@@ -243,6 +244,25 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
 
         listOfWidget.add(textButton);
       }
+
+      // All level combined
+      TextButton combinedTextButton = TextButton(
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        ),
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+                  WordLaunchPage(drillCategory: drillCategory,
+                      subItemId: 0, //subItemId,
+                      customString: null)));
+        },
+        child: Text(getString(459),
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+
+      listOfWidget.add(combinedTextButton);
+
 
       return listOfWidget;
   }

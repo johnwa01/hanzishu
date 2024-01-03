@@ -26,6 +26,9 @@ import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 
+//TODO: this page not used any more, replaced by WordPage.dart. Clean up later.
+// The Hanzishu lessons are still from there, need to move to Lessons area.
+
 class DrillPage extends StatefulWidget {
   //final int lessonId;
   final DrillCategory drillCategory; //startLessonId;

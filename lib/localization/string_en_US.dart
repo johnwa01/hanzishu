@@ -466,4 +466,5 @@ var theString_en_US = [
   Local(456, "Learn Hanzi"),
   Local(457, "In current test, it's estimated that you know about "),
   Local(458, "Total is "),
+  Local(459, "All level combined"),
 ];

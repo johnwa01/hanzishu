@@ -6,8 +6,8 @@ enum DrillCategory {
   all,
   hanzishu,
   hsk,
-  hskTestSound,
-  hskTestMeaning,
+  hskTestSound, //TODO: remove
+  hskTestMeaning, //TODO: remove
   custom,
   yuwen,
   yuwenLesson

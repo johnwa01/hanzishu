@@ -238,7 +238,7 @@ class ZiManager {
         for (var memberZiId in groupMembers) {
           filter = theDictionaryManager.getCurrentRealFilterList();
           filterValue = filter[memberZiId];
-          if (drillCategory == DrillCategory.all || (internalEndLessonId <= filterValue && filterValue <= internalEndLessonId)) {
+          if (drillCategory == DrillCategory.all || (internalStartLessonId <= filterValue && filterValue <= internalEndLessonId)) {
             realGroupMembers.add(memberZiId);
           }
         }
