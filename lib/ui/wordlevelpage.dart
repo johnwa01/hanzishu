@@ -90,7 +90,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
     theAllZiLearned = false;
 
     //if (drillCategory == DrillCategory.custom) {
-      DictionaryManager.InitRealFilterList(drillCategory, customString);
+    //  theDictionaryManager.InitRealFilterList(drillCategory, subItemId, subItemId, customString);
     //}
 
     theCurrentCenterZiId = 1;

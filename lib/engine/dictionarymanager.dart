@@ -12,6 +12,8 @@ import 'package:hanzishu/data/componentlist.dart';
 import 'package:hanzishu/data/drillmenulist.dart';
 
 class DictionaryManager {
+  List<int> currentRealFilterList = [];
+
   static String getChar(int id) {
     return theSearchingZiList[id].char;
   }
@@ -386,54 +388,43 @@ class DictionaryManager {
   }
   */
 
-  static InitRealFilterList(DrillCategory drillCategory, String ziListIfCustomCategory) {
-    if (drillCategory != DrillCategory.custom && theZiManager.getRealFilterList(drillCategory) != null) {
-      return;
-    }
-
-    var length = theSearchingZiFilterList[1].length; //TODO: use the 2nd one, need real list
+  InitRealFilterList(DrillCategory drillCategory, int internalStartItemId, int internalEndItemId, String ziListIfCustomCategory) {
+    //if (drillCategory != DrillCategory.custom && theZiManager.getRealFilterList(drillCategory) != null) {
+    //  return;
+    //}
+    currentRealFilterList.clear();
+    var length = theSearchingZiList.length;
 
     // custom might reuse existing memory
-    List<int> realFilterList;
-    if (drillCategory != DrillCategory.custom) {
-      realFilterList = List<int>(length); // allocate memory
-    }
+    //List<int> realFilterList;
+    //if (drillCategory != DrillCategory.custom) {
+    //  realFilterList = List<int>(length); // allocate memory
+    //}
 
-    var oneList = theZiManager.getOriginalDrillFilterList(drillCategory);
+    //var oneList = theZiManager.getOriginalDrillFilterList(drillCategory);
 
-    /*
-    for (int i = 0; i < length; i++) {
-      // TODO: make this more generic
-      if (filterId == 2) {
-        realFilterList[i] = oneList[i].level; //for Hanzishu lessons
-      }
-      else if (filterId == 3) {
-        realFilterList[i] = oneList[i].levelHSK;
-      }
-    }
-    */
-
-    if (drillCategory == DrillCategory.hanzishu) {
+    if (drillCategory == DrillCategory.hanzishu || drillCategory == DrillCategory.all) {
       for (int i = 0; i < length; i++) {
-        realFilterList[i] = oneList[i].level; //for Hanzishu lessons
+        currentRealFilterList.add(theSearchingZiList[i].level); //for Hanzishu lessons
       }
     }
     else if (drillCategory == DrillCategory.hsk) {
       for (int j = 0; j < length; j++) {
-        realFilterList[j] = oneList[j].levelHSK;
+        currentRealFilterList.add(theSearchingZiList[j].levelHSK);
       }
     }
-    else if (drillCategory == DrillCategory.hskTestSound) {
-      for (int k = 0; k < length; k++) {
-        realFilterList[k] = oneList[k].levelHSK;
-      }
-    }
-    else if (drillCategory == DrillCategory.hskTestMeaning) {
-      for (int k = 0; k < length; k++) {
-        realFilterList[k] = oneList[k].levelHSK;
-      }
-    }
+    //else if (drillCategory == DrillCategory.hskTestSound) {
+    //  for (int k = 0; k < length; k++) {
+    //    currentRealFilterList.add(theSearchingZiList[k].levelHSK);
+    //  }
+    //}
+    //else if (drillCategory == DrillCategory.hskTestMeaning) {
+    //  for (int k = 0; k < length; k++) {
+    //    currentRealFilterList.add(theSearchingZiList[k].levelHSK);
+    //  }
+    //}
     else if (drillCategory == DrillCategory.custom) {
+      /*
       // create the list // filterId
       var customFilterIndex = ZiManager.getFilterIndexByCategory(drillCategory);
       realFilterList = theSearchingZiRealFilterList[customFilterIndex];
@@ -449,35 +440,51 @@ class DictionaryManager {
         // allocate memory
         realFilterList = List<int>(length); // allocate memory
       }
+      */
       // init with given word string
-      var wordLength = ziListIfCustomCategory.length;
-      for (int l = 0; l < length; l++) {
-        realFilterList[l] = 0; //init value
-        for (int m = 0; m < wordLength; m++) {
-          if (theSearchingZiList[l].char == ziListIfCustomCategory[m]) {
-            realFilterList[l] = 1; // indicate active char
+      if (ziListIfCustomCategory != null) {
+        var wordLength = ziListIfCustomCategory.length;
+        int find;
+        for (int l = 0; l < length; l++) {
+          find = 0;
+          for (int m = 0; m < wordLength; m++) {
+            if (theSearchingZiList[l].char == ziListIfCustomCategory[m]) {
+              find = 1;
+              break;
+            }
           }
+          currentRealFilterList.add(find);
         }
       }
     }
 
     //TODO
-    for (int n = 0; n < length; n++) {
-      if (realFilterList[n] != 0) {
-        updateFilterSubLevels(n, realFilterList);
+    if (drillCategory != DrillCategory.all) {
+      for (int n = 0; n < length; n++) {
+        if (currentRealFilterList[n] != 0 &&
+            currentRealFilterList[n] >= internalStartItemId &&
+            currentRealFilterList[n] <= internalEndItemId) {
+          // update all its parents to the current n's value; could be over ride by a later item with different value,
+          // but doesn't matter since they are within the start/end range group.
+          updateFilterSubLevels(n, currentRealFilterList);
+        }
       }
     }
 
-    var filterIndex = ZiManager.getFilterIndexByCategory(drillCategory);
-    theSearchingZiRealFilterList[filterIndex] = realFilterList;
+    //var filterIndex = ZiManager.getFilterIndexByCategory(drillCategory);
+    //theSearchingZiRealFilterList[filterIndex] = currentRealFilterList;
+  }
+
+  List<int> getCurrentRealFilterList() {
+    return currentRealFilterList;
   }
 
   static updateFilterSubLevels(int index, List<int> realFilterList) {
     var parentId = theSearchingZiList[index].parentId;
     if (parentId != 0) {
-      if (realFilterList[parentId] > realFilterList[index] || realFilterList[parentId] == 0) {
+      //if (realFilterList[parentId] > realFilterList[index] || realFilterList[parentId] == 0) {
         realFilterList[parentId] = realFilterList[index];
-      }
+      //}
       updateFilterSubLevels(parentId, realFilterList);
     }
   }

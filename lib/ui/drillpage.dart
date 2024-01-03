@@ -107,7 +107,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     theAllZiLearned = false;
 
     if (drillCategory == DrillCategory.custom) {
-      DictionaryManager.InitRealFilterList(DrillCategory.custom, customString);
+      theDictionaryManager.InitRealFilterList(DrillCategory.custom, subItemId, subItemId, customString);
     }
 
     //theSearchingZiRealFilterList[0] = null;
@@ -311,12 +311,12 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       case 3:
         category = DrillCategory.hsk;
         break;
-      case 4:
-        category = DrillCategory.hskTestSound;
-        break;
-      case 5:
-        category = DrillCategory.hskTestMeaning;
-        break;
+      //case 4:
+      //  category = DrillCategory.hskTestSound;
+      //  break;
+      //case 5:
+      //  category = DrillCategory.hskTestMeaning;
+      //  break;
       default:
         category = DrillCategory.all;
         break;
@@ -462,15 +462,14 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       drillCategory = getCategoryFromSelectedDrillMenu(_selectedDrillMenu.id);
       _dropdownSubMenuItems = buildDropdownSubMenuItems();
 
-      if (_selectedDrillMenu.id != 1 && theSearchingZiRealFilterList[_selectedDrillMenu.id-1] == null) {
-
-        DictionaryManager.InitRealFilterList(drillCategory, null);
-      }
-
       if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
         _selectedSubMenu = _dropdownSubMenuItems[0].value;
         subItemId = _selectedSubMenu.id;
       }
+
+      //if (_selectedDrillMenu.id != 1 && theDictionaryManager.getCurrentRealFilterList() == null) {
+        theDictionaryManager.InitRealFilterList(drillCategory, subItemId, subItemId, null);
+      //}
     });
   }
 

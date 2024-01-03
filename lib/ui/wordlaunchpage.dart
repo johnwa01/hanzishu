@@ -83,9 +83,9 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
     customString = widget.customString;
     theAllZiLearned = false;
 
-    if (drillCategory == DrillCategory.custom) {
-      DictionaryManager.InitRealFilterList(DrillCategory.custom, customString);
-    }
+    //if (drillCategory == DrillCategory.custom) {
+    //  theDictionaryManager.InitRealFilterList(DrillCategory.custom, subItemId, subItemId, customString);
+    //}
 
     theCurrentCenterZiId = 1;
     setState(() {
@@ -102,48 +102,13 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    /*
-    int compoundZiCurrentComponentId = -1;
-    int compoundZiTotalComponentNum = 0;
-
-    // compound zi is animating.
-    if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
-      if (compoundZiAllComponents == null ||
-          compoundZiAllComponents.length == 0) {
-        DictionaryManager.getAllComponents(centerZiId, componentCodes);
-        DictionaryManager.getComponentIdsFromCodes(
-            componentCodes, compoundZiAllComponents);
-      }
-      //var compList = getAllZiComponents(searchingZiIndex);
-      compoundZiTotalComponentNum = compoundZiAllComponents.length;
-
-      if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
-        // after looping through the compoundZiAllComponents.
-        compoundZiCurrentComponentId = centerZiId;
-        currentZiListType = ZiListType.searching;
-        shouldDrawCenter = true;
-      }
-      else {
-        compoundZiCurrentComponentId =
-        compoundZiAllComponents[compoundZiComponentNum - 1];
-        currentZiListType = ZiListType.component;
-      }
-    }
-*/
-    //screenWidth = Utility.getScreenWidth(context);
-    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    screenWidth = Utility.getScreenWidth(context);
+    //screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
-
-
-    var imageName = "assets/core/chardrill_eng.png";
-    if (theDefaultLocale == "zh_CN") {
-      imageName = "assets/core/chardrill_cn.png";
-    }
 
     var title;
     if (drillCategory == DrillCategory.hsk) {
-      title = getString(455);
+      title = getString(455) + " " + getString(399) + subItemId.toString();
     }
     else if (drillCategory == DrillCategory.all) {
       title = getString(395); // 'all 3,800'
@@ -159,8 +124,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         child: WillPopScope(   // just for removing overlay on detecting back arrow
           //height: 200.0,
           //width: 200.0,
+          child: Center(
             child: Column(
-              //crossAxisAlignment: CrossAxisAlignment.center,
+              //mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
                 RawMaterialButton(
@@ -170,7 +137,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                       ),
                       side: BorderSide(color: Colors.blue, width: 0.5)
                   ),
-
+                  fillColor: Colors.blue,
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) =>
@@ -191,7 +158,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                       ),
                       side: BorderSide(color: Colors.blue, width: 0.5)
                   ),
-
+                  fillColor: Colors.blue,
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) =>
@@ -210,7 +177,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                       ),
                       side: BorderSide(color: Colors.blue, width: 0.5)
                   ),
-
+                  fillColor: Colors.blue,
                   onPressed: () {
                     Navigator.of(context).push(
                         MaterialPageRoute(builder: (context) =>
@@ -224,9 +191,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 SizedBox(height: 30),
               ],
             ),
+        ),
             onWillPop: _onWillPop
         ),
-      ),
+      )
     );
   }
 

@@ -116,9 +116,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     customString = widget.customString;
     theAllZiLearned = false;
 
-    if (drillCategory == DrillCategory.custom) {
-      DictionaryManager.InitRealFilterList(DrillCategory.custom, customString);
-    }
+    //if (drillCategory == DrillCategory.custom) {
+      theDictionaryManager.InitRealFilterList(drillCategory, subItemId, subItemId, customString);
+    //}
 
     //theSearchingZiRealFilterList[0] = null;
     //theSearchingZiRealFilterList[1] = null;
@@ -244,7 +244,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         centerZiId,
                         shouldDrawCenter,
                         screenWidth,
-                        0, //widget.startLessonId, //TODO: remove this
+                        subItemId, //widget.startLessonId
                         subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
                         widget.sidePositionsCache,
                         widget.realGroupMembersCache,
@@ -626,7 +626,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
     }
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, 0/*widget.startLessonId*/, subItemId/*subMenuUptoId*/, widget.realGroupMembersCache);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, subItemId/*widget.startLessonId*/, subItemId/*subMenuUptoId*/, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -954,8 +954,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     centerZiId,
     shouldDrawCenter,
     screenWidth,
-    0, //widget.startLessonId, //TODO: remove this
-    subItemId, //subMenuUptoId, //widget.endLessonId, TODO: remove endLessonId
+    subItemId, //widget.startLessonId
+    subItemId, //widget.endLessonId
     widget.sidePositionsCache,
     widget.realGroupMembersCache,
     widget.centerPositionAndSizeCache,

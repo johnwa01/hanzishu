@@ -461,4 +461,6 @@ var theString_zh_CN = [
   Local(454, "汉字练习纸"),
   Local(455, "HSK汉字"),
   Local(456, "学习汉字"),
+  Local(457, "在这个测试中，估计你知道约"),
+  Local(458, "总数是"),
 ];

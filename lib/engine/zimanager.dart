@@ -55,6 +55,7 @@ class IdAndListTypePair {
 
 class ZiManager {
   static final ZiManager _ziManager = ZiManager._internal();
+
   factory ZiManager() {
     return _ziManager;
   }
@@ -76,7 +77,8 @@ class ZiManager {
 
   Zi getZiByChar(String char) {
     for (var zi in theZiList) {
-      if (zi.char.runes.length == 1 && zi.char.runes.first == char.runes.first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
+      if (zi.char.runes.length == 1 && zi.char.runes.first == char.runes
+          .first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
         return zi;
       }
     }
@@ -103,7 +105,7 @@ class ZiManager {
       }
     }
 
-    return -1;  // not found
+    return -1; // not found
   }
 
   static SearchingZi findSearchingZiFromChar(String char) {
@@ -130,7 +132,7 @@ class ZiManager {
     return (tagOrId > 10000) ? true : false;
   }
 
-  bool hasFinishedQuiz(int id){
+  bool hasFinishedQuiz(int id) {
     var zi = getZi(id);
     return zi.hasFinishedQuiz;
   }
@@ -172,7 +174,7 @@ class ZiManager {
           numberOfZis.right = numberOfZis.right + 1;
           break;
         case "u":
-          numberOfZis.upper  = numberOfZis.upper + 1;
+          numberOfZis.upper = numberOfZis.upper + 1;
           break;
         case "b":
           numberOfZis.bottom = numberOfZis.bottom + 1;
@@ -190,6 +192,26 @@ class ZiManager {
     return zi.groupMembers;
   }
 
+  /*
+  List<int> getRealGroupMembersForDrill(int id, DrillCategory drillCategory, int level, int lesson) {
+    if (drillCategory == DrillCategory.all) {
+      return theSearchingZiList[id].groupMembers;
+    }
+    else if (drillCategory == DrillCategory.hsk) {
+      var groupMembers = theSearchingZiList[id].groupMembers;
+      List<int> realGroupMembers = [];
+
+      for (var memberZiId in groupMembers) {
+          if (memberZiId or children is in level) {
+            //((internalEndLessonId > 0 && filterValue == internalEndLessonId) || (internalEndLessonId == 0 && filterValue <= 7))) {  // 7 is the highest hsk level
+            realGroupMembers.add(memberZiId);
+          }
+      }
+      return realGroupMembers;
+    }
+  }
+  */
+
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     //TODO: filter by endId
@@ -197,7 +219,7 @@ class ZiManager {
       if (drillCategory == DrillCategory.all) {
         return theSearchingZiList[id].groupMembers;
       }
-      else {
+      else { // hsk
         List<int> realGroupMembers = [];
         var filter;
         var filterMember;
@@ -214,9 +236,9 @@ class ZiManager {
         }
 
         for (var memberZiId in groupMembers) {
-          filter = getRealFilterList(drillCategory); //theSearchingZiRealFilterList[filterId-1];
+          filter = theDictionaryManager.getCurrentRealFilterList();
           filterValue = filter[memberZiId];
-          if (filterValue > 0 && filterValue <= internalEndLessonId) {
+          if (drillCategory == DrillCategory.all || (internalEndLessonId <= filterValue && filterValue <= internalEndLessonId)) {
             realGroupMembers.add(memberZiId);
           }
         }
@@ -273,26 +295,29 @@ class ZiManager {
     return false;
   }
 
+  /*
   List<SearchingZi> getOriginalDrillFilterList(DrillCategory drillCategory) {
-    if (drillCategory == DrillCategory.all || drillCategory == DrillCategory.custom) {
+    if (drillCategory == DrillCategory.custom) {
       return null;
     }
 
     var filterList;
     switch(drillCategory) {
-      //case DrillCategory.all:
+      case DrillCategory.all:
+        filterList = theSearchingZiFilterList[0];
+        break;
       case DrillCategory.hanzishu:
         filterList = theSearchingZiFilterList[1];
         break;
       case DrillCategory.hsk:
         filterList = theSearchingZiFilterList[2];
         break;
-      case DrillCategory.hskTestSound:
-        filterList = theSearchingZiFilterList[3];
-        break;
-      case DrillCategory.hskTestMeaning:
-        filterList = theSearchingZiFilterList[4];
-        break;
+      //case DrillCategory.hskTestSound:
+      //  filterList = theSearchingZiFilterList[3];
+      //  break;
+      //case DrillCategory.hskTestMeaning:
+      //  filterList = theSearchingZiFilterList[4];
+      //  break;
       //case DrillCategory.custom:
       default:
         filterList = theSearchingZiFilterList[0];
@@ -347,6 +372,7 @@ class ZiManager {
 
     return filterIndex;
   }
+*/
 
   static bool isNonCharWithOneCharName(int id) {
     if ( id == 12 || id == 13 || id == 14 || id == 19) {

@@ -57,13 +57,15 @@ var theHSKTestSubList = [
   DrillMenu(7, 400), //"level 7/8/9"),
 ];
 
+/*
 var theSearchingZiFilterList = [
-  null, //all
-  theSearchingZiList, //hanzishu
+  theSearchingZiList, //all
+  theSearchingZiList, //hanzishu searchingzilist
   theSearchingZiList, //hsk
   theSearchingZiList, //hskTestSound
   theSearchingZiList, //hskTestMeaning
   null //custom
 ];
+*/
 
-List<List<int>> theSearchingZiRealFilterList = new List<List<int>>(theSearchingZiFilterList.length);
+//List<List<int>> theSearchingZiRealFilterList = new List<List<int>>(theSearchingZiFilterList.length);

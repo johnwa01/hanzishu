@@ -7,10 +7,12 @@ import 'package:hanzishu/engine/quizmanager.dart';
 
 class StandardExamManager {
   DrillCategory currentDrillCategory;
-  int currentSubItemId = 0;
+  int currentSubItemId;
   QuizCategory currentQuizCategory;
 
-  static int maxExamNumber = 30;
+  // The two numbers have to be divisible by 3
+  static List<int> maxExamNumber = [30, 45, 60];
+  int currentMaxExamNumber;
 
   int currentCount = 0;
   int currentId;
@@ -23,6 +25,8 @@ class StandardExamManager {
 
   List<int> usedIDs;
 
+  List<int> currentCorrectRandoms;
+
   List<String> fullSubList = ['灵', '覃', '阶', '敢', '因', '众', '醒', '已', '啥'];
   /*
   List<List<String>> testSubLists = [['覃', '阶', '敢', '众', '醒', '已', '啥'],
@@ -32,7 +36,9 @@ class StandardExamManager {
     ['醒', '已', '啥', '已', '啥'],
     ['敢', '众', '醒', '已', '啥']];*/
 
-  List<List<SearchingZi>> testSubLists = [[], [], [], [], [], [], []];
+  //List<List<SearchingZi>> testSubLists = [[], [], [], [], [], [], []];
+
+  List<SearchingZi> currentTestSubList = [];
 
   static List<int> hskZiCounts = [300, 300, 300, 300, 300, 300, 1200]; // 7 levels
 
@@ -47,16 +53,30 @@ class StandardExamManager {
     correctPosition = 0;
     usedIDs = [];
 
+
+    if (currentDrillCategory == DrillCategory.all || (currentDrillCategory == DrillCategory.hsk && currentSubItemId == 0)) {
+      currentMaxExamNumber = maxExamNumber[2];
+    }
+    else if (currentDrillCategory == DrillCategory.hsk && currentSubItemId == 7) {
+      currentMaxExamNumber = maxExamNumber[1];
+    }
+    else {
+      currentMaxExamNumber = maxExamNumber[0];
+    }
+
+    currentCorrectRandoms = [0, 0, 0];
+
     //createFullSubList(subItemId);
 
     // create submenu lists from the general menu
-    createTestSubList(subItemId);
+    //createTestSubList(subItemId);
+    createCurrentTestSubList(currentDrillCategory, subItemId, 0 /*lessonId*/);
 
     currentId = getNext();
   }
 
   int getTotalQuestions() {
-    return maxExamNumber; //testSubLists[currentSubItemId - 1].length;
+      return currentMaxExamNumber;
   }
 
   List<SearchingZi> getCurrentValues() {
@@ -70,12 +90,12 @@ class StandardExamManager {
   }
 */
   int getNext() {
-    return getNextHelper(currentSubItemId);
+    return getNextHelper(/*currentSubItemId*/);
   }
 
-  int getNextHelper(int drillSubMenu) {
-    if (currentCount < (testSubLists[currentSubItemId - 1].length - 1)) {
-      if (currentCount >= maxExamNumber) {
+  int getNextHelper(/*int drillSubMenu*/) {
+    if (currentCount < (currentTestSubList.length - 1)) {
+      if (currentCount >= currentMaxExamNumber) {
         return -1;
       }
 
@@ -101,6 +121,7 @@ class StandardExamManager {
     //return fullSubList;
   }
 
+  /*
   createTestSubList(int drillSubMenu) {
     var hskLevel;
     for (int i = 52; i < theSearchingZiList.length; i++) {
@@ -111,6 +132,32 @@ class StandardExamManager {
     }
     //return testSubLists[0];
   }
+  */
+
+  // level and lesson start at 1; level 0 = all levels of the category, lesson 0 = all lessons of the level
+  createCurrentTestSubList(DrillCategory category, int level, int lesson) {
+      currentTestSubList.clear();
+
+      if (category == DrillCategory.all) {
+        for (int i = 52; i < theSearchingZiList.length; i++) {
+            currentTestSubList.add(theSearchingZiList[i]);
+        }
+      }
+      else if (category == DrillCategory.hsk) {
+        int hskLevel;
+        for (int i = 52; i < theSearchingZiList.length; i++) {
+          hskLevel = theSearchingZiList[i].levelHSK;
+          if ((level == 0 && (hskLevel >= 1 && hskLevel <=7)) || (level != 0 && level == hskLevel)) {
+            currentTestSubList.add(theSearchingZiList[i]);
+          }
+        }
+     }
+  }
+
+  int getCurrentTestSubListTotal() {
+    return currentTestSubList.length;
+  }
+
 
   int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
     var chosen = true;
@@ -134,7 +181,7 @@ class StandardExamManager {
   }
 
   List<SearchingZi> getTypeList(QuizType type) {
-    return testSubLists[currentSubItemId - 1];;
+    return currentTestSubList; //[currentSubItemId - 1];;
   }
 
   SearchingZi getOneValueById(int id) {
@@ -178,15 +225,34 @@ class StandardExamManager {
     return upperRange;
   }
 
+  int getCorrectRandom() {
+    int oneThirdNumberMinusOne = (currentMaxExamNumber / 3).toInt() - 1;
+
+    Random rand = Random();
+
+    int nextRand;
+    do {
+      if ((currentCorrectRandoms[0] > oneThirdNumberMinusOne) && (currentCorrectRandoms[1] > oneThirdNumberMinusOne) && (currentCorrectRandoms[2] > oneThirdNumberMinusOne)) {
+        return -1;
+      }
+
+      nextRand = rand.nextInt(3);
+    }
+    while (currentCorrectRandoms[nextRand] > oneThirdNumberMinusOne);
+
+    currentCorrectRandoms[nextRand] += 1;
+    // 1 based.
+    return (1 + nextRand); // 0, 1, 2 -> +1
+  }
+
   List<SearchingZi> getUpdatedValues(/*int index, bool isMeaning*/) {
     var upperRange = getUpperRange();
 
     currentValues[0] = getOneValueById(currentId);
     var nonCharId0 = 0;
 
-    Random rand = Random();
     // 1 based.
-    correctPosition = 1 + rand.nextInt(3 - 1);
+    correctPosition = getCorrectRandom();
 
     // 0 based position when creating randon number
     var wrongPositionI = getARandomNumber(

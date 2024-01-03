@@ -24,7 +24,7 @@ class StandardExamPage extends StatefulWidget {
 }
 
 class _StandardExamPageState extends State<StandardExamPage> {
-  // No need to show drillCategory and subItem
+  DrillCategory drillCategory;
   double screenWidth;
   QuizCategory quizCategory;
   int subItemId;
@@ -50,6 +50,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
   void initState() {
     super.initState();
     _progressValue = 0.0;
+    drillCategory = widget.drillCategory;
     quizCategory = widget.quizCategory;
     subItemId = widget.subItemId;
     //isSoundAnswered = false;
@@ -359,18 +360,29 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
     //var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
-    var subCountPerLevel = StandardExamManager.hskZiCounts[subItemId-1];
+    var subCountPerLevel = theStandardExamManager.getCurrentTestSubListTotal(); //StandardExamManager.hskZiCounts[subItemId-1];
+    if (drillCategory == DrillCategory.hsk) {
+      if (subItemId >= 1 && subItemId <= 6) {
+        subCountPerLevel = 300;
+      }
+      else if (subItemId == 7) {
+        subCountPerLevel = 1200;
+      }
+      else if (subItemId == 0) {
+        subCountPerLevel = 3000;
+      }
+    }
     var diff = lessonQuizResult.cor - (lessonQuizResult.answ / 3);
     diff = (diff >= 0) ? diff : 0;
     double correctEstimate = subCountPerLevel * diff / (lessonQuizResult.answ * 2 / 3);
     var corStr = correctEstimate.toStringAsFixed(0);
 
     String  title = "Good effort!";
-    String levelString = subItemId.toString();
-    if (subItemId == 7) {
-      levelString = "7/8/9";
-    }
-    String  content = "Out of " + subCountPerLevel.toString() + " Hanzis in level " + levelString + ", it's estimated that you know about " + corStr + ".";
+    //String levelString = subItemId.toString();
+    //if (subItemId == 7) {
+    //  levelString = "7/8/9";
+    //}
+    String  content = getString(457) + corStr + ". " + getString(458) + subCountPerLevel.toString() + ".";
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
