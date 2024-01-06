@@ -226,7 +226,16 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
       //  numberOfLevel = ;
       //}
 
+      String levelText;
+
       for (int i = 0; i < numberOfLevel; i++) {
+        if (i == 6) { // last item for level 7/8/9
+          levelText = level + " 7/8/9";
+        }
+        else {
+          levelText = level + (i + 1).toString();
+        }
+
         textButton = TextButton(
           style: TextButton.styleFrom(
             textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
@@ -238,7 +247,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                         subItemId: i + 1, //subItemId,
                         customString: null)));
           },
-          child: Text(level + (i+1).toString(),
+          child: Text(levelText,
               style: TextStyle(color: Colors.brown)), // lightBlue
         );
 

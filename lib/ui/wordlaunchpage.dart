@@ -112,11 +112,19 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         title = getString(455) + " - " + getString(459);
       }
       else {
-        title = getString(455) + " " + getString(399) + subItemId.toString();
+        if (subItemId == 7) {
+          title = getString(455) + " " + getString(399) + " 7/8/9";
+        }
+        else {
+          title = getString(455) + " " + getString(399) + subItemId.toString();
+        }
       }
     }
     else if (drillCategory == DrillCategory.all) {
       title = getString(395); // 'all 3,800'
+    }
+    else if (drillCategory == DrillCategory.custom) {
+      title = getString(10) + " " + getString(399) + subItemId.toString();
     }
 
     return Scaffold
@@ -135,64 +143,11 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
-                RawMaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(33),
-                      ),
-                      side: BorderSide(color: Colors.blue, width: 0.5)
-                  ),
-                  fillColor: Colors.blue,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) =>
-                            DrillPageCore(drillCategory: drillCategory,
-                                startingCenterZiId: 1,
-                                subItemId: subItemId,
-                                customString: null)));
-                  },
-                  child: Text(getString(456), //"Learn Hanzi"
-                      style: TextStyle(color: Colors.brown)), // lightBlue
-                ),
-
+                getDrillPageCore(drillCategory),
                 SizedBox(height: 30),
-                RawMaterialButton(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(33),
-                      ),
-                      side: BorderSide(color: Colors.blue, width: 0.5)
-                  ),
-                  fillColor: Colors.blue,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) =>
-                            StandardExamPage(drillCategory: drillCategory,
-                                subItemId: subItemId, quizCategory: QuizCategory.sound)));
-                  },
-                  child: Text(getString(447), //"Test Hanzi sound"
-                      style: TextStyle(color: Colors.brown)), // lightBlue
-                ),
+                getExamSound(),
                 SizedBox(height: 30),
-
-                RawMaterialButton(
-                  shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(33),
-                      ),
-                      side: BorderSide(color: Colors.blue, width: 0.5)
-                  ),
-                  fillColor: Colors.blue,
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) =>
-                            StandardExamPage(drillCategory: drillCategory,
-                                subItemId: subItemId, quizCategory: QuizCategory.meaning)));
-                  },
-                  child: Text(getString(448), //"Test Hanzi meaning"
-                      style: TextStyle(color: Colors.brown)), // lightBlue
-                ),
-
+                getExamMeaning(drillCategory),
                 SizedBox(height: 30),
               ],
             ),
@@ -200,6 +155,78 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             onWillPop: _onWillPop
         ),
       )
+    );
+  }
+
+  Widget getDrillPageCore(drillCategory) {
+    if(drillCategory == DrillCategory.custom) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue,
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) =>
+                DrillPageCore(drillCategory: drillCategory,
+                    startingCenterZiId: 1,
+                    subItemId: subItemId,
+                    customString: customString)));
+      },
+      child: Text(getString(456), //"Learn Hanzi"
+          style: TextStyle(color: Colors.brown)), // lightBlue
+    );
+  }
+
+  Widget getExamSound() {
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue,
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) =>
+                StandardExamPage(drillCategory: drillCategory,
+                    subItemId: subItemId,
+                    quizCategory: QuizCategory.sound,
+                    customString: customString)));
+      },
+      child: Text(getString(447), //"Test Hanzi sound"
+          style: TextStyle(color: Colors.brown)), // lightBlue
+    );
+  }
+
+  Widget getExamMeaning(drillCategory) {
+    if(drillCategory == DrillCategory.custom) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue,
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) =>
+                StandardExamPage(drillCategory: drillCategory,
+                    subItemId: subItemId, quizCategory: QuizCategory.meaning)));
+      },
+      child: Text(getString(448), //"Test Hanzi meaning"
+          style: TextStyle(color: Colors.brown)), // lightBlue
     );
   }
 

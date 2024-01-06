@@ -163,6 +163,7 @@ class Utility {
   static var baseNumber = 10000;
   static var componentBaseNumber = 9000;
   static var searchingBaseNumber = 4600;
+  static var searchingZiListRealZiStart = 52;
 
   static void speakChars(String chars, String lang) {
     // skip the special root char
@@ -384,7 +385,7 @@ class Utility {
   }
 
   static bool isSearchingPseudoZiId(int rootZiId) {
-    return (rootZiId >= 3 && rootZiId <= 52); //TODO: finalize it
+    return (rootZiId >= 3 && rootZiId < searchingZiListRealZiStart); //TODO: finalize it
   }
 
   static bool isStarChar(int rootZiId) {
@@ -397,7 +398,7 @@ class Utility {
 
   static bool specialChar(String char) {
     return char == '！' || char == '？' || char == '。' || char == '，' ||
-        char == '!' || char == '?' || char == '.' || char == ',';
+        char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】';
   }
 
   static bool isALowerCaseLetter(String value) {

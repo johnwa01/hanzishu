@@ -219,13 +219,14 @@ class ZiManager {
       if (drillCategory == DrillCategory.all) {
         return theSearchingZiList[id].groupMembers;
       }
-      else { // hsk
+      else { // hsk & custom
         List<int> realGroupMembers = [];
         var filter;
         var filterMember;
         var filterValue;
         List<int> tempGroupMembers = [];
         var groupMembers = theSearchingZiList[id].groupMembers;
+
         if (drillCategory == DrillCategory.custom && id == 1) { // skip the pseudo layer from root level
           var tmpMembers;
           for (var memberId in groupMembers) {
@@ -234,7 +235,7 @@ class ZiManager {
           }
           groupMembers = tempGroupMembers;
         }
-
+        
         for (var memberZiId in groupMembers) {
           filter = theDictionaryManager.getCurrentRealFilterList();
           filterValue = filter[memberZiId];

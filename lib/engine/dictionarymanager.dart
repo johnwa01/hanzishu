@@ -482,9 +482,7 @@ class DictionaryManager {
   static updateFilterSubLevels(int index, List<int> realFilterList) {
     var parentId = theSearchingZiList[index].parentId;
     if (parentId != 0) {
-      //if (realFilterList[parentId] > realFilterList[index] || realFilterList[parentId] == 0) {
-        realFilterList[parentId] = realFilterList[index];
-      //}
+      realFilterList[parentId] = realFilterList[index];
       updateFilterSubLevels(parentId, realFilterList);
     }
   }

@@ -1,5 +1,7 @@
 import 'package:hanzishu/engine/level.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/levellist.dart';
+import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 
 class LevelLessonPair {
@@ -93,7 +95,7 @@ class LevelManager {
     }
 
     var lastLessonId = 0;
-    for (var i = 0; i <= levelId; i++) {
+    for (var i = 0; i < levelId; i++) {
       lastLessonId += theLevelList[i].numberOfLessons;
     }
 
@@ -167,5 +169,22 @@ class LevelManager {
     }
 
     return lessonId;
+  }
+
+  static String getNewHanzi(int levelId) {
+    if (!theHavePopulatedLessonsInfo) {
+      LessonManager.populateLessonsInfo();
+      theHavePopulatedLessonsInfo = true;
+    }
+
+    int firstLessonId = firstInternalLessonId(levelId);
+    int lastLessonId = lastInternalLessonId(levelId);
+
+    String levelNewHanzi = "";
+    for (int i = firstLessonId; i <= lastLessonId; i++) {
+      levelNewHanzi += theLessonList[i].convChars;
+    }
+
+    return levelNewHanzi;
   }
 }

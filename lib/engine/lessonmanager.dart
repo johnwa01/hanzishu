@@ -16,6 +16,8 @@ class LessonManager {
   //static var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
   //static var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
 
+  List<String> newHanziPerLevel;
+
   factory LessonManager() {
     return _lessonManager;
   }

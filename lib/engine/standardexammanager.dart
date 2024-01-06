@@ -42,11 +42,12 @@ class StandardExamManager {
 
   static List<int> hskZiCounts = [300, 300, 300, 300, 300, 300, 1200]; // 7 levels
 
-  initValues(DrillCategory drillCategory, int subItemId, QuizCategory quizCategory) {
+  initValues(DrillCategory drillCategory, int subItemId, QuizCategory quizCategory, String customString) {
     // set all ini values for this drillCategory
     currentDrillCategory = drillCategory;
     currentSubItemId = subItemId;
     currentQuizCategory = quizCategory;
+    customString = customString;
 
     currentCount = 0;
     currentValues = [null, null, null, null];
@@ -60,6 +61,14 @@ class StandardExamManager {
     else if (currentDrillCategory == DrillCategory.hsk && currentSubItemId == 7) {
       currentMaxExamNumber = maxExamNumber[1];
     }
+    else if (currentDrillCategory == DrillCategory.custom) {
+      if(customString.length < maxExamNumber[0]) {
+        currentMaxExamNumber = customString.length;
+      }
+      else {
+        currentMaxExamNumber = maxExamNumber[0];
+      }
+    }
     else {
       currentMaxExamNumber = maxExamNumber[0];
     }
@@ -70,7 +79,7 @@ class StandardExamManager {
 
     // create submenu lists from the general menu
     //createTestSubList(subItemId);
-    createCurrentTestSubList(currentDrillCategory, subItemId, 0 /*lessonId*/);
+    createCurrentTestSubList(currentDrillCategory, subItemId, 0 /*lessonId*/, customString);
 
     currentId = getNext();
   }
@@ -135,7 +144,7 @@ class StandardExamManager {
   */
 
   // level and lesson start at 1; level 0 = all levels of the category, lesson 0 = all lessons of the level
-  createCurrentTestSubList(DrillCategory category, int level, int lesson) {
+  createCurrentTestSubList(DrillCategory category, int level, int lesson, String customString) {
       currentTestSubList.clear();
 
       if (category == DrillCategory.all) {
@@ -151,7 +160,17 @@ class StandardExamManager {
             currentTestSubList.add(theSearchingZiList[i]);
           }
         }
-     }
+      }
+      else if (category == DrillCategory.custom) {
+        for (int j = 0; j < customString.length; j++) {
+          for (int i = 52; i < theSearchingZiList.length; i++) {
+            if (customString[j] == theSearchingZiList[i].char) {
+              currentTestSubList.add(theSearchingZiList[i]);
+              break;
+            }
+          }
+        }
+      }
   }
 
   int getCurrentTestSubListTotal() {

@@ -15,8 +15,9 @@ class StandardExamPage extends StatefulWidget {
   DrillCategory drillCategory;
   final int subItemId;
   QuizCategory quizCategory;
+  String customString;
 
-  StandardExamPage({this.drillCategory, this.subItemId, this.quizCategory});
+  StandardExamPage({this.drillCategory, this.subItemId, this.quizCategory, this.customString});
   //StandardExamPage({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
 
   @override
@@ -27,6 +28,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
   DrillCategory drillCategory;
   double screenWidth;
   QuizCategory quizCategory;
+  String customString;
   int subItemId;
   int internalStartItemId;
   int internalEndItemId;
@@ -55,9 +57,10 @@ class _StandardExamPageState extends State<StandardExamPage> {
     drillCategory = widget.drillCategory;
     quizCategory = widget.quizCategory;
     subItemId = widget.subItemId;
+    customString = widget.customString;
     //isSoundAnswered = false;
 
-    theStandardExamManager.initValues(widget.drillCategory, widget.subItemId, widget.quizCategory);
+    theStandardExamManager.initValues(drillCategory, subItemId, quizCategory, customString);
 
     totalMeaningAndSoundQuestions = theStandardExamManager.getTotalQuestions();
 

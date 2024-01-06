@@ -217,7 +217,7 @@ var theSearchingZiList = [
   SearchingZi(213,"箫", "xiāo", "a vertical bamboo flute",14,["Sn","310"],"",0,"","","u",[],310,0,0,"t"),
   SearchingZi(214,"管", "guǎn", "mange; control; tube; pipe",14,["Sn","249"],"",0,"","","u",[],249,0,3,"t"),
   SearchingZi(215,"丶", "dǐan", "",1,["Ma"],"",0,"","","b",[],0,0,0,"s"),
-  SearchingZi(216,"丫", "yā", "girl",3,["Ge"],"",0,"","","r",[],26,0,7,"s"),
+  SearchingZi(216,"丫", "yā", "girl",3,["Ge"],"",0,"","","u",[],26,0,7,"s"),
   SearchingZi(217,"冯", "féng", "surname",5,["Mc","287"],"",0,"","","l",[],287,0,7,"l"),
   SearchingZi(218,"礼", "lǐ", "gift",5,["Mq","Rb"],"",0,"","","l",[],38,0,2,"l"),
   SearchingZi(219,"写", "xiě", "write",5,["Oe","293"],"",0,"","","u",[247],293,0,1,"t"),

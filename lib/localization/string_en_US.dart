@@ -393,7 +393,7 @@ var theString_en_US = [
   Local(384, "Chinese alphabets"),
   Local(385, "Name"),
   Local(386, "group"),
-  Local(387, "Up to unit"),
+  Local(387, "unit"),
   Local(388, "Please learn and remember above general component categories carefully. It's the foundation of this method!"), // not used anymore
   Local(389, "Part 7:\n\nWe haven't learned some less commonly used alphabets as shown above.\n\nSince they are similar to the alphabets you have learned earlier, you should be able to recognize them. But let's go through them to speed up the learning process."),
   Local(390, "Attached components"), //not used anymore

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:hanzishu/engine/fileio.dart';
 import 'package:hanzishu/engine/lesson.dart';
+import 'package:hanzishu/engine/levelmanager.dart';
 import 'package:hanzishu/engine/paintsoundmanager.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
@@ -13,6 +14,8 @@ import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
 import 'package:hanzishu/ui/paintsoundpage.dart';
+import 'package:hanzishu/ui/wordlaunchpage.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -226,6 +229,7 @@ class _LessonsPageState extends State<LessonsPage> {
     return Column(
       children: <Widget>[
         //getADivider(lessonNumber),
+        getUnitReview(10), // "level - 1" is the real level for last unit's review
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -254,6 +258,14 @@ class _LessonsPageState extends State<LessonsPage> {
         ),
       ]
     );
+  }
+
+  Widget getUnitReviewAtLesson(int level, int lesson) {
+    if (lesson != 60) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return getUnitReview(level);
   }
 
   Widget getLanguageSwitchButtonAsNeeded(int level) {
@@ -328,6 +340,16 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount) {
+    return Column(
+        children: <Widget>[
+          getButtonRowOneContainer(lessonNumber, lessonCount),
+          //getADivider(lessonNumber),
+          getUnitReviewAtLesson(10, lessonNumber),
+        ]
+    );
+  }
+
+  Widget getButtonRowOneContainer(int lessonNumber, int lessonCount) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -426,6 +448,33 @@ class _LessonsPageState extends State<LessonsPage> {
         items: _dropdownCourseMenuItems,
         onChanged: onChangeDropdownCourseItem,
       );
+  }
+
+  Widget getUnitReview(int realLevel) {
+    if (realLevel == 0) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue,
+      onPressed: () {
+        var newHanziPerLevel = LevelManager.getNewHanzi(realLevel);
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) =>
+                WordLaunchPage(drillCategory: DrillCategory.custom,
+                    subItemId: realLevel, //subItemId,
+                    customString: newHanziPerLevel/*"品笑井输入法"*/)));
+      },
+      child: Text(getString(296) + ' ' + getString(387) + realLevel.toString(), //"Review unit 1"
+          style: TextStyle(color: Colors.brown)), // lightBlue
+    )
+    ;
   }
 
   onChangeDropdownCourseItem(CourseMenu selectedCourseMenu) {

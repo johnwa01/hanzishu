@@ -124,6 +124,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       internalStartItemId = 1;
       internalEndItemId = 7;
     }
+    else if(drillCategory == DrillCategory.custom) {
+      internalStartItemId = 1;
+      internalEndItemId = 1;
+    }
 
     //if (drillCategory == DrillCategory.custom) {
       theDictionaryManager.InitRealFilterList(drillCategory, internalStartItemId, internalEndItemId, customString);
