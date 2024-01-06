@@ -229,7 +229,7 @@ class _LessonsPageState extends State<LessonsPage> {
     return Column(
       children: <Widget>[
         //getADivider(lessonNumber),
-        getUnitReview(10), // "level - 1" is the real level for last unit's review
+        getUnitReview(level-1), // "level - 1" is the real level for last unit's review
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -261,7 +261,8 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getUnitReviewAtLesson(int level, int lesson) {
-    if (lesson != 60) {
+    //TODO: doesn't show up yet for some reason
+    if (lesson != 38) { //first lesson of last row of lessons.
       return SizedBox(width: 0, height: 0);
     }
 
