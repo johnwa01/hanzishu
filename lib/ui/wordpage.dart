@@ -47,7 +47,7 @@ class _MeWordState extends State<WordPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(1)/*Learn/Test Hanzi*/),
+        title: Text(getString(1)/*Learn/test Hanzi*/),
       ),
       body: Center
         (

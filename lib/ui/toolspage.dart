@@ -254,7 +254,14 @@ class _ToolsPageState extends State<ToolsPage> {
 
   launchTypingAppPageOrHtml() {
     if (kIsWeb) {
-      launchUrl(Uri.parse("https://hanzishu.com/zi"), webOnlyWindowName: '_self');
+      String urlStr;
+      if (theDefaultLocale == "zh_CN") {
+        urlStr = "https://github.com/hanzishu";
+      }
+      else { // English
+        urlStr = "https://github.com/hanzishu/hanzishu/blob/main/README-en.md";
+      }
+      launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
     }
     else {
       Navigator.push(

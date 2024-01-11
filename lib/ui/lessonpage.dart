@@ -163,6 +163,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 6:
         var initZis = getConvCharsForLesson(lessonId);
         Navigator.push(
@@ -173,6 +174,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+         */
       default:
         break;
     }
@@ -282,7 +284,7 @@ class _LessonPageState extends State<LessonPage> {
         buttonTitle = getString(4);
         break;
       case 1:
-        buttonTitle = getString(1);
+        buttonTitle = getString(456);
         break;
       case 2:
         buttonTitle = getString(2);

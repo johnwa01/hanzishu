@@ -1350,7 +1350,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      "[" + getString(90) + "]"/*"Hint1"*/,
+                      "[" + getString(90) + "1]"/*"Hint1"*/,
                       style: TextStyle(fontSize: fontSize * 1.2), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
                     ),
