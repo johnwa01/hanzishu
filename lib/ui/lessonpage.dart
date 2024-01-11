@@ -58,7 +58,7 @@ class _LessonPageState extends State<LessonPage> {
       this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 6) {
+      if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 5) {
         // re-init for next section's action
         theIsBackArrowExit = true;
         launchLessonSection(context, theCurrentLessonId, numberOfExercises);
@@ -163,7 +163,6 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
       case 6:
         var initZis = getConvCharsForLesson(lessonId);
         Navigator.push(
@@ -174,7 +173,6 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-         */
       default:
         break;
     }
