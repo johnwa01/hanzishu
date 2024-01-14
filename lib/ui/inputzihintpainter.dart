@@ -12,13 +12,12 @@ class InputZiHintPainter extends BasePainter {
   Color lineColor;
   Color completeColor;
   double screenWidth;
-  bool showHint;
-  bool showFullHint;
+  int showHint;
   String char;
   TypingType typingType;
 
   InputZiHintPainter({
-    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.showFullHint, this.char, this.typingType
+    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.char, this.typingType
   });
 
   @override
@@ -26,7 +25,7 @@ class InputZiHintPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth; // set the base class width variable
 
-    if (showHint || showFullHint) {
+    if (showHint == 1 || showHint == 2) {
       displayHintMessage(15.0 * getSizeRatio(), char);  // 18.0
     }
     else {
@@ -152,7 +151,7 @@ class InputZiHintPainter extends BasePainter {
     }
 
     double size = 24 * getSizeRatio(); //14.4
-    if (showFullHint == true) {
+    if (showHint == 2) {
       size = 20 * getSizeRatio(); //14.4
     }
     double halfSize = size/1.2;
@@ -169,7 +168,7 @@ class InputZiHintPainter extends BasePainter {
       drawComponentZi(comp, xPosi, 0.0, size, size, size, Colors.blue, true, 1);
 
       xPosi += size * 1.2;
-      if (showFullHint) {
+      if (showHint == 2) {
         displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
@@ -202,7 +201,7 @@ class InputZiHintPainter extends BasePainter {
             1);
 
         xPosi += size * 1.2;
-        if (showFullHint) {
+        if (showHint == 2) {
           displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
           xPosi += halfSize / 1.5;
           var typingCode = ComponentManager.getTypingCode(comp);

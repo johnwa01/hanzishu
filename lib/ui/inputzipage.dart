@@ -45,8 +45,7 @@ class _InputZiPageState extends State<InputZiPage> {
   String initialControllerTextValue; // = "unlikelyIniStr876";
   String previousText = "";
   //List<String> ziCandidates;
-  bool showHint = false;
-  bool showFullHint = false;
+  int showHint = 0;
 
   OverlayEntry overlayEntry;
   int dismissCount = 0;
@@ -90,8 +89,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     setState(() {
       updateCounter = 0;
-      showHint = false;
-      showFullHint = false;
+      showHint = 0;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
     });
   }
@@ -436,8 +434,7 @@ class _InputZiPageState extends State<InputZiPage> {
     previousStartComposing = -1;
     previousEndComposing = -1;
 
-    showHint = false;
-    showFullHint = false;
+    showHint = 0;
 
     checkAndUpdateCurrentIndex();
 
@@ -866,7 +863,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (!showHint && !showFullHint && !isFromArrowCandidate) {
+    if (showHint == 0 && !isFromArrowCandidate) {
       theCurrentZiCandidates = theDefaultZiCandidates;
     } // set it to default
 
@@ -1297,7 +1294,6 @@ class _InputZiPageState extends State<InputZiPage> {
         completeColor: Colors.blueAccent,
         screenWidth: screenWidth, //350 /*TODO: temp*/
         showHint: this.showHint,
-        showFullHint: this.showFullHint,
         char: char, //zi.zi,
         typingType: typingType
     );
@@ -1345,8 +1341,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = true;
-                        showFullHint = false;
+                        showHint = 1; // show Hint1
                         _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -1368,8 +1363,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = false;
-                        showFullHint = true;
+                        showHint = 2; // show Hint2
                         _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
