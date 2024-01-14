@@ -1346,6 +1346,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
                       setState(() {
                         showHint = true;
+                        showFullHint = false;
                         _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -1367,7 +1368,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = true;
+                        showHint = false;
                         showFullHint = true;
                         _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });

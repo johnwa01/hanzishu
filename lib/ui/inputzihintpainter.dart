@@ -151,7 +151,10 @@ class InputZiHintPainter extends BasePainter {
       subComponents = ComponentManager.getSubComponents(components);
     }
 
-    double size = 14.4 * getSizeRatio(); //18.0
+    double size = 24 * getSizeRatio(); //14.4
+    if (showFullHint == true) {
+      size = 20 * getSizeRatio(); //14.4
+    }
     double halfSize = size/1.2;
     double xPosi = 8.0; //10.0
 
