@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 enum QuestionType {
   none,
   //TODO: remove all but two
@@ -145,6 +147,7 @@ class LeadComponent {
   String strokesString;
   int hint;
   List<double> strokes;
+  String componentCategory;
 
 
   LeadComponent(
@@ -158,7 +161,8 @@ class LeadComponent {
         String image,
         String strokesString,
       int hint,
-      List<double> strokes)
+      List<double> strokes,
+      String componentCategory)
   {
       this.id = id;
       this.doubleByteCode = doubleByteCode;
@@ -171,6 +175,17 @@ class LeadComponent {
       this.strokesString = strokesString;
       this.hint = hint;
       this.strokes = strokes;
+      this.componentCategory = componentCategory;
+  }
+}
+
+class ComponentCategory {
+  String categoryType;
+  int categoryNameLocaleStringId;
+
+  ComponentCategory(String categoryType, int categoryNameLocaleStringId) {
+    this.categoryType = categoryType;
+    this.categoryNameLocaleStringId = categoryNameLocaleStringId;
   }
 }
 
@@ -198,7 +213,7 @@ class Component {
       String subComponents,
       List<double> strokes)
   {
-    this.doubleByteCode= doubleByteCode;
+    this.doubleByteCode = doubleByteCode;
     this.charOrNameOfNonchar = charOrNameOfNonchar;
     this.pinyin = pinyin;
     this.typingCode = typingCode;

@@ -36,6 +36,8 @@ class _InputZiPageState extends State<InputZiPage> {
   int totalQuestions;
   double screenWidth;
 
+  String currentTypingChar;
+
   // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
   TextEditingController _controller = new TextEditingController(text: "");
   FocusNode _textNode = new FocusNode();
@@ -45,7 +47,14 @@ class _InputZiPageState extends State<InputZiPage> {
   String initialControllerTextValue; // = "unlikelyIniStr876";
   String previousText = "";
   //List<String> ziCandidates;
-  int showHint = 0;
+  int showHint;
+  int selectedCompIndex;
+  int selectedCategoryIndex;
+  int selectedSubcategoryIndex;
+  int currentCorrectCategoryIndex;
+  int currentCorrectSubcategoryIndex;
+  List<String> currentTypingComponentsAndSub;
+  List<int> currentLeadCompList;
 
   OverlayEntry overlayEntry;
   int dismissCount = 0;
@@ -68,6 +77,17 @@ class _InputZiPageState extends State<InputZiPage> {
     return Utility.getSizeRatio(screenWidth);
   }
 
+  initSelected() {
+    // TODO: temp
+    showHint = 0;
+    selectedCompIndex = 1;
+    selectedCategoryIndex = 0;
+    selectedSubcategoryIndex = 0;
+    currentCorrectCategoryIndex = 0;
+    currentCorrectSubcategoryIndex = 0;
+  }
+
+
   @override
   initState() {
     super.initState();
@@ -86,6 +106,16 @@ class _InputZiPageState extends State<InputZiPage> {
 
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
+
+    initSelected();
+
+    if (currentTypingComponentsAndSub != null && currentTypingComponentsAndSub.length > 0) {
+      currentTypingComponentsAndSub.clear();
+    }
+
+    if (currentLeadCompList != null && currentLeadCompList.length > 0) {
+      currentLeadCompList.clear();
+    }
 
     setState(() {
       updateCounter = 0;
@@ -1230,10 +1260,12 @@ class _InputZiPageState extends State<InputZiPage> {
     else {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
-      char = zi.zi;
+      currentTypingChar = zi.zi;
+      //selectedCategoryIndex = 0;
+      //selectedSubcategoryIndex = 0;
     }
 
-    TextToSpeech.speak("zh-CN", char);
+    TextToSpeech.speak("zh-CN", currentTypingChar);
 
     return Row(
         children: <Widget>[
@@ -1247,7 +1279,7 @@ class _InputZiPageState extends State<InputZiPage> {
           SizedBox(
             width: 35.0 * getSizeRatio(), //50
             child: Text(
-                char, //zi.zi,
+                currentTypingChar, //zi.zi,
                 style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                 textAlign: TextAlign.left
             ),
@@ -1294,6 +1326,9 @@ class _InputZiPageState extends State<InputZiPage> {
         completeColor: Colors.blueAccent,
         screenWidth: screenWidth, //350 /*TODO: temp*/
         showHint: this.showHint,
+        selectedCompIndex: selectedCompIndex,
+        //selectedCategoryIndex: selectedCategoryIndex,
+        //selectedSubcategoryIndex: selectedSubcategoryIndex,
         char: char, //zi.zi,
         typingType: typingType
     );
@@ -1396,10 +1431,173 @@ class _InputZiPageState extends State<InputZiPage> {
               ]
          ),
          */
+          getCategoryRow(),
+          getSubCategoryRow1(),
+          getSubCategoryRow2(),
        ]
       ),
       onWillPop: _onWillPop
     );
+  }
+
+  getCategoryRow() {
+    if (showHint == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    currentTypingComponentsAndSub =
+          ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
+
+    currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
+
+    return Row(
+        children: <Widget>[
+          getCategoryOneItem(1),
+          getCategoryOneItem(2),
+          getCategoryOneItem(3),
+          getCategoryOneItem(4),
+          getCategoryOneItem(5),
+        ]
+    );
+  }
+
+  getCategoryOneItem(int categoryIndex) {
+    if (selectedCategoryIndex != 0) {
+      if (categoryIndex != selectedCategoryIndex && categoryIndex != currentCorrectCategoryIndex) {
+        return SizedBox(width: 0.0, height: 0.0);
+      }
+    }
+
+    //currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(typingComponentsAndSub, selectedCompIndex);
+    String categoryString = getString(theComponentCategoryList[categoryIndex-1].categoryNameLocaleStringId);
+    var color = Colors.blue;
+    if (selectedCategoryIndex > 0) {
+      if (categoryIndex == currentCorrectCategoryIndex) {
+        color = Colors.green;
+        categoryString += ':';
+      }
+      else if (categoryIndex == selectedCategoryIndex) {
+        color = Colors.red;
+        categoryString = '(' + categoryString + ')';
+      }
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 16.0 * getSizeRatio()),
+      ),
+      onPressed: () {
+        setState(() {
+          selectedCategoryIndex = categoryIndex;
+        });
+      },
+      child: Text(categoryString /*"Start"*/,
+          style: TextStyle(color: color)),
+    );
+  }
+
+  getSubCategoryOneItem(int leadCompIndex, List<int> leadComponentList) {
+    bool isSubCategoryEmpty = leadCompIndex > leadComponentList.length;
+
+    if (isSubCategoryEmpty || showHint == 0 || selectedCategoryIndex == 0 /*|| selectedSubCategoryIndex == 0*/) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    int componentIndex = leadComponentList[leadCompIndex-1];
+
+    var color = Colors.blue;
+    if (selectedSubcategoryIndex > 0) {
+      if (leadCompIndex == currentCorrectSubcategoryIndex) {
+        color = Colors.green;
+      }
+      else if (leadCompIndex == selectedSubcategoryIndex) {
+        color = Colors.red;
+      }
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 16.0 * getSizeRatio()),
+      ),
+      onPressed: () {
+        setState(() {
+          selectedSubcategoryIndex = leadCompIndex;
+        });
+      },
+      child: Text(getString(theLeadComponentList[componentIndex].hint) /*"Start"*/,
+          style: TextStyle(color: color)), // lightBlue
+    );
+  }
+
+  getSubCategoryRow1() {
+    if (showHint == 0 || selectedCategoryIndex == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
+    currentLeadCompList = ComponentManager.getLeadComponentsForCategory(category);
+
+    currentCorrectSubcategoryIndex = theComponentManager.getCurrentCorrectSubcategoryIndex(currentTypingComponentsAndSub, selectedCompIndex, currentLeadCompList);
+
+    if (currentCorrectCategoryIndex == 3 || currentCorrectCategoryIndex == 5) { // legs
+      return Row(
+          children: <Widget>[
+            getSubCategoryOneItem(1, currentLeadCompList),
+            getSubCategoryOneItem(2, currentLeadCompList),
+            getSubCategoryOneItem(3, currentLeadCompList),
+          ]
+      );
+    }
+    else {
+      return Row(
+          children: <Widget>[
+            getSubCategoryOneItem(1, currentLeadCompList),
+            getSubCategoryOneItem(2, currentLeadCompList),
+            getSubCategoryOneItem(3, currentLeadCompList),
+            getSubCategoryOneItem(4, currentLeadCompList),
+          ]
+      );
+    }
+  }
+
+  getSubCategoryRow2() {
+    if (showHint == 0 || selectedCategoryIndex == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    //String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
+    //var leadCompList = ComponentManager.getLeadComponentsForCategory(category);
+
+    if (currentLeadCompList.length <= 4) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    if (currentCorrectCategoryIndex == 3) { // legs
+      return Row(
+          children: <Widget>[
+            getSubCategoryOneItem(4, currentLeadCompList),
+            getSubCategoryOneItem(5, currentLeadCompList),
+          ]
+      );
+    }
+    else if (currentCorrectCategoryIndex == 5) { // strokes
+      return Row(
+          children: <Widget>[
+            getSubCategoryOneItem(4, currentLeadCompList),
+            getSubCategoryOneItem(5, currentLeadCompList),
+            getSubCategoryOneItem(6, currentLeadCompList),
+          ]
+      );
+    }
+    else {
+      return Row(
+          children: <Widget>[
+            getSubCategoryOneItem(5, currentLeadCompList),
+            getSubCategoryOneItem(6, currentLeadCompList),
+            getSubCategoryOneItem(7, currentLeadCompList),
+          ]
+      );
+    }
   }
 
   // not used anymore

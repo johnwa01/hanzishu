@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:ui';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/utility.dart';
 
 
@@ -13,11 +15,14 @@ class InputZiHintPainter extends BasePainter {
   Color completeColor;
   double screenWidth;
   int showHint;
+  int selectedCompIndex;
+  //int selectedCategoryIndex;
+  //int selectedSubcategoryIndex;
   String char;
   TypingType typingType;
 
   InputZiHintPainter({
-    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.char, this.typingType
+    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ this.char, this.typingType
   });
 
   @override
@@ -141,6 +146,7 @@ class InputZiHintPainter extends BasePainter {
 */
 
   displayHintMessage(double fontSize, String char) {
+    int totalComponentsDisplayed = 0;
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
     List<String> components = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
@@ -156,8 +162,15 @@ class InputZiHintPainter extends BasePainter {
     }
     double halfSize = size/1.2;
     double xPosi = 8.0; //10.0
+    var compColor;
 
     for (int i = 0; i < components.length; i++) {
+      totalComponentsDisplayed++;
+      compColor = Colors.blue;
+      if (selectedCompIndex == totalComponentsDisplayed) {
+        compColor = Colors.green;
+      }
+
       if (i != 0) {
         xPosi += halfSize / 1.5;
       //  displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
@@ -165,25 +178,29 @@ class InputZiHintPainter extends BasePainter {
       }
 
       var comp = components[i];
-      drawComponentZi(comp, xPosi, 0.0, size, size, size, Colors.blue, true, 1);
+      drawComponentZi(comp, xPosi, 0.0, size, size, size, compColor, true, 1);
 
       xPosi += size * 1.2;
       if (showHint == 2) {
-        displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
+        displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
         displayTextWithValue(
-            typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue, false);
+            typingCode.toUpperCase(), xPosi, 0.0, size, compColor, false);
 
         xPosi += size; //* 1.2;
-        displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
+        displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
         //xPosi += halfSize / 1.5;
       }
     }
 
     if (subComponents != null) {
       for (int i = 0; i < subComponents.length; i++) {
-
+        totalComponentsDisplayed++;
+        compColor = Colors.blue;
+        if (selectedCompIndex == totalComponentsDisplayed) {
+          compColor = Colors.green;
+        }
           xPosi += halfSize / 1.3;
           //displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
           //xPosi += halfSize;
@@ -196,24 +213,46 @@ class InputZiHintPainter extends BasePainter {
             size,
             size,
             size,
-            Colors.blue,
+            compColor,
             true,
             1);
 
         xPosi += size * 1.2;
         if (showHint == 2) {
-          displayTextWithValue('(', xPosi, 0.0, size, Colors.blue, false);
+          displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
           xPosi += halfSize / 1.5;
           var typingCode = ComponentManager.getTypingCode(comp);
 
           displayTextWithValue(
-              typingCode.toUpperCase(), xPosi, 0.0, size, Colors.blue, false);
+              typingCode.toUpperCase(), xPosi, 0.0, size, compColor, false);
           xPosi += size;
-          displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
+          displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
         }
       }
     }
+
+    //int selectedCompRealId = 100; //getCompRealIdFromIndex(selectedCompIndex);
+    //String correctCompCategory = 'A'; //getCorrectCompCategoryFromRealId(selectedCompRealId);
+
+    //if (selectedCompIndex > 0) {
+    //  displayCompCategories(correctCompCategory, selectedCategoryIndex);
+    //}
   }
+
+  /*
+  displayCompCategories(String correctCompCategory, int selectedCategoryIndex) {
+    double size = 20.0;
+    double xPosi = 0.0;
+    double yPosi = 40.0;
+    String categoryName;
+
+    for (int i = 0; i < 3/*theComponentCategoryList.length*/; i++) {
+        categoryName = getString(theComponentCategoryList[i].categoryNameLocaleStringId);
+        displayTextWithValue(categoryName, xPosi, yPosi, size, Colors.blue, false);
+        xPosi += 5 * size;
+    }
+  }
+  */
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {

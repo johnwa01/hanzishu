@@ -1,6 +1,7 @@
 
 import 'package:hanzishu/data/ziidtocompcodemaplist.dart';
 import 'package:hanzishu/engine/component.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/data/componentlist.dart';
@@ -1132,6 +1133,11 @@ class ComponentManager {
     return oneComp.typingCode.substring(0, 1);
   }
 
+  static String getFullTypingCode(String componentCode) {
+    var oneComp = getComponentByCode(componentCode);
+    return oneComp.typingCode;
+  }
+
   static List<String> getSubComponents(List<String> componentCodes) {
     var count = componentCodes.length;
     Component oneComp;
@@ -1169,5 +1175,72 @@ class ComponentManager {
     //maybe ok to have zi listed in the front
 
     return sortedCompIds;
+  }
+
+  static List<int> getLeadComponentsForCategory(String category) {
+    List<int> compIndex = [];
+    var temp;
+
+    for (var i = 0; i < theLeadComponentList.length; i++) {
+      temp = theLeadComponentList[i].componentCategory;
+      if (category == temp) {
+        compIndex.add(i);
+      }
+    }
+
+    return compIndex;
+  }
+
+  static List<String> getTypingComponentsAndSubComp(String char) {
+    var searchingZiId = DictionaryManager.getSearchingZiId(char);
+    List<String> components = List<String>();
+    DictionaryManager.getAllComponents(searchingZiId, components);
+
+    var subComponents;
+    if (components.length < 3) {
+      subComponents = ComponentManager.getSubComponents(components);
+      for (int i = 0; i < subComponents.length; i++) {
+        components.add(subComponents[i]);
+      }
+    }
+
+    return components;
+  }
+
+  String getLeadComponenCategoryCode(String componentTypingCode) {
+    for (int i = 0; i < theLeadComponentList.length; i++) {
+      if (theLeadComponentList[i].doubleByteCode.codeUnitAt(0) == componentTypingCode.codeUnitAt(0)) {
+        return theLeadComponentList[i].componentCategory;
+      }
+    }
+
+    return null;
+  }
+
+  int getLeadComponentCategoryIndex(String componentTypingCode) {
+    var categoryCode = getLeadComponenCategoryCode(componentTypingCode);
+
+    return categoryCode.codeUnitAt(0) - 'A'.codeUnitAt(0) + 1;
+  }
+
+  int getCurrentCorrectCategoryIndex(List<String> typingComponentsAndSub, int selectedCompIndex) {
+    String componentCode = typingComponentsAndSub[selectedCompIndex - 1];
+    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode);
+    return getLeadComponentCategoryIndex(componentTypingCode);
+  }
+
+  int getCurrentCorrectSubcategoryIndex(List<String> typingComponentsAndSub, int selectedCompIndex, List<int>currentLeadCompList) {
+    String componentCode = typingComponentsAndSub[selectedCompIndex - 1];
+    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode);
+
+    int leadComonentIndex = 0;
+    for (int i = 0; i < currentLeadCompList.length; i++) {
+      leadComonentIndex = currentLeadCompList[i];
+      if (componentTypingCode.codeUnitAt(0) == theLeadComponentList[leadComonentIndex].doubleByteCode.codeUnitAt(0)) {
+        return i + 1;
+      }
+    }
+
+    return 0;
   }
 }

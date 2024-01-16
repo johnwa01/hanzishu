@@ -464,4 +464,7 @@ var theString_zh_CN = [
   Local(457, "在这个测试中，估计你知道约"),
   Local(458, "总数是"),
   Local(459, "所有水平一起"),
+  Local(460, "口"),
+  Local(461, "腿"),
+  Local(462, "常用"),
 ];
