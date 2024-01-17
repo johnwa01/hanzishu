@@ -146,15 +146,10 @@ class InputZiHintPainter extends BasePainter {
 */
 
   displayHintMessage(double fontSize, String char) {
-    int totalComponentsDisplayed = 0;
-    var searchingZiId = DictionaryManager.getSearchingZiId(char);
-    List<String> components = List<String>();
-    DictionaryManager.getAllComponents(searchingZiId, components);
-
-    var subComponents;
-    if (components.length < 3) {
-      subComponents = ComponentManager.getSubComponents(components);
-    }
+    //var searchingZiId = DictionaryManager.getSearchingZiId(char);
+    //List<String> components = List<String>();
+    //DictionaryManager.getAllComponents(searchingZiId, components);
+    var typingComponentsAndSubComp = ComponentManager.getTypingComponentsAndSubComp(char);
 
     double size = 24 * getSizeRatio(); //14.4
     if (showHint == 2) {
@@ -164,11 +159,10 @@ class InputZiHintPainter extends BasePainter {
     double xPosi = 8.0; //10.0
     var compColor;
 
-    for (int i = 0; i < components.length; i++) {
-      totalComponentsDisplayed++;
+    for (int i = 0; i < typingComponentsAndSubComp.length; i++) {
       compColor = Colors.blue;
-      if (selectedCompIndex == totalComponentsDisplayed) {
-        compColor = Colors.green;
+      if (selectedCompIndex == (i + 1)) {
+        compColor = Colors.purple;
       }
 
       if (i != 0) {
@@ -177,7 +171,7 @@ class InputZiHintPainter extends BasePainter {
       //  xPosi += halfSize / 1.5;
       }
 
-      var comp = components[i];
+      var comp = typingComponentsAndSubComp[i];
       drawComponentZi(comp, xPosi, 0.0, size, size, size, compColor, true, 1);
 
       xPosi += size * 1.2;
@@ -193,50 +187,6 @@ class InputZiHintPainter extends BasePainter {
         //xPosi += halfSize / 1.5;
       }
     }
-
-    if (subComponents != null) {
-      for (int i = 0; i < subComponents.length; i++) {
-        totalComponentsDisplayed++;
-        compColor = Colors.blue;
-        if (selectedCompIndex == totalComponentsDisplayed) {
-          compColor = Colors.green;
-        }
-          xPosi += halfSize / 1.3;
-          //displayTextWithValue(',', xPosi, 0.0, size, Colors.blue);
-          //xPosi += halfSize;
-
-        var comp = subComponents[i];
-        drawComponentZi(
-            comp,
-            xPosi,
-            0.0,
-            size,
-            size,
-            size,
-            compColor,
-            true,
-            1);
-
-        xPosi += size * 1.2;
-        if (showHint == 2) {
-          displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
-          xPosi += halfSize / 1.5;
-          var typingCode = ComponentManager.getTypingCode(comp);
-
-          displayTextWithValue(
-              typingCode.toUpperCase(), xPosi, 0.0, size, compColor, false);
-          xPosi += size;
-          displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
-        }
-      }
-    }
-
-    //int selectedCompRealId = 100; //getCompRealIdFromIndex(selectedCompIndex);
-    //String correctCompCategory = 'A'; //getCorrectCompCategoryFromRealId(selectedCompRealId);
-
-    //if (selectedCompIndex > 0) {
-    //  displayCompCategories(correctCompCategory, selectedCategoryIndex);
-    //}
   }
 
   /*

@@ -53,7 +53,10 @@ class _InputZiPageState extends State<InputZiPage> {
   int selectedSubcategoryIndex;
   int currentCorrectCategoryIndex;
   int currentCorrectSubcategoryIndex;
+  bool currentTypingCodeIsCorrect;
+  String currentComposingText;
   List<String> currentTypingComponentsAndSub;
+  String currentCorrectTypingCode;
   List<int> currentLeadCompList;
 
   OverlayEntry overlayEntry;
@@ -77,7 +80,7 @@ class _InputZiPageState extends State<InputZiPage> {
     return Utility.getSizeRatio(screenWidth);
   }
 
-  initSelected() {
+  initHintSelected() {
     // TODO: temp
     showHint = 0;
     selectedCompIndex = 1;
@@ -85,6 +88,16 @@ class _InputZiPageState extends State<InputZiPage> {
     selectedSubcategoryIndex = 0;
     currentCorrectCategoryIndex = 0;
     currentCorrectSubcategoryIndex = 0;
+    currentCorrectTypingCode = '';
+    currentTypingCodeIsCorrect = true;
+
+    if (currentTypingComponentsAndSub != null && currentTypingComponentsAndSub.length > 0) {
+      currentTypingComponentsAndSub.clear();
+    }
+
+    if (currentLeadCompList != null && currentLeadCompList.length > 0) {
+      currentLeadCompList.clear();
+    }
   }
 
 
@@ -107,15 +120,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
 
-    initSelected();
-
-    if (currentTypingComponentsAndSub != null && currentTypingComponentsAndSub.length > 0) {
-      currentTypingComponentsAndSub.clear();
-    }
-
-    if (currentLeadCompList != null && currentLeadCompList.length > 0) {
-      currentLeadCompList.clear();
-    }
+    initHintSelected();
 
     setState(() {
       updateCounter = 0;
@@ -374,6 +379,8 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType != TypingType.FreeTyping) {
       if (theInputZiManager.doesTypingResultContainTheZi(
           typingType, currentIndex, _controller.text, lessonId)) {
+        initHintSelected(); // reset the hint selection parameters
+
         // tell Flutter to refresh with the next index
         setState(() {
           if ((currentIndex + 1) ==
@@ -598,12 +605,16 @@ class _InputZiPageState extends State<InputZiPage> {
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
+        currentComposingText = previousText;
+        updateTypingStatusAndHintCompIndex(previousText);
       }
       else {
         previousStartComposing = -1;
         previousEndComposing = -1;
         theCurrentZiCandidates = theDefaultZiCandidates;
         previousText = _controller.text;
+        currentComposingText = previousText;
+        updateTypingStatusAndHintCompIndex(previousText);
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
@@ -669,14 +680,16 @@ class _InputZiPageState extends State<InputZiPage> {
       setTextByChosenZiIndex(
           getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
-    else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
-      candidateGroupIndex = 0;
+    else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {candidateGroupIndex = 0;
       hasVerifiedToBeALowerCase = true;
       initOverlay();
       setPreviousComposing();
 
       var composingText = getFullComposingText(
           previousStartComposing, previousEndComposing);
+
+      currentComposingText = composingText;
+      updateTypingStatusAndHintCompIndex(composingText);
       fullZiCandidates = InputZiManager.getZiCandidates(composingText);
       InputZiManager.updateFirstCandidate(
           fullZiCandidates, InputZiManager.previousFirstPositionList);
@@ -1261,8 +1274,10 @@ class _InputZiPageState extends State<InputZiPage> {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
       currentTypingChar = zi.zi;
-      //selectedCategoryIndex = 0;
-      //selectedSubcategoryIndex = 0;
+      // prepard hint stuff, running once per zi, therefore to put here.
+      currentTypingComponentsAndSub =
+            ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
+      currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
     }
 
     TextToSpeech.speak("zh-CN", currentTypingChar);
@@ -1284,8 +1299,24 @@ class _InputZiPageState extends State<InputZiPage> {
                 textAlign: TextAlign.left
             ),
           ),
+          SizedBox(width: fontSize * 1.2),
+          getWarningMessage(),
         ]
     );
+  }
+
+  Widget getWarningMessage() {
+    var fontSize = 15.0 * getSizeRatio();     //15.0
+    if (currentTypingCodeIsCorrect) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+    else {
+      return Text(
+          "Warning: Wrong typing code.",
+          style: TextStyle(fontSize: fontSize),
+          textAlign: TextAlign.left
+      );
+    }
   }
 
   Widget getComponentRelated() {
@@ -1445,8 +1476,12 @@ class _InputZiPageState extends State<InputZiPage> {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-    currentTypingComponentsAndSub =
-          ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
+    //TODO: find a place to do this just once for each char
+    //currentTypingComponentsAndSub =
+    //      ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
+    //currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
+
+    //updateTypingStatusAndHintCompIndex(currentComposingText);
 
     currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
 
@@ -1844,5 +1879,23 @@ class _InputZiPageState extends State<InputZiPage> {
         return alert;
       },
     );
+  }
+
+  updateTypingStatusAndHintCompIndex(String composingText) {
+    int sameStartSubstring = Utility.sameStartSubstring(
+        composingText, currentCorrectTypingCode);
+
+    setState(() {
+      if (sameStartSubstring < currentCorrectTypingCode.length) {
+        selectedCompIndex = sameStartSubstring + 1;
+      }
+
+      if (sameStartSubstring < composingText.length) {
+        currentTypingCodeIsCorrect = false;
+      }
+      else {
+        currentTypingCodeIsCorrect = true;
+      }
+    });
   }
 }

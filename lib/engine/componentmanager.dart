@@ -1243,4 +1243,25 @@ class ComponentManager {
 
     return 0;
   }
+
+  List<String> getFullTypingCodes(List<String>typingComponentsAndSub) {
+    List<String> typingCodes = [];
+    for (int i = 0; i < typingComponentsAndSub.length; i++) {
+      typingCodes.add(ComponentManager.getFullTypingCode(typingComponentsAndSub[i]));
+    }
+
+    return typingCodes;
+  }
+
+  String getCurrentCorrectTypingCode(List<String>typingComponentsAndSub) {
+    String typingCode = '';
+
+    var typingCodes = getFullTypingCodes(typingComponentsAndSub);
+
+    for (int i = 0; i < typingCodes.length; i++) {
+      typingCode += typingCodes[i].substring(0, 1);
+    }
+
+    return typingCode.toLowerCase();
+  }
 }

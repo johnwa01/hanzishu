@@ -297,6 +297,18 @@ class Utility {
     return ratio;
   }
 
+  static int sameStartSubstring(String first, String second) {
+    int minLength = (first.length < second.length) ? first.length : second.length;
+
+    for (int i = 0; i < minLength; i++) {
+      if (first[i] != second[i]) {
+        return i;
+      }
+    }
+
+    return minLength;
+  }
+
   /*
   static double getDrawingSizeRatio(BuildContext context) {
     var screenSize = MediaQuery
