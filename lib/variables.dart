@@ -81,6 +81,7 @@ bool theIsFromLessonContinuedSection = false;
 bool theIsFromTypingContinuedSection = false;
 
 bool theAllZiLearned = false;
+bool theZiCandidatesFromPinyin = false;
 
 //int theSelectedExerciseNumber = 1;
 

@@ -162,9 +162,11 @@ class InputZiManager {
       if (input.length == 1) {
         return null;
       }
+      theZiCandidatesFromPinyin = true;
       return getZiCandidatesFromPinyinList(input.substring(1));
     }
     else {
+      theZiCandidatesFromPinyin = false;
       return getZiCandidatesFromInputZiList(input);
       /*
       var first = findFirst(input);
@@ -771,5 +773,27 @@ class InputZiManager {
     }
 
     return Utility.isArrow(str[str.length - 1]);
+  }
+
+  static String getLastComposingTextAfterDelete(String mixedString) {
+    // find the first non-asc letter
+    var oneValue;
+    int nonLetterId = -1;
+    for (int i = 0; i < mixedString.length; i++) {
+      oneValue = mixedString.codeUnitAt(i);
+      if (oneValue < "a".codeUnitAt(0) || oneValue > "z".codeUnitAt(0)) {
+        nonLetterId = i;
+      }
+    }
+
+    if (nonLetterId == -1) {
+      return mixedString;
+    }
+    else if (nonLetterId == (mixedString.length - 1)) {
+      return '';
+    }
+    else {
+      return mixedString.substring(nonLetterId + 1);
+    }
   }
 }

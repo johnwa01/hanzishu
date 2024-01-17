@@ -54,7 +54,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int currentCorrectCategoryIndex;
   int currentCorrectSubcategoryIndex;
   bool currentTypingCodeIsCorrect;
-  String currentComposingText;
+  //String currentComposingText;
   List<String> currentTypingComponentsAndSub;
   String currentCorrectTypingCode;
   List<int> currentLeadCompList;
@@ -577,6 +577,7 @@ class _InputZiPageState extends State<InputZiPage> {
       setPreviousComposing();
 
       setTextByChosenZiIndex(selectionIndex, false, false, false);
+      updateTypingStatusAndHintCompIndex('');
     }
     /*
     else if (_controller.text.length == 0) { // due to deletion, otherwise won't be 0
@@ -605,16 +606,18 @@ class _InputZiPageState extends State<InputZiPage> {
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
-        currentComposingText = previousText;
-        updateTypingStatusAndHintCompIndex(previousText);
+        //currentComposingText = previousText;
+        var lastComposingText = InputZiManager.getLastComposingTextAfterDelete(previousText);
+        updateTypingStatusAndHintCompIndex(lastComposingText);
       }
       else {
         previousStartComposing = -1;
         previousEndComposing = -1;
         theCurrentZiCandidates = theDefaultZiCandidates;
         previousText = _controller.text;
-        currentComposingText = previousText;
-        updateTypingStatusAndHintCompIndex(previousText);
+        //currentComposingText = previousText;
+        var lastComposingText = InputZiManager.getLastComposingTextAfterDelete(previousText);
+        updateTypingStatusAndHintCompIndex(lastComposingText);
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
@@ -688,7 +691,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var composingText = getFullComposingText(
           previousStartComposing, previousEndComposing);
 
-      currentComposingText = composingText;
+      //currentComposingText = composingText;
       updateTypingStatusAndHintCompIndex(composingText);
       fullZiCandidates = InputZiManager.getZiCandidates(composingText);
       InputZiManager.updateFirstCandidate(
@@ -1307,12 +1310,12 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getWarningMessage() {
     var fontSize = 15.0 * getSizeRatio();     //15.0
-    if (currentTypingCodeIsCorrect) {
+    if (currentTypingCodeIsCorrect || theZiCandidatesFromPinyin) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {
       return Text(
-          "Warning: Wrong typing code.",
+          getString(463), //"Warning: Wrong typing code.",
           style: TextStyle(fontSize: fontSize),
           textAlign: TextAlign.left
       );
