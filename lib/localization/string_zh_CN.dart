@@ -468,4 +468,6 @@ var theString_zh_CN = [
   Local(461, "腿"),
   Local(462, "常用"),
   Local(463, "提示：打字码不对。"),
+  Local(464, "无"),
+  Local(465, "方向"),
 ];

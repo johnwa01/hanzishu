@@ -81,8 +81,6 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   initHintSelected() {
-    // TODO: temp
-    showHint = 0;
     selectedCompIndex = 1;
     selectedCategoryIndex = 0;
     selectedSubcategoryIndex = 0;
@@ -120,11 +118,11 @@ class _InputZiPageState extends State<InputZiPage> {
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
 
+    showHint = 1;  // this is the default
     initHintSelected();
 
     setState(() {
       updateCounter = 0;
-      showHint = 0;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
     });
   }
@@ -471,12 +469,15 @@ class _InputZiPageState extends State<InputZiPage> {
     previousStartComposing = -1;
     previousEndComposing = -1;
 
-    showHint = 0;
+    //showHint = 0;
 
     checkAndUpdateCurrentIndex();
 
     //restart a typing cycle
     InputZiManager.previousFirstPositionList.clear();
+
+    // reset hint status and index
+    updateTypingStatusAndHintCompIndex('');
   }
 
   void handleKeyInput() {
@@ -692,7 +693,6 @@ class _InputZiPageState extends State<InputZiPage> {
           previousStartComposing, previousEndComposing);
 
       //currentComposingText = composingText;
-      updateTypingStatusAndHintCompIndex(composingText);
       fullZiCandidates = InputZiManager.getZiCandidates(composingText);
       InputZiManager.updateFirstCandidate(
           fullZiCandidates, InputZiManager.previousFirstPositionList);
@@ -702,7 +702,7 @@ class _InputZiPageState extends State<InputZiPage> {
         theCurrentZiCandidates = composingList;
       }
       previousText = _controller.text;
-
+      updateHintAfterANewLetter(composingText);
       // Android appears updating its value.composing after initial setting of the value.composing from empty by app.
       // or even without initial setting. Maybe a kind of algorithm behind detecting what kind of input. By default, it seems treating
       // English letter input as composing.
@@ -909,9 +909,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (showHint == 0 && !isFromArrowCandidate) {
-      theCurrentZiCandidates = theDefaultZiCandidates;
-    } // set it to default
+    //if (/*showHint == 0 &&*/ !isFromArrowCandidate) {
+    //   theCurrentZiCandidates = theDefaultZiCandidates;
+    //} // set it to default
 
     typingType = widget.typingType; //theComponentManager.getCurrentType();
     lessonId = widget.lessonId;
@@ -943,16 +943,29 @@ class _InputZiPageState extends State<InputZiPage> {
     //   typingType = widget.typingType; //theComponentManager.getCurrentType();
 //    theInputZiManager.setCurrentType(typingType); //TODO: should pass as a parameter in painter?
 
-    var leftArrowColor = Colors.black; // inito to grey? typing doesn't go through build, therefore won't update here.
-    //TODO: make it right.
-    //if (candidateGroupIndex == 0) {
-    //  leftArrowColor = Colors.grey;
-    //}
+    var leftArrowColor; // black is default
+    // if the first one, no way to go left
+    if (candidateGroupIndex == 0) {
+      leftArrowColor = Colors.grey;
+    }
+    else {
+      leftArrowColor = Colors.black;
+    }
 
-    var rightArrowColor = Colors.black;
-    //if ((fullZiCandidates != null) && ((candidateGroupIndex + 1) == (fullZiCandidates.length % InputZiManager.maxTypingCandidates))) {
-    //  rightArrowColor = Colors.grey;
-    //}
+    var rightArrowColor; // black is default
+    if (fullZiCandidates == null) {
+      rightArrowColor = Colors.grey;
+    }
+    else {
+      int candidateGroupCount = (fullZiCandidates.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
+      // if it's the last one, no way to go right.
+      if (candidateGroupIndex == (candidateGroupCount - 1)) {
+        rightArrowColor = Colors.grey;
+      }
+      else {
+        rightArrowColor = Colors.black;
+      }
+    }
 
     var inputZiPainter = InputZiPainter(
         lineColor: leftArrowColor,
@@ -1382,6 +1395,20 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
 
+    var hint1Color = Colors.blue;
+    var hint2Color = Colors.blue;
+    var hint0Color = Colors.blue;
+
+    if(showHint == 1) {
+      hint1Color = Colors.green;
+    }
+    else if(showHint == 2) {
+      hint2Color = Colors.green;
+    }
+    else if(showHint == 0) {
+      hint0Color = Colors.green;
+    }
+
     return WillPopScope(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -1399,12 +1426,12 @@ class _InputZiPageState extends State<InputZiPage> {
                 //      textAlign: TextAlign.left
                 //  ),
                 //),
-                SizedBox(width: fontSize),
+                //SizedBox(width: fontSize),
                 SizedBox(
                   width: 50.0 * getSizeRatio(),
                   child: FlatButton(
                     color: Colors.white,
-                    textColor: Colors.blueAccent,
+                    textColor: hint1Color,
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
@@ -1426,7 +1453,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   width: 50.0 * getSizeRatio(),
                   child: FlatButton(
                     color: Colors.white,
-                    textColor: Colors.blueAccent,
+                    textColor: hint2Color,
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
@@ -1440,6 +1467,27 @@ class _InputZiPageState extends State<InputZiPage> {
                         "[" + getString(438) + "]"/*"Hint2"*/,
                         style: TextStyle(fontSize: fontSize * 1.2), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 30.0 * getSizeRatio(),
+                  child: FlatButton(
+                    color: Colors.white,
+                    textColor: hint0Color,
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      initOverlay();
+
+                      setState(() {
+                        showHint = 0; // show Hint0 - no hint
+                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                      });
+                    },
+                    child: Text(
+                      "[" + getString(464) + "]"/*"Hint0"*/,
+                      style: TextStyle(fontSize: fontSize * 1.2), // 1.6
+                      textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
@@ -1900,5 +1948,12 @@ class _InputZiPageState extends State<InputZiPage> {
         currentTypingCodeIsCorrect = true;
       }
     });
+  }
+
+  updateHintAfterANewLetter(String composingText) {
+    selectedCategoryIndex = 0;
+    selectedSubcategoryIndex = 0;
+
+    updateTypingStatusAndHintCompIndex(composingText);
   }
 }

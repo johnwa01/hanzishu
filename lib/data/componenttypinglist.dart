@@ -2,7 +2,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/utility.dart';
 
 var theComponentCategoryList = [
-  ComponentCategory('A', 66), // directions
+  ComponentCategory('A', 465), // directions
   ComponentCategory('B', 460), // mouth
   ComponentCategory('C', 461), // legs
   ComponentCategory('D', 462), // common
