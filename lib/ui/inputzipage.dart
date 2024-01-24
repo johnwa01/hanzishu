@@ -1296,7 +1296,7 @@ class _InputZiPageState extends State<InputZiPage> {
       currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
     }
 
-    TextToSpeech.speak("zh-CN", currentTypingChar);
+    //TextToSpeech.speak("zh-CN", currentTypingChar);
 
     return Row(
         children: <Widget>[
