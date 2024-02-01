@@ -476,10 +476,9 @@ class _QuizPageState extends State<QuizPage> {
     String title;
     String content;
 
-
-    if (correctPercent >= 70.0 * getSizeRatio()) {
-      title = "Congratulation!";
-      content = "You have passed this quiz with a score of " + corStr + "!";
+    if (correctPercent >= 70.0) {
+      title = getString(118) + "!"; // "Congratulation!";
+      content = getString(467) /*"You have passed this quiz with a score of "*/ + " " + corStr + "!";
       // save the info to storage
       if (quizTextbook != QuizTextbook.wordsStudy) {
         updateCompleteStatus();
@@ -487,10 +486,9 @@ class _QuizPageState extends State<QuizPage> {
       }
     }
     else {
-      title = "Good effort!";
-      content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
+      title = getString(466) + "!"; // Good effort
+      content = getString(468) /*"You have achieved a score of "*/ + corStr + ". " + getString(469) /*You can come back later to reach 70."*/;
     }
-
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(

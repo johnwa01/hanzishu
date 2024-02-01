@@ -9,7 +9,7 @@ var theString_en_US = [
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
   Local(5, "Typing exercises"),
-  Local(6, "Challenge"), // Quiz
+  Local(6, "Quiz"), // Quiz
   Local(7, "Lesson"),
   Local(8, "Welcome to lesson "),
   Local(9, "Unit"),
@@ -121,7 +121,7 @@ var theString_en_US = [
   Local(115, "Good job!"),
   Local(116, "You did it! Let's go through the Chinese alphabet-key pairings now."),
   Local(117, "You did it again! Let’s get to know the Expanded Chinese alphabets."),
-  Local(118, "Congratulations!"),
+  Local(118, "Congratulations"),
   Local(119, "You are making great progress in typing Chinese words."),
   Local(120, "Your typing exercise is complete for this lesson."),
   Local(121, "Ready to memorize the Chinese alphabet-key pairings?"),
@@ -258,7 +258,7 @@ var theString_en_US = [
   Local(252, "Demonstrates pronunciation and provides speaking practice. Tapping a word displays its overlay information."),
   Local(253, "Typing exercises"),
   Local(254, "Practice for typing the word using the Hanzishu puzzle typing method."),
-  Local(255, "Challenge"), // Quiz
+  Local(255, "Quiz"), // Quiz
   Local(256, "Reviews the lesson."),
   Local(257, "Dictionary"),
   Local(258, "View all the words based on the Hanzishu Dictionary method which groups words by their Basic words. Contains nearly 3,800 words."),
@@ -270,7 +270,7 @@ var theString_en_US = [
   Local(264, "Hanzishu's other tools."),
   Local(265, "Word review"),
   Local(266, "Review the words according to the lessons and the units that they were first introduced."),
-  Local(267, "Challenge results"), // Quiz
+  Local(267, "Quiz results"), // Quiz
   Local(268, "Records of the quizzes that you have taken"),
   Local(269, "Icons"),
   Local(270, "Triangle"),
@@ -473,4 +473,8 @@ var theString_en_US = [
   Local(463, "Warning: Wrong typing code."),
   Local(464, "No"),
   Local(465, "Direction"),
+  Local(466, "Good effort"),
+  Local(467, "You have passed this quiz with a score of"),
+  Local(468, "You have achieved a score of"),
+  Local(469, "You can come back later to reach 70."),
 ];

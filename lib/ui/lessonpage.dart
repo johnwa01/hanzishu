@@ -294,7 +294,7 @@ class _LessonPageState extends State<LessonPage> {
         buttonTitle = getString(373);
         break;
       case 5:
-        buttonTitle = getString(6) + "!";
+        buttonTitle = getString(6);
         break;
       case 6:
         buttonTitle = getString(454);
