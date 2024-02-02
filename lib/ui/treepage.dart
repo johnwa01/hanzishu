@@ -504,6 +504,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
         setState(() {
           centerRelatedButtonUpdates++;
+          shouldDrawCenter = true;
         });
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
@@ -532,6 +533,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
         setState(() {
           centerRelatedButtonUpdates++;
+          shouldDrawCenter = true;
         });
 
       },
@@ -560,8 +562,8 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
         currentCenterZiRelatedBottum.compCountSelectPosition = 0;
 
         setState(() {
-
           centerRelatedButtonUpdates++;
+          shouldDrawCenter = true;
         });
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
@@ -590,6 +592,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
         setState(() {
           centerRelatedButtonUpdates++;
+          shouldDrawCenter = true;
         });
 
       },
