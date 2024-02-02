@@ -409,7 +409,7 @@ var theString_en_US = [
   Local(400, "7/8/9"),
   Local(401, "Skip section"),
   Local(402, "Next section"),
-  Local(403, "Shortcuts"),
+  Local(403, "More exercises"),
   Local(404, "Study till all are check-marked"),
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
