@@ -746,7 +746,7 @@ class BasePainter extends CustomPainter{
     else {
       DisplayHint(listType, id, false, posi, true);
 
-      posi.transY += (2 * fontSize);
+      posi.transY += (2.5 * fontSize);  // Need to match treepage
       displayZiStructure(posi, centerZiRelatedBottum);
 
       posi.transY += fontSize;

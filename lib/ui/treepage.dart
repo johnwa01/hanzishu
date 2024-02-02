@@ -512,7 +512,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * fontSize;
+    posi.transY += 2.5 * fontSize; // need to match basepainter
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -542,7 +542,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * fontSize;
+    posi.transY += 2.5 * fontSize; // to match basepainter
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -571,7 +571,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += (3 * fontSize);
+    posi.transY += (3.5 * fontSize); // need to match basepainter
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -601,7 +601,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += (3 * fontSize);
+    posi.transY += (3.5 * fontSize); // need to match basepaint
 
     var posiCenter = Positioned(
         top: posi.transY,

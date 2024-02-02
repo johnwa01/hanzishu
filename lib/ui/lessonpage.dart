@@ -125,7 +125,6 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
       case 3:
         Navigator.push(
           context,
@@ -135,8 +134,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        */
-      case 3:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -145,7 +143,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -154,7 +152,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 5:
+      case 6:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -163,7 +161,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 6:
+      case 7:
         var initZis = getConvCharsForLesson(lessonId);
         Navigator.push(
           context,
@@ -266,6 +264,7 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 6),
+                getButton(context, lessonId, 7),
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -288,15 +287,18 @@ class _LessonPageState extends State<LessonPage> {
         buttonTitle = getString(2);
         break;
       case 3:
-        buttonTitle = getString(5);
+        buttonTitle = getString(304);
         break;
       case 4:
-        buttonTitle = getString(373);
+        buttonTitle = getString(5);
         break;
       case 5:
-        buttonTitle = getString(6);
+        buttonTitle = getString(373);
         break;
       case 6:
+        buttonTitle = getString(6);
+        break;
+      case 7:
         buttonTitle = getString(454);
         break;
       default:
