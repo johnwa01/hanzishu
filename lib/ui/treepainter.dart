@@ -7,6 +7,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/utility.dart';
 
+/*
 class TreePainter extends BasePainter {
   double screenWidth;
   CenterZiRelatedBottum centerZiRelatedBottum;
@@ -43,16 +44,16 @@ class TreePainter extends BasePainter {
     thePositionManager.setFrameWidth(getFrameWidth());
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
-    drawFrameWithColors(ZiListType.zi,
+    drawFrameWithColors(ZiListType.searching,
         getFrameWidth(), PositionManager.FrameLeftEdgeSize, PositionManager.FrameTopEdgeSize, Colors.cyan,
         Colors.lime, BasePainter.FrameLineWidth);
 
     centerZiRelatedBottum.breakoutPositions = treeBreakoutPositions;
-    drawZiGroup(centerId, ZiListType.zi, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, centerZiRelatedBottum);
+    drawZiGroup(centerId, ZiListType.searching, 1, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, centerZiRelatedBottum);
 
     if (compoundZiCurrentComponentId > 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId, ZiListType.zi);
+      drawCenterZi(compoundZiCurrentComponentId, ZiListType.searching);
     }
   }
 
@@ -86,3 +87,4 @@ class TreePainter extends BasePainter {
     return true;
   }
 }
+*/

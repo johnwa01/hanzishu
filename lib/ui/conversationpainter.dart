@@ -6,7 +6,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/engine/phrasemanager.dart';
 
 class ConversationPainter extends BasePainter {

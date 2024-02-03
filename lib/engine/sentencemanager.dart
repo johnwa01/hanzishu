@@ -83,6 +83,7 @@ class SentenceManager {
   }
 
   void populateSubcharsAndComponentsC(String /*was Character*/ char, MyString subchars, List<int> comps) {
+    /*
     if (!Utility.specialChar(char))
     {
       var zi = theZiManager.getZiByChar(char);
@@ -91,6 +92,7 @@ class SentenceManager {
         populateSubcharsAndComponentsD(0, 0, zi, subchars, comps);
       }
     }
+    */
   }
 
   void populateSubcharsAndComponentsD(int recurLevel, int indexInLevel, Zi zi, MyString subchars, List<int> comps) {

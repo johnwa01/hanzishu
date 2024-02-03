@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
@@ -9,12 +10,15 @@ import 'package:hanzishu/ui/treepage.dart';
 import 'package:hanzishu/ui/listofzipage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
+import 'package:hanzishu/ui/dictionarysearchingpage.dart';
+import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/conversationpage.dart';
 import 'package:hanzishu/ui/conversationsnowballpage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/practicesheetpage.dart';
 import 'package:hanzishu/engine/inputzi.dart';
-import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 
 class LessonPage extends StatefulWidget {
   final int lessonId;
@@ -108,6 +112,7 @@ class _LessonPageState extends State<LessonPage> {
         break;
       case 1:
         theAllZiLearned = false;
+        /*
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -115,8 +120,31 @@ class _LessonPageState extends State<LessonPage> {
                 TreePage(lessonId: lessonId),
           ),
         ).then((val) => {_getRequests()});
+        */
+        var convChars = theLessonManager.getConvChars(lessonId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, customString: convChars),
+          ),
+        ).then((val) => {_getRequests()});
         break;
       case 2:
+        var convChars = theLessonManager.getConvChars(lessonId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DictionarySearchingPage(
+                    dicStage: DictionaryStage.detailedzi,
+                    firstOrSearchingZiIndex: -1,
+                    flashcardList: convChars,
+                    dicCaller: DicCaller.Flashcard),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+        /*
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -125,7 +153,9 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 3:
+        */
+        /*
+        case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -134,7 +164,8 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+        */
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -143,7 +174,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 5:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -152,7 +183,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 6:
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -161,7 +192,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 7:
+      case 6:
         var initZis = getConvCharsForLesson(lessonId);
         Navigator.push(
           context,
@@ -181,7 +212,7 @@ class _LessonPageState extends State<LessonPage> {
     var lesson = theLessonManager.getLesson(lessonId);
     var length = lesson.convCharsIds.length;
     for (int i = 0; i < length; i++) {
-      initZis += theZiList[lesson.convCharsIds[i]].char;
+      initZis += theSearchingZiList[lesson.convCharsIds[i]].char;
     }
 
     return initZis;
@@ -264,7 +295,7 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 6),
-                getButton(context, lessonId, 7),
+                //getButton(context, lessonId, 7),
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -286,19 +317,21 @@ class _LessonPageState extends State<LessonPage> {
       case 2:
         buttonTitle = getString(2);
         break;
+        /*
       case 3:
         buttonTitle = getString(304);
         break;
-      case 4:
+        */
+      case 3:
         buttonTitle = getString(5);
         break;
-      case 5:
+      case 4:
         buttonTitle = getString(373);
         break;
-      case 6:
+      case 5:
         buttonTitle = getString(6);
         break;
-      case 7:
+      case 6:
         buttonTitle = getString(454);
         break;
       default:

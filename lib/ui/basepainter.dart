@@ -683,7 +683,7 @@ class BasePainter extends CustomPainter{
      */
   }
 
-  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelatedBottum centerZiRelatedBottum) {
+  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelatedBottum centerZiRelatedBottum, int displayCenterZiRelated) {
     var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
@@ -721,7 +721,7 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     //}
 
-    if (listType == ZiListType.zi && !isFromReviewPage && isCharNewInLesson(id)) {
+    if (/*listType == ZiListType.zi &&*/ /*!isFromReviewPage &&*/isCharNewInLesson(id, displayCenterZiRelated)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
           iconNewCharStrokes,
@@ -1014,7 +1014,7 @@ class BasePainter extends CustomPainter{
             shouldDrawCenter);
 
       if (display) {
-        displayCenterZiRelated(listType, id, posiSize.charFontSize, centerZiRelatedBottum);
+        displayCenterZiRelated(listType, id, posiSize.charFontSize, centerZiRelatedBottum, internalStartLessonId);
       }
 
       // draw navigation path
@@ -1220,15 +1220,16 @@ class BasePainter extends CustomPainter{
         if (indexPair != null) {
           //var indexStartPlusOne = hint.index(indexStart, offsetBy: 1);
           //var charIdString = hint[indexStartPlusOne..<indexPair];
-          var charIdString = hint.substring(indexStart + 1, indexPair);
-          var id = Utility.StringToInt(charIdString);
+          var componentCodeString = hint.substring(indexStart + 1, indexPair);
+          //var id = Utility.StringToInt(charIdString);
 
-          if (id != -1) {
+          if (componentCodeString != null) {
             checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0), defaultFontSize);
             displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
             xPosi.value += applyRatio(7.0);
 
-            drawRootZi(id, ZiListType.zi, xPosi.value, yPosi.value, applyRatio(13.0), applyRatio(13.0), applyRatio(11.0)/*thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize)*/, Colors.blue, false, 1.5, false, false, false, Colors.blue, true);
+            var componentId = ComponentManager.getComponentIdByCode(componentCodeString);
+            drawRootZi(componentId, ZiListType.component, xPosi.value, yPosi.value, applyRatio(13.0), applyRatio(13.0), applyRatio(11.0)/*thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize)*/, Colors.blue, false, 1.5, false, false, false, Colors.blue, true);
             xPosi.value += applyRatio(13.0);
             displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
 
@@ -1271,7 +1272,16 @@ class BasePainter extends CustomPainter{
     }
   }
 
-  bool isCharNewInLesson(int id) {
+  bool isCharNewInLesson(int id, int internalStartLessonId) {
+    var convChars = theLessonManager.getConvCharsIds(internalStartLessonId);
+    for (int i = 0; i < convChars.length; i++) {
+      if (id == convChars[i]) {
+        return true;
+      }
+    }
+
+    return false;
+    /*
     if (newInLesson.containsKey(id)) {
       return newInLesson[id];
     }
@@ -1281,6 +1291,7 @@ class BasePainter extends CustomPainter{
       newInLesson[id] = isNew;
       return isNew;
     }
+    */
   }
 
   // Note: this path will not change its size regardless of the screen size

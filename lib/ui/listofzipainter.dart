@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/phraselist.dart';
-import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
@@ -220,24 +220,24 @@ class ListOfZiPainter extends BasePainter {
 
       if (!isInfoOnly) {
         var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-        if (theZiList[id].isBasicZi()) {
-          var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-          var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-          displayCompStrokes(id, ZiListType.zi, posiSize, applyRatio(1.0));
-        }
-        else {
+        //if (theSearchingZiList[id].isBasicZi()) {
+        //  var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
+        //  var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
+        //  displayCompStrokes(id, ZiListType.zi, posiSize, applyRatio(1.0));
+        //}
+        //else {
           var searchingZiId = DictionaryManager.getSearchingZiId(
-              theZiList[id].char);
+              theSearchingZiList[id].char);
           if (searchingZiId != -1) {
             var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
             displayFullComponents(searchingZiId, posiSize, applyRatio(1.0), true);
           }
-        }
+        //}
       }
 
       if (!theZiManager.getZi(id).isStrokeOrNonChar()) {
         var searchingZiIndex = DictionaryManager.getSearchingZiId(
-            theZiList[id].char);
+            theSearchingZiList[id].char);
         if (searchingZiIndex > 0) {
           yPositionWrapper.value += applyRatio(30.0);
           if (!isInfoOnly) {
@@ -301,8 +301,8 @@ class ListOfZiPainter extends BasePainter {
             false,
             Colors.blue,
             true);
-        pinyin = theZiList[id].pinyin;
-        meaning = theZiList[id].meaning;
+        pinyin = theSearchingZiList[id].pinyin;
+        meaning = theSearchingZiList[id].meaning;
       }
       transX +=
       (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +

@@ -1,5 +1,5 @@
 import 'package:hanzishu/data/searchingzilist.dart';
-import 'package:hanzishu/data/zilist.dart';
+//import 'package:hanzishu/data/zilist.dart';
 import 'package:hanzishu/data/drillmenulist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
@@ -62,21 +62,21 @@ class ZiManager {
 
   ZiManager._internal();
 
-  Zi getZi(int id) {
-    return theZiList[id];
+  SearchingZi getZi(int id) {
+    return theSearchingZiList[id];
   }
 
   bool isBasicZi(int id) {
     var zi = getZi(id);
-    return zi.isBasicZi();
+    return true; //zi.isBasicZi(); //TODO
   }
 
   int getZiListLength() {
-    return theZiList.length;
+    return theSearchingZiList.length;
   }
 
-  Zi getZiByChar(String char) {
-    for (var zi in theZiList) {
+  SearchingZi getZiByChar(String char) {
+    for (var zi in theSearchingZiList) {
       if (zi.char.runes.length == 1 && zi.char.runes.first == char.runes
           .first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
         return zi;
@@ -88,7 +88,7 @@ class ZiManager {
 
   static int findIdFromChar(ZiListType listType, String char) {
     if (listType == ZiListType.zi) {
-      for (var eachZi in theZiList) {
+      for (var eachZi in theSearchingZiList) {
         if (eachZi.char.runes.length == 1 &&
             eachZi.char.runes.first == char.runes.first) {
           return eachZi.id;
@@ -134,20 +134,22 @@ class ZiManager {
 
   bool hasFinishedQuiz(int id) {
     var zi = getZi(id);
-    return zi.hasFinishedQuiz;
+    return true; // zi.hasFinishedQuiz; //TODO
   }
 
   void UpdateHasFinishedQuiz(int id) {
     var zi = getZi(id);
-    zi.hasFinishedQuiz = true;
+    // zi.hasFinishedQuiz = true; //TODO
   }
 
   void clearHasFinishedQuizFlag() {
-    for (var zi in theZiList) {
+    /*
+    for (var zi in theSearchingZiList) {
       if (zi.hasFinishedQuiz != null && zi.hasFinishedQuiz == true) {
         zi.hasFinishedQuiz = false;
       }
     }
+    */
   }
 
   // count number of zis in all sides
@@ -215,19 +217,21 @@ class ZiManager {
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     //TODO: filter by endId
+    List<int> realGroupMembers = [];
     if (listType == ZiListType.searching) {
       if (drillCategory == DrillCategory.all) {
         return theSearchingZiList[id].groupMembers;
       }
-      else { // hsk & custom
-        List<int> realGroupMembers = [];
+      else if (drillCategory == DrillCategory.hsk || drillCategory == DrillCategory.custom) { // hsk & custom
+        //List<int> realGroupMembers = [];
         var filter;
         var filterMember;
         var filterValue;
         List<int> tempGroupMembers = [];
         var groupMembers = theSearchingZiList[id].groupMembers;
 
-        if (drillCategory == DrillCategory.custom && id == 1) { // skip the pseudo layer from root level
+        if (drillCategory == DrillCategory.custom &&
+            id == 1) { // skip the pseudo layer from root level
           var tmpMembers;
           for (var memberId in groupMembers) {
             tmpMembers = theSearchingZiList[memberId].groupMembers;
@@ -235,49 +239,46 @@ class ZiManager {
           }
           groupMembers = tempGroupMembers;
         }
-        
+
         for (var memberZiId in groupMembers) {
           filter = theDictionaryManager.getCurrentRealFilterList();
           filterValue = filter[memberZiId];
-          if (drillCategory == DrillCategory.all || (internalStartLessonId <= filterValue && filterValue <= internalEndLessonId)) {
+          if (drillCategory == DrillCategory.all ||
+              (internalStartLessonId <= filterValue &&
+                  filterValue <= internalEndLessonId)) {
             realGroupMembers.add(memberZiId);
           }
         }
-        return realGroupMembers;
+        //return realGroupMembers;
       }
-    }
-
-    // ZiListType.zi
-    if (internalStartLessonId == internalEndLessonId) {
-      if (id == 1) {
-        return LessonManager.getRootMembersForLesson(internalStartLessonId);
-      }
-      else if (id == TheConst.starCharId) {
-        return LessonManager.getRootNonCharMembersForLesson(internalStartLessonId);
-      }
-    }
-
-    var zi = getZi(id);
-    var groupMembers = zi.groupMembers;
-
-    List<int> lessonGroupMembers = [];
-
-    var showZi = false;
-    for (var memberZiId in groupMembers) {
-        showZi = false;
-        //if (theHittestState == HittestState.hanzishuLesson || theHittestState == HittestState.ziAndSidingShuLesson || theHittestState == HittestState.quizShuLesson) {
-        //showZi = showZiForLessonId(memberZiId, theCurrentLessonId);
-        //}
-        //else {
-        //  var internalStartLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeFromLessonNumberForCurrentLevel));
-        //  var internalLesson = LevelManager.getInternalLessonId(LevelLessonPair(theLevelManager.theCurrentLevel, theRangeUptoLessonNumberForCurrentLevel));
-        showZi = showZiForLessons(
-            memberZiId, internalStartLessonId, internalEndLessonId);
-        //}
-
-        if (showZi) {
-          lessonGroupMembers.add(memberZiId);
+      else if (drillCategory == DrillCategory.hanzishu) {
+        // ZiListType.zi
+        if (internalStartLessonId == internalEndLessonId) {
+          if (id == 1) {
+            return LessonManager.getRootMembersForLesson(internalStartLessonId);
+          }
+          else if (id == TheConst.starCharId) {
+            //return LessonManager.getRootNonCharMembersForLesson(
+            //    internalStartLessonId);
+          }
         }
+
+        var zi = getZi(id);
+        var groupMembers = zi.groupMembers;
+
+        //List<int> lessonGroupMembers = [];
+
+        var showZi = false;
+        for (var memberZiId in groupMembers) {
+          showZi = false;
+          showZi = showZiForLessons(
+              memberZiId, internalStartLessonId, internalEndLessonId);
+
+          if (showZi) {
+            realGroupMembers.add(memberZiId);
+          }
+        }
+      }
     }
 
     //TODO: same to internalEndLessonId's memory of internalEndLesson.getRealGroupMembers(id); addToRealGroupMembersMap(id, groupMembers);
@@ -285,7 +286,7 @@ class ZiManager {
     // But not sure what to do about review and lesson mode which would use the same lesson memory. Refresh every time?
     //List<int> getRealGroupMembersFromCache(int id, int lessonId)
     //addToRealGroupMembersMapCache(int id, List<int>groupMembers, int lessonId)
-    return lessonGroupMembers;
+    return realGroupMembers;
   }
 
   static bool parentIdEqual1(DrillCategory category, int ziId) {
@@ -434,16 +435,36 @@ class ZiManager {
     return false;
   }
 
-  int getRootCharOrStar(int ziId) {
+  SearchingZi getSearchingZi(int id) {
+    return theSearchingZiList[id];
+  }
+
+  int getRootCharOrStar(int ziId, ZiListType listType) {
     var pathZiId = ziId;
 
     while (pathZiId != 0 ) {
-      var lessonZi = theZiManager.getZi(pathZiId);
+
+      var lessonZi;
+      if (listType == ZiListType.zi) {
+        lessonZi = theZiManager.getZi(pathZiId);
+      }
+      else { // searchingzi
+        lessonZi = theZiManager.getSearchingZi(pathZiId);
+      }
+
       if (lessonZi != null) {
         // the second layer structure which parent is the pseudo root zi
         // only the root zi (over 200) can have parent of pseudo root zi (10 of them)
-        if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
-          return pathZiId;
+        if (listType == ZiListType.zi) {
+          if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
+
+            return pathZiId;
+          }
+        }
+        else { // searchingzi
+          if (Utility.isSearchingPseudoZiId(lessonZi.parentId)) {
+            return pathZiId;
+          }
         }
         if (Utility.isStarChar(lessonZi.parentId)) {
           return TheConst.starCharId;
@@ -487,9 +508,11 @@ class ZiManager {
     var composits;
 
     if (listTypeWrapper.value == ZiListType.zi) {
+      /* TODO
       var zi = getZi(memberZiId);
       isHetizi = (zi.type == "h");
       composits = zi.bodyComposites;
+       */
     }
     else if (listTypeWrapper.value == ZiListType.searching) {
       isHetizi = (theSearchingZiList[memberZiId].composit.length > 1);
@@ -641,6 +664,7 @@ class ZiManager {
   }
 
   void getAllZiComponents(int id, List<int> allComponents) {
+    /*
     List<int> ziComponents = getZiComponents(id);
     for (var i = 0; i < ziComponents.length; i++) {
       var compId = ziComponents[i];
@@ -652,10 +676,11 @@ class ZiManager {
         getAllZiComponents(compId, allComponents);
       }
     }
+     */
   }
 
   static int getCharById(int ziId)  {
-    for (var eachZi in theZiList) {
+    for (var eachZi in theSearchingZiList) {
       if (eachZi.id == ziId) {
         if (eachZi.char.runes.length > 0) {
           var char = eachZi.char.runes.first;
@@ -669,6 +694,8 @@ class ZiManager {
   }
 
   String getZiType(int id) {
+    return "";
+    /*
     var zi = getZi(id);
 
     if (zi.type == "f") {
@@ -680,6 +707,7 @@ class ZiManager {
     else {
       return zi.type;
     }
+     */
   }
 
   bool isPianpang(int id) {
@@ -709,6 +737,7 @@ class ZiManager {
   }
 
   Zi getPianpangZi(int id) {
+    /*
     var zi = getZi(id);
     if (zi.type == 'b') {
       return zi;
@@ -721,7 +750,7 @@ class ZiManager {
         return referenceZi;
       }
     }
-
+    */
     return null;
   }
 
@@ -936,7 +965,7 @@ class ZiManager {
   */
 
   static String getPinyinAndMeaning(int ziId) {
-    return theZiList[ziId].getPinyinAndMeaning();
+    return "NOTUSED"; //theSearchingZiList[ziId].getPinyinAndMeaning();
   }
 
   static String getOnePinyinAndMeaning(int id, ZiListType listType) {

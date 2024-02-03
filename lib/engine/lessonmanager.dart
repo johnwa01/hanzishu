@@ -1,10 +1,10 @@
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
-import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/engine/zi.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
@@ -230,7 +230,7 @@ class LessonManager {
     return lesson.convCharsIds.length + lesson.charsIds.length;
   }
 
-  Zi getChar(int lessonId, int currentIndex) {
+  SearchingZi getChar(int lessonId, int currentIndex) {
     var lesson = getLesson(lessonId);
     if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
       return null;
@@ -238,11 +238,11 @@ class LessonManager {
 
     if (currentIndex < lesson.convCharsIds.length) {
       var ziId = lesson.convCharsIds[currentIndex];
-      return theZiList[ziId];
+      return theSearchingZiList[ziId];
     }
     else { // >=
       var ziId = lesson.charsIds[currentIndex - lesson.convCharsIds.length];
-      return theZiList[ziId];
+      return theSearchingZiList[ziId];
     }
   }
 
@@ -254,7 +254,7 @@ class LessonManager {
     var lesson = theLessonList[lessonId];
     for (var idB in lesson.charsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootCharOrStar(idB)) != 0) {
+      if ((rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) != 0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
@@ -263,7 +263,7 @@ class LessonManager {
 
     for (var idB in lesson.convCharsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootCharOrStar(idB)) != 0) {
+      if ((rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) != 0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
@@ -325,7 +325,7 @@ class LessonManager {
     for (var lesson in theLessonList) {
       for (var ch in lesson.convChars.runes) {
         var char = String.fromCharCode(ch);
-        var id = ZiManager.findIdFromChar(ZiListType.zi, char);
+        var id = ZiManager.findIdFromChar(ZiListType.searching, char);
         if (id != -1) {
           lesson.convCharsIds.add(id);
         }
@@ -367,4 +367,11 @@ class LessonManager {
     return lesson.breakoutPositions;
   }
 
+  List<int> getConvCharsIds(int lessonId) {
+    return theLessonList[lessonId].convCharsIds;
+  }
+
+  String getConvChars(int lessonId) {
+    return theLessonList[lessonId].convChars;
+  }
 }

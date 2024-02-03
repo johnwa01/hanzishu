@@ -12,9 +12,10 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/basepainter.dart';
-import 'package:hanzishu/data/zilist.dart';
+import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
 
+/*
 class TreePage extends StatefulWidget {
   final int lessonId;
   Map<int, PositionAndSize> sidePositionsCache = Map();
@@ -363,18 +364,18 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
         setState(() {
           centerZiId = newCenterZiId;
-          if (Utility.isPseudoRootZiId(centerZiId)) {
+          if (Utility.isSearchingPseudoZiId(centerZiId)) {
             centerZiId = 1;   // skip the pseudo layer for treepage.
           }
-          else if (Utility.isPseudoNonCharRootZiId(centerZiId)) {
-            centerZiId = TheConst.starCharId;   // skip the pseudo layer for treepage.
-          }
+          //else if (Utility.isPseudoNonCharRootZiId(centerZiId)) {
+            //centerZiId = TheConst.starCharId;   // skip the pseudo layer for treepage.
+          //}
           shouldDrawCenter = true;
 
           // convert to searching zi id first. The two lists will merge eventually.
           if (centerZiId != 1) {
             var searchingZiId = ZiManager.findIdFromChar(
-                ZiListType.searching, theZiList[centerZiId].char);
+                ZiListType.searching, theSearchingZiList[centerZiId].char);
             currentCenterZiRelatedBottum.searchingZiId = searchingZiId;
             CenterZiRelatedBottum.initCenterZiRelatedBottum(
                 searchingZiId, currentCenterZiRelatedBottum);
@@ -426,18 +427,18 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     //TextToSpeech.speak('你好');
 
     thePositionManager.resetPositionIndex();
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.zi, DrillCategory.all/*not used here*/, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
-    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.zi, realGroupMembers);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, DrillCategory.hanzishu, theCurrentLessonId, theCurrentLessonId, widget.realGroupMembersCache);
+    var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
       if (memberZiId == TheConst.starCharId) {
         continue;
       }
       //var memberPinyinAndMeaning = ZiManager.getPinyinAndMeaning(memberZiId);
-      var positionAndSize = BasePainter.getPositionAndSize(ZiListType.zi, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
+      var positionAndSize = BasePainter.getPositionAndSize(ZiListType.searching, memberZiId, totalSideNumberOfZis, widget.sidePositionsCache);
 
       var posi = getPositionedButton(positionAndSize, memberZiId, memberZiId, false);
-      thePositionManager.updatePositionIndex(ZiListType.zi, memberZiId);
+      thePositionManager.updatePositionIndex(ZiListType.searching, memberZiId);
       buttons.add(posi);
     }
 
@@ -448,7 +449,7 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
 
     if (centerZiId != 1 ) {
       //var pinyinAndMeaning = ZiManager.getPinyinAndMeaning(centerZiId);
-      var newCenterZiId = theZiManager.getParentZiId(ZiListType.zi, centerZiId);
+      var newCenterZiId = theZiManager.getParentZiId(ZiListType.searching, centerZiId);
       var posiAndSize = BasePainter.getCenterPositionAndSize(widget.centerPositionAndSizeCache);
       var posiCenter = getPositionedButton(posiAndSize, centerZiId, newCenterZiId, false);
       buttons.add(posiCenter);
@@ -780,3 +781,4 @@ class _TreePageState extends State<TreePage> with SingleTickerProviderStateMixin
     return highestValue;
   }
 }
+*/
