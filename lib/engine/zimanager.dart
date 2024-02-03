@@ -455,17 +455,16 @@ class ZiManager {
       if (lessonZi != null) {
         // the second layer structure which parent is the pseudo root zi
         // only the root zi (over 200) can have parent of pseudo root zi (10 of them)
-        if (listType == ZiListType.zi) {
-          if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
-
-            return pathZiId;
-          }
-        }
-        else { // searchingzi
+        //if (listType == ZiListType.zi) {
+        //  if (Utility.isPseudoRootZiId(lessonZi.parentId)) {
+        //    return pathZiId;
+        //  }
+        //}
+        //else { // searchingzi
           if (Utility.isSearchingPseudoZiId(lessonZi.parentId)) {
             return pathZiId;
           }
-        }
+        //}
         if (Utility.isStarChar(lessonZi.parentId)) {
           return TheConst.starCharId;
         }
@@ -487,12 +486,12 @@ class ZiManager {
     while (pathZiId != 0 ) {
         var lessonZi = theZiManager.getZi(pathZiId);
         if (lessonZi != null) {
-          if (Utility.isPseudoRootZiId(lessonZi.parentId) || Utility.isPseudoNonCharRootZiId(lessonZi.parentId)) {
-            return pathZiId;
-          }
-          else {
+          //if (Utility.isPseudoRootZiId(lessonZi.parentId) || Utility.isPseudoNonCharRootZiId(lessonZi.parentId)) {
+          //  return pathZiId;
+          //}
+          //else {
             pathZiId = lessonZi.parentId;
-          }
+          //}
         }
         else {
           return 0;

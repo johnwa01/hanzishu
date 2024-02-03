@@ -377,6 +377,7 @@ class Utility {
     }
   }
 
+  /*
   static bool isPseudoRootZiId(int rootZiId) {
     return (rootZiId >= 741 && rootZiId <= 749) ||
         (rootZiId == 751) /*|| (rootZiId == 756)*/;
@@ -395,6 +396,7 @@ class Utility {
     return isPseudoNonCharRootZiId(rootZiId) ||
         (rootZiId == TheConst.starCharId);
   }
+  */
 
   static bool isSearchingPseudoZiId(int rootZiId) {
     return (rootZiId >= 3 && rootZiId < searchingZiListRealZiStart); //TODO: finalize it

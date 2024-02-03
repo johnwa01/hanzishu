@@ -644,8 +644,8 @@ class BasePainter extends CustomPainter{
 
       var showLinesInBetween = true;
       if (listType == ZiListType.zi) {
-        if (Utility.isPseudoRootZiId(centerId) ||
-            Utility.isPseudoNonCharRootZiId(centerId) ||
+        if (/*Utility.isPseudoRootZiId(centerId) ||
+            Utility.isPseudoNonCharRootZiId(centerId) ||*/
             Utility.isStarChar(centerId)) {
           showLinesInBetween = false;
         }
@@ -970,7 +970,7 @@ class BasePainter extends CustomPainter{
     //TODO：add checking to not display center pseudo root zi for treepage mode - !isFromReviewPage
     if (id > 1) {
       //var rootZiLearned = GeneralManager.hasZiCompleted(id, theHittestState, theCurrentLessonId);
-
+/*
       if (listType == ZiListType.zi && isFromReviewPage && Utility.isPseudoRootZiIdPlusStar(id)) {
         isReviewCenterPseudoZi = true;
       }
@@ -983,14 +983,14 @@ class BasePainter extends CustomPainter{
         posiSize.transX += posiSize.charFontSize * 0.25;
         posiSize.transY += posiSize.charFontSize / 4 ;
       }
-
+*/
       var display = false;
-      if (listType == ZiListType.zi) {
-        if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && id != TheConst.starCharId ) {
-          display = true;
-        }
-      }
-      else if (listType == ZiListType.searching) {
+ //     if (listType == ZiListType.zi) {
+ //       if (TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi && id != TheConst.starCharId ) {
+ //         display = true;
+ //       }
+ //     }
+      if (listType == ZiListType.searching) {
         if (id >= 52) { // TODO: exclude more structural items
           display = true;
         }
@@ -1019,7 +1019,7 @@ class BasePainter extends CustomPainter{
 
       // draw navigation path
       // skip a zi if it's in the parent path of startingCenterZiId
-      displayNavigationPath(listType, id, startingCenterZiId);
+      displayNavigationPath(listType, id, startingCenterZiId, drillCategory);
 
       isReviewCenterPseudoZi = false;
       isReviewCenterPseudoNonCharZi = false;
@@ -1295,12 +1295,12 @@ class BasePainter extends CustomPainter{
   }
 
   // Note: this path will not change its size regardless of the screen size
-  displayNavigationPath(ZiListType listType, int ziId, int startingCenterZiId) {
+  displayNavigationPath(ZiListType listType, int ziId, int startingCenterZiId, DrillCategory drillCategory) {
     var posi = thePositionManager.getTreeNavigationPosi(getSizeRatio());
-    displayOneNaviationPathChar(0, listType, ziId, startingCenterZiId, posi);
+    displayOneNaviationPathChar(0, listType, ziId, startingCenterZiId, posi, drillCategory);
   }
 
-  displayOneNaviationPathChar(int recurLevel, ZiListType listType, int id, startingCenterZiId, PositionAndSize posi) {
+  displayOneNaviationPathChar(int recurLevel, ZiListType listType, int id, startingCenterZiId, PositionAndSize posi, DrillCategory drillCategory) {
 
       var withPinyin = false;
 
@@ -1317,43 +1317,46 @@ class BasePainter extends CustomPainter{
         var newRecurLevel = recurLevel + 1;
         var parentId = zi.parentId;
 
-        displayOneNaviationPathChar(newRecurLevel, listType, parentId, startingCenterZiId, posi);
+        displayOneNaviationPathChar(newRecurLevel, listType, parentId, startingCenterZiId, posi, drillCategory);
       }
 
       // for lesson, skip those pseudo ones.
-      if (listType == ZiListType.searching || isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))) {
-        if (zi.id != 1) {
-          posi.transX += applyRatio(18.0); // 23.0
-          displayTextWithValue(
-              " -> ", posi.transX, posi.transY - posi.charFontSize * 0.3,
-              posi.charFontSize, Colors.brown, false);
-          posi.transX += applyRatio(36.0); //15.0
-        }
+      if (listType == ZiListType.searching || isFromReviewPage /*|| (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))*/) {
+        if (!(drillCategory == DrillCategory.custom && Utility.isSearchingPseudoZiId(id))) {
+          if (zi.id != 1) {
+            posi.transX += applyRatio(18.0); // 23.0
+            displayTextWithValue(
+                " -> ", posi.transX, posi.transY - posi.charFontSize * 0.3,
+                posi.charFontSize, Colors.brown, false);
+            posi.transX += applyRatio(36.0); //15.0
+          }
 
-        var frameFillColor = Colors.yellow;
-        var createFrame = false;
-        if (recurLevel != 0) {
-          frameFillColor = theDefaultTransparentFillColor;
-          createFrame = true;
-        }
+          var frameFillColor = Colors.yellow;
+          var createFrame = false;
+          if (recurLevel != 0) {
+            frameFillColor = theDefaultTransparentFillColor;
+            createFrame = true;
+          }
 
-        if (!theZiManager.isADistantParentOf(listType, startingCenterZiId, id)) {
-          drawRootZi(
-              id,
-              listType,
-              posi.transX,
-              posi.transY,
-              posi.width,
-              posi.height,
-              posi.charFontSize,
-              Colors.brown,
-              false,
-              posi.lineWidth,
-              createFrame,
-              false,
-              withPinyin,
-              frameFillColor,
-              true);
+          if (!theZiManager.isADistantParentOf(
+              listType, startingCenterZiId, id)) {
+            drawRootZi(
+                id,
+                listType,
+                posi.transX,
+                posi.transY,
+                posi.width,
+                posi.height,
+                posi.charFontSize,
+                Colors.brown,
+                false,
+                posi.lineWidth,
+                createFrame,
+                false,
+                withPinyin,
+                frameFillColor,
+                true);
+          }
         }
       }
   }

@@ -825,8 +825,8 @@ class PositionManager
     }
 
     // for lesson, skip those pseudo ones.
-    if (listType == ZiListType.searching || isFromReviewPage || (!Utility.isPseudoNonCharRootZiId(id) &&
-          !Utility.isPseudoRootZiId(id))) {
+    if (listType == ZiListType.searching || isFromReviewPage /*|| (!Utility.isPseudoNonCharRootZiId(id) &&
+          !Utility.isPseudoRootZiId(id))*/) {
       if (zi.id != 1) {
         posi.transX += 18.0 * sizeRatio; // 23.0
         posi.transX += 36.0 * sizeRatio; //15.0

@@ -795,7 +795,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * fontSize;
+    posi.transY += 2.5 * fontSize;
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -824,7 +824,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += 2 * fontSize;
+    posi.transY += 2.5 * fontSize;
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -853,7 +853,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += (3 * fontSize);
+    posi.transY += (3.5 * fontSize);
 
     var posiCenter = Positioned(
         top: posi.transY,
@@ -882,7 +882,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     var posi = thePositionManager.getHintPosi();
     var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    posi.transY += (3 * fontSize);
+    posi.transY += (3.5 * fontSize);
 
     var posiCenter = Positioned(
         top: posi.transY,
