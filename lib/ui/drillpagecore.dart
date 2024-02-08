@@ -887,7 +887,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     var posiCenter = Positioned(
         top: posi.transY,
         left: (posi.transX + CenterZiRelatedBottum.position[3] - 10.0) * getSizeRatio(),
-        height: fontSize * 1.3,
+        height: fontSize * 1.1,
         width: 40 * getSizeRatio(),
         child: butt
     );

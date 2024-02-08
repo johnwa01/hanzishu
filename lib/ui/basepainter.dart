@@ -1134,7 +1134,6 @@ class BasePainter extends CustomPainter{
     else {
       ziOrPhraseHint = theZiManager.getZi(id).origin;
     }
-
     var hintHeader = withIndex ? ('4. ' + getString(90)/*"Hint"*/ + ': ') : (getString(90)/*"Hint"*/ + ': ');
 
     displayTextWithValue(hintHeader, posi.transX, posi.transY,
