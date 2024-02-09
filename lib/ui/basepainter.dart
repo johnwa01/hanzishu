@@ -32,6 +32,7 @@ class BasePainter extends CustomPainter{
   List<double> iconTriangleStrokes = [4.0, 0.0, 0.5, 8.0, 0.75, 0.25, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5]; // not used currently
   List<double> iconNewCharStrokes = [4.0, 0.35, 0.9, 8.0, 0.1,0.6, 8.0, 0.45, 0.775, 8.0, 0.25, 0.475, 4.0, 0.425, 0.3, 8.0, 0.325, 0.4, 8.0, 0.55, 0.675, 8.0, 0.65, 0.575, 4.0, 0.425, 0.525, 8.0, 0.525, 0.425, 4.0, 0.5, 0.25, 8.0, 0.75, 0.5, 8.0, 0.65, 0.2, 8.0, 0.9, 0.35, 8.0, 0.75, 0.025];
   List<double> iconBreakdownStrokes = [4.0, 0.5, 0.0, 8.0, 1.0, 0.5, 8.0, 0.5, 1.0, 8.0, 0.0, 0.5, 8.0, 0.5, 0.0];
+  List<double> iconQuizStrokes = [4.0,0.025,0.65,8.0,0.1,0.75,8.0,0.2,0.85,8.0,0.35,0.95,8.0,0.43,0.9,8.0,0.425,0.8,8.0,0.3,0.65,8.0,0.2,0.575,8.0,0.15,0.55,8.0,0.05,0.56,8.0,0.025,0.65,4.0,0.25,0.76,8.0,0.525,0.81,4.0,0.252,0.46,8.0,0.4,0.625,8.0,0.55,0.725,8.0,0.6,0.75,8.0,0.65,0.725,8.0,0.65,0.625,8.0,0.6,0.58,8.0,0.375,0.375,4.0,0.4,0.3,8.0,0.5,0.2,4.0,0.45,0.25,8.0,0.79,0.58,4.0,0.75,0.65,8.0,0.85,0.5,4.0,0.525,0.15,8.0,0.65,0.0,8.0,0.9,0.45,8.0,1.0,0.3];
 
   bool isFromReviewPage = false;
 
@@ -724,7 +725,7 @@ class BasePainter extends CustomPainter{
     if (/*listType == ZiListType.zi &&*/ /*!isFromReviewPage &&*/isCharNewInLesson(id, displayCenterZiRelated)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
-          iconNewCharStrokes,
+          iconQuizStrokes, //iconNewCharStrokes,
           posiNewChar.transX,
           posiNewChar.transY,
           posiNewChar.width,
@@ -1224,13 +1225,13 @@ class BasePainter extends CustomPainter{
 
           if (componentCodeString != null) {
             checkAndUpdateSubstrStartPosition('    ', xPosi, yPosi, applyRatio(8.0), defaultFontSize);
-            displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
-            xPosi.value += applyRatio(7.0);
+            //displayTextWithValue('(', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
+            //xPosi.value += applyRatio(7.0);
 
             var componentId = ComponentManager.getComponentIdByCode(componentCodeString);
             drawRootZi(componentId, ZiListType.component, xPosi.value, yPosi.value, applyRatio(13.0), applyRatio(13.0), applyRatio(11.0)/*thePositionManager.getCharFontSize(ZiOrCharSize.sideSmallSize)*/, Colors.blue, false, 1.5, false, false, false, Colors.blue, true);
             xPosi.value += applyRatio(13.0);
-            displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
+            //displayTextWithValue(')', xPosi.value, yPosi.value, defaultFontSize, Colors.blue, false);
 
             xPosi.value += applyRatio(8.0);
           }

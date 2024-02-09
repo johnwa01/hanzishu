@@ -423,7 +423,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     });
   }
 
-  showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning) {
+  showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning, int searchingZiId) {
     initOverlay();
     var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
 
@@ -436,7 +436,14 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
               child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
               color: Colors.blueAccent,
               textColor: Colors.white,
-              onPressed: () {initOverlay();},
+              onPressed: () {
+                initOverlay();
+                if (searchingZiId != -1) {
+                  setState(() {
+                    centerZiId = searchingZiId;
+                  });
+                }
+              },
             )
         ));
     overlayState.insert(overlayEntry);
@@ -519,42 +526,51 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       onLongPress: () {
         initOverlay();
 
-        var partialZiId = currentZiId;
-        ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(ZiListType.searching);
-        // navigation would always show the real char
-        if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
-          partialZiId = theZiManager.getPartialZiId(listTypeWrapper, theCurrentCenterZiId, currentZiId);
-        }
+        if (currentZiId != theCurrentCenterZiId) {
+          var partialZiId = currentZiId;
+          ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(
+              ZiListType.searching);
+          // navigation would always show the real char
+          if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
+            partialZiId = theZiManager.getPartialZiId(
+                listTypeWrapper, theCurrentCenterZiId, currentZiId);
+          }
 
-        var sideZiOrComp;
-        if (listTypeWrapper.value == ZiListType.component) {
-          sideZiOrComp = theComponentList[partialZiId].charOrNameOfNonchar;
-        }
-        else {
-          sideZiOrComp = theSearchingZiList[partialZiId].char;
-        }
-
-        //var zi = theZiManager.getZi(partialZiId);
-        TextToSpeech.speak("zh-CN", sideZiOrComp);
-
-        if (previousZiId != currentZiId || !haveShowedOverlay) {
-          //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
-          var pinyinAndMeaning;
-          if (listTypeWrapper.value == ZiListType.searching) {
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theSearchingZiList[partialZiId].pinyin, theSearchingZiList[partialZiId].meaning);
+          var sideZiOrComp;
+          if (listTypeWrapper.value == ZiListType.component) {
+            sideZiOrComp = theComponentList[partialZiId].charOrNameOfNonchar;
           }
           else {
-            pinyinAndMeaning = Zi.formatPinyinAndMeaning(theComponentList[partialZiId].pinyin, theComponentList[partialZiId].meaning);
+            sideZiOrComp = theSearchingZiList[partialZiId].char;
           }
 
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
-          haveShowedOverlay = true;
-        }
-        else if (haveShowedOverlay) {
-          haveShowedOverlay = false;
-        }
+          //var zi = theZiManager.getZi(partialZiId);
+          TextToSpeech.speak("zh-CN", sideZiOrComp);
 
-        previousZiId = currentZiId;
+          if (previousZiId != currentZiId || !haveShowedOverlay) {
+            //var meaning = ZiManager.getPinyinAndMeaning(partialZiId);
+            var pinyinAndMeaning;
+            if (listTypeWrapper.value == ZiListType.searching) {
+              pinyinAndMeaning = Zi.formatPinyinAndMeaning(
+                  theSearchingZiList[partialZiId].pinyin,
+                  theSearchingZiList[partialZiId].meaning);
+            }
+            else {
+              pinyinAndMeaning = Zi.formatPinyinAndMeaning(
+                  theComponentList[partialZiId].pinyin,
+                  theComponentList[partialZiId].meaning);
+            }
+
+            showOverlay(context, posiAndSize.transX, posiAndSize.transY,
+                pinyinAndMeaning + "\n\n    <Go>", currentZiId);
+            haveShowedOverlay = true;
+          }
+          else if (haveShowedOverlay) {
+            haveShowedOverlay = false;
+          }
+
+          previousZiId = currentZiId;
+        }
       },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
@@ -585,7 +601,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         top: posiAndSize.transY,
         left: posiAndSize.transX,
         height: posiAndSize.height,
-        width: posiAndSize.width,
+        width: posiAndSize.width + 80.0 * getSizeRatio(), //
         child: butt
     );
 
@@ -600,6 +616,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         //var zi = theZiManager.getZi(ziId);
         TextToSpeech.speak("en-US", theSearchingZiList[ziId].meaning);
       },
+        onLongPress: () {
+          initOverlay();
+          TextToSpeech.speak("en-US", theSearchingZiList[ziId].meaning);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, theSearchingZiList[ziId].meaning, -1);
+        },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );
 
@@ -942,7 +963,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         if (previousZiId != id || !haveShowedOverlay) {
           var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
           //var meaning = ZiManager.getPinyinAndMeaning(id);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning, id);
           haveShowedOverlay = true;
         }
         else if (haveShowedOverlay) {
