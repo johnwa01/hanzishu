@@ -216,7 +216,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           borderRadius: BorderRadius.all(
             Radius.circular(33),
           ),
-          side: BorderSide(color: Colors.blue, width: 0.5)
+          side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
       ),
       fillColor: Colors.blue,
       onPressed: () {

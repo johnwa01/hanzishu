@@ -495,7 +495,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         bool setParentTo1 = false;
         if (drillCategory == DrillCategory.custom) {
           // during going back toward root. skip the pseudo zi
-          if (currentZiId != 1 && ZiManager.parentIdEqual1(DrillCategory.custom, newCenterZiId)) {
+          if (currentZiId != 1 && (ZiManager.parentIdEqual1(DrillCategory.custom, newCenterZiId) || Utility.isSearchingNonZiPseudoZiId(newCenterZiId))) {
             setParentTo1 = true;
           }
         }

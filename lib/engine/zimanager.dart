@@ -214,6 +214,19 @@ class ZiManager {
   }
   */
 
+  static handleChildMembers(int memberId, List<int> tmpGrMembers) {
+    var tmpLocalMembers = theSearchingZiList[memberId].groupMembers;
+    for (int i = 0; i < tmpLocalMembers.length; i++) {
+      var membId = tmpLocalMembers[i];
+      if (Utility.isSearchingNonZiPseudoZiId(membId)) {
+        tmpGrMembers.addAll(theSearchingZiList[membId].groupMembers);
+      }
+      else {
+        tmpGrMembers.add(membId);
+      }
+    }
+  }
+
   // consider the case for each lesson
   List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
     //TODO: filter by endId
@@ -235,7 +248,8 @@ class ZiManager {
           var tmpMembers;
           for (var memberId in groupMembers) {
             tmpMembers = theSearchingZiList[memberId].groupMembers;
-            tempGroupMembers.addAll(tmpMembers);
+            //tempGroupMembers.addAll(tmpMembers);
+            handleChildMembers(memberId, tempGroupMembers);
           }
           groupMembers = tempGroupMembers;
         }
@@ -292,6 +306,14 @@ class ZiManager {
   static bool parentIdEqual1(DrillCategory category, int ziId) {
     if (category == DrillCategory.custom) {
       return theSearchingZiList[ziId].parentId == 1;
+    }
+
+    return false;
+  }
+
+  static bool parentIdEqualNonZiPseudo(DrillCategory category, int ziId) {
+    if (category == DrillCategory.custom) {
+      return Utility.isSearchingNonZiPseudoZiId(theSearchingZiList[ziId].parentId);
     }
 
     return false;
