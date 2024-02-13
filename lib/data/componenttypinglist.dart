@@ -326,11 +326,11 @@ var theZiForLeadCompExerciseList=[
 var theZiForExpandedReviewExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 335), //
   ////ZiWithComponentsAndStrokes("份", [], "E42.png,E43.png", 0), //任
-  ZiWithComponentsAndStrokes("柒", [], "E21.png,E31.png", 0), //畜
+  ////ZiWithComponentsAndStrokes("柒", [], "E21.png,E31.png", 0), //畜
   ZiWithComponentsAndStrokes("岸", [], "E21.png,E52.png", 0),
   ZiWithComponentsAndStrokes("哄", [], "E24.png,E61.png", 0), //贵
   ////ZiWithComponentsAndStrokes("亨", [], "E21.png,E11.png", 0),
-  ZiWithComponentsAndStrokes("汰", [], "E21.png,E35.png", 0),
+  ////ZiWithComponentsAndStrokes("汰", [], "E21.png,E35.png", 0),
   ZiWithComponentsAndStrokes("渠", [], "E21.png,E53.png", 0),
   ZiWithComponentsAndStrokes("叁", [], "E31.png,E41.png", 0),
   ////ZiWithComponentsAndStrokes("坞", [], "E43.png,E34.png", 0),
@@ -353,7 +353,7 @@ var theZiForExpandedReviewExerciseList=[
   ////ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
   //ZiWithComponentsAndStrokes("京", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("匈", [], "E21.png,E52.png", 0),
-  ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),
+  ////ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),
   ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
   ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
 ];

@@ -15,7 +15,11 @@ import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
 import 'package:hanzishu/ui/paintsoundpage.dart';
 import 'package:hanzishu/ui/wordlaunchpage.dart';
+import 'package:hanzishu/ui/inputzipage.dart';
+import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/component.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -46,6 +50,8 @@ class _LessonsPageState extends State<LessonsPage> {
 
   int currentSoundPaintSection;
   SoundCategory currentSoundCategory;
+
+  int numberOfExercises = 0;
 
   //_openLessonPage(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => LessonPage()));
@@ -249,6 +255,7 @@ class _LessonsPageState extends State<LessonsPage> {
           ),
         ),
         Divider(color: Colors.black),
+        getTypingCourseForLesson(level),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -260,9 +267,42 @@ class _LessonsPageState extends State<LessonsPage> {
     );
   }
 
+  Widget getTypingCourseForLesson(int level) {
+    if (level == 1) {
+      return
+        InkWell(
+          child: Column(
+              children: [
+                Ink.image(
+                  image: AssetImage("assets/lessons/L28.png"),
+                  width: 110.0, //xSize,
+                  height: 110.0, //ySize,
+                ),
+                //Row(
+                    //children: [
+                      Text(
+                        "0. " + getString(470),
+                        style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+                      ),
+                      //OpenHelper.getCompletedImage(lessonNumber),
+                   // ]
+                //),
+              ]
+          ),
+
+          onTap: () {
+            theIsFromTypingContinuedSection = true;
+            LaunchExercise(0);
+          },
+        );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
+  }
+
   Widget getUnitReviewAtLesson(int level, int lesson) {
-    //TODO: doesn't show up yet for some reason
-    if (lesson != 38) { //first lesson of last row of lessons.
+    if (lesson != 60) { //first lesson of last row of lessons.
       return SizedBox(width: 0, height: 0);
     }
 
@@ -393,7 +433,7 @@ class _LessonsPageState extends State<LessonsPage> {
     return sections;
   }
 
-  _getRequests() async {
+  _getLessonRequests() async {
     if (theHasNewlyCompletedLesson) {
       setState(() {
         // force refresh to pick up the completed icon for the lesson
@@ -406,7 +446,7 @@ class _LessonsPageState extends State<LessonsPage> {
 
   openPage(BuildContext context, int lessonId) {
     Navigator.of(context).push(
-        MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getRequests()});
+        MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getLessonRequests()});
   }
 
   Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
@@ -594,5 +634,81 @@ class _LessonsPageState extends State<LessonsPage> {
         }
 
     );
+  }
+
+  _getRequests() async {
+    //setState(() {
+    // force refresh every time to make sure to pick up completed icon
+    this.numberOfExercises += 1;
+    //});
+
+    if (!theIsBackArrowExit && this.numberOfExercises <= 4) {
+      // reinit
+      theIsBackArrowExit = true;
+      LaunchExercise(this.numberOfExercises);
+    }
+    else {
+      // init all variables
+      // either true back arrow or all done
+      theIsBackArrowExit = true;
+      theIsFromTypingContinuedSection = false;
+      this.numberOfExercises = 0;
+    }
+    //}
+  }
+
+  LaunchExercise(int exerciseNumber) {
+    switch (exerciseNumber) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ComponentPage(questionType: QuestionType.Component),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(typingType: TypingType.LeadComponents,
+                    lessonId: 0, wordsStudy: null), //InputZiPage(),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 2:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ComponentPage(questionType: QuestionType.ExpandedComponent),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(
+                    typingType: TypingType.ExpandedReview), //InputZiPage(),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(
+                    typingType: TypingType.SingleComponent), //InputZiPage(),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      default:
+        break;
+    }
   }
 }

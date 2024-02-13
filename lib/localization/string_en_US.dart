@@ -409,7 +409,7 @@ var theString_en_US = [
   Local(400, "7/8/9"),
   Local(401, "Skip section"),
   Local(402, "Next section"),
-  Local(403, "More exercises"),
+  Local(403, "Individual exercises"),
   Local(404, "Study till all are check-marked"),
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
@@ -477,4 +477,5 @@ var theString_en_US = [
   Local(467, "You have passed this quiz with a score of"),
   Local(468, "You have achieved a score of"),
   Local(469, "You can come back later to reach 70."),
+  Local(470, "Chinese alphabets"),
 ];

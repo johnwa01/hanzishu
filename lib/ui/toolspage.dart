@@ -47,7 +47,7 @@ class _ToolsPageState extends State<ToolsPage> {
         this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowExit && this.numberOfExercises <= 8) {
+      if (!theIsBackArrowExit && this.numberOfExercises <= 4) {
         // reinit
         theIsBackArrowExit = true;
         LaunchExercise(this.numberOfExercises);

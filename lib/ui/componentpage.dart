@@ -762,7 +762,7 @@ class _ComponentPageState extends State<ComponentPage> {
       if (hint != null) {
         return Text(
             '[' + hint + ']',
-            style: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit(),
+            style: TextStyle(color: Colors.lightBlue, fontSize: 16.0 * getSizeRatioWithLimit(),
                 fontWeight: FontWeight.bold)
         );
       }
