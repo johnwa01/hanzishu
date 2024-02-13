@@ -118,6 +118,10 @@ class _InputZiPageState extends State<InputZiPage> {
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
 
+    // first char, put here instead of Build so that it does only once.
+    String TypingChar = getEitherCharFromCurrentId(typingType, 0 /*currentIndex*/, widget.lessonId);
+    TextToSpeech.speak("zh-CN", TypingChar);
+
     showHint = 1;  // this is the default
     initHintSelected();
 
@@ -397,6 +401,8 @@ class _InputZiPageState extends State<InputZiPage> {
           currentIndex =
               theInputZiManager.getNextIndex(
                   typingType, /*currentIndex,*/ lessonId);
+          String TypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
+          TextToSpeech.speak("zh-CN", TypingChar);
         });
 
         //       return;
@@ -442,7 +448,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // pronounce the typed char
     if (typingType != TypingType.FreeTyping) {
       var typedZiString = InputZiManager.getCandidateZiString(selectionIndex);
-      TextToSpeech.speak("zh-CN", typedZiString);
+      //TextToSpeech.speak("zh-CN", typedZiString);
     }
 
     var newText = getInputText(selectionIndex, isFromNumber);
@@ -1273,6 +1279,20 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  String getEitherCharFromCurrentId(TypingType typingType, int currentIndex, int lessonId) {
+    var typingChar;
+    if (typingType == TypingType.ComponentTyping) {
+      typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+    }
+    else {
+      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
+          typingType, currentIndex, lessonId);
+      typingChar = zi.zi;
+    }
+
+    return typingChar;
+  }
+
   Widget getInputPrompt() {
     // an empty box
     if (typingType == TypingType.FreeTyping) {
@@ -1282,19 +1302,22 @@ class _InputZiPageState extends State<InputZiPage> {
     var promptStr = getString(113) + "： "; //"Please type"
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
-    var char;
+    currentTypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
+    /*
     if (typingType == TypingType.ComponentTyping) {
-      char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+      currentTypingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
     }
     else {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
       currentTypingChar = zi.zi;
-      // prepard hint stuff, running once per zi, therefore to put here.
+    }
+    */
+
+      // prepare hint stuff, running once per zi, therefore to put here.
       currentTypingComponentsAndSub =
             ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
       currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
-    }
 
     //TextToSpeech.speak("zh-CN", currentTypingChar);
 
