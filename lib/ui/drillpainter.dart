@@ -15,7 +15,7 @@ class DrillPainter extends BasePainter {
   CenterZiRelatedBottum centerZiRelatedBottum;
   Map<int, PositionAndSize> drillBreakoutPositions = Map();
 
-  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -32,13 +32,12 @@ class DrillPainter extends BasePainter {
     this.drillCategory = drillCategory; //this.filterId = filterId;
     this.startingCenterZiId = startingCenterZiId;
     this.centerZiRelatedBottum = centerZiRelatedBottum;
+    this.isFromReviewPage = isFromReviewPage;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-
-    isFromReviewPage = true;
 
     thePositionManager.setFrameWidth(getFrameWidth());
     //if (centerId != 1) {

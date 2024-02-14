@@ -722,7 +722,7 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     //}
 
-    if (/*listType == ZiListType.zi &&*/ /*!isFromReviewPage &&*/isCharNewInLesson(id, internalStartLessonId)) {
+    if (!isFromReviewPage && isCharNewInLesson(id, internalStartLessonId)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
           iconQuizStrokes, //iconNewCharStrokes,
@@ -1321,7 +1321,7 @@ class BasePainter extends CustomPainter{
       }
 
       // for lesson, skip those pseudo ones.
-      if (listType == ZiListType.searching || isFromReviewPage /*|| (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))*/) {
+      //if (listType == ZiListType.searching || isFromReviewPage /*|| (!Utility.isPseudoNonCharRootZiId(id) && !Utility.isPseudoRootZiId(id))*/) {
         if (!(drillCategory == DrillCategory.custom && Utility.isSearchingPseudoZiId(id))) {
           if (zi.id != 1) {
             posi.transX += applyRatio(18.0); // 23.0
@@ -1358,7 +1358,7 @@ class BasePainter extends CustomPainter{
                 true);
           }
         }
-      }
+      //}
   }
 
   displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio, bool withHeader) {

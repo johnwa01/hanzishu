@@ -177,6 +177,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 DrillPageCore(drillCategory: drillCategory,
                     startingCenterZiId: 1,
                     subItemId: subItemId,
+                    isFromReviewPage: true,
                     customString: customString)));
       },
       child: Text(getString(456), //"Learn Hanzi"

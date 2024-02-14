@@ -497,7 +497,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, customString: inputText),
+                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, isFromReviewPage: false, customString: inputText),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -604,7 +604,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: startingCenterZiId, subItemId: 0, customString: null),
+                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: startingCenterZiId, subItemId: 0, isFromReviewPage: false ,customString: null),
           ),
         );
       },

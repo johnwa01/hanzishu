@@ -27,12 +27,13 @@ class DrillPageCore extends StatefulWidget {
   final DrillCategory drillCategory; //startLessonId;
   final int startingCenterZiId;
   final int subItemId; //endLessonId;
+  final bool isFromReviewPage;
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
 
-  DrillPageCore({this.drillCategory, this.startingCenterZiId, this.subItemId, this.customString});
+  DrillPageCore({this.drillCategory, this.startingCenterZiId, this.subItemId, this.isFromReviewPage, this.customString});
 
   @override
   _DrillPageCoreState createState() => _DrillPageCoreState();
@@ -292,7 +293,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         currentZiListType,
                         drillCategory,
                         startingCenterZiId,
-                        currentCenterZiRelatedBottum
+                        currentCenterZiRelatedBottum,
+                        widget.isFromReviewPage,
                     ),
                     child: Center(
                       child: Stack(
@@ -1023,7 +1025,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     currentZiListType,
     drillCategory,
     startingCenterZiId,
-        currentCenterZiRelatedBottum
+        currentCenterZiRelatedBottum,
+      widget.isFromReviewPage,
     );
 
     var breakoutPositions = drillPainter.getDrillBreakoutPositions();

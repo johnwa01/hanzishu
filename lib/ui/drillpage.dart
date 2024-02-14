@@ -258,6 +258,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                                   DrillPageCore(drillCategory: drillCategory,
                                       startingCenterZiId: 1,
                                       subItemId: subItemId,
+                                      isFromReviewPage: true,
                                       customString: null))),
                       }
                     }
