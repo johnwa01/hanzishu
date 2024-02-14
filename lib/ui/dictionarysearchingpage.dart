@@ -756,6 +756,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       posiAndSizeZiGroup.width += 50*ratio;
       var drawZiGroupPosiCenter = getPositionedDrawZiGroupButton(posiAndSizeZiGroup, searchingZiIndex);
       buttons.add(drawZiGroupPosiCenter);
+
+      // skip button
+      if (theIsFromLessonContinuedSection) {
+        buttons.add(getPositionedSkipButton());
+      }
     }
     else if (dicStage == DictionaryStage.help) {
       CreateNavigationHitttestButtons(DictionaryStage.detailedzi, buttons);
@@ -945,5 +950,38 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         return alert;
       },
     );
+  }
+
+  Positioned getPositionedSkipButton() {
+    var yPosi = 0.0;
+
+    var buttonColor = Colors.white;
+    if (theAllZiLearned) {
+      buttonColor = Colors.blue;
+    }
+
+    var butt = FlatButton(
+      color: buttonColor, //Colors.white,
+      textColor: Colors.brown,
+      onPressed: () {
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop();
+      },
+      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
+    );
+
+    // NOTE: match the basepainting's drawZiGroup
+    var posiCenter = Positioned(
+        top: yPosi, //yPosi.transY +
+        //2 * thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
+        left: screenWidth - 80.0, //getSizeRatio() * 0.0,  // Need to match DrillPainter/BasePainter
+        height: /*getSizeRatio() */ 50.0,
+        //posiAndSize.height,
+        width: /*getSizeRatio() */ 80.0, // 100.0
+        //posiAndSize.width,
+        child: butt
+    );
+
+    return posiCenter;
   }
 }

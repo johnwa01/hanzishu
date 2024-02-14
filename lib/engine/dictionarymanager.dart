@@ -449,7 +449,12 @@ class DictionaryManager {
           find = 0;
           for (int m = 0; m < wordLength; m++) {
             if (theSearchingZiList[l].char == ziListIfCustomCategory[m]) {
-              find = 1;
+              if (internalStartItemId != 0) {
+                find = internalStartItemId;
+              }
+              else {
+                find = 1; // for non-lesson custom, always set it to 1.
+              }
               break;
             }
           }

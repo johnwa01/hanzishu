@@ -126,7 +126,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, customString: convChars),
+                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: lessonId, customString: convChars),
           ),
         ).then((val) => {_getRequests()});
         break;

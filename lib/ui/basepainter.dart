@@ -684,7 +684,7 @@ class BasePainter extends CustomPainter{
      */
   }
 
-  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelatedBottum centerZiRelatedBottum, int displayCenterZiRelated) {
+  void displayCenterZiRelated(ZiListType listType, int id, double charFontSize, CenterZiRelatedBottum centerZiRelatedBottom, int internalStartLessonId) {
     var posiAndSizeMeaning = thePositionManager.getMeaningPosi();
     var posiAndSizeSpeech = thePositionManager.getCenterSpeechPosi();
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
@@ -722,7 +722,7 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     //}
 
-    if (/*listType == ZiListType.zi &&*/ /*!isFromReviewPage &&*/isCharNewInLesson(id, displayCenterZiRelated)) {
+    if (/*listType == ZiListType.zi &&*/ /*!isFromReviewPage &&*/isCharNewInLesson(id, internalStartLessonId)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
           iconQuizStrokes, //iconNewCharStrokes,
@@ -734,7 +734,7 @@ class BasePainter extends CustomPainter{
           2.0 /*ziLineWidth*/);
     }
 
-    displayCenterZiRelatedBottum(listType, id, centerZiRelatedBottum);
+    displayCenterZiRelatedBottum(listType, id, centerZiRelatedBottom);
   }
 
   void displayCenterZiRelatedBottum(ZiListType listType, int id, CenterZiRelatedBottum centerZiRelatedBottum) {
@@ -1030,7 +1030,7 @@ class BasePainter extends CustomPainter{
       displayIntroMessage();
     }
 
-    if ((drillCategory == DrillCategory.custom) || (theIsFromLessonContinuedSection && listType == ZiListType.zi)) {
+    if ((drillCategory == DrillCategory.custom) && theIsFromLessonContinuedSection) {
         //var posi = thePositionManager.getHintPosi();
         // Need to match the DrillPage & TreePage sizes
         double xPosi = width - 80.0;

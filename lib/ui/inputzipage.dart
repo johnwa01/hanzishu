@@ -119,8 +119,11 @@ class _InputZiPageState extends State<InputZiPage> {
     theInputZiManager.initCurrentIndex();
 
     // first char, put here instead of Build so that it does only once.
-    String TypingChar = getEitherCharFromCurrentId(typingType, 0 /*currentIndex*/, widget.lessonId);
-    TextToSpeech.speak("zh-CN", TypingChar);
+    if (typingType != TypingType.FreeTyping) {
+      String TypingChar = getEitherCharFromCurrentId(
+          typingType, 0 /*currentIndex*/, widget.lessonId);
+      TextToSpeech.speak("zh-CN", TypingChar);
+    }
 
     showHint = 1;  // this is the default
     initHintSelected();

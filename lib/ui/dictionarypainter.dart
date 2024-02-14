@@ -145,6 +145,10 @@ class DictionaryPainter extends BreakoutPainter {
   DisplayDetailedZi(int ziIndex) {
     thePositionManager.setFrameWidth(getFrameWidth());
 
+    if (theIsFromLessonContinuedSection) {
+      DisplayContinueOrSkip(ZiListType.searching, width - 80.0, 0.0);
+    }
+
     //var defaultFontSize = applyRatio(25.0);
     //NOTE: match the definitions in dictionarysearchingpage.dart
     var fontSize1 = applyRatio(1.0);

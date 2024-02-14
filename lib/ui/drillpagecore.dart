@@ -122,11 +122,15 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     internalEndItemId = subItemId;
     if (drillCategory == DrillCategory.hsk && subItemId == 0) {
       internalStartItemId = 1;
-      internalEndItemId = 7;
+      internalEndItemId = 7; // total 7 levels
     }
-    else if(drillCategory == DrillCategory.custom) {
-      internalStartItemId = 1;
+    else if(drillCategory == DrillCategory.custom && subItemId == 0) { // real custom
+      internalStartItemId = 1; // it use customString in initReadFilterList
       internalEndItemId = 1;
+    }
+    else if(drillCategory == DrillCategory.custom && subItemId != 0) { // coming from lessons, not regular custom
+      // need to set this to lesson specific string
+      customString = theLessonManager.getConvChars(subItemId);
     }
 
     //if (drillCategory == DrillCategory.custom) {
@@ -449,7 +453,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     overlayState.insert(overlayEntry);
   }
 
-  Positioned getPositionedContinueButton() {
+  Positioned getPositionedSkipButton() {
     var yPosi = 0.0;
 
     var buttonColor = Colors.white;
@@ -737,8 +741,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     CreateNavigationHitttestButtons(centerZiId, true, buttons);
 
     // skip and next section button
-    if (drillCategory == DrillCategory.custom) {
-      buttons.add(getPositionedContinueButton());
+    if (drillCategory == DrillCategory.custom && theIsFromLessonContinuedSection) {
+      buttons.add(getPositionedSkipButton());
     }
 
     return buttons;
