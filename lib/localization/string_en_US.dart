@@ -420,7 +420,7 @@ var theString_en_US = [
   Local(411, "Hanzishu Introduction"),
   Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words. You will learn Chinese fast through this system. \n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
   //Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words.\n\nThe Hanzishu puzzle typing method, dictionary, word puzzle, and conversational lessons were invented and developed by Microsoft Senior Engineer John Zhongqi Wang. The Paint Sound symbols and lessons were invented by children education expert Kang Baoling.\n\nYou will learn Chinese fast through this system. Non-Chinese heritage students should start from conversation, and Chinese heritage students should start from Paint Sound section directly.\n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
-  Local(413, "Typing exercises for words containing single Chinese alphabet "), //"Typing exercises by component characteristics"
+  Local(413, "Typing exercises for single alphabet words"), //"Typing exercises by component characteristics"
   Local(414, "Practice typing of all components by their characteristics."),
   Local(415, "Hanzishu puzzle typing course"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),

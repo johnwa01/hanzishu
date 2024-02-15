@@ -9,7 +9,7 @@ import 'package:hanzishu/variables.dart';
 class ComponentExerciseNumber {
   int id;
   String name;
-  static int totalExercises = 25; // roughly 4 to 30 chars a exercises.
+  static int totalExercises = 23; // roughly 4 to 30 chars a exercises.
 
   ComponentExerciseNumber(this.id, this.name);
 
