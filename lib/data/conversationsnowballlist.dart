@@ -5,9 +5,9 @@ var theConversationSnowballList =
 [
   Snowball(0, [Sent('A',1)]), // non-lesson
   Snowball(1, [Sent('A',1), Sent('B', 153), Sent('A', 154), Sent('B', 155)]),
-  Snowball(2, [Sent('A',1), Sent('B', 1), Sent('A', 153), Sent('B', 154), Sent('A', 155), Sent('B', 2), Sent('A', 3), Sent('B', 4)]),
-  Snowball(3, [Sent('A',1), Sent('B', 153), Sent('A', 154), Sent('B', 155), Sent('A', 5), Sent('B', 6), Sent(' ', 5), Sent('A', 146)/*, Sent('T', 155), Sent('T', 167)*/]),
-  Snowball(4, [Sent('A',1), Sent('B', 153), Sent('A', 154), Sent('B', 155), Sent('A', 5), Sent('B', 6), Sent('A', 8), Sent('B', 8)/*, Sent('T', 155), Sent('T', 167), Sent('T', 168)*/]),
+  Snowball(2, [Sent('A',1), Sent('B', 1), Sent('A', 155), Sent('B', 2), Sent('A', 3), Sent('B', 4)]),
+  Snowball(3, [Sent('A',1), Sent('B', 155), Sent('A', 5), Sent('B', 6), Sent(' ', 5), Sent('A', 146)/*, Sent('T', 155), Sent('T', 167)*/]),
+  Snowball(4, [Sent('A',1), Sent('B', 155), Sent('A', 5), Sent('B', 6), Sent('A', 8), Sent('B', 8)/*, Sent('T', 155), Sent('T', 167), Sent('T', 168)*/]),
   Snowball(5, [Sent('A',9), Sent('B', 1), Sent('A', 7), Sent('B', 10), Sent(' ', 5), Sent('A', 6), Sent('B', 8), Sent('A', 8)/*, Sent('T', 155), Sent('T', 167), Sent('T', 168), Sent('T', 169)*/]),
   Snowball(6, [Sent('A',1), Sent('B', 7), Sent('A', 11), Sent('B', 12), Sent(' ', 5), Sent('A', 6), Sent('B', 8), Sent('A', 8)/*, Sent('T', 155), Sent('T', 167), Sent('T', 168), Sent('T', 169), Sent('T', 170)*/]),
   Snowball(7, [Sent('A',1), Sent('B', 9), Sent('A', 11), Sent('B', 12), Sent(' ', 5), Sent('A', 6), Sent('B', 13), Sent('A', 14), Sent('B', 8), Sent('A', 8)/*, Sent('T', 155), Sent('T', 167), Sent('T', 168), Sent('T', 169), Sent('T', 170), Sent('T', 171)*/]),
