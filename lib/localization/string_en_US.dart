@@ -478,4 +478,5 @@ var theString_en_US = [
   Local(468, "You have achieved a score of"),
   Local(469, "You can come back later to reach 70."),
   Local(470, "Chinese alphabets"),
+  Local(471, "New scientific stage of Chinese character education"),
 ];
