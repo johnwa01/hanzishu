@@ -115,7 +115,7 @@ class LessonManager {
   }
 
   static void populateLessonsInfo() {
-    populateLessonsList();
+    //populateLessonsList();
     theSentenceManager.populateSubcharsAndComponents();
     populateConvCharsAndCharsList();
     //populateComps(); //
@@ -124,11 +124,13 @@ class LessonManager {
     //theLessonsInitialized = true;
   }
 
+  /*
   static void populateLessonsList() {
     for(var i=0; i < theSentenceList.length; i++) {
       theLessonList[theSentenceList[i].lessonId].sentenceList.add(theSentenceList[i].id);
     }
   }
+  */
 
   static void populateConvCharsAndCharsList() {
     for (var j = 1; j <= (theLessonList.length - 1); j++) {
