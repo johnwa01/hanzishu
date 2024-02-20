@@ -1,5 +1,3 @@
-
-
 class LessonUnit {
   int id;
   int numberOfLessons;
@@ -7,8 +5,8 @@ class LessonUnit {
   String description;
 
   LessonUnit(int id,
-    int numberOfLessons,
-    bool isCompleted,
+      int numberOfLessons,
+      bool isCompleted,
       String description) {
     this.id = id;
     this.numberOfLessons = numberOfLessons;

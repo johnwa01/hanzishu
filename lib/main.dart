@@ -14,7 +14,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/phrasemanager.dart';
 import 'package:hanzishu/engine/sentencemanager.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/engine/lessonunitmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 import 'package:hanzishu/engine/quizmanager.dart';

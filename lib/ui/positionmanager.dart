@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/engine/levelmanager.dart';
+import 'package:hanzishu/engine/lessonunitmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class PositionAndMeaning {
