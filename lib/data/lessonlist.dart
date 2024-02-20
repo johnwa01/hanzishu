@@ -2,6 +2,7 @@ import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/utility.dart';
 
 int BaseLessonTitleTranslationStringID = 20;
+int BaseUnitTitleTranslationStringID = 472;
 
 // only access this through LessonManager
 var theLessonList = [

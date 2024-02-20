@@ -487,7 +487,7 @@ class _QuizPageState extends State<QuizPage> {
     }
     else {
       title = getString(466) + "!"; // Good effort
-      content = getString(468) /*"You have achieved a score of "*/ + corStr + ". " + getString(469) /*You can come back later to reach 70."*/;
+      content = getString(468) /*"You have achieved a score of"*/ + " " + corStr + ". " + getString(469) /*You can come back later to reach 70."*/;
     }
 
     // set up the AlertDialog

@@ -496,6 +496,11 @@ class Utility {
     return oldString.substring(0, index) + newChar + oldString.substring(index + 1);
   }
 
+  // a longer string of stringToBeSet, with first part being replaced by subString
+  static String replacePartOfString(String stringToBeSet, String subString) {
+    return subString + stringToBeSet.substring(subString.length);
+  }
+
   static String checkAndUpdateOneCharSideForLessonTwo(int id, String displaySideString) {
     // do special for '六' for lesson 2 so that it'll order sequencially in screen
     if (theCurrentLessonId == 2 && id == 155) {

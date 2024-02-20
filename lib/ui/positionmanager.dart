@@ -370,7 +370,7 @@ class PositionManager
   }
 
   static Rect getLessonBoxPosition(int internalLessonId, double transYPosition){
-    var levelLessonPair = LevelManager.getLevelLessonPair(internalLessonId);
+    var levelLessonPair = LessonUnitManager.getUnitLessonPair(internalLessonId);
     var levelId = levelLessonPair.levelId;
     var lessonId = levelLessonPair.lessonId;
     var numberOfLessons =    theNumberOfLessonsInLevels[levelId - 1];

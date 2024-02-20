@@ -91,7 +91,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theZiManager = ZiManager();
     thePhraseManager = PhraseManager();
     theSentenceManager = SentenceManager();
-    theLevelManager = LevelManager();
+    theLessonUnitManager = LessonUnitManager();
     thePositionManager = PositionManager();
     theStorageHandler = StorageHandler();
     theQuizManager = QuizManager();

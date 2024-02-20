@@ -1,12 +1,12 @@
 
 
-class Level {
+class LessonUnit {
   int id;
   int numberOfLessons;
   bool isCompleted;
   String description;
 
-  Level(int id,
+  LessonUnit(int id,
     int numberOfLessons,
     bool isCompleted,
       String description) {

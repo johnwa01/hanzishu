@@ -4,45 +4,45 @@ import 'package:hanzishu/data/levellist.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
 
-class LevelLessonPair {
+class UnitLessonPair {
   int levelId;
   int lessonId;
 
-  LevelLessonPair(int levelId, int lessonId) {
+  UnitLessonPair(int levelId, int lessonId) {
     this.levelId = levelId;
     this.lessonId = lessonId;
   }
 }
 
-class LevelManager {
-  static final LevelManager _levelManager = LevelManager._internal();
-  LevelLessonPair currentLevelLessonPair = LevelLessonPair(1, 1);
+class LessonUnitManager {
+  static final LessonUnitManager _levelManager = LessonUnitManager._internal();
+  UnitLessonPair currentLevelLessonPair = UnitLessonPair(1, 1);
   int theCurrentLevel = 1;
   String theRangeLevelPlus = "theRangeLevelPlus"; // TODO: do we still need these three?
   String theRangeLevelMinus = "theRangeLevelMinus";
   String theRangeLevelBoxTag = "theRangeLevelBoxTag";
 
-  factory LevelManager() {
+  factory LessonUnitManager() {
     return _levelManager;
   }
-  LevelManager._internal();
+  LessonUnitManager._internal();
 
-  Level getLevel(int id) {
-    return theLevelList[id];
+  LessonUnit getLessonUnit(int id) {
+    return theUnitList[id];
   }
 
   int getLevelCount() {
-    return theLevelList.length;
+    return theUnitList.length;
   }
 
-  static LevelLessonPair getLevelLessonPair(int internalLessonId) {
-    var levelLessonPair = LevelLessonPair(0, 0);
-    var levelCount = theLevelList.length;
+  static UnitLessonPair getUnitLessonPair(int internalLessonId) {
+    var levelLessonPair = UnitLessonPair(0, 0);
+    var levelCount = theUnitList.length;
     var lessonId = internalLessonId;
 
     for (var i = 0; i <= (levelCount - 1); i++) {
-      if (lessonId > theLevelList[i].numberOfLessons) {
-        lessonId -= theLevelList[i].numberOfLessons;
+      if (lessonId > theUnitList[i].numberOfLessons) {
+        lessonId -= theUnitList[i].numberOfLessons;
       }
       else {
         levelLessonPair.levelId = i + 1;
@@ -54,9 +54,9 @@ class LevelManager {
     return levelLessonPair;
   }
 
-  static int getInternalLessonId(LevelLessonPair levelLessonPair) {
+  static int getInternalLessonId(UnitLessonPair levelLessonPair) {
     var levelId = levelLessonPair.levelId;
-    if (levelId > theLevelList.length) {
+    if (levelId > theUnitList.length) {
       return 0;
     }
 
@@ -66,14 +66,14 @@ class LevelManager {
 
     var internalLessonId = 0;
     for (var i = 0; i <= (levelId-2); i++) {
-      internalLessonId += theLevelList[i].numberOfLessons;
+      internalLessonId += theUnitList[i].numberOfLessons;
     }
 
     return internalLessonId + levelLessonPair.lessonId;
   }
 
   static int firstInternalLessonId(int levelId) {
-    if (levelId > theLevelList.length) {
+    if (levelId > theUnitList.length) {
       return 0;
     }
 
@@ -83,20 +83,20 @@ class LevelManager {
 
     var firstLessonId = 0;
     for (var i = 0; i <= (levelId - 2); i++) {
-      firstLessonId += theLevelList[i].numberOfLessons;
+      firstLessonId += theUnitList[i].numberOfLessons;
     }
 
     return firstLessonId + 1;
   }
 
   static int lastInternalLessonId(int levelId) {
-    if (levelId > theLevelList.length) {
+    if (levelId > theUnitList.length) {
       return 0;
     }
 
     var lastLessonId = 0;
     for (var i = 0; i < levelId; i++) {
-      lastLessonId += theLevelList[i].numberOfLessons;
+      lastLessonId += theUnitList[i].numberOfLessons;
     }
 
     return lastLessonId;
@@ -104,7 +104,7 @@ class LevelManager {
 
   /* TODO
   static String getLevelLessonDisplayString(int internalLessonId) {
-    var levelLessonPair = LevelManager.getLevelLessonPair(internalLessonId);
+    var levelLessonPair = LessonUnitManager.getUnitLessonPair(internalLessonId);
     var levelLessonDisplayString = theLessonString + " " + String(levelLessonPair.levelId) + " / " + String(levelLessonPair.lessonId);
 
   return levelLessonDisplayString;
@@ -118,7 +118,7 @@ class LevelManager {
 
   String UpdateRangeLevel(String levelOperation) {
     if (levelOperation == theRangeLevelPlus) {
-      if (theCurrentLevel == theLevelList.length) {
+      if (theCurrentLevel == theUnitList.length) {
         theCurrentLevel = 1;
       }
       else {
@@ -127,7 +127,7 @@ class LevelManager {
     }
     else if (levelOperation == theRangeLevelMinus) {
       if (theCurrentLevel == 1) {
-        theCurrentLevel = theLevelList.length;
+        theCurrentLevel = theUnitList.length;
       }
       else {
         theCurrentLevel -= 1;
@@ -135,7 +135,7 @@ class LevelManager {
     }
 
     // reset the lesson range
-    theRangeUptoLessonNumberForCurrentLevel = theLevelList[theCurrentLevel - 1].numberOfLessons;
+    theRangeUptoLessonNumberForCurrentLevel = theUnitList[theCurrentLevel - 1].numberOfLessons;
   }
   */
 

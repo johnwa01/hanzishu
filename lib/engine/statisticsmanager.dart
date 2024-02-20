@@ -114,7 +114,7 @@ class StatisticsManager {
     var quizResultString = lessonQuizResult.dateString;
     quizResultString += "   ";
 
-    //var levelLessonPair = LevelManager.getLevelLessonPair(lessonQuizResult.lessonId);
+    //var levelLessonPair = LessonUnitManager.getUnitLessonPair(lessonQuizResult.lessonId);
     //quizResultString += "L";
     //quizResultString += levelLessonPair.levelId.toString();
     quizResultString += "Lesson ";

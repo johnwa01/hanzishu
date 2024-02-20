@@ -10,9 +10,11 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 class LessonManager {
   static final LessonManager _lessonManager = LessonManager._internal();
+
   //String theCurrentLesson = "none";
   int theLatestEnabledLesson = 1; // will be overwritten by value from storage
   static String theBeginnerLesson = "beginnerLesson";
+
   //static var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
   //static var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
 
@@ -21,6 +23,7 @@ class LessonManager {
   factory LessonManager() {
     return _lessonManager;
   }
+
   LessonManager._internal();
 
   Lesson getLesson(int id) {
@@ -38,7 +41,7 @@ class LessonManager {
   }
 
   bool isALessonName(String name) {
-    for (var i = 1;  i <= theTotalBeginnerLessons; i++) {
+    for (var i = 1; i <= theTotalBeginnerLessons; i++) {
       var numberString = i.toString();
       var lessonName = theBeginnerLesson + numberString;
       if (lessonName == name) {
@@ -67,7 +70,7 @@ class LessonManager {
   }
   */
 
-   int getLessonNumber(String name) {
+  int getLessonNumber(String name) {
     for (var i = 1; i <= theTotalBeginnerLessons; i++) {
       var numberString = i.toString();
       var lessonName = theBeginnerLesson + numberString;
@@ -87,13 +90,16 @@ class LessonManager {
       }
     }
 
-    var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
-    var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
-    var nextYPosition = currentY + (analyzeZiYSize + analyzeZiYGap) * maxComponents;
+    var analyzeZiYSize = thePositionManager.getZiSize(
+        ZiOrCharSize.assembleDissembleSize); //CGFloat(30.0)
+    var analyzeZiYGap = 0.5 * analyzeZiYSize; //CGFloat(15.0)
+    var nextYPosition = currentY +
+        (analyzeZiYSize + analyzeZiYGap) * maxComponents;
 
     return nextYPosition;
   }
- /*
+
+  /*
   static double getNextXPosition(double urrentX) {
     var maxComponents = 0;
     for (var i = 0; i <= (theCurrentZiComponents.count - 1); i++) {
@@ -137,9 +143,9 @@ class LessonManager {
       for (var k in theLessonList[j].sentenceList) {
         for (var eachChar in theSentenceList[k].conv.runes) {
           var char = String.fromCharCode(eachChar);
-          if (!Utility.specialChar(char) && !charExists(j, char))
-          {
-            theLessonList[j].convChars += char; // String.fromCharCode(eachChar); //eachChar.toString();
+          if (!Utility.specialChar(char) && !charExists(j, char)) {
+            theLessonList[j].convChars +=
+                char; // String.fromCharCode(eachChar); //eachChar.toString();
           }
         }
         /*
@@ -159,20 +165,21 @@ class LessonManager {
     for (var j = 1; j <= theLessonList.length - 1; j++) {
       for (var k in theLessonList[j].sentenceList) {
         for (var eachComp in theSentenceList[k].comps) {
-          if (!compExists(j, eachComp))
-          {
+          if (!compExists(j, eachComp)) {
             // check the parent of this non-character
             // they are not real parents, but the parent in Hanzishu hirarchy
             var compZi = theZiManager.getZi(eachComp);
 
             if (!compExists(j, compZi.parentId)) {
-              if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isPseudoRootZiId(compZi.parentId) &&*/ !Utility.isAtChar(compZi.parentId)) {
+              if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isPseudoRootZiId(compZi.parentId) &&*/ !Utility
+                  .isAtChar(compZi.parentId)) {
                 theLessonList[j].comps.add(compZi.parentId);
               }
             }
 
             // add the non-char itself
-            if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isPseudoRootZiId(eachComp) &&*/ !Utility.isAtChar(eachComp)) {
+            if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isPseudoRootZiId(eachComp) &&*/ !Utility
+                .isAtChar(eachComp)) {
               theLessonList[j].comps.add(eachComp);
             }
           }
@@ -192,16 +199,19 @@ class LessonManager {
   }
 
   static bool ziIdExistsInLesson(int lessonId, int ziId) {
-    return charExistsInLessonById(lessonId, ziId) || compExistsInLesson(lessonId, ziId);
+    return charExistsInLessonById(lessonId, ziId) ||
+        compExistsInLesson(lessonId, ziId);
   }
 
   static bool charExistsInLesson(int lessonId, String char) {
-    return theLessonList[lessonId].convChars.contains(char) || theLessonList[lessonId].chars.contains(char);
+    return theLessonList[lessonId].convChars.contains(char) ||
+        theLessonList[lessonId].chars.contains(char);
   }
 
   // was charExistsInLesson before. changed to ziIdExistsInLesson
   static bool charExistsInLessonById(int lessonId, int ziId) {
-    return theLessonList[lessonId].convCharsIds.contains(ziId) || theLessonList[lessonId].charsIds.contains(ziId);
+    return theLessonList[lessonId].convCharsIds.contains(ziId) ||
+        theLessonList[lessonId].charsIds.contains(ziId);
   }
 
   static bool isZiInTreePathOfZisInLesson(int ziId, int lessonId) {
@@ -249,14 +259,16 @@ class LessonManager {
   }
 
   // the members direct child of id 731 to 755.
-  static  List<int> getRootMembersForLesson(int lessonId) {
+  static List<int> getRootMembersForLesson(int lessonId) {
     List<int> rootMembers = [];
     int rootId = 0;
 
     var lesson = theLessonList[lessonId];
     for (var idB in lesson.charsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) != 0) {
+      if ((
+          rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) !=
+          0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
@@ -265,7 +277,9 @@ class LessonManager {
 
     for (var idB in lesson.convCharsIds) {
       rootId = 0;
-      if ((rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) != 0) {
+      if ((
+          rootId = theZiManager.getRootCharOrStar(idB, ZiListType.searching)) !=
+          0) {
         if (!rootMembers.contains(rootId)) {
           rootMembers.add(rootId);
         }
@@ -274,13 +288,13 @@ class LessonManager {
 
     //TODO:  Not to display those
     if (lesson.comps.length > 0 && !rootMembers.contains(TheConst.starCharId)) {
-      rootMembers.add(TheConst.starCharId);  // the * member
+      rootMembers.add(TheConst.starCharId); // the * member
     }
 
     return rootMembers;
   }
 
-  static  List<int> getRootNonCharMembersForLesson(int lessonId) {
+  static List<int> getRootNonCharMembersForLesson(int lessonId) {
     List<int> rootMembers = [];
     int rootId = 0;
 
@@ -299,7 +313,8 @@ class LessonManager {
     return rootMembers;
   }
 
-  static bool isZiInTreePathOfZisInLessons(int ziId, int startLessonId, int endLessonId) {
+  static bool isZiInTreePathOfZisInLessons(int ziId, int startLessonId,
+      int endLessonId) {
     for (var lessonId = startLessonId; lessonId <= endLessonId; lessonId++) {
       if (isZiInTreePathOfZisInLesson(ziId, lessonId)) {
         return true;
@@ -340,7 +355,7 @@ class LessonManager {
       for (var ch in lesson.chars.runes) {
         var char = String.fromCharCode(ch);
         var id = ZiManager.findIdFromChar(ZiListType.zi, char);
-          if (id != -1) {
+        if (id != -1) {
           lesson.charsIds.add(id);
         }
       }
@@ -375,5 +390,33 @@ class LessonManager {
 
   String getConvChars(int lessonId) {
     return theLessonList[lessonId].convChars;
+  }
+
+  static String getLessonTitle(int lessonNumber) {
+    String lessonTitle = lessonNumber.toString() + ". ";
+    if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
+      lessonTitle +=
+          getString(BaseLessonTitleTranslationStringID + lessonNumber);
+    }
+    else {
+      lessonTitle +=
+          getString(BaseUnitTitleTranslationStringID /*+ lessonNumber*/);
+    }
+
+    return lessonTitle;
+  }
+
+  static String getLessonImagePath(int lessonNumber) {
+    var path = "assets/lessons/L";
+
+    if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
+      path += lessonNumber.toString() + ".png";
+    }
+    else {
+      var imageNumber = 1; //TODO
+      path += imageNumber.toString() + ".png";
+    }
+
+    return path;
   }
 }

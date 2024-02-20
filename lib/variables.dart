@@ -8,7 +8,7 @@ var theLessonManager;
 var theZiManager;
 var thePhraseManager;
 var theSentenceManager;
-var theLevelManager;
+var theLessonUnitManager;
 var thePositionManager;
 var theStorageHandler;
 var theQuizManager;

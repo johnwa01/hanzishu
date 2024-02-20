@@ -19,6 +19,7 @@ import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'dart:ui';
 import 'dart:io';
@@ -31,13 +32,15 @@ class LessonsPage extends StatefulWidget {
 var courseMenuList = [
   // allocate local language during run time
   CourseMenu(1, 429),
-  //CourseMenu(2, 423),
+  CourseMenu(2, 423),
   //CourseMenu(3, 424),
   //CourseMenu(4, 425),
   //CourseMenu(5, 426),
 ];
 
 class _LessonsPageState extends State<LessonsPage> {
+  static List<int> NumberOfLessonsInLevel = [60, 2];
+
   bool hasLoadedStorage;
   int newFinishedLessons;
 
@@ -70,6 +73,18 @@ class _LessonsPageState extends State<LessonsPage> {
        44, 45, 47, 49,
        50, 51, 53,
        54, 55, 57, 59, 60];
+
+  final List<int> lessons2 = <int>[
+    1, 2, 4, 5, 7, 9,
+    10, 11, 13, 15,
+    17, 18, 20,
+    22, 23, 25,
+    27, 28, 30, 32,
+    34, 35, 37,
+    39, 40, 42,
+    44, 45, 47, 49,
+    50, 51, 53,
+    54, 55, 57, 59, 60];
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -156,7 +171,8 @@ class _LessonsPageState extends State<LessonsPage> {
       return getHanzishuLessons();
     }
     else if (_selectedCourseMenu.id == 2) {
-      return getPaintIndex(context, SoundCategory.intro);
+      //return getPaintIndex(context, SoundCategory.intro);
+      return getHanzishuLessons2();
     }
     else if (_selectedCourseMenu.id == 3) {
       return getPaintIndex(context, SoundCategory.erGe);
@@ -183,26 +199,65 @@ class _LessonsPageState extends State<LessonsPage> {
             lessonCount = lessons[index + 1] - lessons[index];
           }
 
-          int level = 1;
+          int unit = 1;
           //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
           if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
 
-            if (index == 0) {level = 1;}
-            else if (index == 6) { level = 2;}
-            else if (index == 10) { level = 3;}
-            else if (index == 13) { level = 4;}
-            else if (index == 16) { level = 5;}
-            else if (index == 20) { level = 6;}
-            else if (index == 23) { level = 7;}
-            else if (index == 26) { level = 8;}
-            else if (index == 30) { level = 9;}
-            else if (index == 33) { level = 10;}
-            //else if (index == 34) { level = 10;}
-            //return getLevel(context, level);
-            return getButtonRowWithLevelBegin(context, lessons[index], lessonCount, level);
+            if (index == 0) {unit = 1;}
+            else if (index == 6) { unit = 2;}
+            else if (index == 10) { unit = 3;}
+            else if (index == 13) { unit = 4;}
+            else if (index == 16) { unit = 5;}
+            else if (index == 20) { unit = 6;}
+            else if (index == 23) { unit = 7;}
+            else if (index == 26) { unit = 8;}
+            else if (index == 30) { unit = 9;}
+            else if (index == 33) { unit = 10;}
+            //else if (index == 34) { unit = 10;}
+            //return getLessonUnit(context, unit);
+            return getButtonRowWithUnitBegin(context, lessons[index], lessonCount, unit, 1 /*level 1*/);
           }
           else {
-            return getButtonRow(context, lessons[index], lessonCount);
+            return getButtonRow(context, lessons[index], lessonCount, 1/*level*/);
+          }
+        }
+    );
+  }
+
+  Widget getHanzishuLessons2() {
+    return ListView.builder(
+        itemCount/*itemExtent*/: lessons.length,
+        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+          int lessonCount = 1;
+
+          // assume last row has one item
+          if (index == lessons.length - 1) {
+            lessonCount = 1;  // have to specify the number of last row
+          }
+          else if (index < lessons.length - 1) {
+            lessonCount = lessons[index + 1] - lessons[index];
+          }
+
+          int unit = 1;
+          //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
+          if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
+
+            if (index == 0) {unit = 1;}
+            else if (index == 6) { unit = 2;}
+            else if (index == 10) { unit = 3;}
+            else if (index == 13) { unit = 4;}
+            else if (index == 16) { unit = 5;}
+            else if (index == 20) { unit = 6;}
+            else if (index == 23) { unit = 7;}
+            else if (index == 26) { unit = 8;}
+            else if (index == 30) { unit = 9;}
+            else if (index == 33) { unit = 10;}
+            //else if (index == 34) { unit = 10;}
+            //return getLessonUnit(context, unit);
+            return getButtonRowWithUnitBegin(context, lessons[index], lessonCount, unit, 2/*level*/);
+          }
+          else {
+            return getButtonRow(context, lessons[index], lessonCount, 2/*level*/);
           }
         }
     );
@@ -231,35 +286,35 @@ class _LessonsPageState extends State<LessonsPage> {
     return items;
   }
 
-  Widget getButtonRowWithLevelBegin(BuildContext context, int lessonNumber, int lessonCount, int level) {
+  Widget getButtonRowWithUnitBegin(BuildContext context, int lessonNumber, int lessonCount, int unit, int levelNumber) {
     return Column(
       children: <Widget>[
         //getADivider(lessonNumber),
-        getUnitReview(level-1), // "level - 1" is the real level for last unit's review
+        getUnitReview(unit-1), // "unit - 1" is the real unit for last unit's review
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
-              getCourseType(context, level),
+              getCourseType(context, unit),
               //SizedBox(width: 30, height: 0),
               Text(
-                getString(9)/*"Unit"*/ + " " + '$level' + ": " + getString(BaseLevelDescriptionStringID + level)/*theLevelList[level].description*/,
+                getString(9)/*"Unit"*/ + " " + '$unit' + ": " + getString(BaseUnitDescriptionStringID + unit)/*theUnitList[unit].description*/,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 16.0),
               ),
               //SizedBox(width: 30, height: 0),
-              //getSpaceAsNeeded(level),
-              getLanguageSwitchButtonAsNeeded(level),
+              //getSpaceAsNeeded(unit),
+              getLanguageSwitchButtonAsNeeded(unit),
               //
             ]
           ),
         ),
         Divider(color: Colors.black),
-        getTypingCourseForLesson(level),
+        getTypingCourseForLesson(unit),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: getRowSections(context, lessonNumber, lessonCount),
+            children: getRowSections(context, lessonNumber, lessonCount, levelNumber),
           ),
           padding: EdgeInsets.all(20),
         ),
@@ -267,8 +322,8 @@ class _LessonsPageState extends State<LessonsPage> {
     );
   }
 
-  Widget getTypingCourseForLesson(int level) {
-    if (level == 1) {
+  Widget getTypingCourseForLesson(int unit) {
+    if (unit == 1) {
       return
         InkWell(
           child: Column(
@@ -301,16 +356,16 @@ class _LessonsPageState extends State<LessonsPage> {
     }
   }
 
-  Widget getUnitReviewAtLesson(int level, int lesson) {
+  Widget getUnitReviewAtLesson(int unit, int lesson) {
     if (lesson != 60) { //first lesson of last row of lessons.
       return SizedBox(width: 0, height: 0);
     }
 
-    return getUnitReview(level);
+    return getUnitReview(unit);
   }
 
-  Widget getLanguageSwitchButtonAsNeeded(int level) {
-    if (level != 1) {
+  Widget getLanguageSwitchButtonAsNeeded(int unit) {
+    if (unit != 1) {
       return SizedBox(width: 0, height: 0);
     }
 
@@ -372,39 +427,43 @@ class _LessonsPageState extends State<LessonsPage> {
     return localString;
   }
 
-  Widget getSpaceAsNeeded(int level) {
-    if (level != 1) {
+  Widget getSpaceAsNeeded(int unit) {
+    if (unit != 1) {
       return SizedBox(width: 0, height: 0);
     }
 
     return SizedBox(width: 60, height: 0);
   }
 
-  Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount) {
+  Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount, int level) {
     return Column(
         children: <Widget>[
-          getButtonRowOneContainer(lessonNumber, lessonCount),
+          getButtonRowOneContainer(lessonNumber, lessonCount, level),
           //getADivider(lessonNumber),
           getUnitReviewAtLesson(10, lessonNumber),
         ]
     );
   }
 
-  Widget getButtonRowOneContainer(int lessonNumber, int lessonCount) {
+  Widget getButtonRowOneContainer(int lessonNumber, int lessonCount, int level) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: getRowSections(context, lessonNumber, lessonCount),
+        children: getRowSections(context, lessonNumber, lessonCount, level),
       ),
       padding: EdgeInsets.all(20),
     );
   }
 
-  List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount) {
+  List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount, int level) {
+    int realNumber = lessonNumber;
+    if (level == 2) {
+      realNumber += NumberOfLessonsInLevel[0];
+    }
+
     List<Widget> sections = [];
-    var realNumber = lessonNumber;
     //var modNumber = realNumber % 10;
-    var path = "assets/lessons/L" + realNumber.toString() + ".png";
+    var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
     //if (modNumber == 9) {
     //  path = "assets/IMG_6606.PNG";
     //}
@@ -413,7 +472,7 @@ class _LessonsPageState extends State<LessonsPage> {
     if (lessonCount >= 2) {
       realNumber++;
       //modNumber = realNumber % 10;
-      var path = "assets/lessons/L" + realNumber.toString() + ".png";
+      var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
       //if (modNumber == 9) {
       //  path = "assets/IMG_6606.PNG";
       //}
@@ -422,7 +481,7 @@ class _LessonsPageState extends State<LessonsPage> {
       if (lessonCount >= 3) {
         realNumber++;
         //modNumber = realNumber % 10;
-        var path = "assets/lessons/L" + realNumber.toString() + ".png";
+        var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
         //if (modNumber == 9) {
         //  path = "assets/IMG_6606.PNG";
         //}
@@ -466,7 +525,8 @@ class _LessonsPageState extends State<LessonsPage> {
                 Row(
                     children: [
                       Text(
-                        lessonNumber.toString() + ". " + getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                        //lessonNumber.toString() + ". " + getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
+                        LessonManager.getLessonTitle(lessonNumber),
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),
                       OpenHelper.getCompletedImage(lessonNumber),
@@ -479,8 +539,8 @@ class _LessonsPageState extends State<LessonsPage> {
         );
     }
 
-  Widget getCourseType(BuildContext context, int level) {
-      if (currentSoundCategory == SoundCategory.hanzishuLessons && level > 1) {
+  Widget getCourseType(BuildContext context, int unit) {
+      if (currentSoundCategory == SoundCategory.hanzishuLessons && unit > 1) {
         return SizedBox(width: 0, height: 0);
       }
 
@@ -505,7 +565,7 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       fillColor: Colors.blue,
       onPressed: () {
-        var newHanziPerLevel = LevelManager.getNewHanzi(realLevel);
+        var newHanziPerLevel = LessonUnitManager.getNewHanzi(realLevel);
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
                 WordLaunchPage(drillCategory: DrillCategory.custom,
@@ -549,7 +609,7 @@ class _LessonsPageState extends State<LessonsPage> {
         itemCount/*itemExtent*/: count,
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
           if (index == 0) {
-            return getCourseType(context, courseType); // level
+            return getCourseType(context, courseType); // courseType == level
           }
           else {
             return getSoundButtonRow(context, index);

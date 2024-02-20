@@ -10,7 +10,7 @@ part 'storagehandler.g.dart';
 class Storage {
   String storageVersion;
   String language;
-  String lessonsStatus; // completed = '1', not completed = '0'; starting from 0 position up to 59. Total 60 for now.
+  String lessonsStatus; // completed = '1', not completed = '0'; starting from 0 position up to 119. Total 120 for now.
   //List<Statistics> statisticsArray;  //Note: The most complicated structure I created for the storage.
   List<LessonQuizResult> lessonQuizResults;
 
@@ -86,8 +86,7 @@ class StorageHandler {
   initStorage() {
     storage.storageVersion = '1.0';
     storage.language = 'en_US';
-    storage.lessonsStatus = '000000000000000000000000000000000000000000000000000000000000';
-    storage.lessonQuizResults = [LessonQuizResult()];
+    storage.lessonsStatus = '000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000';
     hasTriedToLoadStorage = false;
   }
 
@@ -179,6 +178,7 @@ class StorageHandler {
   }
 
   // setting this way will make it easier for new versions with new entries. It'll pick up whatever new entries you add here in future versions.
+  // set value read from storage to run time
   setStorage(Storage storage) {
     // update some values from local storage
     if (storage.storageVersion != null) {
@@ -190,7 +190,17 @@ class StorageHandler {
     }
 
     if (storage.lessonsStatus != null) {
-      this.storage.lessonsStatus = storage.lessonsStatus;
+      if(this.storage.lessonsStatus.length == storage.lessonsStatus.length) {
+        this.storage.lessonsStatus = storage.lessonsStatus;
+      }
+      if(this.storage.lessonsStatus.length > storage.lessonsStatus.length) { // new release with more lessons than from storage record
+        this.storage.lessonsStatus = Utility.replacePartOfString(this.storage.lessonsStatus, storage.lessonsStatus);
+      }
+      else {
+        // strange case of run time having a shorter string than read from storage.
+        // just read first part of the string read from the storage
+        this.storage.lessonsStatus = storage.lessonsStatus.substring(0, this.storage.lessonsStatus.length);
+      }
     }
 
     if (storage.lessonQuizResults != null) {
