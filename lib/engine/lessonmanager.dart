@@ -6,6 +6,8 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/lessonunit.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class LessonManager {
@@ -392,7 +394,15 @@ class LessonManager {
     return theLessonList[lessonId].convChars;
   }
 
-  static String getLessonTitle(int lessonNumber) {
+  static int getLessonIndexInUnit(int lessonNumber, int unit) {
+    for (int i = 0; i < unit - 1; i++) {
+      lessonNumber -= theNumberOfLessonsInLevels[i];
+    }
+
+    return lessonNumber;
+  }
+
+  static String getLessonTitle(int lessonNumber, int unit) {
     String lessonTitle = lessonNumber.toString() + ". ";
     if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
       lessonTitle +=
@@ -400,23 +410,74 @@ class LessonManager {
     }
     else {
       lessonTitle +=
-          getString(BaseUnitTitleTranslationStringID /*+ lessonNumber*/);
+          getString(BaseUnitTitleTranslationStringID + unit - LessonUnit.NumberOfUnitsInLevel1 - 1) + " " + getLessonIndexInUnit(lessonNumber, unit).toString();
     }
 
     return lessonTitle;
   }
 
-  static String getLessonImagePath(int lessonNumber) {
+  static String getLessonImagePath(int lessonNumber, int unit) {
     var path = "assets/lessons/L";
 
     if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
       path += lessonNumber.toString() + ".png";
     }
     else {
-      var imageNumber = 1; //TODO
+      int imageNumber = 1;
+      if (unit == 11) {
+        imageNumber = 24;
+      }
+      else if (unit == 12) {
+        imageNumber = 13;
+      }
       path += imageNumber.toString() + ".png";
     }
 
     return path;
+  }
+
+
+  static String getTranslationFromSentence(String conversation) {
+    int oneId;
+    String trans = '';
+    String subStr;
+    for (int i = 0; i < conversation.length; i++) {
+      subStr = conversation[i];
+      if (!Utility.specialChar(subStr)) {
+        oneId = DictionaryManager.getSearchingZiId(subStr);
+        if (i > 0) {
+          trans += " | ";
+        }
+        if (oneId >= 0) {
+          trans += theSearchingZiList[oneId].meaning;
+        }
+      }
+    }
+
+    return trans;
+  }
+
+  static String getPinyinFromSentence(String conversation) {
+    int oneId;
+    String pinyin = '';
+    String subStr;
+    for (int i = 0; i < conversation.length; i++) {
+      subStr = conversation[i];
+      if (i > 0) {
+        pinyin += " ";
+      }
+      if (!Utility.specialChar(subStr)) {
+        oneId = DictionaryManager.getSearchingZiId(subStr);
+
+        if (oneId >= 0) {
+          pinyin += Utility.getFirstPinyin(theSearchingZiList[oneId].pinyin);
+        }
+      }
+      else {
+        pinyin += subStr; // keep the special char 'comma' to take space
+      }
+    }
+
+    return pinyin;
   }
 }

@@ -13,4 +13,6 @@ class LessonUnit {
     this.isCompleted = isCompleted;
     this.description = description;
   }
+
+  static int NumberOfUnitsInLevel1 = 10;
 }

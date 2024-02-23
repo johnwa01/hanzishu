@@ -186,6 +186,56 @@ class Utility {
     return token[0];
   }
 
+  static String getFirstPinyin(String backslashSeparatedPinyins) {
+    var delimiter = "/";
+    var token = backslashSeparatedPinyins.split(delimiter);
+    return token[0];
+  }
+
+  static String adjustPinyinSpace(pinyin) {
+    String updatedPinyin = '';
+    var delimiter = ' ';
+    var token = pinyin.split(delimiter);
+    int length;
+    for (int i = 0; i < token.length; i++) {
+      length = token[i].length;
+
+      switch (length) {
+        case 1:
+          updatedPinyin += '  ';
+          updatedPinyin += token[i];
+          updatedPinyin += '   ';
+          break;
+        case 2:
+          updatedPinyin += '  ';
+          updatedPinyin += token[i];
+          updatedPinyin += '  ';
+          break;
+        case 3:
+          updatedPinyin += ' ';
+          updatedPinyin += token[i];
+          updatedPinyin += '  ';
+          break;
+        case 4:
+          updatedPinyin += ' ';
+          updatedPinyin += token[i];
+          updatedPinyin += ' ';
+          break;
+        case 5:
+          updatedPinyin += ' ';
+          updatedPinyin += token[i];
+          break;
+        case 6:
+          updatedPinyin += token[i];
+          break;
+        default:
+          break;
+      }
+    }
+
+    return updatedPinyin;
+  }
+
   //TODO: rename to StringToDouble when everything has been tested
   static double StringToFloat(String str) {
     return double.parse(str);
@@ -416,7 +466,7 @@ class Utility {
   }
 
   static bool specialChar(String char) {
-    return char == '！' || char == '？' || char == '。' || char == '，' ||
+    return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
         char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】';
   }
 
@@ -648,6 +698,7 @@ static const List<MaterialColor> primaries = <MaterialColor>[
 
 class SpeechIconInfo {
   ZiListType type;
+
   int id;
   double xPosi;
   double yPosi;

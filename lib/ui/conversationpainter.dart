@@ -7,7 +7,7 @@ import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
-import 'package:hanzishu/engine/phrasemanager.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 
 class ConversationPainter extends BasePainter {
   static var lessonLeftEdge = 10.0;
@@ -33,27 +33,50 @@ class ConversationPainter extends BasePainter {
     var lesson = theLessonList[theCurrentLessonId];
     var sentenceLength = lesson.sentenceList.length;
 
+    String sentenceIndexString = "";
+
     for (int j = 0; j < sentenceLength; j++) {
       //var conv = lesson.getSentence(j);
       var sentId = lesson.sentenceList[j];
       var conv = theSentenceList[sentId].conv;
   //    var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      displayTextWithValue((j + 1).toString() + ".", applyRatioWithLimit(8.0), applyRatioWithLimit(30.0 + 70.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent, false);
+      if (lessonId <= 60) {
+        sentenceIndexString = (j + 1).toString() + ".";
+      }
 
-      DisplayIcon(iconSpeechStrokes, applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 70.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), Colors.amber/*MaterialColor ofColor*/, applyRatioWithLimit(2.0)/*ziLineWidth*/);
+      displayTextWithValue(sentenceIndexString, applyRatioWithLimit(8.0), applyRatioWithLimit(30.0 + 105.0 * j), applyRatioWithLimit(17.0), Colors.blueAccent, false);
+
+      DisplayIcon(iconSpeechStrokes, applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 105.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), Colors.amber/*MaterialColor ofColor*/, applyRatioWithLimit(2.0)/*ziLineWidth*/);
 
       // text itself
       for (int i = 0; i < conv.length; i++) {
         var oneChar = conv[i];
         displayTextWithValue(
  //           oneChar, 50.0 + 35.0 * i, 30.0 + 140.0 * j - 30.0 * 0.25, 30.0,
-            oneChar, applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 70.0 * j - 30.0 * 0.25), applyRatioWithLimit(28.0),
+            oneChar, applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 105.0 * j - 30.0 * 0.25), applyRatioWithLimit(28.0),
+            Colors.blueAccent, false);
+      }
+
+      // pinyin
+      if (lessonId > theNumberOfLessonsInLevels[0]) {
+        String pinyin = theSentenceList[sentId].pinyin;
+        if (pinyin.length == 0) {
+          pinyin =
+              LessonManager.getPinyinFromSentence(theSentenceList[sentId].conv);
+        }
+        pinyin = Utility.adjustPinyinSpace(pinyin);
+        displayTextWithValue(pinyin, applyRatioWithLimit(50.0),
+            applyRatioWithLimit(65.0 + 105.0 * j), applyRatioWithLimit(15.0),
             Colors.blueAccent, false);
       }
 
       // text trans
-      displayTextWithValue(theSentenceList[sentId].trans, applyRatioWithLimit(50.0), applyRatioWithLimit(65.0 + 70.0 * j), applyRatioWithLimit(15.0), Colors.blueAccent, false);
+      String trans = theSentenceList[sentId].trans;
+      if (trans.length == 0) {
+        trans = LessonManager.getTranslationFromSentence(theSentenceList[sentId].conv);
+      }
+      displayTextWithValue(trans, applyRatioWithLimit(50.0), applyRatioWithLimit(90.0 + 105.0 * j), applyRatioWithLimit(15.0), Colors.blueAccent, false);
 
       /* Not including phrases any more per current plan.
       // conWithSepa text
@@ -123,7 +146,7 @@ class ConversationPainter extends BasePainter {
     if (theIsFromLessonContinuedSection) {
       displayTextWithValue(
           getString(285) /*"Continue"*/, applyRatioWithLimit(50.0),
-          applyRatioWithLimit(125.0 + 70.0 * (sentenceLength - 1) + 50.0),
+          applyRatioWithLimit(125.0 + 105.0 * (sentenceLength - 1) + 13.0),
           applyRatioWithLimit(15.0), Colors.white, false);
     }
   }

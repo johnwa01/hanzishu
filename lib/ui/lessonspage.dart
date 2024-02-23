@@ -18,6 +18,7 @@ import 'package:hanzishu/ui/wordlaunchpage.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/lessonunit.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/component.dart';
@@ -74,9 +75,10 @@ class _LessonsPageState extends State<LessonsPage> {
        50, 51, 53,
        54, 55, 57, 59, 60];
 
-  final List<int> lessons2 = <int>[
-    1, 2, 4, 5, 7, 9,
-    10, 11, 13, 15,
+  final List<int> level2Lessons = <int>[
+    1, 2,
+    4, 6, 7,
+    8, 10, 11, 13, 15,
     17, 18, 20,
     22, 23, 25,
     27, 28, 30, 32,
@@ -189,6 +191,7 @@ class _LessonsPageState extends State<LessonsPage> {
     return ListView.builder(
         itemCount/*itemExtent*/: lessons.length,
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
+          //NOTE: the index has to go with row, not lesson, that's why the more complicated approach here.
           int lessonCount = 1;
 
           // assume last row has one item
@@ -218,33 +221,33 @@ class _LessonsPageState extends State<LessonsPage> {
             return getButtonRowWithUnitBegin(context, lessons[index], lessonCount, unit, 1 /*level 1*/);
           }
           else {
-            return getButtonRow(context, lessons[index], lessonCount, 1/*level*/);
+            return getButtonRow(context, lessons[index], lessonCount, unit, 1/*level*/);
           }
         }
     );
   }
 
   Widget getHanzishuLessons2() {
+    int unit = 1;
     return ListView.builder(
-        itemCount/*itemExtent*/: lessons.length,
+        itemCount/*itemExtent*/: 5, //TODO: update everytime with new lessons. //level2Lessons.length, // Note: this is a row count.
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
           int lessonCount = 1;
 
           // assume last row has one item
-          if (index == lessons.length - 1) {
+          if (index == level2Lessons.length - 1) {
             lessonCount = 1;  // have to specify the number of last row
           }
-          else if (index < lessons.length - 1) {
-            lessonCount = lessons[index + 1] - lessons[index];
+          else if (index < level2Lessons.length - 1) {
+            lessonCount = level2Lessons[index + 1] - level2Lessons[index];
           }
 
-          int unit = 1;
           //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-          if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
+          if (index == 0 || index == 2 || index == 5 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
 
             if (index == 0) {unit = 1;}
-            else if (index == 6) { unit = 2;}
-            else if (index == 10) { unit = 3;}
+            else if (index == 2) { unit = 2;}
+            else if (index == 5) { unit = 3;}
             else if (index == 13) { unit = 4;}
             else if (index == 16) { unit = 5;}
             else if (index == 20) { unit = 6;}
@@ -254,14 +257,17 @@ class _LessonsPageState extends State<LessonsPage> {
             else if (index == 33) { unit = 10;}
             //else if (index == 34) { unit = 10;}
             //return getLessonUnit(context, unit);
-            return getButtonRowWithUnitBegin(context, lessons[index], lessonCount, unit, 2/*level*/);
+            return getButtonRowWithUnitBegin(context, level2Lessons[index], lessonCount, unit + 10, 2/*level*/); // for level 2
           }
           else {
-            return getButtonRow(context, lessons[index], lessonCount, 2/*level*/);
+            //unit += 10; // for level 2
+            return getButtonRow(context, level2Lessons[index], lessonCount, unit + 10, 2/*level*/); // for level 2
           }
         }
     );
   }
+
+
 
   // not use for now
   Widget getADivider(int lessonNumber) {
@@ -295,10 +301,10 @@ class _LessonsPageState extends State<LessonsPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
-              getCourseType(context, unit),
+              getCourseType(context, lessonNumber),
               //SizedBox(width: 30, height: 0),
               Text(
-                getString(9)/*"Unit"*/ + " " + '$unit' + ": " + getString(BaseUnitDescriptionStringID + unit)/*theUnitList[unit].description*/,
+                getString(9)/*"Unit"*/ + " " + '$unit' + ": " + LessonUnitManager.getLessonUnitDescriptionString(unit),
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 16.0),
               ),
@@ -314,7 +320,7 @@ class _LessonsPageState extends State<LessonsPage> {
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: getRowSections(context, lessonNumber, lessonCount, levelNumber),
+            children: getRowSections(context, lessonNumber, lessonCount, unit, levelNumber),
           ),
           padding: EdgeInsets.all(20),
         ),
@@ -357,7 +363,7 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getUnitReviewAtLesson(int unit, int lesson) {
-    if (lesson != 60) { //first lesson of last row of lessons.
+    if (lesson != 60) { //first lesson of last row of lessons
       return SizedBox(width: 0, height: 0);
     }
 
@@ -435,27 +441,27 @@ class _LessonsPageState extends State<LessonsPage> {
     return SizedBox(width: 60, height: 0);
   }
 
-  Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount, int level) {
+  Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount, int unit, int level) {
     return Column(
         children: <Widget>[
-          getButtonRowOneContainer(lessonNumber, lessonCount, level),
+          getButtonRowOneContainer(lessonNumber, lessonCount, unit, level),
           //getADivider(lessonNumber),
           getUnitReviewAtLesson(10, lessonNumber),
         ]
     );
   }
 
-  Widget getButtonRowOneContainer(int lessonNumber, int lessonCount, int level) {
+  Widget getButtonRowOneContainer(int lessonNumber, int lessonCount, int unit, int level) {
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: getRowSections(context, lessonNumber, lessonCount, level),
+        children: getRowSections(context, lessonNumber, lessonCount, unit, level),
       ),
       padding: EdgeInsets.all(20),
     );
   }
 
-  List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount, int level) {
+  List<Widget> getRowSections(BuildContext context, int lessonNumber, int lessonCount, int unit, int level) {
     int realNumber = lessonNumber;
     if (level == 2) {
       realNumber += NumberOfLessonsInLevel[0];
@@ -463,29 +469,29 @@ class _LessonsPageState extends State<LessonsPage> {
 
     List<Widget> sections = [];
     //var modNumber = realNumber % 10;
-    var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
+    var path = LessonManager.getLessonImagePath(realNumber, unit); //"assets/lessons/L" + lessonNumber.toString() + ".png";
     //if (modNumber == 9) {
     //  path = "assets/IMG_6606.PNG";
     //}
-    sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
+    sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber, unit, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
 
     if (lessonCount >= 2) {
       realNumber++;
       //modNumber = realNumber % 10;
-      var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
+      var path = LessonManager.getLessonImagePath(realNumber, unit); //"assets/lessons/L" + lessonNumber.toString() + ".png";
       //if (modNumber == 9) {
       //  path = "assets/IMG_6606.PNG";
       //}
-      sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber, path/*conversations.png*/, LessonSection.None, true, 110, 110)));
+      sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber,unit,  path/*conversations.png*/, LessonSection.None, true, 110, 110)));
 
       if (lessonCount >= 3) {
         realNumber++;
         //modNumber = realNumber % 10;
-        var path = LessonManager.getLessonImagePath(realNumber); //"assets/lessons/L" + lessonNumber.toString() + ".png";
+        var path = LessonManager.getLessonImagePath(realNumber, unit); //"assets/lessons/L" + lessonNumber.toString() + ".png";
         //if (modNumber == 9) {
         //  path = "assets/IMG_6606.PNG";
         //}
-        sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber,  path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
+        sections.add(Container(child: /*OpenHelper.*/getImageButton(context, realNumber,  unit, path/*charactertree.png*/, LessonSection.None, true, 110, 110)));
       }
     }
 
@@ -508,7 +514,7 @@ class _LessonsPageState extends State<LessonsPage> {
         MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getLessonRequests()});
   }
 
-  Widget getImageButton(BuildContext context, int lessonNumber, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
+  Widget getImageButton(BuildContext context, int lessonNumber, int unit, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
     //var lesson = theLessonManager.getLesson(lessonNumber);
     //String lessonOrSectionName = "";
       //lessonOrSectionName = lesson.titleTranslation;
@@ -526,7 +532,7 @@ class _LessonsPageState extends State<LessonsPage> {
                     children: [
                       Text(
                         //lessonNumber.toString() + ". " + getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                        LessonManager.getLessonTitle(lessonNumber),
+                        LessonManager.getLessonTitle(lessonNumber, unit),
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),
                       OpenHelper.getCompletedImage(lessonNumber),
@@ -539,8 +545,8 @@ class _LessonsPageState extends State<LessonsPage> {
         );
     }
 
-  Widget getCourseType(BuildContext context, int unit) {
-      if (currentSoundCategory == SoundCategory.hanzishuLessons && unit > 1) {
+  Widget getCourseType(BuildContext context, int lessonNumber) {
+      if (currentSoundCategory == SoundCategory.hanzishuLessons && lessonNumber != 1 && lessonNumber != 61) {
         return SizedBox(width: 0, height: 0);
       }
 
@@ -551,8 +557,8 @@ class _LessonsPageState extends State<LessonsPage> {
       );
   }
 
-  Widget getUnitReview(int realLevel) {
-    if (realLevel == 0) {
+  Widget getUnitReview(int realUnit) {
+    if (realUnit == 0 || realUnit == 10) { // first unit in level 1 and level 2
       return SizedBox(width: 0, height: 0);
     }
 
@@ -565,14 +571,14 @@ class _LessonsPageState extends State<LessonsPage> {
       ),
       fillColor: Colors.blue,
       onPressed: () {
-        var newHanziPerLevel = LessonUnitManager.getNewHanzi(realLevel);
+        var newHanziPerLevel = LessonUnitManager.getNewHanzi(realUnit);
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
                 WordLaunchPage(drillCategory: DrillCategory.custom,
-                    subItemId: realLevel, //subItemId,
+                    subItemId: realUnit, //subItemId,
                     customString: newHanziPerLevel/*"品笑井输入法"*/)));
       },
-      child: Text(getString(296) + ' ' + getString(387) + realLevel.toString(), //"Review unit 1"
+      child: Text(getString(296) + ' ' + getString(387) + ' ' + realUnit.toString(), //"Review unit 1"
           style: TextStyle(color: Colors.brown)), // lightBlue
     )
     ;

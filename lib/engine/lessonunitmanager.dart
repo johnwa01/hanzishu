@@ -3,6 +3,7 @@ import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/lessonunitlist.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 
 class UnitLessonPair {
   int levelId;
@@ -25,6 +26,7 @@ class LessonUnitManager {
   factory LessonUnitManager() {
     return _levelManager;
   }
+
   LessonUnitManager._internal();
 
   LessonUnit getLessonUnit(int id) {
@@ -65,7 +67,7 @@ class LessonUnitManager {
     }
 
     var internalLessonId = 0;
-    for (var i = 0; i <= (levelId-2); i++) {
+    for (var i = 0; i <= (levelId - 2); i++) {
       internalLessonId += theUnitList[i].numberOfLessons;
     }
 
@@ -139,7 +141,9 @@ class LessonUnitManager {
   }
   */
 
-  static int getStartInternalLessonId(int selectedReviewLevelStartingId, int selectedReviewLevelEndingId, int selectedReviewLessonStartingId, int selectedReviewLessonEndingId) {
+  static int getStartInternalLessonId(int selectedReviewLevelStartingId,
+      int selectedReviewLevelEndingId, int selectedReviewLessonStartingId,
+      int selectedReviewLessonEndingId) {
     var lessonId = 0;
     for (var i = 1; i < selectedReviewLevelStartingId; i++) {
       lessonId += theNumberOfLessonsInLevels[i - 1];
@@ -155,7 +159,9 @@ class LessonUnitManager {
     return lessonId;
   }
 
-  static int getEndInternalLessonId(int selectedReviewLevelStartingId, int selectedReviewLevelEndingId, int selectedReviewLessonStartingId, int selectedReviewLessonEndingId) {
+  static int getEndInternalLessonId(int selectedReviewLevelStartingId,
+      int selectedReviewLevelEndingId, int selectedReviewLessonStartingId,
+      int selectedReviewLessonEndingId) {
     var lessonId = 0;
     for (var i = 1; i < selectedReviewLevelEndingId; i++) {
       lessonId += theNumberOfLessonsInLevels[i - 1];
@@ -165,20 +171,21 @@ class LessonUnitManager {
       lessonId += selectedReviewLessonEndingId;
     }
     else {
-      lessonId += theNumberOfLessonsInLevels[selectedReviewLevelEndingId - 1]; // default the whole level
+      lessonId += theNumberOfLessonsInLevels[selectedReviewLevelEndingId -
+          1]; // default the whole level
     }
 
     return lessonId;
   }
 
-  static String getNewHanzi(int levelId) {
+  static String getNewHanzi(int unitId) {
     if (!theHavePopulatedLessonsInfo) {
       LessonManager.populateLessonsInfo();
       theHavePopulatedLessonsInfo = true;
     }
 
-    int firstLessonId = firstInternalLessonId(levelId);
-    int lastLessonId = lastInternalLessonId(levelId);
+    int firstLessonId = firstInternalLessonId(unitId);
+    int lastLessonId = lastInternalLessonId(unitId);
 
     String levelNewHanzi = "";
     for (int i = firstLessonId; i <= lastLessonId; i++) {
@@ -186,5 +193,14 @@ class LessonUnitManager {
     }
 
     return levelNewHanzi;
+  }
+
+  static String getLessonUnitDescriptionString(int unitNumber) {
+    if (unitNumber <= LessonUnit.NumberOfUnitsInLevel1) {
+      return getString(BaseUnitDescriptionStringID + unitNumber);
+    }
+    else {
+      return getString(BaseUnitDescriptionStringIDLevel2 + unitNumber - LessonUnit.NumberOfUnitsInLevel1 - 1); //  0 start
+    }
   }
 }

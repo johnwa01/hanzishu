@@ -9,6 +9,7 @@ class Sentence {
   MyString chars;
   List<int> comps; //TODO: this field is required?
   String convWithSeparation;
+  String pinyin;
 
   Sentence(
     int id,
@@ -17,7 +18,8 @@ class Sentence {
     int lessonId,
     MyString chars,
     List<int> comps,
-      convWithSeparation
+      convWithSeparation,
+      String pinyin
   ) {
   this.id = id;
   this.conv = conv;
@@ -26,6 +28,7 @@ class Sentence {
   this.chars = chars;
   this.comps = comps;
   this.convWithSeparation = convWithSeparation;
+  this.pinyin = pinyin;
   }
 }
 

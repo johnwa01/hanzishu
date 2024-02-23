@@ -225,7 +225,7 @@ class _ConversationPageState extends State<ConversationPage> {
       var conv = theSentenceList[sentId].conv;
       var convWithSeparation = theSentenceList[sentId].convWithSeparation;
 
-      var position = PositionAndSize(applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 70.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), 0.0, 0.0);
+      var position = PositionAndSize(applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 105.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), 0.0, 0.0);
       buttons.add(getPositionedButton(j, position, ButtonType.sound));
 
       for (int i = 0; i < conv.length; i++) {
@@ -233,12 +233,12 @@ class _ConversationPageState extends State<ConversationPage> {
         var id = ZiManager.findIdFromChar(ZiListType.zi, oneChar);
         if (id != -1) {
           var position = PositionAndSize(
-              applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 70.0 * j), applyRatioWithLimit(28.0), applyRatioWithLimit(28.0), 0.0, 0.0);
+              applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 105.0 * j), applyRatioWithLimit(28.0), applyRatioWithLimit(28.0), 0.0, 0.0);
           buttons.add(getPositionedButton(id, position, ButtonType.char));
         }
       }
 
-      var positionTranslation = PositionAndSize(applyRatioWithLimit(50.0), applyRatioWithLimit(33.0 + 70.0 * j + 33.0), applyRatioWithLimit(8.0 * theSentenceList[sentId].trans.length), applyRatioWithLimit(20.0), 0.0, 0.0);
+      var positionTranslation = PositionAndSize(applyRatioWithLimit(50.0), applyRatioWithLimit(33.0 + 105.0 * j + 57.0), applyRatioWithLimit(8.0 * theSentenceList[sentId].trans.length), applyRatioWithLimit(20.0), 0.0, 0.0);
       buttons.add(getPositionedButton(j, positionTranslation, ButtonType.translationSound));
 
       /* Decide to not show phrase based sentences per current plan.
@@ -302,7 +302,7 @@ class _ConversationPageState extends State<ConversationPage> {
       var xStartPosi = applyRatioWithLimit(50.0);
       var position = PositionAndSize(
           xStartPosi,
-          applyRatioWithLimit(100.0 + 70.0 * (sentenceLength - 1) + 80),
+          applyRatioWithLimit(100.0 + 105.0 * (sentenceLength - 1) + 40),
           applyRatioWithLimit(100.0 /*temp width*/), applyRatioWithLimit(20.0),
           0.0, 0.0);
       buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
