@@ -8,6 +8,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/conversationsnowballlist.dart';
 
@@ -124,6 +125,10 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
 
     for (var i = 0; i < sents.length; i++) {
       widgets.add(getOneRow(sents[i], i));
+      if (lessonId > theNumberOfLessonsInLevels[0]) {
+        widgets.add(getPinyinRow(sents[i]));
+      }
+      widgets.add(SizedBox(height: 10 * getSizeRatioWithLimit()));
     }
 
     return widgets;
@@ -138,10 +143,28 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     );
   }
 
+  Widget getPinyinRow(Sent oneSent) {
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 75 * getSizeRatioWithLimit()),
+            getSentencePinyin(theSentenceList[oneSent.sentenceId].conv)
+          ]
+
+      ),
+    );
+  }
+
+  Widget getSentencePinyin(String conv) {
+    String pinyin = LessonManager.getPinyinFromSentence(conv);
+    return Text(Utility.adjustPinyinSpace(pinyin));
+  }
+
   List<Widget> getRowButtons(Sent oneSent, int rowIndex) {
     var label;
     if (oneSent.player == ' ') {
-      label = oneSent.player + ' ';
+      label = oneSent.player + '  ';
     }
     else {
       label = oneSent.player + ':';

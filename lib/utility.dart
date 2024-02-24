@@ -204,29 +204,30 @@ class Utility {
         case 1:
           updatedPinyin += '  ';
           updatedPinyin += token[i];
-          updatedPinyin += '   ';
+          updatedPinyin += '  ';
           break;
         case 2:
-          updatedPinyin += '  ';
+          updatedPinyin += ' ';
           updatedPinyin += token[i];
           updatedPinyin += '  ';
           break;
         case 3:
           updatedPinyin += ' ';
           updatedPinyin += token[i];
-          updatedPinyin += '  ';
+          updatedPinyin += ' ';
           break;
         case 4:
-          updatedPinyin += ' ';
+          //updatedPinyin += ' ';
           updatedPinyin += token[i];
           updatedPinyin += ' ';
           break;
         case 5:
-          updatedPinyin += ' ';
           updatedPinyin += token[i];
+          updatedPinyin += ' ';
           break;
         case 6:
           updatedPinyin += token[i];
+          updatedPinyin += ' ';
           break;
         default:
           break;

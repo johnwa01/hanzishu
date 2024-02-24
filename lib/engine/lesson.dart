@@ -82,6 +82,8 @@ class Lesson {
     this.snowballIds = snowballIds;
   }
 
+  static int numberOfLessonsInLevel1 = 60;
+
   // including non-chars and phrases
   int getNumberOfNewChars() {
     if (numberOfNewChars > 0) {

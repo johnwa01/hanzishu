@@ -379,7 +379,7 @@ var theString_en_US = [
   Local(370, "Please type"),
   Local(371, "Please type"),
   Local(372, "Recommend Chrome browser."),
-  Local(373, "Snowball Conversation"), //Unit
+  Local(373, "Snowball"), // Conversation"), //Unit
   Local(374, "Can not find character: "),
   Local(375, "Result"),
   Local(376, "minutes"),
@@ -489,4 +489,5 @@ var theString_en_US = [
   Local(479, "lessonlevelstr479"),
   Local(480, "lessonlevelstr480"),
   Local(481, "lessonlevelstr481"),
+  Local(482, "Stories"),
 ];

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
+import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/utility.dart';
@@ -251,7 +252,7 @@ class _LessonPageState extends State<LessonPage> {
               //]
             //),
             onTap: () => { theIsFromLessonContinuedSection = true,
-                        launchLessonSection(context, 1, 0), }
+                        launchLessonSection(context, lessonId, 0), }
           ),
           SizedBox(
             height: 60.0, //40
@@ -309,7 +310,12 @@ class _LessonPageState extends State<LessonPage> {
     String buttonTitle = "";
     switch (lessonSection) {
       case 0:
-        buttonTitle = getString(4);
+        if (lessonId <= Lesson.numberOfLessonsInLevel1) {
+          buttonTitle = getString(4);
+        }
+        else {
+          buttonTitle = getString(482);
+        }
         break;
       case 1:
         buttonTitle = getString(456);

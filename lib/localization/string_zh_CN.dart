@@ -486,4 +486,5 @@ var theString_zh_CN = [
   Local(479, "lessonlevelstr479"),
   Local(480, "lessonlevelstr480"),
   Local(481, "lessonlevelstr481"),
+  Local(482, "故事"),
 ];
