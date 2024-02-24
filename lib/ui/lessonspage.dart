@@ -302,18 +302,18 @@ class _LessonsPageState extends State<LessonsPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget> [
               getCourseType(context, lessonNumber),
-              //SizedBox(width: 30, height: 0),
-              Text(
-                getString(9)/*"Unit"*/ + " " + '$unit' + ": " + LessonUnitManager.getLessonUnitDescriptionString(unit),
-                textAlign: TextAlign.right,
-                style: TextStyle(fontSize: 16.0),
-              ),
+              SizedBox(width: 30, height: 0),
               //SizedBox(width: 30, height: 0),
               //getSpaceAsNeeded(unit),
               getLanguageSwitchButtonAsNeeded(unit),
               //
             ]
           ),
+        ),
+        Text(
+          getString(9)/*"Unit"*/ + " " + '$unit' + ": " + LessonUnitManager.getLessonUnitDescriptionString(unit),
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 16.0),
         ),
         Divider(color: Colors.black),
         getTypingCourseForLesson(unit),

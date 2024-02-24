@@ -9,7 +9,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/ui/treepage.dart';
 import 'package:hanzishu/ui/listofzipage.dart';
-import 'package:hanzishu/ui/breakoutpage.dart';
+import 'package:hanzishu/ui/standardexampage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
@@ -185,13 +185,29 @@ class _LessonPageState extends State<LessonPage> {
         ).then((val) => {_getRequests()});
         break;
       case 5:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                QuizPage(quizTextbook: QuizTextbook.hanzishu, lessonId: lessonId, wordsStudy: null, fromPaintSound: false),
-          ),
-        ).then((val) => {_getRequests()});
+        if (lessonId <= Lesson.numberOfLessonsInLevel1) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  QuizPage(quizTextbook: QuizTextbook.hanzishu,
+                      lessonId: lessonId,
+                      wordsStudy: null,
+                      fromPaintSound: false),
+            ),
+          ).then((val) => {_getRequests()});
+        }
+        else {
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) =>
+                  StandardExamPage(drillCategory: DrillCategory.custom,
+                      subItemId: 0,
+                      quizCategory: QuizCategory.sound,
+                      customString: theLessonList[theCurrentLessonId].convChars),
+              ),
+          ).then((val) => {_getRequests()});;
+        }
         break;
       case 6:
         var initZis = getConvCharsForLesson(lessonId);
@@ -208,6 +224,7 @@ class _LessonPageState extends State<LessonPage> {
     }
   }
 
+  // not sure why needs this, seems like just lesson.convChars?
   String getConvCharsForLesson(int lessonId) {
     String initZis = '';
     var lesson = theLessonManager.getLesson(lessonId);
