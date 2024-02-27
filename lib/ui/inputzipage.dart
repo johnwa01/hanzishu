@@ -48,6 +48,7 @@ class _InputZiPageState extends State<InputZiPage> {
   TextEditingController _controllerStandard = new TextEditingController(text: "");
 
   FocusNode _textNode = new FocusNode();
+  FocusNode _textNodeStandard = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
@@ -1250,11 +1251,12 @@ class _InputZiPageState extends State<InputZiPage> {
         SizedBox(
           width: 80 * getSizeRatio(), //double.infinity,
           //height: 120,
+          // Note: this is the standard for Dic Search only, not related to the Hanzishu typing field.
           child: TextField(
             autocorrect: false,
             enableSuggestions: false,
             controller: oneController,
-            focusNode: _textNode,
+            focusNode:   _textNodeStandard,
             autofocus: false,
             style: TextStyle(
               fontSize: 20 * getSizeRatio(),
@@ -1268,7 +1270,7 @@ class _InputZiPageState extends State<InputZiPage> {
               filled: true,
               fillColor: Colors.black12, //lightBlueAccent,
             ),
-          ),//focusNode: _textNode,
+          ),//focusNode: _textNodeStandard,
         ),
         getQueryButton(oneController),
       ],

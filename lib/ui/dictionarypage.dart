@@ -120,48 +120,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                     Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
                     SizedBox(width: 30 * getSizeRatioWithLimit()),
 
-                    SizedBox(
-                      width: 80 * getSizeRatioWithLimit(), //double.infinity,
-                      //height: 120,
-                      child: TextField(
-                        //decoration: InputDecoration(
-                          //hintText: 'Test text',
-                        //),
-
-                        autocorrect: false,
-                        enableSuggestions: false,
-                        controller: _controller,
-                        focusNode: _textNode,
-                        autofocus: false,
-                        style: TextStyle(
-                          fontSize: 20 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-                          //height: 1.0 // 1.3
-                        ),
-                        maxLines: 1,
-                        //expands: true,
-                        keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
-                        decoration: InputDecoration(
-                          //hintText: 'This test',
-                          filled: true,
-                          fillColor: Colors.black12, //lightBlueAccent,
-                        ),
-                      ),//focusNode: _textNode,
-                    ),
-                    Container(
-                        //height: 25.0 * getSizeRatioWithLimit(), //180
-                        // width: 25.0 * getSizeRatioWithLimit(),
-                      child: IconButton(
-                        icon: Icon(
-                          Icons.search,   //volume_up,
-                          size: 25.0 * getSizeRatioWithLimit(),   // 150
-                        ),
-                        color: Colors.lightBlueAccent, //cyan, //Colors.green,
-                        onPressed: () {
-                          processZiQuery();
-                        },
-                      )
-                    ),
-                    SizedBox(width: 25 * getSizeRatioWithLimit()),
+                    SizedBox(width: 125 * getSizeRatioWithLimit()),
 
                     TextButton(
                       style: TextButton.styleFrom(
@@ -214,60 +173,6 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       );
     } catch (e, s) {
       print(s);
-    }
-  }
-
-  processZiQuery() {
-    var latestValue;
-    var ziId = -1;
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
-      latestValue = _controller.value.text;
-      ziId = DictionaryManager.getSearchingZiId(_controller.value.text);
-    }
-
-    if (ziId > 0) {
-      _controller.clear();
-      FocusScope.of(context).unfocus();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              DictionarySearchingPage(
-                  dicStage: DictionaryStage.detailedzi,
-                  firstOrSearchingZiIndex: ziId,
-                  flashcardList: null,
-                  dicCaller: DicCaller.Dictionary),
-        ),
-      );
-    }
-    else {
-      _controller.clear();
-      FocusScope.of(context).unfocus();
-      // set up the button
-      Widget okButton = FlatButton(
-        child: Text(getString(286)/*Ok*/),
-        onPressed: () {
-          Navigator.pop(context);
-        },
-      );
-
-      // set up the AlertDialog
-      AlertDialog alert = AlertDialog(
-        title: Text(getString(375)/*Result*/),
-        content: Text(
-            getString(374)/*cannot find: */ + latestValue + "."),
-        actions: [
-          okButton,
-        ],
-      );
-
-      // show the dialog
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return alert;
-        },
-      );
     }
   }
 
