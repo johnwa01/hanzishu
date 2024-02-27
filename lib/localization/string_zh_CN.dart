@@ -487,4 +487,9 @@ var theString_zh_CN = [
   Local(480, "lessonlevelstr480"),
   Local(481, "lessonlevelstr481"),
   Local(482, "故事"),
+  Local(483, "首字部首检字表"),
+  Local(484, "通用输入法"),
+  Local(485, "汉字树拼形输入法"),
+  Local(486, "请用下列方法查字"),
+  Local(487, "（本程序自带, 请将系统输入模式设在英文。)"),
 ];

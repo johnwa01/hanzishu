@@ -490,4 +490,9 @@ var theString_en_US = [
   Local(480, "lessonlevelstr480"),
   Local(481, "lessonlevelstr481"),
   Local(482, "Stories"),
+  Local(483, "First Zi Searching Table"),
+  Local(484, "Your own preferred typing method"),
+  Local(485, "Hanzishi Puzzle Typing method"),
+  Local(486, "Please use following methods to search word"),
+  Local(487, "(built-in, please set system input mode to English.)"),
 ];

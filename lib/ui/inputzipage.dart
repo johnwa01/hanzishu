@@ -6,9 +6,12 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzihintpainter.dart';
-import 'package:hanzishu/ui/inputzihelppage.dart';
+import 'package:hanzishu/ui/dictionarypage.dart';
+import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
@@ -40,6 +43,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
   // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
   TextEditingController _controller = new TextEditingController(text: "");
+
+  //For standard typing methods only, not related to Hanzishu specific typing
+  TextEditingController _controllerStandard = new TextEditingController(text: "");
+
   FocusNode _textNode = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
@@ -108,6 +115,7 @@ class _InputZiPageState extends State<InputZiPage> {
       });
 
     _controller.addListener(handleKeyInput);
+    _controllerStandard.addListener(handleKeyInput);
     _progressValue = 0.0;
     typingType = widget.typingType;
     wordsStudy = widget.wordsStudy;
@@ -119,7 +127,7 @@ class _InputZiPageState extends State<InputZiPage> {
     theInputZiManager.initCurrentIndex();
 
     // first char, put here instead of Build so that it does only once.
-    if (typingType != TypingType.FreeTyping) {
+    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       String TypingChar = getEitherCharFromCurrentId(
           typingType, 0 /*currentIndex*/, widget.lessonId);
       TextToSpeech.speak("zh-CN", TypingChar);
@@ -381,7 +389,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   checkAndUpdateCurrentIndex() {
     // for guarded typing
-    if (typingType != TypingType.FreeTyping) {
+    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       if (theInputZiManager.doesTypingResultContainTheZi(
           typingType, currentIndex, _controller.text, lessonId)) {
         initHintSelected(); // reset the hint selection parameters
@@ -449,7 +457,7 @@ class _InputZiPageState extends State<InputZiPage> {
     hasVerifiedToBeALowerCase = false;
 
     // pronounce the typed char
-    if (typingType != TypingType.FreeTyping) {
+    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       var typedZiString = InputZiManager.getCandidateZiString(selectionIndex);
       //TextToSpeech.speak("zh-CN", typedZiString);
     }
@@ -1020,6 +1028,9 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.FreeTyping) {
       title = getString(108)/*'Free typing and help'*/;
     }
+    else if (typingType == TypingType.DicSearchTyping) {
+      title = getString(95)/*'Dictionary'*/;
+    }
     else if (typingType == TypingType.CustomizedTyping) {
       title = getString(112)/*'Customized exercises'*/;
     }
@@ -1037,13 +1048,18 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.WordsStudy && typingType != TypingType.ComponentTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.WordsStudy && typingType != TypingType.ComponentTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
     var editFieldFontRatio = getSizeRatio();
     if (editFieldFontRatio > 1.7) { // otherwise iPad Pro 12.9" would have a huge char size in EditField
       editFieldFontRatio /= 1.3;
+    }
+
+    var fieldWidth = double.infinity;
+    if (typingType == TypingType.DicSearchTyping) {
+      fieldWidth = 80.0 * getSizeRatio();
     }
 
     return Scaffold
@@ -1059,72 +1075,276 @@ class _InputZiPageState extends State<InputZiPage> {
           //physics: NeverScrollableScrollPhysics(), // Didn't work: not allow to scroll to avoid the issue of pushing content up in Andorid browser
           scrollDirection: Axis.vertical,
           child: WillPopScope( // for dismissing overlay menu only when hitting back arrow
-            child: Column(
-            //mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //mainAxisSize:  MainAxisSize.max,
-            children: <Widget>[
-              //Spacer(),
-              getHelpOrProgressIndicator(),
-              Container(
-                alignment: Alignment.topRight,
-                child: getSkipThisSection(),
-              ),
-              getInputPrompt(),
-              getComponentRelated(),
-              SizedBox(
-                  width: double.infinity,
-                  //height: 120,
-                  child: TextField(
-                    autocorrect: false,
-                    enableSuggestions: false,
-                    controller: _controller,
-                    focusNode: _textNode,
-                    autofocus: true,
-                      cursorColor: Colors.black,
-                    //autocorrect: false,
-                    //enableSuggestions: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: '', //'Full Name',
-                    ),
-                    style: TextStyle(
-                      fontSize: editFontSize * editFieldFontRatio, // 35
-                      height: 1.0 // 1.3
-                    ),
-                    maxLines: maxNumberOfLines,
-                    //expands: true,
-                    keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
-                  ),//focusNode: _textNode,
-                ),
-              //),
-              SizedBox(
-                width: double.infinity,
-                height: 40.0 * getSizeRatio(), //40
-                child:  CustomPaint(
-                  foregroundPainter: inputZiPainter,
-                  //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
-
-                  //child: Center(
-                    child: Stack(
-                      children: createHittestButtons(context, theCurrentZiCandidates),
-                    ),
-                  //),
-                ),
-              ),
-              SizedBox(
-                  height: 40.0, //40
-              ),
-              //SizedBox(
-              //    child: getContinue(),
-              //),
-              // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
-            ]
-          ),
+            child:
+                  getTypingContent(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter),
               onWillPop: _onWillPop
           ),
         ),
       ),
     );
+  }
+
+  Column getTypingContent(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    if (typingType == TypingType.DicSearchTyping)
+    {
+      return getDicSearchTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
+    }
+    else
+    {
+      return getRegularTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
+    }
+  }
+
+  Column  getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,   //spaceAround,
+      //mainAxisSize:  MainAxisSize.max,
+        children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width: 30 * getSizeRatio()),
+                Text(getString(486), textAlign:TextAlign.left),
+              ]
+          ),
+          SizedBox(height: 15.0),
+          getDicSearchFirstZi(),
+          SizedBox(height: 15.0),
+          Row(mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(width: 30 * getSizeRatio()),
+              Text("2. " + getString(484), textAlign:TextAlign.left),
+            ]
+          ),
+          getDicSearchByWord(_controllerStandard),
+          SizedBox(height: 15.0),
+          Row(mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width: 30 * getSizeRatio()),
+                Text("3. " + getString(485), textAlign:TextAlign.left, maxLines: 2, softWrap: true),
+              ]
+          ),
+          Row(mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                SizedBox(width: 30 * getSizeRatio()),
+                Text(getString(487), textAlign:TextAlign.left, maxLines: 2, softWrap: true),
+              ]
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              SizedBox(width: 30.0),
+              getHanzishuTextField(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
+              getQueryButton(_controller),
+            ]
+          ),
+          getZiCandidates(inputZiPainter),
+        ]
+    );
+  }
+
+  Column getRegularTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    return Column(
+      //mainAxisAlignment: MainAxisAlignment.spaceAround,
+      //mainAxisSize:  MainAxisSize.max,
+        children: <Widget>[
+          //Spacer(),
+          getHelpOrProgressIndicator(),
+          Container(
+            alignment: Alignment.topRight,
+            child: getSkipThisSection(),
+          ),
+          getInputPrompt(),
+          getComponentRelated(),
+          getHanzishuTextField(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
+          getZiCandidates(inputZiPainter),
+          SizedBox(
+            height: 40.0, //40
+          ),
+          //SizedBox(
+          //    child: getContinue(),
+          //),
+          // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
+        ]
+    );
+  }
+
+  Widget getHanzishuTextField(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines) {
+    return SizedBox(
+      width: fieldWidth, //double.infinity,
+      //height: 120,
+      child: TextField(
+        autocorrect: false,
+        enableSuggestions: false,
+        controller: _controller,
+        focusNode: _textNode,
+        autofocus: true,
+        cursorColor: Colors.black,
+        //autocorrect: false,
+        //enableSuggestions: false,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          labelText: '', //'Full Name',
+        ),
+        style: TextStyle(
+            fontSize: editFontSize * editFieldFontRatio, // 35
+            height: 1.0 // 1.3
+        ),
+        maxLines: maxNumberOfLines,
+        //expands: true,
+        keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
+      ),//focusNode: _textNode,
+    );
+    //),
+  }
+
+  Widget getZiCandidates(InputZiPainter inputZiPainter) {
+    return SizedBox(
+      width: double.infinity,
+      height: 40.0 * getSizeRatio(), //40
+      child: CustomPaint(
+        foregroundPainter: inputZiPainter,
+        //size: new Size(screenWidth, 60 /*TODO: more precise. contentLength.value*/),
+
+        //child: Center(
+        child: Stack(
+          children: createHittestButtons(context, theCurrentZiCandidates),
+        ),
+        //),
+      ),
+    );
+  }
+
+  Widget getDicSearchFirstZi() {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(width: 30 * getSizeRatio()),
+          Text("1. ", textAlign:TextAlign.left),
+          TextButton(
+            style: TextButton.styleFrom(
+            textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DictionaryPage(),
+              ),
+            );
+          },
+          child: Text(getString(483)/*"First Zi Search Table"*/,
+            style: TextStyle(color: Colors.black)),
+          ),
+        ]
+    );
+  }
+
+  Widget getDicSearchByWord(TextEditingController oneController) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        //SizedBox(width: 20 * getSizeRatio()),
+        //Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatio(), color: Colors.blueGrey), ),
+        SizedBox(width: 30 * getSizeRatio()),
+
+        SizedBox(
+          width: 80 * getSizeRatio(), //double.infinity,
+          //height: 120,
+          child: TextField(
+            autocorrect: false,
+            enableSuggestions: false,
+            controller: oneController,
+            focusNode: _textNode,
+            autofocus: false,
+            style: TextStyle(
+              fontSize: 20 * getSizeRatio(),
+              //height: 1.0 // 1.3
+            ),
+            maxLines: 1,
+            //expands: true,
+            keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
+            decoration: InputDecoration(
+              //hintText: 'This test',
+              filled: true,
+              fillColor: Colors.black12, //lightBlueAccent,
+            ),
+          ),//focusNode: _textNode,
+        ),
+        getQueryButton(oneController),
+      ],
+    );
+  }
+
+  Widget getQueryButton(TextEditingController oneController) {
+    return Container(
+      //height: 25.0 * getSizeRatioWithLimit(), //180
+      // width: 25.0 * getSizeRatioWithLimit(),
+        child: IconButton(
+          icon: Icon(
+            Icons.search,   //volume_up,
+            size: 50.0 * getSizeRatio(),   // 150
+          ),
+          color: Colors.lightBlueAccent, //cyan, //Colors.green,
+          onPressed: () {
+            processZiQuery(oneController);
+          },
+        )
+    );
+  }
+
+  processZiQuery(TextEditingController oneController) {
+    var latestValue;
+    var ziId = -1;
+    var text = oneController.value.text;
+    if ( text != null && text.length != 0) {
+      latestValue = text;
+      ziId = DictionaryManager.getSearchingZiId(text);
+    }
+
+    if (ziId > 0) {
+      oneController.clear();
+      FocusScope.of(context).unfocus();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DictionarySearchingPage(
+                  dicStage: DictionaryStage.detailedzi,
+                  firstOrSearchingZiIndex: ziId,
+                  flashcardList: null,
+                  dicCaller: DicCaller.Dictionary),
+        ),
+      );
+    }
+    else {
+      oneController.clear();
+      FocusScope.of(context).unfocus();
+      // set up the button
+      Widget okButton = FlatButton(
+        child: Text(getString(286)/*Ok*/),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
+
+      // set up the AlertDialog
+      AlertDialog alert = AlertDialog(
+        title: Text(getString(375)/*Result*/),
+        content: Text(
+            getString(374)/*cannot find: */ + latestValue + "."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
   }
 
   Widget getSkipThisSection() {
@@ -1165,7 +1385,7 @@ class _InputZiPageState extends State<InputZiPage> {
 */
 
   Widget getHelpOrProgressIndicator() {
-    if (typingType == TypingType.FreeTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
       return SizedBox(width: 0.0, height: 0.0);
 
       /*
@@ -1298,7 +1518,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputPrompt() {
     // an empty box
-    if (typingType == TypingType.FreeTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
       return Container(width: 0.0, height: 0.0);
     }
 
@@ -1367,7 +1587,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // an empty box
-    if (typingType == TypingType.FreeTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
       return Container(width:0.0, height: 0.0);
         /*SizedBox(
         width: double.infinity,

@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
@@ -16,7 +16,7 @@ import 'package:hanzishu/engine/sentencemanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/lessonunitmanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-
+import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/toolspage.dart';
 import 'package:hanzishu/ui/mepage.dart';
@@ -131,10 +131,11 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _children =
   [
     LessonsPage(),
-    DictionaryPage(),
+    //DictionaryPage(),
+    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0), //InputZiPage(),
     WordPage(),
     //DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
-    ToolsPage(),
+    ToolsPage(), // typing
     MePage()
   ];
 

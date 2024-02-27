@@ -18,6 +18,7 @@ enum TypingType {
   FreeTyping,
   WordsStudy,
   ComponentTyping,
+  DicSearchTyping,
 }
 
 class InputZi {
