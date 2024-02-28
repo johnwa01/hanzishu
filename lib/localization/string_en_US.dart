@@ -454,7 +454,7 @@ var theString_en_US = [
   Local(444, "Wrapped"),
   Local(445, "Chinese alphabet count"),
   Local(446, "Breakdown"),
-  Local(447, "Test Hanzi Sound"),
+  Local(447, "Test Hanzi to Sound"),
   Local(448, "Test Hanzi Meaning"),
   Local(449, "Hanzi practice sheet generator"),
   Local(450, "Hanzishu unit review"),
@@ -495,4 +495,5 @@ var theString_en_US = [
   Local(485, "Hanzishi Puzzle Typing method"),
   Local(486, "Please use following methods to search word"),
   Local(487, "(built-in, please set system input mode to English.)"),
+  Local(488, "Test Sound to Hanzi"),
 ];

@@ -371,7 +371,7 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getLanguageSwitchButtonAsNeeded(int unit) {
-    if (unit != 1) {
+    if (unit != 1 && unit != 11)  {
       return SizedBox(width: 0, height: 0);
     }
 

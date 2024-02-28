@@ -56,7 +56,7 @@ class _QuizPageState extends State<QuizPage> {
     totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId) * 2;
 
     if (fromPaintSound == true) {
-      theQuizManager.setCurrentCategory(QuizCategory.sound);
+      theQuizManager.setCurrentCategory(QuizCategory.ziToSound);
     }
 
     setState(() {
@@ -189,7 +189,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget getAnswers(BuildContext context) {
     var currentCategory = theQuizManager.getCurrentCategory();
     var currentType = theQuizManager.getCurrentType();
-    if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.sound &&
+    if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.ziToSound &&
         (answerPosition == AnswerPosition.soundIcon || answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB ||
         answerPosition == AnswerPosition.positionC))) {
       if (currentCategory ==

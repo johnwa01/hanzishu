@@ -244,7 +244,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
                                 StandardExamPage(drillCategory: drillCategory,
-                                    subItemId: subItemId, quizCategory: QuizCategory.sound))),
+                                    subItemId: subItemId, quizCategory: QuizCategory.ziToSound))),
                       }
                       else if(drillCategory == DrillCategory.hskTestMeaning) {
                           Navigator.of(context).push(

@@ -15,7 +15,8 @@ enum QuizTextbook {
 
 enum QuizCategory {
   meaning,
-  sound
+  soundToZi,
+  ziToSound
 }
 
 enum QuizType {
@@ -92,7 +93,7 @@ class QuizManager {
 
     currentCategory = QuizCategory.meaning;
     //if (currentQuizTextbook == QuizTextbook.wordsStudy && paint sound) {
-    //  currentCategory = QuizCategory.sound;
+    //  currentCategory = QuizCategory.ziToSound;
     //}
 
     currentType = QuizType.chars; // starting with 1, 0 for no more
@@ -234,7 +235,7 @@ class QuizManager {
 
     if (currentQuizTextbook == QuizTextbook.wordsStudy) {
       if (currentCategory == QuizCategory.meaning) {
-        currentCategory = QuizCategory.sound;
+        currentCategory = QuizCategory.ziToSound;
         //nextType = QuizType.chars;
       }
       else { // already in sound category
@@ -260,7 +261,7 @@ class QuizManager {
         //  break;
         case QuizType.conversations:
           if (currentCategory == QuizCategory.meaning) {
-            currentCategory = QuizCategory.sound;
+            currentCategory = QuizCategory.ziToSound;
             nextType = QuizType.chars;
           }
           else { // already in sound category
@@ -402,7 +403,7 @@ class QuizManager {
       bool usedForQuestion) {
     var value = "";
 
-    if (category == QuizCategory.sound || usedForQuestion) {
+    if (category == QuizCategory.ziToSound || usedForQuestion) {
       if (quizTextbook == QuizTextbook.wordsStudy) {
         value = theSearchingZiList[id].char;
       }
@@ -629,11 +630,11 @@ class QuizManager {
     var nonCharIdI = 0;
     var nonCharIdJ = 0;
     if (currentType == QuizType.nonChars &&
-        currentCategory == QuizCategory.sound) {
+        currentCategory == QuizCategory.ziToSound) {
       nonCharIdI = getIdByIndexInLessons(
-          QuizCategory.sound, QuizType.nonChars, wrongPositionI);
+          QuizCategory.ziToSound, QuizType.nonChars, wrongPositionI);
       nonCharIdJ = getIdByIndexInLessons(
-          QuizCategory.sound, QuizType.nonChars, wrongPositionJ);
+          QuizCategory.ziToSound, QuizType.nonChars, wrongPositionJ);
     }
 
     var correctText = currentValues[0];
@@ -650,7 +651,7 @@ class QuizManager {
       currentValues[3] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.sound) {
+          currentCategory == QuizCategory.ziToSound) {
         setNonCharIds(nonCharId0, nonCharIdI, nonCharIdJ);
       }
     }
@@ -662,7 +663,7 @@ class QuizManager {
       currentValues[3] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.sound) {
+          currentCategory == QuizCategory.ziToSound) {
         setNonCharIds(nonCharIdI, nonCharId0, nonCharIdJ);
       }
     }
@@ -674,7 +675,7 @@ class QuizManager {
       currentValues[2] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.sound) {
+          currentCategory == QuizCategory.ziToSound) {
         setNonCharIds(nonCharIdI, nonCharIdJ, nonCharId0);
       }
     }

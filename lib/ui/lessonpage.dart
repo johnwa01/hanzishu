@@ -185,7 +185,7 @@ class _LessonPageState extends State<LessonPage> {
         ).then((val) => {_getRequests()});
         break;
       case 5:
-        if (lessonId <= Lesson.numberOfLessonsInLevel1) {
+        //if (lessonId <= Lesson.numberOfLessonsInLevel1) {
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -196,18 +196,20 @@ class _LessonPageState extends State<LessonPage> {
                       fromPaintSound: false),
             ),
           ).then((val) => {_getRequests()});
-        }
+        //}
+        /*
         else {
           Navigator.push(
               context,
               MaterialPageRoute(builder: (context) =>
                   StandardExamPage(drillCategory: DrillCategory.custom,
                       subItemId: 0,
-                      quizCategory: QuizCategory.sound,
+                      quizCategory: QuizCategory.ziToSound,
                       customString: theLessonList[theCurrentLessonId].convChars),
               ),
           ).then((val) => {_getRequests()});;
         }
+        */
         break;
       case 6:
         var initZis = getConvCharsForLesson(lessonId);

@@ -82,7 +82,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
     var title;
     if (drillCategory == DrillCategory.hsk) {
-      if (quizCategory == QuizCategory.sound) {
+      if (quizCategory == QuizCategory.ziToSound) {
         if (subItemId == 0) {
           title = getString(455) + " - " /*+ getString(459) + " - "*/ +
               getString(447);
@@ -102,13 +102,26 @@ class _StandardExamPageState extends State<StandardExamPage> {
               " - " + getString(448);
         }
       }
+      else if (quizCategory == QuizCategory.soundToZi) {
+        if (subItemId == 0) {
+          title = getString(455) + " - " /*+ getString(459) + " - "*/ +
+              getString(488);
+        }
+        else {
+          title = getString(455) + " " + getString(399) + subItemId.toString() +
+              " - " + getString(488);
+        }
+      }
     }
     else if (drillCategory == DrillCategory.all) {
-      if (quizCategory == QuizCategory.sound) {
+      if (quizCategory == QuizCategory.ziToSound) {
         title = getString(447);
       }
       else if (quizCategory == QuizCategory.meaning) {
         title = getString(448);
+      }
+      else if (quizCategory == QuizCategory.soundToZi) {
+        title = getString(488);
       }
     }
     else {
@@ -173,12 +186,18 @@ class _StandardExamPageState extends State<StandardExamPage> {
   Widget getQuestion(BuildContext context) {
     var currentValues = theStandardExamManager.getCurrentValues();
 
-    return getText(AnswerPosition.center);
+    if (quizCategory == QuizCategory.soundToZi) {
+      return getSoundImage(AnswerPosition.center);
+    }
+    else {
+      return getText(AnswerPosition.center);
+    }
+
   }
 
   Widget getAnswers(BuildContext context) {
     /*
-    if (quizCategory == QuizCategory.sound) {
+    if (quizCategory == QuizCategory.ziToSound) {
       String strValue = getValue(AnswerPosition.positionA).char;
       strValue += getValue(AnswerPosition.positionB).char;
       strValue += getValue(AnswerPosition.positionC).char;
@@ -202,7 +221,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
         )
       );
     }
-    else {
+    else if (quizCategory == QuizCategory.ziToSound){
       return Column(
         //textDirection: TextDirection.ltr,
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -220,6 +239,18 @@ class _StandardExamPageState extends State<StandardExamPage> {
           SizedBox(height: 10.0 * getSizeRatio()),
           getSoundABCText(),
         ]
+      );
+    }
+    else if(quizCategory == QuizCategory.soundToZi) {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            getText(AnswerPosition.positionA),
+            SizedBox(height: 15.0 * getSizeRatio()),
+            getText(AnswerPosition.positionB),
+            SizedBox(height: 15.0 * getSizeRatio()),
+            getText(AnswerPosition.positionC),
+          ]
       );
     }
   }
@@ -296,6 +327,9 @@ class _StandardExamPageState extends State<StandardExamPage> {
       if (quizCategory == QuizCategory.meaning) {
         strValue = value.meaning;
       }
+      else if (quizCategory == QuizCategory.soundToZi) {
+        strValue = value.char;
+      }
       else {
         //strValue = value.char;
         if (position == AnswerPosition.positionA) {
@@ -366,14 +400,19 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
   Widget getSoundImage(AnswerPosition position) {
     var value = getValue(position);
+    var size = 50.0;
+
+    if (position == AnswerPosition.center) {
+      size = 180.0;
+    }
 
     return Container(
-        height: 50.0 * getSizeRatio(), //180
-        width: 50.0 * getSizeRatio(),
+        height: size * getSizeRatio(), //180
+        width: size * getSizeRatio(),
         child: IconButton(
           icon: Icon(
             Icons.volume_up,
-            size: 50.0 * getSizeRatio(),   // 150
+            size: size * getSizeRatio(),   // 150
           ),
           color: Colors.cyan, //Colors.green,
           onPressed: () {

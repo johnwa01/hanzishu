@@ -47,8 +47,8 @@ class _InputZiPageState extends State<InputZiPage> {
   //For standard typing methods only, not related to Hanzishu specific typing
   TextEditingController _controllerStandard = new TextEditingController(text: "");
 
-  FocusNode _textNode = new FocusNode();
-  FocusNode _textNodeStandard = new FocusNode();
+  FocusNode _focusNode = new FocusNode();
+  FocusNode _focusNodeStandard = new FocusNode();
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
@@ -115,6 +115,8 @@ class _InputZiPageState extends State<InputZiPage> {
       ..addListener(() {
       });
 
+    _focusNode.addListener(_onFocusChange);
+
     _controller.addListener(handleKeyInput);
     _controllerStandard.addListener(handleKeyInput);
     _progressValue = 0.0;
@@ -146,7 +148,13 @@ class _InputZiPageState extends State<InputZiPage> {
   @override
   void dispose() {
     _scrollController.dispose(); // it is a good practice to dispose the controller
+    _focusNode.removeListener(_onFocusChange);
+    _focusNode.dispose();
     super.dispose();
+  }
+
+  void _onFocusChange() {
+    debugPrint("Focus: ${_focusNode.hasFocus.toString()}");
   }
 
   initParameters() {
@@ -1177,7 +1185,7 @@ class _InputZiPageState extends State<InputZiPage> {
         autocorrect: false,
         enableSuggestions: false,
         controller: _controller,
-        focusNode: _textNode,
+        focusNode: _focusNode,
         autofocus: true,
         cursorColor: Colors.black,
         //autocorrect: false,
@@ -1193,7 +1201,7 @@ class _InputZiPageState extends State<InputZiPage> {
         maxLines: maxNumberOfLines,
         //expands: true,
         keyboardType: TextInputType.multiline,  //TextInputType.visiblePassword
-      ),//focusNode: _textNode,
+      ),//focusNode: _focusNode,
     );
     //),
   }
@@ -1256,7 +1264,7 @@ class _InputZiPageState extends State<InputZiPage> {
             autocorrect: false,
             enableSuggestions: false,
             controller: oneController,
-            focusNode:   _textNodeStandard,
+            focusNode:   _focusNodeStandard,
             autofocus: false,
             style: TextStyle(
               fontSize: 20 * getSizeRatio(),
@@ -1270,7 +1278,7 @@ class _InputZiPageState extends State<InputZiPage> {
               filled: true,
               fillColor: Colors.black12, //lightBlueAccent,
             ),
-          ),//focusNode: _textNodeStandard,
+          ),//focusNode: _focusNodeStandard,
         ),
         getQueryButton(oneController),
       ],
@@ -1686,7 +1694,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
                       setState(() {
                         showHint = 1; // show Hint1
-                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
                     child: Text(
@@ -1708,7 +1716,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
                       setState(() {
                         showHint = 2; // show Hint2
-                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
                     child: Text(
@@ -1729,7 +1737,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
                       setState(() {
                         showHint = 0; // show Hint0 - no hint
-                        _textNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
                     child: Text(

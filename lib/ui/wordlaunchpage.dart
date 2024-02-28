@@ -145,9 +145,11 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 SizedBox(height: 20),
                 getDrillPageCore(drillCategory),
                 SizedBox(height: 30),
-                getExamSound(),
-                SizedBox(height: 30),
                 getExamMeaning(drillCategory),
+                SizedBox(height: 30),
+                getExamSoundToHanzi(drillCategory),
+                SizedBox(height: 30),
+                getExamSound(drillCategory),
                 SizedBox(height: 30),
               ],
             ),
@@ -170,7 +172,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           ),
           side: BorderSide(color: Colors.blue, width: 0.5)
       ),
-      fillColor: Colors.blue,
+      fillColor: Colors.blue.shade100,
       onPressed: () {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
@@ -185,7 +187,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
     );
   }
 
-  Widget getExamSound() {
+  Widget getExamSoundToHanzi(DrillCategory drillCategory) {
     return RawMaterialButton(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -193,13 +195,35 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           ),
           side: BorderSide(color: Colors.blue, width: 0.5)
       ),
-      fillColor: Colors.blue,
+      fillColor: Colors.blue.shade100,
       onPressed: () {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
                 StandardExamPage(drillCategory: drillCategory,
                     subItemId: subItemId,
-                    quizCategory: QuizCategory.sound,
+                    quizCategory: QuizCategory.soundToZi,
+                    customString: customString)));
+      },
+      child: Text(getString(488), //"Test sound to Hanzi"
+          style: TextStyle(color: Colors.brown)), // lightBlue
+    );
+  }
+
+  Widget getExamSound(DrillCategory drillCategory) {
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue.shade100,
+      onPressed: () {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) =>
+                StandardExamPage(drillCategory: drillCategory,
+                    subItemId: subItemId,
+                    quizCategory: QuizCategory.ziToSound,
                     customString: customString)));
       },
       child: Text(getString(447), //"Test Hanzi sound"
@@ -219,7 +243,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           ),
           side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
       ),
-      fillColor: Colors.blue,
+      fillColor: Colors.blue.shade100,
       onPressed: () {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
