@@ -82,6 +82,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool isFromArrowCandidate = false;
 
+  bool showZiCandidates = false;
+
   final stopwatch = Stopwatch()..start();
 
   double getSizeRatio() {
@@ -149,11 +151,23 @@ class _InputZiPageState extends State<InputZiPage> {
   void dispose() {
     _scrollController.dispose(); // it is a good practice to dispose the controller
     _focusNode.removeListener(_onFocusChange);
+    showZiCandidates = false;
     _focusNode.dispose();
     super.dispose();
   }
 
   void _onFocusChange() {
+    if(_focusNode.hasFocus && !showZiCandidates) {
+      setState(() {
+        showZiCandidates = true;
+      });
+    }
+    else if (!_focusNode.hasFocus && showZiCandidates) {
+      setState(() {
+        showZiCandidates = false;
+      });
+    }
+
     debugPrint("Focus: ${_focusNode.hasFocus.toString()}");
   }
 
@@ -1207,6 +1221,10 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getZiCandidates(InputZiPainter inputZiPainter) {
+    if (!showZiCandidates) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     return SizedBox(
       width: double.infinity,
       height: 40.0 * getSizeRatio(), //40
