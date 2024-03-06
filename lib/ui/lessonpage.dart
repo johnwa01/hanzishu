@@ -191,9 +191,9 @@ class _LessonPageState extends State<LessonPage> {
             MaterialPageRoute(
               builder: (context) =>
                   QuizPage(quizTextbook: QuizTextbook.hanzishu,
+                      quizCategory: QuizCategory.none,
                       lessonId: lessonId,
-                      wordsStudy: null,
-                      fromPaintSound: false),
+                      wordsStudy: null),
             ),
           ).then((val) => {_getRequests()});
         //}

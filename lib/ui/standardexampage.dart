@@ -18,7 +18,7 @@ class StandardExamPage extends StatefulWidget {
   String customString;
 
   StandardExamPage({this.drillCategory, this.subItemId, this.quizCategory, this.customString});
-  //StandardExamPage({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
+  //StandardExamPage({this.quizTextbook, this.lessonId, this.wordsStudy});
 
   @override
   _StandardExamPageState createState() => _StandardExamPageState();
@@ -40,7 +40,6 @@ class _StandardExamPageState extends State<StandardExamPage> {
   QuizTextbook quizTextbook;
   int lessonId;
   String wordsStudy;
-  bool fromPaintSound;
   int index;
   double _progressValue;
   int totalMeaningAndSoundQuestions;

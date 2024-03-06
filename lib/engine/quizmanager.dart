@@ -16,7 +16,8 @@ enum QuizTextbook {
 enum QuizCategory {
   meaning,
   soundToZi,
-  ziToSound
+  ziToSound,
+  none
 }
 
 enum QuizType {
@@ -71,7 +72,8 @@ class QuizManager {
   var minUpperRange = 5; // 0 based, so 5+1=6
   var currentLesson = 0;
   var currentWordsStudy;
-  var currentCategory = QuizCategory.meaning;
+  QuizCategory assignedQuizCategory;
+  var currentCategory; // = QuizCategory.meaning;
   var currentType = QuizType.chars; // starting with 1, 0 for no more
   var nextIndexForCurrentType = 0;
   var currentIndex = 0;
@@ -86,14 +88,21 @@ class QuizManager {
   //TODO: init to calculate the max number of zi up to a certain lessons
   //TODO: add an Answered variable so that no further action
 
-  initValues(QuizTextbook quizTextbook, String wordsStudy) {
+  initValues(QuizTextbook quizTextbook, QuizCategory quizCategory, String wordsStudy) {
     currentQuizTextbook = quizTextbook;
+    this.assignedQuizCategory = quizCategory;
     currentWordsStudy = wordsStudy;
     currentLesson = 0;
 
-    currentCategory = QuizCategory.meaning;
+    if (assignedQuizCategory != QuizCategory.none) {
+      currentCategory = assignedQuizCategory;
+    }
+    else {
+      currentCategory = QuizCategory.meaning;
+    }
+
     //if (currentQuizTextbook == QuizTextbook.custom && paint sound) {
-    //  currentCategory = QuizCategory.ziToSound;
+    //  currentCategory = QuizCategory.soundToZi;
     //}
 
     currentType = QuizType.chars; // starting with 1, 0 for no more
@@ -139,7 +148,8 @@ class QuizManager {
 
     currentLesson = lessonId;
 
-    currentCategory = QuizCategory.meaning;
+    // note: set in initValues
+    //currentCategory = QuizCategory.meaning;
 
     var lesson = theLessonList[lessonId];
 
@@ -212,6 +222,15 @@ class QuizManager {
   }
 
   resetCurrentTypeToNextNonEmptyTypeOrNone() {
+    if (currentQuizTextbook == QuizTextbook.custom) {
+      // assigned to do one category only
+      if (assignedQuizCategory != null) {
+        currentType = QuizType.none;
+        return;
+      }
+      //return currentWordsStudy.length;
+    }
+
     var isEmptyOrNone = true;
     while (isEmptyOrNone) {
       resetCurrentTypeToNext();
@@ -234,8 +253,13 @@ class QuizManager {
     var nextType = currentType;
 
     if (currentQuizTextbook == QuizTextbook.custom) {
-      if (currentCategory == QuizCategory.meaning) {
-        currentCategory = QuizCategory.ziToSound;
+      // just want one assigned category only
+      if (assignedQuizCategory != null) {
+        currentCategory = QuizCategory.none;
+        nextType = QuizType.none;
+      }
+      else if (currentCategory == QuizCategory.meaning) {
+        currentCategory = QuizCategory.soundToZi;
         //nextType = QuizType.chars;
       }
       else { // already in sound category
@@ -261,7 +285,7 @@ class QuizManager {
         //  break;
         case QuizType.conversations:
           if (currentCategory == QuizCategory.meaning) {
-            currentCategory = QuizCategory.ziToSound;
+            currentCategory = QuizCategory.soundToZi;
             nextType = QuizType.chars;
           }
           else { // already in sound category
@@ -403,7 +427,7 @@ class QuizManager {
       bool usedForQuestion) {
     var value = "";
 
-    if (category == QuizCategory.ziToSound || usedForQuestion) {
+    if (category == QuizCategory.soundToZi || usedForQuestion) {
       if (quizTextbook == QuizTextbook.custom) {
         value = theSearchingZiList[id].char;
       }
@@ -630,11 +654,11 @@ class QuizManager {
     var nonCharIdI = 0;
     var nonCharIdJ = 0;
     if (currentType == QuizType.nonChars &&
-        currentCategory == QuizCategory.ziToSound) {
+        currentCategory == QuizCategory.soundToZi) {
       nonCharIdI = getIdByIndexInLessons(
-          QuizCategory.ziToSound, QuizType.nonChars, wrongPositionI);
+          QuizCategory.soundToZi, QuizType.nonChars, wrongPositionI);
       nonCharIdJ = getIdByIndexInLessons(
-          QuizCategory.ziToSound, QuizType.nonChars, wrongPositionJ);
+          QuizCategory.soundToZi, QuizType.nonChars, wrongPositionJ);
     }
 
     var correctText = currentValues[0];
@@ -651,7 +675,7 @@ class QuizManager {
       currentValues[3] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.ziToSound) {
+          currentCategory == QuizCategory.soundToZi) {
         setNonCharIds(nonCharId0, nonCharIdI, nonCharIdJ);
       }
     }
@@ -663,7 +687,7 @@ class QuizManager {
       currentValues[3] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.ziToSound) {
+          currentCategory == QuizCategory.soundToZi) {
         setNonCharIds(nonCharIdI, nonCharId0, nonCharIdJ);
       }
     }
@@ -675,7 +699,7 @@ class QuizManager {
       currentValues[2] = valueJ;
 
       if (currentType == QuizType.nonChars &&
-          currentCategory == QuizCategory.ziToSound) {
+          currentCategory == QuizCategory.soundToZi) {
         setNonCharIds(nonCharIdI, nonCharIdJ, nonCharId0);
       }
     }

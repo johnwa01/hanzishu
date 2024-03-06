@@ -8,12 +8,12 @@ import 'package:hanzishu/engine/texttospeech.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizTextbook quizTextbook;
+  final quizCategory;
   final int lessonId;
   final String wordsStudy;
-  final bool fromPaintSound;
   bool isChars = true;
 
-  QuizPage({this.quizTextbook, this.lessonId, this.wordsStudy, this.fromPaintSound});
+  QuizPage({this.quizTextbook, this.quizCategory, this.lessonId, this.wordsStudy});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -23,9 +23,9 @@ class _QuizPageState extends State<QuizPage> {
   double screenWidth;
   AnswerPosition answerPosition;
   QuizTextbook quizTextbook;
+  QuizCategory quizCategory;
   int lessonId;
   String wordsStudy;
-  bool fromPaintSound;
   int index;
   double _progressValue;
   int totalMeaningAndSoundQuestions;
@@ -45,8 +45,8 @@ class _QuizPageState extends State<QuizPage> {
     lessonId = widget.lessonId;
     quizTextbook = widget.quizTextbook;
     wordsStudy = widget.wordsStudy;
-    fromPaintSound = widget.fromPaintSound;
-    theQuizManager.initValues(quizTextbook, wordsStudy);
+    quizCategory = widget.quizCategory;
+    theQuizManager.initValues(quizTextbook, quizCategory, wordsStudy);
     index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
     //if (quizTextbook != QuizTextbook.custom) {
@@ -55,9 +55,7 @@ class _QuizPageState extends State<QuizPage> {
 
     totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId) * 2;
 
-    if (fromPaintSound == true) {
-      theQuizManager.setCurrentCategory(QuizCategory.ziToSound);
-    }
+    //theQuizManager.setCurrentCategory(QuizCategory.soundToZi);
 
     setState(() {
       answerPosition = AnswerPosition.none;
@@ -189,7 +187,7 @@ class _QuizPageState extends State<QuizPage> {
   Widget getAnswers(BuildContext context) {
     var currentCategory = theQuizManager.getCurrentCategory();
     var currentType = theQuizManager.getCurrentType();
-    if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.ziToSound &&
+    if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.soundToZi &&
         (answerPosition == AnswerPosition.soundIcon || answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB ||
         answerPosition == AnswerPosition.positionC))) {
       if (currentCategory ==
