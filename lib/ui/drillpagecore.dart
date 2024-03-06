@@ -743,7 +743,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     CreateNavigationHitttestButtons(centerZiId, true, buttons);
 
     // skip and next section button
-    if (drillCategory == DrillCategory.custom && theIsFromLessonContinuedSection) {
+    if (drillCategory == DrillCategory.custom && (theIsFromLessonContinuedSection || widget.isFromReviewPage)) {
       buttons.add(getPositionedSkipButton());
     }
 

@@ -16,6 +16,8 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/introductionpage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
+import 'package:hanzishu/ui/thirdpartylessonpage.dart';
 
 class WordPage extends StatefulWidget {
   @override
@@ -63,7 +65,7 @@ class _MeWordState extends State<WordPage> {
       children: <Widget>[
         ListTile(
           leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(455)/*"Hanzi Hanzi"*/, textDirection: TextDirection.ltr),
+          title: Text(getString(455)/*"HSK Hanzi"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
@@ -86,6 +88,20 @@ class _MeWordState extends State<WordPage> {
                 builder: (context) => WordLaunchPage(drillCategory: DrillCategory.all,
                     subItemId: 1,
                     customString: null),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(490)/*"Yuwen"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwen),
               ),
             );
           },

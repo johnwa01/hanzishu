@@ -123,7 +123,7 @@ Sentence(108, "请问前门怎么走？", "Excuse me, how can I get to Qianmen?"
   Sentence(117, "上海到北京有高铁吗？", "Is there a highspeed train from Shanghai to Beijing?", 50, null, [], "上海|到|北京|有|高铁|吗？", ""),
   Sentence(118, "有。需要坐四个小时。", "Yes. It takes four hours.", 50, null, [], "有。需要|坐|四个|小时。", ""),
   Sentence(119, "城市里出租车多吗？", "Are there many taxis in the city?", 51, null, [], "城市|里|出租车|多|吗？", ""),
-  Sentence(120, "到处都有，很便宜。", "They are everywhere and very cheap.", 51, null, [], "到处|都|有，很|便宜。", ""),
+  Sentence(120, "到处都有，很便宜。", "They are everywhere and very cheap.", 51, null, [], "到处|都|有，很|便宜。", "dào chǔ dōu yǒu， hěn pián yí."),
   Sentence(121, "飞机马上就要起飞了。", "The airplane will take off soon.", 52, null, [], "飞机|马上|就要|起飞|了。", ""),
   Sentence(122, "乘客们请登机。", "Passengers, please begin boarding.", 52, null, [], "乘客们|请|登机。", ""),
   Sentence(123, "列车开往苹果园。", "This train is heading towards Pingguo Yuan.", 53, null, [], "列车|开往|苹果园。", ""),

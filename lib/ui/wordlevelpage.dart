@@ -30,6 +30,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/engine/drill.dart';
 
+// For HSK word level only currently
 class WordLevelPage extends StatefulWidget {
   //final int lessonId;
   final DrillCategory drillCategory; //startLessonId;

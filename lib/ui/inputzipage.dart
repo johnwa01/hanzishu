@@ -82,7 +82,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool isFromArrowCandidate = false;
 
-  bool showZiCandidates = false;
+  //bool showZiCandidates = false;
 
   final stopwatch = Stopwatch()..start();
 
@@ -117,7 +117,7 @@ class _InputZiPageState extends State<InputZiPage> {
       ..addListener(() {
       });
 
-    _focusNode.addListener(_onFocusChange);
+    //_focusNode.addListener(_onFocusChange);
 
     _controller.addListener(handleKeyInput);
     _controllerStandard.addListener(handleKeyInput);
@@ -150,12 +150,14 @@ class _InputZiPageState extends State<InputZiPage> {
   @override
   void dispose() {
     _scrollController.dispose(); // it is a good practice to dispose the controller
-    _focusNode.removeListener(_onFocusChange);
-    showZiCandidates = false;
+    //_focusNode.removeListener(_onFocusChange);
+    //showZiCandidates = false;
     _focusNode.dispose();
     super.dispose();
   }
 
+  // Need more work if want this feature, not turn on yet
+  /*
   void _onFocusChange() {
     if(_focusNode.hasFocus && !showZiCandidates) {
       setState(() {
@@ -170,6 +172,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     debugPrint("Focus: ${_focusNode.hasFocus.toString()}");
   }
+  */
 
   initParameters() {
     previousStartComposing = -1;
@@ -1054,16 +1057,16 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.DicSearchTyping) {
       title = getString(95)/*'Dictionary'*/;
     }
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       title = getString(112)/*'Customized exercises'*/;
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(253)/*'Typing exercises'*/;
     }
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       title = getString(112)/*'Customized exercises'*/;
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.Custom) {
       title = getString(409)/*'Study customized words'*/;
     }
     else if (typingType == TypingType.ComponentTyping) {
@@ -1071,7 +1074,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.CustomizedTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.WordsStudy && typingType != TypingType.ComponentTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -1221,9 +1224,9 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getZiCandidates(InputZiPainter inputZiPainter) {
-    if (!showZiCandidates) {
-      return SizedBox(width: 0.0, height: 0.0);
-    }
+    //if (!showZiCandidates) {
+    //  return SizedBox(width: 0.0, height: 0.0);
+    //}
 
     return SizedBox(
       width: double.infinity,
@@ -1376,7 +1379,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.WordsStudy) {
+    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
@@ -2164,7 +2167,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //  content = getString(355)/*"You have completed this exercise! Please move on to the next one."*/;
       //theNewlyCompletedTypingExercise = 10;
     //}
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       title = getString(115)/*"Good job!"*/;
 
       var elapsed = stopwatch.elapsed;
@@ -2183,7 +2186,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(115)/*"Good job!"*/;
       content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
     }
-    else if (typingType == TypingType.WordsStudy || typingType == TypingType.ComponentTyping) {
+    else if (typingType == TypingType.Custom || typingType == TypingType.ComponentTyping) {
       title = getString(115)/*"Good job!"*/;
       content = getString(410)/*"You have completed typing exercises."*/;
     }

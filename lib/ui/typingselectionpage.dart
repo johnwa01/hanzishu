@@ -144,7 +144,7 @@ class _TypingSelectionPageState extends State<TypingSelectionPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.CustomizedTyping, lessonId: _selectedExerciseNumber.id), // TODO: hardcoded
+              builder: (context) => InputZiPage(typingType: TypingType.CommonZiTyping, lessonId: _selectedExerciseNumber.id), // TODO: hardcoded
             ),
           );
         },

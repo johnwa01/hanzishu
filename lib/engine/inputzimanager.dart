@@ -447,7 +447,7 @@ class InputZiManager {
 */
 
   // index 0->100, lessonId == exerciseId -> 1 to 38 (1 based).
-  ZiWithComponentsAndStrokes getCustomizedTypingZi(int index, int lessonId) {
+  ZiWithComponentsAndStrokes getCommonZi(int index, int lessonId) {
     // every other 38 items.
     int searchingZiId = getSearchingZiId(index, lessonId); // skip the index 0 in theSearchingZiList
     if (searchingZiId < theSearchingZiList.length) {
@@ -494,8 +494,8 @@ class InputZiManager {
     else if (typingType == TypingType.GeneralExercise) {
       return theZiForGeneralExerciseList[index];
     }
-    else if (typingType == TypingType.CustomizedTyping) {
-      return getCustomizedTypingZi(index, lessonId);
+    else if (typingType == TypingType.CommonZiTyping) {
+      return getCommonZi(index, lessonId);
     }
     else if (typingType == TypingType.FromLessons) {
       var zi = theLessonManager.getChar(lessonId, index);
@@ -506,7 +506,7 @@ class InputZiManager {
           0/*"nohelpyet"*/
       );
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.Custom) {
       return ZiWithComponentsAndStrokes(wordsStudy[index], [""], "", 0);
     }
 
@@ -587,7 +587,7 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       // overall index = 0, 69, 77, 160
       var searchingZiId = getSearchingZiId(currentIndex, lessonId);
       // Note: there are 52 index which are not chars
@@ -605,7 +605,7 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.Custom) {
       //var lesson = theLessonManager.getLesson(lessonId);
       if (currentIndex >= wordsStudy.length) {
         currentIndex = -1;
@@ -672,7 +672,7 @@ class InputZiManager {
       zi = theZiForGeneralExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       var searchingZiId = getSearchingZiId(currentIndex, lessonId);
       zi = theSearchingZiList[searchingZiId];
       result = typingResult.contains(zi.char);
@@ -681,7 +681,7 @@ class InputZiManager {
       zi = theLessonManager.getChar(lessonId, currentIndex);
       result = typingResult.contains(zi.char);
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.Custom) {
       var char = wordsStudy[currentIndex];
       result = typingResult.contains(char);
     }
@@ -727,7 +727,7 @@ class InputZiManager {
     else if (typingType == TypingType.GeneralExercise) {
       return theZiForGeneralExerciseList.length;
     }
-    else if (typingType == TypingType.CustomizedTyping) {
+    else if (typingType == TypingType.CommonZiTyping) {
       int total = ((theSearchingZiList.length - 52) / 38).truncate();    // 37
       int remain = (theSearchingZiList.length - 52) % 38; // first 30
       if (lessonId <= remain) {
@@ -739,7 +739,7 @@ class InputZiManager {
       var lesson = theLessonManager.getLesson(lessonId);
       return lesson.convCharsIds.length + lesson.charsIds.length;
     }
-    else if (typingType == TypingType.WordsStudy) {
+    else if (typingType == TypingType.Custom) {
       return wordsStudy.length;
     }
     else if (typingType == TypingType.ComponentTyping) {

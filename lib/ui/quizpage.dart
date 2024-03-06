@@ -49,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
     theQuizManager.initValues(quizTextbook, wordsStudy);
     index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
-    //if (quizTextbook != QuizTextbook.wordsStudy) {
+    //if (quizTextbook != QuizTextbook.custom) {
       theStatisticsManager.initLessonQuizResults();
     //}
 
@@ -401,7 +401,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.wordsStudy) {
+    if (theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.custom) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
@@ -480,7 +480,7 @@ class _QuizPageState extends State<QuizPage> {
       title = getString(118) + "!"; // "Congratulation!";
       content = getString(467) /*"You have passed this quiz with a score of "*/ + " " + corStr + "!";
       // save the info to storage
-      if (quizTextbook != QuizTextbook.wordsStudy) {
+      if (quizTextbook != QuizTextbook.custom) {
         updateCompleteStatus();
         theHasNewlyCompletedLesson = true;
       }

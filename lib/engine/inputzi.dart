@@ -13,10 +13,10 @@ enum TypingType {
   SingleComponent,
   TwoComponents,
   GeneralExercise,
-  CustomizedTyping,
+  CommonZiTyping,
   FromLessons,
   FreeTyping,
-  WordsStudy,
+  Custom,
   ComponentTyping,
   DicSearchTyping,
 }

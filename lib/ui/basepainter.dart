@@ -1030,7 +1030,7 @@ class BasePainter extends CustomPainter{
       displayIntroMessage();
     }
 
-    if ((drillCategory == DrillCategory.custom) && theIsFromLessonContinuedSection) {
+    if ((drillCategory == DrillCategory.custom) && (theIsFromLessonContinuedSection || isFromReviewPage)) {
         //var posi = thePositionManager.getHintPosi();
         // Need to match the DrillPage & TreePage sizes
         double xPosi = width - 80.0;

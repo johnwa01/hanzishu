@@ -316,7 +316,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
         category = DrillCategory.hsk;
         break;
       //case 4:
-      //  category = DrillCategory.hskTestSound;
+      //  category = DrillCategory.;
       //  break;
       //case 5:
       //  category = DrillCategory.hskTestMeaning;

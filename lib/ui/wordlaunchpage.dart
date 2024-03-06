@@ -16,10 +16,10 @@ import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/standardexampage.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
-import 'package:hanzishu/ui/basepainter.dart';
+import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
-import 'package:hanzishu/ui/animatedpathpainter.dart';
+import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
@@ -149,7 +149,9 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 SizedBox(height: 30),
                 getExamSoundToHanzi(drillCategory),
                 SizedBox(height: 30),
-                getExamSound(drillCategory),
+                getExamHanziToSound(drillCategory),
+                SizedBox(height: 30),
+                getExamTypingHanzi(drillCategory),
                 SizedBox(height: 30),
               ],
             ),
@@ -209,7 +211,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
     );
   }
 
-  Widget getExamSound(DrillCategory drillCategory) {
+  Widget getExamHanziToSound(DrillCategory drillCategory) {
     return RawMaterialButton(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -233,24 +235,67 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
 
   Widget getExamMeaning(drillCategory) {
     if(drillCategory == DrillCategory.custom) {
-      return SizedBox(width: 0, height: 0);
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+              QuizPage(quizTextbook: QuizTextbook.custom, lessonId: 0, wordsStudy: customString, fromPaintSound: false),
+            ),
+          );
+        },
+        child: Text(getString(448), //"Test Hanzi meaning"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
     }
+    else { // HSK
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+                  StandardExamPage(drillCategory: drillCategory,
+                      subItemId: subItemId,
+                      quizCategory: QuizCategory.meaning)));
+        },
+        child: Text(getString(448), //"Test Hanzi meaning"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+    }
+  }
 
+  Widget getExamTypingHanzi(DrillCategory drillCategory) {
     return RawMaterialButton(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(33),
           ),
-          side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
+          side: BorderSide(color: Colors.blue, width: 0.5)
       ),
       fillColor: Colors.blue.shade100,
       onPressed: () {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) =>
-                StandardExamPage(drillCategory: drillCategory,
-                    subItemId: subItemId, quizCategory: QuizCategory.meaning)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(typingType: TypingType.Custom,
+                    lessonId: 0, wordsStudy: null), //InputZiPage(),
+          ),
+        );
       },
-      child: Text(getString(448), //"Test Hanzi meaning"
+      child: Text(getString(489), //"Test Hanzi typing/writing"
           style: TextStyle(color: Colors.brown)), // lightBlue
     );
   }

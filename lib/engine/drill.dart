@@ -9,8 +9,6 @@ enum DrillCategory {
   hskTestSound, //TODO: remove
   hskTestMeaning, //TODO: remove
   custom,
-  yuwen,
-  yuwenLesson
 }
 
 

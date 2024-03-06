@@ -496,4 +496,6 @@ var theString_en_US = [
   Local(486, "Please use following methods to search word"),
   Local(487, "(built-in, please set system input mode to English.)"),
   Local(488, "Test Sound to Hanzi"),
+  Local(489, "Test Hanzi typing/writing"),
+  Local(490, "Yuwen： Hanzi"),
 ];

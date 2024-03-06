@@ -10,7 +10,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 
 enum QuizTextbook {
   hanzishu,
-  wordsStudy,
+  custom,
 }
 
 enum QuizCategory {
@@ -92,7 +92,7 @@ class QuizManager {
     currentLesson = 0;
 
     currentCategory = QuizCategory.meaning;
-    //if (currentQuizTextbook == QuizTextbook.wordsStudy && paint sound) {
+    //if (currentQuizTextbook == QuizTextbook.custom && paint sound) {
     //  currentCategory = QuizCategory.ziToSound;
     //}
 
@@ -133,7 +133,7 @@ class QuizManager {
   int getFirstIndex(QuizTextbook quizTextbook, int lessonId) {
     var index = 0;
 
-    if (quizTextbook == QuizTextbook.wordsStudy) {
+    if (quizTextbook == QuizTextbook.custom) {
       return index;
     }
 
@@ -168,7 +168,7 @@ class QuizManager {
   }
 
   int getTotalQuestions(QuizTextbook quizTextbook, int lessonId) {
-    if (quizTextbook == QuizTextbook.wordsStudy) {
+    if (quizTextbook == QuizTextbook.custom) {
       return currentWordsStudy.length;
     }
 
@@ -222,7 +222,7 @@ class QuizManager {
   }
 
   bool isCurrentTypeEmpty() {
-    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook == QuizTextbook.custom) {
       return currentWordsStudy.length == 0;
     }
 
@@ -233,7 +233,7 @@ class QuizManager {
   resetCurrentTypeToNext() {
     var nextType = currentType;
 
-    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook == QuizTextbook.custom) {
       if (currentCategory == QuizCategory.meaning) {
         currentCategory = QuizCategory.ziToSound;
         //nextType = QuizType.chars;
@@ -330,7 +330,7 @@ class QuizManager {
 
   int getNextIndexForCurrentType() {
     var max;
-    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook == QuizTextbook.custom) {
       max = currentWordsStudy.length;
     }
     else {
@@ -404,7 +404,7 @@ class QuizManager {
     var value = "";
 
     if (category == QuizCategory.ziToSound || usedForQuestion) {
-      if (quizTextbook == QuizTextbook.wordsStudy) {
+      if (quizTextbook == QuizTextbook.custom) {
         value = theSearchingZiList[id].char;
       }
       else {
@@ -433,7 +433,7 @@ class QuizManager {
       }
     }
     else if (category == QuizCategory.meaning) {
-      if (quizTextbook == QuizTextbook.wordsStudy) {
+      if (quizTextbook == QuizTextbook.custom) {
         value = theSearchingZiList[id].meaning;
       }
       else {
@@ -541,7 +541,7 @@ class QuizManager {
   String getOneValueByIndexInLesson(QuizTextbook quizTextbook, QuizCategory category, QuizType type,
       int index, bool usedForQuestion) {
     var id;
-    if (quizTextbook == QuizTextbook.wordsStudy) {
+    if (quizTextbook == QuizTextbook.custom) {
       id = getSearchingZiIdByWordsStudyIndex(index);
     }
     else {
@@ -559,13 +559,13 @@ class QuizManager {
 
   // TODO: add id type paraqmeter, meaning/translation para
   List<String> getUpdatedValues(int index, bool isMeaning) {
-    if (currentQuizTextbook != QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook != QuizTextbook.custom) {
       initCurrentValuesNonCharIds();
     }
 
     //currentIndex = index
     var upperRange;
-    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook == QuizTextbook.custom) {
       upperRange = 3750; // TODO: const value. searchingZiList length with at least 50 extra entries
     }
     else {
@@ -615,7 +615,7 @@ class QuizManager {
     //let ziI = theZiManager.getZi(id: wrongPositionI)
     var valueI;
     var valueJ;
-    if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+    if (currentQuizTextbook == QuizTextbook.custom) {
       valueI = getOneValueById(currentQuizTextbook, currentCategory, currentType, wrongPositionI, false);
       valueJ = getOneValueById(currentQuizTextbook, currentCategory, currentType, wrongPositionJ, false);
     }
@@ -712,7 +712,7 @@ class QuizManager {
     while (chosen) {
       number = rand.nextInt(upperRange);
 
-      if (currentQuizTextbook == QuizTextbook.wordsStudy) {
+      if (currentQuizTextbook == QuizTextbook.custom) {
         if (number < 52) {
           continue; // not valid with those special index words
         }
