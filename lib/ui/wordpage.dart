@@ -64,7 +64,7 @@ class _MeWordState extends State<WordPage> {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          leading: Image.asset('assets/lessons/L27.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
           title: Text(getString(455)/*"HSK Hanzi"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
@@ -73,6 +73,20 @@ class _MeWordState extends State<WordPage> {
               MaterialPageRoute(
                 builder: (context) =>
                     WordLevelPage(drillCategory: DrillCategory.hsk),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(490)/*"Yuwen"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwen),
               ),
             );
           },
@@ -88,20 +102,6 @@ class _MeWordState extends State<WordPage> {
                 builder: (context) => WordLaunchPage(drillCategory: DrillCategory.all,
                     subItemId: 1,
                     customString: null),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(490)/*"Yuwen"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwen),
               ),
             );
           },

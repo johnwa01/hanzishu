@@ -26,6 +26,9 @@ class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize centerPositionAndSizeCache;
+  final String customString;
+
+  StudyCustomizedWordsPage({this.customString});
 
   @override
   _StudyCustomizedWordsPageState createState() => _StudyCustomizedWordsPageState();
@@ -35,6 +38,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   int searchingZiIndex;
   bool shouldDrawCenter;
   double screenWidth;
+  String customString;
   //DictionaryStage dicStage;
   //OverlayEntry overlayEntry;
   // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
@@ -62,6 +66,11 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
     theCurrentCenterZiId = searchingZiIndex;
     //_controller.addListener(handleKeyInput);
+    customString = widget.customString;
+
+    if (customString != null) {
+      inputText = customString;
+    }
 
     setState(() {
       searchingZiIndex = searchingZiIndex;
@@ -139,45 +148,12 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                 child: new Column( //Stack(
                     children: <Widget>[
                       SizedBox(height: 40 * getSizeRatioWithLimit()),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(width: 10 * getSizeRatioWithLimit()),
-                            Text(getString(408)/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                            //SizedBox(width: 30 * getSizeRatioWithLimit()),
-                          ]
-                      ),
+                      getCopyPasteDictionry(),
                       SizedBox(height: 10 * getSizeRatioWithLimit()),
                       Row(
                         children: <Widget>[
                           SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          SizedBox(
-                            width: 280 * getSizeRatioWithLimit(), //double.infinity,
-                            //height: 120,
-                            child: TextField(
-                              //decoration: InputDecoration(
-                              //hintText: 'Test text',
-                              //),
-
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              controller: _controller,
-                              focusNode: _textNode,
-                              autofocus: false,
-                              style: TextStyle(
-                                fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-                                //height: 1.0 // 1.3
-                              ),
-                              maxLines: 1,
-                              //expands: true,
-                              keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
-                              decoration: InputDecoration(
-                                //hintText: 'This test',
-                                filled: true,
-                                fillColor: Colors.grey, //lightBlueAccent, //black12,
-                              ),
-                            ),//focusNode: _textNode,
-                          ),
+                          getTextField(),
                           SizedBox(width: 10 * getSizeRatioWithLimit()),
                           TextButton(
                             style: TextButton.styleFrom(
@@ -207,6 +183,61 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
       );
     } catch (e, s) {
       print(s);
+    }
+  }
+
+  Widget getCopyPasteDictionry() {
+    if (inputText != null) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+    else {
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: 10 * getSizeRatioWithLimit()),
+            Text(getString(408) /*"Type or copy/paster all your words below"*/,
+              style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(),
+                  color: Colors.blueGrey),),
+            //SizedBox(width: 30 * getSizeRatioWithLimit()),
+          ]
+      );
+    }
+  }
+
+  Widget getTextField() {
+    if (inputText != null) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+    else {
+      return SizedBox(
+        width: 280 * getSizeRatioWithLimit(), //double.infinity,
+        //height: 120,
+        child: TextField(
+          //decoration: InputDecoration(
+          //hintText: 'Test text',
+          //),
+
+          autocorrect: false,
+          enableSuggestions: false,
+          controller: _controller,
+          focusNode: _textNode,
+          autofocus: false,
+          style: TextStyle(
+            fontSize: 18 *
+                getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
+            //height: 1.0 // 1.3
+          ),
+          maxLines: 1,
+          //expands: true,
+          keyboardType: TextInputType.text,
+          //multiline,  //TextInputType.visiblePassword
+          decoration: InputDecoration(
+            //hintText: 'This test',
+            filled: true,
+            fillColor: Colors.grey, //lightBlueAccent, //black12,
+          ),
+        ), //focusNode: _textNode,
+      );
     }
   }
 
@@ -309,7 +340,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText),
+                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1),
             ),
           ).then((val) => {_getRequests()});
           break;

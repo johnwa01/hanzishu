@@ -53,7 +53,10 @@ class _QuizPageState extends State<QuizPage> {
       theStatisticsManager.initLessonQuizResults();
     //}
 
-    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId) * 2;
+    totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId);
+    if (quizTextbook != QuizTextbook.custom) {
+      totalMeaningAndSoundQuestions *= 2;
+    }
 
     //theQuizManager.setCurrentCategory(QuizCategory.soundToZi);
 
@@ -158,7 +161,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getQuestion(BuildContext context) {
-    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning) { // short button
+    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning || theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) { // short button
       return getZiContainer(AnswerPosition.center, false);
     }
     else {
@@ -187,11 +190,11 @@ class _QuizPageState extends State<QuizPage> {
   Widget getAnswers(BuildContext context) {
     var currentCategory = theQuizManager.getCurrentCategory();
     var currentType = theQuizManager.getCurrentType();
-    if(currentCategory == QuizCategory.meaning || (currentCategory == QuizCategory.soundToZi &&
+    if(currentCategory == QuizCategory.meaning || currentCategory == QuizCategory.ziToSound || (currentCategory == QuizCategory.soundToZi &&
         (answerPosition == AnswerPosition.soundIcon || answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB ||
         answerPosition == AnswerPosition.positionC))) {
       if (currentCategory ==
-          QuizCategory.meaning || currentType == QuizType.phrases ||
+          QuizCategory.meaning ||currentType == QuizType.phrases ||
           currentType == QuizType.conversations) { // phrases and sentences
         return IntrinsicWidth(
           child: Column(

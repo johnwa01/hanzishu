@@ -21,6 +21,12 @@ enum TypingType {
   DicSearchTyping,
 }
 
+enum InputMethod {
+  Pinxin,
+  Others,
+  Both,
+}
+
 class InputZi {
   String zi;
   String doubleByteCode;

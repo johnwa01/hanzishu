@@ -1066,4 +1066,14 @@ class ZiManager {
 
     return null;
   }
+
+  static String getPhrase(String char) {
+    for (var i = 0; i < theSearchingZiList.length; i++) {
+      if (theSearchingZiList[i].char == char) {
+        return theSearchingZiList[i].phrase;
+      }
+    }
+
+    return null;
+  }
 }

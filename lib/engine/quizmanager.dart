@@ -485,6 +485,35 @@ class QuizManager {
         }
       }
     }
+    else if (category == QuizCategory.ziToSound) {
+      if (quizTextbook == QuizTextbook.custom) {
+        value = theSearchingZiList[id].char;
+      }
+      else {
+        switch (type) {
+          case QuizType.basicChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.chars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.nonChars:
+            var zi = theZiManager.getZi(id);
+            value = zi.char;
+            break;
+          case QuizType.phrases:
+            value = thePhraseList[id].chars;
+            break;
+          case QuizType.conversations:
+            value = theSentenceList[id].conv;
+            break;
+          case QuizType.none:
+            break;
+        }
+      }
+    }
 
     return value;
   }

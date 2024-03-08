@@ -8,15 +8,16 @@ import 'dart:async';
 import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
-import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/drillpainter.dart';
+import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/standardexampage.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
@@ -143,16 +144,46 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
-                getDrillPageCore(drillCategory),
+                Row(
+                    children: <Widget>[
+                      SizedBox(width: 50),
+                      getDrillPageCore(drillCategory),
+                      SizedBox(width: 50),
+                      getFlashcard(drillCategory),
+                    ]
+                ),
                 SizedBox(height: 30),
-                getExamMeaning(drillCategory),
+                Row(
+                    children: <Widget>[
+                      SizedBox(width: 50),
+                      getExamMeaning(drillCategory),
+                    ]
+                ),
                 SizedBox(height: 30),
-                getExamSoundToHanzi(drillCategory),
+                Row(
+                    children: <Widget>[
+                      SizedBox(width: 50),
+                      getExamSoundToHanzi(drillCategory),
+                      SizedBox(width: 50),
+                      getExamHanziToSound(drillCategory),
+                    ]
+                ),
                 SizedBox(height: 30),
-                getExamHanziToSound(drillCategory),
+                Row(
+                    children: <Widget>[
+                      SizedBox(width: 50),
+                      getReadAndTypeHanzi(drillCategory),
+                      SizedBox(width: 50),
+                      getListenAndTypeHanzi(drillCategory),
+                    ]
+                ),
                 SizedBox(height: 30),
-                getExamTypingHanzi(drillCategory),
-                SizedBox(height: 30),
+                Row(
+                    children: <Widget>[
+                      SizedBox(width: 50),
+                      getStudyCustomizedWordsPage(drillCategory),
+                    ]
+                ),
               ],
             ),
         ),
@@ -163,8 +194,9 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getDrillPageCore(drillCategory) {
+    bool isFromReviewPage = true;
     if(drillCategory == DrillCategory.custom) {
-      return SizedBox(width: 0, height: 0);
+      isFromReviewPage = false;
     }
 
     return RawMaterialButton(
@@ -181,7 +213,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 DrillPageCore(drillCategory: drillCategory,
                     startingCenterZiId: 1,
                     subItemId: subItemId,
-                    isFromReviewPage: true,
+                    isFromReviewPage: isFromReviewPage,
                     customString: customString)));
       },
       child: Text(getString(456), //"Learn Hanzi"
@@ -234,25 +266,47 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamHanziToSound(DrillCategory drillCategory) {
-    return RawMaterialButton(
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(33),
-          ),
-          side: BorderSide(color: Colors.blue, width: 0.5)
-      ),
-      fillColor: Colors.blue.shade100,
-      onPressed: () {
-        Navigator.of(context).push(
+    if(drillCategory == DrillCategory.custom) {
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.lightBlueAccent, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
-                StandardExamPage(drillCategory: drillCategory,
-                    subItemId: subItemId,
-                    quizCategory: QuizCategory.ziToSound,
-                    customString: customString)));
-      },
-      child: Text(getString(447), //"Test Hanzi sound"
-          style: TextStyle(color: Colors.brown)), // lightBlue
-    );
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.ziToSound, lessonId: 0, wordsStudy: customString),
+            ),
+          );
+        },
+        child: Text(getString(447), //"Test Hanzi to sound"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+    }
+    else {
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.blue, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) =>
+                  StandardExamPage(drillCategory: drillCategory,
+                      subItemId: subItemId,
+                      quizCategory: QuizCategory.ziToSound,
+                      customString: customString)));
+        },
+        child: Text(getString(447), //"Test Hanzi to sound"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+    }
   }
 
   Widget getExamMeaning(drillCategory) {
@@ -298,7 +352,74 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
     }
   }
 
-  Widget getExamTypingHanzi(DrillCategory drillCategory) {
+  Widget getReadAndTypeHanzi(DrillCategory drillCategory) {
+    if(drillCategory != DrillCategory.custom) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+    else {
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.blue, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  InputZiPage(typingType: TypingType.Custom,
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Others, showHint: 0), //InputZiPage(),
+            ),
+          );
+        },
+        child: Text(getString(489), //"Read and type Hanzi"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+    }
+  }
+
+  Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
+    if(drillCategory != DrillCategory.custom) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+    else {
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33),
+            ),
+            side: BorderSide(color: Colors.blue, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  InputZiPage(typingType: TypingType.Custom,
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 0) //InputZiPage(),
+            ),
+          );
+        },
+        child: Text(getString(491), //"Listen and type Hanzi"
+            style: TextStyle(color: Colors.brown)), // lightBlue
+      );
+    }
+  }
+
+  Widget getFlashcard(DrillCategory drillCategory) {
+    if(drillCategory != DrillCategory.custom) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    bool isFromReviewPage = true;
+    if(drillCategory == DrillCategory.custom) {
+      isFromReviewPage = false;
+    }
+
     return RawMaterialButton(
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
@@ -312,12 +433,47 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           context,
           MaterialPageRoute(
             builder: (context) =>
-                InputZiPage(typingType: TypingType.Custom,
-                    lessonId: 0, wordsStudy: null), //InputZiPage(),
+                DictionarySearchingPage(
+                    dicStage: DictionaryStage.detailedzi,
+                    firstOrSearchingZiIndex: -1,
+                    flashcardList: customString,
+                    dicCaller: DicCaller.WordsStudy),
           ),
         );
       },
-      child: Text(getString(489), //"Test Hanzi typing/writing"
+      child: Text(getString(2), //"Flashcards"
+          style: TextStyle(color: Colors.brown)), // lightBlue
+    );
+  }
+
+  Widget getStudyCustomizedWordsPage(DrillCategory drillCategory) {
+    if(drillCategory != DrillCategory.custom) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    bool isFromReviewPage = true;
+    if(drillCategory == DrillCategory.custom) {
+      isFromReviewPage = false;
+    }
+
+    return RawMaterialButton(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(33),
+          ),
+          side: BorderSide(color: Colors.blue, width: 0.5)
+      ),
+      fillColor: Colors.blue.shade100,
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                StudyCustomizedWordsPage(customString: customString),
+          ),
+        );
+      },
+      child: Text(getString(492), //"Hanzi: learn, ..."
           style: TextStyle(color: Colors.brown)), // lightBlue
     );
   }

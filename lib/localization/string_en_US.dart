@@ -496,6 +496,11 @@ var theString_en_US = [
   Local(486, "Please use following methods to search word"),
   Local(487, "(built-in, please set system input mode to English.)"),
   Local(488, "Test Sound to Hanzi"),
-  Local(489, "Test Hanzi typing/writing"),
+  Local(489, "Read and type Hanzi"),
   Local(490, "Yuwen： Hanzi"),
+  Local(491, "Listen and type Hanzi"),
+  Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
+  Local(493, "Change"),
+  Local(494, "Hanzishu input method"),
+  Local(495, "Self-chosen input methods"),
 ];

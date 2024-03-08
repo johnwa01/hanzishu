@@ -27,7 +27,7 @@ class InputZiManager {
   }
 
   setCurrentType(TypingType currentType, String wordsStudy) {
-    if (currentTypingType != currentType) {
+    if (currentType == TypingType.Custom || currentType != currentTypingType) {
       currentTypingType = currentType;
       currentIndex = 0;
       this.wordsStudy = wordsStudy;

@@ -7,6 +7,7 @@ import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzihintpainter.dart';
@@ -23,7 +24,10 @@ class InputZiPage extends StatefulWidget {
   final TypingType typingType;
   final int lessonId;
   final String wordsStudy;
-  InputZiPage({this.typingType, this.lessonId, this.wordsStudy});
+  final bool isSoundPrompt;
+  final InputMethod inputMethod;
+  final int showHint;
+  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
@@ -33,6 +37,9 @@ class _InputZiPageState extends State<InputZiPage> {
   TypingType typingType;
   int lessonId;
   String wordsStudy;
+  bool isSoundPrompt;
+  InputMethod inputMethod;
+  int showHint;
   int currentIndex;
   BuildContext currentBuildContext;
   double _progressValue;
@@ -55,7 +62,6 @@ class _InputZiPageState extends State<InputZiPage> {
   String initialControllerTextValue; // = "unlikelyIniStr876";
   String previousText = "";
   //List<String> ziCandidates;
-  int showHint;
   int selectedCompIndex;
   int selectedCategoryIndex;
   int selectedSubcategoryIndex;
@@ -120,10 +126,12 @@ class _InputZiPageState extends State<InputZiPage> {
     //_focusNode.addListener(_onFocusChange);
 
     _controller.addListener(handleKeyInput);
-    _controllerStandard.addListener(handleKeyInput);
+    _controllerStandard.addListener(handleKeyInputStandard);
     _progressValue = 0.0;
     typingType = widget.typingType;
     wordsStudy = widget.wordsStudy;
+    isSoundPrompt = widget.isSoundPrompt;
+    inputMethod = widget.inputMethod;
     theInputZiManager.setCurrentType(typingType, wordsStudy);
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
@@ -138,7 +146,7 @@ class _InputZiPageState extends State<InputZiPage> {
       TextToSpeech.speak("zh-CN", TypingChar);
     }
 
-    showHint = 1;  // this is the default
+    showHint = widget.showHint;  // this is the default
     initHintSelected();
 
     setState(() {
@@ -525,6 +533,17 @@ class _InputZiPageState extends State<InputZiPage> {
 
   void handleKeyInput() {
     handleKeyInputHelper(0);
+  }
+
+  void handleKeyInputStandard() {
+    if (typingType != TypingType.DicSearchTyping) {
+      String TypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
+      if (_controllerStandard.text.contains(TypingChar)) {
+        setState(() {
+          currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
+        });
+      }
+    }
   }
 
   workaroundWebCases() {
@@ -1117,7 +1136,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else
     {
-      return getRegularTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
+      return getRegularOneTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
     }
   }
 
@@ -1141,7 +1160,7 @@ class _InputZiPageState extends State<InputZiPage> {
               Text("2. " + getString(484), textAlign:TextAlign.left),
             ]
           ),
-          getDicSearchByWord(_controllerStandard),
+          getOtherInputMethodTextField(_controllerStandard, true),
           SizedBox(height: 15.0),
           Row(mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -1160,7 +1179,7 @@ class _InputZiPageState extends State<InputZiPage> {
             children: <Widget>[
               SizedBox(width: 30.0),
               getHanzishuTextField(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
-              getQueryButton(_controller),
+              getQueryButton(_controller, true),
             ]
           ),
           getZiCandidates(inputZiPainter),
@@ -1168,30 +1187,115 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Column getRegularTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-    return Column(
-      //mainAxisAlignment: MainAxisAlignment.spaceAround,
-      //mainAxisSize:  MainAxisSize.max,
-        children: <Widget>[
-          //Spacer(),
-          getHelpOrProgressIndicator(),
-          Container(
-            alignment: Alignment.topRight,
-            child: getSkipThisSection(),
-          ),
-          getInputPrompt(),
-          getComponentRelated(),
-          getHanzishuTextField(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
-          getZiCandidates(inputZiPainter),
-          SizedBox(
-            height: 40.0, //40
-          ),
-          //SizedBox(
-          //    child: getContinue(),
-          //),
-          // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
-        ]
+  Column getRegularOneTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    if (inputMethod == InputMethod.Pinxin) {
+      return Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisSize:  MainAxisSize.max,
+          children: <Widget>[
+            //Spacer(),
+            getHelpOrProgressIndicator(),
+            Row(
+              children: <Widget>[
+                SizedBox(width: 10),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: getShortTypingTitle(),
+                ),
+                //SizedBox(width: 10),
+                Container(
+                  //alignment: Alignment.topRight,
+                  child: getSwitchInputMethod(),
+                ),
+                //SizedBox(width: 10),
+                Container(
+                  alignment: Alignment.topRight,
+                  child: getSkipThisSection(),
+                ),
+              ]
+            ),
+            getInputPrompt(),
+            getComponentRelated(),
+            getHanzishuTextField(
+                fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
+            getZiCandidates(inputZiPainter),
+            SizedBox(
+              height: 40.0, //40
+            ),
+            //SizedBox(
+            //    child: getContinue(),
+            //),
+            // getImageTiedToZi() TODO: not showing image anymore, one can't do two things at the same time.
+          ]
+      );
+    }
+    else { // other input methods
+      return Column(
+        //mainAxisAlignment: MainAxisAlignment.spaceAround,
+        //mainAxisSize:  MainAxisSize.max,
+          children: <Widget>[
+            //Spacer(),
+            getHelpOrProgressIndicator(),
+            Row(
+                children: <Widget>[
+                  SizedBox(width: 10),
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: getShortTypingTitle(),
+                  ),
+                  //SizedBox(width: 10),
+                  Container(
+                    //alignment: Alignment.topRight,
+                    child: getSwitchInputMethod(),
+                  ),
+                  //SizedBox(width: 10),
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: getSkipThisSection(),
+                  ),
+                ]
+            ),
+            getInputPrompt(),
+
+            getOtherInputMethodTextField(_controllerStandard, false),
+
+            SizedBox(
+              height: 40.0, //40
+            ),
+          ]
+      );
+    }
+  }
+
+  Widget getSwitchInputMethod() {
+    return TextButton(
+      onPressed: () {
+        if (inputMethod == InputMethod.Others) {
+          setState(() {
+            inputMethod = InputMethod.Pinxin;
+          });
+        }
+        else if (inputMethod == InputMethod.Pinxin) {
+          setState(() {
+            inputMethod = InputMethod.Others;
+          });
+        }
+      },
+      child: Text(getString(493),
+          style: TextStyle(color: Colors.brown)),
     );
+  }
+
+  Widget getShortTypingTitle() {
+    String switchLabel;
+    if (inputMethod == InputMethod.Pinxin) {
+      switchLabel = getString(494); // puzzle typing. oopposite from the current value
+    }
+    else { // others
+      switchLabel = getString(495); // other input methods
+    }
+
+    return Text(switchLabel, style: TextStyle(color: Colors.lightBlue/*, fontSize: 15 * getSizeRatio()*/));
   }
 
   Widget getHanzishuTextField(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines) {
@@ -1269,7 +1373,12 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Widget getDicSearchByWord(TextEditingController oneController) {
+  Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
+    double fieldWidth = 300.0; //double.infinity;
+    if (withQueryButton) {
+      fieldWidth = 120.0;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -1278,7 +1387,7 @@ class _InputZiPageState extends State<InputZiPage> {
         SizedBox(width: 30 * getSizeRatio()),
 
         SizedBox(
-          width: 80 * getSizeRatio(), //double.infinity,
+          width: fieldWidth, // * getSizeRatio(),
           //height: 120,
           // Note: this is the standard for Dic Search only, not related to the Hanzishu typing field.
           child: TextField(
@@ -1301,12 +1410,16 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
           ),//focusNode: _focusNodeStandard,
         ),
-        getQueryButton(oneController),
+          getQueryButton(oneController, withQueryButton),
       ],
     );
   }
 
-  Widget getQueryButton(TextEditingController oneController) {
+  Widget getQueryButton(TextEditingController oneController, bool withQueryButton) {
+    if (!withQueryButton) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     return Container(
       //height: 25.0 * getSizeRatioWithLimit(), //180
       // width: 25.0 * getSizeRatioWithLimit(),
@@ -1586,16 +1699,38 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
           SizedBox(
             width: 35.0 * getSizeRatio(), //50
-            child: Text(
-                currentTypingChar, //zi.zi,
-                style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
-                textAlign: TextAlign.left
-            ),
+            child: getInputZiOrSoundIcon(currentTypingChar, fontSize),
           ),
           SizedBox(width: fontSize * 1.2),
           getWarningMessage(),
         ]
     );
+  }
+
+  Widget getInputZiOrSoundIcon(String typingChar, double fontSize) {
+    if (isSoundPrompt) {
+      var phrase = ZiManager.getPhrase(typingChar);
+      return IconButton(
+          icon: Icon(
+            Icons.volume_up,
+            size: fontSize * 3 * getSizeRatio(),   // 150
+          ),
+          color: Colors.cyan, //Colors.green,
+          onPressed: () {
+            TextToSpeech.speak("zh-CN", typingChar);
+            if (phrase != null) {
+              sleep(const Duration(milliseconds: 1000));
+              TextToSpeech.speak("zh-CN", phrase);
+            }
+          });
+    }
+    else { // text
+      return Text(
+          currentTypingChar, //zi.zi,
+          style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+          textAlign: TextAlign.left
+      );
+    }
   }
 
   Widget getWarningMessage() {
