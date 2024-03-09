@@ -503,4 +503,8 @@ var theString_en_US = [
   Local(493, "Change"),
   Local(494, "Hanzishu input method"),
   Local(495, "Self-chosen input methods"),
+  Local(496, "Grade"),
+  Local(497, "Semester"),
+  Local(498, "Learn Hanzi"),
+  Local(499, "Lesson"),
 ];

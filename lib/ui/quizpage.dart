@@ -201,13 +201,26 @@ class _QuizPageState extends State<QuizPage> {
             //textDirection: TextDirection.ltr,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              getText(AnswerPosition.positionA),
+              getText(AnswerPosition.positionA, false),
               SizedBox(height: 5.0 * getSizeRatio()),
-              getText(AnswerPosition.positionB),
+              getText(AnswerPosition.positionB, false),
               SizedBox(height: 5.0 * getSizeRatio()),
-              getText(AnswerPosition.positionC),
+              getText(AnswerPosition.positionC, false),
             ]
           ),
+        );
+      }
+      else if (currentCategory == QuizCategory.ziToSound) {
+      // Zi only
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            getOneZiToSoundAnswer(AnswerPosition.positionA),
+            SizedBox(height: 5.0 * getSizeRatio()),
+            getOneZiToSoundAnswer(AnswerPosition.positionB),
+            SizedBox(height: 5.0 * getSizeRatio()),
+            getOneZiToSoundAnswer(AnswerPosition.positionC),
+          ]
         );
       }
       else {
@@ -265,6 +278,35 @@ class _QuizPageState extends State<QuizPage> {
     return noncharId;
   }
 
+  Widget getOneZiToSoundAnswer(AnswerPosition position) {
+    var hanzi = getValue(position);
+
+    return Column(
+        children: <Widget>[
+          Container(
+            height: 50.0 * getSizeRatio(), //180
+            width: 50.0 * getSizeRatio(),
+            child: IconButton(
+              icon: Icon(
+                Icons.volume_up,
+                size: 50.0 * getSizeRatio(),   // 150
+              ),
+              color: Colors.cyan, //Colors.green,
+                onPressed: () {
+                  TextToSpeech.speak("zh-CN", hanzi);
+                  },
+            )
+          ),
+          SizedBox(height: 10),
+          Container(
+            //alignment: Alignment.topRight,
+            child: getText(position, true),
+          ),
+        ]
+    );
+
+  }
+
   String getValue(AnswerPosition position) {
     var value;
     var currentValues = theQuizManager.getCurrentValues();
@@ -297,8 +339,23 @@ class _QuizPageState extends State<QuizPage> {
     return value;
   }
 
-  Widget getText(AnswerPosition position) {
-    var value = getValue(position);
+  Widget getText(AnswerPosition position, bool wantUpperCaseLetter) {
+    var value;
+    if (wantUpperCaseLetter) {
+      if (position == AnswerPosition.positionA) {
+        value = 'A';
+      }
+      else if (position == AnswerPosition.positionB) {
+        value = 'B';
+      }
+      else if (position == AnswerPosition.positionC) {
+        value = 'C';
+      }
+    }
+    else {
+      value = getValue(position);
+    }
+
     var fontSize = 30.0 * getSizeRatio(); // 35.0
     var currentType = theQuizManager.getCurrentType();
 
@@ -397,7 +454,7 @@ class _QuizPageState extends State<QuizPage> {
       );
     }
     else {
-      return getText(position);
+      return getText(position, false);
     }
   }
 

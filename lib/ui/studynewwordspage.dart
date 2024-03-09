@@ -244,8 +244,12 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   processInputs() {
     //var latestValue;
     var ziId = -1;
+    if (customString != null && customString.length > 0) {
+      inputText = customString;
+      launchContent(0);
+    }
     //TODO: contentIndex++
-    if (_controller.value.text != null && _controller.value.text.length != 0) {
+    else if (_controller.value.text != null && _controller.value.text.length != 0) {
       inputText = _controller.value.text;
 
       if (inputText != null && inputText.length > 0) {

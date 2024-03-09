@@ -7,6 +7,7 @@ var theThirdPartyList = [
 
 var theThirdPartyLevelList = [
   ThirdPartyLevel(ThirdPartyType.yuwen, 1, "l1"), // 100: temp
+  ThirdPartyLevel(ThirdPartyType.yuwen, 2, "l2"), // 100: temp
 ];
 
 var theThirdPartyLessonList = [

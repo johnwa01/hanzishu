@@ -24,6 +24,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
   ScrollController _scrollController;
   ThirdPartyType thirdPartyType;
   int currentLessonId;
+  int currentLevelId;
 
   double screenWidth;
 
@@ -39,6 +40,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
   @override
   void initState() {
     super.initState();
+    currentLevelId = 0;
 
     _scrollController = ScrollController()
       ..addListener(() {
@@ -87,35 +89,61 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: getLessonList(thirdPartyType),
+      children: getLevelAndLessonList(thirdPartyType),
     );
   }
 
-  List<Widget> getLessonList(ThirdPartyType thirdPartyType) {
+  List<Widget> getLevelAndLessonList(ThirdPartyType thirdPartyType) {
     List<Widget> listOfWidget = [];
 
     var textButton;
-
-    String levelText;
+    int levelIndex = 0;
 
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
       if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType) {
-        textButton = TextButton(
-          style: TextButton.styleFrom(
-            textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-          ),
-          onPressed: () {
-            Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) =>
-                    WordLaunchPage(drillCategory: DrillCategory.custom,
-                        subItemId: i + 1, //subItemId,
-                        customString: "好替身")));
-          },
-          child: Text(theThirdPartyLessonList[i].lessonNameCode,
-              style: TextStyle(color: Colors.brown)), // lightBlue
-        );
+        if (theThirdPartyLessonList[i].levelId != levelIndex) {
+          var levelName = ThirdPartyLevel.getLevelName(theThirdPartyLessonList[i].levelId);
+          textButton = TextButton(
+            style: TextButton.styleFrom(
+              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+            ),
+            onPressed: () {
+              setState(() {
+                if (currentLevelId == theThirdPartyLessonList[i].levelId) {
+                  currentLevelId = 0;
+                }
+                else {
+                  currentLevelId = theThirdPartyLessonList[i].levelId;
+                }
+              });
+            },
+            child: Text(levelName,
+                style: TextStyle(color: Colors.brown)), // lightBlue
+          );
 
-        listOfWidget.add(textButton);
+          levelIndex = theThirdPartyLessonList[i].levelId;
+          listOfWidget.add(textButton);
+        }
+
+        if (theThirdPartyLessonList[i].levelId == currentLevelId) {
+          var lessonName = ThirdPartyLesson.getLessonName(theThirdPartyLessonList[i].lessonId);
+          textButton = TextButton(
+            style: TextButton.styleFrom(
+              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+            ),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) =>
+                      WordLaunchPage(drillCategory: DrillCategory.custom,
+                          subItemId: i + 1, //subItemId,
+                          customString: ThirdPartyLesson.getLessonString(thirdPartyType, theThirdPartyLessonList[i].lessonId)/*"好替身"*/)));
+            },
+            child: Text("                   " + lessonName, // add some back space from level
+                style: TextStyle(color: Colors.black)), // lightBlue
+          );
+
+          listOfWidget.add(textButton);
+        }
       }
     }
 

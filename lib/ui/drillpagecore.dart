@@ -129,7 +129,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       internalStartItemId = 1; // it use customString in initReadFilterList
       internalEndItemId = 1;
     }
-    else if(drillCategory == DrillCategory.custom && subItemId != 0) { // coming from lessons, not regular custom
+    else if(drillCategory == DrillCategory.custom && subItemId != 0 && customString == null) { // coming from lessons, not regular custom
       // need to set this to lesson specific string
       customString = theLessonManager.getConvChars(subItemId);
     }
