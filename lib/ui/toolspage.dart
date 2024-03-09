@@ -79,7 +79,7 @@ class _ToolsPageState extends State<ToolsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(typingType: TypingType.LeadComponents,
-                    lessonId: 0, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1), //InputZiPage(),
+                    lessonId: 0, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -224,7 +224,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1), //InputZiPage(),
+                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false), //InputZiPage(),
               ),
             );
           },

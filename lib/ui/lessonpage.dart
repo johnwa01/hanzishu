@@ -167,11 +167,16 @@ class _LessonPageState extends State<LessonPage> {
         break;
         */
       case 3:
+        bool includeSkipSection = false;
+        if (theIsFromLessonContinuedSection) {
+          includeSkipSection = true;
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1)
+                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: includeSkipSection)
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -193,7 +198,8 @@ class _LessonPageState extends State<LessonPage> {
                   QuizPage(quizTextbook: QuizTextbook.hanzishu,
                       quizCategory: QuizCategory.none,
                       lessonId: lessonId,
-                      wordsStudy: null),
+                      wordsStudy: null,
+                      includeSkipSection: true),
             ),
           ).then((val) => {_getRequests()});
         //}

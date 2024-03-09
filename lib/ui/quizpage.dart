@@ -11,9 +11,10 @@ class QuizPage extends StatefulWidget {
   final quizCategory;
   final int lessonId;
   final String wordsStudy;
+  final includeSkipSection;
   bool isChars = true;
 
-  QuizPage({this.quizTextbook, this.quizCategory, this.lessonId, this.wordsStudy});
+  QuizPage({this.quizTextbook, this.quizCategory, this.lessonId, this.wordsStudy, this.includeSkipSection});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -24,6 +25,7 @@ class _QuizPageState extends State<QuizPage> {
   AnswerPosition answerPosition;
   QuizTextbook quizTextbook;
   QuizCategory quizCategory;
+  bool includeSkipSection;
   int lessonId;
   String wordsStudy;
   int index;
@@ -46,6 +48,7 @@ class _QuizPageState extends State<QuizPage> {
     quizTextbook = widget.quizTextbook;
     wordsStudy = widget.wordsStudy;
     quizCategory = widget.quizCategory;
+    includeSkipSection = widget.includeSkipSection;
     theQuizManager.initValues(quizTextbook, quizCategory, wordsStudy);
     index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
@@ -459,7 +462,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.custom) {
+    if (includeSkipSection/*theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.custom*/) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),

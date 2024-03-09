@@ -531,7 +531,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1),
+                    typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -540,7 +540,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none,lessonId: 0, wordsStudy: inputText),
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none,lessonId: 0, wordsStudy: inputText, includeSkipSection: false,),
           ),
         ).then((val) => {_getRequests()});
         break;

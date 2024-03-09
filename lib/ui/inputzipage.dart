@@ -27,7 +27,8 @@ class InputZiPage extends StatefulWidget {
   final bool isSoundPrompt;
   final InputMethod inputMethod;
   final int showHint;
-  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint});
+  final bool includeSkipSection;
+  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint, this.includeSkipSection});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
@@ -40,6 +41,7 @@ class _InputZiPageState extends State<InputZiPage> {
   bool isSoundPrompt;
   InputMethod inputMethod;
   int showHint;
+  bool includeSkipSection;
   int currentIndex;
   BuildContext currentBuildContext;
   double _progressValue;
@@ -132,6 +134,7 @@ class _InputZiPageState extends State<InputZiPage> {
     wordsStudy = widget.wordsStudy;
     isSoundPrompt = widget.isSoundPrompt;
     inputMethod = widget.inputMethod;
+    includeSkipSection = widget.includeSkipSection;
     theInputZiManager.setCurrentType(typingType, wordsStudy);
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
@@ -1492,7 +1495,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getSkipThisSection() {
-    if (theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom) {
+    if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return FlatButton(
         child: Text(
           getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),

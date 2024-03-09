@@ -344,7 +344,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1),
+                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true),
             ),
           ).then((val) => {_getRequests()});
           break;
@@ -353,7 +353,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none, lessonId: 0, wordsStudy: inputText),
+                  QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none, lessonId: 0, wordsStudy: inputText, includeSkipSection: true),
             ),
           ).then((val) => {_getRequests()});
           break;

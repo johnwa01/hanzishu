@@ -234,7 +234,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
-                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.soundToZi, lessonId: 0, wordsStudy: customString),
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.soundToZi, lessonId: 0, wordsStudy: customString, includeSkipSection: false,),
             ),
           );
         },
@@ -278,7 +278,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(builder: (context) =>
-                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.ziToSound, lessonId: 0, wordsStudy: customString),
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.ziToSound, lessonId: 0, wordsStudy: customString, includeSkipSection: false),
             ),
           );
         },
@@ -322,7 +322,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         onPressed: () {
           Navigator.of(context).push(
               MaterialPageRoute(builder: (context) =>
-              QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.meaning, lessonId: 0, wordsStudy: customString),
+              QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.meaning, lessonId: 0, wordsStudy: customString, includeSkipSection: false),
             ),
           );
         },
@@ -371,7 +371,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Others, showHint: 0), //InputZiPage(),
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Others, showHint: 0, includeSkipSection: false), //InputZiPage(),
             ),
           );
         },
@@ -400,7 +400,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 0) //InputZiPage(),
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 0, includeSkipSection: false) //InputZiPage(),
             ),
           );
         },
@@ -437,7 +437,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                     dicStage: DictionaryStage.detailedzi,
                     firstOrSearchingZiIndex: -1,
                     flashcardList: customString,
-                    dicCaller: DicCaller.WordsStudy),
+                    dicCaller: DicCaller.Flashcard),
           ),
         );
       },
