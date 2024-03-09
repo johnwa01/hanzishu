@@ -379,7 +379,7 @@ var theString_en_US = [
   Local(370, "Please type"),
   Local(371, "Please type"),
   Local(372, "Recommend Chrome browser."),
-  Local(373, "Snowball"), // Conversation"), //Unit
+  Local(373, "Snowball conversation"), //Unit
   Local(374, "Can not find character: "),
   Local(375, "Result"),
   Local(376, "minutes"),
@@ -500,11 +500,13 @@ var theString_en_US = [
   Local(490, "Yuwen： Hanzi"),
   Local(491, "Listen and type Hanzi"),
   Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
-  Local(493, "Change"),
+  Local(493, "Change method"),
   Local(494, "Hanzishu input method"),
   Local(495, "Self-chosen input methods"),
   Local(496, "Grade"),
   Local(497, "Semester"),
   Local(498, "Learn Hanzi"),
   Local(499, "Lesson"),
+  Local(500, "Study and test Hanzi"),
+  Local(501, "Snowball stories"),
 ];

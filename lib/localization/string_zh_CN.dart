@@ -504,4 +504,6 @@ var theString_zh_CN = [
   Local(497, "学期"),
   Local(498, "识字"),
   Local(499, "课文"),
+  Local(500, "学习和测试汉字"),
+  Local(501, "滚雪球故事"),
 ];

@@ -133,7 +133,12 @@ class OpenHelper {
           lessonOrSectionName = "4. " + getString(4); //"Conversation";
           break;
         case LessonSection.ConversationSnowball:
-          lessonOrSectionName = "5. " + getString(373); //"ConversationSnowball";
+          if (lessonNumber <=60) {
+            lessonOrSectionName = "5. " + getString(373); //"Snowball conversation";
+          }
+          else { // > 60
+            lessonOrSectionName = "5. " + getString(501); //"Snowball stories";
+          }
           break;
         case LessonSection.Typing:
           lessonOrSectionName = "6. " + getString(5); //"Typing exercises";

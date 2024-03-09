@@ -125,7 +125,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       title = getString(395); // 'all 3,800'
     }
     else if (drillCategory == DrillCategory.custom) {
-      title = getString(10) + " " + getString(399) + subItemId.toString();
+      title = getString(500);
     }
 
     return Scaffold
