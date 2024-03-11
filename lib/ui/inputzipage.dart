@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:ui';
+import 'dart:async';
 import 'package:flutter/rendering.dart';
 //importpackage:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
@@ -116,6 +118,21 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  speakHanziAndPhrase(String typingChar) {
+    TextToSpeech.speak("zh-CN", typingChar);
+    var phrase = ZiManager.getPhrase(typingChar);
+    if (phrase != null) {
+      //sleep(const Duration(milliseconds: 1000));
+      if (kIsWeb) {
+        TextToSpeech.speak("zh-CN", phrase);
+      }
+      else {
+        Timer(Duration(seconds: 1), () {
+          TextToSpeech.speak("zh-CN", phrase);
+        });
+      }
+    }
+  }
 
   @override
   initState() {
@@ -144,9 +161,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
     // first char, put here instead of Build so that it does only once.
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
-      String TypingChar = getEitherCharFromCurrentId(
+      String typeChar = getEitherCharFromCurrentId(
           typingType, 0 /*currentIndex*/, widget.lessonId);
-      TextToSpeech.speak("zh-CN", TypingChar);
+      if (isSoundPrompt) { // custom, and sound prompt
+        speakHanziAndPhrase(typeChar);
+      }
+      else {
+        TextToSpeech.speak("zh-CN", typeChar);
+      }
     }
 
     showHint = widget.showHint;  // this is the default
@@ -424,12 +446,14 @@ class _InputZiPageState extends State<InputZiPage> {
     return selectionPosi;
   }
 
-  checkAndUpdateCurrentIndex() {
+  checkAndUpdateCurrentIndex(TextEditingController edidController) {
     // for guarded typing
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       if (theInputZiManager.doesTypingResultContainTheZi(
-          typingType, currentIndex, _controller.text, lessonId)) {
-        initHintSelected(); // reset the hint selection parameters
+          typingType, currentIndex, edidController.text, lessonId)) {
+        if (edidController == _controller) {
+          initHintSelected(); // reset the hint selection parameters
+        }
 
         // tell Flutter to refresh with the next index
         setState(() {
@@ -446,11 +470,19 @@ class _InputZiPageState extends State<InputZiPage> {
             theInputZiManager.initCurrentIndex();
             showCompletedDialog(currentBuildContext);
           }
-          currentIndex =
-              theInputZiManager.getNextIndex(
-                  typingType, /*currentIndex,*/ lessonId);
-          String TypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
-          TextToSpeech.speak("zh-CN", TypingChar);
+          else {
+            currentIndex =
+                theInputZiManager.getNextIndex(
+                    typingType, /*currentIndex,*/ lessonId);
+            String typeChar = getEitherCharFromCurrentId(
+                typingType, currentIndex, lessonId);
+            if (isSoundPrompt) { // custom, and sound prompt
+              speakHanziAndPhrase(typeChar);
+            }
+            else {
+              TextToSpeech.speak("zh-CN", typeChar);
+            }
+          }
         });
 
         //       return;
@@ -525,7 +557,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //showHint = 0;
 
-    checkAndUpdateCurrentIndex();
+    checkAndUpdateCurrentIndex(_controller);
 
     //restart a typing cycle
     InputZiManager.previousFirstPositionList.clear();
@@ -539,14 +571,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputStandard() {
-    if (typingType != TypingType.DicSearchTyping) {
-      String TypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
-      if (_controllerStandard.text.contains(TypingChar)) {
-        setState(() {
-          currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
-        });
-      }
-    }
+         checkAndUpdateCurrentIndex(_controllerStandard);
   }
 
   workaroundWebCases() {
@@ -1259,12 +1284,9 @@ class _InputZiPageState extends State<InputZiPage> {
                 ]
             ),
             getInputPrompt(),
-
+            SizedBox(height: 30.0),
             getOtherInputMethodTextField(_controllerStandard, false),
-
-            SizedBox(
-              height: 40.0, //40
-            ),
+            SizedBox(height: 40.0),
           ]
       );
     }
@@ -1712,19 +1734,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputZiOrSoundIcon(String typingChar, double fontSize) {
     if (isSoundPrompt) {
-      var phrase = ZiManager.getPhrase(typingChar);
       return IconButton(
           icon: Icon(
             Icons.volume_up,
-            size: fontSize * 3 * getSizeRatio(),   // 150
+            size: fontSize * 2 * getSizeRatio(),   // 150
           ),
           color: Colors.cyan, //Colors.green,
           onPressed: () {
-            TextToSpeech.speak("zh-CN", typingChar);
-            if (phrase != null) {
-              sleep(const Duration(milliseconds: 1000));
-              TextToSpeech.speak("zh-CN", phrase);
-            }
+            speakHanziAndPhrase(typingChar);
           });
     }
     else { // text
@@ -2324,9 +2341,13 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(115)/*"Good job!"*/;
       content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
     }
-    else if (typingType == TypingType.Custom || typingType == TypingType.ComponentTyping) {
+    else if (typingType == TypingType.ComponentTyping) {
       title = getString(115)/*"Good job!"*/;
       content = getString(410)/*"You have completed typing exercises."*/;
+    }
+    else if (typingType == TypingType.Custom) {
+      title = getString(115)/*"Good job!"*/;
+      content = getString(502)/*"You have completed this typing exercises."*/;
     }
 
     // set up the AlertDialog
