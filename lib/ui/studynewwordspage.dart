@@ -344,7 +344,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true),
+                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: true),
             ),
           ).then((val) => {_getRequests()});
           break;

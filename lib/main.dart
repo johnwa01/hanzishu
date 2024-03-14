@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     //DictionaryPage(),
-    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: 1, includeSkipSection: false), //InputZiPage(),
+    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
     WordPage(),
     //DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
     ToolsPage(), // typing

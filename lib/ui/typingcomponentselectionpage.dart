@@ -163,7 +163,7 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id),
+              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false),
             ),
           );
         },

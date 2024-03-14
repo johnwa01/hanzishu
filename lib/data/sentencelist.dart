@@ -177,7 +177,7 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(168, "很大很大，人很少，", "very | big | very | big, people | very | few,", 0, null, [], "", ""),
   Sentence(179, "车辆无法行驶。", "vehicle | vehicle | no | way | move | drive.", 0, null, [], "", ""),
   Sentence(170, "骆驼身上有驼峰，", "camel | camel | body | up | have | camel | peak,", 0, null, [], "", ""),
-  Sentence(171, "能够耐渴耐饿，", "capable | enough | hold | thirty | hold | hungry,", 0, null, [], "", ""),
+  Sentence(171, "能够耐渴耐饿，", "capable | enough | hold | thirsty | hold | hungry,", 0, null, [], "", ""),
   Sentence(172, "适应干旱生活，", "fit | respond | dry | dry | birth | live,", 0, null, [], "", ""),
   Sentence(173, "深受人们喜爱。", "", 0, null, [], "", ""), // not used
   Sentence(174, "是不可缺少的工具。", "is | not | ok | miss | lack | of | working | tool.", 0, null, [], "", ""),

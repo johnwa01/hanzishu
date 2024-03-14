@@ -30,7 +30,8 @@ class InputZiPage extends StatefulWidget {
   final InputMethod inputMethod;
   final int showHint;
   final bool includeSkipSection;
-  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint, this.includeSkipSection});
+  final bool showSwitchMethod;
+  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint, this.includeSkipSection, this.showSwitchMethod});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
@@ -44,6 +45,7 @@ class _InputZiPageState extends State<InputZiPage> {
   InputMethod inputMethod;
   int showHint;
   bool includeSkipSection;
+  bool showSwitchMethod;
   int currentIndex;
   BuildContext currentBuildContext;
   double _progressValue;
@@ -152,6 +154,7 @@ class _InputZiPageState extends State<InputZiPage> {
     isSoundPrompt = widget.isSoundPrompt;
     inputMethod = widget.inputMethod;
     includeSkipSection = widget.includeSkipSection;
+    showSwitchMethod = widget.showSwitchMethod;
     theInputZiManager.setCurrentType(typingType, wordsStudy);
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
@@ -1233,7 +1236,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 //SizedBox(width: 10),
                 Container(
                   //alignment: Alignment.topRight,
-                  child: getSwitchInputMethod(),
+                  child: getSwitchInputMethodOrInputModeMessage(),
                 ),
                 //SizedBox(width: 10),
                 Container(
@@ -1289,6 +1292,15 @@ class _InputZiPageState extends State<InputZiPage> {
             SizedBox(height: 40.0),
           ]
       );
+    }
+  }
+
+  Widget getSwitchInputMethodOrInputModeMessage() {
+    if (showSwitchMethod) {
+      return getSwitchInputMethod();
+    }
+    else {
+      return Text(getString(503), style: TextStyle(color: Colors.lightBlue));
     }
   }
 

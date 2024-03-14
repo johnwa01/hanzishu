@@ -371,7 +371,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Others, showHint: 0, includeSkipSection: false), //InputZiPage(),
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 0, includeSkipSection: false, showSwitchMethod: true), //InputZiPage(),
             ),
           );
         },
@@ -400,7 +400,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 0, includeSkipSection: false) //InputZiPage(),
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 0, includeSkipSection: false, showSwitchMethod: true) //InputZiPage(),
             ),
           );
         },

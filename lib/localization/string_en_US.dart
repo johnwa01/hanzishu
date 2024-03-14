@@ -501,7 +501,7 @@ var theString_en_US = [
   Local(491, "Listen and type Hanzi"),
   Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
   Local(493, "Change method"),
-  Local(494, "Hanzishu input method"),
+  Local(494, "Puzzle typing method"),
   Local(495, "Self-chosen input methods"),
   Local(496, "Grade"),
   Local(497, "Semester"),
@@ -510,4 +510,5 @@ var theString_en_US = [
   Local(500, "Study and test Hanzi"),
   Local(501, "Snowball stories"),
   Local(502, "You have completed this typing exercise."),
+  Local(503, "(under English mode)"),
 ];
