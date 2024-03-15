@@ -229,6 +229,16 @@ class _MePageState extends State<MePage> {
                 );
               },
             ),
+            if (kIsWeb)
+              ListTile(
+                leading: Image.asset('assets/core/itemicon.png'),
+                title: Text(getString(504) /*"Friendly links"*/,
+                    textDirection: TextDirection.ltr),
+                onTap: () {
+                  launchUrl(Uri.parse("https://hanzishu.com/links"),
+                      webOnlyWindowName: '_self');
+                },
+              ),
           ],
         );
       }

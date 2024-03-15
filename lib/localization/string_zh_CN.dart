@@ -329,7 +329,7 @@ var theString_zh_CN = [
   Local(323, "左开口"),
   Local(324, "单纯'点'"),
   Local(325, "左右腿"),
-  Local(326, "刀"),
+  Local(326, "'刀'形"),
   Local(327, "上下口"),
   Local(328, "学习更多部件"),
   Local(329, "学习双胞胎部件"),
@@ -449,7 +449,7 @@ var theString_zh_CN = [
   Local(442, "左右"),
   Local(443, "上下"),
   Local(444, "包围"),
-  Local(445, "中文部件数"),
+  Local(445, "汉字部件数"),
   Local(446, "拆分"),
   Local(447, "测试汉字到读音"),
   Local(448, "测试汉字字义"),
@@ -508,4 +508,5 @@ var theString_zh_CN = [
   Local(501, "滚雪球故事"),
   Local(502, "你完成了这个打字练习。"),
   Local(503, "(英文模式下)"),
+  Local(504, "友情链接"),
 ];

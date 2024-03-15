@@ -1957,8 +1957,7 @@ class _InputZiPageState extends State<InputZiPage> {
               ]
          ),
          */
-          getCategoryRow(),
-          getSubCategoryRow1(),
+          getCategoryAndSubCat1Row(),
           getSubCategoryRow2(),
        ]
       ),
@@ -1966,30 +1965,34 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  getCategoryRow() {
+  getCategoryAndSubCat1Row() {
     if (showHint == 0) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-    //TODO: find a place to do this just once for each char
-    //currentTypingComponentsAndSub =
-    //      ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
-    //currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
-
-    //updateTypingStatusAndHintCompIndex(currentComposingText);
-
     currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
 
     return Row(
-        children: <Widget>[
-          getCategoryOneItem(1),
-          getCategoryOneItem(2),
-          getCategoryOneItem(3),
-          getCategoryOneItem(4),
-          getCategoryOneItem(5),
-        ]
+        children: getCategoriesAndSubCat1(),
     );
   }
+
+  List<Widget> getCategoriesAndSubCat1() {
+    List<Widget> categories = [];
+
+    categories.add(Text('[', style: TextStyle(color: Colors.green)));
+    categories.add(getCategoryOneItem(1));
+    categories.add(getCategoryOneItem(2));
+    categories.add(getCategoryOneItem(3));
+    categories.add(getCategoryOneItem(4));
+    categories.add(getCategoryOneItem(5));
+    categories.add(Text(']', style: TextStyle(color: Colors.green)));
+
+    addSubCategory1(categories);
+
+    return categories;
+  }
+
 
   getCategoryOneItem(int categoryIndex) {
     if (selectedCategoryIndex != 0) {
@@ -2004,11 +2007,10 @@ class _InputZiPageState extends State<InputZiPage> {
     if (selectedCategoryIndex > 0) {
       if (categoryIndex == currentCorrectCategoryIndex) {
         color = Colors.green;
-        categoryString += ':';
       }
       else if (categoryIndex == selectedCategoryIndex) {
         color = Colors.red;
-        categoryString = '(' + categoryString + ')';
+        categoryString = categoryString;
       }
     }
 
@@ -2059,75 +2061,30 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  getSubCategoryRow1() {
-    if (showHint == 0 || selectedCategoryIndex == 0) {
-      return SizedBox(width: 0.0, height: 0.0);
-    }
-
-    String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
-    currentLeadCompList = ComponentManager.getLeadComponentsForCategory(category);
-
-    currentCorrectSubcategoryIndex = theComponentManager.getCurrentCorrectSubcategoryIndex(currentTypingComponentsAndSub, selectedCompIndex, currentLeadCompList);
-
-    if (currentCorrectCategoryIndex == 3 || currentCorrectCategoryIndex == 5) { // legs
-      return Row(
-          children: <Widget>[
-            getSubCategoryOneItem(1, currentLeadCompList),
-            getSubCategoryOneItem(2, currentLeadCompList),
-            getSubCategoryOneItem(3, currentLeadCompList),
-          ]
-      );
-    }
-    else {
-      return Row(
-          children: <Widget>[
-            getSubCategoryOneItem(1, currentLeadCompList),
-            getSubCategoryOneItem(2, currentLeadCompList),
-            getSubCategoryOneItem(3, currentLeadCompList),
-            getSubCategoryOneItem(4, currentLeadCompList),
-          ]
-      );
+  addSubCategory1(List<Widget> widgetList) {
+    if (showHint != 0 && selectedCategoryIndex != 0) {
+      String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
+      currentLeadCompList = ComponentManager.getLeadComponentsForCategory(category);
+      currentCorrectSubcategoryIndex = theComponentManager.getCurrentCorrectSubcategoryIndex(currentTypingComponentsAndSub, selectedCompIndex, currentLeadCompList);
+      widgetList.add(getSubCategoryOneItem(1, currentLeadCompList));
+      widgetList.add(getSubCategoryOneItem(2, currentLeadCompList));
     }
   }
 
   getSubCategoryRow2() {
-    if (showHint == 0 || selectedCategoryIndex == 0) {
+    if (showHint == 0 || selectedCategoryIndex == 0 || currentLeadCompList.length <= 2) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-    //String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
-    //var leadCompList = ComponentManager.getLeadComponentsForCategory(category);
-
-    if (currentLeadCompList.length <= 4) {
-      return SizedBox(width: 0.0, height: 0.0);
+    List<Widget> widgetList  = [];
+    for (int i = 2; i < currentLeadCompList.length; i++) {
+      widgetList.add(getSubCategoryOneItem(i + 1, currentLeadCompList));
     }
 
-    if (currentCorrectCategoryIndex == 3) { // legs
-      return Row(
-          children: <Widget>[
-            getSubCategoryOneItem(4, currentLeadCompList),
-            getSubCategoryOneItem(5, currentLeadCompList),
-          ]
-      );
-    }
-    else if (currentCorrectCategoryIndex == 5) { // strokes
-      return Row(
-          children: <Widget>[
-            getSubCategoryOneItem(4, currentLeadCompList),
-            getSubCategoryOneItem(5, currentLeadCompList),
-            getSubCategoryOneItem(6, currentLeadCompList),
-          ]
-      );
-    }
-    else {
-      return Row(
-          children: <Widget>[
-            getSubCategoryOneItem(5, currentLeadCompList),
-            getSubCategoryOneItem(6, currentLeadCompList),
-            getSubCategoryOneItem(7, currentLeadCompList),
-          ]
-      );
-    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: widgetList,
+    );
   }
 
   // not used anymore

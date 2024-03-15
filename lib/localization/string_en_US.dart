@@ -511,4 +511,5 @@ var theString_en_US = [
   Local(501, "Snowball stories"),
   Local(502, "You have completed this typing exercise."),
   Local(503, "(under English mode)"),
+  Local(504, "Friendly links"),
 ];
