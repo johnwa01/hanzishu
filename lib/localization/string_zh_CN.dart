@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/localization.dart';
 // NOTE: never change or remove an existing entry here. Just create a new one.
 var theString_zh_CN = [
   Local(0, "未知"),
-  Local(1, "识字/测字"),
+  Local(1, "汉字/测试"),
   Local(2, "字卡"),
   Local(3, "汉字分解"),
   Local(4, "对话"),
@@ -460,7 +460,7 @@ var theString_zh_CN = [
   Local(453, "不显示字"),
   Local(454, "汉字练习纸"),
   Local(455, "HSK汉字"),
-  Local(456, "学习汉字"),
+  Local(456, "学习或复习汉字"),
   Local(457, "在这个测试中，估计你知道约"),
   Local(458, "总数是"),
   Local(459, "所有水平一起"),

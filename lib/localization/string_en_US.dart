@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Learn/Test Hanzi"),
+  Local(1, "Hanzi/Test"),
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -463,7 +463,7 @@ var theString_en_US = [
   Local(453, "Not show Hanzi"),
   Local(454, "Hanzi practice sheet"),
   Local(455, "HSK Hanzi"),
-  Local(456, "Learn Hanzi"),
+  Local(456, "Learn or review Hanzi"),
   Local(457, "In current test, it's estimated that you know about "),
   Local(458, "Total is "),
   Local(459, "All levels combined"),
