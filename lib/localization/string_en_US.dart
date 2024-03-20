@@ -512,4 +512,6 @@ var theString_en_US = [
   Local(502, "You have completed this typing exercise."),
   Local(503, "(under English mode)"),
   Local(504, "Friendly links"),
+  Local(505, "Pinyin exercise"),
+  Local(506, "Click each Pinyin and repeat after speaker for a few times."),
 ];

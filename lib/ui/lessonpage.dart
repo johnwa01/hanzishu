@@ -7,7 +7,7 @@ import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/ui/treepage.dart';
+import 'package:hanzishu/ui/pinyinpage.dart';
 import 'package:hanzishu/ui/listofzipage.dart';
 import 'package:hanzishu/ui/standardexampage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
@@ -54,16 +54,12 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   _getRequests() async {
-    //if (theNewlyCompletedTypingExercise != -1) {
-      //exerciseCompleted[theNewlyCompletedTypingExercise] = true;
-      //theNewlyCompletedTypingExercise = -1;
-
-      //setState(() {
-      // force refresh every time to make sure to pick up completed icon
       this.numberOfExercises += 1;
-      //});
+      if (this.numberOfExercises == 3 && (widget.lessonId < 10 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
+        this.numberOfExercises += 1; // skip Pinyin section
+      }
 
-      if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 5) {
+      if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 6) {
         // re-init for next section's action
         theIsBackArrowExit = true;
         launchLessonSection(context, theCurrentLessonId, numberOfExercises);
@@ -74,7 +70,6 @@ class _LessonPageState extends State<LessonPage> {
         theIsBackArrowExit = true;
         numberOfExercises = 0;
       }
-    //}
   }
 
   @override
@@ -155,18 +150,25 @@ class _LessonPageState extends State<LessonPage> {
         ).then((val) => {_getRequests()});
         break;
         */
-        /*
         case 3:
+          int pinyinLesson = lessonId - 10; // starting from lesson 10 by default
+          if (lessonId >= 41) {             // temp second round starting from pinyin 5.
+            pinyinLesson = lessonId - 41 + 4;
+          }
+
+          bool includeSkipSection = false;
+          if (theIsFromLessonContinuedSection) {
+            includeSkipSection = true;
+          }
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                BreakoutPage(lessonId: lessonId, wordsStudy: ""),
+                PinyinPage(currentPinyinLessonId: pinyinLesson, includeSkipSection: includeSkipSection),
           ),
         ).then((val) => {_getRequests()});
         break;
-        */
-      case 3:
+      case 4:
         bool includeSkipSection = false;
         if (theIsFromLessonContinuedSection) {
           includeSkipSection = true;
@@ -180,7 +182,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -189,7 +191,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 5:
+      case 6:
         //if (lessonId <= Lesson.numberOfLessonsInLevel1) {
           Navigator.push(
             context,
@@ -217,7 +219,7 @@ class _LessonPageState extends State<LessonPage> {
         }
         */
         break;
-      case 6:
+      case 7:
         var initZis = getConvCharsForLesson(lessonId);
         Navigator.push(
           context,
@@ -301,7 +303,7 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 2),
-                getButton(context, lessonId, 3),
+                getPinyinButton(context, lessonId, 3),
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -321,7 +323,7 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 6),
-                //getButton(context, lessonId, 7),
+                getButton(context, lessonId, 7),
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -330,6 +332,16 @@ class _LessonPageState extends State<LessonPage> {
       ),
     );
   }
+
+  Widget getPinyinButton(BuildContext context, int lessonId, int lessonSection) {
+    if ((lessonId >= 10 && lessonId <= 33) || (lessonId >= 41)) {  // changed the range together with _getRequests()
+      return getButton(context, lessonId, lessonSection);
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+  }
+
 
   Widget getButton(BuildContext context, int lessonId, int lessonSection) {
     String buttonTitle = "";
@@ -348,21 +360,19 @@ class _LessonPageState extends State<LessonPage> {
       case 2:
         buttonTitle = getString(2);
         break;
-        /*
-      case 3:
-        buttonTitle = getString(304);
-        break;
-        */
-      case 3:
-        buttonTitle = getString(5);
+      case 3: // new
+        buttonTitle = getString(505);
         break;
       case 4:
-        buttonTitle = getString(373);
+        buttonTitle = getString(5);
         break;
       case 5:
-        buttonTitle = getString(6);
+        buttonTitle = getString(373);
         break;
       case 6:
+        buttonTitle = getString(6);
+        break;
+      case 7:
         buttonTitle = getString(454);
         break;
       default:
