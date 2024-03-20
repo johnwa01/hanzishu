@@ -2082,7 +2082,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: widgetList,
     );
   }
