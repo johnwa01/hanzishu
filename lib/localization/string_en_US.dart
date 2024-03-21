@@ -481,7 +481,7 @@ var theString_en_US = [
   Local(471, "New scientific stage of Chinese character education"),
   Local(472, "Chicken"),
   Local(473, "Camel"),
-  Local(474, "lessonlevelstr474"),
+  Local(474, "Bear"),
   Local(475, "lessonlevelstr475"),
   Local(476, "lessonlevelstr476"),
   Local(477, "lessonlevelstr477"),

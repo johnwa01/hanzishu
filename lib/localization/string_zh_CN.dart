@@ -478,7 +478,7 @@ var theString_zh_CN = [
   Local(471, "识字教育科学化的新阶段"),
   Local(472, "鸡"),
   Local(473, "骆驼"),
-  Local(474, "lessonlevelstr474"),
+  Local(474, "狗熊"),
   Local(475, "lessonlevelstr475"),
   Local(476, "lessonlevelstr476"),
   Local(477, "lessonlevelstr477"),

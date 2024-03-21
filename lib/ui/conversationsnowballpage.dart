@@ -144,21 +144,28 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   }
 
   Widget getPinyinRow(Sent oneSent) {
+    var spaceBeforePinyin = 75.0;
+    if (lessonId > 60) {
+      spaceBeforePinyin = 50.0;
+    }
     return Container(
       child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            SizedBox(width: 75 * getSizeRatioWithLimit()),
-            getSentencePinyin(theSentenceList[oneSent.sentenceId].conv)
+            SizedBox(width: spaceBeforePinyin * getSizeRatioWithLimit()),
+            getSentencePinyin(oneSent.sentenceId)
           ]
 
       ),
     );
   }
 
-  Widget getSentencePinyin(String conv) {
-    String pinyin = LessonManager.getPinyinFromSentence(conv);
-    return Text(Utility.adjustPinyinSpace(pinyin));
+  Widget getSentencePinyin(int sentenceId) {
+    String pinyin = theSentenceList[sentenceId].pinyin;
+    if (pinyin.length == 0) {
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv);
+    }
+    return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));
   }
 
   List<Widget> getRowButtons(Sent oneSent, int rowIndex) {
@@ -174,9 +181,12 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
 
     List<Widget> buttons = [];
     buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
-    buttons.add(Text(
-        label, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit()),));
-    buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    if (lessonId <= 60) {
+      buttons.add(Text(
+        label, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit())));
+      buttons.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    }
+
     var oneIcon = Container(
           height: 20.0 * getSizeRatioWithLimit(), //180
           width: 20.0 * getSizeRatioWithLimit(),
