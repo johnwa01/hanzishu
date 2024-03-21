@@ -55,7 +55,7 @@ class _LessonPageState extends State<LessonPage> {
 
   _getRequests() async {
       this.numberOfExercises += 1;
-      if (this.numberOfExercises == 3 && (widget.lessonId < 10 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
+      if (this.numberOfExercises == 3 && (widget.lessonId < 10 || widget.lessonId > 60 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
         this.numberOfExercises += 1; // skip Pinyin section
       }
 
@@ -334,7 +334,7 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   Widget getPinyinButton(BuildContext context, int lessonId, int lessonSection) {
-    if ((lessonId >= 10 && lessonId <= 33) || (lessonId >= 41)) {  // changed the range together with _getRequests()
+    if ((lessonId >= 10 && lessonId <= 33) || (lessonId >= 41 && lessonId <= 60)) {  // changed the range together with _getRequests()
       return getButton(context, lessonId, lessonSection);
     }
     else {
