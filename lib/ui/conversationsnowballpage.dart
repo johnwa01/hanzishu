@@ -222,8 +222,8 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
         onLongPress: () {
           initOverlay();
           TextToSpeech.speak("zh-CN", sentText[i]);
-          var ziId = ZiManager.findIdFromChar(ZiListType.zi, sentText[i]);
-          var meaning = ZiManager.getPinyinAndMeaning(ziId);
+          var ziId = ZiManager.findIdFromChar(ZiListType.searching, sentText[i]);
+          var meaning = ZiManager.getOnePinyinAndMeaning(ziId, ZiListType.searching);
           var posiAndSize = PositionAndSize((150.0 + rowIndex) * getSizeRatioWithLimit(), (85.0 + (rowIndex * 25)) * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 0.0, 0.0);
           showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
         },

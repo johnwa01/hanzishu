@@ -209,11 +209,11 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(200, "每次掰完一个棒子，", "every | time | rip | finish | one | piece | cob | -", 0, null, [], "", ""),
   Sentence(201, "就放在胳肢窝里，", "just | put | at | arm | limb | nest | inside", 0, null, [], "", ""),
   Sentence(202, "再掰一个又放在那里，", "again | rip | one | piece | also | put | at | that | place", 0, null, [], "", ""),
-  Sentence(203, "结果上一个就从", "", 0, null, [], "", ""),
+  Sentence(203, "结果上一个就从", "knot | result | last | one | - | at once | from", 0, null, [], "", ""),
   Sentence(204, "胳肢窝溜下来了。", "arm | limb | nest | slide | down | come | -", 0, null, [], "", ""),
   Sentence(205, "就这样，狗熊忙个不停，", "just | this | way, dog | bear | busy | - | no | stop", 0, null, [], "", ""),
   Sentence(206, "浑身有使不完的力气，", "murky | body | have | make | not | use up | of | power | air", 0, null, [], "", ""),
   Sentence(207, "但是到头来只有", "but | yeah | arrive | end | come | only | hold", 0, null, [], "", ""),
   Sentence(208, "一个棒子还在胳肢窝里，", "one | piece | cob | - | still | at | arm | limb | nest| inside ", 0, null, [], "", ""),
-  Sentence(209, "其它的全都掉了。", "", 0, null, [], "", ""),
+  Sentence(209, "其它的全都掉了。", "he | it | of | completely | all | drop | -", 0, null, [], "", ""),
 ];

@@ -1,25 +1,17 @@
+
+
 import 'package:flutter/material.dart';
-import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/ui/conversationsnowballpage.dart';
+import 'package:hanzishu/data/sentencelist.dart';
+import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/ui/conversationpainter.dart';
+import 'package:hanzishu/engine/sentence.dart';
+import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/data/sentencelist.dart';
-import 'package:hanzishu/engine/phrasemanager.dart';
-import 'package:hanzishu/data/phraselist.dart';
-
-enum ButtonType {
-  none,
-  char,
-  phrase,
-  specialPhrase,
-  sound,
-  translationSound,
-  launchPage
-}
+import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/data/conversationsnowballlist.dart';
 
 class ConversationPage extends StatefulWidget {
   final int lessonId;
@@ -30,74 +22,258 @@ class ConversationPage extends StatefulWidget {
 }
 
 class _ConversationPageState extends State<ConversationPage> {
+  int lessonId;
+  double fontSize1;
+  double fontSize2;
+  double fontSize3;
+
   double screenWidth;
+  ScrollController _scrollController;
+  PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
   OverlayEntry overlayEntry;
-  var lesson;
+  int previousOverlayGroup = 0;
+  int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
-
-  @override
-  void initState() {
-    super.initState();
-
-    lesson = theLessonList[theCurrentLessonId];
-    //lesson.populateNewItemList();
-  }
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
   }
 
-  double applyRatioWithLimit(double value) {
-    return value * getSizeRatioWithLimit();
-  }
-
   @override
-  Widget build(BuildContext context) {
-    //screenWidth = Utility.getScreenWidth(context);
-    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-    thePositionManager.setFrameWidth(screenWidth);
-
-    return Scaffold
-      (
-      appBar: AppBar
-        (
-        title: Text(getString(4)/*"Conversation"*/),
-      ),
-      body: Container(
-          //height: 200.0,
-          //width: 200.0,
-          child: WillPopScope(   // just for removing overlay on detecting back arrow
-            child: CustomPaint(
-              foregroundPainter: ConversationPainter(
-                  lineColor: Colors.amber,
-                  lessonId: widget.lessonId,
-                  screenWidth: screenWidth
-              ),
-              child: Center(
-                child: Stack(
-                    children: displayCharsAndCreateHittestButtons(context)
-                ),
-              ),
-            ),
-            onWillPop: _onWillPop
-          ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController()
+      ..addListener(() {
+        //print("offset = ${_scrollController.offset}");
+      });
   }
 
   initOverlay() {
     if (overlayEntry != null) {
       overlayEntry.remove();
       overlayEntry = null;
-      theDicOverlayEntry = null; //TODO: not used here, remove?
     }
   }
 
-  Future<bool>_onWillPop() {
+  @override
+  void dispose() {
     initOverlay();
+    _scrollController
+        .dispose(); // it is a good practice to dispose the controller
+    super.dispose();
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    screenWidth = Utility.getScreenWidth(context);
+    lessonId = widget.lessonId;
+
+    fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
+    fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
+    fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
+
+    // init positionmanager frame size
+    thePositionManager.setFrameWidth(screenWidth);
+
+    return Scaffold
+      (
+      appBar: AppBar
+        (
+        title: Text(getString(4) /*"Conversation"*/),
+      ),
+      body: Container(
+        //height: 800.00,
+
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          scrollDirection: Axis.vertical,
+          child: WillPopScope(
+              child: Column(
+                  children: <Widget>[
+                    getConversationContent(context),
+                    getContinue(context),
+                  ]
+              ),
+              onWillPop: _onWillPop
+          ),
+        ),
+
+      ),
+    );
+  }
+
+  Future<bool> _onWillPop() {
     return Future.value(true);
+  }
+
+  Widget getConversationContent(BuildContext context) {
+    return Column(
+      //mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+
+      children: getRows(lessonId),
+    );
+  }
+
+  List<Widget> getRows(int lessId) {
+    List<Widget> widgets = [];
+    var sents = theLessonList[lessId].sentenceList; //  snowballIds[0];
+
+    for (var i = 0; i < sents.length; i++) {
+      widgets.add(getOneRow(sents[i], i));
+      if (lessonId > theNumberOfLessonsInLevels[0]) {
+        widgets.add(getPinyinRow(sents[i]));
+      }
+      widgets.add(getTranslation(sents[i]));
+      widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));
+    }
+
+    return widgets;
+  }
+
+  Widget getOneRow(int sentId, int rowIndex) {
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: getRowButtons(sentId, rowIndex)
+      ),
+    );
+  }
+
+  Widget getPinyinRow(int sentId) {
+    var spaceStart = 47.0;
+    if (lessonId > 60) {
+      spaceStart = 27.0;
+    }
+
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: spaceStart * getSizeRatioWithLimit()),
+            getSentencePinyin(sentId)
+          ]
+
+      ),
+    );
+  }
+
+  Widget getSentencePinyin(int sentenceId) {
+    String pinyin = theSentenceList[sentenceId].pinyin;
+    if (pinyin.length == 0) {
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv);
+    }
+    return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));
+  }
+
+  Widget getTranslation(int sentId) {
+    // text trans
+    String trans = theSentenceList[sentId].trans;
+    if (trans.length == 0) {
+      trans = LessonManager.getTranslationFromSentence(theSentenceList[sentId].conv);
+    }
+
+    var spaceStart = 50.0;
+    if (lessonId > 60) {
+      spaceStart = 30.0;
+    }
+
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: spaceStart * getSizeRatioWithLimit()),
+            Flexible(
+              child: Container(
+                child: Text(trans, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()), softWrap: true),
+              ),
+            ),
+          ]
+
+      ),
+    );
+  }
+
+  List<Widget> getRowButtons(int sentId, int rowIndex) {
+    var sentText = theSentenceList[sentId].conv;
+
+    List<Widget> buttons = [];
+    if (lessonId <= 60) {
+      buttons.add(Text(" " + (rowIndex + 1).toString() + ".",
+          style: TextStyle(color: Colors.blue)));
+    }
+
+    var oneIcon = Container(
+        height: 20.0 * getSizeRatioWithLimit(), //180
+        width: 20.0 * getSizeRatioWithLimit(),
+        child: IconButton(
+          icon: Icon(
+            Icons.volume_up,
+            size: 20.0 * getSizeRatioWithLimit(), // 150
+          ),
+          color: Colors.cyan, //Colors.green,
+          onPressed: () {
+            initOverlay();
+            TextToSpeech.speak("zh-CN", sentText);
+          },
+        )
+    );
+    buttons.add(oneIcon);
+    buttons.add(SizedBox(width: 5 * getSizeRatioWithLimit()));
+    //Text(sentText,
+    //  style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
+
+    for (int i = 0; i < sentText.length; i++) {
+      var butt = TextButton(
+        style: TextButton.styleFrom(
+            textStyle: TextStyle(fontSize: 25.0 * getSizeRatioWithLimit()),
+            minimumSize: Size.zero,
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: EdgeInsets.fromLTRB(2.5, 0.0, 2.5, 0.0)
+        ),
+        onPressed: () {
+          initOverlay();
+          TextToSpeech.speak("zh-CN", sentText[i]);
+        },
+        onLongPress: () {
+          initOverlay();
+          TextToSpeech.speak("zh-CN", sentText[i]);
+          var ziId = ZiManager.findIdFromChar(ZiListType.searching, sentText[i]);
+          var meaning = ZiManager.getOnePinyinAndMeaning(ziId, ZiListType.searching);
+          var posiAndSize = PositionAndSize((150.0 + rowIndex) * getSizeRatioWithLimit(), (85.0 + (rowIndex * 25)) * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 20.0 * getSizeRatioWithLimit(), 0.0, 0.0);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
+        },
+        child: Text(sentText[i],
+            style: TextStyle(color: Colors.blue)),
+      );
+      buttons.add(Container(child: butt));
+    }
+
+    return buttons;
+  }
+
+  Widget getContinue(BuildContext context) {
+    var buttonText = getString(285); // Continue
+
+    if (theIsFromLessonContinuedSection) {
+      return Container(
+        child: FlatButton(
+          child: Text(buttonText,
+            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0),),
+          color: Colors.blueAccent,
+          textColor: Colors.white,
+          onPressed: () {
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop();
+          },
+        ),
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {
@@ -113,11 +289,27 @@ class _ConversationPageState extends State<ConversationPage> {
               Positioned(
                   top: posiY,
                   left: adjustedXValue,
+                  /*
                   child: FlatButton(
-                    child: Text(meaning, style: TextStyle(fontSize: applyRatioWithLimit(20.0)),),
+                    child: Text(meaning, style: TextStyle(fontSize: getSizeRatioWithLimit() * 20.0),),
                     color: Colors.blueAccent,
                     textColor: Colors.white,
-                    onPressed: () {initOverlay();},
+                    onPressed: () {},
+                  )*/
+
+                  child: TextButton(
+                    style: TextButton.styleFrom(
+                      backgroundColor: Colors.blueAccent, //Colors.red.shade50,
+                      textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+                      minimumSize: Size.zero,
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      padding: EdgeInsets.fromLTRB(2.5, 0.0, 2.5, 0.0),
+                    ),
+                    onPressed: () {
+                      initOverlay();
+                    },
+                    child: Text(meaning,
+                        style: TextStyle(color: Colors.white)),
                   )
               ));
       overlayState.insert(overlayEntry);
@@ -127,214 +319,4 @@ class _ConversationPageState extends State<ConversationPage> {
       previousPositionAndMeaning.set(0.0, 0.0, "");
     }
   }
-
-  Positioned getPositionedButton(int id, PositionAndSize posiAndSize, ButtonType buttonType) {
-    var frameColor = Colors.white;
-    if (buttonType == ButtonType.launchPage) {
-      frameColor = Colors.blueAccent;
-    }
-    var butt = FlatButton(
-      color: frameColor,
-      textColor: Colors.blueAccent,
-
-      onPressed: () {
-        initOverlay();
-
-        if (buttonType == ButtonType.sound) {
-          var conv = lesson.getSentence(id);
-          TextToSpeech.speak("zh-CN", conv);
-        }
-        else if (buttonType == ButtonType.char){
-          var zi = theZiManager.getZi(id);
-          TextToSpeech.speak("zh-CN", zi.char);
-        }
-        else if (buttonType == ButtonType.phrase){
-          var phrase = thePhraseList[id];
-          TextToSpeech.speak("zh-CN", phrase.chars);
-          //shortcut for sound only!
-        }
-        if (buttonType == ButtonType.translationSound) {
-          var sent = lesson.getRealSentence(id);
-          TextToSpeech.speak("en-US", sent.trans);
-        }
-        else if (buttonType == ButtonType.launchPage) {
-          theIsBackArrowExit = false;
-          Navigator.of(context).pop();
-        }
-      },
-      onLongPress: () {
-        if (buttonType == ButtonType.sound) {
-          var conv = lesson.getSentence(id);
-          TextToSpeech.speak("zh-CN", conv);
-        }
-        else if (buttonType == ButtonType.char) {
-          var zi = theZiManager.getZi(id);
-          if (zi != null) {
-            TextToSpeech.speak("zh-CN", zi.char);
-          }
-
-          var meaning = ZiManager.getPinyinAndMeaning(id);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
-        }
-        else if (buttonType == ButtonType.phrase || buttonType == ButtonType.specialPhrase){
-          var phrase;
-          if (buttonType == ButtonType.phrase) {
-            phrase = thePhraseList[id];
-          }
-          else {
-            phrase = theSpecialPhraseList[id];
-          }
-
-          TextToSpeech.speak("zh-CN", phrase.chars);
-
-          var meaning = phrase.getPinyinAndMeaning();
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY, meaning);
-        }
-        else if (buttonType == ButtonType.translationSound) {
-          var sent = lesson.getRealSentence(id);
-          TextToSpeech.speak("en-US", sent.trans);
-        }
-        else if (buttonType == ButtonType.launchPage) {
-          theIsBackArrowExit = false;
-          Navigator.of(context).pop();
-        }
-      },
-      child:
-        Text("", style: TextStyle(fontSize: applyRatioWithLimit(32.0))),
-      // Note: cannot put char here directly since the gap would be too big.
-    );
-
-    var posiCenter = Positioned(
-        top: posiAndSize.transY,
-        left: posiAndSize.transX,
-        height: posiAndSize.height,
-        width: posiAndSize.width,
-        child: butt
-    );
-
-    return posiCenter;
-  }
-
-  List<Widget> displayCharsAndCreateHittestButtons(BuildContext context) {
-    List<Widget> buttons = [];
-
-    var sentenceLength = lesson.sentenceList.length;
-    for (int j = 0; j < sentenceLength; j++) {
-      //var conv = lesson.getSentence(j);
-      var sentId = lesson.sentenceList[j];
-      var conv = theSentenceList[sentId].conv;
-      var convWithSeparation = theSentenceList[sentId].convWithSeparation;
-
-      var position = PositionAndSize(applyRatioWithLimit(25.0), applyRatioWithLimit(33.0 + 100.0 * j), applyRatioWithLimit(20.0), applyRatioWithLimit(20.0), 0.0, 0.0);
-      buttons.add(getPositionedButton(j, position, ButtonType.sound));
-
-      for (int i = 0; i < conv.length; i++) {
-        var oneChar = conv[i];
-        var id = ZiManager.findIdFromChar(ZiListType.zi, oneChar);
-        if (id != -1) {
-          var position = PositionAndSize(
-              applyRatioWithLimit(50.0 + 30.0 * i), applyRatioWithLimit(30.0 + 100.0 * j), applyRatioWithLimit(28.0), applyRatioWithLimit(28.0), 0.0, 0.0);
-          buttons.add(getPositionedButton(id, position, ButtonType.char));
-        }
-      }
-
-      if (theCurrentLessonId <= 60) {
-        var positionTranslation = PositionAndSize(applyRatioWithLimit(50.0),
-            applyRatioWithLimit(33.0 + 100.0 * j + 52.0),
-            applyRatioWithLimit(8.0 * theSentenceList[sentId].trans.length),
-            applyRatioWithLimit(20.0), 0.0, 0.0);
-        buttons.add(getPositionedButton(
-            j, positionTranslation, ButtonType.translationSound));
-      }
-
-      /* Decide to not show phrase based sentences per current plan.
-      ButtonType buttonType;
-      var previousChar = '|';
-      var phrase;
-      var xPosi = applyRatioWithLimit(50.0);
-      for (int i = 0; i < convWithSeparation.length; i++) {
-        var oneSeparation = convWithSeparation[i];
-
-        int separationCount = 1;
-
-        if (oneSeparation == '|' || Utility.specialChar(oneSeparation)) {
-          xPosi += applyRatioWithLimit(12.0);
-        }
-        else {
-          var id = -1;
-          if (previousChar == '|' || Utility.specialChar(previousChar)) {
-            var width;
-            // complete the whole separation block after "|"
-            if ((separationCount =
-                Utility.findSeparationCount(convWithSeparation, i)) == 1) {
-              width = applyRatioWithLimit(25.0); //20.0;
-              id = ZiManager.findIdFromChar(ZiListType.zi, oneSeparation);
-              buttonType = ButtonType.char;
-            }
-            else {
-              width = applyRatioWithLimit(25.0) * separationCount;
-              var subStr = convWithSeparation.substring(i, i + separationCount);
-              phrase = PhraseManager.getPhraseByName(subStr);
-              if (phrase != null) {
-                id = phrase.id;
-                buttonType = ButtonType.phrase;
-              }
-              else {
-                phrase = PhraseManager.getSpecialPhraseByName(subStr);
-                if (phrase != null) {
-                  id = phrase.id;
-                  buttonType = ButtonType.specialPhrase;
-                }
-              }
-            }
-
-            if ( id != -1) {
-              var position = PositionAndSize(
-                  xPosi, applyRatioWithLimit(100.0 + 70.0 * j), width, applyRatioWithLimit(20.0), 0.0, 0.0);
-              buttons.add(getPositionedButton(id, position, buttonType));
-
-              xPosi += width;
-            }
-          }
-        }
-
-        previousChar = oneSeparation;
-      }
-      */
-    }
-
-    // for Continue button
-    if (theIsFromLessonContinuedSection) {
-      var xStartPosi = applyRatioWithLimit(50.0);
-      var position = PositionAndSize(
-          xStartPosi,
-          applyRatioWithLimit(100.0 + 100.0 * (sentenceLength - 1) + 40),
-          applyRatioWithLimit(100.0 /*temp width*/), applyRatioWithLimit(20.0),
-          0.0, 0.0);
-      buttons.add(getPositionedButton(9999, position, ButtonType.launchPage));
-    }
-
-    return buttons;
-  }
-
-  /*
-  Widget getConversationWizard() {
-    var lesson = theLessonList[theCurrentLessonId];
-    lesson.populateNewItemList();
-
-    return ListView.separated(
-      itemCount: lesson.sentenceList.length,
-      separatorBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-        return Divider();
-      },
-      itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-        return ListTile(
-          //title: Text('item $index'),
-          //title: Text(theLessonList[index].chars),
-          title: Text(lesson.getSentence(index)),
-        );
-      },
-    );
-  }
-  */
 }
