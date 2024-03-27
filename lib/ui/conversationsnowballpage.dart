@@ -8,13 +8,17 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/sentence.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
+import 'package:hanzishu/engine/pinyin.dart';
+import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/conversationsnowballlist.dart';
 
 class ConversationSnowballPage extends StatefulWidget {
   final int lessonId;
-  ConversationSnowballPage({this.lessonId});
+  final PinyinType pinyinType;
+
+  ConversationSnowballPage({this.lessonId, this.pinyinType});
 
   @override
   _ConversationSnowballPageState createState() => _ConversationSnowballPageState();
@@ -34,6 +38,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
+  PinyinType pinyinType;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -46,6 +51,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       ..addListener(() {
         //print("offset = ${_scrollController.offset}");
       });
+    pinyinType = widget.pinyinType;
   }
 
   initOverlay() {
@@ -122,6 +128,10 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     var snowballId = theLessonList[lessId].snowballIds[0];
     var sents = theConversationSnowballList[snowballId].sents;
 
+    if (lessId > Lesson.numberOfLessonsInUnit1) // after first unit of lessons
+        {
+      widgets.add(getPinyinTypeRow());
+    }
 
     for (var i = 0; i < sents.length; i++) {
       widgets.add(getOneRow(sents[i], i));
@@ -132,6 +142,48 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
 
     return widgets;
+  }
+
+  Widget getPinyinTypeRow() {
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //SizedBox(width: spaceStart * getSizeRatioWithLimit()),
+            getOnePinyinType(PinyinType.None),
+            getOnePinyinType(PinyinType.OnlyFirst),
+            getOnePinyinType(PinyinType.OnlyNewZi),
+            getOnePinyinType(PinyinType.Full)
+          ]
+
+      ),
+    );
+  }
+
+  Widget getOnePinyinType(PinyinType onePinyinType) {
+    var display = getString(507); // None pinyin
+    if (onePinyinType == PinyinType.OnlyFirst) {
+      display = getString(508);
+    }
+    else if (onePinyinType == PinyinType.OnlyNewZi) {
+      display = getString(509);
+    }
+    else if (onePinyinType == PinyinType.Full) {
+      display = getString(510);
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 14.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        setState(() {
+          pinyinType = onePinyinType;
+        });
+      },
+      child: Text(display,
+          style: TextStyle(color: Colors.black)),
+    );
   }
 
   Widget getOneRow(Sent oneSent, int rowIndex) {
@@ -155,16 +207,31 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
             SizedBox(width: spaceBeforePinyin * getSizeRatioWithLimit()),
             getSentencePinyin(oneSent.sentenceId)
           ]
-
       ),
     );
   }
 
   Widget getSentencePinyin(int sentenceId) {
-    String pinyin = theSentenceList[sentenceId].pinyin;
-    if (pinyin.length == 0) {
-      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv);
+    if (pinyinType == PinyinType.None) {
+      return SizedBox(width: 0.0, height: 0.0);
     }
+
+    String pinyin = theSentenceList[sentenceId].pinyin;
+
+    if (pinyin.length > 1) {
+      if (pinyinType == PinyinType.OnlyFirst) {
+        var token = pinyin.split(' '); // ' ' is delimeter
+        pinyin = token[0];
+      }
+      else if (pinyinType == PinyinType.OnlyNewZi) {
+        pinyin = ""; // recreate the list for new zi only
+      }
+    }
+
+    if (pinyin.length == 0) {
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType, theLessonList[lessonId].convChars);
+    }
+
     return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));
   }
 

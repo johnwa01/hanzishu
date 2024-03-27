@@ -6,16 +6,17 @@ import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
-import 'package:hanzishu/engine/sentence.dart';
+import 'package:hanzishu/engine/pinyin.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
-import 'package:hanzishu/data/conversationsnowballlist.dart';
+import 'package:hanzishu/engine/lesson.dart';
 
 class ConversationPage extends StatefulWidget {
   final int lessonId;
-  ConversationPage({this.lessonId});
+  final PinyinType pinyinType;
+  ConversationPage({this.lessonId, this.pinyinType});
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
@@ -35,6 +36,7 @@ class _ConversationPageState extends State<ConversationPage> {
   int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
+  PinyinType pinyinType;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -47,6 +49,7 @@ class _ConversationPageState extends State<ConversationPage> {
       ..addListener(() {
         //print("offset = ${_scrollController.offset}");
       });
+    pinyinType = widget.pinyinType;
   }
 
   initOverlay() {
@@ -121,16 +124,63 @@ class _ConversationPageState extends State<ConversationPage> {
     List<Widget> widgets = [];
     var sents = theLessonList[lessId].sentenceList; //  snowballIds[0];
 
+    if (lessId > Lesson.numberOfLessonsInUnit1) // after first unit of 9 lessons
+      {
+        widgets.add(getPinyinTypeRow());
+      }
+
     for (var i = 0; i < sents.length; i++) {
       widgets.add(getOneRow(sents[i], i));
-      if (lessonId > theNumberOfLessonsInLevels[0]) {
-        widgets.add(getPinyinRow(sents[i]));
+      if (pinyinType != PinyinType.None) { // after level 1
+        widgets.add(getPinyinRow(sents[i], pinyinType));
       }
       widgets.add(getTranslation(sents[i]));
       widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));
     }
 
     return widgets;
+  }
+
+  Widget getPinyinTypeRow() {
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            //SizedBox(width: spaceStart * getSizeRatioWithLimit()),
+            getOnePinyinType(PinyinType.None),
+            getOnePinyinType(PinyinType.OnlyFirst),
+            getOnePinyinType(PinyinType.OnlyNewZi),
+            getOnePinyinType(PinyinType.Full)
+          ]
+
+      ),
+    );
+  }
+
+  Widget getOnePinyinType(PinyinType onePinyinType) {
+    var display = getString(507); // None pinyin
+    if (onePinyinType == PinyinType.OnlyFirst) {
+      display = getString(508);
+    }
+    else if (onePinyinType == PinyinType.OnlyNewZi) {
+      display = getString(509);
+    }
+    else if (onePinyinType == PinyinType.Full) {
+      display = getString(510);
+    }
+
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 14.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        setState(() {
+          pinyinType = onePinyinType;
+        });
+      },
+      child: Text(display,
+          style: TextStyle(color: Colors.black)),
+    );
   }
 
   Widget getOneRow(int sentId, int rowIndex) {
@@ -142,7 +192,7 @@ class _ConversationPageState extends State<ConversationPage> {
     );
   }
 
-  Widget getPinyinRow(int sentId) {
+  Widget getPinyinRow(int sentId, PinyinType pinyinType) {
     var spaceStart = 47.0;
     if (lessonId > 60) {
       spaceStart = 27.0;
@@ -153,17 +203,28 @@ class _ConversationPageState extends State<ConversationPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             SizedBox(width: spaceStart * getSizeRatioWithLimit()),
-            getSentencePinyin(sentId)
+            getSentencePinyin(sentId, pinyinType)
           ]
 
       ),
     );
   }
 
-  Widget getSentencePinyin(int sentenceId) {
+  Widget getSentencePinyin(int sentenceId, PinyinType pinyinType) {
     String pinyin = theSentenceList[sentenceId].pinyin;
+
+    if (pinyin.length > 1) {
+      if (pinyinType == PinyinType.OnlyFirst) {
+        var token = pinyin.split(' '); // ' ' is delimeter
+        pinyin = token[0];
+      }
+      else if (pinyinType == PinyinType.OnlyNewZi) {
+        pinyin = ""; // recreate the list for new zi only
+      }
+    }
+
     if (pinyin.length == 0) {
-      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv);
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType, theLessonList[lessonId].convChars);
     }
     return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));
   }
@@ -221,7 +282,7 @@ class _ConversationPageState extends State<ConversationPage> {
         )
     );
     buttons.add(oneIcon);
-    buttons.add(SizedBox(width: 5 * getSizeRatioWithLimit()));
+    buttons.add(SizedBox(width: 8 * getSizeRatioWithLimit()));
     //Text(sentText,
     //  style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
 

@@ -6,7 +6,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/zimanager.dart';
-import 'package:hanzishu/engine/lessonunit.dart';
+import 'package:hanzishu/engine/pinyin.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
@@ -404,14 +404,13 @@ class LessonManager {
 
   static String getLessonTitle(int lessonNumber, int unit) {
     String lessonTitle = lessonNumber.toString() + ". ";
-    if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
-      lessonTitle +=
-          getString(BaseLessonTitleTranslationStringID + lessonNumber);
-    }
-    else {
-      lessonTitle +=
-          getString(BaseUnitTitleTranslationStringID + unit - LessonUnit.NumberOfUnitsInLevel1 - 1) + " " + getLessonIndexInUnit(lessonNumber, unit).toString();
-    }
+    //if (lessonNumber > 0 && lessonNumber <= theTotalBeginnerLessons) {
+      lessonTitle += getString(theLessonList[lessonNumber].titleId);
+    //}
+    //else {
+    //  lessonTitle +=
+    //      getString(BaseUnitTitleTranslationStringID + unit - LessonUnit.NumberOfUnitsInLevel1 - 1) + " " + getLessonIndexInUnit(lessonNumber, unit).toString();
+    //}
 
     return lessonTitle;
   }
@@ -460,16 +459,29 @@ class LessonManager {
     return trans;
   }
 
-  static String getPinyinFromSentence(String conversation) {
+  static String getPinyinFromSentence(String conversation, PinyinType pinyinType, String lessonChars) {
     int oneId;
     String pinyin = '';
     String subStr;
+
+    if (pinyinType == PinyinType.None) {
+      return pinyin;
+    }
+
     for (int i = 0; i < conversation.length; i++) {
+      if (i == 1 && pinyinType == PinyinType.OnlyFirst) {
+        return pinyin; // just need to first char
+      }
+
       subStr = conversation[i];
       if (i > 0) {
         pinyin += " ";
       }
-      if (!Utility.specialChar(subStr)) {
+
+      if ((pinyinType == PinyinType.OnlyNewZi) && !lessonChars.contains(subStr)) {
+        pinyin += "999"; // place holder, will be empty
+      }
+      else if (!Utility.specialChar(subStr)) {
         oneId = DictionaryManager.getSearchingZiId(subStr);
 
         if (oneId >= 0) {

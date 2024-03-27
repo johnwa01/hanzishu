@@ -83,6 +83,8 @@ class Lesson {
   }
 
   static int numberOfLessonsInLevel1 = 60;
+  static int numberOfLessonsInUnit1 = 9;
+  static int numberOfLessonsInUnit1ToUnit5 = 38;
 
   // including non-chars and phrases
   int getNumberOfNewChars() {

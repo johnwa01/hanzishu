@@ -1,9 +1,9 @@
 import 'package:hanzishu/engine/pinyin.dart';
 
 var thePinyinList=[
-  Pinyin(0, "a", Sample( "a", "啊"), []),
+  Pinyin(0, "a", Sample( "a", "阿"), []),
   Pinyin(1, "o", Sample("o", "噢"), []),
-  Pinyin(2, "e", Sample("e", "鹅"), []),
+  Pinyin(2, "e", Sample("e", "婀"), []),
 
   Pinyin(3, "i", Sample("", "衣"), []),
   Pinyin(4, "u", Sample("", "屋"), []),
@@ -19,7 +19,7 @@ var thePinyinList=[
 
   Pinyin(12, "ie", Sample("", "耶"), []),
   Pinyin(13, "üe", Sample("", "约"), []),
-  Pinyin(14, "er", Sample("", "儿(2)"), []),
+  Pinyin(14, "er", Sample("", "儿"), []), // 2nd tone
 
   Pinyin(15, "an", Sample("", "安"), []),
   Pinyin(16, "en", Sample("", "恩"), []),
@@ -29,9 +29,9 @@ var thePinyinList=[
   Pinyin(19, "ün", Sample("", "晕"), []),
   Pinyin(20, "ang", Sample("", "昂"), []),
 
-  Pinyin(21, "eng", Sample("", "亨(h)"), []),
+  Pinyin(21, "eng", Sample("", "亨(h)"), []), // h
   Pinyin(22, "ing", Sample("", "英"), []),
-  Pinyin(23, "ong", Sample("", "轰(h)"), []),
+  Pinyin(23, "ong", Sample("", "轰(h)"), []), // h
 
   Pinyin(24, "b", Sample("", "玻"), []),
   Pinyin(25, "p", Sample("", "坡"), []),
@@ -63,22 +63,21 @@ var thePinyinList=[
   Pinyin(45, "y", Sample("", "迂"), []),
   Pinyin(46, "w", Sample("", "乌"), []),
 
-  Pinyin(47, "", Sample("", ""), [Sample("mā", "妈"), Sample("má", "麻"), Sample("mǎ", "马"), Sample("mà", "骂")]),
-  Pinyin(48, "", Sample("", ""), [Sample("ō", "噢"), Sample("ó", "哦"), Sample("ǒ", "嚄"), Sample("ò", "哦")]),
-  Pinyin(49, "", Sample("", ""), [Sample("ē", "婀"), Sample("é", "俄"), Sample("shě", "舍"), Sample("è", "饿")]),
+  Pinyin(47, "", Sample("", ""), [Sample("mā", "妈"), Sample("má", "麻"), Sample("mǎ", "马"), Sample("mà", "骂")]), // '马' has wrong sound in Chrome
+  //Pinyin(48, "", Sample("", ""), [Sample("ō", "噢"), Sample("ó", "哦"), Sample("ǒ", "嚄"), Sample("ò", "哦")]),
+  //Pinyin(49, "", Sample("", ""), [Sample("ē", "婀"), Sample("é", "俄"), Sample("shě", "舍"), Sample("è", "饿")]),
+  Pinyin(48, "", Sample("", ""), [Sample("yī", "衣"), Sample("yí", "移"), Sample("yǐ", "乙"), Sample("yì", "易")]),
+  Pinyin(49, "", Sample("", ""), [Sample("wū", "屋"), Sample("wú", "无"), Sample("wǔ", "五"), Sample("wù", "物")]),
+  Pinyin(50, "", Sample("", ""), [Sample("yū", "迂"), Sample("yú", "鱼"), Sample("yǔ", "雨"), Sample("yù", "遇")]),
 
-  Pinyin(50, "", Sample("", ""), [Sample("yī", "衣"), Sample("yí", "移"), Sample("yǐ", "乙"), Sample("yì", "义")]),
-  Pinyin(51, "", Sample("", ""), [Sample("wū", "屋"), Sample("wú", "无"), Sample("wǔ", "五"), Sample("wù", "物")]),
-  Pinyin(52, "", Sample("", ""), [Sample("yū", "迂"), Sample("yú", "鱼"), Sample("yǔ", "雨"), Sample("yù", "遇")]),
-
-  Pinyin(53, "", Sample("", ""), [Sample("zhè", "这"), Sample("zuò", "做"), Sample("suì", "岁")]),
-  Pinyin(54, "", Sample("", ""), [Sample("lóu", "楼"), Sample("hǎo", "好"), Sample("yuè", "月")]),
-  Pinyin(55, "", Sample("", ""), [Sample("děng", "等"), Sample("shān", "山"), Sample("xià", "复")]),
-  Pinyin(56, "", Sample("", ""), [Sample("xià", "下"), Sample("rén", "人"), Sample("jiào", "叫")]),
-  Pinyin(57, "", Sample("", ""), [Sample("xiè", "谢"), Sample("tóng", "同"), Sample("bèi", "贝")]),
-  Pinyin(58, "", Sample("", ""), [Sample("jiàn", "见"), Sample("nà", "那"), Sample("cài", "菜")]),
-  Pinyin(59, "", Sample("", ""), [Sample("kuài", "快"), Sample("míng", "名"), Sample("páng", "旁")]),
-  Pinyin(60, "", Sample("", ""), [Sample("guān", "关"), Sample("qì", "气"), Sample("chūn", "春")]),
+  Pinyin(51, "", Sample("", ""), [Sample("zhè", "这"), Sample("zuò", "做"), Sample("suì", "岁")]),
+  Pinyin(52, "", Sample("", ""), [Sample("lóu", "楼"), Sample("hǎo", "好"), Sample("yuè", "月")]),
+  Pinyin(53, "", Sample("", ""), [Sample("děng", "等"), Sample("shān", "山"), Sample("xià", "夏")]),
+  Pinyin(54, "", Sample("", ""), [Sample("xià", "下"), Sample("rén", "人"), Sample("jiào", "叫")]),
+  Pinyin(55, "", Sample("", ""), [Sample("xiè", "谢"), Sample("tóng", "同"), Sample("bèi", "贝")]),
+  Pinyin(56, "", Sample("", ""), [Sample("jiàn", "见"), Sample("nà", "那"), Sample("cài", "菜")]),
+  Pinyin(57, "", Sample("", ""), [Sample("kuài", "快"), Sample("míng", "名"), Sample("páng", "旁")]),
+  Pinyin(58, "", Sample("", ""), [Sample("guān", "关"), Sample("qì", "气"), Sample("chūn", "春")]),
 ];
 
 var thePinyinLessonList=[
@@ -105,5 +104,5 @@ var thePinyinLessonList=[
   [50, 55,            49, 54],
   [51, 56,            50, 55],
   [52, 57,            51, 56],
-  [58, 59, 60, 57],
+  [58,                57, 56, 55],
 ];

@@ -1,5 +1,12 @@
 import 'package:hanzishu/variables.dart';
 
+enum PinyinType {
+  None,
+  OnlyFirst,
+  OnlyNewZi,
+  Full,
+}
+
 class Sample {
   String pinyin;
   String zi;
@@ -9,7 +16,6 @@ class Sample {
     this.zi = zi;
   }
 }
-
 
 class Pinyin {
   int id;

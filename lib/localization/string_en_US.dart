@@ -514,4 +514,8 @@ var theString_en_US = [
   Local(504, "Friendly links"),
   Local(505, "Pinyin exercise"),
   Local(506, "Click each Pinyin and repeat after speaker for a few times."),
+  Local(507, "No Pinyin"),
+  Local(508, "First Only"),
+  Local(509, "New Only"),
+  Local(510, "Full Pinyin"),
 ];

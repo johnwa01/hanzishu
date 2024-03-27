@@ -60,6 +60,9 @@ class _PinyinPageState extends State<PinyinPage> {
     var name = thePinyinList[exerciseList[currentPinyinExerciseIndex]].name;
     var sample = thePinyinList[exerciseList[currentPinyinExerciseIndex]].sample;
 
+    // initial sound
+    TextToSpeech.speak("zh-CN", sample.zi);
+
     if (name.length != 0) {
       return TextButton(
         style: TextButton.styleFrom(
@@ -103,6 +106,9 @@ class _PinyinPageState extends State<PinyinPage> {
   }
 
   Widget getOneSample(Sample sample) {
+    // no initial sound for multiple entries since Chrome would mess up
+    //TextToSpeech.speak("zh-CN", sample.zi);
+
     return Column(
       children: <Widget>[
         TextButton(

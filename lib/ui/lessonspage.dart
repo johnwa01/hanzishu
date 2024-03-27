@@ -531,7 +531,6 @@ class _LessonsPageState extends State<LessonsPage> {
                 Row(
                     children: [
                       Text(
-                        //lessonNumber.toString() + ". " + getString(BaseLessonTitleTranslationStringID + lessonNumber), //lessonOrSectionName, //lesson.titleTranslation, //"Hello",
                         LessonManager.getLessonTitle(lessonNumber, unit),
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),

@@ -211,9 +211,14 @@ class Utility {
           updatedPinyin += token[i];
           updatedPinyin += '  ';
           break;
-        case 3:
+        case 3: // place holder case of '999' string
           updatedPinyin += ' ';
-          updatedPinyin += token[i];
+          if (token[i] == "999") {
+            updatedPinyin += "     ";
+          }
+          else {
+            updatedPinyin += token[i];
+          }
           updatedPinyin += ' ';
           break;
         case 4:

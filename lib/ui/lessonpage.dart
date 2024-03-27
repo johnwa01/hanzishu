@@ -8,7 +8,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/ui/pinyinpage.dart';
-import 'package:hanzishu/ui/listofzipage.dart';
+import 'package:hanzishu/engine/pinyin.dart';
 import 'package:hanzishu/ui/standardexampage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
@@ -79,7 +79,7 @@ class _LessonPageState extends State<LessonPage> {
     //theIsFromLessonContinuedSection = false;
     theCurrentLessonId = widget.lessonId;
 
-    String lessonName = getString(7) /*"Lesson"*/ + " " + theCurrentLessonId.toString() + ": " + getString(BaseLessonTitleTranslationStringID + theLessonList[theCurrentLessonId].titleId)/* + " " + theLessonList[theCurrentLessonId].title*/;
+    String lessonName = getString(7) /*"Lesson"*/ + " " + theCurrentLessonId.toString() + ": " + getString(theLessonList[theCurrentLessonId].titleId)/* + " " + theLessonList[theCurrentLessonId].title*/;
 
     return Scaffold
       (
@@ -96,13 +96,21 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   launchLessonSection(BuildContext context, int lessonId, int lessonSection) {
+    var pinyinType = PinyinType.OnlyNewZi;
+    if (lessonId <= Lesson.numberOfLessonsInUnit1) {
+      pinyinType = PinyinType.None;
+    }
+    else if (lessonId > Lesson.numberOfLessonsInUnit1 && lessonId <= Lesson.numberOfLessonsInLevel1) { // TODO: change to numberOfLessonsInUnit1ToUnit5
+      pinyinType = PinyinType.OnlyFirst;
+    }
+
     switch (lessonSection) {
       case 0:
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ConversationPage(lessonId: lessonId),
+                ConversationPage(lessonId: lessonId, pinyinType: pinyinType),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -152,8 +160,8 @@ class _LessonPageState extends State<LessonPage> {
         */
         case 3:
           int pinyinLesson = lessonId - 10; // starting from lesson 10 by default
-          if (lessonId >= 41) {             // temp second round starting from pinyin 5.
-            pinyinLesson = lessonId - 41 + 4;
+          if (lessonId >= 37) {             // second round of pinyin starting from lesson 37. no pinyin from 34 to 36.
+            pinyinLesson = lessonId - 37;
           }
 
           bool includeSkipSection = false;
@@ -187,7 +195,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ConversationSnowballPage(lessonId: lessonId), //InputZiPage(),
+                ConversationSnowballPage(lessonId: lessonId, pinyinType: pinyinType), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
