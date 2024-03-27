@@ -326,8 +326,15 @@ class _ConversationPageState extends State<ConversationPage> {
           color: Colors.blueAccent,
           textColor: Colors.white,
           onPressed: () {
-            theIsBackArrowExit = false;
-            Navigator.of(context).pop();
+            if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None) {
+              setState(() {
+                pinyinType = PinyinType.None;
+              });
+            }
+            else {
+              theIsBackArrowExit = false;
+              Navigator.of(context).pop();
+            }
           },
         ),
       );
