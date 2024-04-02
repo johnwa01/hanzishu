@@ -37,6 +37,7 @@ class _ConversationPageState extends State<ConversationPage> {
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
   PinyinType pinyinType;
+  bool hasPressedContinue = false;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -326,7 +327,8 @@ class _ConversationPageState extends State<ConversationPage> {
           color: Colors.blueAccent,
           textColor: Colors.white,
           onPressed: () {
-            if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None) {
+            if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None && !hasPressedContinue) {
+              hasPressedContinue = true;
               setState(() {
                 pinyinType = PinyinType.None;
               });
