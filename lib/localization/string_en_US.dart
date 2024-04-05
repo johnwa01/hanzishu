@@ -482,7 +482,7 @@ var theString_en_US = [
   Local(472, "Chicken"),
   Local(473, "Camel"),
   Local(474, "Bear"),
-  Local(475, "lessonlevelstr475"),
+  Local(475, "Terra-Cotta Warriors"),
   Local(476, "lessonlevelstr476"),
   Local(477, "lessonlevelstr477"),
   Local(478, "lessonlevelstr478"),

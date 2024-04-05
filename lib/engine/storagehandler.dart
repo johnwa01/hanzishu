@@ -209,7 +209,12 @@ class StorageHandler {
   }
 
   Storage getStorageFromJson(String content) {
-    return _$StorageFromJson(json.decode(content));
+    try {
+      var stor = _$StorageFromJson(json.decode(content));
+      return stor;
+    } catch (e) {
+      return null;
+    }
   }
 
   String putStorageToJson() {

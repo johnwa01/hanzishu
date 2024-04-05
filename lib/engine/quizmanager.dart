@@ -6,6 +6,7 @@ import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
 enum QuizTextbook {
@@ -106,6 +107,7 @@ class QuizManager {
     //}
 
     currentType = QuizType.chars; // starting with 1, 0 for no more
+
     nextIndexForCurrentType = 0;
     currentIndex = 0;
     currentValues = ["", "", "", ""];
@@ -153,7 +155,10 @@ class QuizManager {
 
     var lesson = theLessonList[lessonId];
 
-    if (lesson.convCharsIds.length > 0) {
+    if (currentQuizTextbook == QuizTextbook.hanzishu && lessonId > Lesson.numberOfLessonsInLevel1) {
+      currentType = QuizType.conversations; // For intermediate level, only test conversations
+    }
+    else if (lesson.convCharsIds.length > 0) {
       //id = lesson.convCharsIds[0]
       currentType = QuizType.chars;
     }
@@ -184,9 +189,17 @@ class QuizManager {
 
     var lesson = theLessonList[lessonId];
 
-    return lesson.convCharsIds.length + lesson.charsIds.length +
-        lesson.comps.length + lesson.phraseIds.length +
-        lesson.sentenceList.length;
+    int total = 0;
+    if (quizTextbook == QuizTextbook.hanzishu && lessonId > Lesson.numberOfLessonsInLevel1) {
+      total = lesson.sentenceList.length;
+    }
+    else {
+      total = lesson.convCharsIds.length + /*lesson.charsIds.length +
+          lesson.comps.length + lesson.phraseIds.length +*/
+          lesson.sentenceList.length;
+    }
+
+    return total;
   }
 
   // zis, phrases or conversations
@@ -284,9 +297,15 @@ class QuizManager {
         //  nextType = QuizType.conversations;
         //  break;
         case QuizType.conversations:
+
           if (currentCategory == QuizCategory.meaning) {
             currentCategory = QuizCategory.soundToZi;
-            nextType = QuizType.chars;
+            if (currentQuizTextbook == QuizTextbook.hanzishu && theCurrentLessonId > Lesson.numberOfLessonsInLevel1) {
+              nextType = QuizType.conversations; // only type for intermediate lessons
+            }
+            else {
+              nextType = QuizType.chars;
+            }
           }
           else { // already in sound category
             nextType = QuizType.none;

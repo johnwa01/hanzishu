@@ -841,7 +841,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var fontSize4 = applyRatio(20.0);
       var fontSize8 = applyRatio(115.0);
       var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 1.1,
-          getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3,
+          0.0 /*getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3 */,
           fontSize4 * 6, fontSize4 * 1.2, 10.0, 10.0);
       buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
     }
@@ -912,7 +912,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var posiCenter = Positioned(
         top: 0.0, //y
         left: screenWidth - applyRatio(80.0),
-        height: applyRatio(40.0),
+        height: applyRatio(25.0),
         width: applyRatio(85.0),
         child: butt
     );

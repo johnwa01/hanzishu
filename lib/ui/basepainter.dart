@@ -725,7 +725,7 @@ class BasePainter extends CustomPainter{
     if (!isFromReviewPage && isCharNewInLesson(id, internalStartLessonId)) {
       var posiNewChar = thePositionManager.getNewCharIconPosi();
       DisplayIcon(
-          iconQuizStrokes, //iconNewCharStrokes,
+          iconNewCharStrokes, //iconNewCharStrokes,
           posiNewChar.transX,
           posiNewChar.transY,
           posiNewChar.width,

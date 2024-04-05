@@ -20,7 +20,7 @@ var theUnitList = [
   LessonUnit(10, theNumberOfLessonsInLevels[10], false, getString(BaseUnitDescriptionStringIDLevel2 + 1)/*"Chicken"*/),
   LessonUnit(11, theNumberOfLessonsInLevels[11], false, getString(BaseUnitDescriptionStringIDLevel2 + 2)/*"Camel"*/),
   LessonUnit(12, theNumberOfLessonsInLevels[12], false, getString(BaseUnitDescriptionStringIDLevel2 + 3)/*"Bear"*/),
-  LessonUnit(13, theNumberOfLessonsInLevels[13], false, getString(BaseUnitDescriptionStringIDLevel2 + 4)/*""*/),
+  LessonUnit(13, theNumberOfLessonsInLevels[13], false, getString(BaseUnitDescriptionStringIDLevel2 + 4)/*"Emperor"*/),
   LessonUnit(14, theNumberOfLessonsInLevels[14], false, getString(BaseUnitDescriptionStringIDLevel2 + 5)/*""*/),
   LessonUnit(15, theNumberOfLessonsInLevels[15], false, getString(BaseUnitDescriptionStringIDLevel2 + 6)/*""*/),
   LessonUnit(16, theNumberOfLessonsInLevels[16], false, getString(BaseUnitDescriptionStringIDLevel2 + 7)/*""*/),

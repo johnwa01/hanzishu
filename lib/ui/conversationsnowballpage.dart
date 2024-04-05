@@ -10,6 +10,7 @@ import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/pinyin.dart';
 import 'package:hanzishu/engine/lesson.dart';
+import 'package:hanzishu/engine/lessonunit.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/conversationsnowballlist.dart';
@@ -229,7 +230,8 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
 
     if (pinyin.length == 0) {
-      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType, theLessonList[lessonId].convChars);
+      var newCharsInUnit = LessonUnit.getNewCharsInUnit(lessonId);
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType, newCharsInUnit);
     }
 
     return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));

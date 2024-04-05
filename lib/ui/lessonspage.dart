@@ -79,8 +79,8 @@ class _LessonsPageState extends State<LessonsPage> {
     1, 2,
     4, 6, 7,
     8, 10,
-    11, 13, 15, 17, 18, 20,
-    22, 23, 25,
+    11, 13,
+    15, 16, 17, 19, 21, 23, 25,
     27, 28, 30, 32,
     34, 35, 37,
     39, 40, 42,
@@ -230,7 +230,7 @@ class _LessonsPageState extends State<LessonsPage> {
   Widget getHanzishuLessons2() {
     int unit = 1;
     return ListView.builder(
-        itemCount/*itemExtent*/: 7, //TODO: update everytime with new lessons. //level2Lessons.length, // Note: this is a row count.
+        itemCount/*itemExtent*/: 9, //TODO: update everytime with new lessons. //level2Lessons.length, // Note: this is a row count.
         itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
           int lessonCount = 1;
 
@@ -243,13 +243,13 @@ class _LessonsPageState extends State<LessonsPage> {
           }
 
           //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-          if (index == 0 || index == 2 || index == 5 || index == 8 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
+          if (index == 0 || index == 2 || index == 5 || index == 7 || index == 10 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
 
             if (index == 0) {unit = 1;}
             else if (index == 2) { unit = 2;}
             else if (index == 5) { unit = 3;}
-            else if (index == 8) { unit = 4;}
-            else if (index == 16) { unit = 5;}
+            else if (index == 7) { unit = 4;}
+            else if (index == 10) { unit = 5;}
             else if (index == 20) { unit = 6;}
             else if (index == 23) { unit = 7;}
             else if (index == 26) { unit = 8;}

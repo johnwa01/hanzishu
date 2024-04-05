@@ -37,7 +37,7 @@ class _ConversationPageState extends State<ConversationPage> {
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
   PinyinType pinyinType;
-  bool hasPressedContinue = false;
+  //bool hasPressedContinue = false;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -134,8 +134,8 @@ class _ConversationPageState extends State<ConversationPage> {
       widgets.add(getOneRow(sents[i], i));
       if (pinyinType != PinyinType.None) { // after level 1
         widgets.add(getPinyinRow(sents[i], pinyinType));
+        widgets.add(getTranslation(sents[i]));
       }
-      widgets.add(getTranslation(sents[i]));
       widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));
     }
 
@@ -327,16 +327,16 @@ class _ConversationPageState extends State<ConversationPage> {
           color: Colors.blueAccent,
           textColor: Colors.white,
           onPressed: () {
-            if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None && !hasPressedContinue) {
-              hasPressedContinue = true;
-              setState(() {
-                pinyinType = PinyinType.None;
-              });
-            }
-            else {
+            //if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None && !hasPressedContinue) {
+            //  hasPressedContinue = true;
+            //  setState(() {
+            //    pinyinType = PinyinType.None;
+            //  });
+            //}
+            //else {
               theIsBackArrowExit = false;
               Navigator.of(context).pop();
-            }
+            //}
           },
         ),
       );

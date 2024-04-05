@@ -479,7 +479,7 @@ var theString_zh_CN = [
   Local(472, "鸡"),
   Local(473, "骆驼"),
   Local(474, "狗熊"),
-  Local(475, "lessonlevelstr475"),
+  Local(475, "兵马俑"),
   Local(476, "lessonlevelstr476"),
   Local(477, "lessonlevelstr477"),
   Local(478, "lessonlevelstr478"),
