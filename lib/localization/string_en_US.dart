@@ -447,7 +447,7 @@ var theString_en_US = [
   Local(437, "Pinyin does no good to international Chinese teaching"),
   Local(438, "Hint2"),
   Local(439, "Introduction to Hanzishu Puzzle Typing"),
-  Local(440, "Word structure"),
+  Local(440, "Hanzi structure"),
   Local(441, "Single part"),
   Local(442, "Left & right"),
   Local(443, "Up & down"),

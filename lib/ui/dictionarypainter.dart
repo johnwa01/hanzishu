@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
+import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/utility.dart';
@@ -162,7 +163,7 @@ class DictionaryPainter extends BreakoutPainter {
     var fontSize9 = applyRatio(210.0);
     var fontSize10 = applyRatio(245.0);
     var fontSize11 = applyRatio(295.0);
-    var fontSize12 = applyRatio(362.0);
+    var fontSize12 = applyRatio(397.0);
 
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
@@ -240,6 +241,8 @@ class DictionaryPainter extends BreakoutPainter {
     displayComponentsOrStrokes(ziIndex, posiSize, true);
     posiSize.transY += fontSize6;
 
+    displayStructure(ziIndex, posiSize, fontSize4, fontSize6);
+
     if (showBreakoutDetails) {
       displayTypingCodePlaceholder(posiSize);  // hide when diamond icon is selected
     }
@@ -253,6 +256,23 @@ class DictionaryPainter extends BreakoutPainter {
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
     bool isGetPositionOnly = false;
     var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
+  }
+
+  displayStructure(int ziIndex, PositionAndSize posiSize, double fontSize4, double fontSize6) {
+    var structureReal = theSearchingZiList[ziIndex].structure;
+    var structureIndex = CenterZiRelatedBottum.getIndexByStructureValue(structureReal);
+    displayTextWithValue(
+        getString(440) + ": ",
+        posiSize.transX, posiSize.transY,
+        fontSize4,
+        Colors.black, false);
+    displayTextWithValue(
+      getString(CenterZiRelatedBottum.structure[structureIndex]),
+      posiSize.transX + applyRatio(160), posiSize.transY,
+        fontSize4,
+      Colors.blue, false);
+
+      posiSize.transY += fontSize6;
   }
 
   /*
@@ -272,7 +292,7 @@ class DictionaryPainter extends BreakoutPainter {
     //breakoutIndex.value = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
-    var fontSize1 = applyRatio(396.0); //425.0
+    var fontSize1 = applyRatio(432.0); //425.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails, isBreakoutPositionsOnly, breakoutPositions);

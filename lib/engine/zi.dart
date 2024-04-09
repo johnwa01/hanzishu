@@ -1,3 +1,4 @@
+// Note: This is replaced by SearchingZi
 class Zi {
   int id;
   String char;

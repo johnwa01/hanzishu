@@ -734,7 +734,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       var posiTrans = getPositionedTranslationSpeechButton(positionAndSizesTrans, searchingZiIndex);
       buttons.add(posiTrans);
 
-      var breakdownPositionAndSize = PositionAndSize(115.0 * 1.1 * getSizeRatio(), 362.0 * getSizeRatio(), 20.0 * getSizeRatio(), 20.0 * getSizeRatio(), 0.0, 0.0);
+      var breakdownPositionAndSize = PositionAndSize(115.0 * 1.1 * getSizeRatio(), 397.0 * getSizeRatio(), 20.0 * getSizeRatio(), 20.0 * getSizeRatio(), 0.0, 0.0);
       var breakdownPosi = getPositionedBreakdownButton(breakdownPositionAndSize);
       buttons.add(breakdownPosi);
 

@@ -257,8 +257,8 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
 
     var oneIcon = Container(
-          height: 20.0 * getSizeRatioWithLimit(), //180
-          width: 20.0 * getSizeRatioWithLimit(),
+          height: 28.0 * getSizeRatioWithLimit(), //180
+          width: 28.0 * getSizeRatioWithLimit(),
           child: IconButton(
             icon: Icon(
               Icons.volume_up,
