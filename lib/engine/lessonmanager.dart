@@ -435,6 +435,12 @@ class LessonManager {
       else if (unit == 14) {
         imageNumber = 29;
       }
+      else if (unit == 15) {
+        imageNumber = 47;
+      }
+      else if (unit == 16) {
+        imageNumber = 53;
+      }
       path += imageNumber.toString() + ".png";
     }
 

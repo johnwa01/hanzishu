@@ -165,6 +165,9 @@ class StorageHandler {
     result.cor = lessonQuizResult.cor;
     result.answ = lessonQuizResult.answ;
 
+    if (storage.lessonQuizResults == null) {
+      storage.lessonQuizResults = [];
+    }
     storage.lessonQuizResults.add(result);
 
     // trim the results if more than the max
