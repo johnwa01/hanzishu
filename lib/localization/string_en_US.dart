@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Hanzi/Test"),
+  Local(1, "Hanzi"),
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -110,10 +110,10 @@ var theString_en_US = [
   Local(104, "Guided typing"),
   Local(105, "Learn Chinese alphabets"),
   Local(106, "Typing exercises"),
-  Local(107, "Typing exercises for commonly used Chinese words"),
+  Local(107, "Typing exercises for commonly used Hanzi"),
   Local(108, "Editor"),
   Local(109, "Try a few"),
-  Local(110, "Part 2:\n\nLet's try a few.\n\nFor example, to type a word '品', you break it up into ZiGroupPages '口', '口', and '口', then type 'O', 'O', and 'O', then choose '品' from the candidate list below the editing field by typing its number or mouse/tap it.\n\nIf having difficulty, you can use [Hint] next to the word.\n\n"),
+  Local(110, "Part 2:\n\nLet's try to type a few.\n\nFor example, to type a word '品', you break it up into ZiGroupPages '口', '口', and '口', then type 'O', 'O', and 'O', then choose '品' from the candidate list below the editing field by typing its number or mouse/tap it.\n\nIf having difficulty, you can use [Hint] next to the word.\n\n"),
   Local(111, "Reference this chart to visualize how Chinese alphabets are mapped to English letters. The five single-stroke Chinese alphabets sit in the two middle columns, so try to read from middle to two sides."),
   Local(112, "Commonly used word exercises"),
   Local(113, "Please type"),
@@ -134,7 +134,7 @@ var theString_en_US = [
   Local(128, "Please tap or mouse click a key image below that maps the above Chinese alphabet."),
   Local(129, "Please carefully review every Chinese alphabet in the above category, then mouse click or tap their mapping key in the screen below."),
   Local(130, "Please choose the key group that matches the above Chinese alphabet group."),
-  Local(131, "Part 3:\n\nThe above chart shows some Chinese alphabets which look similar to Chinese alphabet '口'（key B).\n\nThey share the same keyboard key with '口', just like English alphabet lower case 'o' shares the same key with upper case 'O'. Therefore, you simply type the same key 'O' for any of them.\n\nWe'll go through those Chinese alphabets."),
+  Local(131, "Part 3:\n\nThe above chart shows some Chinese alphabets which look similar to Chinese alphabet '人'（key A).\n\nThey share the same keyboard key with '人', just like English alphabet lower case 'a' shares the same key with upper case 'A'. Therefore, you simply type the same key 'A' for any of them.\n\nWe'll go through those Chinese alphabets."),
   Local(132, "Note: The Expanded Chinese alphabets have similar shapes to their Lead Chinese alphabet."), // TODO: not used
   Local(133, "You remember the Chinese alphabets by group! In the next exercise, you will review the Chinese alphabets."),
   Local(134, "Way to go!"),

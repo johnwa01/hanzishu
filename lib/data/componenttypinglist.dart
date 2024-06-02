@@ -177,10 +177,8 @@ var theRandomComponentList = [
 ];
 
 var theExpandedComponentList = [
-  ComponentCollection(0, "E24.png", 0, 0, 0/*"Explaination Text"*/),
+  ComponentCollection(0, "E35.png", 0, 0, 0/*"Explaination Text"*/),
   ComponentCollection(14, "E22.png", 2, 2, 345/*"open to top"*/),
-  ComponentCollection(17, "E61.png", 6, 1, 348/*"open to bottom"*/),
-  ComponentCollection(11, "E34.png", 3, 4, 323/*"open to left"*/),
   ComponentCollection(4, "E53.png", 5, 3, 317/*"open to right"*/),
   ComponentCollection(1, "E24.png", 2, 4, 315/*"single mouth"*/),
   ComponentCollection(21, "E51.png", 5, 1, 327/*"up & down mouths"*/),
@@ -199,6 +197,8 @@ var theExpandedComponentList = [
   ComponentCollection(7, "E25.png", 2, 5, 320/*"ear"*/),
   ComponentCollection(2, "E13.png", 1, 3, 316/*"horizontal"*/),
   ComponentCollection(3, "E23.png", 2, 3, 342/*"verticle"*/),
+  ComponentCollection(17, "E61.png", 6, 1, 348/*"open to bottom"*/),
+  ComponentCollection(11, "E34.png", 3, 4, 323/*"open to left"*/),
   ComponentCollection(5, "E42.png", 4, 2, 318/*"throw away"*/),
   ComponentCollection(13, "E14.png", 1, 4, 324/*"pure dots"*/),
   ComponentCollection(24, "E21.png", 2, 1, 352/*"mixed dots"*/),
@@ -336,26 +336,26 @@ var theZiForExpandedReviewExerciseList=[
   ////ZiWithComponentsAndStrokes("坞", [], "E43.png,E34.png", 0),
   //ZiWithComponentsAndStrokes("鸭", [], "E15.png,E34.png", 0),
   //ZiWithComponentsAndStrokes("描", [], "E41.png,E61.png", 0),//蕾
-  ZiWithComponentsAndStrokes("谓", [], "E41.png,E61.png", 0),
-  ZiWithComponentsAndStrokes("佐", [], "E24.png,E61.png", 0),
+//  ZiWithComponentsAndStrokes("谓", [], "E41.png,E61.png", 0),
+//  ZiWithComponentsAndStrokes("佐", [], "E24.png,E61.png", 0),
   ////ZiWithComponentsAndStrokes("悟", [], "E23.png,E34.png", 0),
   ////ZiWithComponentsAndStrokes("诏", [], "E21.png,E25.png", 0),
 
   //ZiWithComponentsAndStrokes("群", [], "E33.png,E13.png", 0),
   ////ZiWithComponentsAndStrokes("铭", [], "E42.png,E34.png", 0),
   //ZiWithComponentsAndStrokes("驶", [], "E34.png,E24.png", 0),
-  ZiWithComponentsAndStrokes("炊", [], "E35.png,E42.png", 0),
+//  ZiWithComponentsAndStrokes("炊", [], "E35.png,E42.png", 0),
   ////ZiWithComponentsAndStrokes("妙", [], "E54.png,E52.png", 0),
   //ZiWithComponentsAndStrokes("道", [], "E21.png,E51.png", 0),
   //ZiWithComponentsAndStrokes("俱", [], "E42.png,E51.png", 0),
   ////ZiWithComponentsAndStrokes("梅", [], "E42.png,E51.png", 0),
   ZiWithComponentsAndStrokes("摩", [], "E32.png,E13.png", 0),
-  ////ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
+  ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
   //ZiWithComponentsAndStrokes("京", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("匈", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),
-  ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
-  ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
+//  ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
+//  ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
 ];
 
 var theZiForExpandedGeneralExerciseList=[
@@ -545,16 +545,16 @@ var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 339),
   //ZiWithComponentsAndStrokes("歹", [], "", 0),
   //ZiWithComponentsAndStrokes("二", [], "", 0),
-  ZiWithComponentsAndStrokes("日", [], "", 0),
+//  ZiWithComponentsAndStrokes("日", [], "", 0),
+  ZiWithComponentsAndStrokes("田", [], "", 0),
   ZiWithComponentsAndStrokes("十", [], "", 0),
   //ZiWithComponentsAndStrokes("大", [], "", 0),
   ////ZiWithComponentsAndStrokes("父", [], "", 0),
   //ZiWithComponentsAndStrokes("口", [], "", 0),
   //ZiWithComponentsAndStrokes("下", [], "", 0), //世
-  ZiWithComponentsAndStrokes("田", [], "", 0),
   //ZiWithComponentsAndStrokes("乙", [], "", 0),
   //ZiWithComponentsAndStrokes("我", [], "", 0),
-  ZiWithComponentsAndStrokes("三", [], "", 0),
+//  ZiWithComponentsAndStrokes("三", [], "", 0),
   //ZiWithComponentsAndStrokes("了", [], "", 0),
   //ZiWithComponentsAndStrokes("弓", [], "", 0),
   ////ZiWithComponentsAndStrokes("尺", [], "", 0),
@@ -565,8 +565,9 @@ var theZiForSingleCompExerciseList=[
   //ZiWithComponentsAndStrokes("冉", [], "", 0),
 
   // two components
-  ZiWithComponentsAndStrokes("明", [], "", 0),
-  ZiWithComponentsAndStrokes("六", [], "", 0),
+//  ZiWithComponentsAndStrokes("明", [], "", 0),
+//  ZiWithComponentsAndStrokes("六", [], "", 0),
+  ZiWithComponentsAndStrokes("穴", [], "", 0),
 ];
 
 var theZiForTwoCompExerciseList=[

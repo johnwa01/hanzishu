@@ -98,7 +98,7 @@ class _ToolsPageState extends State<ToolsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.ExpandedReview, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.ExpandedReview, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -108,7 +108,7 @@ class _ToolsPageState extends State<ToolsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.SingleComponent, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.SingleComponent, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -152,25 +152,25 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"2. " + */getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TypingComponentSelectionPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"3. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
+          title: Text(/*"2. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) => TypingSelectionPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(/*"3. " + */getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TypingComponentSelectionPage(),
               ),
             );
           },
