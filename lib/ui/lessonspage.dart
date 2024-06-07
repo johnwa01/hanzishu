@@ -341,7 +341,7 @@ class _LessonsPageState extends State<LessonsPage> {
                 //Row(
                     //children: [
                       Text(
-                        "0. " + getString(470),
+                        "0. " + getString(494),
                         style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
                       ),
                       //OpenHelper.getCompletedImage(lessonNumber),

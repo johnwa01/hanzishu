@@ -93,7 +93,7 @@ class _QuizPageState extends State<QuizPage> {
       _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
     }
 
-    if (currentType == QuizType.none) {
+    if (currentType == QuizType.none && quizTextbook != QuizTextbook.custom) {
       // Completed the quiz. Save the quiz results and go back to lesson page.
       theStatisticsManager.saveLessonQuizAndStatisticsToStorage();
 

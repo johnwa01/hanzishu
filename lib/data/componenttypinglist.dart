@@ -292,10 +292,10 @@ var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("网", [], "", 0),
   //ZiWithComponentsAndStrokes("命", [], "", 0),
   //ZiWithComponentsAndStrokes("晌", [], "", 0),
-  //ZiWithComponentsAndStrokes("松", [], "", 0),
+  ZiWithComponentsAndStrokes("松", [], "", 0),
   //ZiWithComponentsAndStrokes("框", [], "", 0),
   //ZiWithComponentsAndStrokes("苔", [], "", 0),
-  ZiWithComponentsAndStrokes("苦", [], "", 0),
+//  ZiWithComponentsAndStrokes("苦", [], "", 0),
   //ZiWithComponentsAndStrokes("架", [], "", 0),
   //ZiWithComponentsAndStrokes("岗", [], "", 0),
   ZiWithComponentsAndStrokes("谷", [], "", 0),
@@ -327,11 +327,13 @@ var theZiForExpandedReviewExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 335), //
   ////ZiWithComponentsAndStrokes("份", [], "E42.png,E43.png", 0), //任
   ////ZiWithComponentsAndStrokes("柒", [], "E21.png,E31.png", 0), //畜
-  ZiWithComponentsAndStrokes("岸", [], "E21.png,E52.png", 0),
+  ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
+  ZiWithComponentsAndStrokes("渠", [], "E21.png,E53.png", 0),
+  ZiWithComponentsAndStrokes("诏", [], "E21.png,E25.png", 0),
+  //ZiWithComponentsAndStrokes("岸", [], "E21.png,E52.png", 0),
   ZiWithComponentsAndStrokes("哄", [], "E24.png,E61.png", 0), //贵
   ////ZiWithComponentsAndStrokes("亨", [], "E21.png,E11.png", 0),
   ////ZiWithComponentsAndStrokes("汰", [], "E21.png,E35.png", 0),
-  ZiWithComponentsAndStrokes("渠", [], "E21.png,E53.png", 0),
   ZiWithComponentsAndStrokes("叁", [], "E31.png,E41.png", 0),
   ////ZiWithComponentsAndStrokes("坞", [], "E43.png,E34.png", 0),
   //ZiWithComponentsAndStrokes("鸭", [], "E15.png,E34.png", 0),
@@ -339,7 +341,6 @@ var theZiForExpandedReviewExerciseList=[
 //  ZiWithComponentsAndStrokes("谓", [], "E41.png,E61.png", 0),
 //  ZiWithComponentsAndStrokes("佐", [], "E24.png,E61.png", 0),
   ////ZiWithComponentsAndStrokes("悟", [], "E23.png,E34.png", 0),
-  ////ZiWithComponentsAndStrokes("诏", [], "E21.png,E25.png", 0),
 
   //ZiWithComponentsAndStrokes("群", [], "E33.png,E13.png", 0),
   ////ZiWithComponentsAndStrokes("铭", [], "E42.png,E34.png", 0),
@@ -350,7 +351,6 @@ var theZiForExpandedReviewExerciseList=[
   //ZiWithComponentsAndStrokes("俱", [], "E42.png,E51.png", 0),
   ////ZiWithComponentsAndStrokes("梅", [], "E42.png,E51.png", 0),
   ZiWithComponentsAndStrokes("摩", [], "E32.png,E13.png", 0),
-  ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
   //ZiWithComponentsAndStrokes("京", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("匈", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),

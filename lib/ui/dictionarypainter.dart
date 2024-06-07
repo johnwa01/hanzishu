@@ -321,15 +321,15 @@ class DictionaryPainter extends BreakoutPainter {
     String charStr;
     double yPosi;
 
-    var defaultFontSize = applyRatio(25.0);
-    var smallFontSize = applyRatio(20.0);
+    var defaultFontSize = applyRatio(23.0); // 25
+    var smallFontSize = applyRatio(18.0); // 20
     var fillerSize = applyRatio(4.0); // 5
     var startYSize = applyRatio(40.0); // 60
 
 
-    for (var j = 0; j < 16; j++) {
-      for (var i = 0; i < 12 /*realGroupMembers.length*/; i++) {
-        int firstZiId = j * 12 + i;
+    for (var j = 0; j < 17; j++) {  //16
+      for (var i = 0; i < 14 /*realGroupMembers.length*/; i++) { // 12
+        int firstZiId = j * 14 + i;
         if (firstZiId >= firstZiCount) {
           return;
         }

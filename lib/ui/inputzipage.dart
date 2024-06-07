@@ -1403,7 +1403,7 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
             );
           },
-          child: Text(getString(483)/*"First Zi Search Table"*/,
+          child: Text(getString(96)/*"First-Hanzi Radical Table"*/,
             style: TextStyle(color: Colors.black)),
           ),
         ]

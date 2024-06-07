@@ -1366,7 +1366,7 @@ class BasePainter extends CustomPainter{
     DictionaryManager.getAllComponents(searchingZiId, comps);
     if (withHeader) {
       displayTextWithValue(
-          getString(97) /*"Components"*/ + ": ", posi.transX, posi.transY, posi
+          getString(97) /*"component"*/ + ": ", posi.transX, posi.transY, posi
           .charFontSize /*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/,
           Colors.black, false);
     }

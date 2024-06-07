@@ -13,6 +13,7 @@ import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
+import 'package:hanzishu/ui/dictionaryscrollablepage.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class DictionaryPage extends StatefulWidget {
@@ -120,7 +121,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                     Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
                     SizedBox(width: 30 * getSizeRatioWithLimit()),
 
-                    SizedBox(width: 125 * getSizeRatioWithLimit()),
+                    SizedBox(width: 50 * getSizeRatioWithLimit()),
 
                     TextButton(
                       style: TextButton.styleFrom(
@@ -186,8 +187,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       textColor: Colors.blueAccent,
       onPressed: () {
         var char;
+        var searchingZiId;
         if (dicStage == DictionaryStage.firstzis) {
-          var searchingZiId = theFirstZiList[ziIndex].searchingZiId;
+          searchingZiId = theFirstZiList[ziIndex].searchingZiId;
           char = theSearchingZiList[searchingZiId].char;
         }
 
@@ -197,12 +199,28 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
           if (dicStage == DictionaryStage.firstzis) {
             //this.firstZiIndex = ziIndex;
             //dicStage = DictionaryStage.searchingzis;
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DictionarySearchingPage(dicStage: DictionaryStage.searchingzis, firstOrSearchingZiIndex: ziIndex, flashcardList: null, dicCaller: DicCaller.Dictionary),
-              ),
-            );
+            if (theSearchingZiList[searchingZiId].char == '口') {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      DictionaryScrollablePage(firstZiIndex: ziIndex),
+                ),
+              );
+            }
+            else {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      DictionarySearchingPage(
+                          dicStage: DictionaryStage.searchingzis,
+                          firstOrSearchingZiIndex: ziIndex,
+                          flashcardList: null,
+                          dicCaller: DicCaller.Dictionary),
+                ),
+              );
+            }
           }
 
           shouldDrawCenter = true;
@@ -254,8 +272,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     thePositionManager.resetPositionIndex();
 
     var defaultFontSize = screenWidth / 16;     // was hardcoded 25.0 in painter, use it as the standard
-    var hitTestPositionGap = defaultFontSize * (29.0 / 25.0); //30, that is, 25 + 4 = 29
-    var hitTestSize = defaultFontSize * (27.0 / 25.0);
+    var hitTestPositionGap = defaultFontSize * (27.0 / 25.0); //was 29.0, that is, 23 + 4 = 27, 23 is the size in dictionarypainter
+    var hitTestSize = defaultFontSize * (25.0 / 25.0); // was 27.0
     var startXSize = defaultFontSize * (20.0 / 25.0);
     var startYSize = defaultFontSize * (40.0 / 25.0); // ratio of 60.0/25.0
     var helpPara1 = defaultFontSize * (65.0 / 25.0);
@@ -271,12 +289,12 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
       //var helpPosi = getHelpPositionedButton(helpPosiAndSize);
       //buttons.add(helpPosi);
 
-      for (var j = 0; j < 16; j++) {
-        for (var i = 0; i < 12; i++) {
+      for (var j = 0; j < 17; j++) { //16 - need to match dictionarypainter
+        for (var i = 0; i < 14; i++) {  //12
           var positionAndSize = PositionAndSize(
               startXSize + i * hitTestPositionGap, startYSize + j * hitTestPositionGap, hitTestSize, hitTestSize, 0.0, 0.0);
 
-          int indexOfFirstZi = j * 12 + i;
+          int indexOfFirstZi = j * 14 + i;  // 12
           if (indexOfFirstZi >= theFirstZiList.length) {
             return buttons;
           }
