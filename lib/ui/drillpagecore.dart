@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/data/componentlist.dart';
@@ -17,7 +18,7 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
-import 'package:hanzishu/localization/string_en_US.dart';
+import 'package:hanzishu/engine/questionmanager.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
@@ -76,6 +77,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   int centerRelatedButtonUpdates = 0;
 
+  QuestionManager questionManager = QuestionManager();
+
   CenterZiRelatedBottum currentCenterZiRelatedBottum = CenterZiRelatedBottum(
       -1, 'l', 0, 0, -1, 1, 1, 0, -1, false, null);
 
@@ -105,6 +108,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   void initState() {
     super.initState();
     //theLessonList[theCurrentLessonId].populateDrillMap(1);
+
+    //questionManager.index = 0;
 
     // should just run once
     // believe initState only runs once, but added a global variable in case LessonPage has run it already.
@@ -262,6 +267,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     else {
       title = getString(394)/*"Hanzishu drill"*/;
     }
+
+    //if (questionManager.selectedPosi != -1) {
+    //  showOverlayQuestion(context, 30.0, 100.0,
+    //      "", 345 /*currentZiId*/);
+    //}
 
     return Scaffold
       (
@@ -455,6 +465,154 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     overlayState.insert(overlayEntry);
   }
 
+  Widget getQuestionWizard(BuildContext context, int currentZiId) {
+    var posi = questionManager.getSelectedPosi();
+    if (posi < 0) {
+      questionManager.setValues(
+          currentZiId, centerZiId, "");
+      questionManager.PopulateQuestionInfo();
+    }
+
+    return Container(child: Column(
+        children: <Widget>[
+          displayOldCenterZi(),
+          displayZi(),
+          getAnswerButton(1, currentZiId),
+          SizedBox(height: 5.0),
+          getAnswerButton(2, currentZiId),
+          SizedBox(height: 5.0),
+          getAnswerButton(3, currentZiId),
+          SizedBox(height: 5.0),
+          getContinueButton(context, currentZiId),
+        ]
+      ),
+      color: Colors.limeAccent, //lime,
+      height: 400.0,
+      width: 330.0,
+    );
+  }
+
+  Widget displayOldCenterZi() {
+    return Text(
+      questionManager.getPreviousZi() + ' : ' + questionManager.getPreviousZiMeaning(),
+      style: TextStyle(fontSize: 24.0, color: Colors.black/*, fontFamily: "Raleway"*/),
+    );
+  }
+
+  Widget displaySideZiOrComp() {
+    return Row(
+        children: <Widget>[
+          Text(
+            questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
+            style: TextStyle(fontSize: 24.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+          ),
+          Text(
+            questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
+            style: TextStyle(fontSize: 24.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+          ),
+        ]
+    );
+  }
+
+  Widget displayZi() {
+    return Text(
+      questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
+      style: TextStyle(fontSize: 48.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+    );
+  }
+
+  Widget getAnswerButton(int index, int currentZiId) {
+    Color color = Colors.blue;
+
+    if (questionManager.selectedPosi > 0 && index == questionManager.getCorrectPosi()) {
+      color = Colors.green;
+    }
+    else if (questionManager.selectedPosi > 0 && index == questionManager.selectedPosi) {
+      color = Colors.red;
+    }
+
+    var currentZiId = questionManager.getCurrentZiId();
+
+    return Container(height:45.0, width: 300.0,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: Colors.black,
+
+          ),
+        ),
+        child: TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 24.0 * getSizeRatio()),
+      ),
+      onPressed: () {
+        initOverlay();
+        setState(() {
+          questionManager.selectedPosi = index;
+          showOverlayQuestion(context, 30.0, 100.0,
+              previousZiId, currentZiId);
+        });
+      },
+      child: Text(questionManager.getAnswer(index),
+          style: TextStyle(color: color)),
+    ));
+  }
+
+  Widget getContinueButton(context, int searchingZiId) {
+    if (questionManager.selectedPosi < 1) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    String text = "";
+    if (questionManager.selectedPosi > 0 && questionManager.selectedPosi != questionManager.getCorrectPosi() ) {
+      text = "Incorrect, continue";
+    }
+    else if (questionManager.selectedPosi > 0 && questionManager.selectedPosi == questionManager.getCorrectPosi() ) {
+      text = "Correct, continue";
+    }
+
+    return TextButton(
+      //style: TextButton.styleFrom(
+      //    textStyle: TextStyle(fontSize: 24.0 * getSizeRatio()),
+      //),
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 24.0 * getSizeRatio()),
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Colors.greenAccent,
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+      onPressed: () {
+        initOverlay();
+        questionManager.selectedPosi = -1; // reinit
+        if (searchingZiId != -1) {
+          setState(() {
+            centerZiId = searchingZiId;
+          });
+        }
+      },
+      child: Text(text,
+        style: TextStyle(color: Colors.greenAccent)),
+    );
+  }
+
+  showOverlayQuestion(BuildContext context, double posiX, double posiY, int centerZiId, int searchingZiId) {
+    initOverlay();
+    var adjustedXValue = 30.0; //Utility.adjustOverlayXPosition(posiX, screenWidth);
+
+    OverlayState overlayState = Overlay.of(context);
+    overlayEntry = OverlayEntry(
+        builder: (context) =>Positioned(
+            top: posiY,
+            left: adjustedXValue,
+            child: getQuestionWizard(context, searchingZiId)
+        ));
+    overlayState.insert(overlayEntry);
+  }
+
   Positioned getPositionedSkipButton() {
     var yPosi = 0.0;
 
@@ -494,39 +652,77 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       textColor: Colors.blueAccent,
       onPressed: () {
         initOverlay();
+        if (questionManager.isQuestionOn == false || currentZiId == theCurrentCenterZiId || centerZiId == 1) {
+          _clearAnimation();
+          resetCompoundZiAnimation();
 
-        _clearAnimation();
-        resetCompoundZiAnimation();
+          bool setParentTo1 = false;
+          if (drillCategory == DrillCategory.custom) {
+            // during going back toward root. skip the pseudo zi
+            if (currentZiId != 1 && (ZiManager.parentIdEqual1(
+                DrillCategory.custom, newCenterZiId) ||
+                Utility.isSearchingNonZiPseudoZiId(newCenterZiId))) {
+              setParentTo1 = true;
+            }
+          }
 
-        bool setParentTo1 = false;
-        if (drillCategory == DrillCategory.custom) {
-          // during going back toward root. skip the pseudo zi
-          if (currentZiId != 1 && (ZiManager.parentIdEqual1(DrillCategory.custom, newCenterZiId) || Utility.isSearchingNonZiPseudoZiId(newCenterZiId))) {
-            setParentTo1 = true;
+          // make sure it doesn't go beyond the startingCenterZiId. do nothing in that case.
+          if (!theZiManager.isADistantParentOf(
+              ZiListType.searching, startingCenterZiId, newCenterZiId)) {
+            setState(() {
+              if (setParentTo1) {
+                centerZiId = 1;
+              }
+              else {
+                centerZiId = newCenterZiId;
+              }
+              shouldDrawCenter = true;
+
+              if (centerZiId != 1) {
+                var searchingZiId = centerZiId; // drill is for searching zi already
+                currentCenterZiRelatedBottum.searchingZiId = searchingZiId;
+                CenterZiRelatedBottum.initCenterZiRelatedBottum(
+                    searchingZiId, currentCenterZiRelatedBottum);
+              }
+            });
+
+            var char = theSearchingZiList[currentZiId].char;
+            TextToSpeech.speak("zh-CN", char);
           }
         }
+        else { //isQuestionOn == true
+          //if (currentZiId != theCurrentCenterZiId) {
+            var partialZiId = currentZiId;
+            ZiListTypeWrapper listTypeWrapper = ZiListTypeWrapper(
+                ZiListType.searching);
+            // navigation would always show the real char
+            if (theCurrentCenterZiId != currentZiId && !isFromNavigation) {
+              partialZiId = theZiManager.getPartialZiId(
+                  listTypeWrapper, theCurrentCenterZiId, currentZiId);
+            }
 
-        // make sure it doesn't go beyond the startingCenterZiId. do nothing in that case.
-        if (!theZiManager.isADistantParentOf(ZiListType.searching, startingCenterZiId, newCenterZiId)) {
-          setState(() {
-            if (setParentTo1) {
-              centerZiId = 1;
+            var sideZiOrComp;
+            if (listTypeWrapper.value == ZiListType.component) {
+              sideZiOrComp = theComponentList[partialZiId].charOrNameOfNonchar;
             }
             else {
-              centerZiId = newCenterZiId;
+              sideZiOrComp = theSearchingZiList[partialZiId].char;
             }
-            shouldDrawCenter = true;
 
-            if (centerZiId != 1) {
-              var searchingZiId = centerZiId; // drill is for searching zi already
-              currentCenterZiRelatedBottum.searchingZiId = searchingZiId;
-              CenterZiRelatedBottum.initCenterZiRelatedBottum(
-                  searchingZiId, currentCenterZiRelatedBottum);
+            //var zi = theZiManager.getZi(partialZiId);
+            TextToSpeech.speak("zh-CN", sideZiOrComp);
+
+            if (previousZiId != currentZiId || !haveShowedOverlay) {
+              showOverlayQuestion(context, 30.0, 80.0,
+                  centerZiId, currentZiId);
+              haveShowedOverlay = true;
             }
-          });
+            else if (haveShowedOverlay) {
+              haveShowedOverlay = false;
+            }
 
-          var char = theSearchingZiList[currentZiId].char;
-          TextToSpeech.speak("zh-CN", char);
+            previousZiId = currentZiId;
+          //}
         }
       },
       onLongPress: () {

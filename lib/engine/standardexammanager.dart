@@ -178,7 +178,7 @@ class StandardExamManager {
   }
 
 
-  int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
+  static int getARandomNumber(int upperRange, int chosenNumber1, int chosenNumber2) {
     var chosen = true;
     var number = 0;
 
