@@ -19,7 +19,7 @@ import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/questionmanager.dart';
-import 'package:hanzishu/localization/string_zh_CN.dart';
+import 'package:hanzishu/ui/onerootzipainter.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
 
@@ -449,7 +449,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             top: posiY,
             left: adjustedXValue,
             child: FlatButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
               color: Colors.blueAccent,
               textColor: Colors.white,
               onPressed: () {
@@ -465,63 +465,91 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     overlayState.insert(overlayEntry);
   }
 
-  Widget getQuestionWizard(BuildContext context, int currentZiId) {
-    var posi = questionManager.getSelectedPosi();
-    if (posi < 0) {
-      questionManager.setValues(
-          currentZiId, centerZiId, "");
-      questionManager.PopulateQuestionInfo();
-    }
-
+  Widget getQuestionWizard(BuildContext context) {
     return Container(child: Column(
         children: <Widget>[
           displayOldCenterZi(),
+          displaySideZiOrComp(),
           displayZi(),
-          getAnswerButton(1, currentZiId),
-          SizedBox(height: 5.0),
-          getAnswerButton(2, currentZiId),
-          SizedBox(height: 5.0),
-          getAnswerButton(3, currentZiId),
-          SizedBox(height: 5.0),
-          getContinueButton(context, currentZiId),
+          getAnswerButton(1),
+          SizedBox(height: getSizeRatio() * 5.0),
+          getAnswerButton(2),
+          SizedBox(height: getSizeRatio() * 5.0),
+          getAnswerButton(3),
+          SizedBox(height: getSizeRatio() * 15.0),
+          getContinueButton(context),
         ]
       ),
       color: Colors.limeAccent, //lime,
-      height: 400.0,
-      width: 330.0,
+      height: getSizeRatio() * 420.0,
+      width: getSizeRatio() * 330.0,
     );
   }
 
   Widget displayOldCenterZi() {
-    return Text(
-      questionManager.getPreviousZi() + ' : ' + questionManager.getPreviousZiMeaning(),
-      style: TextStyle(fontSize: 24.0, color: Colors.black/*, fontFamily: "Raleway"*/),
+    return Row(
+        children: <Widget>[
+          Text(
+            ' ' + questionManager.getPreviousZi() + ' : ' + questionManager.getPreviousZiMeaning(),
+            style: TextStyle(fontSize: getSizeRatio() * 24.0, color: Colors.brown/*, fontFamily: "Raleway"*/),
+          ),
+        ]
     );
   }
 
   Widget displaySideZiOrComp() {
+    if(questionManager.getCurrentZiId() == questionManager.getSideZiId()) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     return Row(
         children: <Widget>[
           Text(
-            questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
-            style: TextStyle(fontSize: 24.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+            ' ',
+            style: TextStyle(fontSize: getSizeRatio() * 24.0, color: Colors.brown/*, fontFamily: "Raleway"*/),
+          ),
+          Container(
+            height: getSizeRatio() * 24.0,
+            width: getSizeRatio() * 24.0,
+            // child: FlatButton(
+            child: CustomPaint(
+              foregroundPainter: OneRootZiPainter(
+                ziId: questionManager.getSideZiId(),
+                ziListType: questionManager.getSideZiListType(),
+                screenWidth: screenWidth,
+                fontSize: getSizeRatio() * 24.0,
+                ziColor: Colors.brown,
+              ),
+            ),
           ),
           Text(
-            questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
-            style: TextStyle(fontSize: 24.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+            " : " + questionManager.getSideZiMeaning(),
+            style: TextStyle(fontSize: getSizeRatio() * 24.0, color: Colors.brown/*, fontFamily: "Raleway"*/),
           ),
         ]
     );
   }
 
   Widget displayZi() {
-    return Text(
-      questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
-      style: TextStyle(fontSize: 48.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+    var char = questionManager.getCurrentZi();
+    return TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 24.0 * getSizeRatio()),
+      ),
+      onPressed: () {
+        TextToSpeech.speak("zh-CN", char);
+      },
+      child: Text(char,
+          style: TextStyle(fontSize: 48.0 * getSizeRatio(), color: Colors.greenAccent)),
     );
+
+    //return Text(
+    //  questionManager.getCurrentZi(), //lesson.titleTranslation, //"Hello",
+    //  style: TextStyle(fontSize: 48.0, color: Colors.greenAccent/*, fontFamily: "Raleway"*/),
+    //);
   }
 
-  Widget getAnswerButton(int index, int currentZiId) {
+  Widget getAnswerButton(int index) {
     Color color = Colors.blue;
 
     if (questionManager.selectedPosi > 0 && index == questionManager.getCorrectPosi()) {
@@ -531,9 +559,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       color = Colors.red;
     }
 
-    var currentZiId = questionManager.getCurrentZiId();
+    //var currentZiId = questionManager.getCurrentZiId();
 
-    return Container(height:45.0, width: 300.0,
+    return Container(height:45.0 * getSizeRatio(), width: 300.0 * getSizeRatio(),
         decoration: BoxDecoration(
           border: Border.all(
             width: 1,
@@ -549,8 +577,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         initOverlay();
         setState(() {
           questionManager.selectedPosi = index;
-          showOverlayQuestion(context, 30.0, 100.0,
-              previousZiId, currentZiId);
+          showOverlayQuestion(context, 30.0 * getSizeRatio(), 80.0 * getSizeRatio(),
+              -1, -1, null, -1);
         });
       },
       child: Text(questionManager.getAnswer(index),
@@ -558,7 +586,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     ));
   }
 
-  Widget getContinueButton(context, int searchingZiId) {
+  Widget getContinueButton(context) {
     if (questionManager.selectedPosi < 1) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -582,15 +610,16 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             color: Colors.greenAccent,
             width: 1,
           ),
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20.0 * getSizeRatio()),
         ),
       ),
       onPressed: () {
         initOverlay();
         questionManager.selectedPosi = -1; // reinit
-        if (searchingZiId != -1) {
+        var currentZiId = questionManager.getCurrentZiId();
+        if (currentZiId != -1) {
           setState(() {
-            centerZiId = searchingZiId;
+            centerZiId = currentZiId; //actually the next zi to be at center
           });
         }
       },
@@ -599,16 +628,21 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     );
   }
 
-  showOverlayQuestion(BuildContext context, double posiX, double posiY, int centerZiId, int searchingZiId) {
+  showOverlayQuestion(BuildContext context, double posiX, double posiY, int centerZiId, int sideZiId, ZiListType sideZiListType, int searchingZiId) {
     initOverlay();
-    var adjustedXValue = 30.0; //Utility.adjustOverlayXPosition(posiX, screenWidth);
+    var posi = questionManager.getSelectedPosi();
+    if (posi < 0) {
+      questionManager.setValues(centerZiId, sideZiId, sideZiListType, searchingZiId);
+      questionManager.PopulateQuestionInfo();
+    }
+    var adjustedXValue = 30.0 * getSizeRatio(); //Utility.adjustOverlayXPosition(posiX, screenWidth);
 
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
         builder: (context) =>Positioned(
             top: posiY,
             left: adjustedXValue,
-            child: getQuestionWizard(context, searchingZiId)
+            child: getQuestionWizard(context)
         ));
     overlayState.insert(overlayEntry);
   }
@@ -652,7 +686,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       textColor: Colors.blueAccent,
       onPressed: () {
         initOverlay();
-        if (questionManager.isQuestionOn == false || currentZiId == theCurrentCenterZiId || centerZiId == 1) {
+        // note: Lessons use Custom as well, so I have to use 1 to skip other non-lesson custom usage.
+        // no big difference for lesson 1 itself with this condition, impact only 1 char.
+        bool isMiddleZiInLesson = (internalStartItemId == internalEndItemId) && internalStartItemId > 1 && (drillCategory == DrillCategory.custom) && !BasePainter.isCharNewInLesson(newCenterZiId, internalStartItemId);
+        var parentZiId = theZiManager.getParentZiId(ZiListType.searching, newCenterZiId);
+        if (questionManager.isQuestionOn == false || currentZiId == theCurrentCenterZiId || centerZiId == 1 || newCenterZiId < Utility.searchingZiListRealZiStart || parentZiId < Utility.searchingZiListRealZiStart || isMiddleZiInLesson) {
           _clearAnimation();
           resetCompoundZiAnimation();
 
@@ -714,7 +752,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
             if (previousZiId != currentZiId || !haveShowedOverlay) {
               showOverlayQuestion(context, 30.0, 80.0,
-                  centerZiId, currentZiId);
+                  centerZiId, partialZiId, listTypeWrapper.value, currentZiId);
               haveShowedOverlay = true;
             }
             else if (haveShowedOverlay) {

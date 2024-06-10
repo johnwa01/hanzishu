@@ -1272,7 +1272,7 @@ class BasePainter extends CustomPainter{
     }
   }
 
-  bool isCharNewInLesson(int id, int internalStartLessonId) {
+  static bool isCharNewInLesson(int id, int internalStartLessonId) {
     var convChars = theLessonManager.getConvCharsIds(internalStartLessonId);
     for (int i = 0; i < convChars.length; i++) {
       if (id == convChars[i]) {

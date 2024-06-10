@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:hanzishu/data/componentlist.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
@@ -10,7 +11,9 @@ class QuestionManager {
   int previousZiId;
   String previousZi;
   String previousZiMeaning;
-  String sideZiOrComp;
+  int sideZiId;
+  ZiListType sideZiListType;
+  String sideZiMeaning;
 
   String currentZi;
   String currentZiMeaning;
@@ -28,11 +31,13 @@ class QuestionManager {
 
   QuestionManager() {}
 
-  setValues(int currentZiId, int previousZiId, String sideZiOrComp) {
-    this.currentZiId = currentZiId;
-    this.currentZi = theSearchingZiList[currentZiId].char;
-    this.previousZiId = previousZiId;
-    this.sideZiOrComp = sideZiOrComp;
+  setValues(int centerZiId, int sideZiId, ZiListType sideZiListType, int searchingZiId) {
+  //setValues(int previousZiId, String sideZiOrComp, int currentZiId,) {
+    this.previousZiId = centerZiId;
+    this.sideZiId = sideZiId;
+    this.sideZiListType = sideZiListType;
+    this.currentZiId = searchingZiId;
+    this.currentZi = theSearchingZiList[searchingZiId].char;
   }
 
   String getMeaning(int posi) { // 1 based
@@ -73,6 +78,18 @@ class QuestionManager {
     return previousZiMeaning;
   }
 
+  int getSideZiId() {
+    return sideZiId;
+  }
+
+  String getSideZiMeaning() {
+    return sideZiMeaning;
+  }
+
+  ZiListType getSideZiListType() {
+    return sideZiListType;
+  }
+
   String getAnswer(int index) {
     var answer = null;
     if (index == currentZiPosi) {
@@ -96,7 +113,8 @@ class QuestionManager {
 
     //var zi = ZiManager.getZiByChar(currentZi);
     currentZiMeaning = theSearchingZiList[currentZiId].meaning;
-    currentZiPosi = StandardExamManager.getARandomNumber(3, -1, -1) + 1; // 0,1,2-> 1,2,3
+    currentZiPosi =
+        StandardExamManager.getARandomNumber(3, -1, -1) + 1; // 0,1,2-> 1,2,3
 
     for (int i = 1; i <= 3; i++) {
       if (currentZiPosi != i && wrongZiAPosi < 1) {
@@ -108,12 +126,21 @@ class QuestionManager {
     }
 
     // have to exclude the first 52 entries
-    int searchingZiIndexA = StandardExamManager.getARandomNumber(3773, currentZiId - 52, -1); //3773 + 52 = 3825
+    int searchingZiIndexA = StandardExamManager.getARandomNumber(
+        3773, currentZiId - 52, -1); //3773 + 52 = 3825
     wrongZiAMeaning = theSearchingZiList[searchingZiIndexA + 52].meaning;
-    int searchingZiIndexB = StandardExamManager.getARandomNumber(3773, currentZiId - 52, searchingZiIndexA);
+    int searchingZiIndexB = StandardExamManager.getARandomNumber(
+        3773, currentZiId - 52, searchingZiIndexA);
     wrongZiBMeaning = theSearchingZiList[searchingZiIndexB + 52].meaning;
 
     previousZi = theSearchingZiList[previousZiId].char;
     previousZiMeaning = theSearchingZiList[previousZiId].meaning;
+
+    if (sideZiListType == ZiListType.component) {
+      sideZiMeaning = theComponentList[sideZiId].meaning;
+    }
+    else {
+      sideZiMeaning = theSearchingZiList[sideZiId].meaning;
+    }
   }
 }

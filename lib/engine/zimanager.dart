@@ -75,9 +75,9 @@ class ZiManager {
     return theSearchingZiList.length;
   }
 
-  static SearchingZi getZiByChar(String char) {
+  static SearchingZi getZiByChar(String chgetar) {
     for (var zi in theSearchingZiList) {
-      if (zi.char.runes.length == 1 && zi.char.runes.first == char.runes
+      if (zi.char.runes.length == 1 && zi.char.runes.first == zi.char.runes
           .first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
         return zi;
       }
