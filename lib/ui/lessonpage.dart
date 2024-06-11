@@ -300,8 +300,8 @@ class _LessonPageState extends State<LessonPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                getButton(context, lessonId, 2),
-                getPinyinButton(context, lessonId, 3),
+                getPinyinButton(context, lessonId, 2),
+                getButton(context, lessonId, 3),
               ],
             ),
             //padding: EdgeInsets.all(20),
