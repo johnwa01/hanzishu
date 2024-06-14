@@ -55,8 +55,16 @@ class _LessonPageState extends State<LessonPage> {
 
   _getRequests() async {
       this.numberOfExercises += 1;
+      if (this.numberOfExercises == 1 && widget.lessonId > 60) {
+        this.numberOfExercises += 1; // skip drill section
+      }
+
       if (this.numberOfExercises == 2 && (widget.lessonId < 10 || widget.lessonId > 60 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
         this.numberOfExercises += 1; // skip Pinyin section
+      }
+
+      if (this.numberOfExercises == 5 && widget.lessonId > 60) {
+        this.numberOfExercises += 1; // skip quiz section
       }
 
       if (!theIsBackArrowExit && theIsFromLessonContinuedSection && numberOfExercises <= 5) {
