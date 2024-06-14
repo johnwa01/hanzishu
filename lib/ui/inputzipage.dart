@@ -882,6 +882,10 @@ class _InputZiPageState extends State<InputZiPage> {
       str = getString(theZiForSingleCompExerciseList[currentIndex].hintText);
       title = getString(331);
     }
+    else if (typingType == TypingType.FirstTyping) {
+      str = getString(theZiForFirstTypingExerciseList[currentIndex].hintText);
+      title = getString(511);
+    }
     else if (typingType == TypingType.TwoComponents) {
       str = getString(theZiForTwoCompExerciseList[currentIndex].hintText);
       title = getString(332);
@@ -977,6 +981,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.SingleComponent) {
       image = theZiForSingleCompExerciseList[currentIndex].hintImage;
+    }
+    else if (typingType == TypingType.FirstTyping) {
+      image = theZiForFirstTypingExerciseList[currentIndex].hintImage;
     }
     else if (typingType == TypingType.TwoComponents) {
       image = theZiForTwoCompExerciseList[currentIndex].hintImage;
@@ -1094,6 +1101,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.SingleComponent) {
       title = getString(331)/*'Character with single Component'*/;
+    }
+    else if (typingType == TypingType.FirstTyping) {
+      title = getString(511)/*'Character with First Hanzi'*/;
     }
     else if (typingType == TypingType.TwoComponents) {
       title = getString(332)/*'Character with two Components'*/;
@@ -2279,6 +2289,11 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.SingleComponent) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(355)/*"You have completed this typing course! ..."*/;
+      //theNewlyCompletedTypingExercise = 8;
+    }
+    else if (typingType == TypingType.FirstTyping) {
+      title = getString(118)/*"Congratulations!"*/;
+      content = getString(512)/*"You have typed your first Hanzi into computer!"*/;
       //theNewlyCompletedTypingExercise = 8;
     }
     else if (typingType == TypingType.TwoComponents) {

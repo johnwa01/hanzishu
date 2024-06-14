@@ -47,7 +47,7 @@ class _ToolsPageState extends State<ToolsPage> {
         this.numberOfExercises += 1;
       //});
 
-      if (!theIsBackArrowExit && this.numberOfExercises <= 4) {
+      if (!theIsBackArrowExit && this.numberOfExercises <= 5) {
         // reinit
         theIsBackArrowExit = true;
         LaunchExercise(this.numberOfExercises);
@@ -69,11 +69,21 @@ class _ToolsPageState extends State<ToolsPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ComponentPage(questionType: QuestionType.Component),
+                InputZiPage(
+                    typingType: TypingType.FirstTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
       case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ComponentPage(questionType: QuestionType.Component),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 2:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -83,7 +93,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 2:
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -92,7 +102,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 3:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -102,7 +112,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(

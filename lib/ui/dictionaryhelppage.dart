@@ -174,16 +174,16 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
               style: TextStyle(fontSize: TheConst.fontSizes[2]),
               textAlign: TextAlign.start
           ),
-          Text(
-              "        " + getString(147)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "            " + getString(148)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
+       //   Text(
+       //       "        " + getString(147)/*""*/,
+       //       style: TextStyle(fontSize: TheConst.fontSizes[2]),
+       //       textAlign: TextAlign.start
+       //   ),
+       //   Text(
+       //       "            " + getString(148)/*""*/,
+       //       style: TextStyle(fontSize: TheConst.fontSizes[2]),
+       //       textAlign: TextAlign.start
+       //   ),
           Text(
               "        " + getString(149)/*""*/,
               style: TextStyle(fontSize: TheConst.fontSizes[1]),

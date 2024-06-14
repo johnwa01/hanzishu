@@ -488,6 +488,9 @@ class InputZiManager {
     else if (typingType == TypingType.SingleComponent) {
       return theZiForSingleCompExerciseList[index];
     }
+    else if (typingType == TypingType.FirstTyping) {
+      return theZiForFirstTypingExerciseList[index];
+    }
     else if (typingType == TypingType.TwoComponents) {
       return theZiForTwoCompExerciseList[index];
     }
@@ -582,6 +585,11 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
+    else if (typingType == TypingType.FirstTyping) {
+      if (currentIndex >= theZiForFirstTypingExerciseList.length) {
+        currentIndex = -1;
+      }
+    }
     else if (typingType == TypingType.GeneralExercise) {
       if (currentIndex >= theZiForGeneralExerciseList.length) {
         currentIndex = -1;
@@ -664,6 +672,10 @@ class InputZiManager {
       zi = theZiForSingleCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
+    else if (typingType == TypingType.FirstTyping) {
+      zi = theZiForFirstTypingExerciseList[currentIndex];
+      result = typingResult.contains(zi.zi);
+    }
     else if (typingType == TypingType.TwoComponents) {
       zi = theZiForTwoCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
@@ -720,6 +732,9 @@ class InputZiManager {
     }
     else if (typingType == TypingType.SingleComponent) {
       return theZiForSingleCompExerciseList.length;
+    }
+    else if (typingType == TypingType.FirstTyping) {
+      return theZiForFirstTypingExerciseList.length;
     }
     else if (typingType == TypingType.TwoComponents) {
       return theZiForTwoCompExerciseList.length;

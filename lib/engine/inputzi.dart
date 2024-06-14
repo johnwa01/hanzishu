@@ -19,6 +19,7 @@ enum TypingType {
   Custom,
   ComponentTyping,
   DicSearchTyping,
+  FirstTyping,
 }
 
 enum InputMethod {

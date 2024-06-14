@@ -249,7 +249,7 @@ var theZiForIntroductionList=[
 
 var theZiForLeadCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "GG6.png", 110), //hintText ID
-  ZiWithComponentsAndStrokes("品", [], "", 0),
+  //ZiWithComponentsAndStrokes("品", [], "", 0),
   ZiWithComponentsAndStrokes("森", [], "", 0),
   ZiWithComponentsAndStrokes("晶", [], "", 0),
   //ZiWithComponentsAndStrokes("合", [], "", 0),
@@ -560,6 +560,11 @@ var theZiForTwoCompExerciseList=[
   ZiWithComponentsAndStrokes("明", [], "", 0),
   ////ZiWithComponentsAndStrokes("汁", [], "", 0),
   //ZiWithComponentsAndStrokes("对", [], "", 0),
+];
+
+var theZiForFirstTypingExerciseList=[
+  ZiWithComponentsAndStrokes("键", [], "", 513),
+  ZiWithComponentsAndStrokes("品", [], "", 0),
 ];
 
 var theZiForGeneralExerciseList=[

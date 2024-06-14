@@ -424,7 +424,7 @@ class _ComponentPageState extends State<ComponentPage> {
     var str;
     if (currentIndex == 0) {
       if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 0) {
-        str = ''; //getString(388); /* learn content then continue*/
+        str = getString(514); /* 25 categories of Chinese alphabets*/
       }
       else if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
         str = ''; //getString(416); /* learn content & mapping then continue*/
@@ -651,6 +651,10 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     else if (questionType == QuestionType.Component) { // for the header only
+      if (preIndexAtCurrentIndex0 == 0) {
+        return SizedBox(width: 0.0, height: 0.0);
+      }
+
       var imageName;
       if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
         if (theDefaultLocale == "zh_CN") {
