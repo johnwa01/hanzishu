@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-import 'package:video_player/video_player.dart';
+//import 'package:video_player/video_player.dart';
 
 class InputZiHelpPage extends StatefulWidget {
   InputZiHelpPage();
@@ -13,8 +13,7 @@ class InputZiHelpPage extends StatefulWidget {
 }
 
 class _InputZiHelpPageState extends State<InputZiHelpPage> {
-  VideoPlayerController _videoController;
-  Future<void> _initializeVideoPlayerFuture;
+  //VideoPlayerController _videoController;
 
   double screenWidth;
   ScrollController _scrollController;
@@ -37,11 +36,11 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   void initState() {
     super.initState();
 
-    _videoController = VideoPlayerController.asset('assets/video/Welcome.MP4');
+    //_videoController = VideoPlayerController.asset('assets/video/Welcome.MP4');
     // Initialize the VideoPlayerController.
-    _videoController.initialize();
+    //_videoController.initialize();
     // Play the video.
-    _videoController.play();
+    //_videoController.play();
 
     _scrollController = ScrollController()
       ..addListener(() {
