@@ -22,6 +22,7 @@ import 'package:hanzishu/engine/lessonunit.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
 import 'package:hanzishu/engine/component.dart';
+import 'package:video_player/video_player.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -103,6 +104,11 @@ class _LessonsPageState extends State<LessonsPage> {
       _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
       _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   handleStorage() {

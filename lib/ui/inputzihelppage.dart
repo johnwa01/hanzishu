@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
-
+import 'package:video_player/video_player.dart';
 
 class InputZiHelpPage extends StatefulWidget {
   InputZiHelpPage();
@@ -13,6 +13,9 @@ class InputZiHelpPage extends StatefulWidget {
 }
 
 class _InputZiHelpPageState extends State<InputZiHelpPage> {
+  VideoPlayerController _videoController;
+  Future<void> _initializeVideoPlayerFuture;
+
   double screenWidth;
   ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
@@ -33,6 +36,13 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
   @override
   void initState() {
     super.initState();
+
+    _videoController = VideoPlayerController.asset('assets/video/Welcome.MP4');
+    // Initialize the VideoPlayerController.
+    _videoController.initialize();
+    // Play the video.
+    _videoController.play();
+
     _scrollController = ScrollController()
       ..addListener(() {
         //print("offset = ${_scrollController.offset}");
@@ -162,6 +172,10 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
+          //AspectRatio(
+          //  aspectRatio: _videoController.value.aspectRatio,
+          //    child: VideoPlayer(_videoController),
+          //),
           Text(
               getString(366)/*"部件输入法将一个汉字分解成部件，并在英文键盘上输入对应的字母。"*/,
               style: TextStyle(fontSize: fontSize2),
