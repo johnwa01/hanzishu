@@ -42,6 +42,8 @@ dependencies:
 
   intl:
 
+  video_player:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -356,6 +358,7 @@ flutter:
      - assets/typing/T4_E.png
      - assets/typing/T5_E.png
      - assets/typing/T6_E.png
+     - assets/video/
 
   #   - images/a_dot_ham.jpeg
 

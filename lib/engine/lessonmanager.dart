@@ -244,6 +244,7 @@ class LessonManager {
     return lesson.convCharsIds.length + lesson.charsIds.length;
   }
 
+  //TODO: change to return char only from sentencelist, no need searchingzi
   SearchingZi getChar(int lessonId, int currentIndex) {
     var lesson = getLesson(lessonId);
     if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
