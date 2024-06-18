@@ -681,6 +681,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
+    //TODO: for new, temp set isQuestion to false, that is, turn off the question feature
     var butt = FlatButton(
       color: Colors.white, // buttonColor,
       textColor: Colors.blueAccent,
@@ -690,7 +691,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         // no big difference for lesson 1 itself with this condition, impact only 1 char.
         bool isMiddleZiInLesson = (internalStartItemId == internalEndItemId) && internalStartItemId > 1 && (drillCategory == DrillCategory.custom) && !BasePainter.isCharNewInLesson(newCenterZiId, internalStartItemId);
         var parentZiId = theZiManager.getParentZiId(ZiListType.searching, newCenterZiId);
-        if (questionManager.isQuestionOn == false || currentZiId == theCurrentCenterZiId || centerZiId == 1 || newCenterZiId < Utility.searchingZiListRealZiStart || parentZiId < Utility.searchingZiListRealZiStart || isMiddleZiInLesson) {
+ //       if (questionManager.isQuestionOn == false || currentZiId == theCurrentCenterZiId || centerZiId == 1 || newCenterZiId < Utility.searchingZiListRealZiStart || parentZiId < Utility.searchingZiListRealZiStart || isMiddleZiInLesson) {
           _clearAnimation();
           resetCompoundZiAnimation();
 
@@ -727,7 +728,8 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             var char = theSearchingZiList[currentZiId].char;
             TextToSpeech.speak("zh-CN", char);
           }
-        }
+ //       }
+        /*
         else { //isQuestionOn == true
           //if (currentZiId != theCurrentCenterZiId) {
             var partialZiId = currentZiId;
@@ -762,6 +764,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             previousZiId = currentZiId;
           //}
         }
+        */
       },
       onLongPress: () {
         initOverlay();
