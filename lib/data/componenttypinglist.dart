@@ -510,6 +510,7 @@ var theZiForSubCompExerciseList=[
   ZiWithComponentsAndStrokes("粹", [], "Q62.png", 0),
 ];
 
+/*
 var theZiForSingleCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 339),
   //ZiWithComponentsAndStrokes("歹", [], "", 0),
@@ -538,6 +539,7 @@ var theZiForSingleCompExerciseList=[
 //  ZiWithComponentsAndStrokes("六", [], "", 0),
   ZiWithComponentsAndStrokes("穴", [], "", 0),
 ];
+*/
 
 var theZiForTwoCompExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 340), // SpecialStrokes.png - not show it to make it simple.

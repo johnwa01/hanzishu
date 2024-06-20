@@ -1195,7 +1195,7 @@ class ComponentManager {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
     List<String> components = List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
-
+/*
     var subComponents;
     if (components.length < 3) {
       subComponents = ComponentManager.getSubComponents(components);
@@ -1203,7 +1203,7 @@ class ComponentManager {
         components.add(subComponents[i]);
       }
     }
-
+*/
     return components;
   }
 

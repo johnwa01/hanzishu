@@ -485,9 +485,9 @@ class InputZiManager {
     else if (typingType == TypingType.SubComponents) {
       return theZiForSubCompExerciseList[index];
     }
-    else if (typingType == TypingType.SingleComponent) {
-      return theZiForSingleCompExerciseList[index];
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  return theZiForSingleCompExerciseList[index];
+    //}
     else if (typingType == TypingType.FirstTyping) {
       return theZiForFirstTypingExerciseList[index];
     }
@@ -580,11 +580,11 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
-    else if (typingType == TypingType.SingleComponent) {
-      if (currentIndex >= theZiForSingleCompExerciseList.length) {
-        currentIndex = -1;
-      }
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  if (currentIndex >= theZiForSingleCompExerciseList.length) {
+    //    currentIndex = -1;
+    //  }
+    //}
     else if (typingType == TypingType.FirstTyping) {
       if (currentIndex >= theZiForFirstTypingExerciseList.length) {
         currentIndex = -1;
@@ -668,10 +668,10 @@ class InputZiManager {
       zi = theZiForSubCompExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
     }
-    else if (typingType == TypingType.SingleComponent) {
-      zi = theZiForSingleCompExerciseList[currentIndex];
-      result = typingResult.contains(zi.zi);
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  zi = theZiForSingleCompExerciseList[currentIndex];
+    //  result = typingResult.contains(zi.zi);
+    //}
     else if (typingType == TypingType.FirstTyping) {
       zi = theZiForFirstTypingExerciseList[currentIndex];
       result = typingResult.contains(zi.zi);
@@ -730,9 +730,9 @@ class InputZiManager {
     else if (typingType == TypingType.SubComponents) {
       return theZiForSubCompExerciseList.length;
     }
-    else if (typingType == TypingType.SingleComponent) {
-      return theZiForSingleCompExerciseList.length;
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  return theZiForSingleCompExerciseList.length;
+    //}
     else if (typingType == TypingType.FirstTyping) {
       return theZiForFirstTypingExerciseList.length;
     }

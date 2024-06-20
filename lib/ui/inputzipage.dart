@@ -878,10 +878,10 @@ class _InputZiPageState extends State<InputZiPage> {
       str = getString(theZiForSubCompExerciseList[currentIndex].hintText);
       title = getString(330);
     }
-    else if (typingType == TypingType.SingleComponent) {
-      str = getString(theZiForSingleCompExerciseList[currentIndex].hintText);
-      title = getString(331);
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  str = getString(theZiForSingleCompExerciseList[currentIndex].hintText);
+    //  title = getString(331);
+    //}
     else if (typingType == TypingType.FirstTyping) {
       str = getString(theZiForFirstTypingExerciseList[currentIndex].hintText);
       title = getString(511);
@@ -979,9 +979,9 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.SubComponents) {
       image = theZiForSubCompExerciseList[currentIndex].hintImage;
     }
-    else if (typingType == TypingType.SingleComponent) {
-      image = theZiForSingleCompExerciseList[currentIndex].hintImage;
-    }
+    //else if (typingType == TypingType.SingleComponent) {
+    //  image = theZiForSingleCompExerciseList[currentIndex].hintImage;
+    //}
     else if (typingType == TypingType.FirstTyping) {
       image = theZiForFirstTypingExerciseList[currentIndex].hintImage;
     }
@@ -1699,7 +1699,7 @@ class _InputZiPageState extends State<InputZiPage> {
       typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
     }
     else {
-      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
+      var zi = theInputZiManager. getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
       typingChar = zi.zi;
     }
@@ -2263,7 +2263,7 @@ class _InputZiPageState extends State<InputZiPage> {
     */
     else if (typingType == TypingType.ExpandedReview) {
       title = getString(118)/*"Congratulations!"*/;
-      content = getString(354)/*"You have completed this exercise! Please move on to the next one."*/;
+      content = getString(355)/*"Completed course!."*/;
       //theNewlyCompletedTypingExercise = 3;
     }
     else if (typingType == TypingType.ExpandedGeneral) {
