@@ -370,6 +370,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
+          /*
           SizedBox(height: fontSize2),
           Text(
               getString(183)/*"提示 4：将部件分解为子部件的规则。"*/,
@@ -398,12 +399,14 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                 width: 200.0 * getSizeRatioWithLimit(), //390
                 height: 160.0 * getSizeRatioWithLimit()), //150
           ),
+          */
           SizedBox(height: fontSize2),
           Text(
               getString(184)/*"How to type a Chinese Character"*/,
               style: TextStyle(color: Colors.blue, fontSize: fontSize1),
               textAlign: TextAlign.start
           ),
+          /*
           Text(
               "1. " + getString(185)/*"Divide the character into components (Lead Components or Expanded Components)."*/,
               style: TextStyle(fontSize: fontSize2),
@@ -424,7 +427,6 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
-          /*
           Text(
               "      1. " + getString(189)/*"Type up to three make-up Strokes (the first, second, and the last stroke of the Component) until the Character appears"*/,
               style: TextStyle(fontSize: fontSize2),
@@ -435,7 +437,6 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
-          */
           Text(
               "  b. " + getString(191)/*"If a Character has two Components:"*/,
               style: TextStyle(fontSize: fontSize2),
@@ -451,7 +452,6 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
-          /*
           Text(
               "      1. " + getString(194)/*"Type two make-up Strokes (the last Stroke of each Component) until the Character appears"*/,
               style: TextStyle(fontSize: fontSize2),
@@ -462,14 +462,14 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
-          */
           Text(
               "  c. " + getString(196)/*"If a Character has three or more Components:"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
+          */
           Text(
-              "    i. " + getString(197)/*"Type as many Components as necessary in sequence until the Character appears"*/,
+              getString(197)/*"Type as many Components as necessary in sequence until the Character appears"*/,
               style: TextStyle(fontSize: fontSize2),
               textAlign: TextAlign.start
           ),
