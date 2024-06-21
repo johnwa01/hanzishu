@@ -734,11 +734,21 @@ class _LessonsPageState extends State<LessonsPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ComponentPage(questionType: QuestionType.Component),
+                InputZiPage(
+                    typingType: TypingType.FirstTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false),
           ),
         ).then((val) => {_getRequests()});
         break;
       case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                ComponentPage(questionType: QuestionType.Component),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 2:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -748,7 +758,7 @@ class _LessonsPageState extends State<LessonsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 2:
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -757,16 +767,17 @@ class _LessonsPageState extends State<LessonsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 3:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.ExpandedReview, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.ExpandedReview, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
+        /*
       case 4:
         Navigator.push(
           context,
@@ -777,6 +788,7 @@ class _LessonsPageState extends State<LessonsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+        */
       default:
         break;
     }

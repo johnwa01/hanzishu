@@ -273,6 +273,6 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   Sentence(264, "复旦大学是顶尖学府，", "Fu- | dan | college | learning | is | top | sharp | learning | campus", 0, null, [], "", ""),
   Sentence(265, "每年有上海时装周，", "each | year | have | Shang- | hai | timely | dress | week", 0, null, [], "", ""),
   Sentence(266, "南京路是购物的天堂，", "Nan- | jing | road | is | shopping | (something) | of | sky's | hall", 0, null, [], "", ""),
-  Sentence(267, "城隍庙有地道的小吃，", "Cheng- | huang | temple | have | ground | way | of | small | eat", 0, null, [], "", ""),
+  Sentence(267, "城里有地道的小吃，", "Cheng- | huang | temple | have | ground | way | of | small | eat", 0, null, [], "", ""), //no '城隍庙' yet
   Sentence(268, "比如小笼包和生煎包。", "(compare) | example | small | cage | bun | and | raw | fried | bun", 0, null, [], "", ""),
 ];

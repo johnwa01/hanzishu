@@ -522,4 +522,5 @@ var theString_en_US = [
   Local(512, "You have typed your first Hanzi '品' into computer!"),
   Local(513, "In this three-step typing course, you will learn how to type Hanzi (Chinese character) into computer using Hanzishu Puzzle Typing method.\n\nStep1:\n\nQuestion: How can I type Hanzi '品' into computer?\n\nAnswer: You break up '品' into '口'，'口'，and '口'， then type 'o', 'o', and 'o'. \n\nThat is, map Chinese alphabet '口' into upper case letter 'O' according to shape similarity, then type letter. Then choose '品' from a candidate list below the editing field by typing its number, mouse clicking, tapping it, or using space bar to choose the 1st candidate. You can also use arrow '>' key to see more candidates when necessary."),
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 5 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
+  Local(515, "Read sound & meaning, Next"),
 ];

@@ -839,10 +839,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     // Next flashcard button, match dictionarypainter's definition
     if (flashcardList != null) {
       var fontSize4 = applyRatio(20.0);
-      var fontSize8 = applyRatio(115.0);
+      var fontSize8 = applyRatio(15.0); //115
       var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 1.1,
           0.0 /*getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3 */,
-          fontSize4 * 6, fontSize4 * 1.2, 10.0, 10.0);
+          fontSize4 * 15, fontSize4 * 1.2, 10.0, 10.0);
       buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
     }
 
@@ -882,7 +882,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           showCompletedDialog(context);
         }
       },
-      child: Text(getString(138) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio()),),
+      child: Text(getString(515) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio()),),
     );
 
     var posiCenter = Positioned(
