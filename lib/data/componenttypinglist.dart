@@ -566,6 +566,8 @@ var theZiForTwoCompExerciseList=[
 
 var theZiForFirstTypingExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 513),
+  ZiWithComponentsAndStrokes("口", [], "", 0),
+  ZiWithComponentsAndStrokes("吕", [], "", 0),
   ZiWithComponentsAndStrokes("品", [], "", 0),
 ];
 
