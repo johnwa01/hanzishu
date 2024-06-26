@@ -428,13 +428,13 @@ class LessonManager {
         imageNumber = 24;
       }
       else if (unit == 12) {
-        imageNumber = 13;
+        imageNumber = 64;
       }
       else if (unit == 13) {
-        imageNumber = 60;
+        imageNumber = 68;
       }
       else if (unit == 14) {
-        imageNumber = 29;
+        imageNumber = 71;
       }
       else if (unit == 15) {
         imageNumber = 47;

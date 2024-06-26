@@ -593,26 +593,26 @@ var theZiForGeneralExerciseList=[
 ];
 
 var theComponentCategoryStringIdAndTypingCharsList=[
-  ComponentCategoryStringIdAndTypingChars(353, "A", "人入火个金食臾大犬夫央夷"), ///*庚椿筷*/"), // human legs
-  ComponentCategoryStringIdAndTypingChars(327, "B", "日曰白臼母目自且身艮耳"), ///*帽衰棺埠值唧殷*/"), // two mouths
+  ComponentCategoryStringIdAndTypingChars(353, "A", "人入火个金食臾大犬夫央夷久"), ///*庚椿筷*/"), // human legs
+  ComponentCategoryStringIdAndTypingChars(327, "B", "日曰白臼母目自且身艮"), ///*帽衰棺埠值唧殷*/"), // two mouths
   ComponentCategoryStringIdAndTypingChars(317, "C", "巨臣亡丘"), ///*枢宦*/"), // open to sides
   ComponentCategoryStringIdAndTypingChars(326, "D", "刀力为书韦弗万方乃丑"), ///*溜姊弟*/"), // mouth with teeth
   ComponentCategoryStringIdAndTypingChars(316, "E", "王玉工亚垂一二三土士"), ///*疟糕集御*/"), // 工 shape
-  ComponentCategoryStringIdAndTypingChars(349, "F", "厂广"), ///*后痊鹿泼畴拜搓判滤佑须浓所*/"), // cliff shape
+  ComponentCategoryStringIdAndTypingChars(349, "F", "厂广斤斥"), ///*后痊鹿泼畴拜搓判滤佑须浓所*/"), // cliff shape
   ComponentCategoryStringIdAndTypingChars(321, "G", "幺乡衣"), ///*拚层拟展亥终丝紧缘髦袁派祭*/"), // triangle
-  ComponentCategoryStringIdAndTypingChars(344, "H", "井廿甘"), ///*莽带舞散媾基*/"), // horizontal
+  ComponentCategoryStringIdAndTypingChars(344, "H", "井廿甘耳"), ///*莽带舞散媾基*/"), // horizontal
   ComponentCategoryStringIdAndTypingChars(342, "I", "卜爿上止业小"), ///*攸创览卓性将背涉尚面延胥犀债徒*/"), // vertical
   //ComponentCategoryStringIdAndTypingChars(318, "J", ""), ///*劣吻须受段疙锌临简昂泖印玺角馅猪貌*/"), // arc
-  ComponentCategoryStringIdAndTypingChars(346, "K", "长片豕象水"), ///*洗渚降技晴择*/"), // cross shape
+  ComponentCategoryStringIdAndTypingChars(346, "K", "长片"), ///*洗渚降技晴择*/"), // cross shape
   ComponentCategoryStringIdAndTypingChars(343, "L", "毛七匕己已巳巴也屯乙飞心瓦氏民气世弋"), ///*断乱延花沏皆凯创甩迅贰*/"), // northeast
-  ComponentCategoryStringIdAndTypingChars(322, "M", "木本未末耒米求禾爪永承示乐东不束柬"), ///*炼剥潘茶聚缘琢刺恭秉*/"), // three legs
+  ComponentCategoryStringIdAndTypingChars(322, "M", "木本未末耒米求禾爪永承示乐东不束柬水豕象"), ///*炼剥潘茶聚缘琢刺恭秉*/"), // three legs
   ComponentCategoryStringIdAndTypingChars(348, "N", "门贝见巾冉内肉而雨两甫月丹舟册禹"), ///*同周奂滑遍沛制憋离肾索*/"), // south
   ComponentCategoryStringIdAndTypingChars(315, "O", "口凸石言中串虫皿四西酉黑熏革"), ///*徊勤囊腰临置曾*/"), // one mouth
-  ComponentCategoryStringIdAndTypingChars(320, "P", "尸户卫尹聿"), ///*楣陪却哪顾假睁肃逮庸捷凄谦*/"), // knife shape
+  ComponentCategoryStringIdAndTypingChars(320, "P", "尸户卫尹聿事"), ///*楣陪却哪顾假睁肃逮庸捷凄谦*/"), // knife shape
   ComponentCategoryStringIdAndTypingChars(351, "Q", "田由甲申电里果毋鬼曳更禺重曲"), ///*惯龟阐碑嫂穗碘槽*/"), // four mouths
-  ComponentCategoryStringIdAndTypingChars(325, "R", "尺几久九丸兀斤斥"), ///*兔枫抚沈溉痹*/"), // strange legs
+  ComponentCategoryStringIdAndTypingChars(325, "R", "尺几九丸兀"), ///*兔枫抚沈溉痹*/"), // strange legs
   ComponentCategoryStringIdAndTypingChars(323, "S", "刁习夕歹专弓丐"), ///*司敢今蛋甬劲然烫忽黎巧写驰呜鸣兜剥帚侯*/"), // southwest
-  ComponentCategoryStringIdAndTypingChars(319, "T", "丁于牙乎了子孑予矛下手事十干千牛才寸车年丰羊"), ///*坷*/"), // T shape
+  ComponentCategoryStringIdAndTypingChars(319, "T", "丁于牙乎了子孑予矛下手十干千牛才寸车年丰羊"), ///*坷*/"), // T shape
   ComponentCategoryStringIdAndTypingChars(345, "U", "凹山缶"), ///*画收拙逆*/"), // north
   ComponentCategoryStringIdAndTypingChars(347, "V", "八儿兆川州非竹"), ///*剿孪弈师挤渊丞登舆鼎侃鼠*/"), // separated legs
   //ComponentCategoryStringIdAndTypingChars(324, "W", ""), ///*仪养均兑温实兴热*/"), // linear dots
