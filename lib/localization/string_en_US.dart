@@ -386,7 +386,7 @@ var theString_en_US = [
   Local(377, "seconds"),
   Local(378, "English"),
   Local(379, "Download general purpose Hanzishu puzzle typing app"),
-  Local(380, "Currently the general purpose Hanzishu puzzle typing app can be downloaded for Windows and Mac computers through Hanzishu web address. That means, after installing the app, all other programs can use this typing method."),
+  Local(380, "Currently the general purpose Hanzishu puzzle typing app can be downloaded for Windows and Mac computers through http://github.com/hanzishu    That means, after installing the app, all other programs can use this typing method."),
   Local(381, "The development of the phone version of the app is close to complete."),
   Local(382, "At the same time, you can use the previous free typing page to type Chinese words then copy/paste to other programs."),
   Local(383, "Before moving to the next one, suggest you repeat this exercise until your progress is not obvious."),

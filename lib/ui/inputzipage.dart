@@ -1772,7 +1772,7 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
-    else if (typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.Custom) {
+    else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.Custom) {
       return Row(
           children: <Widget>[
             SizedBox(width: fontSize),
