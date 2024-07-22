@@ -33,6 +33,7 @@ class Lesson {
   bool newItemListCreated = false;
   List<int> newItemList = [];
   List<int> newItemTypeStartPosition = [0, 0, 0, 0];
+  String allTypingChars = '';
 
   //Map<int, bool> componentLearnedDictLesson = Map();
   //Map<int, bool> fullCharLearnedDictLesson = Map();
@@ -432,5 +433,52 @@ class Lesson {
 
   bool isCharNewInLesson(int id) {
      return convCharsIds.contains(id) || charsIds.contains(id) || comps.contains(id);
+  }
+
+  String getAllTypingChars() {
+    if (allTypingChars.length != 0)  {
+      // already initialized
+      return allTypingChars;
+    }
+
+    int sentenceId;
+    Sentence sentence;
+    String conv;
+    for (int i = 0; i < sentenceList.length; i++) {
+      sentenceId = sentenceList[i];
+      sentence = theSentenceList[sentenceId];
+      conv = sentence.conv;
+      for (int j = 0; j < conv.length;  j++) {
+
+        if (!Utility.specialChar(conv[j])) {
+          allTypingChars += conv[j];
+        }
+      }
+    }
+
+    return allTypingChars;
+  }
+
+  void getSentenceAndCharIndex(int typingCharsIndex, PrimitiveWrapper sentenceIndex, PrimitiveWrapper charIndex) {
+    int sentenceId;
+    Sentence sentence;
+    String conv;
+    int charCount = 0;
+    for (int i = 0; i < sentenceList.length; i++) {
+      sentenceId = sentenceList[i];
+      sentence = theSentenceList[sentenceId];
+      conv = sentence.conv;
+      for (int j = 0; j < conv.length;  j++) {
+        if (!Utility.specialChar(conv[j])) {
+          charCount++;
+
+          if (typingCharsIndex == (charCount - 1)) {
+            sentenceIndex.value = sentenceId;
+            charIndex.value = j;
+            return;
+          }
+        }
+      }
+    }
   }
 }

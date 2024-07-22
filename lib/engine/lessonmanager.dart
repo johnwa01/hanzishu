@@ -245,8 +245,16 @@ class LessonManager {
   }
 
   //TODO: change to return char only from sentencelist, no need searchingzi
-  SearchingZi getChar(int lessonId, int currentIndex) {
+  String getChar(int lessonId, int currentIndex) {
     var lesson = getLesson(lessonId);
+    var typingChars = lesson.getAllTypingChars();
+    if (currentIndex >= typingChars.length) {
+      return null;
+    }
+
+    return typingChars[currentIndex];
+
+    /*
     if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
       return null;
     }
@@ -259,6 +267,7 @@ class LessonManager {
       var ziId = lesson.charsIds[currentIndex - lesson.convCharsIds.length];
       return theSearchingZiList[ziId];
     }
+    */
   }
 
   // the members direct child of id 731 to 755.
@@ -423,6 +432,10 @@ class LessonManager {
       path += lessonNumber.toString() + ".png";
     }
     else {
+      path += lessonNumber.toString() + ".jpg";
+    }
+    /*
+    else {
       int imageNumber = 1;
       if (unit == 11) {
         imageNumber = 24;
@@ -444,7 +457,7 @@ class LessonManager {
       }
       path += imageNumber.toString() + ".png";
     }
-
+    */
     return path;
   }
 

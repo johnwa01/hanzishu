@@ -55,11 +55,11 @@ class _LessonPageState extends State<LessonPage> {
 
   _getRequests() async {
       this.numberOfExercises += 1;
-      if (this.numberOfExercises == 1 && widget.lessonId > 60) {
+      if (this.numberOfExercises == 2 && widget.lessonId > 60) {
         this.numberOfExercises += 1; // skip drill section
       }
 
-      if (this.numberOfExercises == 3 && (widget.lessonId < 10 || widget.lessonId > 60 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
+      if (this.numberOfExercises == 1 && (widget.lessonId < 10 || widget.lessonId > 60 || (widget.lessonId > 33 && widget.lessonId < 41))) { // changed the range together with getPinyinButton()
         this.numberOfExercises += 1; // skip Pinyin section
       }
 
@@ -123,6 +123,24 @@ class _LessonPageState extends State<LessonPage> {
         ).then((val) => {_getRequests()});
         break;
       case 1:
+        int pinyinLesson = lessonId - 10; // starting from lesson 10 by default
+        //if (lessonId >= 37) {             // second round of pinyin starting from lesson 37. no pinyin from 34 to 36.
+        //  pinyinLesson = lessonId - 37;
+        //}
+
+        bool includeSkipSection = false;
+        if (theIsFromLessonContinuedSection) {
+          includeSkipSection = true;
+        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                PinyinPage(currentPinyinLessonId: pinyinLesson, includeSkipSection: includeSkipSection),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 2:
         theAllZiLearned = false;
         /*
         Navigator.push(
@@ -142,7 +160,7 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 2:
+      case 3:
         var convChars = theLessonManager.getConvChars(lessonId);
         Navigator.push(
           context,
@@ -153,24 +171,6 @@ class _LessonPageState extends State<LessonPage> {
                     firstOrSearchingZiIndex: -1,
                     flashcardList: convChars,
                     dicCaller: DicCaller.Flashcard),
-          ),
-        ).then((val) => {_getRequests()});
-        break;
-        case 3:
-          int pinyinLesson = lessonId - 10; // starting from lesson 10 by default
-          if (lessonId >= 37) {             // second round of pinyin starting from lesson 37. no pinyin from 34 to 36.
-            pinyinLesson = lessonId - 37;
-          }
-
-          bool includeSkipSection = false;
-          if (theIsFromLessonContinuedSection) {
-            includeSkipSection = true;
-          }
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                PinyinPage(currentPinyinLessonId: pinyinLesson, includeSkipSection: includeSkipSection),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -299,7 +299,8 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 0),
-                getButton(context, lessonId, 1),
+                getPinyinButton(context, lessonId, 1),
+
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -309,7 +310,7 @@ class _LessonPageState extends State<LessonPage> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 getButton(context, lessonId, 2),
-                getPinyinButton(context, lessonId, 3),
+                getButton(context, lessonId, 3),
               ],
             ),
             //padding: EdgeInsets.all(20),
@@ -340,7 +341,7 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   Widget getPinyinButton(BuildContext context, int lessonId, int lessonSection) {
-    if ((lessonId >= 10 && lessonId <= 33) || (lessonId >= 41 && lessonId <= 60)) {  // changed the range together with _getRequests()
+    if ((lessonId >= 10 && lessonId <= 60)) {  // changed the range together with _getRequests()
       return getButton(context, lessonId, lessonSection);
     }
     else {
@@ -361,13 +362,13 @@ class _LessonPageState extends State<LessonPage> {
         }
         break;
       case 1:
-        buttonTitle = getString(456);
+        buttonTitle = getString(505);
         break;
       case 2:
-        buttonTitle = getString(2);
+        buttonTitle = getString(456);
         break;
       case 3:
-        buttonTitle = getString(505);
+        buttonTitle = getString(2);
         break;
       case 4:
         buttonTitle = getString(5);

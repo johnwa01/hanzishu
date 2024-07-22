@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/rendering.dart';
 //importpackage:flutter/services.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
@@ -18,6 +19,8 @@ import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
+import 'package:hanzishu/data/lessonlist.dart';
+import 'package:hanzishu/data/sentencelist.dart';
 
 import 'dart:core';
 import 'dart:io';
@@ -168,6 +171,11 @@ class _InputZiPageState extends State<InputZiPage> {
           typingType, 0 /*currentIndex*/, widget.lessonId);
       if (isSoundPrompt) { // custom, and sound prompt
         speakHanziAndPhrase(typeChar);
+      }
+      else if(typingType == TypingType.FromLessons) {
+        var sentenceList = theLessonList[widget.lessonId].sentenceList;
+        TextToSpeech.speak(
+            "zh-CN", theSentenceList[sentenceList[0]].conv);
       }
       else {
         TextToSpeech.speak("zh-CN", typeChar);
@@ -479,11 +487,26 @@ class _InputZiPageState extends State<InputZiPage> {
                     typingType, /*currentIndex,*/ lessonId);
             String typeChar = getEitherCharFromCurrentId(
                 typingType, currentIndex, lessonId);
+
             if (isSoundPrompt) { // custom, and sound prompt
               speakHanziAndPhrase(typeChar);
             }
+            else if(typingType == TypingType.FromLessons) {
+              var sentenceIndex = PrimitiveWrapper(0);
+              var charIndex = PrimitiveWrapper(0);
+              var oneLesson = theLessonList[lessonId];
+              oneLesson.getSentenceAndCharIndex(
+                  currentIndex, sentenceIndex, charIndex);
+              if (charIndex.value == 0) {
+                TextToSpeech.speak(
+                    "zh-CN", theSentenceList[sentenceIndex.value].conv);
+              }
+              else {
+                TextToSpeech.speak("zh-CN", typeChar);
+              }
+            }
             else {
-              TextToSpeech.speak("zh-CN", typeChar);
+                TextToSpeech.speak("zh-CN", typeChar);
             }
           }
         });
@@ -1310,7 +1333,7 @@ class _InputZiPageState extends State<InputZiPage> {
       return getSwitchInputMethod();
     }
     else {
-      return Text(getString(503), style: TextStyle(color: Colors.lightBlue));
+      return getWarningMessage(); //Text(getString(503), style: TextStyle(color: Colors.lightBlue));
     }
   }
 
@@ -1699,7 +1722,7 @@ class _InputZiPageState extends State<InputZiPage> {
       typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
     }
     else {
-      var zi = theInputZiManager. getZiWithComponentsAndStrokes(
+      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
       typingChar = zi.zi;
     }
@@ -1717,16 +1740,6 @@ class _InputZiPageState extends State<InputZiPage> {
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
     currentTypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
-    /*
-    if (typingType == TypingType.ComponentTyping) {
-      currentTypingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
-    }
-    else {
-      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
-          typingType, currentIndex, lessonId);
-      currentTypingChar = zi.zi;
-    }
-    */
 
       // prepare hint stuff, running once per zi, therefore to put here.
       currentTypingComponentsAndSub =
@@ -1735,44 +1748,104 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //TextToSpeech.speak("zh-CN", currentTypingChar);
 
-    return Row(
-        children: <Widget>[
-
-          SizedBox(width: fontSize),
-          Text(
-              promptStr,
-              style: TextStyle(fontSize: fontSize * 1.2),
-              textAlign: TextAlign.left
-          ),
-          SizedBox(
-            width: 35.0 * getSizeRatio(), //50
-            child: getInputZiOrSoundIcon(currentTypingChar, fontSize),
-          ),
-          SizedBox(width: fontSize * 1.2),
-          getWarningMessage(),
-        ]
-    );
-  }
-
-  Widget getInputZiOrSoundIcon(String typingChar, double fontSize) {
     if (isSoundPrompt) {
-      return IconButton(
-          icon: Icon(
-            Icons.volume_up,
-            size: fontSize * 2 * getSizeRatio(),   // 150
-          ),
-          color: Colors.cyan, //Colors.green,
-          onPressed: () {
-            speakHanziAndPhrase(typingChar);
-          });
-    }
-    else { // text
-      return Text(
-          currentTypingChar, //zi.zi,
-          style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
-          textAlign: TextAlign.left
+      return Row(
+          children: <Widget>[
+            SizedBox(width: fontSize),
+            Text(
+                promptStr,
+                style: TextStyle(fontSize: fontSize * 1.2),
+                textAlign: TextAlign.left
+            ),
+            SizedBox(
+              width: 35.0 * getSizeRatio(), //50
+              child: IconButton(
+                icon: Icon(
+                  Icons.volume_up,
+                  size: fontSize * 2 * getSizeRatio(),   // 150
+                ),
+                color: Colors.cyan, //Colors.green,
+                onPressed: () {
+                  speakHanziAndPhrase(currentTypingChar);
+                }),
+            ),
+          ]
       );
     }
+    else if (typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.Custom) {
+      return Row(
+          children: <Widget>[
+            SizedBox(width: fontSize),
+            Text(
+                promptStr,
+                style: TextStyle(fontSize: fontSize * 1.2),
+                textAlign: TextAlign.left
+            ),
+            Text(
+                currentTypingChar,
+                style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                textAlign: TextAlign.left
+            ),
+          ]
+      );
+    }
+    else { // from lesson
+      return getInputSentence(currentIndex, promptStr, fontSize);
+    }
+  }
+
+  Widget getInputSentence(int currentTypingCharsIndex, String promptStr, double fontSize) {
+      var sentenceIndex = PrimitiveWrapper(0);
+      var charIndex = PrimitiveWrapper(0);
+      var oneLesson = theLessonList[lessonId];
+      oneLesson.getSentenceAndCharIndex(currentTypingCharsIndex, sentenceIndex, charIndex);
+      var conv = theSentenceList[sentenceIndex.value].conv;
+
+      String strBeforeChar;
+      String strChar;
+      String strAfterChar;
+
+      if (charIndex.value == 0) {
+        strBeforeChar = '';
+      }
+      else {
+        strBeforeChar = conv.substring(0, charIndex.value);
+      }
+
+      strChar = conv.substring(charIndex.value, charIndex.value + 1);
+
+      if (charIndex == conv.length - 1) { // the char is the last one
+        strAfterChar = '';
+      }
+      else {
+        strAfterChar = conv.substring(charIndex.value + 1, conv.length);
+      }
+
+      return Row(
+          children: <Widget>[
+            SizedBox(width: fontSize),
+            Text(
+                promptStr,
+                style: TextStyle(fontSize: fontSize * 1.2),
+                textAlign: TextAlign.left
+            ),
+            Text(
+                  strBeforeChar,
+                style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                textAlign: TextAlign.left
+            ),
+            Text(
+                  strChar,
+                  style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                  textAlign: TextAlign.left
+            ),
+            Text(
+                  strAfterChar,
+                  style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                  textAlign: TextAlign.left
+            ),
+          ]
+      );
   }
 
   Widget getWarningMessage() {
@@ -1782,7 +1855,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else {
       return Text(
-          getString(463), //"Warning: Wrong typing code.",
+          "   " + getString(463), //"Warning: Wrong typing code.",
           style: TextStyle(fontSize: fontSize),
           textAlign: TextAlign.left
       );

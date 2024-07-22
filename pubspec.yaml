@@ -110,6 +110,7 @@ flutter:
      - assets/core/dictionaryicon0.png
      - assets/core/dictionaryicon1.png
      - assets/core/glossary.png
+     - assets/core/hanzi_wave.gif
      - assets/core/itemicon.png
      - assets/core/keyboard_cn.png
      - assets/core/keyboard_eng.png
@@ -188,17 +189,26 @@ flutter:
      - assets/lessons/L58.png
      - assets/lessons/L59.png
      - assets/lessons/L60.png
-     - assets/lessons/L64.png
-     - assets/lessons/L65.png
-     - assets/lessons/L66.png
-     - assets/lessons/L67.png
-     - assets/lessons/L68.png
-     - assets/lessons/L69.png
-     - assets/lessons/L70.png
-     - assets/lessons/L71.png
-     - assets/lessons/L72.png
-     - assets/lessons/L73.png
-     - assets/lessons/L74.png
+     - assets/lessons/L61.jpg
+     - assets/lessons/L62.jpg
+     - assets/lessons/L63.jpg
+     - assets/lessons/L64.jpg
+     - assets/lessons/L65.jpg
+     - assets/lessons/L66.jpg
+     - assets/lessons/L67.jpg
+     - assets/lessons/L68.jpg
+     - assets/lessons/L69.jpg
+     - assets/lessons/L70.jpg
+     - assets/lessons/L71.jpg
+     - assets/lessons/L72.jpg
+     - assets/lessons/L73.jpg
+     - assets/lessons/L74.jpg
+     - assets/lessons/L75.jpg
+     - assets/lessons/L76.jpg
+     - assets/lessons/L77.jpg
+     - assets/lessons/L78.jpg
+     - assets/lessons/L79.jpg
+     - assets/lessons/L80.jpg
      - assets/letters/L11.png
      - assets/letters/L12.png
      - assets/letters/L13.png

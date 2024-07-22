@@ -21,6 +21,8 @@ class _PinyinPageState extends State<PinyinPage> {
   bool includeSkipSection;
   List<int> currentExerciseCollection;
 
+  static int maxBasicPinyinIndex = 56;
+  static int toneStartIndex = 122;
 
   @override
   void initState() {
@@ -39,7 +41,7 @@ class _PinyinPageState extends State<PinyinPage> {
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
 
-    String pinyinExerciseName = getString(505) /*"Pinyin exercise"*/ + " " + currentPinyinLessonId.toString();
+    String pinyinExerciseName = getString(505) /*"Pinyin exercise"*/ + " " + (currentPinyinLessonId + 10).toString();
 
     return Scaffold
       (
@@ -63,10 +65,21 @@ class _PinyinPageState extends State<PinyinPage> {
     // initial sound
     TextToSpeech.speak("zh-CN", sample.zi);
 
+    var fontSize = 220.0;
+    if (name.length == 3 || name.length == 4) {
+      fontSize = fontSize * 0.69;
+    }
+    else if (name.length == 5) {
+      fontSize = fontSize * 0.59;
+    }
+    else if (name.length >= 6) {
+      fontSize = fontSize * 0.48;
+    }
+
     if (name.length != 0) {
       return TextButton(
         style: TextButton.styleFrom(
-          textStyle: TextStyle(fontSize: 220.0 * getSizeRatioWithLimit()),
+          textStyle: TextStyle(fontSize: fontSize * getSizeRatioWithLimit()),
         ),
         onPressed: () {
           TextToSpeech.speak("zh-CN", sample.zi);
@@ -85,12 +98,18 @@ class _PinyinPageState extends State<PinyinPage> {
     var exerciseList = thePinyinLessonList[currentPinyinLessonId];
     //only need to worry about one index. When index increases through next button, this will show next index.
     var name = thePinyinList[exerciseList[currentPinyinExerciseIndex]].name;
-    var sample = thePinyinList[exerciseList[currentPinyinExerciseIndex]].sample;
+    var pinyinListID = exerciseList[currentPinyinExerciseIndex];
+    var sample = thePinyinList[pinyinListID].sample;
+
+    var fontSize = 40.0;
+    if (pinyinListID > maxBasicPinyinIndex && (pinyinListID < toneStartIndex || (pinyinListID > toneStartIndex + 3))) {
+      fontSize = 80.0;
+    }
 
     if (name.length != 0) {
       return TextButton(
         style: TextButton.styleFrom(
-          textStyle: TextStyle(fontSize: 40.0 * getSizeRatioWithLimit()),
+          textStyle: TextStyle(fontSize: fontSize * getSizeRatioWithLimit()),
         ),
         onPressed: () {
           TextToSpeech.speak("zh-CN", sample.zi);

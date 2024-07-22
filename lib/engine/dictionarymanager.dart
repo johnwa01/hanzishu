@@ -331,14 +331,14 @@ class DictionaryManager {
     //var typingStrokes = getAllTypingStrokes(components);
     //var typingCode = getStrokeTypingCodes(typingStrokes);
 
-    var typingCode = getSubComponentKeys(components);
+    //var typingCode = getSubComponentKeys(components);
 
-    if (typingCode != null) {
-      return getOneTypingCode(compCodes, typingCode);
-    }
-    else {
+    //if (typingCode != null) {
+    //  return getOneTypingCode(compCodes, typingCode);
+    //}
+    //else {
       return compCodes.toUpperCase();
-    }
+    //}
   }
 
   /*

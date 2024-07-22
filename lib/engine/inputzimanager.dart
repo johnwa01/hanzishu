@@ -501,9 +501,9 @@ class InputZiManager {
       return getCommonZi(index, lessonId);
     }
     else if (typingType == TypingType.FromLessons) {
-      var zi = theLessonManager.getChar(lessonId, index);
+      var char = theLessonManager.getChar(lessonId, index);
       return ZiWithComponentsAndStrokes(
-          zi.char,
+          char,
           [""],
           "noimage",
           0/*"nohelpyet"*/
@@ -609,7 +609,8 @@ class InputZiManager {
     else if (typingType == TypingType.FromLessons) {
       //if (currentIndex >= theZiWithOneComponentList.length) {
       var lesson = theLessonManager.getLesson(lessonId);
-      if (currentIndex >= lesson.convCharsIds.length + lesson.charsIds.length) {
+      var typingChars = lesson.getAllTypingChars();
+      if (currentIndex >= typingChars.length) { /*lesson.convCharsIds.length + lesson.charsIds.length*/
         currentIndex = -1;
       }
     }
@@ -690,8 +691,8 @@ class InputZiManager {
       result = typingResult.contains(zi.char);
     }
     else if (typingType == TypingType.FromLessons) {
-      zi = theLessonManager.getChar(lessonId, currentIndex);
-      result = typingResult.contains(zi.char);
+      var char = theLessonManager.getChar(lessonId, currentIndex);
+      result = typingResult.contains(char);
     }
     else if (typingType == TypingType.Custom) {
       var char = wordsStudy[currentIndex];
@@ -752,7 +753,8 @@ class InputZiManager {
     }
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);
-      return lesson.convCharsIds.length + lesson.charsIds.length;
+      //return lesson.convCharsIds.length + lesson.charsIds.length;
+      return lesson.getAllTypingChars().length;
     }
     else if (typingType == TypingType.Custom) {
       return wordsStudy.length;
