@@ -54,6 +54,12 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
     super.dispose();
   }
 
+  double getSizeRatio() {
+    // Note: assume screenWidth has considered the height to screen ratio already, that is, might be narrowed alreadly
+    //       from the actual screen size if height to width ratio is lower than the minimum.
+    return Utility.getSizeRatio(screenWidth);
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
@@ -250,6 +256,17 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
               ]
           ),
           SizedBox(height: fontSize2),
+          Container(
+            //color: Colors.grey,
+            //padding: EdgeInsets.all(1.0),
+            alignment: Alignment.center,
+            child: Image.asset(
+              "assets/typing/FullComponents.png",
+              width: 370.0 * getSizeRatio(),
+              height: 250.0 * getSizeRatio(),
+            )
+          ),
+          //SizedBox(height: fontSize2),
           Text(
               getString(160)/*"Expanded Components are grouped under each Lead Component-key pairing. To type in Chinese, Components are grouped into sequences of English letters. Each sequence of Components creates a Character."*/,
               style: TextStyle(fontSize: fontSize2),

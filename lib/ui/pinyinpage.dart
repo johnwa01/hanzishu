@@ -100,13 +100,14 @@ class _PinyinPageState extends State<PinyinPage> {
     var name = thePinyinList[exerciseList[currentPinyinExerciseIndex]].name;
     var pinyinListID = exerciseList[currentPinyinExerciseIndex];
     var sample = thePinyinList[pinyinListID].sample;
+    var showZiOrNot = thePinyinList[pinyinListID].showZiOrNot;
 
     var fontSize = 40.0;
     if (pinyinListID > maxBasicPinyinIndex && (pinyinListID < toneStartIndex || (pinyinListID > toneStartIndex + 3))) {
       fontSize = 80.0;
     }
 
-    if (name.length != 0) {
+    if (name.length != 0 && showZiOrNot == 1) {
       return TextButton(
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: fontSize * getSizeRatioWithLimit()),

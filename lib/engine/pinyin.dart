@@ -22,14 +22,17 @@ class Pinyin {
   String name;
   Sample sample;
   List<Sample> samples;
+  int showZiOrNot; // 1-show, 0-not show
 
   Pinyin(int id,
       String name,
       Sample sample,
-      List<Sample> samples) {
+      List<Sample> samples,
+      int showZiOrNot) {
     this.id = id;
     this.name = name;
     this.sample = sample;
     this.samples = samples;
+    this.showZiOrNot = showZiOrNot;
   }
 }
