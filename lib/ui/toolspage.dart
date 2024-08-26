@@ -149,6 +149,25 @@ class _ToolsPageState extends State<ToolsPage> {
     return ListView(
       children: <Widget>[
         ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            launchTypingAppPageOrHtml();
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiHelpPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
           title: Text(str, textDirection: TextDirection.ltr),
         ),
         ListTile(
@@ -200,47 +219,28 @@ class _ToolsPageState extends State<ToolsPage> {
             );
           },
         ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiHelpPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            launchTypingAppPageOrHtml();
-          },
-        ),
       ],
     );
   }
 
   launchTypingAppPageOrHtml() {
-    if (kIsWeb) {
+    //if (kIsWeb) {
       String urlStr;
       if (theDefaultLocale == "zh_CN") {
-        urlStr = "https://github.com/hanzishu";
+        urlStr = "https://hanzishu.com/xiangxing/index.htm";
       }
       else { // English
-        urlStr = "https://github.com/hanzishu/hanzishu/blob/main/README-en.md";
+        urlStr = "https://hanzishu.com/xiangxing/index-en.htm";
       }
       launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
-    }
-    else {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TypingAppPage(),
-        ),
-      );
-    }
+    //}
+    //else {
+    //  Navigator.push(
+    //    context,
+    //    MaterialPageRoute(
+    //      builder: (context) => TypingAppPage(),
+    //    ),
+    //  );
+    //}
   }
 }
