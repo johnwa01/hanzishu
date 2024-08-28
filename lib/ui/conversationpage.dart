@@ -134,8 +134,8 @@ class _ConversationPageState extends State<ConversationPage> {
       widgets.add(getOneRow(sents[i], i));
       if (pinyinType != PinyinType.None) { // after level 1
         widgets.add(getPinyinRow(sents[i], pinyinType));
-        widgets.add(getTranslation(sents[i]));
       }
+      widgets.add(getTranslation(sents[i]));
       widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));
     }
 

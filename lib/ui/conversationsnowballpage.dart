@@ -139,6 +139,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       if (lessonId > theNumberOfLessonsInLevels[0]) {
         widgets.add(getPinyinRow(sents[i]));
       }
+      widgets.add(getTranslation(sents[i].sentenceId));
       widgets.add(SizedBox(height: 10 * getSizeRatioWithLimit()));
     }
 
@@ -235,6 +236,34 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
 
     return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));
+  }
+
+  Widget getTranslation(int sentId) {
+    // text trans
+    String trans = theSentenceList[sentId].trans;
+    if (trans.length == 0) {
+      trans = LessonManager.getTranslationFromSentence(theSentenceList[sentId].conv);
+    }
+
+    var spaceStart = 50.0;
+    if (lessonId > 60) {
+      spaceStart = 30.0;
+    }
+
+    return Container(
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            SizedBox(width: spaceStart * getSizeRatioWithLimit()),
+            Flexible(
+              child: Container(
+                child: Text(trans, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()), softWrap: true),
+              ),
+            ),
+          ]
+
+      ),
+    );
   }
 
   List<Widget> getRowButtons(Sent oneSent, int rowIndex) {
