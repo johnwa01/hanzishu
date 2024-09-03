@@ -6,6 +6,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 
+// Note: this file is no longer used
 class IntroductionPage extends StatefulWidget {
   IntroductionPage();
 

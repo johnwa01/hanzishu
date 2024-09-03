@@ -161,7 +161,7 @@ Sentence(144, "造纸，指南针，火药，印刷术。", "Paper making, compa
   //Sentence(153, "小心。", "Be careful!", 1, null, [], "小|心！", ""),
   Sentence(153, "你好吗？", "How are you？", 1, null, [], "你|好|吗？", "nǐ hǎo ma"),
   Sentence(154, "好！", "Good！", 1, null, [], "", ""),
-  Sentence(155, "小马好!", "Hello Mr. Ma.", 1, null, [], "", ""),
+  Sentence(155, "小马好!", "Hello Ma.", 1, null, [], "", ""),
  Sentence(156, "我带你看医生。", "I'll take you see a doctor.", 21, null, [], "我|带你|看|医生。", ""),
   Sentence(157, "同时刮强风。", "There will also be a very strong wind.", 36, null, [], "同时|刮|强风。", ""),
   Sentence(158, "你会读吗？", "Do you know how to read?", 11, null, [], "我会|读吗？", ""),

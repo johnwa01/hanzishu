@@ -180,11 +180,16 @@ class _LessonPageState extends State<LessonPage> {
           includeSkipSection = true;
         }
 
+        int lessonShowHint = 1;
+        if (lessonId > 30) { // half way of beginner level
+          lessonShowHint = 0; // default to no hint
+        }
+
         Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: includeSkipSection, showSwitchMethod: false)
+                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: lessonShowHint, includeSkipSection: includeSkipSection, showSwitchMethod: false)
           ),
         ).then((val) => {_getRequests()});
         break;

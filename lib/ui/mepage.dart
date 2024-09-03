@@ -117,12 +117,12 @@ class _MePageState extends State<MePage> {
               leading: Image.asset('assets/core/conversations.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title:  Text(getString(411)/*"Hanzishu Introduction"*/, textDirection: TextDirection.ltr),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => IntroductionPage(),
-                  ),
-                );
+                if (theDefaultLocale == "en_US") {
+                  launchUrl(Uri.parse("https://hanzishu.com/publish/index-en.htm"), webOnlyWindowName: '_self');
+                }
+                else {
+                  launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
+                }
               },
             ),
             if (kIsWeb)
