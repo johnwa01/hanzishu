@@ -268,12 +268,12 @@ class _ConversationPageState extends State<ConversationPage> {
     }
 
     var oneIcon = Container(
-        height: 20.0 * getSizeRatioWithLimit(), //180
-        width: 20.0 * getSizeRatioWithLimit(),
+        height: 30.0 * getSizeRatioWithLimit(), //180
+        width: 30.0 * getSizeRatioWithLimit(),
         child: IconButton(
           icon: Icon(
             Icons.volume_up,
-            size: 20.0 * getSizeRatioWithLimit(), // 150
+            size: 30.0 * getSizeRatioWithLimit(), // 150
           ),
           color: Colors.cyan, //Colors.green,
           onPressed: () {

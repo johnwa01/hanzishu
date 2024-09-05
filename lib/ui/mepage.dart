@@ -13,6 +13,7 @@ import 'dart:io';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/introductionpage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/webviewpage.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -117,13 +118,26 @@ class _MePageState extends State<MePage> {
               leading: Image.asset('assets/core/conversations.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title:  Text(getString(411)/*"Hanzishu Introduction"*/, textDirection: TextDirection.ltr),
               onTap: () {
+                String webUrl;
                 if (theDefaultLocale == "en_US") {
-                  launchUrl(Uri.parse("https://hanzishu.com/publish/index-en.htm"), webOnlyWindowName: '_self');
+                  webUrl = "https://hanzishu.com/publish/index-en.htm";
                 }
                 else {
-                  launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
+                  webUrl = "https://hanzishu.com/publish";
                 }
-              },
+                if (kIsWeb) {
+                  launchUrl(Uri.parse(webUrl), webOnlyWindowName: '_self');
+                }
+                else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          WebViewPage(webUrl, getString(94) /*"Me"*/),
+                    ),
+                  );
+                }
+                },
             ),
             if (kIsWeb)
               ListTile(

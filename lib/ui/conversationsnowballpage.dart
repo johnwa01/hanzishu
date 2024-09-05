@@ -286,12 +286,12 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
 
     var oneIcon = Container(
-          height: 28.0 * getSizeRatioWithLimit(), //180
-          width: 28.0 * getSizeRatioWithLimit(),
+          height: 30.0 * getSizeRatioWithLimit(), //180
+          width: 30.0 * getSizeRatioWithLimit(),
           child: IconButton(
             icon: Icon(
               Icons.volume_up,
-              size: 20.0 * getSizeRatioWithLimit(), // 150
+              size: 30.0 * getSizeRatioWithLimit(), // 150
             ),
             color: Colors.cyan, //Colors.green,
             onPressed: () {

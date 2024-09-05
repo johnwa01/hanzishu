@@ -102,7 +102,7 @@ var theString_en_US = [
   Local(96, "First-Hanzi Radical Table"),
   Local(97, "Chinese alphabets"),
   Local(98, "Hanzi pictographic typing method"),
-  Local(99, "[For below, please make sure your computer/phone is under English input mode."),
+  Local(99, "[For below, please make sure your computer/phone is under English input mode. The pictographic input method is built in here already."),
   Local(100, "Give it a try"),
   Local(101, "Chinese alphabet-key pairing groups"),
   Local(102, "Memorize by groups"),

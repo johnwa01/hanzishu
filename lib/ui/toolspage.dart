@@ -11,6 +11,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/webviewpage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -224,7 +225,6 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   launchTypingAppPageOrHtml() {
-    //if (kIsWeb) {
       String urlStr;
       if (theDefaultLocale == "zh_CN") {
         urlStr = "https://hanzishu.com/xiangxing/index.htm";
@@ -232,8 +232,17 @@ class _ToolsPageState extends State<ToolsPage> {
       else { // English
         urlStr = "https://hanzishu.com/xiangxing/index-en.htm";
       }
-      launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
-    //}
+      if (kIsWeb) {
+        launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
+      }
+      else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => WebViewPage(urlStr, getString(368)/*"Component Input Method"*/),
+          ),
+        );
+      }
     //else {
     //  Navigator.push(
     //    context,
