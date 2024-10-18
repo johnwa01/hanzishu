@@ -65,7 +65,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   @override
   void dispose() {
     initOverlay();
-    _scrollController
+    _scrollController!
         .dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
@@ -232,7 +232,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
 
     if (pinyin.length == 0) {
       var newCharsInUnit = LessonUnit.getNewCharsInUnit(lessonId);
-      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType, newCharsInUnit);
+      pinyin = LessonManager.getPinyinFromSentence(theSentenceList[sentenceId].conv, pinyinType!, newCharsInUnit);
     }
 
     return Text(Utility.adjustPinyinSpace(pinyin), style: TextStyle(fontSize: 16 * getSizeRatioWithLimit()));

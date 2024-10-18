@@ -63,7 +63,7 @@ class _ConversationPageState extends State<ConversationPage> {
   @override
   void dispose() {
     initOverlay();
-    _scrollController
+    _scrollController!
         .dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
@@ -133,7 +133,7 @@ class _ConversationPageState extends State<ConversationPage> {
     for (var i = 0; i < sents.length; i++) {
       widgets.add(getOneRow(sents[i], i));
       if (pinyinType != PinyinType.None) { // after level 1
-        widgets.add(getPinyinRow(sents[i], pinyinType));
+        widgets.add(getPinyinRow(sents[i], pinyinType!));
       }
       widgets.add(getTranslation(sents[i]));
       widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));

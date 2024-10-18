@@ -34,7 +34,7 @@ class _MePageState extends State<MePage> {
   }
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   Widget getQuizResults() {

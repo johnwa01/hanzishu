@@ -891,7 +891,7 @@ class BasePainter extends CustomPainter{
     //var groupMembers = theLessonManager.getRealGroupMembers(id);
     var groupMembers;
     // hardcode lesson 2 so that it'll have a sequential number order in top layer display
-    groupMembers = getRealGroupMembers(id, listType, drillCategory, internalStartLessonId, internalEndLessonId, realGroupMembersCache);
+    groupMembers = getRealGroupMembers(id, listType, drillCategory, internalStartLessonId, internalEndLessonId, realGroupMembersCache!);
 
     //var phraseZis = theLessonManager.getPhraseZis(id, internalStartLessonId, internalEndLessonId);
     //TODO: including phraseZis
@@ -905,7 +905,7 @@ class BasePainter extends CustomPainter{
 
       var memberZiId = groupMembers[index];
 
-      var posiSize2 = getPositionAndSize(listType, memberZiId, totalSideNumberOfZis, sidePositionsCache);
+      var posiSize2 = getPositionAndSize(listType, memberZiId, totalSideNumberOfZis, sidePositionsCache!);
 
       var memberZiLearned = doesZiExistInLearnedMap(memberZiId); //GeneralManager.hasZiCompleted(memberZiId, theHittestState, theCurrentLessonId);
       allCurrentMemberZiLearned = allCurrentMemberZiLearned && memberZiLearned;
@@ -1050,19 +1050,19 @@ class BasePainter extends CustomPainter{
   //}
 
   bool doesZiExistInLearnedMap(int id) {
-    return allLearnedZis.containsKey(id);
+    return allLearnedZis!.containsKey(id);
   }
 
   setCenterZiLearned(int id) {
-    allLearnedZis[id] = true;
+    allLearnedZis![id] = true;
   }
 
   static addToSidePositionsCache(int ziId, PositionAndSize positionAndSize, Map<int, PositionAndSize> sidePositions) {
     sidePositions[ziId] = positionAndSize;
   }
 
-  static PositionAndSize getPositionAndSizeFromCache(int ziId, Map<int, PositionAndSize> sidePositions) {
-    return sidePositions[ziId]!;
+  static PositionAndSize? getPositionAndSizeFromCache(int ziId, Map<int, PositionAndSize> sidePositions) {
+    return sidePositions[ziId];
   }
 
   static PositionAndSize getPositionAndSize(ZiListType listType, int ziId, NumberOfZis totalSideNumberOfZis, Map<int, PositionAndSize> sidePositions) {
@@ -1073,7 +1073,7 @@ class BasePainter extends CustomPainter{
 
     if (positionAndSize == null) {
       positionAndSize = thePositionManager.getPositionAndSize(listType, ziId, totalSideNumberOfZis);
-      addToSidePositionsCache(ziId, positionAndSize, sidePositions);
+      addToSidePositionsCache(ziId, positionAndSize!, sidePositions);
     }
 
     return positionAndSize;

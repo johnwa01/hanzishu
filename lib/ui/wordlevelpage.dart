@@ -60,17 +60,17 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
 
-  ZiListType currentZiListType;
+  late ZiListType currentZiListType;
 
   getSizeRatio() {
-    var defaultFontSize = screenWidth / 16;
+    var defaultFontSize = screenWidth! / 16;
     return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   @override
@@ -167,7 +167,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
           //height: 200.0,
           //width: 200.0,
             child: Column(
-              children: getLevelList(drillCategory),
+              children: getLevelList(drillCategory!),
               /*[
                 /
                 SizedBox(height: 20),

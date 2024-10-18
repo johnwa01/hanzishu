@@ -168,7 +168,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // first char, put here instead of Build so that it does only once.
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       String typeChar = getEitherCharFromCurrentId(
-          typingType, 0 /*currentIndex*/, widget.lessonId);
+          typingType!, 0 /*currentIndex*/, widget.lessonId);
       if (isSoundPrompt) { // custom, and sound prompt
         speakHanziAndPhrase(typeChar);
       }
@@ -193,7 +193,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   void dispose() {
-    _scrollController.dispose(); // it is a good practice to dispose the controller
+    _scrollController!.dispose(); // it is a good practice to dispose the controller
     //_focusNode.removeListener(_onFocusChange);
     //showZiCandidates = false;
     _focusNode.dispose();
@@ -479,14 +479,14 @@ class _InputZiPageState extends State<InputZiPage> {
             }
             */
             theInputZiManager.initCurrentIndex();
-            showCompletedDialog(currentBuildContext);
+            showCompletedDialog(currentBuildContext!);
           }
           else {
             currentIndex =
                 theInputZiManager.getNextIndex(
                     typingType, /*currentIndex,*/ lessonId);
             String typeChar = getEitherCharFromCurrentId(
-                typingType, currentIndex, lessonId);
+                typingType!, currentIndex, lessonId);
 
             if (isSoundPrompt) { // custom, and sound prompt
               speakHanziAndPhrase(typeChar);
@@ -521,10 +521,10 @@ class _InputZiPageState extends State<InputZiPage> {
       // if empty text, therefore no non-default candidates yet, then skip
       if (_controller.text.length > 0) {
         if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
-            fullZiCandidates.length) {
+            fullZiCandidates!.length) {
           candidateGroupIndex++;
           setState(() {
-            theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
+            theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
             isFromArrowCandidate = true;
             updateCounter++;
           });
@@ -535,7 +535,7 @@ class _InputZiPageState extends State<InputZiPage> {
       if (candidateGroupIndex > 0) {
         candidateGroupIndex--;
         setState(() {
-          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
+          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
           isFromArrowCandidate = true;
           updateCounter++;
         });
@@ -746,7 +746,7 @@ class _InputZiPageState extends State<InputZiPage> {
         // if just '>' char with text length of 1, no non-default candidates yet, there skip
         if (_controller.text.length != 1) {
           if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
-              fullZiCandidates.length) {
+              fullZiCandidates!.length) {
             candidateGroupIndex++;
           }
         }
@@ -787,7 +787,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       if (Utility.isArrow(latestInputKeyLetter)) {
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates, candidateGroupIndex);
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
@@ -811,8 +811,8 @@ class _InputZiPageState extends State<InputZiPage> {
       //currentComposingText = composingText;
       fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
       InputZiManager.updateFirstCandidate(
-          fullZiCandidates, InputZiManager.previousFirstPositionList);
-      theCurrentZiCandidates = fullZiCandidates;
+          fullZiCandidates!, InputZiManager.previousFirstPositionList);
+      theCurrentZiCandidates = fullZiCandidates!;
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;
@@ -1080,7 +1080,7 @@ class _InputZiPageState extends State<InputZiPage> {
       rightArrowColor = Colors.grey;
     }
     else {
-      int candidateGroupCount = (fullZiCandidates.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
+      int candidateGroupCount = (fullZiCandidates!.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
       // if it's the last one, no way to go right.
       if (candidateGroupIndex == (candidateGroupCount - 1)) {
         rightArrowColor = Colors.grey;
@@ -1739,7 +1739,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var promptStr = getString(113) + "： "; //"Please type"
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
-    currentTypingChar = getEitherCharFromCurrentId(typingType, currentIndex, lessonId);
+    currentTypingChar = getEitherCharFromCurrentId(typingType!, currentIndex, lessonId);
 
       // prepare hint stuff, running once per zi, therefore to put here.
       currentTypingComponentsAndSub =
@@ -1904,7 +1904,7 @@ class _InputZiPageState extends State<InputZiPage> {
         //selectedCategoryIndex: selectedCategoryIndex,
         //selectedSubcategoryIndex: selectedSubcategoryIndex,
         char: char, //zi.zi,
-        typingType: typingType
+        typingType: typingType!
     );
 
     //var promptStr = getString(113) + "： "; //"Please type"

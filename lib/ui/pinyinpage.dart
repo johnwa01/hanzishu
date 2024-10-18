@@ -34,7 +34,7 @@ class _PinyinPageState extends State<PinyinPage> {
   }
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   @override
@@ -193,7 +193,7 @@ class _PinyinPageState extends State<PinyinPage> {
   }
 
   Widget SkipSection() {
-    if (includeSkipSection) {
+    if (includeSkipSection!) {
       return TextButton(
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()),

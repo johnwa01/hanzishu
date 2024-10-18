@@ -58,12 +58,12 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
 
   ZiListType? currentZiListType;
 
   getSizeRatio() {
-    var defaultFontSize = screenWidth / 16;
+    var defaultFontSize = screenWidth! / 16;
     return defaultFontSize / 25.0; // ratio over original hard coded value
   }
 
@@ -149,7 +149,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                       SizedBox(width: 50),
                       getDrillPageCore(drillCategory),
                       SizedBox(width: 50),
-                      getFlashcard(drillCategory),
+                      getFlashcard(drillCategory!),
                     ]
                 ),
                 SizedBox(height: 30),
@@ -163,25 +163,25 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                 Row(
                     children: <Widget>[
                       SizedBox(width: 50),
-                      getExamSoundToHanzi(drillCategory),
+                      getExamSoundToHanzi(drillCategory!),
                       SizedBox(width: 50),
-                      getExamHanziToSound(drillCategory),
+                      getExamHanziToSound(drillCategory!),
                     ]
                 ),
                 SizedBox(height: 30),
                 Row(
                     children: <Widget>[
                       SizedBox(width: 50),
-                      getReadAndTypeHanzi(drillCategory),
+                      getReadAndTypeHanzi(drillCategory!),
                       SizedBox(width: 50),
-                      getListenAndTypeHanzi(drillCategory),
+                      getListenAndTypeHanzi(drillCategory!),
                     ]
                 ),
                 SizedBox(height: 30),
                 Row(
                     children: <Widget>[
                       SizedBox(width: 50),
-                      getStudyCustomizedWordsPage(drillCategory),
+                      getStudyCustomizedWordsPage(drillCategory!),
                     ]
                 ),
               ],

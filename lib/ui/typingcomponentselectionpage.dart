@@ -58,7 +58,7 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
   }
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   List<DropdownMenuItem<ComponentExerciseNumber>> buildDropdownMenuItemsNumber(/*List exerciseNumbers*/) {
@@ -86,11 +86,11 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
     // due to localization, has to do it every build instead of init
     _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(/*_exerciseNumbers*/);
     if (_selectedComponentExerciseNumber == null) {
-      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value!;
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber![0].value!;
     }
     else {
       // _select* has to map to one in the current _dropdown*
-      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[_selectedComponentExerciseNumber.id].value!;
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber![_selectedComponentExerciseNumber!.id].value!;
     }
 
     return Scaffold
@@ -168,7 +168,7 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false),
+              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber!.id, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false),
             ),
           );
         },

@@ -15,8 +15,8 @@ class ListOfZiPainter extends BasePainter {
 
   int breakoutIndex = -1;
 
-  Color? lineColor;
-  Color? completeColor;
+  late Color lineColor;
+  late Color completeColor;
   int lessonId = -1;
   double? screenWidth;
 
@@ -28,7 +28,7 @@ class ListOfZiPainter extends BasePainter {
   });
 
   double getSizeRatio() {
-    var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
+    var defaultSize = screenWidth! / 16.0; // equivalent to the original hardcoded value of 25.0
     return defaultSize / 25.0;
   }
 
@@ -39,7 +39,7 @@ class ListOfZiPainter extends BasePainter {
   @override
   void paint(Canvas canvas, Size size) {
     this.canvas = canvas;
-    this.width = screenWidth;  // set the base class width variable
+    this.width = screenWidth!;  // set the base class width variable
     isBreakoutPositionsOnly = false;
     PrimitiveWrapper contentLength = PrimitiveWrapper(0.0); // not used
     lessonLeftEdge = applyRatio(10.0);
@@ -365,8 +365,8 @@ class ListOfZiPainter extends BasePainter {
 
   checkAndUpdateYPosi(PrimitiveWrapper yPositionWrapper, String prefix, String str, double fontWidth, double fontSize) {
     var len = (applyRatio(20.0) + prefix.length * fontWidth + str.length * fontWidth + applyRatio(8.0));
-    if (len > screenWidth) {
-      var mul = (len ~/ screenWidth);
+    if (len > screenWidth!) {
+      var mul = (len ~/ screenWidth!);
       yPositionWrapper.value += fontSize * mul;
     }
   }

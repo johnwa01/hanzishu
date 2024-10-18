@@ -13,8 +13,8 @@ class QuizPainter extends BasePainter {
   var theDefaultTransparentFillColor = Colors
       .cyan; //UIColor(red: 0.7294, green: 0.9882, blue: 0.8941, alpha: 0.5);
 
-  Color? lineColor;
-  Color? completeColor;
+  late Color lineColor;
+  late Color completeColor;
   int centerId = -1;
   //double completePercent;
   //double width;
@@ -35,9 +35,9 @@ class QuizPainter extends BasePainter {
     //TODO: why its members are null?
     //var posiSize = PositionAndSize(100.0, 40.0, 35.0, 35.0, 15.0, 2.0);
 
-    if (withNonCharFrame) {
+    if (withNonCharFrame!) {
       var paint1 = Paint()
-        ..color = this.completeColor   //Color(0xff638965)
+        ..color = this.completeColor!   //Color(0xff638965)
         ..style = PaintingStyle.fill;
       //a rectangle
       canvas.drawRect(Offset(0, 0) & Size(size.width, size.height), paint1);

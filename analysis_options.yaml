@@ -4,7 +4,7 @@ include: package:lints/recommended.yaml
 
 analyzer:
   exclude:
-    - lib/main.dart
+   - lib/main.dart
   //language:
   //  strict-casts: true
   //  strict-raw-types: true

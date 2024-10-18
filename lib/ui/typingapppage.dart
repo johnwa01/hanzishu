@@ -10,7 +10,7 @@ class _TypingAppPageState extends State<TypingAppPage> {
   double? screenWidth;
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   @override

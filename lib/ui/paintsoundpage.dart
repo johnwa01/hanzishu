@@ -50,7 +50,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 */
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   @override
@@ -67,7 +67,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   @override
   void dispose() {
-    _scrollController.dispose(); // it is a good practice to dispose the controller
+    _scrollController!.dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
 
@@ -129,7 +129,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning) {
     initOverlay();
-    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth!);
 
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
@@ -471,7 +471,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         children: [
           Image.asset(
             "assets/painthua/tonghua" + currentSoundViewIndex.toString() + "_" + currentSoundViewSubIndex.toString() + ".png",
-            width: screenWidth * getSizeRatioWithLimit(),  // 350
+            width: screenWidth! * getSizeRatioWithLimit(),  // 350
             //height: 500.0 * getSizeRatioWithLimit(), // 150
             fit: BoxFit.fitWidth,
           ),

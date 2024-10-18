@@ -49,7 +49,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  late var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
   int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 

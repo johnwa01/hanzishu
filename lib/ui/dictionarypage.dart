@@ -40,7 +40,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
   int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 

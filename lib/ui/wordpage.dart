@@ -38,7 +38,7 @@ class _MeWordState extends State<WordPage> {
   }
 
   double getSizeRatioWithLimit() {
-    return Utility.getSizeRatioWithLimit(screenWidth);
+    return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
   @override

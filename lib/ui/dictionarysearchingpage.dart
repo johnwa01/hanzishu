@@ -49,7 +49,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  late var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
   int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
   bool showBreakoutDetails = false;
@@ -166,7 +166,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
 
     if (compoundZiAnimationTimer != null) {
-      compoundZiAnimationTimer.cancel();
+      compoundZiAnimationTimer!.cancel();
       compoundZiAnimationTimer = null;
     }
   }

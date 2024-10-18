@@ -10,7 +10,7 @@ class InputZiComponentPainter extends BasePainter {
 
   int breakoutIndex = -1;
 
-  Color? lineColor;
+  late Color lineColor;
   late Color completeColor;
   int currentIndex = -1; //lessonId;  //TODO: zi index
   double screenWidth = 0.0;

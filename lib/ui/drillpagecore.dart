@@ -60,7 +60,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
 
   ZiListType? currentZiListType;
 
@@ -88,20 +88,20 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   void _startAnimation() {
-    _controller.stop();
-    _controller.reset();
-    _controller.forward(from: 0.0).whenComplete(() {
+    _controller!.stop();
+    _controller!.reset();
+    _controller!.forward(from: 0.0).whenComplete(() {
       setState(() {
-        _controller.stop();
-        _controller.reset();     // when complete, clean the animation drawing.
+        _controller!.stop();
+        _controller!.reset();     // when complete, clean the animation drawing.
         shouldDrawCenter = true; // let it redraw the screen with regular center zi.
       });
     });
   }
 
   void _clearAnimation() {
-    _controller.stop();
-    _controller.reset();
+    _controller!.stop();
+    _controller!.reset();
   }
 
   @override
@@ -148,11 +148,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     //theSearchingZiRealFilterList[2] = null;
 
     _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
-    _selectedDrillMenu = _dropdownDrillMenuItems[0].value!;
+    _selectedDrillMenu = _dropdownDrillMenuItems![0].value!;
 
     _dropdownSubMenuItems = buildDropdownSubMenuItems();
-    if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
-      _selectedSubMenu = _dropdownSubMenuItems[0].value!;
+    if (_dropdownSubMenuItems != null && _dropdownSubMenuItems!.length > 0) {
+      _selectedSubMenu = _dropdownSubMenuItems![0].value!;
     }
 
     _controller = new AnimationController(
@@ -171,7 +171,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
 
     resetCompoundZiAnimation();
@@ -185,7 +185,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     }
 
     if (compoundZiAnimationTimer != null) {
-      compoundZiAnimationTimer.cancel();
+      compoundZiAnimationTimer!.cancel();
       compoundZiAnimationTimer = null;
     }
   }
@@ -360,14 +360,14 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     var subMenuList;
     var commonString1 = getString(397);
     var commonString2 = "";
-    if (_selectedDrillMenu.id == 1) {
+    if (_selectedDrillMenu!.id == 1) {
       return <DropdownMenuItem<DrillMenu>>[]; //null;
     }
-    else if (_selectedDrillMenu.id == 2) {
+    else if (_selectedDrillMenu!.id == 2) {
       subMenuList = theHanzishuSubList;
       commonString2 = getString(398);
     }
-    else if (_selectedDrillMenu.id == 3) {
+    else if (_selectedDrillMenu!.id == 3) {
       subMenuList = theHSKSubList;
       commonString2 = getString(399);
     }
@@ -404,7 +404,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         height: posi.height,
         width: posi.width,
         child: new CustomPaint(
-          foregroundPainter: new AnimatedPathPainter(_controller, strokes!),
+          foregroundPainter: new AnimatedPathPainter(_controller!, strokes!),
         ),
       );
     }
@@ -921,10 +921,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     //var subMenuUptoId = 0;
     if (drillCategory != DrillCategory.custom && _selectedSubMenu != null) {
-      /*subMenuUptoId*/subItemId = _selectedSubMenu.id;
+      /*subMenuUptoId*/subItemId = _selectedSubMenu!.id;
     }
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory, internalStartItemId, internalEndItemId, widget.realGroupMembersCache);
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory!, internalStartItemId, internalEndItemId, widget.realGroupMembersCache);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -1256,17 +1256,17 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     subItemId, //widget.endLessonId
     widget.sidePositionsCache,
     widget.realGroupMembersCache,
-    widget.centerPositionAndSizeCache,
+    widget.centerPositionAndSizeCache!,
     allLearnedZis,
     compoundZiCurrentComponentId,
-    currentZiListType,
-    drillCategory,
+    currentZiListType!,
+    drillCategory!,
     startingCenterZiId,
         currentCenterZiRelatedBottum,
       widget.isFromReviewPage,
     );
 
-    var breakoutPositions = drillPainter.getDrillBreakoutPositions();
+    var breakoutPositions = drillPainter!.getDrillBreakoutPositions();
 
     var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error

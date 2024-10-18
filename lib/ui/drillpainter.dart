@@ -9,13 +9,13 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 class DrillPainter extends BasePainter {
   double screenWidth = 0.0;
-  late ZiListType ziListType;
-  late DrillCategory drillCategory; //int filterId;
+  ZiListType? ziListType;
+  DrillCategory? drillCategory; //int filterId;
   int startingCenterZiId = -1;
   late CenterZiRelatedBottum centerZiRelatedBottum;
   late Map<int, PositionAndSize> drillBreakoutPositions = Map();
 
-  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize? centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType? ziListType, DrillCategory? drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -48,12 +48,12 @@ class DrillPainter extends BasePainter {
     //}
     //?theCurrentCenterZiId = centerId;
     centerZiRelatedBottum.breakoutPositions = drillBreakoutPositions;
-    drawZiGroup(centerId, ZiListType.searching, startingCenterZiId, drillCategory, reviewStartLessonId, reviewEndLessonId, centerZiRelatedBottum);
+    drawZiGroup(centerId, ZiListType.searching, startingCenterZiId, drillCategory!, reviewStartLessonId, reviewEndLessonId, centerZiRelatedBottum);
 
     // component list starts from 0, unlike zi list
     if (compoundZiCurrentComponentId >= 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId, ziListType);
+      drawCenterZi(compoundZiCurrentComponentId, ZiListType.searching);
     }
   }
 

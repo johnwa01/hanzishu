@@ -59,7 +59,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
 
   late ZiListType currentZiListType;
 

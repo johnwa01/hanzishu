@@ -34,7 +34,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
+  Timer? compoundZiAnimationTimer;
   int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 
