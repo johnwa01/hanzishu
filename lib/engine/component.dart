@@ -57,8 +57,8 @@ enum AnswerPosition {
 }
 
 class ComponentGroup {
-  int id;
-  String imageName;
+  int id = -1;
+  String imageName = '';
 
   ComponentGroup(
       int id,
@@ -70,9 +70,9 @@ class ComponentGroup {
 }
 
 class ComponentInGroup {
-  int id;
-  int groupNumber;
-  int indexInGroup;
+  int id = -1;
+  int groupNumber = -1;
+  int indexInGroup = -1;
 
   ComponentInGroup(
     int id,
@@ -86,11 +86,11 @@ class ComponentInGroup {
 }
 
 class ComponentCollection {
-  int id;
-  String imageName;
-  int groupNumber;
-  int indexInGroup;
-  int hint; // String ID
+  int id = -1;
+  String imageName = '';
+  int groupNumber = -1;
+  int indexInGroup = -1;
+  int hint = -1; // String ID
 
   ComponentCollection(
       int id,
@@ -108,8 +108,8 @@ class ComponentCollection {
 }
 
 class GroupAndIndexPair {
-  int groupNumber;
-  int indexInGroup;
+  int groupNumber = -1;
+  int indexInGroup = -1;
 
   GroupAndIndexPair(int groupNumber, int indexInGroup) {
     this.groupNumber = groupNumber;
@@ -136,18 +136,18 @@ class FullComponentCollection {
 */
 
 class LeadComponent {
-  int id;
-  String doubleByteCode;
-  String charOrNameOfNonchar;
-  bool isChar;
-  bool isLeadComponent;
-  int groupNumber;
-  int indexInGroup;
-  String image;
-  String strokesString;
-  int hint;
-  List<double> strokes;
-  String componentCategory;
+  int id = -1;
+  String doubleByteCode = '';
+  String charOrNameOfNonchar = '';
+  bool isChar = false;
+  bool isLeadComponent = false;
+  int groupNumber = -1;
+  int indexInGroup = -1;
+  String image = '';
+  String strokesString = '';
+  int hint = -1;
+  List<double> strokes = [];
+  String componentCategory = '';
 
 
   LeadComponent(
@@ -180,8 +180,8 @@ class LeadComponent {
 }
 
 class ComponentCategory {
-  String categoryType;
-  int categoryNameLocaleStringId;
+  String categoryType = '';
+  int categoryNameLocaleStringId = -1;
 
   ComponentCategory(String categoryType, int categoryNameLocaleStringId) {
     this.categoryType = categoryType;
@@ -190,16 +190,16 @@ class ComponentCategory {
 }
 
 class Component {
-  String doubleByteCode;
-  String charOrNameOfNonchar;
-  String pinyin;
-  String typingCode;
-  bool isChar;
-  String xiangXinImage;
-  String strokesString;
-  String meaning;
-  String subComponents;
-  List<double> strokes;
+  String doubleByteCode = '';
+  String charOrNameOfNonchar = '';
+  String pinyin = '';
+  String typingCode = '';
+  bool isChar = false;
+  String xiangXinImage = '';
+  String strokesString = '';
+  String meaning = '';
+  String subComponents = '';
+  List<double> strokes = [];
 
   Component(
       String doubleByteCode,
@@ -230,7 +230,7 @@ class Component {
 
   static String getComponentCategoryFromGroupAndIndex(int keyGroup, int keyIndex) {
     if (keyGroup < 1 || keyGroup > 6 || keyIndex < 1 || keyIndex > 5) {
-      return null;
+      return '';
     }
 
     var posi = (keyGroup -1) * 5 + keyIndex - 1;
@@ -240,10 +240,10 @@ class Component {
 }
 
 class ZiWithComponentsAndStrokes {
-  String zi;
-  List<String> componentCodes;
-  String hintImage;
-  int hintText;
+  String zi = '';
+  List<String> componentCodes = [];
+  String hintImage = '';
+  int hintText = -1;
 
   ZiWithComponentsAndStrokes(
       String zi,
@@ -259,8 +259,8 @@ class ZiWithComponentsAndStrokes {
 }
 
 class ZiIdToCompMap {
-  int id;
-  String compCode;
+  int id = -1;
+  String compCode = '';
 
   ZiIdToCompMap (
       int id,
@@ -272,9 +272,9 @@ class ZiIdToCompMap {
 }
 
 class ComponentCategoryStringIdAndTypingChars {
-  int stringId;
-  String letter;
-  String chars;
+  int stringId = -1;
+  String letter = '';
+  String chars = '';
 
   ComponentCategoryStringIdAndTypingChars(
       int stringId,

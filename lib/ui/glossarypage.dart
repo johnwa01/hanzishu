@@ -12,14 +12,14 @@ class GlossaryPage extends StatefulWidget {
 }
 
 class _GlossaryPageState extends State<GlossaryPage> {
-  double fontSize1;
-  double fontSize2;
-  double fontSize3;
+  double fontSize1 = 0.0;
+  double fontSize2 = 0.0;
+  double fontSize3 = 0.0;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 

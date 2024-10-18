@@ -14,23 +14,23 @@ class QuizPage extends StatefulWidget {
   final includeSkipSection;
   bool isChars = true;
 
-  QuizPage({this.quizTextbook, this.quizCategory, this.lessonId, this.wordsStudy, this.includeSkipSection});
+  QuizPage({required this.quizTextbook, required this.quizCategory, required this.lessonId, required this.wordsStudy, required this.includeSkipSection});
 
   @override
   _QuizPageState createState() => _QuizPageState();
 }
 
 class _QuizPageState extends State<QuizPage> {
-  double screenWidth;
-  AnswerPosition answerPosition;
-  QuizTextbook quizTextbook;
-  QuizCategory quizCategory;
-  bool includeSkipSection;
-  int lessonId;
-  String wordsStudy;
-  int index;
-  double _progressValue;
-  int totalMeaningAndSoundQuestions;
+  late double screenWidth;
+  late AnswerPosition answerPosition;
+  late QuizTextbook quizTextbook;
+  late QuizCategory quizCategory;
+  late bool includeSkipSection;
+  int lessonId = -1;
+  String wordsStudy = '';
+  int index = -1;
+  double _progressValue = 0.0;
+  int totalMeaningAndSoundQuestions = -1;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16.0;
@@ -122,7 +122,7 @@ class _QuizPageState extends State<QuizPage> {
           //),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.only(top: 10 * getSizeRatio(), left: 10 * getSizeRatio(), right: 10 * getSizeRatio()), //25
+            padding: EdgeInsets.only(top: 10.0 * getSizeRatio(), left: 10.0 * getSizeRatio(), right: 10.0 * getSizeRatio()), //25
           ),
           Container(
             alignment: Alignment.topRight,
@@ -133,14 +133,14 @@ class _QuizPageState extends State<QuizPage> {
             //padding: EdgeInsets.all(20),
           ),
           Container(
-            padding: EdgeInsets.all(18 * getSizeRatio()), //
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(18 * getSizeRatio()), //40
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //40
           ),
           Container(
-            padding: EdgeInsets.all(18 * getSizeRatio()), //
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
           ),
           Container(
             child: getContinue(context),
@@ -240,6 +240,9 @@ class _QuizPageState extends State<QuizPage> {
         );
       }
     }
+
+    //should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   setPositionState(AnswerPosition position) {
@@ -363,7 +366,7 @@ class _QuizPageState extends State<QuizPage> {
     var currentType = theQuizManager.getCurrentType();
 
     if (currentType == QuizType.conversations) {
-      fontSize = 25 * getSizeRatio();
+      fontSize = 25.0 * getSizeRatio();
     }
 
     if (position == AnswerPosition.center) {
@@ -397,10 +400,10 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     return Container(
-      child: FlatButton(
-        child: Text(value, style: TextStyle(fontSize: fontSize),),
-        color: backgroundColor, //color,
-        textColor: textColor, //Colors.white,
+      child: TextButton(
+        child: Text(value, style: TextStyle(fontSize: fontSize, color: textColor),),
+        //color: backgroundColor, //color,
+        //textColor: textColor, //Colors.white,
         onPressed: () {
           setPositionState(position);
         },
@@ -463,11 +466,11 @@ class _QuizPageState extends State<QuizPage> {
 
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || quizTextbook == QuizTextbook.custom*/) {
-      return FlatButton(
+      return TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
-        color: Colors.white,
-        textColor: Colors.blueAccent,
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
+        //color: Colors.white,
+        //textColor: Colors.blueAccent,
         onPressed: () {
           theIsBackArrowExit = false;
           Navigator.of(context).pop();
@@ -496,10 +499,10 @@ class _QuizPageState extends State<QuizPage> {
       //_updateProgress();
 
       return Container(
-          child: FlatButton(
-            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(),)),
-            color: Colors.cyan,    //blueAccent,
-            textColor: Colors.white,
+          child: TextButton(
+            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(), color: Colors.white)),
+            //color: Colors.cyan,    //blueAccent,
+            //textColor: Colors.white,
             onPressed: () {
               setState(() {
                 setPositionState(AnswerPosition.continueNext);
@@ -517,11 +520,14 @@ class _QuizPageState extends State<QuizPage> {
           ),
       );
     }
+
+    // should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*"Ok"*/),
       onPressed: () {
         theIsBackArrowExit = false;

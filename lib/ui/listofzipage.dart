@@ -11,15 +11,15 @@ import 'package:hanzishu/ui/positionmanager.dart';
 
 class ListOfZiPage extends StatefulWidget {
   final int lessonId;
-  ListOfZiPage({this.lessonId});
+  ListOfZiPage({required this.lessonId});
 
   @override
   _ListOfZiPageState createState() => _ListOfZiPageState();
 }
 
 class _ListOfZiPageState extends State<ListOfZiPage> {
-  double screenWidth;
-  ScrollController _scrollController;
+  late double screenWidth;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
 
   @override
@@ -60,7 +60,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
         screenWidth: screenWidth
     );
 
-    List<SpeechIconInfo> listOfSpeechIconInfo = List<SpeechIconInfo>();
+    List<SpeechIconInfo> listOfSpeechIconInfo = <SpeechIconInfo>[];
     // get iconinfo only, isInfoOnly = true
     listOfZiPainter.displayAllZi(widget.lessonId, true, listOfSpeechIconInfo, contentLength);
 
@@ -93,9 +93,9 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
   }
 
   Positioned getPositionedSpeechButton(SpeechIconInfo speechIconInfo) {
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         var str;
         if (speechIconInfo.type == ZiListType.phrase) {
@@ -107,7 +107,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
 
         TextToSpeech.speak("zh-CN", str);
       },
-      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0), color: Colors.blueAccent)),
     );
 
     var posiCenter = Positioned(
@@ -122,14 +122,14 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
   }
 
   Positioned getPositionedContinueButton() {
-    var butt = FlatButton(
-      color: Colors.blueAccent,
-      textColor: Colors.white, //brown,
+    var butt = TextButton(
+      //color: Colors.blueAccent,
+      //textColor: Colors.white, //brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text(getString(285), style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text(getString(285), style: TextStyle(fontSize: applyRatio(20.0), color: Colors.white)),
     );
 
     var posiCenter = Positioned(
@@ -145,14 +145,14 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
   }
 
   Positioned getPositionedSkipButton() {
-    var butt = FlatButton(
-      color: Colors.blueAccent, //white,
-      textColor: Colors.white, //brown,
+    var butt = TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.white, //brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text(getString(401), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+      child: Text(getString(401), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.white)),
     );
 
     var posiCenter = Positioned(

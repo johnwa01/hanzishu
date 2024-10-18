@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 var MaximumValidPeriod = 120.0;
 
 class StatisticsManager {
-  LessonQuizResult lessonQuizResult;
+  LessonQuizResult lessonQuizResult = LessonQuizResult(dateString : '', lessonId : -1, cor : -1, answ : -1);
 
   init(LessonQuizResult lessonQuizResult) {
       this.lessonQuizResult = lessonQuizResult;
@@ -24,7 +24,7 @@ class StatisticsManager {
 
   initLessonQuizResults() {
     if (lessonQuizResult == null) {
-      lessonQuizResult = LessonQuizResult();
+      lessonQuizResult = LessonQuizResult(dateString : '', lessonId : -1, cor : -1, answ : -1);
     }
 
     lessonQuizResult.cor = 0;

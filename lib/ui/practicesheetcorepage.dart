@@ -5,18 +5,18 @@ import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/practicesheetpainter.dart';
 
 class PracticeSheetCorePage extends StatefulWidget {
-  String flashcardList;
-  bool gridShowZi;
-  PracticeSheetCorePage({this.flashcardList, this.gridShowZi});
+  late String flashcardList;
+  late bool gridShowZi;
+  PracticeSheetCorePage({required this.flashcardList, required this.gridShowZi});
 
   @override
   _PracticeSheetCorePageState createState() => _PracticeSheetCorePageState();
 }
 
 class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with SingleTickerProviderStateMixin {
-  double screenWidth;
-  String flashcardList;
-  bool gridShowZi;
+  late double screenWidth;
+  late String flashcardList;
+  late bool gridShowZi;
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;

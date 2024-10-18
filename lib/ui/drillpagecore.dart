@@ -32,48 +32,48 @@ class DrillPageCore extends StatefulWidget {
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  PositionAndSize? centerPositionAndSizeCache;
 
-  DrillPageCore({this.drillCategory, this.startingCenterZiId, this.subItemId, this.isFromReviewPage, this.customString});
+  DrillPageCore({required this.drillCategory, required this.startingCenterZiId, required this.subItemId, required this.isFromReviewPage, required this.customString});
 
   @override
   _DrillPageCoreState createState() => _DrillPageCoreState();
 }
 
 class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProviderStateMixin {
-  DrillCategory drillCategory; //startLessonId;
-  DrillPainter drillPainter;
-  int startingCenterZiId;
-  int subItemId; //endLessonId;
-  int internalStartItemId;
-  int internalEndItemId;
-  String customString;
-  int centerZiId;
-  bool shouldDrawCenter;
-  double screenWidth;
-  OverlayEntry overlayEntry;
+  DrillCategory? drillCategory; //startLessonId;
+  DrillPainter? drillPainter;
+  int startingCenterZiId = -1;
+  int subItemId = -1; //endLessonId;
+  int internalStartItemId = -1;
+  int internalEndItemId = -1;
+  String customString = '';
+  int centerZiId = -1;
+  bool shouldDrawCenter = false;
+  double screenWidth = 0.0;
+  OverlayEntry? overlayEntry = null;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
-  AnimationController _controller;
+  AnimationController? _controller;
   Map<int, bool> allLearnedZis = Map();
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
 
-  ZiListType currentZiListType;
+  ZiListType? currentZiListType;
 
   //List<ReviewLevel> _reviewLevelsEnding = ReviewLevel.getReviewLevelsEnding(0);
-  List<DropdownMenuItem<DrillMenu>> _dropdownDrillMenuItems;
-  DrillMenu _selectedDrillMenu;
+  List<DropdownMenuItem<DrillMenu>>? _dropdownDrillMenuItems;
+  DrillMenu? _selectedDrillMenu;
 
-  List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
-  DrillMenu _selectedSubMenu;
+  List<DropdownMenuItem<DrillMenu>>? _dropdownSubMenuItems;
+  DrillMenu? _selectedSubMenu;
 
-  String currentLocale;
+  String currentLocale = '';
 
-  CenterZiRelatedBottum centerZiRelatedBottum;
+  CenterZiRelatedBottum? centerZiRelatedBottum;
 
   int centerRelatedButtonUpdates = 0;
 
@@ -148,11 +148,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     //theSearchingZiRealFilterList[2] = null;
 
     _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
-    _selectedDrillMenu = _dropdownDrillMenuItems[0].value;
+    _selectedDrillMenu = _dropdownDrillMenuItems[0].value!;
 
     _dropdownSubMenuItems = buildDropdownSubMenuItems();
     if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
-      _selectedSubMenu = _dropdownSubMenuItems[0].value;
+      _selectedSubMenu = _dropdownSubMenuItems[0].value!;
     }
 
     _controller = new AnimationController(
@@ -205,7 +205,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[];
       if (compoundZiAllComponents == null ||
           compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(centerZiId, componentCodes);
@@ -344,7 +344,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   List<DropdownMenuItem<DrillMenu>> buildDropdownDrillMenuItems(List drillMenuList) {
-    List<DropdownMenuItem<DrillMenu>> items = List();
+    List<DropdownMenuItem<DrillMenu>> items = []; //List();
     for (DrillMenu drillMenu in drillMenuList) {
       items.add(
         DropdownMenuItem(
@@ -361,7 +361,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     var commonString1 = getString(397);
     var commonString2 = "";
     if (_selectedDrillMenu.id == 1) {
-      return null;
+      return <DropdownMenuItem<DrillMenu>>[]; //null;
     }
     else if (_selectedDrillMenu.id == 2) {
       subMenuList = theHanzishuSubList;
@@ -372,7 +372,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       commonString2 = getString(399);
     }
 
-    List<DropdownMenuItem<DrillMenu>> items = List();
+    List<DropdownMenuItem<DrillMenu>> items = []; //List();
 
     for (var subMenu in subMenuList) {
       var subString;
@@ -404,7 +404,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         height: posi.height,
         width: posi.width,
         child: new CustomPaint(
-          foregroundPainter: new AnimatedPathPainter(_controller, strokes),
+          foregroundPainter: new AnimatedPathPainter(_controller, strokes!),
         ),
       );
     }
@@ -416,7 +416,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -448,10 +448,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         builder: (context) =>Positioned(
             top: posiY,
             left: adjustedXValue,
-            child: FlatButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
+            child: TextButton(
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
+              //color: Colors.blueAccent,
+              //textColor: Colors.white,
               onPressed: () {
                 initOverlay();
                 if (searchingZiId != -1) {
@@ -462,7 +462,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
               },
             )
         ));
-    overlayState.insert(overlayEntry);
+    overlayState.insert(overlayEntry!);
   }
 
   Widget getQuestionWizard(BuildContext context) {
@@ -578,7 +578,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         setState(() {
           questionManager.selectedPosi = index;
           showOverlayQuestion(context, 30.0 * getSizeRatio(), 80.0 * getSizeRatio(),
-              -1, -1, null, -1);
+              -1, -1, ZiListType.zi, -1);
         });
       },
       child: Text(questionManager.getAnswer(index),
@@ -644,7 +644,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             left: adjustedXValue,
             child: getQuestionWizard(context)
         ));
-    overlayState.insert(overlayEntry);
+    overlayState.insert(overlayEntry!);
   }
 
   Positioned getPositionedSkipButton() {
@@ -655,14 +655,14 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       buttonColor = Colors.blue;
     }
 
-    var butt = FlatButton(
-      color: buttonColor, //Colors.white,
-      textColor: Colors.brown,
+    var butt = TextButton(
+      //color: buttonColor, //Colors.white,
+      //textColor: Colors.brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
+      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0, color: Colors.brown)),
     );
 
     // NOTE: match the basepainting's drawZiGroup
@@ -682,9 +682,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int currentZiId, int newCenterZiId, bool isFromNavigation) {
     //TODO: for new, temp set isQuestion to false, that is, turn off the question feature
-    var butt = FlatButton(
-      color: Colors.white, // buttonColor,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white, // buttonColor,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         initOverlay();
         // note: Lessons use Custom as well, so I have to use 1 to skip other non-lesson custom usage.
@@ -815,7 +815,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
           previousZiId = currentZiId;
         }
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -830,7 +830,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
 
@@ -852,7 +852,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Positioned getPositionedMeaningSpeakButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
 
@@ -879,7 +879,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
 
@@ -990,7 +990,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   //TODO: not sure to use this or not
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*"OK"*/),
       onPressed: () {
       },
@@ -1023,7 +1023,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
           ZiListType.searching, centerZiId, isFromDrillPageCore, getSizeRatio());
 
       for (var id in naviMap.keys) {
-        var posi = getPositionedButton(naviMap[id], id, id, true);
+        var posi = getPositionedButton(naviMap[id]!, id, id, true);
         buttons.add(posi);
       }
     }
@@ -1045,7 +1045,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Widget getCenterZiStructure0Button() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
         currentCenterZiRelatedBottum.structureSelectPosition = 0;
@@ -1073,7 +1073,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Widget getCenterZiStructure1Button() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
         currentCenterZiRelatedBottum.structureSelectPosition = 1;
@@ -1102,7 +1102,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Widget getCenterZiCompCount0Button() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
         currentCenterZiRelatedBottum.compCountSelectPosition = 0;
@@ -1123,7 +1123,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         top: posi.transY,
         left: (posi.transX + CenterZiRelatedBottum.position[2] - 10.0) * getSizeRatio(),
         height: fontSize * 1.3,
-        width: 40 * getSizeRatio(),
+        width: 40.0 * getSizeRatio(),
         child: butt
     );
 
@@ -1131,7 +1131,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Widget getCenterZiCompCount1Button() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
         currentCenterZiRelatedBottum.compCountSelectPosition = 1;
@@ -1152,7 +1152,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         top: posi.transY,
         left: (posi.transX + CenterZiRelatedBottum.position[3] - 10.0) * getSizeRatio(),
         height: fontSize * 1.1,
-        width: 40 * getSizeRatio(),
+        width: 40.0 * getSizeRatio(),
         child: butt
     );
 
@@ -1160,7 +1160,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Widget getCenterZiWordBreakdownButton() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         initOverlay();
 
@@ -1181,7 +1181,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         top: posi.transY,
         left: (posi.transX + CenterZiRelatedBottum.position[4]) * getSizeRatio(),
         height: fontSize * 1.3,
-        width: 100 * getSizeRatio(),
+        width: 100.0 * getSizeRatio(),
         child: butt
     );
 
@@ -1192,9 +1192,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
     var listType = Utility.getListType(uniqueNumber, id);
 
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
 
       onPressed: () {
         initOverlay();
@@ -1202,7 +1202,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
         //var zi = theZiManager.getZi(id);
         //var searchingZi = DictionaryManager.getSearchingZi(id);
         var char = ZiManager.getOneChar(id, listType);
-        TextToSpeech.speak("zh-CN", char);
+        TextToSpeech.speak("zh-CN", char!);
         if (previousZiId != id || !haveShowedOverlay) {
           var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
           //var meaning = ZiManager.getPinyinAndMeaning(id);
@@ -1215,7 +1215,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
         previousZiId = id;
       },
-      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(

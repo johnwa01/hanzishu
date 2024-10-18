@@ -25,37 +25,37 @@ class DictionarySearchingPage extends StatefulWidget {
   final DicCaller dicCaller;
 
   //dicStage = DictionaryStage.searchingzis;
-  DictionarySearchingPage({this.dicStage, this.firstOrSearchingZiIndex, this.flashcardList, this.dicCaller});
+  DictionarySearchingPage({required this.dicStage, required this.firstOrSearchingZiIndex, required this.flashcardList, required this.dicCaller});
 
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  PositionAndSize? centerPositionAndSizeCache;
 
   @override
   _DictionarySearchingPageState createState() => _DictionarySearchingPageState();
 }
 
 class _DictionarySearchingPageState extends State<DictionarySearchingPage> with SingleTickerProviderStateMixin {
-  int firstZiIndex; // different meaning for different stage
-  int searchingZiIndex;
-  bool shouldDrawCenter;
-  double screenWidth;
-  DictionaryStage dicStage;
-  OverlayEntry overlayEntry;
+  int firstZiIndex = -1; // different meaning for different stage
+  int searchingZiIndex = -1;
+  bool shouldDrawCenter = false;
+  double screenWidth = 0.0;
+  late DictionaryStage dicStage;
+  OverlayEntry? overlayEntry = null;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
 
-  AnimationController _controller;
+  late AnimationController _controller;
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
-  int compoundZiCurrentComponentId;
+  late var compoundZiAnimationTimer;
+  int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
-  bool showBreakoutDetails;
-  String flashcardList;
-  int flashcardIndex;
-  DicCaller dicCaller;
+  bool showBreakoutDetails = false;
+  String flashcardList = '';
+  int flashcardIndex = -1;
+  late DicCaller dicCaller;
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -87,7 +87,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   void clearOverlayEntry() {
     if(dicStage != DictionaryStage.firstzis) {
       if (overlayEntry != null) {
-        overlayEntry.remove();
+        overlayEntry!.remove();
         overlayEntry = null;
       }
     }
@@ -95,7 +95,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
     }
   }
@@ -178,7 +178,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[]; //List<String>();
       if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(
@@ -276,7 +276,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         height: posi.height,
         width: posi.width,
         child: new CustomPaint(
-          foregroundPainter: new AnimatedPathPainter(_controller, strokes),
+          foregroundPainter: new AnimatedPathPainter(_controller, strokes!),
         ),
       );
     }
@@ -310,14 +310,14 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                 Positioned(
                     top: yPosi,
                     left: adjustedXValue,
-                    child: FlatButton(
-                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
-                      color: Colors.blueAccent,
-                      textColor: Colors.white,
+                    child: TextButton(
+                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
+                      //color: Colors.blueAccent,
+                      //textColor: Colors.white,
                       onPressed: () {initOverlay();},
                     )
                 ));
-        overlayState.insert(overlayEntry);
+        overlayState.insert(overlayEntry!);
         previousPositionAndMeaning.set(xPosi, yPosi, meaning);
       }
     }
@@ -341,9 +341,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int ziIndex) {
-    var butt = FlatButton(
-      color: Colors.white, // buttonColor,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white, // buttonColor,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         clearOverlayEntry();
 
@@ -395,7 +395,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         TextToSpeech.speak("zh-CN", char);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY, pinyinAndMeaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -410,9 +410,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedNavigationButton(PositionAndSize posiAndSize, DictionaryStage newDicStage) {
-    var butt = FlatButton(
-      color: Colors.white, // buttonColor,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white, // buttonColor,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         clearOverlayEntry();
 
@@ -425,7 +425,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       },
       onLongPress: () {
       },
-      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -440,7 +440,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Widget getGoHomeButton() {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -456,7 +456,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedSpeechButton(PositionAndSize posiAndSize, int searchingZiId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -478,7 +478,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedTranslationSpeechButton(PositionAndSize posiAndSize, int searchingZiId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -500,7 +500,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedBreakdownButton(PositionAndSize posiAndSize) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -523,7 +523,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   getHelpPositionedButton(posiAndSize) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -549,7 +549,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedDrawBihuaButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
 
@@ -586,7 +586,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Positioned getPositionedDrawZiGroupButton(PositionAndSize posiAndSize, int ziId) {
-    var butt = FlatButton(
+    var butt = TextButton(
       onPressed: () {
         clearOverlayEntry();
         resetCompoundZiAnimation();
@@ -773,9 +773,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
     var listType = Utility.getListType(uniqueNumber, id);
 
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
       /*
       onPressed: () {
         clearOverlayEntry();
@@ -790,12 +790,12 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         //var zi = theZiManager.getZi(id);
         //var searchingZi = DictionaryManager.getSearchingZi(id);
         var char = ZiManager.getOneChar(id, listType);
-        TextToSpeech.speak("zh-CN", char);
+        TextToSpeech.speak("zh-CN", char!);
         var pinyinAndMeaning = ZiManager.getOnePinyinAndMeaning(id, listType);
         //var meaning = ZiManager.getPinyinAndMeaning(id);
         showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, pinyinAndMeaning);
       },
-      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 20.0 *getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -865,9 +865,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Widget getNextFlashcardButton(PositionAndSize posiAndSize) {
-    var butt = FlatButton(
-      color: Colors.blueAccent,
-      textColor: Colors.white,
+    var butt = TextButton(
+      //color: Colors.blueAccent,
+      //textColor: Colors.white,
       onPressed: () {
         clearOverlayEntry();
         flashcardIndex++;
@@ -882,7 +882,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           showCompletedDialog(context);
         }
       },
-      child: Text(getString(515) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio()),),
+      child: Text(getString(515) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio(), color: Colors.white),),
     );
 
     var posiCenter = Positioned(
@@ -897,11 +897,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Widget getSkipThisSection() {
-    var butt = FlatButton(
+    var butt = TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
-        color: Colors.white,
-        textColor: Colors.blueAccent,
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
+        //color: Colors.white,
+        //textColor: Colors.blueAccent,
         onPressed: () {
           clearOverlayEntry();
           theIsBackArrowExit = false;
@@ -922,7 +922,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*"OK"*/),
       onPressed: () {
         theIsBackArrowExit = false;
@@ -960,14 +960,14 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       buttonColor = Colors.blue;
     }
 
-    var butt = FlatButton(
-      color: buttonColor, //Colors.white,
-      textColor: Colors.brown,
+    var butt = TextButton(
+      //color: buttonColor, //Colors.white,
+      //textColor: Colors.brown,
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0)),
+      child: Text('', style: TextStyle(fontSize: getSizeRatio() * 20.0, color: Colors.brown)),
     );
 
     // NOTE: match the basepainting's drawZiGroup

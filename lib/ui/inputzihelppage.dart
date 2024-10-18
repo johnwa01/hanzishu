@@ -15,10 +15,10 @@ class InputZiHelpPage extends StatefulWidget {
 class _InputZiHelpPageState extends State<InputZiHelpPage> {
   //VideoPlayerController _videoController;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
@@ -90,7 +90,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -122,7 +122,7 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
                   //fit: BoxFit.fitWidth,
                 ),
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousOverlayGroup = keyGroup;
       previousOverlayIndex = keyIndex;
     }
@@ -143,10 +143,10 @@ class _InputZiHelpPageState extends State<InputZiHelpPage> {
           keyGroup, keyIndex).image;
     }
 
-    return FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
-      padding: EdgeInsets.zero,
+    return TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
+      //padding: EdgeInsets.zero,
       onPressed: () {
         initOverlay();
 

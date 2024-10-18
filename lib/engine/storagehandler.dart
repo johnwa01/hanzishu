@@ -8,13 +8,13 @@ part 'storagehandler.g.dart';
 
 @JsonSerializable(nullable: false)
 class Storage {
-  String storageVersion;
-  String language;
-  String lessonsStatus; // completed = '1', not completed = '0'; starting from 0 position up to 119. Total 120 for now.
+  String storageVersion = '';
+  String language = '';
+  String lessonsStatus = ''; // completed = '1', not completed = '0'; starting from 0 position up to 119. Total 120 for now.
   //List<Statistics> statisticsArray;  //Note: The most complicated structure I created for the storage.
-  List<LessonQuizResult> lessonQuizResults;
+  List<LessonQuizResult> lessonQuizResults = <LessonQuizResult>[];
 
-  Storage({this.storageVersion, this.language, this.lessonsStatus, this.lessonQuizResults});
+  Storage({required this.storageVersion, required this.language, required this.lessonsStatus, required this.lessonQuizResults});
 }
 
 /* Keep for reference
@@ -50,16 +50,16 @@ class Statistics {
 */
 
 class LessonQuizResult {
-  String dateString;
-  int lessonId;
-  int cor;       // totalCorrect
-  int answ;       // answered
+  String dateString = '';
+  int lessonId = -1;
+  int cor = -1;       // totalCorrect
+  int answ = -1;       // answered
 
   LessonQuizResult({
-    this.dateString,
-    this.lessonId,
-    this.cor,
-    this.answ,
+    required this.dateString,
+    required this.lessonId,
+    required this.cor,
+    required this.answ,
   });
 
   factory LessonQuizResult.fromJson(Map<String, dynamic> json) => LessonQuizResult(
@@ -80,8 +80,8 @@ class LessonQuizResult {
 class StorageHandler {
   static int MaximumNumberOfQuizResults = 60;
   static int NumberOfQuizResultsToTrim = 10;
-  Storage storage = Storage();
-  bool hasTriedToLoadStorage;
+  Storage storage = Storage(storageVersion : '', language : '', lessonsStatus : '', lessonQuizResults : <LessonQuizResult>[]);
+  bool hasTriedToLoadStorage = false;
 
   initStorage() {
     storage.storageVersion = '1.0';
@@ -136,7 +136,7 @@ class StorageHandler {
     return storage.lessonQuizResults;
   }
 
-  LessonQuizResult getLessonQuizResult(int index) {
+  LessonQuizResult? getLessonQuizResult(int index) {
     var results = getLessonQuizResults();
     // make newest result the first - reverse the order
     if (results != null) {
@@ -159,7 +159,7 @@ class StorageHandler {
   }
 
   appendLessonQuizResult(LessonQuizResult lessonQuizResult) {
-    var result = LessonQuizResult();
+    var result = LessonQuizResult(dateString : '', lessonId : -1, cor : -1, answ : -1);
     result.dateString = lessonQuizResult.dateString;
     result.lessonId = lessonQuizResult.lessonId;
     result.cor = lessonQuizResult.cor;
@@ -211,7 +211,7 @@ class StorageHandler {
     }
   }
 
-  Storage getStorageFromJson(String content) {
+  Storage? getStorageFromJson(String content) {
     try {
       var stor = _$StorageFromJson(json.decode(content));
       return stor;

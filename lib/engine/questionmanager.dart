@@ -5,27 +5,27 @@ import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 
 class QuestionManager {
-  bool isQuestionOn;
+  bool isQuestionOn = false;
 
-  int currentZiId;
-  int previousZiId;
-  String previousZi;
-  String previousZiMeaning;
-  int sideZiId;
-  ZiListType sideZiListType;
-  String sideZiMeaning;
+  int currentZiId = -1;
+  int previousZiId = -1;
+  String previousZi = '';
+  String previousZiMeaning = '';
+  int sideZiId = -1;
+  ZiListType sideZiListType = ZiListType.zi; // default
+  String sideZiMeaning = '';
 
-  String currentZi;
-  String currentZiMeaning;
-  int currentZiPosi; // also correctPosi
+  String currentZi = '';
+  String currentZiMeaning = '';
+  int currentZiPosi = -1; // also correctPosi
 
-  String wrongZiA;  // hidden
-  String wrongZiAMeaning;
-  int wrongZiAPosi;
+  String wrongZiA = '';  // hidden
+  String wrongZiAMeaning = '';
+  int wrongZiAPosi = -1;
 
-  String wrongZiB;  // hidden
-  String wrongZiBMeaning;
-  int wrongZiBPosi;
+  String wrongZiB = '';  // hidden
+  String wrongZiBMeaning = '';
+  int wrongZiBPosi = -1;
 
   int selectedPosi = -1; // setState parameter
 
@@ -40,7 +40,7 @@ class QuestionManager {
     this.currentZi = theSearchingZiList[searchingZiId].char;
   }
 
-  String getMeaning(int posi) { // 1 based
+  String? getMeaning(int posi) { // 1 based
     if (currentZiPosi == posi) {
       return currentZiMeaning;
     }

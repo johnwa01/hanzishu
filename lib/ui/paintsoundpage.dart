@@ -31,14 +31,14 @@ class PaintSoundPage extends StatefulWidget {
 }
 
 class _PaintSoundPageState extends State<PaintSoundPage> {
-  double screenWidth;
-  ScrollController _scrollController;
+  double? screenWidth;
+  ScrollController? _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
-  SoundCategory currentSoundCategory;
+  SoundCategory? currentSoundCategory;
   int currentSoundViewIndex = 1;
   int currentSoundViewSubIndex = 1;
   int MaxIntroSoundView = 13; // temp number for 200
@@ -115,7 +115,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -136,14 +136,14 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
         builder: (context) =>Positioned(
             top: posiY,
             left: adjustedXValue,
-            child: FlatButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
+            child: TextButton(
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0, color: Colors.white),),
+              //color: Colors.blueAccent,
+              //textColor: Colors.white,
               onPressed: () {initOverlay();},
             )
         ));
-    overlayState.insert(overlayEntry);
+    overlayState.insert(overlayEntry!);
   }
 
   Widget getOneKeyboardButton(int keyGroup, int keyIndex)
@@ -154,10 +154,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
       path = "assets/paintx/x2_";
     }
 
-    return FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
-      padding: EdgeInsets.zero,
+    return TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
+      //padding: EdgeInsets.zero,
       onPressed: () {
         //initOverlay();
 
@@ -188,6 +188,9 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
     }
     else if (currentSoundCategory == SoundCategory.tongHua) {
       return getTongHua(context);
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
     }
   }
 
@@ -328,7 +331,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
         theIsBackArrowExit = false;
@@ -604,7 +607,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: startingCenterZiId, subItemId: 0, isFromReviewPage: false ,customString: null),
+                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: startingCenterZiId, subItemId: 0, isFromReviewPage: false ,customString: ''),
           ),
         );
       },

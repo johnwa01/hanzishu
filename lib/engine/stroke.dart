@@ -1,9 +1,9 @@
 
 class Stroke {
-  String code;
-  String name;
-  String typingCode;
-  List<double> routes;
+  String code = '';
+  String name = '';
+  String typingCode = '';
+  List<double> routes = <double>[];
 
   Stroke(String code,
       String name,

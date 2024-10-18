@@ -36,23 +36,23 @@ class BasePainter extends CustomPainter{
 
   bool isFromReviewPage = false; // this is the opposite of isFromLessonPage, mainly used for Quiz icon in tree.
 
-  Color lineColor;
-  Color completeColor;
-  double width;  //screenWidth or frame width from inherited classes
-  int centerId;
-  bool shouldDrawCenter;
+  Color lineColor = Colors.blue;
+  Color completeColor = Colors.blue;
+  double width = 0.0;  //screenWidth or frame width from inherited classes
+  int centerId = -1;
+  bool shouldDrawCenter = false;
 
-  int reviewStartLessonId;
-  int reviewEndLessonId;
+  int reviewStartLessonId = -1;
+  int reviewEndLessonId = -1;
 
-  Canvas canvas;
+  Canvas? canvas;
 
-  Map<int, PositionAndSize> sidePositionsCache; // = Map();
-  Map<int, List<int>> realGroupMembersCache; // = Map();
-  PositionAndSize centerPositionAndSizeCache;
-  Map<int, bool> allLearnedZis;
-  Map<int, bool> newInLesson;
-  int compoundZiCurrentComponentId;
+  Map<int, PositionAndSize>? sidePositionsCache; // = Map();
+  Map<int, List<int>>? realGroupMembersCache; // = Map();
+  PositionAndSize? centerPositionAndSizeCache; // = PositionAndSize(0.0,0.0,0.0,0.0,0.0,0.0);
+  Map<int, bool>? allLearnedZis;
+  Map<int, bool>? newInLesson;
+  int compoundZiCurrentComponentId = -1;
 
   bool isReviewCenterPseudoZi = false;
   bool isReviewCenterPseudoNonCharZi = false;
@@ -163,7 +163,7 @@ class BasePainter extends CustomPainter{
 
     paint.color = ofColor; //Colors.amber;
     paint.strokeWidth = widthOfLine; //5;
-    canvas.drawLine(
+    canvas!.drawLine(
         Offset(x1, y1),
         Offset(x2, y2),
         paint
@@ -176,7 +176,7 @@ class BasePainter extends CustomPainter{
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = widthOfLine;
 
-    canvas.drawPath(path, paint);
+    canvas!.drawPath(path, paint);
   }
 
   static Path createZiPathBase(List<double> ziStrokes)
@@ -230,7 +230,7 @@ class BasePainter extends CustomPainter{
     paint.color = ofColor; //Colors.amber;
     paint.style = PaintingStyle.stroke;
     paint.strokeWidth = widthOfLine;
-    canvas.drawPath(path, paint);
+    canvas!.drawPath(path, paint);
   }
 
   static Path createZiPathScaled(List<double>strokes, double widthX, double heightY) {
@@ -265,7 +265,7 @@ class BasePainter extends CustomPainter{
       char = DictionaryManager.getChar(id);
     }
     else if (listType == ZiListType.component) {
-      char = ComponentManager.getComponent(id).charOrNameOfNonchar;
+      char = ComponentManager.getComponent(id)!.charOrNameOfNonchar;
     }
     //else if (listType == ZiListType.custom) {
     //  char = wordsStudy[id];
@@ -365,7 +365,7 @@ class BasePainter extends CustomPainter{
       minWidth: 0,
       maxWidth: this.width - transX,
     );
-    tp.paint(canvas, Offset(transX, transY));
+    tp.paint(canvas!, Offset(transX, transY));
   }
 
   double textTransYAdjust(double transY, double heightY) {
@@ -373,7 +373,7 @@ class BasePainter extends CustomPainter{
   }
 
   List<double> getStrokes(int id, ZiListType listType) {
-    List<double> strokes;
+    List<double> strokes = <double>[];
 
     if (listType == ZiListType.component) {
       var comp = ComponentManager.getComponent(id);
@@ -429,7 +429,7 @@ class BasePainter extends CustomPainter{
     }
 
     if (withPinyin && TheConfig.withSoundAndExplains && !isReviewCenterPseudoZi && !isReviewCenterPseudoNonCharZi) {
-      displayTextForPinyin(listType, id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800], true);
+      displayTextForPinyin(listType, id, transX, transY - charFontSize * 0.45, charFontSize * 0.27, Colors.blue[800]!, true);
     }
 
     if (TheConfig.withSoundAndExplains && hasRootZiLearned) {
@@ -464,20 +464,20 @@ class BasePainter extends CustomPainter{
             ziLineWidth);
     }
     else {
-        displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800], false);
+        displayTextWithValue(char, transX, transY, charFontSize, Colors.blue[800]!, false);
     }
   }
 
   void drawComponentZiById(int id, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
     var comp = ComponentManager.getComponent(id);
-    drawComponentZiBase(comp, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
+    drawComponentZiBase(comp!, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
   }
 
   void drawComponentZi(String doubleByteCode, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
   {
     var  comp = ComponentManager.getComponentByCode(doubleByteCode);
-    drawComponentZiBase(comp, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
+    drawComponentZiBase(comp!, transX, transY, widthX, heightY, charFontSize, ofColor, isSingleColor, ziLineWidth);
   }
 
   void drawComponentZiBase(Component comp, double transX, double transY, double widthX, double heightY, double charFontSize, MaterialColor ofColor, bool isSingleColor, double ziLineWidth)
@@ -690,7 +690,7 @@ class BasePainter extends CustomPainter{
     var posiAndSizeBihua = thePositionManager.getCenterBihuaPosi();
 
     displayTextWithValue("3", posiAndSizeMeaning.transX - 15.0, posiAndSizeMeaning.transY + 15.0, posiAndSizeMeaning.width / 1.3, Colors.amber, false);
-    displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800], true);
+    displayTextForMeaning(listType, id, posiAndSizeMeaning.transX, posiAndSizeMeaning.transY, posiAndSizeMeaning.width, Colors.blue[800]!, true);
 
     var displaySpeechIcon = true;
     if (listType == ZiListType.zi) {
@@ -1062,7 +1062,7 @@ class BasePainter extends CustomPainter{
   }
 
   static PositionAndSize getPositionAndSizeFromCache(int ziId, Map<int, PositionAndSize> sidePositions) {
-    return sidePositions[ziId];
+    return sidePositions[ziId]!;
   }
 
   static PositionAndSize getPositionAndSize(ZiListType listType, int ziId, NumberOfZis totalSideNumberOfZis, Map<int, PositionAndSize> sidePositions) {
@@ -1081,7 +1081,7 @@ class BasePainter extends CustomPainter{
 
 
   static List<int> getRealGroupMembersFromCache(int id, Map<int, List<int>>realGroupMembersCache) {
-    return realGroupMembersCache[id];
+      return realGroupMembersCache[id]!;
   }
 
   static addToRealGroupMembersCache(int id, List<int> realGroupMembers, Map<int, List<int>>realGroupMembersCache) {
@@ -1113,12 +1113,12 @@ class BasePainter extends CustomPainter{
     return realGroupMembers;
   }
 
-  static PositionAndSize getCenterPositionAndSize(PositionAndSize centerPositionAndSizeCache) {
+  static PositionAndSize getCenterPositionAndSize(PositionAndSize? centerPositionAndSizeCache) {
     if (centerPositionAndSizeCache == null) {
       centerPositionAndSizeCache = thePositionManager.getPositionAndSizeHelper("m", 1, PositionManager.theBigMaximumNumber);
     }
 
-    return centerPositionAndSizeCache;
+    return centerPositionAndSizeCache!;
   }
 
   DisplayHint(ZiListType listType, int id, bool isPhrase, PositionAndSize posi, bool withIndex) {
@@ -1362,7 +1362,7 @@ class BasePainter extends CustomPainter{
   }
 
   displayFullComponents(int searchingZiId, PositionAndSize posi, double ratio, bool withHeader) {
-    var comps = List<String>();
+    var comps = <String>[];
     DictionaryManager.getAllComponents(searchingZiId, comps);
     if (withHeader) {
       displayTextWithValue(
@@ -1417,9 +1417,9 @@ class BasePainter extends CustomPainter{
       xStartPosi = 20.0;
     }
 
-    if (comp.strokesString.length > 0) {
+    if (comp!.strokesString.length > 0) {
       drawStrokeZiList(
-          comp.strokesString,
+          comp!.strokesString,
           xStartPosi * ratio,
           posi.transY,
           posi.charFontSize * 1.3,

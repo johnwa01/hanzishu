@@ -74,7 +74,7 @@ class SentenceManager {
   }
 
   // use rune in this kind of situations
-  void populateSubcharsAndComponentsB(String chars, MyString subchars, List<int> comps) {
+  void populateSubcharsAndComponentsB(String chars, MyString? subchars, List<int>? comps) {
     chars.runes.forEach((int eachChar) {
       //for (var char in chars) {
       var char = String.fromCharCode(eachChar);
@@ -82,7 +82,7 @@ class SentenceManager {
     });
   }
 
-  void populateSubcharsAndComponentsC(String /*was Character*/ char, MyString subchars, List<int> comps) {
+  void populateSubcharsAndComponentsC(String /*was Character*/ char, MyString? subchars, List<int>? comps) {
     /*
     if (!Utility.specialChar(char))
     {

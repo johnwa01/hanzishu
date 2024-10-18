@@ -17,7 +17,7 @@ class StandardExamPage extends StatefulWidget {
   QuizCategory quizCategory;
   String customString;
 
-  StandardExamPage({this.drillCategory, this.subItemId, this.quizCategory, this.customString});
+  StandardExamPage({required this.drillCategory, required this.subItemId, required this.quizCategory, required this.customString});
   //StandardExamPage({this.quizTextbook, this.lessonId, this.wordsStudy});
 
   @override
@@ -25,24 +25,24 @@ class StandardExamPage extends StatefulWidget {
 }
 
 class _StandardExamPageState extends State<StandardExamPage> {
-  DrillCategory drillCategory;
-  double screenWidth;
-  QuizCategory quizCategory;
-  String customString;
-  int subItemId;
-  int internalStartItemId;
-  int internalEndItemId;
-  int currentIndex;
+  late DrillCategory drillCategory;
+  late double screenWidth;
+  late QuizCategory quizCategory;
+  late String customString;
+  int subItemId = -1;
+  int internalStartItemId = -1;
+  int internalEndItemId = -1;
+  int currentIndex = -1;
 
   //bool isSoundAnswered;
 
-  AnswerPosition answerPosition;
-  QuizTextbook quizTextbook;
-  int lessonId;
-  String wordsStudy;
-  int index;
-  double _progressValue;
-  int totalMeaningAndSoundQuestions;
+  late AnswerPosition answerPosition;
+  late QuizTextbook quizTextbook;
+  int lessonId = -1;
+  late String wordsStudy;
+  int index = -1;
+  double _progressValue = 0.0;
+  int totalMeaningAndSoundQuestions = -1;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16.0;
@@ -149,21 +149,21 @@ class _StandardExamPageState extends State<StandardExamPage> {
           //),
           Container( // x and progress bard
             child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.only(top: 10 * getSizeRatio(), left: 10 * getSizeRatio(), right: 10 * getSizeRatio()), //25
+            padding: EdgeInsets.only(top: 10.0 * getSizeRatio(), left: 10.0 * getSizeRatio(), right: 10.0 * getSizeRatio()), //25
           ),
           Container(
             child: getQuestion(context),
             //padding: EdgeInsets.all(20),
           ),
           Container(
-            padding: EdgeInsets.all(18 * getSizeRatio()), //
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
           ),
           Container(
             child: getAnswers(context),
-            padding: EdgeInsets.all(18 * getSizeRatio()), //40
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //40
           ),
           Container(
-            padding: EdgeInsets.all(18 * getSizeRatio()), //
+            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
           ),
         ]
     );
@@ -252,6 +252,9 @@ class _StandardExamPageState extends State<StandardExamPage> {
           ]
       );
     }
+
+    //should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   Widget getSoundABCText() {
@@ -353,10 +356,10 @@ class _StandardExamPageState extends State<StandardExamPage> {
     }
 
     return Container(
-      child: FlatButton(
-        child: Text(strValue, style: TextStyle(fontSize: fontSize),),
-        color: backgroundColor, //color,
-        textColor: textColor, //Colors.white,
+      child: TextButton(
+        child: Text(strValue, style: TextStyle(fontSize: fontSize, color: textColor),),
+        //color: backgroundColor, //color,
+        //textColor: textColor, //Colors.white,
         onPressed: () {
           if (position != AnswerPosition.center) {
             //setPositionState(position);
@@ -427,7 +430,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*"Ok"*/),
       onPressed: () {
         theIsBackArrowExit = false;

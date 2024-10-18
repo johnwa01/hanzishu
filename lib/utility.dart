@@ -407,6 +407,8 @@ class Utility {
     else if (listType == ZiListType.component) {
       return breakoutIndex * baseNumber + componentBaseNumber + id;
     }
+
+    return -1;
   }
 
   static int getIdFromUniqueNumber(int uniqueNumber) {
@@ -669,7 +671,7 @@ class PrimitiveWrapper {
 
 //TODO: merge to the above one
 class YPositionWrapper {
-  double yPosi;
+  double yPosi = 0.0;
 
   YPositionWrapper(double yPosi) {
     this.yPosi = yPosi;
@@ -704,11 +706,11 @@ static const List<MaterialColor> primaries = <MaterialColor>[
 */
 
 class SpeechIconInfo {
-  ZiListType type;
+  ZiListType type = ZiListType.zi; // assign a default type
+  int id = -1;
+  double xPosi = 0.1;
+  double yPosi = 0.0;
 
-  int id;
-  double xPosi;
-  double yPosi;
   SpeechIconInfo(ZiListType type, int id, double xPosi, double yPosi) {
     this.type = type;
     this.id = id;

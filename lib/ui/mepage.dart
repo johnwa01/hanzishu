@@ -21,8 +21,8 @@ class MePage extends StatefulWidget {
 }
 
 class _MePageState extends State<MePage> {
-  double screenWidth;
-  String currentLocale;
+  double? screenWidth;
+  String? currentLocale;
 
   @override
   void initState() {
@@ -93,8 +93,8 @@ class _MePageState extends State<MePage> {
         theStorageHandler.SaveToFile();
 
         // let main page refresh to pick up the language change for navigation bar items
-        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
-        navigationBar.onTap(3);
+        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget as BottomNavigationBar;
+        navigationBar.onTap!(3);
       }
 
       /*
@@ -184,7 +184,7 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        StudyCustomizedWordsPage(),
+                        StudyCustomizedWordsPage(customString: ''),
                   ),
                 );
               },

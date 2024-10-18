@@ -8,19 +8,19 @@ import 'package:hanzishu/engine/inputzi.dart';
 class InputZiComponentPainter extends BasePainter {
   static var lessonLeftEdge = 10.0;
 
-  int breakoutIndex;
+  int breakoutIndex = -1;
 
-  Color lineColor;
-  Color completeColor;
-  int currentIndex; //lessonId;  //TODO: zi index
-  double screenWidth;
-  TypingType typingType;
+  Color? lineColor;
+  late Color completeColor;
+  int currentIndex = -1; //lessonId;  //TODO: zi index
+  double screenWidth = 0.0;
+  late TypingType typingType;
 
-  var breakoutPositions;
-  bool isBreakoutPositionsOnly;
+  late var breakoutPositions;
+  bool isBreakoutPositionsOnly = false;
 
   InputZiComponentPainter({
-    this.lineColor, this.completeColor, this.currentIndex, this.screenWidth, this.typingType
+    required this.lineColor, required this.completeColor, required this.currentIndex, required this.screenWidth, required this.typingType
   });
 
   @override

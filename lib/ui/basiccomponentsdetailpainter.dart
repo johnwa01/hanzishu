@@ -15,20 +15,20 @@ import 'package:hanzishu/engine/componentmanager.dart';
 class BasicComponentsDetailPainter extends BasePainter {
   var lessonLeftEdge;
 
-  int breakoutIndex;
+  int breakoutIndex = -1;
 
-  Color lineColor;
-  Color completeColor;
+  Color lineColor = Colors.blue;
+  Color completeColor = Colors.blue;
   //int lessonId;
-  int keyGroup;
-  int keyIndex;
-  double screenWidth;
+  int keyGroup = -1;
+  int keyIndex = -1;
+  double screenWidth = 0.0;
 
   var breakoutPositions;
-  bool isBreakoutPositionsOnly;
+  bool isBreakoutPositionsOnly = false;
 
   BasicComponentsDetailPainter({
-    this.lineColor, this.completeColor, this.keyGroup, this.keyIndex, this.screenWidth
+    required this.lineColor, required this.completeColor, required this.keyGroup, required this.keyIndex, required this.screenWidth
   });
 
   double getSizeRatio() {
@@ -51,9 +51,10 @@ class BasicComponentsDetailPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
-    PrimitiveWrapper contentLength; // not used
+    PrimitiveWrapper contentLength = PrimitiveWrapper(0.0); // not used
     lessonLeftEdge = applyRatio(10.0);
-    displayAllZi(keyGroup, keyIndex, false, null, contentLength);
+    List<SpeechIconInfo> incoInfos = <SpeechIconInfo>[];
+    displayAllZi(keyGroup, keyIndex, false, incoInfos, contentLength);
   }
 
   displayAllZi(keyGroup, keyIndex, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo, PrimitiveWrapper contentLength) {
@@ -109,9 +110,9 @@ class BasicComponentsDetailPainter extends BasePainter {
     }
 
     var comp = ComponentManager.getComponent(id);
-    if (comp.isChar) {
+    if (comp!.isChar) {
       var searchingZiIndex = DictionaryManager.getSearchingZiId(
-          comp.charOrNameOfNonchar);
+          comp!.charOrNameOfNonchar);
       if (searchingZiIndex > 0) {
         yPositionWrapper.value += applyRatio(30.0);
         if (!isInfoOnly) {
@@ -157,9 +158,9 @@ class BasicComponentsDetailPainter extends BasePainter {
           false,
           Colors.blue,
           true);
-      name = comp.charOrNameOfNonchar;
-      pinyin = comp.pinyin;
-      meaning = comp.meaning;
+      name = comp!.charOrNameOfNonchar;
+      pinyin = comp!.pinyin;
+      meaning = comp!.meaning;
     }
     transX +=
     (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +

@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
           // Set the default textScaleFactor to 1.0 for
           // the whole subtree.
           data: mediaQueryData.copyWith(textScaleFactor: 1.0),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -102,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theDictionaryManager = DictionaryManager();
     theStandardExamManager = StandardExamManager();
 
-    theStatisticsManager.init(null);
+    theStatisticsManager.init(LessonQuizResult(dateString : '', lessonId : -1, cor : -1, answ : -1));
 
     //move to lesson
     //LessonManager.populateLessonsInfo();
@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
   [
     LessonsPage(),
     //DictionaryPage(),
-    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
     WordPage(),
     //DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
     ToolsPage(), // typing
@@ -162,8 +162,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: colorScheme.surface,
         selectedItemColor: Colors.green, //colorScheme.onSurface,
         unselectedItemColor: Colors.black, //colorScheme.onSurface.withOpacity(.60),
-        selectedLabelStyle: textTheme.caption,
-        unselectedLabelStyle: textTheme.caption,
+        //selectedLabelStyle: textTheme.caption,
+        //unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
             label: getString(91)/*'Lessons'*/,
@@ -207,16 +207,16 @@ ThemeData _buildShrineTheme() {
 TextTheme _buildShrineTextTheme(TextTheme base) {
   return base
       .copyWith(
-    caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14,
-      letterSpacing: defaultLetterSpacing,
-    ),
-    button: base.button.copyWith(
-      fontWeight: FontWeight.w500,
-      fontSize: 14,
-      letterSpacing: defaultLetterSpacing,
-    ),
+    //caption: base.caption.copyWith(
+    //  fontWeight: FontWeight.w400,
+    //  fontSize: 14,
+    //  letterSpacing: defaultLetterSpacing,
+    //),
+    //button: base.button.copyWith(
+    //  fontWeight: FontWeight.w500,
+    //  fontSize: 14,
+    //  letterSpacing: defaultLetterSpacing,
+    //),
   )
       .apply(
     fontFamily: 'Rubik',
@@ -227,9 +227,9 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
 
 const ColorScheme _shrineColorScheme = ColorScheme(
   primary: shrinePink100,
-  primaryVariant: shrineBrown900,
+  //primaryVariant: shrineBrown900,
   secondary: shrinePink50,
-  secondaryVariant: shrineBrown900,
+  //secondaryVariant: shrineBrown900,
   surface: shrineSurfaceWhite,
   background: shrineBackgroundWhite,
   error: shrineErrorRed,

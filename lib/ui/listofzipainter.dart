@@ -13,18 +13,18 @@ import 'package:hanzishu/utility.dart';
 class ListOfZiPainter extends BasePainter {
   var lessonLeftEdge;
 
-  int breakoutIndex;
+  int breakoutIndex = -1;
 
-  Color lineColor;
-  Color completeColor;
-  int lessonId;
-  double screenWidth;
+  Color? lineColor;
+  Color? completeColor;
+  int lessonId = -1;
+  double? screenWidth;
 
   var breakoutPositions;
-  bool isBreakoutPositionsOnly;
+  bool? isBreakoutPositionsOnly;
 
   ListOfZiPainter({
-    this.lineColor, this.completeColor, this.lessonId, this.screenWidth
+    required this.lineColor, required this.completeColor, required this.lessonId, required this.screenWidth
   });
 
   double getSizeRatio() {
@@ -41,9 +41,9 @@ class ListOfZiPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth;  // set the base class width variable
     isBreakoutPositionsOnly = false;
-    PrimitiveWrapper contentLength; // not used
+    PrimitiveWrapper contentLength = PrimitiveWrapper(0.0); // not used
     lessonLeftEdge = applyRatio(10.0);
-    displayAllZi(lessonId, false, null, contentLength);
+    displayAllZi(lessonId, false, <SpeechIconInfo>[], contentLength);
   }
 
   displayAllZi(int lessonId, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo, PrimitiveWrapper contentLength) {

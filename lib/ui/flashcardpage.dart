@@ -17,16 +17,16 @@ import 'package:hanzishu/engine/zimanager.dart';
 class FlashcardPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  PositionAndSize? centerPositionAndSizeCache;
 
   @override
   _FlashcardPageState createState() => _FlashcardPageState();
 }
 
 class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProviderStateMixin {
-  int searchingZiIndex;
-  bool shouldDrawCenter;
-  double screenWidth;
+  int searchingZiIndex = -1;
+  bool shouldDrawCenter = false;
+  double screenWidth = 0.0;
   //DictionaryStage dicStage;
   //OverlayEntry overlayEntry;
   // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
@@ -38,10 +38,10 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
-  int compoundZiCurrentComponentId;
+  int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 
-  String inputText;
+  String inputText = '';
   int currentIndex = 0;
 
   double getSizeRatioWithLimit() {
@@ -96,7 +96,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
     // TODO: components don't seem relative here
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[];
       if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(
@@ -200,6 +200,9 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
     } catch (e, s) {
       print(s);
     }
+
+    //should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   processInputs() {
@@ -251,7 +254,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
 
   showInvalidInputDialog() {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*Ok*/),
       onPressed: () {
         Navigator.pop(context);

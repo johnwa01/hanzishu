@@ -33,7 +33,7 @@ class PhraseManager {
     return -1;
   }
 
-  static Phrase getPhraseByName(String phrase) {
+  static Phrase? getPhraseByName(String phrase) {
     for (int i = 0; i < thePhraseList.length; i++) {
       if (phrase == thePhraseList[i].chars) {
         return thePhraseList[i];
@@ -41,7 +41,7 @@ class PhraseManager {
     }
   }
 
-  static Phrase getSpecialPhraseByName(String phrase) {
+  static Phrase? getSpecialPhraseByName(String phrase) {
     for (int j = 0; j < theSpecialPhraseList.length; j++) {
       if (phrase == theSpecialPhraseList[j].chars) {
         return theSpecialPhraseList[j];
@@ -52,7 +52,7 @@ class PhraseManager {
   }
 
   // used in sentence with breakers. treat those special phrases as phrases in sentence, but not in the char list.
-  static Phrase getPhraseIncludingSpecial(String phrase) {
+  static Phrase? getPhraseIncludingSpecial(String phrase) {
     /*
     for (int i = 0; i < thePhraseList.length; i++) {
       if (phrase == thePhraseList[i].chars) {

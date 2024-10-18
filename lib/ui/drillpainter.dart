@@ -8,12 +8,12 @@ import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class DrillPainter extends BasePainter {
-  double screenWidth;
-  ZiListType ziListType;
-  DrillCategory drillCategory; //int filterId;
-  int startingCenterZiId;
-  CenterZiRelatedBottum centerZiRelatedBottum;
-  Map<int, PositionAndSize> drillBreakoutPositions = Map();
+  double screenWidth = 0.0;
+  late ZiListType ziListType;
+  late DrillCategory drillCategory; //int filterId;
+  int startingCenterZiId = -1;
+  late CenterZiRelatedBottum centerZiRelatedBottum;
+  late Map<int, PositionAndSize> drillBreakoutPositions = Map();
 
   DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType ziListType, DrillCategory drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage) {
     this.lineColor = lineColor;

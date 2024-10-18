@@ -29,9 +29,9 @@ enum InputMethod {
 }
 
 class InputZi {
-  String zi;
-  String doubleByteCode;
-  int usageFrequency;
+  String zi = '';
+  String doubleByteCode = '';
+  int usageFrequency = -1;
  // String pinyin;
 
 
@@ -49,10 +49,10 @@ class InputZi {
 }
 
 class PinyinInputZi {
-  String zi;
-  String pinyin;
-  int usageFrequency;
-  String typingCode;
+  String zi = '';
+  String pinyin = '';
+  int usageFrequency = -1;
+  String typingCode = '';
 
   PinyinInputZi(
       String zi,

@@ -43,18 +43,18 @@ var courseMenuList = [
 class _LessonsPageState extends State<LessonsPage> {
   static List<int> NumberOfLessonsInLevel = [60, 2];
 
-  bool hasLoadedStorage;
-  int newFinishedLessons;
+  late bool hasLoadedStorage;
+  int newFinishedLessons = -1;
 
-  String currentLocale;
+  late String currentLocale;
 
-  double screenWidth;
+  late double screenWidth;
 
-  List<DropdownMenuItem<CourseMenu>> _dropdownCourseMenuItems;
-  CourseMenu _selectedCourseMenu;
+  late List<DropdownMenuItem<CourseMenu>> _dropdownCourseMenuItems;
+  late CourseMenu _selectedCourseMenu;
 
-  int currentSoundPaintSection;
-  SoundCategory currentSoundCategory;
+  int currentSoundPaintSection = -1;
+  late SoundCategory currentSoundCategory;
 
   int numberOfExercises = 0;
 
@@ -102,7 +102,7 @@ class _LessonsPageState extends State<LessonsPage> {
       currentSoundCategory = SoundCategory.hanzishuLessons;
       currentSoundPaintSection = 0;
       _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
-      _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
+      _selectedCourseMenu = _dropdownCourseMenuItems[0].value!;
     });
   }
 
@@ -141,8 +141,8 @@ class _LessonsPageState extends State<LessonsPage> {
         theDefaultLocale = localeFromPhysicalStorage;
 
         // let main page refresh to pick up the language change for navigation bar items
-        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
-        navigationBar.onTap(0);
+        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget as BottomNavigationBar;
+        navigationBar.onTap!(0);
       }
     }
   }
@@ -189,6 +189,9 @@ class _LessonsPageState extends State<LessonsPage> {
     }
     else if (_selectedCourseMenu.id == 5) {
       return getPaintIndex(context, SoundCategory.tongHua);
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
     }
   }
 
@@ -285,7 +288,7 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   List<DropdownMenuItem<CourseMenu>> buildDropdownCourseMenuItems(List courseMenuList) {
-    List<DropdownMenuItem<CourseMenu>> items = List();
+    List<DropdownMenuItem<CourseMenu>> items = []; //List();
     for (CourseMenu courseMenu in courseMenuList) {
       items.add(
         DropdownMenuItem(
@@ -407,8 +410,8 @@ class _LessonsPageState extends State<LessonsPage> {
     theStorageHandler.SaveToFile();
 
     // let main page refresh to pick up the language change for navigation bar items
-    final BottomNavigationBar navigationBar = globalKeyNav.currentWidget;
-    navigationBar.onTap(0);
+    final BottomNavigationBar navigationBar = globalKeyNav.currentWidget as BottomNavigationBar;
+    navigationBar.onTap!(0);
 
     return theDefaultLocale;
   }
@@ -557,7 +560,12 @@ class _LessonsPageState extends State<LessonsPage> {
       return DropdownButton(
         value: _selectedCourseMenu,
         items: _dropdownCourseMenuItems,
-        onChanged: onChangeDropdownCourseItem,
+        onChanged: (selectedCourseMenu) {
+          setState(() {
+            _selectedCourseMenu = selectedCourseMenu as CourseMenu;
+          });
+        },
+        //onChangeDropdownCourseItem,
       );
   }
 
@@ -735,7 +743,7 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.FirstTyping, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false),
+                    typingType: TypingType.FirstTyping, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -754,7 +762,7 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(typingType: TypingType.LeadComponents,
-                    lessonId: 0, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false) //InputZiPage(),
+                    lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false) //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -773,7 +781,7 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.ExpandedReview, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.ExpandedReview, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;

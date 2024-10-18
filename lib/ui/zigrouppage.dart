@@ -6,7 +6,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class ZiGroupPage extends StatefulWidget {
   final int ziId;
-  ZiGroupPage({this.ziId});
+  ZiGroupPage({required this.ziId});
 
   @override
   _ZiGroupPageState createState() => _ZiGroupPageState();

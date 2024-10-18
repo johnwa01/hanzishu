@@ -11,7 +11,7 @@ class ComponentManager {
   // keep track type and index from manager so that we can keep a state for exit/re-enter the same exercise case.
   var currentQuestionType = QuestionType.none;
   int currentIndex = 0;
-  AnswerPosition correctAnswerPosition;
+  AnswerPosition? correctAnswerPosition;
 
   /*
   initValues() {
@@ -21,7 +21,7 @@ class ComponentManager {
   */
 
   int getTotalQuestions(QuestionType questionType) {
-    int total;
+    int total = -1;
     /*
     if (questionType == QuestionType.ComponentGroup) {
       total = theComponentGroupListInRealExercise.length;
@@ -391,7 +391,7 @@ class ComponentManager {
     correctAnswerPosition = AnswerPosition.none;
   }
 
-  AnswerPosition getCorrectAnswerPosition() {
+  AnswerPosition? getCorrectAnswerPosition() {
     if (correctAnswerPosition != null &&
         correctAnswerPosition != AnswerPosition.none) {
       return correctAnswerPosition;
@@ -499,7 +499,7 @@ class ComponentManager {
   }
   */
 
-  static Component getComponent(int id) {
+  static Component? getComponent(int id) {
     if (id >= theComponentList.length) {
       return null;
     }
@@ -508,7 +508,7 @@ class ComponentManager {
   }
 
   // have to do a full search of the 443 components
-  static Component getComponentByTypingCode(String typingCode) {
+  static Component? getComponentByTypingCode(String typingCode) {
     for (int i = 0; i < theComponentList.length; i++) {
       if (theComponentList[i].typingCode == typingCode) {
         return theComponentList[i];
@@ -519,15 +519,15 @@ class ComponentManager {
 
   static String getPinyinAndMeanging(int id) {
     var comp = getComponent(id);
-    var meaning = comp.meaning;
-    if (meaning.length == 0) {
+    var meaning = comp?.meaning;
+    if (meaning?.length == 0) {
       meaning = "no meaning";
     }
-    return Zi.formatPinyinAndMeaning(comp.pinyin, comp.meaning);
+    return Zi.formatPinyinAndMeaning(comp?.pinyin, comp?.meaning);
   }
 
-  static Component getComponentByCode(String code) {
-    return binarySearch(theComponentList, code, 0, theComponentList.length - 1);
+  static Component? getComponentByCode(String? code) {
+    return binarySearch(theComponentList, code!, 0, theComponentList.length - 1);
 
     /*
     for (var i = 0; i < theComponentList.length; i++) {
@@ -554,7 +554,7 @@ class ComponentManager {
   }
 */
 
-  static Component binarySearch(List<Component> arr, String doubleByteCode, int min, int max) {
+  static Component? binarySearch(List<Component> arr, String doubleByteCode, int min, int max) {
     if (doubleByteCode == null || doubleByteCode.length == 0) {
       return null;
     }
@@ -623,7 +623,7 @@ class ComponentManager {
     return -1;
   }
 
-  LeadComponent getComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
+  LeadComponent? getComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
     var leng = theLeadComponentList.length;
     var comp;
 
@@ -638,7 +638,7 @@ class ComponentManager {
     return null;
   }
 
-  ComponentCollection getFullExpandedComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
+  ComponentCollection? getFullExpandedComponentByGroupAndIndex(int groupNumber, int indexInGroup) {
     var leng = theFullExpandedComponentList.length;
     var comp;
 
@@ -653,14 +653,14 @@ class ComponentManager {
     return null;
   }
 
-  LeadComponent getComponentFromComponentInGroup(int index) {
+  LeadComponent? getComponentFromComponentInGroup(int index) {
     var compInGroup = theComponentInGroupList[index];
     var groupNumber = compInGroup.groupNumber;
     var indexInGroup = compInGroup.indexInGroup;
     return getComponentByGroupAndIndex(groupNumber, indexInGroup);
   }
 
-  LeadComponent getComponentFromRandomComponentList(int index) {
+  LeadComponent? getComponentFromRandomComponentList(int index) {
     var comp = theRandomComponentList[index];
     var groupNumber = comp.groupNumber;
     var indexInGroup = comp.indexInGroup;
@@ -822,7 +822,7 @@ class ComponentManager {
 */
 
 // TODO: Move to manager
-  String getAnswerDisplayValue(AnswerPosition position) {
+  String? getAnswerDisplayValue(AnswerPosition position) {
     if (position == AnswerPosition.none) {
       return "";
     }
@@ -1004,7 +1004,7 @@ class ComponentManager {
   }
 
   static String getLetterByGroupAndIndex(int keyGroup, int keyIndex) {
-    String letter;
+    String letter = '';
     if (keyGroup == 1) {
       if (keyIndex == 1) {
         letter = 'T';
@@ -1096,7 +1096,7 @@ class ComponentManager {
     return letter;
   }
 
-  static String getCompCodeFromZiId(int ziId) {
+  static String? getCompCodeFromZiId(int ziId) {
       return binarySearch2(theZiIdToCompCodeMapList, ziId, 0, theZiIdToCompCodeMapList.length - 1);
       /*
       for (var i = 0; i < theZiIdToCompCodeMapList.length; i++) {
@@ -1109,7 +1109,7 @@ class ComponentManager {
       */
   }
 
-  static String binarySearch2(List<ZiIdToCompMap> arr, int id, int min, int max) {
+  static String? binarySearch2(List<ZiIdToCompMap> arr, int id, int min, int max) {
     if (id < 0) {
       return null;
     }
@@ -1128,19 +1128,19 @@ class ComponentManager {
     return null;
   }
 
-  static String getTypingCode(String componentCode) {
+  static String? getTypingCode(String componentCode) {
     var oneComp = getComponentByCode(componentCode);
-    return oneComp.typingCode.substring(0, 1);
+    return oneComp?.typingCode.substring(0, 1);
   }
 
-  static String getFullTypingCode(String componentCode) {
+  static String? getFullTypingCode(String? componentCode) {
     var oneComp = getComponentByCode(componentCode);
-    return oneComp.typingCode;
+    return oneComp?.typingCode;
   }
 
   static List<String> getSubComponents(List<String> componentCodes) {
     var count = componentCodes.length;
-    Component oneComp;
+    Component? oneComp;
     var subComponents;
 
     if (count == 1) {
@@ -1152,11 +1152,11 @@ class ComponentManager {
       }
     }
 
-    var subCompsStr = oneComp.subComponents;
-    if (subCompsStr.length == 2) {
+    var subCompsStr = oneComp?.subComponents;
+    if (subCompsStr?.length == 2) {
       subComponents = [subCompsStr];
     }
-    else if (subCompsStr.length == 4) {
+    else if (subCompsStr != null && subCompsStr.length == 4) {
       subComponents = [subCompsStr.substring(0, 2), subCompsStr.substring(2, 4)];
     }
 
@@ -1193,7 +1193,7 @@ class ComponentManager {
 
   static List<String> getTypingComponentsAndSubComp(String char) {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
-    List<String> components = List<String>();
+    List<String> components = []; //List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
 /*
     var subComponents;
@@ -1207,7 +1207,7 @@ class ComponentManager {
     return components;
   }
 
-  String getLeadComponenCategoryCode(String componentTypingCode) {
+  String? getLeadComponenCategoryCode(String componentTypingCode) {
     for (int i = 0; i < theLeadComponentList.length; i++) {
       if (theLeadComponentList[i].doubleByteCode.codeUnitAt(0) == componentTypingCode.codeUnitAt(0)) {
         return theLeadComponentList[i].componentCategory;
@@ -1219,19 +1219,23 @@ class ComponentManager {
 
   int getLeadComponentCategoryIndex(String componentTypingCode) {
     var categoryCode = getLeadComponenCategoryCode(componentTypingCode);
-
-    return categoryCode.codeUnitAt(0) - 'A'.codeUnitAt(0) + 1;
+    if (categoryCode != null) {
+      return categoryCode.codeUnitAt(0) - 'A'.codeUnitAt(0) + 1;
+    }
+    else {
+      return -1;
+    }
   }
 
   int getCurrentCorrectCategoryIndex(List<String> typingComponentsAndSub, int selectedCompIndex) {
     String componentCode = typingComponentsAndSub[selectedCompIndex - 1];
-    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode);
+    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode)!;
     return getLeadComponentCategoryIndex(componentTypingCode);
   }
 
   int getCurrentCorrectSubcategoryIndex(List<String> typingComponentsAndSub, int selectedCompIndex, List<int>currentLeadCompList) {
     String componentCode = typingComponentsAndSub[selectedCompIndex - 1];
-    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode);
+    String componentTypingCode = ComponentManager.getFullTypingCode(componentCode)!;
 
     int leadComonentIndex = 0;
     for (int i = 0; i < currentLeadCompList.length; i++) {
@@ -1247,7 +1251,7 @@ class ComponentManager {
   List<String> getFullTypingCodes(List<String>typingComponentsAndSub) {
     List<String> typingCodes = [];
     for (int i = 0; i < typingComponentsAndSub.length; i++) {
-      typingCodes.add(ComponentManager.getFullTypingCode(typingComponentsAndSub[i]));
+      typingCodes.add(ComponentManager.getFullTypingCode(typingComponentsAndSub[i])!);
     }
 
     return typingCodes;

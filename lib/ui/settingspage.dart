@@ -11,8 +11,8 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  List<DropdownMenuItem<Language>> _dropdownMenuItems;
-  Language _selectedLanguage;
+  late List<DropdownMenuItem<Language>> _dropdownMenuItems;
+  late Language _selectedLanguage;
 
   static getSelectedLanguage() {
     for (var language in theLanguageList) {
@@ -33,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   List<DropdownMenuItem<Language>> buildDropdownMenuItems() {
-    List<DropdownMenuItem<Language>> items = List();
+    List<DropdownMenuItem<Language>> items = []; //List();
     for (var language in theLanguageList) {
       items.add(
         DropdownMenuItem(
@@ -92,7 +92,12 @@ class _SettingsPageState extends State<SettingsPage> {
     return DropdownButton(
       value: _selectedLanguage,
       items: _dropdownMenuItems,
-      onChanged: onChangeDropdownItem,
+      onChanged: (selectedLanguage) {
+        setState(() {
+          _selectedLanguage = selectedLanguage as Language;
+        });
+      },
+      //onChangeDropdownItem,
     );
   }
 }

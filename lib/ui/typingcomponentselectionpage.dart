@@ -13,7 +13,7 @@ class ComponentExerciseNumber {
 
   ComponentExerciseNumber(this.id, this.name);
 
-  static List<ComponentExerciseNumber> exerciseNumbers = List<ComponentExerciseNumber>(totalExercises);
+  static List<ComponentExerciseNumber?> exerciseNumbers = List<ComponentExerciseNumber?>.filled(totalExercises, null);
 
   static populateInitialNumbers() {
     //if (exerciseNumbers[0] == null) {
@@ -32,7 +32,7 @@ class ComponentExerciseNumber {
 
   // note: selected ReveiwNumber instance has to be the same one as in the list.
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
-  static List<ComponentExerciseNumber> getComponentExerciseNumbers() {
+  static List<ComponentExerciseNumber?> getComponentExerciseNumbers() {
     populateInitialNumbers();
     return exerciseNumbers;
   }
@@ -44,10 +44,10 @@ class TypingComponentSelectionPage extends StatefulWidget {
 }
 
 class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
-  double screenWidth;
+  double? screenWidth;
   //List<ComponentExerciseNumber> _exerciseNumbers; // = ComponentExerciseNumber.getComponentExerciseNumbers();
-  List<DropdownMenuItem<ComponentExerciseNumber>> _dropdownMenuItemsNumber;
-  ComponentExerciseNumber _selectedComponentExerciseNumber;
+  List<DropdownMenuItem<ComponentExerciseNumber>>? _dropdownMenuItemsNumber;
+  ComponentExerciseNumber? _selectedComponentExerciseNumber;
 
   @override
   void initState() {
@@ -64,7 +64,7 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
   List<DropdownMenuItem<ComponentExerciseNumber>> buildDropdownMenuItemsNumber(/*List exerciseNumbers*/) {
     List exerciseNumbers = ComponentExerciseNumber.getComponentExerciseNumbers();
 
-    List<DropdownMenuItem<ComponentExerciseNumber>> items = List();
+    List<DropdownMenuItem<ComponentExerciseNumber>> items = []; //List();
     for (ComponentExerciseNumber exerciseNumber in exerciseNumbers) {
       items.add(
         DropdownMenuItem(
@@ -86,11 +86,11 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
     // due to localization, has to do it every build instead of init
     _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(/*_exerciseNumbers*/);
     if (_selectedComponentExerciseNumber == null) {
-      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value;
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[0].value!;
     }
     else {
       // _select* has to map to one in the current _dropdown*
-      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[_selectedComponentExerciseNumber.id].value;
+      _selectedComponentExerciseNumber = _dropdownMenuItemsNumber[_selectedComponentExerciseNumber.id].value!;
     }
 
     return Scaffold
@@ -149,21 +149,26 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
     return DropdownButton(
       value: _selectedComponentExerciseNumber,
       items: _dropdownMenuItemsNumber,
-      onChanged: onChangeDropdownItemNumber,
+      onChanged: (selectedComponentExerciseNumber) {
+        setState(() {
+          _selectedComponentExerciseNumber = selectedComponentExerciseNumber as ComponentExerciseNumber;
+        });
+        //onChangeDropdownItemNumber,
+      },
     );
   }
 
   Widget getStartExercise(BuildContext context) {
     return Container(
-      child: FlatButton(
-        child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit()),),
-        color: Colors.blueAccent,
-        textColor: Colors.white,
+      child: TextButton(
+        child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit(), color: Colors.white),),
+        //color: Colors.blueAccent,
+        //textColor: Colors.white,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false),
+              builder: (context) => InputZiPage(typingType: TypingType.ComponentTyping, lessonId: _selectedComponentExerciseNumber.id, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false),
             ),
           );
         },

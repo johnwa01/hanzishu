@@ -6,8 +6,8 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 
 class UnitLessonPair {
-  int levelId;
-  int lessonId;
+  int levelId = -1;
+  int lessonId = -1;
 
   UnitLessonPair(int levelId, int lessonId) {
     this.levelId = levelId;

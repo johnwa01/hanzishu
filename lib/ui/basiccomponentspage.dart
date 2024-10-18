@@ -13,10 +13,10 @@ class BasicComponentsPage extends StatefulWidget {
 }
 
 class _BasicComponentsPageState extends State<BasicComponentsPage> {
-  double screenWidth;
+  double screenWidth = 0.0;
   //ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
@@ -68,7 +68,7 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -92,10 +92,10 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
           keyGroup, keyIndex).image;
     }
 
-    return FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
-      padding: EdgeInsets.zero,
+    return TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
+      //padding: EdgeInsets.zero,
       onPressed: () {
         if (keyGroup != 0 && keyIndex != 0) {
           Navigator.push(

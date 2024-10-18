@@ -11,7 +11,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 class BreakoutPage extends StatefulWidget {
   final int lessonId;
   final String wordsStudy;
-  BreakoutPage({this.lessonId, this.wordsStudy});
+  BreakoutPage({required this.lessonId, required this.wordsStudy});
 
   @override
   _BreakoutPageState createState() => _BreakoutPageState();
@@ -19,10 +19,10 @@ class BreakoutPage extends StatefulWidget {
 
 class _BreakoutPageState extends State<BreakoutPage> {
   //int centerZiId;
-  String wordsStudy;
-  double screenWidth;
-  OverlayEntry overlayEntry;
-  ScrollController _scrollController;
+  String wordsStudy = '';
+  double screenWidth = 0.0;
+  OverlayEntry? overlayEntry = null;
+  late ScrollController _scrollController;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
@@ -107,7 +107,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -129,23 +129,23 @@ class _BreakoutPageState extends State<BreakoutPage> {
         builder: (context) =>Positioned(
             top: posiY,
             left: adjustedXValue,
-            child: FlatButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio()),),
-              color: Colors.blueAccent,
-              textColor: Colors.white,
+            child: TextButton(
+              child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
+              //color: Colors.blueAccent,
+              //textColor: Colors.white,
               onPressed: () {initOverlay();},
             )
         ));
-    overlayState.insert(overlayEntry);
+    overlayState.insert(overlayEntry!);
   }
 
   Positioned getBreakoutPositionedButton(int uniqueNumber, PositionAndSize posiAndSize) {
     var id = Utility.getIdFromUniqueNumber(uniqueNumber);
     var listType = Utility.getListType(uniqueNumber,id);
 
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
       /*
       onPressed: () {
         initOverlay();
@@ -183,7 +183,7 @@ class _BreakoutPageState extends State<BreakoutPage> {
 
         previousZiId = id;
       },
-      child: Text('', style: TextStyle(fontSize: 20.0),),
+      child: Text('', style: TextStyle(fontSize: 20.0, color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -230,15 +230,15 @@ class _BreakoutPageState extends State<BreakoutPage> {
   }
 
   Positioned getPositionedContinueButton(YPositionWrapper contentHeight) {
-    var butt = FlatButton(
-      color: Colors.blueAccent, //white,
-      textColor: Colors.brown,
+    var butt = TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown,
       onPressed: () {
         initOverlay();
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text('', style: TextStyle(fontSize: applyRatio(20.0), color: Colors.brown)),
     );
 
     var posiCenter = Positioned(

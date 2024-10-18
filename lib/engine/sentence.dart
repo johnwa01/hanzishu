@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:hanzishu/utility.dart';
 
 class Sentence {
-  int id;
-  String conv;
-  String trans;
-  int lessonId;
-  MyString chars;
-  List<int> comps; //TODO: this field is required?
-  String convWithSeparation;
-  String pinyin;
+  int id = -1;
+  String conv = '';
+  String trans = '';
+  int lessonId = -1;
+  MyString? chars;
+  List<int>? comps; //TODO: this field is required?
+  String convWithSeparation = '';
+  String pinyin = '';
 
   Sentence(
     int id,
@@ -33,8 +33,8 @@ class Sentence {
 }
 
 class Sent {
-    String player;
-    int sentenceId;
+    String player = '';
+    int sentenceId = -1;
 
     Sent(
         String player,
@@ -46,8 +46,8 @@ class Sent {
 }
 
 class Snowball {
-  int snowballId;
-  List<Sent> sents;
+  int snowballId = -1;
+  List<Sent>? sents;
 
   Snowball(
     int snowballId,

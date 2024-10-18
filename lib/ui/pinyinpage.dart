@@ -8,18 +8,18 @@ import 'package:hanzishu/engine/pinyin.dart';
 class PinyinPage extends StatefulWidget {
   final int currentPinyinLessonId;
   final bool includeSkipSection;
-  PinyinPage({this.currentPinyinLessonId, this.includeSkipSection});
+  PinyinPage({required this.currentPinyinLessonId, required this.includeSkipSection});
 
   @override
   _PinyinPageState createState() => _PinyinPageState();
 }
 
 class _PinyinPageState extends State<PinyinPage> {
-  double screenWidth;
-  int currentPinyinLessonId;
-  int currentPinyinExerciseIndex;
-  bool includeSkipSection;
-  List<int> currentExerciseCollection;
+  double? screenWidth;
+  int currentPinyinLessonId = -1;
+  int currentPinyinExerciseIndex = -1;
+  bool? includeSkipSection;
+  List<int>? currentExerciseCollection;
 
   static int maxBasicPinyinIndex = 56;
   static int toneStartIndex = 122;

@@ -36,21 +36,21 @@ class WordLaunchPage extends StatefulWidget {
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  PositionAndSize? centerPositionAndSizeCache;
 
-  WordLaunchPage({this.drillCategory, this.subItemId, this.customString});
+  WordLaunchPage({required this.drillCategory, required this.subItemId, required this.customString});
 
   @override
   _WordLaunchPageState createState() => _WordLaunchPageState();
 }
 
 class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProviderStateMixin {
-  DrillCategory drillCategory; //startLessonId;
-  int subItemId; //endLessonId;
-  String customString;
-  int centerZiId;
-  bool shouldDrawCenter;
-  double screenWidth;
+  DrillCategory? drillCategory; //startLessonId;
+  int subItemId = -1; //endLessonId;
+  String customString = '';
+  int centerZiId = -1;
+  bool? shouldDrawCenter;
+  double? screenWidth;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
@@ -60,7 +60,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
 
-  ZiListType currentZiListType;
+  ZiListType? currentZiListType;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -344,7 +344,8 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
               MaterialPageRoute(builder: (context) =>
                   StandardExamPage(drillCategory: drillCategory,
                       subItemId: subItemId,
-                      quizCategory: QuizCategory.meaning)));
+                      quizCategory: QuizCategory.meaning,
+                      customString: '')));
         },
         child: Text(getString(448), //"Test Hanzi meaning"
             style: TextStyle(color: Colors.brown)), // lightBlue

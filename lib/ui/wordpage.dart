@@ -25,8 +25,8 @@ class WordPage extends StatefulWidget {
 }
 
 class _MeWordState extends State<WordPage> {
-  double screenWidth;
-  String currentLocale;
+  double? screenWidth;
+  String? currentLocale;
 
   @override
   void initState() {
@@ -72,7 +72,7 @@ class _MeWordState extends State<WordPage> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    WordLevelPage(drillCategory: DrillCategory.hsk),
+                    WordLevelPage(drillCategory: DrillCategory.hsk, subItemId: -1, customString: ''),
               ),
             );
           },
@@ -101,7 +101,7 @@ class _MeWordState extends State<WordPage> {
               MaterialPageRoute(
                 builder: (context) => WordLaunchPage(drillCategory: DrillCategory.all,
                     subItemId: 1,
-                    customString: null),
+                    customString: ''),
               ),
             );
           },

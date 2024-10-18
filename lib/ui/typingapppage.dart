@@ -7,7 +7,7 @@ class TypingAppPage extends StatefulWidget {
 }
 
 class _TypingAppPageState extends State<TypingAppPage> {
-  double screenWidth;
+  double? screenWidth;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);

@@ -10,8 +10,8 @@ enum ThirdPartyType {
 }
 
 class ThirdParty {
-  ThirdPartyType thirdPartyType;
-  int nameStringId;
+  ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  int nameStringId = -1;
 
   ThirdParty(ThirdPartyType thirdPartyType,
       int nameStringId,) {
@@ -19,7 +19,7 @@ class ThirdParty {
     this.nameStringId = nameStringId;
   }
 
-  static String getThirdPartyName(ThirdPartyType thirdPartyType) {
+  static String? getThirdPartyName(ThirdPartyType thirdPartyType) {
     for (int i = 0; i < theThirdPartyList.length; i++) {
       if (theThirdPartyList[i].thirdPartyType == thirdPartyType) {
         return getString(theThirdPartyList[i].nameStringId);
@@ -34,7 +34,7 @@ class ThirdParty {
     String indexString = code.substring(1);
     int index = Utility.StringToInt(indexString);
 
-    String wholeString;
+    String wholeString = '';
 
     switch (stringType) {
       case "k":
@@ -85,9 +85,9 @@ class ThirdParty {
 }
 
 class ThirdPartyLevel {
-  ThirdPartyType thirdPartyType;
-  int levelId;
-  String levelNameCode;  // 'a1', 'b3' etc
+  ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  int levelId = -1;
+  String levelNameCode = '';  // 'a1', 'b3' etc
   //int startingLessonId;
 
   ThirdPartyLevel(ThirdPartyType thirdPartyType,
@@ -99,7 +99,7 @@ class ThirdPartyLevel {
     //this.startingLessonId = startingLessonId;
   }
 
-  static String getLevelName(int levelId) {
+  static String? getLevelName(int levelId) {
     for (int i = 0; i < theThirdPartyLevelList.length; i++) {
       if (theThirdPartyLevelList[i].levelId == levelId) {
         return ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode);
@@ -111,10 +111,10 @@ class ThirdPartyLevel {
 }
 
 class ThirdPartyLesson {
-  ThirdPartyType thirdPartyType;
-  int levelId;
-  int lessonId;
-  String lessonNameCode; // 'a1', 'c4' etc
+  ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  int levelId = -1;
+  int lessonId = -1;
+  String lessonNameCode = ''; // 'a1', 'c4' etc
 
   ThirdPartyLesson(ThirdPartyType thirdPartyType,
       int levelId,
@@ -126,7 +126,7 @@ class ThirdPartyLesson {
     this.lessonNameCode = lessonNameCode;
   }
 
-  static String getLessonName(int lessonId) {
+  static String? getLessonName(int lessonId) {
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
       if (theThirdPartyLessonList[i].lessonId == lessonId) {
         return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);

@@ -17,9 +17,9 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
-  String wordsStudy;
-  List<int> pinyinLetterIndex;
-  List<int> inputCodeLetterIndex;
+  String wordsStudy = '';
+  List<int> pinyinLetterIndex = <int>[];
+  List<int> inputCodeLetterIndex = <int>[];
 //  TypingType typingType;
 
   TypingType getCurrentType() {
@@ -131,7 +131,7 @@ class InputZiManager {
 
   static List<String> convertZiListToStringList(
       List<InputZi> typingCandidates) {
-    List<String> candidates = new List<String>(typingCandidates.length);
+    List<String> candidates = <String>[]; //new List<String>(typingCandidates.length);
 
     for (var i = 0; i < typingCandidates.length; i++) {
       candidates[i] = typingCandidates[i].zi;
@@ -157,7 +157,7 @@ class InputZiManager {
 
   // the only public method for this feature
   // current input as input, and a string as the output
-  static List<String> getZiCandidates(String input) {
+  static List<String>? getZiCandidates(String input) {
     if (isPinyinInput(input)) {
       if (input.length == 1) {
         return null;
@@ -322,7 +322,7 @@ class InputZiManager {
     return false;
   }
 
-  static InputZi getFirstZiCandidate() {
+  static InputZi? getFirstZiCandidate() {
     if (typingCandidates.length > 0) {
       return typingCandidates[0];
     }
@@ -330,7 +330,7 @@ class InputZiManager {
     return null;
   }
 
-  static String getCandidateZiString(int index) {
+  static String? getCandidateZiString(int index) {
     if (theCurrentZiCandidates.length > index) {
       return theCurrentZiCandidates[index];
     }
@@ -447,12 +447,12 @@ class InputZiManager {
 */
 
   // index 0->100, lessonId == exerciseId -> 1 to 38 (1 based).
-  ZiWithComponentsAndStrokes getCommonZi(int index, int lessonId) {
+  ZiWithComponentsAndStrokes? getCommonZi(int index, int lessonId) {
     // every other 38 items.
     int searchingZiId = getSearchingZiId(index, lessonId); // skip the index 0 in theSearchingZiList
     if (searchingZiId < theSearchingZiList.length) {
       var oneSearchingItem = theSearchingZiList[searchingZiId];
-      var components = List<String>();
+      var components = <String>[]; //List<String>();
       DictionaryManager.getAllComponents(searchingZiId, components);
       return ZiWithComponentsAndStrokes(oneSearchingItem.char, components, "", 0);
     }
@@ -460,7 +460,7 @@ class InputZiManager {
     return null;
   }
 
-  ZiWithComponentsAndStrokes getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
+  ZiWithComponentsAndStrokes? getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
     //if (typingType == TypingType.GiveItATry) {
     //  return theZiForIntroductionList[index];
     //}

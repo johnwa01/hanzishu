@@ -8,8 +8,8 @@ enum PinyinType {
 }
 
 class Sample {
-  String pinyin;
-  String zi;
+  String pinyin = '';
+  String zi = '';
 
   Sample(String pinyin, String zi) {
     this.pinyin = pinyin;
@@ -18,11 +18,11 @@ class Sample {
 }
 
 class Pinyin {
-  int id;
-  String name;
-  Sample sample;
-  List<Sample> samples;
-  int showZiOrNot; // 1-show, 0-not show
+  int id = -1;
+  String name = '';
+  Sample sample = Sample('', '');
+  List<Sample> samples = <Sample>[];
+  int showZiOrNot = -1; // 1-show, 0-not show
 
   Pinyin(int id,
       String name,

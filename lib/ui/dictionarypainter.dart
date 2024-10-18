@@ -12,15 +12,15 @@ import 'package:hanzishu/ui/breakoutpainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 
 class DictionaryPainter extends BreakoutPainter {
-  Color lineColor;
+  late Color lineColor;
   //double screenWidth; == width in basepainter
-  DictionaryStage dicStage;
-  int firstZiIndex;  // different meaning for different stage
-  int searchingZiIndex;
-  BuildContext context;
-  int compoundZiCurrentComponentId;
-  ZiListType ziListType;
-  bool showBreakoutDetails;
+  late DictionaryStage dicStage;
+  int firstZiIndex = -1;  // different meaning for different stage
+  int searchingZiIndex = -1;
+  late BuildContext context;
+  int compoundZiCurrentComponentId = -1;
+  late ZiListType ziListType;
+  late bool showBreakoutDetails;
 
   static int firstZiCount = theFirstZiList.length; // started with 0
   static int totalSearchingZiCount = theSearchingZiList.length; // started with 0. first one is not real.
@@ -28,7 +28,7 @@ class DictionaryPainter extends BreakoutPainter {
 
   Map<int, PositionAndSize> dicBreakoutPositions = Map();
 
-  DictionaryPainter(Color lineColor, double screenWidth, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter, bool showBreakoutDetails) {
+  DictionaryPainter(Color lineColor, double screenWidth, DictionaryStage dicStage, int firstZiIndex, int searchingZiIndex, BuildContext context, int compoundZiCurrentComponentId, ZiListType ziListType, bool shouldDrawCenter, bool showBreakoutDetails) : super(lineColor: lineColor, completeColor: lineColor, lessonId: 0, wordsStudy: '', screenWidth: screenWidth) {
     this.lineColor = lineColor;
     this.width = screenWidth;
     this.dicStage = dicStage;

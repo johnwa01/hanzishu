@@ -23,7 +23,7 @@ import 'package:hanzishu/data/searchingzilist.dart';
 
 class LessonPage extends StatefulWidget {
   final int lessonId;
-  LessonPage({this.lessonId});
+  LessonPage({required this.lessonId});
 
   @override
   _LessonPageState createState() => _LessonPageState();
@@ -34,7 +34,7 @@ class _LessonPageState extends State<LessonPage> {
   //_LessonPageState(BuildContext context) {
   //  Navigator.of(context).push(MaterialPageRoute(builder: (context) => TreePage()));
   //}
-  double screenWidth;
+  double screenWidth = 0.0;
   int numberOfExercises = 0;
 
   @override
@@ -189,7 +189,7 @@ class _LessonPageState extends State<LessonPage> {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: null, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: lessonShowHint, includeSkipSection: includeSkipSection, showSwitchMethod: false)
+                  InputZiPage(typingType: TypingType.FromLessons, lessonId: lessonId, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: lessonShowHint, includeSkipSection: includeSkipSection, showSwitchMethod: false)
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -211,7 +211,7 @@ class _LessonPageState extends State<LessonPage> {
                   QuizPage(quizTextbook: QuizTextbook.hanzishu,
                       quizCategory: QuizCategory.none,
                       lessonId: lessonId,
-                      wordsStudy: null,
+                      wordsStudy: '',
                       includeSkipSection: true),
             ),
           ).then((val) => {_getRequests()});
@@ -391,13 +391,13 @@ class _LessonPageState extends State<LessonPage> {
         break;
     }
 
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.black,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.black,
       onPressed: () {
         launchLessonSection(context, lessonId, lessonSection);
       },
-      child: Text(buttonTitle, style: TextStyle(fontSize: getSizeRatioWithLimit() * 14.0)),
+      child: Text(buttonTitle, style: TextStyle(fontSize: getSizeRatioWithLimit() * 14.0, color: Colors.black)),
     );
 
     return butt;

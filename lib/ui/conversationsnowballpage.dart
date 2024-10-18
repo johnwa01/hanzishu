@@ -19,27 +19,27 @@ class ConversationSnowballPage extends StatefulWidget {
   final int lessonId;
   final PinyinType pinyinType;
 
-  ConversationSnowballPage({this.lessonId, this.pinyinType});
+  ConversationSnowballPage({required this.lessonId, required this.pinyinType});
 
   @override
   _ConversationSnowballPageState createState() => _ConversationSnowballPageState();
 }
 
 class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
-  int lessonId;
-  double fontSize1;
-  double fontSize2;
-  double fontSize3;
+  int lessonId = -1;
+  double fontSize1 = 0.0;
+  double fontSize2 = 0.0;
+  double fontSize3 = 0.0;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  ScrollController? _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
-  PinyinType pinyinType;
+  PinyinType? pinyinType;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -57,7 +57,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
     }
   }
@@ -134,7 +134,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       widgets.add(getPinyinTypeRow());
     }
 
-    for (var i = 0; i < sents.length; i++) {
+    for (var i = 0; i < sents!.length; i++) {
       widgets.add(getOneRow(sents[i], i));
       if (lessonId > theNumberOfLessonsInLevels[0]) {
         widgets.add(getPinyinRow(sents[i]));
@@ -339,11 +339,11 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
 
     if (theIsFromLessonContinuedSection) {
       return Container(
-        child: FlatButton(
+        child: TextButton(
           child: Text(buttonText,
-            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0),),
-          color: Colors.blueAccent,
-          textColor: Colors.white,
+            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.white),),
+          //color: Colors.blueAccent,
+          //textColor: Colors.white,
           onPressed: () {
             theIsBackArrowExit = false;
             Navigator.of(context).pop();
@@ -392,7 +392,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
                           style: TextStyle(color: Colors.white)),
                   )
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousPositionAndMeaning.set(posiX, posiY, meaning);
     }
     else {

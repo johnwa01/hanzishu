@@ -8,9 +8,9 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/foundation.dart';
 
 class PracticeSheetPainter extends BasePainter {
-  BuildContext context;
-  String ziList;
-  bool gridShowZi;
+  late BuildContext context;
+  late String ziList;
+  late bool gridShowZi;
   final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
   //final isWebRunningIniOS = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS);
 
@@ -57,7 +57,7 @@ class PracticeSheetPainter extends BasePainter {
       posi.transX = xStartPosi;
       if (i < length) {
         oneWord = zis[i];
-        searchingZi = ZiManager.findSearchingZiFromChar(oneWord);
+        searchingZi = ZiManager.findSearchingZiFromChar(oneWord)!;
         if (searchingZi == null) {
           oneWord = null;
         }

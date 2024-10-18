@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/stroke.dart';
 
 class StrokeManager {
 
-  static Stroke getStrokeByCode(String code) {
+  static Stroke? getStrokeByCode(String code) {
     for (var i = 0; i < theStrokeList.length; i++) {
       if (theStrokeList[i].code == code) {
         return theStrokeList[i];

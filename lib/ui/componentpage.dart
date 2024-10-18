@@ -12,23 +12,23 @@ class ComponentPage extends StatefulWidget {
   //final int lessonId;
   bool isChars = true;
 
-  ComponentPage({this.questionType});
+  ComponentPage({required this.questionType});
 
   @override
   _ComponentPageState createState() => _ComponentPageState();
 }
 
 class _ComponentPageState extends State<ComponentPage> {
-  QuestionType questionType;
-  AnswerPosition answeredPosition;
+  QuestionType? questionType;
+  AnswerPosition? answeredPosition;
   //int lessonId;
-  AnswerType answerType;
-  int currentIndex; // assign the value from the one in ComponentManager every time so that we can keep its state per exit/re-enter case
-  double _progressValue;
-  int totalQuestions;
-  double screenWidth;
-  int preIndexAtCurrentIndex0;
-  bool wasLastAnswerCorrect;
+  AnswerType? answerType;
+  int currentIndex = -1; // assign the value from the one in ComponentManager every time so that we can keep its state per exit/re-enter case
+  double _progressValue = 0.0;
+  int totalQuestions = -1;
+  double screenWidth = 0.0;
+  int preIndexAtCurrentIndex0 = -1;
+  bool wasLastAnswerCorrect = false;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -122,11 +122,11 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getSkipThisSection() {
     if (theIsFromTypingContinuedSection) {
-      return FlatButton(
+      return TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
-        color: Colors.white,
-        textColor: Colors.blueAccent,
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent)),
+        //color: Colors.white,
+        //textColor: Colors.blueAccent,
         onPressed: () {
           theIsBackArrowExit = false;
           Navigator.of(context).pop();
@@ -230,6 +230,9 @@ class _ComponentPageState extends State<ComponentPage> {
           padding: EdgeInsets.all(20 * getSizeRatioWithLimit()),
         );
       }
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
     }
   }
 
@@ -565,6 +568,9 @@ class _ComponentPageState extends State<ComponentPage> {
       }
     }
     */
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
   }
 
 /*
@@ -578,7 +584,7 @@ class _ComponentPageState extends State<ComponentPage> {
 */
 
   Widget getResultReminderImage(BuildContext context) {
-    String imagePath;
+    String imagePath = '';
     double imageWidth = 180.0 * getSizeRatioWithLimit();
     double imageHeight = 160.0 * getSizeRatioWithLimit();
 
@@ -596,6 +602,7 @@ class _ComponentPageState extends State<ComponentPage> {
         imagePath = 'assets/typing/' + comp.image;
       }
 
+
       return Container(
           alignment: Alignment.topRight, //topLeft,
           child: Image.asset(
@@ -611,7 +618,7 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getQuestionImage() {
-    String imagePath;
+    String imagePath = '';
     double imageWidth = 390.0 * getSizeRatioWithLimit();
     double imageHeight = 150.0  * getSizeRatioWithLimit();
 
@@ -1082,10 +1089,10 @@ class _ComponentPageState extends State<ComponentPage> {
       height = 40.0  * getSizeRatioWithLimit();
     }
 
-    return FlatButton(
-      color: backgroundColor,
+    return TextButton(
+      //color: backgroundColor,
       //textColor: Colors.blueAccent,
-      padding: EdgeInsets.all(2.0), //EdgeInsets.zero,
+      //padding: EdgeInsets.all(2.0), //EdgeInsets.zero,
       onPressed: () {
         setPositionState(position);
         wasLastAnswerCorrect = false;
@@ -1149,11 +1156,11 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     return Container(
-        child: FlatButton(
+        child: TextButton(
           child: Text(
-            answerDisplayValue, style: TextStyle(fontSize: fontSize),),
-          color: backgroundColor, //color,
-          textColor: textColor, //Colors.white,
+            answerDisplayValue, style: TextStyle(fontSize: fontSize, color: textColor),),
+          //color: backgroundColor, //color,
+          //textColor: textColor, //Colors.white,
           onPressed: () {
             setPositionState(position);
           },
@@ -1273,11 +1280,11 @@ class _ComponentPageState extends State<ComponentPage> {
 
       if (!isCorrectAnswer || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
         return Container(
-          child: FlatButton(
+          child: TextButton(
             child: Text(result,
-              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit()),),
-            color: Colors.blueAccent, // Colors.brown,
-            textColor: Colors.white,
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.white),),
+            //color: Colors.blueAccent, // Colors.brown,
+            //textColor: Colors.white,
             onPressed: () {
               setState(() {
                 runContinueLogic();
@@ -1287,11 +1294,14 @@ class _ComponentPageState extends State<ComponentPage> {
         );
       }
       else { // correct answer - will not happen actually
-      //  setState(() {
-      //    runContinueLogic();
-      //  });
+        //  setState(() {
+        //    runContinueLogic();
+        //  });
         return SizedBox(width: 0, height: 0);
       }
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
     }
   }
 
@@ -1305,11 +1315,11 @@ class _ComponentPageState extends State<ComponentPage> {
       //skip the first real question
       if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1)) {
         return Container(
-          child: FlatButton(
+          child: TextButton(
             child: Text(result,
-              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit()),),
-            color: Colors.grey, // Colors.brown,
-            textColor: Colors.white,
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.white),),
+            //color: Colors.grey, // Colors.brown,
+            //textColor: Colors.white,
             onPressed: () {
               setPositionState(AnswerPosition.continueNext);
               theComponentManager.resetCorrectAnswerPosition();
@@ -1354,7 +1364,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*"OK"*/),
       onPressed: () {
         theIsBackArrowExit = false;
@@ -1363,8 +1373,8 @@ class _ComponentPageState extends State<ComponentPage> {
       },
     );
 
-    String title;
-    String content;
+    String title = '';
+    String content = '';
 
     //if (correctPercent >= 70.0) {
     //  title = "Congratulation!";

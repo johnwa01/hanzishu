@@ -16,8 +16,8 @@ enum DicCaller {
 }
 
 class FirstZi {
-  String char;
-  int searchingZiId;
+  String char = '';
+  int searchingZiId = -1;
 
   FirstZi(
       String char,
@@ -29,24 +29,24 @@ class FirstZi {
 }
 
 class SearchingZi {
-  int id;
-  String char;
-  String pinyin;
-  String meaning;
-  int strokeCount;
-  List<String> composit;
-  String soundComponent;
-  int soundLevel;
-  String image;
-  String hint;
-  String displaySide;
-  List<int> groupMembers;
-  int parentId;
-  int level;
-  int levelHSK;
-  String structure;
-  String phrase;
-  int lessonYuwen;
+  int id = -1;
+  String char = '';
+  String pinyin = '';
+  String meaning = '';
+  int strokeCount = -1;
+  List<String> composit = [];
+  String soundComponent = '';
+  int soundLevel = -1;
+  String image = '';
+  String hint = '';
+  String displaySide = '';
+  List<int> groupMembers = [];
+  int parentId = -1;
+  int level = -1;
+  int levelHSK = -1;
+  String structure = '';
+  String phrase = '';
+  int lessonYuwen = -1;
 
   SearchingZi(
       int id,

@@ -12,15 +12,15 @@ import 'package:hanzishu/engine/zimanager.dart';
 class BasicComponentsDetailPage extends StatefulWidget {
   final int keyGroup;
   final int keyIndex;
-  BasicComponentsDetailPage({this.keyGroup, this.keyIndex});
+  BasicComponentsDetailPage({required this.keyGroup, required this.keyIndex});
 
   @override
   _BasicComponentsDetailPageState createState() => _BasicComponentsDetailPageState();
 }
 
 class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
 
   @override
@@ -63,7 +63,7 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
         screenWidth: screenWidth
     );
 
-    List<SpeechIconInfo> listOfSpeechIconInfo = List<SpeechIconInfo>();
+    List<SpeechIconInfo> listOfSpeechIconInfo = <SpeechIconInfo>[];
     // get iconinfo only, isInfoOnly = true
     basicComponentsDetailPainter.displayAllZi(widget.keyGroup, widget.keyIndex, true, listOfSpeechIconInfo, contentLength);
 
@@ -96,14 +96,13 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
   }
 
   Positioned getPositionedSpeechButton(SpeechIconInfo speechIconInfo) {
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var str = ComponentManager.getComponent(speechIconInfo.id)!.charOrNameOfNonchar;
+    var butt = TextButton(
+      //textColor: Colors.blueAccent,
       onPressed: () {
-        var str = ComponentManager.getComponent(speechIconInfo.id).charOrNameOfNonchar;
         TextToSpeech.speak("zh-CN", str);
       },
-      child: Text('', style: TextStyle(fontSize: applyRatio(20.0))),
+      child: Text(str, style: TextStyle(color: Colors.blueAccent, fontSize: applyRatio(20.0))),
     );
 
     var posiCenter = Positioned(

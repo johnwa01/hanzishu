@@ -38,21 +38,21 @@ class WordLevelPage extends StatefulWidget {
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  PositionAndSize? centerPositionAndSizeCache;
 
-  WordLevelPage({this.drillCategory, this.subItemId, this.customString});
+  WordLevelPage({required this.drillCategory, required this.subItemId, required this.customString});
 
   @override
   _WordLevelPageState createState() => _WordLevelPageState();
 }
 
 class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProviderStateMixin {
-  DrillCategory drillCategory; //startLessonId;
-  int subItemId; //endLessonId;
-  String customString;
-  int centerZiId;
-  bool shouldDrawCenter;
-  double screenWidth;
+  DrillCategory? drillCategory; //startLessonId;
+  int subItemId = -1; //endLessonId;
+  String customString = '';
+  int centerZiId = -1;
+  bool? shouldDrawCenter;
+  double? screenWidth;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
@@ -246,7 +246,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                 MaterialPageRoute(builder: (context) =>
                     WordLaunchPage(drillCategory: drillCategory,
                         subItemId: i + 1, //subItemId,
-                        customString: null)));
+                        customString: '')));
           },
           child: Text(levelText,
               style: TextStyle(color: Colors.brown)), // lightBlue
@@ -265,7 +265,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
               MaterialPageRoute(builder: (context) =>
                   WordLaunchPage(drillCategory: drillCategory,
                       subItemId: 0, //subItemId,
-                      customString: null)));
+                      customString: '')));
         },
         child: Text(getString(459),
             style: TextStyle(color: Colors.brown)), // lightBlue

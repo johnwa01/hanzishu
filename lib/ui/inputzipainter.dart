@@ -11,18 +11,18 @@ import 'package:hanzishu/utility.dart';
 class InputZiPainter extends BasePainter {
   static var lessonLeftEdge;
 
-  int breakoutIndex;
+  int breakoutIndex = -1;
 
-  Color lineColor;
-  Color completeColor;
-  int lessonId;
-  double screenWidth;
+  late Color lineColor;
+  late Color completeColor;
+  int lessonId = -1;
+  double screenWidth = 0.0;
 
-  var breakoutPositions;
-  bool isBreakoutPositionsOnly;
+  late var breakoutPositions;
+  late bool isBreakoutPositionsOnly;
 
   InputZiPainter({
-    this.lineColor, this.completeColor, this.lessonId, this.screenWidth
+    required this.lineColor, required this.completeColor, required this.lessonId, required this.screenWidth
   });
 
   @override

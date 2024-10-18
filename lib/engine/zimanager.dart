@@ -20,17 +20,17 @@ enum ZiListType {
 }
 
 class ZiListTypeWrapper {
-  ZiListType value;
+  ZiListType value = ZiListType.zi;
   ZiListTypeWrapper(var value) {
     this.value = value;
   }
 }
 
 class NumberOfZis {
-  int left;
-  int right;
-  int upper;
-  int bottom;
+  int left = -1;
+  int right = -1;
+  int upper = -1;
+  int bottom = -1;
 
   NumberOfZis(int left,
     int right,
@@ -44,8 +44,8 @@ class NumberOfZis {
 }
 
 class IdAndListTypePair {
-  int id;
-  ZiListType listType;
+  int id = -1;
+  ZiListType listType = ZiListType.zi;
 
   IdAndListTypePair(int id, ZiListType listType) {
     this.id = id;
@@ -75,7 +75,7 @@ class ZiManager {
     return theSearchingZiList.length;
   }
 
-  static SearchingZi getZiByChar(String chgetar) {
+  static SearchingZi? getZiByChar(String chgetar) {
     for (var zi in theSearchingZiList) {
       if (zi.char.runes.length == 1 && zi.char.runes.first == zi.char.runes
           .first) { // TODO: char[0] is codeUnit, not rune. Is it always same in our case?
@@ -108,7 +108,7 @@ class ZiManager {
     return -1; // not found
   }
 
-  static SearchingZi findSearchingZiFromChar(String char) {
+  static SearchingZi? findSearchingZiFromChar(String char) {
     var index = findIdFromChar(ZiListType.searching, char);
     if (index == -1) {
       return null;
@@ -647,7 +647,7 @@ class ZiManager {
     return false;
   }
 
-  List<int> getZiComponents(int id) {
+  List<int>? getZiComponents(int id) {
     List<int> components = [];
 
       var zi = theZiManager.getZi(id);
@@ -700,7 +700,7 @@ class ZiManager {
      */
   }
 
-  static int getCharById(int ziId)  {
+  static int? getCharById(int ziId)  {
     for (var eachZi in theSearchingZiList) {
       if (eachZi.id == ziId) {
         if (eachZi.char.runes.length > 0) {
@@ -757,7 +757,7 @@ class ZiManager {
     return (type.contains('j') || type.contains('b'));
   }
 
-  Zi getPianpangZi(int id) {
+  Zi? getPianpangZi(int id) {
     /*
     var zi = getZi(id);
     if (zi.type == 'b') {
@@ -1001,7 +1001,7 @@ class ZiManager {
     }
   }
 
-  static String getOneChar(int id, ZiListType listType) {
+  static String? getOneChar(int id, ZiListType listType) {
     if (listType == ZiListType.zi) {
       return theZiManager.getZi(id).char;
     }
@@ -1009,7 +1009,10 @@ class ZiManager {
       return DictionaryManager.getChar(id);
     }
     else {
-      return ComponentManager.getComponent(id).charOrNameOfNonchar;
+      var comp = ComponentManager.getComponent(id);
+      if (comp != null) {
+        return comp.charOrNameOfNonchar;
+      }
     }
   }
 
@@ -1039,7 +1042,7 @@ class ZiManager {
       return false;
   }
 
-  static List<IdAndListTypePair> getComposits(int id, ZiListType listType/*, String wordsStudy*/) {
+  static List<IdAndListTypePair>? getComposits(int id, ZiListType listType/*, String wordsStudy*/) {
     List<IdAndListTypePair> pairList = [];
 
     if (listType == ZiListType.searching) {
@@ -1067,7 +1070,7 @@ class ZiManager {
     return null;
   }
 
-  static String getPhrase(String char) {
+  static String? getPhrase(String char) {
     for (var i = 0; i < theSearchingZiList.length; i++) {
       if (theSearchingZiList[i].char == char) {
         return theSearchingZiList[i].phrase;

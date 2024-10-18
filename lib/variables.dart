@@ -44,7 +44,7 @@ var theDefaultLocale = "en_US";
 //TODO: move to theConfig
 var theIsPartialZiMode = true;
 
-Directory theStorageFileDirectory;
+Directory theStorageFileDirectory = Directory('');
 
 var theFileIOFile;
 

@@ -15,14 +15,14 @@ class IntroductionPage extends StatefulWidget {
 }
 
 class _IntroductionPageState extends State<IntroductionPage> {
-  double fontSize1;
-  double fontSize2;
-  double fontSize3;
+  double fontSize1 = 0.0;
+  double fontSize2 = 0.0;
+  double fontSize3 = 0.0;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  late double screenWidth;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
@@ -112,13 +112,13 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   Widget getHanzishuHistoryLink() {
     if (kIsWeb)
-      return FlatButton(
-        color: Colors.blueAccent, //white,
-        textColor: Colors.brown, //blue,
+      return TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //blue,
         onPressed: () {
           launchUrl(Uri.parse("https://mp.weixin.qq.com/s/veT0HxXO3R_YTHvOUAnPLQ"), webOnlyWindowName: '_self');
         },
-        child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+        child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     return SizedBox(width: 0, height: 0);
@@ -126,13 +126,13 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   Widget getMakaylaHanzishuDiaryLink() {
     if (kIsWeb)
-      return FlatButton(
-        color: Colors.blueAccent, //white,
-        textColor: Colors.brown, //brown,
+      return TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/lesson/makaylahanzishudiary.htm"), webOnlyWindowName: '_self');
         },
-        child: Text(getString(435)/*"Makayla Hanzishu Diary"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+        child: Text(getString(435)/*"Makayla Hanzishu Diary"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     return SizedBox(width: 0, height: 0);
@@ -156,13 +156,13 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   Widget getNewStageOfLearningChineseLink() {
     if (kIsWeb)
-      return FlatButton(
-        color: Colors.blueAccent, //white,
-        textColor: Colors.brown, //brown,
+      return TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
         onPressed: () {
           launchUrl(Uri.parse("https://mp.weixin.qq.com/s/bAWvFFo0WlAuz62UTjkltQ"), webOnlyWindowName: '_self');
         },
-        child: Text(getString(471)/*"New scientific stage of Chinese character education"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+        child: Text(getString(471)/*"New scientific stage of Chinese character education"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     return SizedBox(width: 0, height: 0);
@@ -170,13 +170,13 @@ class _IntroductionPageState extends State<IntroductionPage> {
 
   Widget getInputMethodAndTeachingLink() {
     if (kIsWeb)
-      return FlatButton(
-        color: Colors.blueAccent, //white,
-        textColor: Colors.brown, //brown,
+      return TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish/inputmethodandteaching.htm"), webOnlyWindowName: '_self');
         },
-        child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/)),
+        child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     return SizedBox(width: 0, height: 0);

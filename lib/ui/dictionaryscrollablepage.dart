@@ -13,24 +13,24 @@ import 'package:hanzishu/data/searchingzilist.dart';
 
 class DictionaryScrollablePage extends StatefulWidget {
   final int firstZiIndex;
-  DictionaryScrollablePage({this.firstZiIndex});
+  DictionaryScrollablePage({required this.firstZiIndex});
 
   @override
   _DictionaryScrollablePageState createState() => _DictionaryScrollablePageState();
 }
 
 class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
-  int firstZiIndex;
-  double fontSize1;
-  double fontSize2;
-  double fontSize3;
+  int firstZiIndex = -1;
+  double fontSize1 = 0.0;
+  double fontSize2 = 0.0;
+  double fontSize3 = 0.0;
 
   int currentDisplayRow = 0;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  late ScrollController _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
@@ -53,7 +53,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
     }
   }
@@ -207,7 +207,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
                     DictionarySearchingPage(
                         dicStage: DictionaryStage.detailedzi,
                         firstOrSearchingZiIndex: ziId,
-                        flashcardList: null,
+                        flashcardList: '',
                         dicCaller: DicCaller.Dictionary),
               ),
             );
@@ -265,7 +265,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
                         style: TextStyle(color: Colors.white)),
                   )
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousPositionAndMeaning.set(posiX, posiY, meaning);
     }
     else {

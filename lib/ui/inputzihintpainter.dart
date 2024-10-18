@@ -11,16 +11,16 @@ import 'package:hanzishu/utility.dart';
 
 
 class InputZiHintPainter extends BasePainter {
-  Color lineColor;
-  Color completeColor;
-  double screenWidth;
-  int showHint;
-  int selectedCompIndex;
-  String char;
-  TypingType typingType;
+  late Color lineColor;
+  late Color completeColor;
+  double screenWidth = 0.0;
+  int showHint = -1;
+  int selectedCompIndex = -1;
+  String char = '';
+  late TypingType typingType;
 
   InputZiHintPainter({
-    this.lineColor, this.completeColor, this.screenWidth, this.showHint, this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ this.char, this.typingType
+    required this.lineColor, required this.completeColor, required this.screenWidth, required this.showHint, required this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ required this.char, required this.typingType
   });
 
   @override
@@ -79,7 +79,7 @@ class InputZiHintPainter extends BasePainter {
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
         displayTextWithValue(
-            typingCode.toUpperCase(), xPosi, 0.0, size, compColor, false);
+            typingCode!.toUpperCase(), xPosi, 0.0, size, compColor, false);
 
         xPosi += size; //* 1.2;
         displayTextWithValue(')', xPosi, 0.0, size, compColor, false);

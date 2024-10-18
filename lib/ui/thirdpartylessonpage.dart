@@ -14,19 +14,19 @@ class ThirdPartyLessonPage extends StatefulWidget {
   //final int lessonId;
   final ThirdPartyType thirdPartyType;
 
-  ThirdPartyLessonPage({this.thirdPartyType});
+  ThirdPartyLessonPage({required this.thirdPartyType});
 
   @override
   _ThirdPartyLessonPageState createState() => _ThirdPartyLessonPageState();
 }
 
 class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with SingleTickerProviderStateMixin {
-  ScrollController _scrollController;
-  ThirdPartyType thirdPartyType;
-  int currentLessonId;
-  int currentLevelId;
+  late ScrollController _scrollController;
+  late ThirdPartyType thirdPartyType;
+  int currentLessonId = -1;
+  int currentLevelId = -1;
 
-  double screenWidth;
+  late double screenWidth;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -68,7 +68,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
       (
       appBar: AppBar
         (
-        title: Text(title),
+        title: Text(title!),
       ),
       body: Container(
         child: SingleChildScrollView(
@@ -117,7 +117,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
                 }
               });
             },
-            child: Text(levelName,
+            child: Text(levelName!,
                 style: TextStyle(color: Colors.brown)), // lightBlue
           );
 
@@ -138,7 +138,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
                           subItemId: i + 1, //subItemId,
                           customString: ThirdPartyLesson.getLessonString(thirdPartyType, theThirdPartyLessonList[i].lessonId)/*"好替身"*/)));
             },
-            child: Text("                   " + lessonName, // add some back space from level
+            child: Text("                   " + lessonName!, // add some back space from level
                 style: TextStyle(color: Colors.black)), // lightBlue
           );
 

@@ -16,27 +16,27 @@ import 'package:hanzishu/engine/lesson.dart';
 class ConversationPage extends StatefulWidget {
   final int lessonId;
   final PinyinType pinyinType;
-  ConversationPage({this.lessonId, this.pinyinType});
+  ConversationPage({required this.lessonId, required this.pinyinType});
 
   @override
   _ConversationPageState createState() => _ConversationPageState();
 }
 
 class _ConversationPageState extends State<ConversationPage> {
-  int lessonId;
-  double fontSize1;
-  double fontSize2;
-  double fontSize3;
+  int lessonId = -1;
+  double fontSize1 = 0.0;
+  double fontSize2 = 0.0;
+  double fontSize3 = 0.0;
 
-  double screenWidth;
-  ScrollController _scrollController;
+  double screenWidth = 0.0;
+  ScrollController? _scrollController;
   PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
   PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
       0.0, 0.0, "");
-  PinyinType pinyinType;
+  PinyinType? pinyinType;
   //bool hasPressedContinue = false;
 
   double getSizeRatioWithLimit() {
@@ -55,7 +55,7 @@ class _ConversationPageState extends State<ConversationPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
     }
   }
@@ -321,11 +321,11 @@ class _ConversationPageState extends State<ConversationPage> {
 
     if (theIsFromLessonContinuedSection) {
       return Container(
-        child: FlatButton(
+        child: TextButton(
           child: Text(buttonText,
-            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0),),
-          color: Colors.blueAccent,
-          textColor: Colors.white,
+            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.white),),
+          //color: Colors.blueAccent,
+          //textColor: Colors.white,
           onPressed: () {
             //if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None && !hasPressedContinue) {
             //  hasPressedContinue = true;
@@ -382,7 +382,7 @@ class _ConversationPageState extends State<ConversationPage> {
                         style: TextStyle(color: Colors.white)),
                   )
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousPositionAndMeaning.set(posiX, posiY, meaning);
     }
     else {

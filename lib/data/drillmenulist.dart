@@ -3,8 +3,8 @@ import 'package:hanzishu/data/searchingzilist.dart';
 
 //int DrillDescriptionStringID = 10;
 class DrillMenu {
-  int id;
-  int stringId; //String description;
+  int id = -1;
+  int stringId = -1; //String description;
 
   DrillMenu(int id,
       stringId) {

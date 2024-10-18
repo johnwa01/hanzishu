@@ -6,26 +6,26 @@ import 'package:hanzishu/engine/quizmanager.dart';
 
 
 class StandardExamManager {
-  DrillCategory currentDrillCategory;
-  int currentSubItemId;
-  QuizCategory currentQuizCategory;
+  DrillCategory currentDrillCategory = DrillCategory.hanzishu;
+  int currentSubItemId = -1;
+  QuizCategory currentQuizCategory = QuizCategory.none;
 
   // The two numbers have to be divisible by 3
   static List<int> maxExamNumber = [30, 45, 60];
-  int currentMaxExamNumber;
+  int currentMaxExamNumber = -1;
 
   int currentCount = 0;
-  int currentId;
+  int currentId = -1;
 
   var currentType = QuizType.chars; // only supported type for HSK etc
 
-  List<SearchingZi> currentValues = [null, null, null, null];
+  List<SearchingZi?> currentValues = [null, null, null, null];
   var correctPosition = 0;
   var minUpperRange = 5; // 0 based, so 5+1=6
 
-  List<int> usedIDs;
+  List<int> usedIDs = <int>[];
 
-  List<int> currentCorrectRandoms;
+  List<int> currentCorrectRandoms = <int>[];
 
   List<String> fullSubList = ['灵', '覃', '阶', '敢', '因', '众', '醒', '已', '啥'];
   /*
@@ -88,7 +88,7 @@ class StandardExamManager {
       return currentMaxExamNumber;
   }
 
-  List<SearchingZi> getCurrentValues() {
+  List<SearchingZi?> getCurrentValues() {
     return currentValues;
   }
 /*
@@ -264,7 +264,7 @@ class StandardExamManager {
     return (1 + nextRand); // 0, 1, 2 -> +1
   }
 
-  List<SearchingZi> getUpdatedValues(/*int index, bool isMeaning*/) {
+  List<SearchingZi?> getUpdatedValues(/*int index, bool isMeaning*/) {
     var upperRange = getUpperRange();
 
     currentValues[0] = getOneValueById(currentId);

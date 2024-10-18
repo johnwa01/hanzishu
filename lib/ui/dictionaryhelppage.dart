@@ -13,10 +13,10 @@ class DictionaryHelpPage extends StatefulWidget {
 }
 
 class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
-  double screenWidth;
-  ScrollController _scrollController;
-  PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
-  OverlayEntry overlayEntry;
+  double screenWidth = 0.0;
+  late ScrollController _scrollController;
+  late PrimitiveWrapper contentLength = PrimitiveWrapper(0.0);
+  OverlayEntry? overlayEntry = null;
   int previousOverlayGroup = 0;
   int previousOverlayIndex = 0;
 
@@ -69,7 +69,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
       theDicOverlayEntry = null;
     }
@@ -101,7 +101,7 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
                   //fit: BoxFit.fitWidth,
                 ),
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousOverlayGroup = keyGroup;
       previousOverlayIndex = keyIndex;
     }
@@ -122,10 +122,10 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
           keyGroup, keyIndex).image;
     }
 
-    return FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
-      padding: EdgeInsets.zero,
+    return TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
+      //padding: EdgeInsets.zero,
       onPressed: () {
         initOverlay();
 

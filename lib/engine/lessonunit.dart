@@ -3,10 +3,10 @@ import 'package:hanzishu/data/lessonunitlist.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 
 class LessonUnit {
-  int id;
-  int numberOfLessons;
-  bool isCompleted;
-  String description;
+  int id = -1;
+  int numberOfLessons = -1;
+  bool isCompleted = false;
+  String description = '';
 
   LessonUnit(int id,
       int numberOfLessons,

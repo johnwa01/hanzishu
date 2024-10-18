@@ -19,19 +19,19 @@ import 'package:hanzishu/engine/zimanager.dart';
 class DictionaryPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  late PositionAndSize centerPositionAndSizeCache;
 
   @override
   _DictionaryPageState createState() => _DictionaryPageState();
 }
 
 class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProviderStateMixin {
-  int firstZiIndex;
-  int searchingZiIndex;
-  bool shouldDrawCenter;
-  double screenWidth;
-  DictionaryStage dicStage;
-  OverlayEntry overlayEntry;
+  int firstZiIndex = -1;
+  int searchingZiIndex = -1;
+  bool shouldDrawCenter = false;
+  double screenWidth = 0.0;
+  late DictionaryStage dicStage;
+  OverlayEntry? overlayEntry = null;
  // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
  //     0.0, 0.0, "");
   FocusNode _textNode = new FocusNode();
@@ -41,7 +41,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
-  int compoundZiCurrentComponentId;
+  int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 
   double getSizeRatioWithLimit() {
@@ -78,7 +78,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
 
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[]; //List<String>();
       if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(
@@ -175,6 +175,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     } catch (e, s) {
       print(s);
     }
+
+    // should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   Future<bool>_onWillPop() {
@@ -182,9 +185,9 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   }
 
   Positioned getPositionedButton(PositionAndSize posiAndSize, int ziIndex) {
-    var butt = FlatButton(
-      color: Colors.white, // buttonColor,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white, // buttonColor,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         var char;
         var searchingZiId;
@@ -216,7 +219,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                       DictionarySearchingPage(
                           dicStage: DictionaryStage.searchingzis,
                           firstOrSearchingZiIndex: ziIndex,
-                          flashcardList: null,
+                          flashcardList: '',
                           dicCaller: DicCaller.Dictionary),
                 ),
               );

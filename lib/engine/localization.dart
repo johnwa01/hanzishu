@@ -1,8 +1,8 @@
 
 
 class Local {
-  int id;
-  String str;
+  int id = -1;
+  String str = '';
 
   Local(
       int id,

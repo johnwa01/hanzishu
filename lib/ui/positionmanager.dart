@@ -6,9 +6,9 @@ import 'package:hanzishu/engine/lessonunitmanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 
 class PositionAndMeaning {
-  double x;
-  double y;
-  String meaning;
+  double? x;
+  double? y;
+  String? meaning;
 
   PositionAndMeaning(
       double x,
@@ -43,12 +43,12 @@ class ZiOrCharSize {
 //theCharSizes.sideZiSmallSize
 
 class PositionAndSize {
-  double transX;
-  double transY;
-  double width;
-  double height;
-  double charFontSize;
-  double lineWidth;
+  double transX = 0.0;
+  double transY = 0.0;
+  double width = 0.0;
+  double height = 0.0;
+  double charFontSize = 0.0;
+  double lineWidth = 0.0;
 
   PositionAndSize(double transX,
     double transY,
@@ -125,6 +125,9 @@ class PositionManager
     if (index == 4) {
       return x4;
     }
+
+    // should not reach here
+    return 0.0;
   }
 
   double getFrameYPosition(int index) {
@@ -146,6 +149,9 @@ class PositionManager
     if (index == 4) {
       return y4;
     }
+
+    //should not reach here
+    return 0.0;
   }
 
   PositionAndSize getCenterZiPosi() {
@@ -341,7 +347,7 @@ class PositionManager
   }
 
   void updatePositionIndex(ZiListType listType, int memberZiId) {
-    String displaySideString;
+    String displaySideString = '';
     if (listType == ZiListType.zi) {
       var memberZi = theZiManager.getZi(memberZiId);
       displaySideString = Utility.checkAndUpdateOneCharSideForLessonTwo(
@@ -440,6 +446,9 @@ class PositionManager
     else if (i >= 20 && i <= 25) {
       ziId = 731 + i - 1;
       return realGroupMembers.contains(ziId);
+    }
+    else {
+      return false;
     }
   }
 

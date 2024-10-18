@@ -1,11 +1,11 @@
 import 'package:hanzishu/variables.dart';
 
 class Phrase {
-  int id;
-  String chars;
-  String pinyin;
-  String meaning;
-  String hint;
+  int id = -1;
+  String chars = '';
+  String pinyin = '';
+  String meaning = '';
+  String hint = '';
 
   Phrase(int id,
     String chars,

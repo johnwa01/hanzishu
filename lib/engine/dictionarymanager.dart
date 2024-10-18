@@ -43,7 +43,7 @@ class DictionaryManager {
     return Zi.formatPinyinAndMeaning(searchingZi.pinyin, searchingZi.meaning);
   }
 
-  static List<double> getSingleComponentSearchingZiStrokes(int id) {
+  static List<double>? getSingleComponentSearchingZiStrokes(int id) {
     // for zi with single component only
     var zi = theSearchingZiList[id];
 
@@ -63,10 +63,10 @@ class DictionaryManager {
     // Check whether it's single or combined word
     if (zi.composit.length == 1)
     {
-      return null;
+      return []; //null;
     }
 
-    var composits = new List<IdAndListTypePair>();
+    var composits = <IdAndListTypePair>[]; //new List<IdAndListTypePair>();
     var oneItem;
     for (int i = 0; i < zi.composit.length; i++) {
       oneItem = zi.composit[i];
@@ -147,7 +147,7 @@ class DictionaryManager {
   }
 
   static List<String> getAllLeadComponents(List<String> components) {
-    List<String> leadComponents = List<String>();
+    List<String> leadComponents = <String>[]; //List<String>();
     String code;
 
     for (int i = 0; i < components.length; i++) {
@@ -160,7 +160,9 @@ class DictionaryManager {
       else {
         var leadTypingCode = typingCompCode[0] + 'a';
         var leadComp = ComponentManager.getComponentByTypingCode(leadTypingCode);
-        leadComponents.add(leadComp.doubleByteCode);
+        if (leadComp != null) {
+          leadComponents.add(leadComp.doubleByteCode);
+        }
       }
     }
 
@@ -190,11 +192,14 @@ class DictionaryManager {
   // the components can be lead comp or regular comp here
   static String getAllComponentCodes(List<String> components) {
     String componentTypingCodes = "";
-    Component oneComp;
+    Component? oneComp;
 
     for (int i = 0; i < components.length; i++) {
       oneComp = ComponentManager.getComponentByCode(components[i]);
-      componentTypingCodes += oneComp.typingCode.substring(0, 1).toLowerCase();
+      if (oneComp != null) {
+        componentTypingCodes +=
+            oneComp.typingCode.substring(0, 1).toLowerCase();
+      }
     }
 
     return componentTypingCodes;
@@ -242,8 +247,8 @@ class DictionaryManager {
 
   static String getSubComponentKeys(List<String> componentCodes) {
     var count = componentCodes.length;
-    Component oneComp;
-    String subComps;
+    Component? oneComp;
+    String? subComps;
     String subCompTypingString = "";
 
     if (count == 1 || count == 2) {
@@ -259,7 +264,7 @@ class DictionaryManager {
       var firstComp = ComponentManager.getComponentByCode(firstCompStr);
       if (firstComp != null) {
         var typingCode = firstComp.typingCode;
-        if (typingCode != null && typingCode.length > 1) {
+        if (typingCode.length > 1) {
           subCompTypingString = typingCode.substring(0,1);
         }
       }
@@ -285,7 +290,7 @@ class DictionaryManager {
     String typingCode;
 
     for (int j = 0; j < typingStrokes.length; j++) {
-      typingCode = StrokeManager.getStrokeByCode(typingStrokes[j]).typingCode;
+      typingCode = StrokeManager.getStrokeByCode(typingStrokes[j])!.typingCode;
       if (typingCode == "g") {
         leadTypingStrokes += "a";   // the leadTypingStroke of the typingStrokes[j]
       }
@@ -324,7 +329,7 @@ class DictionaryManager {
   }
 
   static String getTypingCode(int searchingZiId) {
-    List<String> components = List<String>();
+    List<String> components = <String>[]; //List<String>();
     getAllComponents(searchingZiId, components);
     var compCodes = getAllComponentCodes(components);
 

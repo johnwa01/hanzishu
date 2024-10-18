@@ -17,21 +17,21 @@ class CenterZiRelatedBottum {
   static List<double> position = [160.0, 275.0, 230.0, 305.0, 20.0];
   //static List<String> structure = ["Single part", "left & right", "top & down", "wrapped"];
   static List<int> structure = [441, 442, 443, 444/*"Single part", "left & right", "top & down", "wrapped"*/];
-  int searchingZiId;
+  int searchingZiId = -1;
 
-  String structureReal;
-  int structureAccuratePosition; // 0,1
-  int structureWrongIndex;
-  int structureSelectPosition;
+  String structureReal = '';
+  int structureAccuratePosition = -1; // 0,1
+  int structureWrongIndex = -1;
+  int structureSelectPosition = -1;
 
-  int compCountReal;
-  int compCountAccuratePosition;
-  int compCountWrongValue;
-  int compCountSelectPosition;
+  int compCountReal = -1;
+  int compCountAccuratePosition = -1;
+  int compCountWrongValue = -1;
+  int compCountSelectPosition = -1;
 
-  bool drawBreakdown;
+  bool drawBreakdown = false;
 
-  var breakoutPositions;
+  late var breakoutPositions;
 
   CenterZiRelatedBottum(
       int searchingZiId,
@@ -110,7 +110,7 @@ class CenterZiRelatedBottum {
     var realStrucutureIndex = CenterZiRelatedBottum.getIndexByStructureValue(centerZiRelatedBottum.structureReal);
     centerZiRelatedBottum.structureWrongIndex =   CenterZiRelatedBottum.getWrongStructureIndex(realStrucutureIndex);
 
-    var components = List<String>();
+    var components = <String>[]; //List<String>();
     DictionaryManager.getAllComponents(centerZiId, components);
     centerZiRelatedBottum.compCountReal = components.length;
 

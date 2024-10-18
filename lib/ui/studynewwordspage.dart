@@ -25,20 +25,20 @@ import 'package:hanzishu/ui/breakoutpage.dart';
 class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  late PositionAndSize centerPositionAndSizeCache;
   final String customString;
 
-  StudyCustomizedWordsPage({this.customString});
+  StudyCustomizedWordsPage({required this.customString});
 
   @override
   _StudyCustomizedWordsPageState createState() => _StudyCustomizedWordsPageState();
 }
 
 class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> with SingleTickerProviderStateMixin {
-  int searchingZiIndex;
-  bool shouldDrawCenter;
-  double screenWidth;
-  String customString;
+  int searchingZiIndex = -1;
+  late bool shouldDrawCenter;
+  late double screenWidth;
+  String customString = '';
   //DictionaryStage dicStage;
   //OverlayEntry overlayEntry;
   // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
@@ -49,11 +49,11 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
-  var compoundZiAnimationTimer;
-  int compoundZiCurrentComponentId;
+  late var compoundZiAnimationTimer;
+  int compoundZiCurrentComponentId = -1;
   var currentZiListType = ZiListType.searching;
 
-  String inputText;
+  String inputText = '';
   int currentIndex = 0;
 
   double getSizeRatioWithLimit() {
@@ -113,7 +113,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     // TODO: components don't seem relative here
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[]; //List<String>();
       if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(
@@ -184,6 +184,9 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     } catch (e, s) {
       print(s);
     }
+
+    //should not reach here
+    return SizedBox(width: 0.0, height: 0.0);
   }
 
   Widget getCopyPasteDictionry() {
@@ -273,7 +276,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
   showInvalidInputDialog() {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(getString(286)/*Ok*/),
       onPressed: () {
         Navigator.pop(context);

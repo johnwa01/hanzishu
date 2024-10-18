@@ -49,8 +49,8 @@ enum AnswerPosition {
 }
 
 class LessonAndIndex {
-  int lessonId;
-  int indexDiff;
+  int lessonId = -1;
+  int indexDiff = -1;
 
   LessonAndIndex(
       int lessonId,
@@ -73,7 +73,7 @@ class QuizManager {
   var minUpperRange = 5; // 0 based, so 5+1=6
   var currentLesson = 0;
   var currentWordsStudy;
-  QuizCategory assignedQuizCategory;
+  QuizCategory assignedQuizCategory = QuizCategory.none;
   var currentCategory; // = QuizCategory.meaning;
   var currentType = QuizType.chars; // starting with 1, 0 for no more
   var nextIndexForCurrentType = 0;

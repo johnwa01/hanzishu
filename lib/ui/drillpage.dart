@@ -36,39 +36,39 @@ class DrillPage extends StatefulWidget {
   final String customString;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
-  PositionAndSize centerPositionAndSizeCache;
+  late PositionAndSize centerPositionAndSizeCache;
 
-  DrillPage({this.drillCategory, this.subItemId, this.customString});
+  DrillPage({required this.drillCategory, required this.subItemId, required this.customString});
 
   @override
   _DrillPageState createState() => _DrillPageState();
 }
 
 class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMixin {
-  DrillCategory drillCategory; //startLessonId;
-  int subItemId; //endLessonId;
-  String customString;
-  int centerZiId;
-  bool shouldDrawCenter;
-  double screenWidth;
+  late DrillCategory drillCategory; //startLessonId;
+  int subItemId = -1; //endLessonId;
+  String customString = '';
+  int centerZiId = -1;
+  bool shouldDrawCenter = false;
+  double screenWidth = 0.0;
   int previousZiId = 0;
   bool haveShowedOverlay = true;
 
-  AnimationController _controller;
+  late AnimationController _controller;
   Map<int, bool> allLearnedZis = Map();
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
   var compoundZiAnimationTimer;
 
-  ZiListType currentZiListType;
+  late ZiListType currentZiListType;
 
   //List<ReviewLevel> _reviewLevelsEnding = ReviewLevel.getReviewLevelsEnding(0);
-  List<DropdownMenuItem<DrillMenu>> _dropdownDrillMenuItems;
-  DrillMenu _selectedDrillMenu;
+  late List<DropdownMenuItem<DrillMenu>> _dropdownDrillMenuItems;
+  late DrillMenu _selectedDrillMenu;
 
-  List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
-  DrillMenu _selectedSubMenu;
+  late List<DropdownMenuItem<DrillMenu>> _dropdownSubMenuItems;
+  late DrillMenu _selectedSubMenu;
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -118,11 +118,11 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     //theSearchingZiRealFilterList[2] = null;
 
     _dropdownDrillMenuItems = buildDropdownDrillMenuItems(theDrillMenuList);
-    _selectedDrillMenu = _dropdownDrillMenuItems[0].value;
+    _selectedDrillMenu = _dropdownDrillMenuItems[0].value!;
 
     _dropdownSubMenuItems = buildDropdownSubMenuItems();
     if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
-      _selectedSubMenu = _dropdownSubMenuItems[0].value;
+      _selectedSubMenu = _dropdownSubMenuItems[0].value!;
     }
 
     _controller = new AnimationController(
@@ -151,7 +151,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = List<String>();
+      List<String> componentCodes = <String>[]; //List<String>();
       if (compoundZiAllComponents == null ||
           compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(centerZiId, componentCodes);
@@ -209,12 +209,12 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                     mainAxisAlignment: MainAxisAlignment.center, //spaceBetween,
                     children: <Widget>[
                       SizedBox(width: 10),
-                      getCategories(context, centerZiId, drillCategory),
+              //        getCategories(context, centerZiId, drillCategory),
                       //SizedBox(width: 10),
                       //Text("Test"),
                       SizedBox(width: 10),
                       //Text("Results"),
-                      getSubMenus(context, centerZiId),
+                      //       getSubMenus(context, centerZiId),
                       SizedBox(width: 10),
                       //SizedBox(width: 10),
                     ],
@@ -244,13 +244,13 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                         Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
                                 StandardExamPage(drillCategory: drillCategory,
-                                    subItemId: subItemId, quizCategory: QuizCategory.ziToSound))),
+                                    subItemId: subItemId, quizCategory: QuizCategory.ziToSound, customString: ''))),
                       }
                       else if(drillCategory == DrillCategory.hskTestMeaning) {
                           Navigator.of(context).push(
                             MaterialPageRoute(builder: (context) =>
                             StandardExamPage(drillCategory: drillCategory,
-                            subItemId: subItemId, quizCategory: QuizCategory.meaning))),
+                            subItemId: subItemId, quizCategory: QuizCategory.meaning, customString: ''))),
                       }
                       else {
                           Navigator.of(context).push(
@@ -259,7 +259,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
                                       startingCenterZiId: 1,
                                       subItemId: subItemId,
                                       isFromReviewPage: true,
-                                      customString: null))),
+                                      customString: ''))),
                       }
                     }
                 ),
@@ -286,6 +286,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
   }
 
   Widget getEnlighteningClasses() {
+    /*
     if (kIsWeb) {
       return FlatButton(
         color: Colors.blueAccent, //white,
@@ -294,10 +295,11 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
           launchUrl(Uri.parse("https://hanzishu.com/lesson"),
               webOnlyWindowName: '_self');
         },
-        child: Text(getString(420) /*"Hanzishu classes"*/,
-            style: TextStyle(fontSize: 16.0 /*applyRatio(20.0)*/)),
+        child: Text(getString(420)
+            style: TextStyle(fontSize: 16.0)),
       );
     }
+    */
 
     return SizedBox(width: 0, height: 0);
   }
@@ -373,6 +375,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     );
   }
 
+  /*
   Widget getCategories(BuildContext context, int centerZiId, DrillCategory drillCategory) {
     if (centerZiId == 1 && drillCategory != DrillCategory.custom) {
       return DropdownButton(
@@ -391,16 +394,17 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       return DropdownButton(
         value: _selectedSubMenu,
         items: _dropdownSubMenuItems,
-        onChanged: onChangeDropdownSubItem,
+     //   onChanged: onChangeDropdownSubItem,
       );
     }
     else {
       return SizedBox(width: 0, height: 0);
     }
   }
+  */
 
   List<DropdownMenuItem<DrillMenu>> buildDropdownDrillMenuItems(List drillMenuList) {
-    List<DropdownMenuItem<DrillMenu>> items = List();
+    List<DropdownMenuItem<DrillMenu>> items = []; //List();
     for (DrillMenu drillMenu in drillMenuList) {
       items.add(
         DropdownMenuItem(
@@ -417,7 +421,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
     var commonString1 = getString(397);
     var commonString2 = "";
     if (_selectedDrillMenu.id == 1) {
-      return null;
+      return <DropdownMenuItem<DrillMenu>>[]; //null;
     }
     else if (_selectedDrillMenu.id == 2) {
       subMenuList = theHanzishuSubList;
@@ -438,7 +442,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       commonString2 = getString(399);
     }
 
-    List<DropdownMenuItem<DrillMenu>> items = List();
+    List<DropdownMenuItem<DrillMenu>> items = []; //List();
 
     for (var subMenu in subMenuList) {
       var subString;
@@ -467,7 +471,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
       _dropdownSubMenuItems = buildDropdownSubMenuItems();
 
       if (_dropdownSubMenuItems != null && _dropdownSubMenuItems.length > 0) {
-        _selectedSubMenu = _dropdownSubMenuItems[0].value;
+        _selectedSubMenu = _dropdownSubMenuItems[0].value!;
         subItemId = _selectedSubMenu.id;
       }
 

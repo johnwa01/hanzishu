@@ -12,7 +12,7 @@ class ExerciseNumber {
 
   ExerciseNumber(this.id, this.name);
 
-  static List<ExerciseNumber> exerciseNumbers = List<ExerciseNumber>(totalExercises);
+  static List<ExerciseNumber?> exerciseNumbers = List<ExerciseNumber?>.filled(totalExercises, null);
 
   static populateInitialNumbers() {
     if (exerciseNumbers[0] == null) {
@@ -25,7 +25,7 @@ class ExerciseNumber {
 
   // note: selected ReveiwNumber instance has to be the same one as in the list.
   // therefore can't create a new one everytime. Otherwise it'll fail with assert.
-  static List<ExerciseNumber> getExerciseNumbers() {
+  static List<ExerciseNumber?> getExerciseNumbers() {
       populateInitialNumbers();
       return exerciseNumbers;
   }
@@ -37,15 +37,15 @@ class TypingSelectionPage extends StatefulWidget {
 }
 
 class _TypingSelectionPageState extends State<TypingSelectionPage> {
-  double screenWidth;
-  List<ExerciseNumber> _exerciseNumbers = ExerciseNumber.getExerciseNumbers();
-  List<DropdownMenuItem<ExerciseNumber>> _dropdownMenuItemsNumber;
-  ExerciseNumber _selectedExerciseNumber;
+  late double screenWidth;
+  late List<ExerciseNumber?> _exerciseNumbers = ExerciseNumber.getExerciseNumbers();
+  late List<DropdownMenuItem<ExerciseNumber>> _dropdownMenuItemsNumber;
+  late ExerciseNumber _selectedExerciseNumber;
 
   @override
   void initState() {
     _dropdownMenuItemsNumber = buildDropdownMenuItemsNumber(_exerciseNumbers);
-    _selectedExerciseNumber = _dropdownMenuItemsNumber[0].value;
+    _selectedExerciseNumber = _dropdownMenuItemsNumber[0].value!;
 
     super.initState();
   }
@@ -55,7 +55,7 @@ class _TypingSelectionPageState extends State<TypingSelectionPage> {
   }
 
   List<DropdownMenuItem<ExerciseNumber>> buildDropdownMenuItemsNumber(List exerciseNumbers) {
-    List<DropdownMenuItem<ExerciseNumber>> items = List();
+    List<DropdownMenuItem<ExerciseNumber>> items = []; //List();
     for (ExerciseNumber exerciseNumber in exerciseNumbers) {
       items.add(
         DropdownMenuItem(
@@ -130,21 +130,25 @@ class _TypingSelectionPageState extends State<TypingSelectionPage> {
     return DropdownButton(
       value: _selectedExerciseNumber,
       items: _dropdownMenuItemsNumber,
-      onChanged: onChangeDropdownItemNumber,
+      onChanged: (selectedExerciseNumber) {
+        setState(() {
+          _selectedExerciseNumber = selectedExerciseNumber as ExerciseNumber;
+        }); //onChangeDropdownItemNumber,
+      },
     );
   }
 
   Widget getStartExercise(BuildContext context) {
     return Container(
-      child: FlatButton(
+      child: TextButton(
         child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit()),),
-        color: Colors.blueAccent,
-        textColor: Colors.white,
+        //color: Colors.blueAccent,
+        //textColor: Colors.white,
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.CommonZiTyping, lessonId: _selectedExerciseNumber.id, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), // TODO: hardcoded
+              builder: (context) => InputZiPage(typingType: TypingType.CommonZiTyping, lessonId: _selectedExerciseNumber.id, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), // TODO: hardcoded
             ),
           );
         },

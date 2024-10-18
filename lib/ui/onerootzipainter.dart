@@ -6,14 +6,14 @@ import 'package:hanzishu/engine/zimanager.dart';
 
 
 class OneRootZiPainter extends BasePainter {
-  int ziId;
-  ZiListType ziListType;
-  double screenWidth;
-  double fontSize;
-  Color ziColor;
+  int ziId = -1;
+  late ZiListType ziListType;
+  late double screenWidth;
+  double fontSize = 0.0;
+  late Color ziColor;
 
   OneRootZiPainter({
-    this.ziId, this.ziListType, this.screenWidth, this.fontSize, this.ziColor
+    required this.ziId, required this.ziListType, required this.screenWidth, required this.fontSize, required this.ziColor
   });
 
   @override
@@ -29,13 +29,13 @@ class OneRootZiPainter extends BasePainter {
         fontSize, //posi.width,
         fontSize, //posi.height,
         fontSize, //posi.charFontSize,
-        ziColor, //Colors.brown,
+        ziColor as MaterialColor, //Colors.brown,
         false,
         1.0, //posi.lineWidth,
         false, //createFrame,
         false,
         false, //withPinyin,
-        null, //frameFillColor,
+        Colors.blue, //frameFillColor,
         true);
     }
 

@@ -6,8 +6,8 @@ import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 
 class CourseMenu {
-  int id;
-  int stringId; //String description;
+  int id = -1;
+  int stringId = -1; //String description;
 
   CourseMenu(int id,
       stringId) {
@@ -17,19 +17,19 @@ class CourseMenu {
 }
 
 class Lesson {
-  int id;
-  String title;
-  int titleId; //String titleTranslation;
-  List<int> sentenceList;
-  String convChars;
-  List<int> convCharsIds;
-  String chars;
-  List<int> charsIds;
-  List<int> comps;
-  String topicTitle;
-  List<int> topicParagraphList;
-  List<int> phraseIds;
-  List<int> snowballIds;
+  int id = -1;
+  String title = '';
+  int titleId = -1; //String titleTranslation;
+  List<int> sentenceList = [];
+  String convChars = '';
+  List<int> convCharsIds = [];
+  String chars = '';
+  List<int> charsIds = [];
+  List<int> comps = [];
+  String topicTitle = '';
+  List<int> topicParagraphList = [];
+  List<int> phraseIds = [];
+  List<int> snowballIds = [];
   bool newItemListCreated = false;
   List<int> newItemList = [];
   List<int> newItemTypeStartPosition = [0, 0, 0, 0];
@@ -51,7 +51,7 @@ class Lesson {
   Map<int, List<int>> treeMap = Map();
   //Map<int, PositionAndSize> sidePositions = Map();
   //Map<int, List<int>> realGroupMembersMap  = Map();
-  PositionAndSize centerPositionAndSize;
+  PositionAndSize centerPositionAndSize = PositionAndSize(0,0,0,0,0,0);
   Map<int, PositionAndSize> breakoutPositions = Map();
 
   Lesson(
@@ -418,7 +418,7 @@ class Lesson {
   }
 
   void initCache() {
-    centerPositionAndSize = null;
+    //centerPositionAndSize = null;
     //realGroupMembersMap.clear();
     //sidePositions.clear();
   }

@@ -34,28 +34,28 @@ class InputZiPage extends StatefulWidget {
   final int showHint;
   final bool includeSkipSection;
   final bool showSwitchMethod;
-  InputZiPage({this.typingType, this.lessonId, this.wordsStudy, this.isSoundPrompt, this.inputMethod, this.showHint, this.includeSkipSection, this.showSwitchMethod});
+  InputZiPage({required this.typingType, required this.lessonId, required this.wordsStudy, required this.isSoundPrompt, required this.inputMethod, required this.showHint, required this.includeSkipSection, required this.showSwitchMethod});
   @override
   _InputZiPageState createState() => new _InputZiPageState();
 }
 
 class _InputZiPageState extends State<InputZiPage> {
-  ScrollController _scrollController;
-  TypingType typingType;
-  int lessonId;
-  String wordsStudy;
-  bool isSoundPrompt;
-  InputMethod inputMethod;
-  int showHint;
-  bool includeSkipSection;
-  bool showSwitchMethod;
-  int currentIndex;
-  BuildContext currentBuildContext;
-  double _progressValue;
-  int totalQuestions;
-  double screenWidth;
+  ScrollController? _scrollController;
+  TypingType? typingType;
+  int lessonId = -1;
+  String wordsStudy = '';
+  bool isSoundPrompt = false;
+  InputMethod? inputMethod;
+  int showHint = -1;
+  bool includeSkipSection = true;
+  bool showSwitchMethod = false;
+  int currentIndex = -1;
+  BuildContext? currentBuildContext;
+  double _progressValue = 0.0;
+  int totalQuestions = -1;
+  double screenWidth = 0.0;
 
-  String currentTypingChar;
+  String currentTypingChar = '';
 
   // initial value to work around an Android issue: 'y', pick a zi, 'h' ->yh instead of zi+h.
   TextEditingController _controller = new TextEditingController(text: "");
@@ -68,21 +68,21 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousStartComposing = -1;
   int previousEndComposing = -1;
   int previousEndSelection = -1;
-  String initialControllerTextValue; // = "unlikelyIniStr876";
+  String initialControllerTextValue = ''; // = "unlikelyIniStr876";
   String previousText = "";
   //List<String> ziCandidates;
-  int selectedCompIndex;
-  int selectedCategoryIndex;
-  int selectedSubcategoryIndex;
-  int currentCorrectCategoryIndex;
-  int currentCorrectSubcategoryIndex;
-  bool currentTypingCodeIsCorrect;
+  int selectedCompIndex = -1;
+  int selectedCategoryIndex = -1;
+  int selectedSubcategoryIndex = -1;
+  int currentCorrectCategoryIndex = -1;
+  int currentCorrectSubcategoryIndex = -1;
+  bool currentTypingCodeIsCorrect = false;
   //String currentComposingText;
-  List<String> currentTypingComponentsAndSub;
-  String currentCorrectTypingCode;
-  List<int> currentLeadCompList;
+  List<String> currentTypingComponentsAndSub = [];
+  String currentCorrectTypingCode = '';
+  List<int> currentLeadCompList = [];
 
-  OverlayEntry overlayEntry;
+  OverlayEntry? overlayEntry = null;
   int dismissCount = 0;
 
   int updateCounter = 0;
@@ -93,7 +93,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   int candidateGroupIndex = 0;
   //For one specific typing string like "ooo", to be used by < or > action
-  List<String> fullZiCandidates;
+  List<String>? fullZiCandidates;
 
   bool isFromArrowCandidate = false;
 
@@ -114,11 +114,11 @@ class _InputZiPageState extends State<InputZiPage> {
     currentCorrectTypingCode = '';
     currentTypingCodeIsCorrect = true;
 
-    if (currentTypingComponentsAndSub != null && currentTypingComponentsAndSub.length > 0) {
+    if (currentTypingComponentsAndSub.length > 0) {
       currentTypingComponentsAndSub.clear();
     }
 
-    if (currentLeadCompList != null && currentLeadCompList.length > 0) {
+    if (currentLeadCompList.length > 0) {
       currentLeadCompList.clear();
     }
   }
@@ -234,7 +234,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   initOverlay() {
     if (overlayEntry != null) {
-      overlayEntry.remove();
+      overlayEntry!.remove();
       overlayEntry = null;
     }
   }
@@ -378,7 +378,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   fit: BoxFit.fitWidth,
                 ),
               ));
-      overlayState.insert(overlayEntry);
+      overlayState.insert(overlayEntry!);
       previousOverlayLetter = latestOverleyLetter;
     }
     else {
@@ -719,7 +719,7 @@ class _InputZiPageState extends State<InputZiPage> {
         previousEndComposing--;
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
-        theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText);
+        theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText)!;
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
@@ -809,7 +809,7 @@ class _InputZiPageState extends State<InputZiPage> {
           previousStartComposing, previousEndComposing);
 
       //currentComposingText = composingText;
-      fullZiCandidates = InputZiManager.getZiCandidates(composingText);
+      fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
       InputZiManager.updateFirstCandidate(
           fullZiCandidates, InputZiManager.previousFirstPositionList);
       theCurrentZiCandidates = fullZiCandidates;
@@ -1525,7 +1525,7 @@ class _InputZiPageState extends State<InputZiPage> {
               DictionarySearchingPage(
                   dicStage: DictionaryStage.detailedzi,
                   firstOrSearchingZiIndex: ziId,
-                  flashcardList: null,
+                  flashcardList: '',
                   dicCaller: DicCaller.Dictionary),
         ),
       );
@@ -1534,7 +1534,7 @@ class _InputZiPageState extends State<InputZiPage> {
       oneController.clear();
       FocusScope.of(context).unfocus();
       // set up the button
-      Widget okButton = FlatButton(
+      Widget okButton = TextButton(
         child: Text(getString(286)/*Ok*/),
         onPressed: () {
           Navigator.pop(context);
@@ -1563,11 +1563,11 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
-      return FlatButton(
+      return TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0),),
-        color: Colors.white,
-        textColor: Colors.blueAccent,
+          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
+        //color: Colors.white,
+        //textColor: Colors.blueAccent,
         onPressed: () {
           theIsBackArrowExit = false;
           Navigator.of(context).pop();
@@ -1956,10 +1956,10 @@ class _InputZiPageState extends State<InputZiPage> {
                 //SizedBox(width: fontSize),
                 SizedBox(
                   width: 50.0 * getSizeRatio(),
-                  child: FlatButton(
-                    color: Colors.white,
-                    textColor: hint1Color,
-                    padding: EdgeInsets.zero,
+                  child: TextButton(
+                    //color: Colors.white,
+                    //textColor: hint1Color,
+                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -1970,7 +1970,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     },
                     child: Text(
                       "[" + getString(90) + "1]"/*"Hint1"*/,
-                      style: TextStyle(fontSize: fontSize * 1.2), // 1.6
+                      style: TextStyle(fontSize: fontSize * 1.2, color: hint1Color), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
@@ -1978,10 +1978,10 @@ class _InputZiPageState extends State<InputZiPage> {
                 //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
                   width: 50.0 * getSizeRatio(),
-                  child: FlatButton(
-                    color: Colors.white,
-                    textColor: hint2Color,
-                    padding: EdgeInsets.zero,
+                  child: TextButton(
+                    //color: Colors.white,
+                    //textColor: hint2Color,
+                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -1999,10 +1999,10 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
                 SizedBox(
                   width: 30.0 * getSizeRatio(),
-                  child: FlatButton(
-                    color: Colors.white,
-                    textColor: hint0Color,
-                    padding: EdgeInsets.zero,
+                  child: TextButton(
+                    //color: Colors.white,
+                    //textColor: hint0Color,
+                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -2013,7 +2013,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     },
                     child: Text(
                       "[" + getString(464) + "]"/*"Hint0"*/,
-                      style: TextStyle(fontSize: fontSize * 1.2), // 1.6
+                      style: TextStyle(fontSize: fontSize * 1.2, color:  hint0Color), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
@@ -2259,14 +2259,14 @@ class _InputZiPageState extends State<InputZiPage> {
       xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio() + 30.0 * getSizeRatio();
     }
 
-    var butt = FlatButton(
-      color: Colors.white,
-      textColor: Colors.blueAccent,
+    var butt = TextButton(
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
       onPressed: () {
         initOverlay();
         setTextByChosenZiIndex(candidateIndex, true, false, false);
       },
-      child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio()),),
+      child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
@@ -2303,7 +2303,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   showCompletedDialog(BuildContext context) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text("OK"),
       onPressed: () {
         theIsBackArrowExit = false;
@@ -2312,8 +2312,8 @@ class _InputZiPageState extends State<InputZiPage> {
       },
     );
 
-    String title;
-    String content;
+    String title = '';
+    String content = '';
 
     /*
     if (typingType == TypingType.GiveItATry) {

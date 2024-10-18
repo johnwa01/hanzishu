@@ -1,21 +1,21 @@
 // Note: This is replaced by SearchingZi
 class Zi {
-  int id;
-  String char;
-  String pinyin;
-  String meaning;
-  bool isSingleBody;
-  List<double> strokes;
-  List<String> bodyComposites;
-  String displaySide;   // Character
-  List<int> groupMembers;
-  int parentId;
-  int level;
+  int id = -1;
+  String char = '';
+  String pinyin = '';
+  String meaning = '';
+  bool isSingleBody = false;
+  List<double> strokes = <double>[];
+  List<String> bodyComposites = <String>[];
+  String displaySide = '';   // Character
+  List<int> groupMembers = <int>[];
+  int parentId = -1;
+  int level = -1;
   //CGPoint transform,
-  String origin;
-  int lesson;
-  String type;
-  int soundHintId;
+  String origin = '';
+  int lesson = -1;
+  String type = '';
+  int soundHintId = -1;
   bool hasFinishedQuiz = false;   //TODO: this is a valid field
 
   Zi(
@@ -70,11 +70,16 @@ class Zi {
     return type.contains('b') || type.contains('j');
   }
 
-  static String formatPinyinAndMeaning(String pinyin, String meaning) {
-    String str = '[';
-    str += pinyin;
-    str += '] ';
-    str += meaning;
+  static String formatPinyinAndMeaning(String? pinyin, String? meaning) {
+
+      String str = '[';
+      if (pinyin != null) {
+        str += pinyin;
+      }
+      str += '] ';
+      if (meaning != null) {
+        str += meaning;
+      }
 
     return str;
   }

@@ -20,7 +20,7 @@ class LessonManager {
   //static var analyzeZiYSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);  //CGFloat(30.0)
   //static var analyzeZiYGap = 0.5 * analyzeZiYSize;    //CGFloat(15.0)
 
-  List<String> newHanziPerLevel;
+  List<String> newHanziPerLevel = <String>[];
 
   factory LessonManager() {
     return _lessonManager;
@@ -166,23 +166,26 @@ class LessonManager {
   static populateComps() {
     for (var j = 1; j <= theLessonList.length - 1; j++) {
       for (var k in theLessonList[j].sentenceList) {
-        for (var eachComp in theSentenceList[k].comps) {
-          if (!compExists(j, eachComp)) {
-            // check the parent of this non-character
-            // they are not real parents, but the parent in Hanzishu hirarchy
-            var compZi = theZiManager.getZi(eachComp);
+        var comps = theSentenceList[k].comps;
+        if (comps != null) {
+          for (var eachComp in comps) {
+            if (!compExists(j, eachComp)) {
+              // check the parent of this non-character
+              // they are not real parents, but the parent in Hanzishu hirarchy
+              var compZi = theZiManager.getZi(eachComp);
 
-            if (!compExists(j, compZi.parentId)) {
-              if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isPseudoRootZiId(compZi.parentId) &&*/ !Utility
-                  .isAtChar(compZi.parentId)) {
-                theLessonList[j].comps.add(compZi.parentId);
+              if (!compExists(j, compZi.parentId)) {
+                if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(compZi.parentId) && !Utility.isPseudoRootZiId(compZi.parentId) &&*/ !Utility
+                    .isAtChar(compZi.parentId)) {
+                  theLessonList[j].comps.add(compZi.parentId);
+                }
               }
-            }
 
-            // add the non-char itself
-            if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isPseudoRootZiId(eachComp) &&*/ !Utility
-                .isAtChar(eachComp)) {
-              theLessonList[j].comps.add(eachComp);
+              // add the non-char itself
+              if (/*!Utility.isPseudoNonCharRootZiIdPlusStar(eachComp) && !Utility.isPseudoRootZiId(eachComp) &&*/ !Utility
+                  .isAtChar(eachComp)) {
+                theLessonList[j].comps.add(eachComp);
+              }
             }
           }
         }
@@ -245,7 +248,7 @@ class LessonManager {
   }
 
   //TODO: change to return char only from sentencelist, no need searchingzi
-  String getChar(int lessonId, int currentIndex) {
+  String? getChar(int lessonId, int currentIndex) {
     var lesson = getLesson(lessonId);
     var typingChars = lesson.getAllTypingChars();
     if (currentIndex >= typingChars.length) {

@@ -23,10 +23,10 @@ class BreakoutPainter extends BasePainter {
   double screenWidth;
 
   var breakoutPositions;
-  bool isBreakoutPositionsOnly;
+  bool isBreakoutPositionsOnly = false;
 
   BreakoutPainter({
-    this.lineColor, this.completeColor, this.lessonId, this.wordsStudy, this.screenWidth
+    required this.lineColor, required this.completeColor, required this.lessonId, required this.wordsStudy, required this.screenWidth
   });
 
   @override
@@ -36,7 +36,8 @@ class BreakoutPainter extends BasePainter {
     this.canvas = canvas;
     //this.width = size.width;
     isBreakoutPositionsOnly = false;
-    displayCharacterDecomposing(lessonId, null);
+    YPositionWrapper yPosi = YPositionWrapper(0.0);
+    displayCharacterDecomposing(lessonId, yPosi);
   }
 
   double getSizeRatio() {
