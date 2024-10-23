@@ -151,8 +151,8 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = <String>[]; //List<String>();
-      if (compoundZiAllComponents == null ||
+      List<String> componentCodes = []; //List<String>();
+      if (/*compoundZiAllComponents == null ||*/
           compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(centerZiId, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(

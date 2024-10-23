@@ -254,6 +254,8 @@ class DictionaryPainter extends BreakoutPainter {
 
     displayTextWithValue(getString(304)/*"Breakdown"*/ + ": ", fontSize3, fontSize12, fontSize4, Colors.black, false);
     DisplayIcon(iconBreakdownStrokes, fontSize8 * 1.1, fontSize12, fontSize4, fontSize4, Colors.amber, fontSize2);
+
+    breakoutPositions = getDicBreakoutPositions(ziIndex); // get breakPosition;
     bool isGetPositionOnly = false;
     var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
   }

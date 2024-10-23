@@ -53,7 +53,7 @@ class DrillPainter extends BasePainter {
     // component list starts from 0, unlike zi list
     if (compoundZiCurrentComponentId >= 0) {
       // for compound zi animation action only
-      drawCenterZi(compoundZiCurrentComponentId, ZiListType.searching);
+      drawCenterZi(compoundZiCurrentComponentId, ziListType!);
     }
   }
 

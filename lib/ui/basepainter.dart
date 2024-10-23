@@ -372,8 +372,8 @@ class BasePainter extends CustomPainter{
     return transY - heightY / 3.4;  //2.0;   //Note: no ratio change here
   }
 
-  List<double> getStrokes(int id, ZiListType listType) {
-    List<double> strokes = <double>[];
+  List<double>? getStrokes(int id, ZiListType listType) {
+    List<double>? strokes;
 
     if (listType == ZiListType.component) {
       var comp = ComponentManager.getComponent(id);

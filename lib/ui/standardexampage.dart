@@ -350,7 +350,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
       backgroundColor = Colors.white;
     }
 
-    var textColor = Colors.white;
+    var textColor = Colors.blue;
     if (position == AnswerPosition.center) {
       textColor = Colors.cyan; //Colors.blueAccent;
     }

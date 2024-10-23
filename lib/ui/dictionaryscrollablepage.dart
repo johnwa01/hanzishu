@@ -262,7 +262,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
                       initOverlay();
                     },
                     child: Text(meaning,
-                        style: TextStyle(color: Colors.white)),
+                        style: TextStyle(color: Colors.blue)),
                   )
               ));
       overlayState.insert(overlayEntry!);

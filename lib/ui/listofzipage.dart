@@ -129,7 +129,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text(getString(285), style: TextStyle(fontSize: applyRatio(20.0), color: Colors.white)),
+      child: Text(getString(285), style: TextStyle(fontSize: applyRatio(20.0), color: Colors.blue)),
     );
 
     var posiCenter = Positioned(
@@ -152,7 +152,7 @@ class _ListOfZiPageState extends State<ListOfZiPage> {
         theIsBackArrowExit = false;
         Navigator.of(context).pop();
       },
-      child: Text(getString(401), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.white)),
+      child: Text(getString(401), style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.blue)),
     );
 
     var posiCenter = Positioned(

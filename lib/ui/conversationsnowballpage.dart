@@ -341,7 +341,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
       return Container(
         child: TextButton(
           child: Text(buttonText,
-            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.white),),
+            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.blue),),
           //color: Colors.blueAccent,
           //textColor: Colors.white,
           onPressed: () {
@@ -389,7 +389,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
                         initOverlay();
                         },
                       child: Text(meaning,
-                          style: TextStyle(color: Colors.white)),
+                          style: TextStyle(color: Colors.blue)),
                   )
               ));
       overlayState.insert(overlayEntry!);

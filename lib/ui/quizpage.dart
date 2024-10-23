@@ -394,7 +394,7 @@ class _QuizPageState extends State<QuizPage> {
       backgroundColor = Colors.white;
     }
 
-    var textColor = Colors.white;
+    var textColor = Colors.blue;
     if (position == AnswerPosition.center) {
       textColor = Colors.cyan; //Colors.blueAccent;
     }
@@ -500,7 +500,7 @@ class _QuizPageState extends State<QuizPage> {
 
       return Container(
           child: TextButton(
-            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(), color: Colors.white)),
+            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(), color: Colors.cyanAccent)),
             //color: Colors.cyan,    //blueAccent,
             //textColor: Colors.white,
             onPressed: () {

@@ -110,7 +110,7 @@ class PracticeSheetPainter extends BasePainter {
     displayTextWithValue("汉字练习纸生成器：https://hanzishu.com", xStartPosi, posi.transY + yExtraSpace, posi.charFontSize/4.0, Colors.blueGrey, false);
   }
 
-  DrawOneGridAndZi(String oneZi, Color ziColor,  PositionAndSize posi, bool drawZi) {
+  DrawOneGridAndZi(String? oneZi, Color ziColor,  PositionAndSize posi, bool drawZi) {
     var posiOri = PositionAndSize(posi.transX, posi.transY, posi.width, posi.height, posi.charFontSize, posi.lineWidth);
 
     if(isWebMobile) {

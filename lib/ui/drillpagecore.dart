@@ -449,7 +449,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             top: posiY,
             left: adjustedXValue,
             child: TextButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blue),),
               //color: Colors.blueAccent,
               //textColor: Colors.white,
               onPressed: () {
@@ -650,7 +650,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   Positioned getPositionedSkipButton() {
     var yPosi = 0.0;
 
-    var buttonColor = Colors.white;
+    var buttonColor = Colors.cyan;
     if (theAllZiLearned) {
       buttonColor = Colors.blue;
     }

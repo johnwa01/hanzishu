@@ -311,7 +311,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                     top: yPosi,
                     left: adjustedXValue,
                     child: TextButton(
-                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
+                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.brown),),
                       //color: Colors.blueAccent,
                       //textColor: Colors.white,
                       onPressed: () {initOverlay();},
@@ -837,7 +837,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
     // Next flashcard button, match dictionarypainter's definition
-    if (flashcardList != null) {
+    if (flashcardList.length != 0) {
       var fontSize4 = applyRatio(20.0);
       var fontSize8 = applyRatio(15.0); //115
       var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 1.1,
@@ -882,7 +882,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           showCompletedDialog(context);
         }
       },
-      child: Text(getString(515) + "->", style: TextStyle(fontSize: 18.0 * getSizeRatio(), color: Colors.white),),
+      child: Text(getString(515) + "->", style: TextStyle(fontSize: 14.0 * getSizeRatio(), color: Colors.blue),),
     );
 
     var posiCenter = Positioned(
@@ -955,7 +955,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   Positioned getPositionedSkipButton() {
     var yPosi = 0.0;
 
-    var buttonColor = Colors.white;
+    var buttonColor = Colors.blue;
     if (theAllZiLearned) {
       buttonColor = Colors.blue;
     }

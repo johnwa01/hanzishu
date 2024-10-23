@@ -205,7 +205,7 @@ class InputZiManager {
   }
 
   List<int> getInputZiListIndex() {
-    if (inputCodeLetterIndex == null) {
+    if (inputCodeLetterIndex.isEmpty) {
       int letterStartingIndex = 1;
       // 25 + 1 = 26
       inputCodeLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];

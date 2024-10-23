@@ -1149,7 +1149,7 @@ class _ComponentPageState extends State<ComponentPage> {
       backgroundColor = Colors.grey;
     }
 
-    var textColor = Colors.white;
+    var textColor = Colors.blue;
 
     if (position == AnswerPosition.center) {
       textColor = Colors.cyan; //Colors.blueAccent;
@@ -1282,7 +1282,7 @@ class _ComponentPageState extends State<ComponentPage> {
         return Container(
           child: TextButton(
             child: Text(result,
-              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.white),),
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.blue),),
             //color: Colors.blueAccent, // Colors.brown,
             //textColor: Colors.white,
             onPressed: () {
@@ -1317,7 +1317,7 @@ class _ComponentPageState extends State<ComponentPage> {
         return Container(
           child: TextButton(
             child: Text(result,
-              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.white),),
+              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.blue),),
             //color: Colors.grey, // Colors.brown,
             //textColor: Colors.white,
             onPressed: () {

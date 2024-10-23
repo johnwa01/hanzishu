@@ -161,7 +161,7 @@ class _TypingSelectionPageState extends State<TypingComponentSelectionPage> {
   Widget getStartExercise(BuildContext context) {
     return Container(
       child: TextButton(
-        child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit(), color: Colors.white),),
+        child: Text(getString(301)/*"Start"*/, style: TextStyle(fontSize: 28.0 * getSizeRatioWithLimit(), color: Colors.blue),),
         //color: Colors.blueAccent,
         //textColor: Colors.white,
         onPressed: () {
