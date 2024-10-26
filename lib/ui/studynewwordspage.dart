@@ -22,13 +22,19 @@ import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
 
+enum StudyType {
+  all,
+  typingOnly
+}
+
 class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   late PositionAndSize centerPositionAndSizeCache;
   final String customString;
+  final studyType;
 
-  StudyCustomizedWordsPage({required this.customString});
+  StudyCustomizedWordsPage({required this.customString, required this.studyType});
 
   @override
   _StudyCustomizedWordsPageState createState() => _StudyCustomizedWordsPageState();
@@ -208,7 +214,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   }
 
   Widget getTextField() {
-    if (inputText != null) {
+    if (inputText.length != 0) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {

@@ -470,7 +470,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           context,
           MaterialPageRoute(
             builder: (context) =>
-                StudyCustomizedWordsPage(customString: customString),
+                StudyCustomizedWordsPage(customString: customString, studyType: StudyType.all),
           ),
         );
       },
