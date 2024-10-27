@@ -137,7 +137,10 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
             top: posiY,
             left: adjustedXValue,
             child: TextButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0, color: Colors.blue),),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0, color: Colors.white),),
               //color: Colors.blueAccent,
               //textColor: Colors.white,
               onPressed: () {initOverlay();},

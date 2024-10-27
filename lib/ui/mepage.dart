@@ -184,7 +184,7 @@ class _MePageState extends State<MePage> {
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        StudyCustomizedWordsPage(customString: '', studyType: StudyType.all),
+                        StudyCustomizedWordsPage(titleStringId: 409, customString: '', studyType: StudyType.all),
                   ),
                 );
               },

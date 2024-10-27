@@ -130,7 +130,10 @@ class _BreakoutPageState extends State<BreakoutPage> {
             top: posiY,
             left: adjustedXValue,
             child: TextButton(
-              child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blue),),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+              child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
               //color: Colors.blueAccent,
               //textColor: Colors.white,
               onPressed: () {initOverlay();},

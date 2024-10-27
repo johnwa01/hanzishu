@@ -311,7 +311,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                     top: yPosi,
                     left: adjustedXValue,
                     child: TextButton(
-                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.brown),),
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                      ),
+                      child: Text(meaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
                       //color: Colors.blueAccent,
                       //textColor: Colors.white,
                       onPressed: () {initOverlay();},

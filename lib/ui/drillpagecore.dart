@@ -449,7 +449,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             top: posiY,
             left: adjustedXValue,
             child: TextButton(
-              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blue),),
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.blueAccent,
+              ),
+              child: Text(pinyinAndMeaning, style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.white),),
               //color: Colors.blueAccent,
               //textColor: Colors.white,
               onPressed: () {
@@ -805,7 +808,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             }
 
             showOverlay(context, posiAndSize.transX, posiAndSize.transY,
-                pinyinAndMeaning + "\n\n    <Go>", currentZiId);
+                pinyinAndMeaning/* + "\n\n    <Go>"*/, currentZiId);
             haveShowedOverlay = true;
           }
           else if (haveShowedOverlay) {

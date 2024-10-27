@@ -389,7 +389,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
                         initOverlay();
                         },
                       child: Text(meaning,
-                          style: TextStyle(color: Colors.blue)),
+                          style: TextStyle(color: Colors.white)),
                   )
               ));
       overlayState.insert(overlayEntry!);

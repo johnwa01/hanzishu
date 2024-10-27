@@ -12,6 +12,7 @@ import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/webviewpage.dart';
+import 'package:hanzishu/ui/studynewwordspage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -203,6 +204,18 @@ class _ToolsPageState extends State<ToolsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => TypingComponentSelectionPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(516)/*"Customized typing exercises"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
               ),
             );
           },

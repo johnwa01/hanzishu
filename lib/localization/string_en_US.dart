@@ -414,8 +414,8 @@ var theString_en_US = [
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
   Local(407, "You have completed all the flashcards!"),
-  Local(408, "Copy/paste or type words below:"),
-  Local(409, "Study customized words"),
+  Local(408, "Copy/paste or type all Hanzi in your normal method below:"),
+  Local(409, "Study customized Hanzi"),
   Local(410, "You have completed this component typing exercise. Please move on to next one."),
   Local(411, "Hanzishu Introduction"),
   Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words. You will learn Chinese fast through this system. \n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
@@ -523,4 +523,5 @@ var theString_en_US = [
   Local(513, "In this three-step typing course, you will learn how to type Hanzi (Chinese character) into computer using Hanzishu Pictographic Typing method.\n\nStep1:\n\nQuestion: How can I type Hanzi '品' into computer?\n\nAnswer: You break up '品' into '口'，'口'，and '口'， then type 'o', 'o', and 'o'. \n\nThat is, map Chinese alphabet '口' into upper case letter 'O' according to shape similarity, then type letter. Then choose '品' from a candidate list below the editing field by typing its number, mouse clicking, tapping it, or using space bar to choose the 1st candidate. You can also use arrow '>' key to see more candidates when necessary."),
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 5 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
   Local(515, "Read sound & meaning, Next"),
+  Local(516, "Customized typing exercises"),
 ];

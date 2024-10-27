@@ -31,10 +31,11 @@ class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   late PositionAndSize centerPositionAndSizeCache;
+  final int titleStringId;
   final String customString;
   final studyType;
 
-  StudyCustomizedWordsPage({required this.customString, required this.studyType});
+  StudyCustomizedWordsPage({required this.titleStringId, required this.customString, required this.studyType});
 
   @override
   _StudyCustomizedWordsPageState createState() => _StudyCustomizedWordsPageState();
@@ -70,11 +71,15 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   void initState() {
     super.initState();
 
+    if (widget.studyType == StudyType.typingOnly) {
+      currentIndex = 2; // directly set to the typing section
+    }
+
     theCurrentCenterZiId = searchingZiIndex;
     //_controller.addListener(handleKeyInput);
     customString = widget.customString;
 
-    if (customString != null) {
+    if (customString.length != 0) {
       inputText = customString;
     }
 
@@ -94,6 +99,12 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   }
 
   _getRequests() async {
+    if (widget.studyType == StudyType.typingOnly && currentIndex == 2) {
+      theIsBackArrowExit = true;
+      this.currentIndex = 0;
+      return; //done for typing only, exit now
+    }
+
     this.currentIndex += 1;
 
     if (!theIsBackArrowExit && this.currentIndex <= 3) { //TODO: 3 is the number of current subtasks in study new words
@@ -147,7 +158,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
         (
         appBar: AppBar
           (
-          title: Text(getString(409)/*"Customized customized words"*/),
+          title: Text(getString(widget.titleStringId)/*"Customized ..."*/),
         ),
         body: Container(
             child: WillPopScope(
@@ -196,10 +207,10 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   }
 
   Widget getCopyPasteDictionry() {
-    if (inputText != null) {
-      return SizedBox(width: 0.0, height: 0.0);
-    }
-    else {
+    //if (inputText != null) {
+    //  return SizedBox(width: 0.0, height: 0.0);
+    //}
+    //else {
       return Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -210,14 +221,14 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             //SizedBox(width: 30 * getSizeRatioWithLimit()),
           ]
       );
-    }
+    //}
   }
 
   Widget getTextField() {
-    if (inputText.length != 0) {
-      return SizedBox(width: 0.0, height: 0.0);
-    }
-    else {
+    //if (inputText.length != 0) {
+    //  return SizedBox(width: 0.0, height: 0.0);
+    //}
+    //else {
       return SizedBox(
         width: 280 * getSizeRatioWithLimit(), //double.infinity,
         //height: 120,
@@ -247,7 +258,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
           ),
         ), //focusNode: _textNode,
       );
-    }
+    //}
   }
 
   processInputs() {
@@ -255,7 +266,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     var ziId = -1;
     if (customString != null && customString.length > 0) {
       inputText = customString;
-      launchContent(0);
+      launchContent(this.currentIndex);
     }
     //TODO: contentIndex++
     else if (_controller.value.text != null && _controller.value.text.length != 0) {
@@ -271,7 +282,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             inputText = resultStr;
           }
 
-          launchContent(0);
+          launchContent(this.currentIndex);
         }
       }
     }
