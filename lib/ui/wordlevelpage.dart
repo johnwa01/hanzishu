@@ -29,6 +29,7 @@ import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
 
 // For HSK word level only currently
 class WordLevelPage extends StatefulWidget {
@@ -36,6 +37,7 @@ class WordLevelPage extends StatefulWidget {
   final DrillCategory drillCategory; //startLessonId;
   final int subItemId; //endLessonId;
   final String customString;
+  //final ThirdPartyType thirdPartyType;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize? centerPositionAndSizeCache;
@@ -246,7 +248,8 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                 MaterialPageRoute(builder: (context) =>
                     WordLaunchPage(drillCategory: drillCategory,
                         subItemId: i + 1, //subItemId,
-                        customString: '')));
+                        customString: '',
+                        thirdPartyType: ThirdPartyType.none)));
           },
           child: Text(levelText,
               style: TextStyle(color: Colors.brown)), // lightBlue
@@ -265,7 +268,8 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
               MaterialPageRoute(builder: (context) =>
                   WordLaunchPage(drillCategory: drillCategory,
                       subItemId: 0, //subItemId,
-                      customString: '')));
+                      customString: '',
+                      thirdPartyType: ThirdPartyType.none)));
         },
         child: Text(getString(459),
             style: TextStyle(color: Colors.brown)), // lightBlue

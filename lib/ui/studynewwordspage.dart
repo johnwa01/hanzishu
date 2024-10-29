@@ -20,12 +20,8 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/drillpagecore.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/ui/quizpage.dart';
+import 'package:hanzishu/engine/studywords.dart';
 import 'package:hanzishu/ui/breakoutpage.dart';
-
-enum StudyType {
-  all,
-  typingOnly
-}
 
 class StudyCustomizedWordsPage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();

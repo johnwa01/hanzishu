@@ -3,11 +3,13 @@ import 'package:hanzishu/engine/thirdpartylesson.dart';
 
 var theThirdPartyList = [
   ThirdParty(ThirdPartyType.yuwen, 490), // Yuwen
+  ThirdParty(ThirdPartyType.sunlaoshi, 517), // Yuwen
 ];
 
 var theThirdPartyLevelList = [
   ThirdPartyLevel(ThirdPartyType.yuwen, 1, "l1"), // 100: temp
   ThirdPartyLevel(ThirdPartyType.yuwen, 2, "l2"), // 100: temp
+  ThirdPartyLevel(ThirdPartyType.sunlaoshi, 1, "l1"), // 100: temp
 ];
 
 var theThirdPartyLessonList = [
@@ -63,4 +65,8 @@ var theThirdPartyLessonList = [
   ThirdPartyLesson(ThirdPartyType.yuwen, 2, 50, "k19"),
   ThirdPartyLesson(ThirdPartyType.yuwen, 2, 51, "k20"),
   ThirdPartyLesson(ThirdPartyType.yuwen, 2, 52, "k21"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 1, "s1"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 2, "s2"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 3, "s3"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 4, "s4"),
 ];

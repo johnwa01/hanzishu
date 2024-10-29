@@ -18,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/engine/drill.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/ui/thirdpartylessonpage.dart';
+import 'package:hanzishu/engine/studywords.dart';
 
 class WordPage extends StatefulWidget {
   @override
@@ -64,6 +65,22 @@ class _MeWordState extends State<WordPage> {
     return ListView(
       children: <Widget>[
         ListTile(
+          leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title:  Text(getString(395)/*"3,800 common words"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => WordLaunchPage(drillCategory: DrillCategory.all,
+                    subItemId: 1,
+                    customString: '',
+                    thirdPartyType: ThirdPartyType.none),
+              ),
+            );
+          },
+        ),
+        ListTile(
           leading: Image.asset('assets/lessons/L27.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
           title: Text(getString(455)/*"HSK Hanzi"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
@@ -79,6 +96,19 @@ class _MeWordState extends State<WordPage> {
         ),
         ListTile(
           leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(517)/*"sunlaoshi"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
           title: Text(getString(490)/*"Yuwen"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
@@ -87,21 +117,6 @@ class _MeWordState extends State<WordPage> {
               MaterialPageRoute(
                 builder: (context) =>
                     ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwen),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title:  Text(getString(395)/*"3,800 common words"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => WordLaunchPage(drillCategory: DrillCategory.all,
-                    subItemId: 1,
-                    customString: ''),
               ),
             );
           },

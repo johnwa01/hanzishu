@@ -1,3 +1,4 @@
+import 'package:hanzishu/data/thirdpartycontentlist.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/data/thirdpartylessonlist.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
@@ -6,6 +7,7 @@ import 'package:hanzishu/variables.dart';
 
 enum ThirdPartyType {
   yuwen,
+  sunlaoshi,
   none
 }
 
@@ -139,20 +141,51 @@ class ThirdPartyLesson {
   static String getLessonString(ThirdPartyType thirdPartyType, int lessonId) {
     String lessonString = '';
     var fieldLessonId;
-    for (int i = 0; i < theSearchingZiList.length; i++) {
-      switch (thirdPartyType) {
-        case ThirdPartyType.yuwen:
-          {
-            fieldLessonId = theSearchingZiList[i].lessonYuwen;
-          }
-          break;
-      }
+    if (thirdPartyType == ThirdPartyType.yuwen) {
+      for (int i = 0; i < theSearchingZiList.length; i++) {
+        switch (thirdPartyType) {
+          case ThirdPartyType.yuwen:
+            {
+              fieldLessonId = theSearchingZiList[i].lessonYuwen;
+            }
+            break;
+        }
 
-      if (fieldLessonId == lessonId) {
-        lessonString += theSearchingZiList[i].char;
+        if (fieldLessonId == lessonId) {
+          lessonString += theSearchingZiList[i].char;
+        }
       }
+    }
+    else if (thirdPartyType == ThirdPartyType.sunlaoshi) {
+      lessonString = ThirdPartyContent.getContent(ThirdPartyType.sunlaoshi, lessonId);
     }
 
     return lessonString;
+  }
+}
+
+class ThirdPartyContent {
+  ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  int lessonId = -1;
+  String content = '';
+
+  ThirdPartyContent(ThirdPartyType thirdPartyType,
+      int lessonId,
+      String content) {
+    this.thirdPartyType = thirdPartyType;
+    this.lessonId = lessonId;
+    this.content = content;
+  }
+
+  static String getContent(ThirdPartyType thirdPartyType, int lessonId) {
+    String content = '';
+    for (int i = 0; i < theThirdPartyContentList.length; i++) {
+      if (thirdPartyType == theThirdPartyContentList[i].thirdPartyType && lessonId == theThirdPartyContentList[i].lessonId) {
+          content = theThirdPartyContentList[i].content;
+          break;
+      }
+    }
+
+    return content;
   }
 }

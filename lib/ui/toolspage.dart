@@ -13,6 +13,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/webviewpage.dart';
 import 'package:hanzishu/ui/studynewwordspage.dart';
+import 'package:hanzishu/engine/studywords.dart';
 
 class ToolsPage extends StatefulWidget {
   @override

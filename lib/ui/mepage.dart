@@ -14,6 +14,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/introductionpage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/webviewpage.dart';
+import 'package:hanzishu/engine/studywords.dart';
 
 class MePage extends StatefulWidget {
   @override

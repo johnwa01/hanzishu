@@ -1,0 +1,4 @@
+enum StudyType {
+  all,
+  typingOnly
+}

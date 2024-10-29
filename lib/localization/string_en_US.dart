@@ -524,4 +524,5 @@ var theString_en_US = [
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 5 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
   Local(515, "Read sound & meaning, Next"),
   Local(516, "Customized typing exercises"),
+  Local(517, "Sun Lao Shi Text"),
 ];

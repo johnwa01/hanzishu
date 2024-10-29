@@ -25,6 +25,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:video_player/video_player.dart';
 import 'dart:ui';
 import 'dart:io';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -588,7 +589,7 @@ class _LessonsPageState extends State<LessonsPage> {
             MaterialPageRoute(builder: (context) =>
                 WordLaunchPage(drillCategory: DrillCategory.custom,
                     subItemId: realUnit, //subItemId,
-                    customString: newHanziPerLevel/*"品笑井输入法"*/)));
+                    customString: newHanziPerLevel/*"品笑井输入法"*/, thirdPartyType: ThirdPartyType.none)));
       },
       child: Text(getString(296) + ' ' + getString(387) + ' ' + realUnit.toString(), //"Review unit 1"
           style: TextStyle(color: Colors.brown)), // lightBlue

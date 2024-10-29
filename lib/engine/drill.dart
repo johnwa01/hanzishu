@@ -11,8 +11,6 @@ enum DrillCategory {
   custom,
 }
 
-
-
 class CenterZiRelatedBottum {
   static List<double> position = [160.0, 275.0, 230.0, 305.0, 20.0];
   //static List<String> structure = ["Single part", "left & right", "top & down", "wrapped"];

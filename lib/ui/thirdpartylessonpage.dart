@@ -9,6 +9,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/wordlaunchpage.dart';
+import 'package:hanzishu/engine/studywords.dart';
 
 class ThirdPartyLessonPage extends StatefulWidget {
   //final int lessonId;
@@ -136,7 +137,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
                   MaterialPageRoute(builder: (context) =>
                       WordLaunchPage(drillCategory: DrillCategory.custom,
                           subItemId: i + 1, //subItemId,
-                          customString: ThirdPartyLesson.getLessonString(thirdPartyType, theThirdPartyLessonList[i].lessonId)/*"好替身"*/)));
+                          customString: ThirdPartyLesson.getLessonString(thirdPartyType, theThirdPartyLessonList[i].lessonId)/*"好替身"*/, thirdPartyType: thirdPartyType)));
             },
             child: Text("                   " + lessonName!, // add some back space from level
                 style: TextStyle(color: Colors.black)), // lightBlue

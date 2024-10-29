@@ -28,17 +28,20 @@ import 'package:hanzishu/ui/privacypolicy.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/engine/drill.dart';
+import 'package:hanzishu/engine/studywords.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
 
 class WordLaunchPage extends StatefulWidget {
   //final int lessonId;
   final DrillCategory drillCategory; //startLessonId;
   final int subItemId; //endLessonId;
   final String customString;
+  final ThirdPartyType thirdPartyType;
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize? centerPositionAndSizeCache;
 
-  WordLaunchPage({required this.drillCategory, required this.subItemId, required this.customString});
+  WordLaunchPage({required this.drillCategory, required this.subItemId, required this.customString, required this.thirdPartyType});
 
   @override
   _WordLaunchPageState createState() => _WordLaunchPageState();
@@ -144,40 +147,40 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: 20),
-                Row(
-                    children: <Widget>[
-                      SizedBox(width: 50),
-                      getDrillPageCore(drillCategory),
-                      SizedBox(width: 50),
-                      getFlashcard(drillCategory!),
-                    ]
-                ),
-                SizedBox(height: 30),
-                Row(
-                    children: <Widget>[
-                      SizedBox(width: 50),
-                      getExamMeaning(drillCategory),
-                    ]
-                ),
-                SizedBox(height: 30),
-                Row(
-                    children: <Widget>[
-                      SizedBox(width: 50),
-                      getExamSoundToHanzi(drillCategory!),
-                      SizedBox(width: 50),
-                      getExamHanziToSound(drillCategory!),
-                    ]
-                ),
-                SizedBox(height: 30),
-                Row(
-                    children: <Widget>[
-                      SizedBox(width: 50),
-                      getReadAndTypeHanzi(drillCategory!),
-                      SizedBox(width: 50),
-                      getListenAndTypeHanzi(drillCategory!),
-                    ]
-                ),
-                SizedBox(height: 30),
+                  Row(
+                      children: <Widget>[
+                        SizedBox(width: 50),
+                        getDrillPageCore(drillCategory),
+                        SizedBox(width: 50),
+                        getFlashcard(drillCategory!),
+                      ]
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                      children: <Widget>[
+                        SizedBox(width: 50),
+                        getExamMeaning(drillCategory),
+                      ]
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                      children: <Widget>[
+                        SizedBox(width: 50),
+                        getExamSoundToHanzi(drillCategory!),
+                        SizedBox(width: 50),
+                        getExamHanziToSound(drillCategory!),
+                      ]
+                  ),
+                  SizedBox(height: 30),
+                  Row(
+                      children: <Widget>[
+                        SizedBox(width: 50),
+                        getReadAndTypeHanzi(drillCategory!),
+                        SizedBox(width: 50),
+                        getListenAndTypeHanzi(drillCategory!),
+                      ]
+                  ),
+                  SizedBox(height: 30),
                 Row(
                     children: <Widget>[
                       SizedBox(width: 50),
@@ -194,6 +197,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getDrillPageCore(drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     bool isFromReviewPage = true;
     if(drillCategory == DrillCategory.custom) {
       isFromReviewPage = false;
@@ -222,6 +229,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamSoundToHanzi(DrillCategory drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory == DrillCategory.custom) {
       return RawMaterialButton(
         shape: RoundedRectangleBorder(
@@ -266,6 +277,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamHanziToSound(DrillCategory drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory == DrillCategory.custom) {
       return RawMaterialButton(
         shape: RoundedRectangleBorder(
@@ -310,6 +325,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamMeaning(drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory == DrillCategory.custom) {
       return RawMaterialButton(
         shape: RoundedRectangleBorder(
@@ -354,6 +373,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getReadAndTypeHanzi(DrillCategory drillCategory) {
+    //if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+    //  return SizedBox(width: 0.0, height: 0.0);
+    //}
+
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -383,6 +406,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -412,6 +439,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getFlashcard(DrillCategory drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -448,6 +479,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getStudyCustomizedWordsPage(DrillCategory drillCategory) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
