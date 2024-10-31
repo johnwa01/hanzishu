@@ -471,7 +471,7 @@ var theString_en_US = [
   Local(461, "Legs"),
   Local(462, "Common"),
   Local(463, "Warning: Wrong typing code."),
-  Local(464, "No"),
+  Local(464, "NoHint"),
   Local(465, "Direction"),
   Local(466, "Good effort"),
   Local(467, "You have passed this quiz with a score of"),

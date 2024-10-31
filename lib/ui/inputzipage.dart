@@ -1989,9 +1989,9 @@ class _InputZiPageState extends State<InputZiPage> {
                 //  ),
                 //),
                 //SizedBox(width: fontSize),
-                SizedBox(
-                  width: 50.0 * getSizeRatio(),
-                  child: TextButton(
+                //SizedBox(
+                //  width: 90.0 * getSizeRatio(),
+                  /*child:*/ TextButton(
                     //color: Colors.white,
                     //textColor: hint1Color,
                     //padding: EdgeInsets.zero,
@@ -2009,11 +2009,11 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-                ),
+               // ),
                 //SizedBox(width: 140.0 * getSizeRatio()), //140.0
-                SizedBox(
-                  width: 50.0 * getSizeRatio(),
-                  child: TextButton(
+                //SizedBox(
+                //  width: 90.0 * getSizeRatio(),
+                  /*child:*/ TextButton(
                     //color: Colors.white,
                     //textColor: hint2Color,
                     //padding: EdgeInsets.zero,
@@ -2027,14 +2027,14 @@ class _InputZiPageState extends State<InputZiPage> {
                     },
                     child: Text(
                         "[" + getString(438) + "]"/*"Hint2"*/,
-                        style: TextStyle(fontSize: fontSize * 1.2), // 1.6
+                        style: TextStyle(fontSize: fontSize * 1.2, color: hint2Color), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 30.0 * getSizeRatio(),
-                  child: TextButton(
+                //),
+                //SizedBox(
+                //  width: 60.0 * getSizeRatio(),
+                  /*child:*/ TextButton(
                     //color: Colors.white,
                     //textColor: hint0Color,
                     //padding: EdgeInsets.zero,
@@ -2052,17 +2052,17 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30.0 * getSizeRatio(),
+                //),
+                //SizedBox(
+                //  height: 30.0 * getSizeRatio(),
                   //width: 150.0,
-                  child:  CustomPaint(
-                    foregroundPainter: inputZiHintPainter,
-                  ),
-                ),
+                //  child: CustomPaint(
+          //      CustomPaint(
+          //          foregroundPainter: inputZiHintPainter,
+          //        ),
+                //),
               ]
           ),
-        /*
         Row(
             children: <Widget>[
               SizedBox(
@@ -2072,9 +2072,8 @@ class _InputZiPageState extends State<InputZiPage> {
                   foregroundPainter: inputZiHintPainter,
                 ),
               ),
-              ]
+            ]
          ),
-         */
           getCategoryAndSubCat1Row(),
           getSubCategoryRow2(),
        ]

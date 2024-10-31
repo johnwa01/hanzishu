@@ -232,6 +232,7 @@ class ThirdPartyContent {
       }
     }
 
+    realWordsLength++; // 0 indexed, therefore need to add one for length
     return realWordsLength;
   }
 

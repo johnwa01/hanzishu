@@ -468,7 +468,7 @@ var theString_zh_CN = [
   Local(461, "腿"),
   Local(462, "常用"),
   Local(463, "提示：打字码不对。"),
-  Local(464, "无"),
+  Local(464, "无提示"),
   Local(465, "方向"),
   Local(466, "挺努力"),
   Local(467, "你通过了考试，成绩为"),
