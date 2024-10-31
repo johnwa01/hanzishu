@@ -373,10 +373,6 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getReadAndTypeHanzi(DrillCategory drillCategory) {
-    //if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
-    //  return SizedBox(width: 0.0, height: 0.0);
-    //}
-
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -390,11 +386,17 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         ),
         fillColor: Colors.blue.shade100,
         onPressed: () {
+          var typingType = TypingType.Custom;
+          if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+            typingType = TypingType.ThirdParty;
+            ThirdPartyContent.setThirdPartyTypeAndLessonId(ThirdPartyType.sunlaoshi, subItemId);
+          }
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
-                  InputZiPage(typingType: TypingType.Custom,
+                  InputZiPage(typingType: typingType,
                       lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 0, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
             ),
           );

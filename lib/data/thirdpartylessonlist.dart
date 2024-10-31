@@ -67,6 +67,4 @@ var theThirdPartyLessonList = [
   ThirdPartyLesson(ThirdPartyType.yuwen, 2, 52, "k21"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 1, "s1"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 2, "s2"),
-  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 3, "s3"),
-  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 4, "s4"),
 ];

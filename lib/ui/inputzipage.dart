@@ -16,6 +16,7 @@ import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzihintpainter.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
@@ -167,9 +168,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
     // first char, put here instead of Build so that it does only once.
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
-      String typeChar = getEitherCharFromCurrentId(
-          typingType!, 0 /*currentIndex*/, widget.lessonId);
-      if (isSoundPrompt) { // custom, and sound prompt
+      String typeChar;
+      if (isSoundPrompt) {
+        typeChar = getEitherCharFromCurrentId(
+            typingType!, 0 /*currentIndex*/, widget.lessonId);// custom, and sound prompt
         speakHanziAndPhrase(typeChar);
       }
       else if(typingType == TypingType.FromLessons) {
@@ -177,7 +179,15 @@ class _InputZiPageState extends State<InputZiPage> {
         TextToSpeech.speak(
             "zh-CN", theSentenceList[sentenceList[0]].conv);
       }
+      else if(typingType == TypingType.ThirdParty) {
+        PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+        String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(0, charIndex);
+        TextToSpeech.speak(
+            "zh-CN", sentence);
+      }
       else {
+        typeChar = getEitherCharFromCurrentId(
+            typingType!, 0 /*currentIndex*/, widget.lessonId);
         TextToSpeech.speak("zh-CN", typeChar);
       }
     }
@@ -503,6 +513,18 @@ class _InputZiPageState extends State<InputZiPage> {
               }
               else {
                 TextToSpeech.speak("zh-CN", typeChar);
+              }
+            }
+            else if(typingType == TypingType.ThirdParty) {
+              var charIndex = PrimitiveWrapper(0);
+          String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(
+                  currentIndex, charIndex);
+              if (charIndex.value == 0) {
+                TextToSpeech.speak(
+                    "zh-CN", sentence);
+              }
+              else {
+                TextToSpeech.speak("zh-CN", sentence[charIndex.value]);
               }
             }
             else {
@@ -1155,9 +1177,12 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.ComponentTyping) {
       title = getString(413)/*'Practice typing by component characteristics'*/;
     }
+    else if (typingType == TypingType.ThirdParty) {
+      title = getString(518)/*'Typing exercises'*/;
+    }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.ThirdParty && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -1262,10 +1287,10 @@ class _InputZiPageState extends State<InputZiPage> {
             Row(
               children: <Widget>[
                 SizedBox(width: 10),
-                Container(
-                  alignment: Alignment.topLeft,
-                  child: getShortTypingTitle(),
-                ),
+                //Container(
+                //  alignment: Alignment.topLeft,
+                //  child: getShortTypingTitle(),
+                //),
                 //SizedBox(width: 10),
                 Container(
                   //alignment: Alignment.topRight,
@@ -1789,17 +1814,27 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
-    else { // from lesson
-      return getInputSentence(currentIndex, promptStr, fontSize);
+    else if (typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty) {
+      return getInputSentence(typingType!, currentIndex, promptStr, fontSize);
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
     }
   }
 
-  Widget getInputSentence(int currentTypingCharsIndex, String promptStr, double fontSize) {
+  Widget getInputSentence(TypingType typingType, int currentTypingCharsIndex, String promptStr, double fontSize) {
       var sentenceIndex = PrimitiveWrapper(0);
       var charIndex = PrimitiveWrapper(0);
-      var oneLesson = theLessonList[lessonId];
-      oneLesson.getSentenceAndCharIndex(currentTypingCharsIndex, sentenceIndex, charIndex);
-      var conv = theSentenceList[sentenceIndex.value].conv;
+      String conv = '';
+      if (typingType == TypingType.FromLessons) {
+        var oneLesson = theLessonList[lessonId];
+        oneLesson.getSentenceAndCharIndex(
+            currentTypingCharsIndex, sentenceIndex, charIndex);
+        conv = theSentenceList[sentenceIndex.value].conv;
+      }
+      else if (typingType == TypingType.ThirdParty) {
+        conv = ThirdPartyContent.getCurrentSentenceAndCharIndex(currentIndex, charIndex);
+      }
 
       String strBeforeChar;
       String strChar;

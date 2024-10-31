@@ -525,4 +525,5 @@ var theString_en_US = [
   Local(515, "Read sound & meaning, Next"),
   Local(516, "Customized typing exercises"),
   Local(517, "Sun Lao Shi Text"),
+  Local(518, "Typing exercises"),
 ];

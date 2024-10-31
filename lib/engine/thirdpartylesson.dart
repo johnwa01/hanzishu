@@ -165,9 +165,15 @@ class ThirdPartyLesson {
 }
 
 class ThirdPartyContent {
+  static int currentContentIndex = -1;
+
   ThirdPartyType thirdPartyType = ThirdPartyType.none;
   int lessonId = -1;
   String content = '';
+
+  //int currentWordIndex = -1;
+  int realWordsLength = -1;
+  //String realWords = '';
 
   ThirdPartyContent(ThirdPartyType thirdPartyType,
       int lessonId,
@@ -175,6 +181,15 @@ class ThirdPartyContent {
     this.thirdPartyType = thirdPartyType;
     this.lessonId = lessonId;
     this.content = content;
+  }
+
+  static void setThirdPartyTypeAndLessonId(ThirdPartyType thirdPartyType, int lessonId) {
+    for (int i = 0; i < theThirdPartyContentList.length; i++) {
+      if (thirdPartyType == theThirdPartyContentList[i].thirdPartyType && theThirdPartyContentList[i].lessonId == theThirdPartyLessonList[lessonId - 1].lessonId) {
+        currentContentIndex = i;
+        break;
+      }
+    }
   }
 
   static String getContent(ThirdPartyType thirdPartyType, int lessonId) {
@@ -187,5 +202,94 @@ class ThirdPartyContent {
     }
 
     return content;
+  }
+
+  static String getChar(int currentIndex) {
+    PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+    String sentence = getCurrentSentenceAndCharIndex(currentIndex, charIndex);
+    return sentence.substring(charIndex.value, charIndex.value + 1);
+  }
+
+  static int getCurrentRealWordsLength() {
+    var content = theThirdPartyContentList[currentContentIndex];
+    return content.getRealWordsLength();
+  }
+
+  static String getCurrentSentenceAndCharIndex(int typingCharsIndex, PrimitiveWrapper charIndex) {
+    var content = theThirdPartyContentList[currentContentIndex];
+    return content.getSentenceAndCharIndex(typingCharsIndex, charIndex);
+  }
+
+  int getRealWordsLength() {
+    if (realWordsLength != -1)  {
+      // already initialized
+      return realWordsLength;
+    }
+
+    for (int i = 0; i < content.length; i++) {
+      if (!Utility.specialChar(content[i])) {
+        realWordsLength++;
+      }
+    }
+
+    return realWordsLength;
+  }
+
+  /*
+  String getCurrentRealWords() {
+    if (currentRealWordsLength != -1)  {
+      // already initialized
+      return currentRealWords;
+    }
+
+    for (int i = 0; i < currentContent.length; i++) {
+        if (!Utility.specialChar(currentContent[i])) {
+          currentRealWords += currentContent[i];
+        }
+    }
+
+    return currentRealWords;
+  }
+  */
+
+  String getSentenceAndCharIndex(int typingCharsIndex, PrimitiveWrapper charIndex) {
+    int charIndexCount = -1;
+    int lastNonCharIndex = -1;
+    String currentSentence = '';
+
+      for (int i = 0; i < content.length; i++) {
+        if (!Utility.specialChar(content[i])) {
+          charIndexCount++;
+          //currentSentence += currentContent[i];
+        }
+        else {
+          // record the current non-char index for later sentence creation
+          lastNonCharIndex = i;
+        }
+
+        if (charIndexCount == typingCharsIndex) {
+          // this is the one wanted
+          charIndex.value = i - lastNonCharIndex - 1;
+          currentSentence = getCurrentSentenceHelper(lastNonCharIndex);
+          break;
+        }
+      }
+
+      return currentSentence;
+  }
+
+  String getCurrentSentenceHelper(int lastNonCharIndex) {
+    String sentence = '';
+
+    for (int i = lastNonCharIndex + 1; i < content.length; i++) {
+      sentence += content[i];
+      if (Utility.specialChar(content[i])) {
+          if (sentence.length != 0) {
+            break;
+          }
+      }
+    }
+
+    return sentence;
   }
 }

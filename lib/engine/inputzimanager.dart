@@ -1,6 +1,7 @@
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/data/inputzilist.dart';
 import 'package:hanzishu/data/pinyininputzilist.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
@@ -509,6 +510,15 @@ class InputZiManager {
           0/*"nohelpyet"*/
       );
     }
+    else if (typingType == TypingType.ThirdParty) {
+      String char = ThirdPartyContent.getChar(index);
+      return ZiWithComponentsAndStrokes(
+          char,
+          [""],
+          "noimage",
+          0/*"nohelpyet"*/
+      );
+    }
     else if (typingType == TypingType.Custom) {
       return ZiWithComponentsAndStrokes(wordsStudy[index], [""], "", 0);
     }
@@ -614,6 +624,12 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
+    else if (typingType == TypingType.ThirdParty) {
+      var currentTotal = ThirdPartyContent.getCurrentRealWordsLength();
+      if (currentIndex >= currentTotal) { /*lesson.convCharsIds.length + lesson.charsIds.length*/
+        currentIndex = -1;
+      }
+    }
     else if (typingType == TypingType.Custom) {
       //var lesson = theLessonManager.getLesson(lessonId);
       if (currentIndex >= wordsStudy.length) {
@@ -694,6 +710,10 @@ class InputZiManager {
       var char = theLessonManager.getChar(lessonId, currentIndex);
       result = typingResult.contains(char);
     }
+    else if (typingType == TypingType.ThirdParty) {
+      var char = ThirdPartyContent.getChar(currentIndex);
+      result = typingResult.contains(char);
+    }
     else if (typingType == TypingType.Custom) {
       var char = wordsStudy[currentIndex];
       result = typingResult.contains(char);
@@ -755,6 +775,9 @@ class InputZiManager {
       var lesson = theLessonManager.getLesson(lessonId);
       //return lesson.convCharsIds.length + lesson.charsIds.length;
       return lesson.getAllTypingChars().length;
+    }
+    else if (typingType == TypingType.ThirdParty) {
+      return ThirdPartyContent.getCurrentRealWordsLength();
     }
     else if (typingType == TypingType.Custom) {
       return wordsStudy.length;
