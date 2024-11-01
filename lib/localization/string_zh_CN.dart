@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/localization.dart';
 // NOTE: never change or remove an existing entry here. Just create a new one.
 var theString_zh_CN = [
   Local(0, "未知"),
-  Local(1, "汉字"),
+  Local(1, "识字树"),
   Local(2, "字卡"),
   Local(3, "汉字分解"),
   Local(4, "对话"),
@@ -493,7 +493,7 @@ var theString_zh_CN = [
   Local(486, "请用下列方法查字"),
   Local(487, "（本程序自带, 请将系统输入模式设为英文。)"),
   Local(488, "测试声音到汉字"),
-  Local(489, "看打汉字"),
+  Local(489, "打汉字"),
   Local(490, "语文 (统编教材)： 汉字"),
   Local(491, "听打汉字"),
   Local(492, "汉字：学习，字卡，打字，测验。"),
@@ -504,7 +504,7 @@ var theString_zh_CN = [
   Local(497, "学期"),
   Local(498, "识字"),
   Local(499, "课文"),
-  Local(500, "学习和测试汉字"),
+  Local(500, "学习汉字"),
   Local(501, "滚雪球故事"),
   Local(502, "你完成了这个打字练习。"),
   Local(503, "(英文模式下)"),
@@ -521,6 +521,9 @@ var theString_zh_CN = [
   Local(514, "第二步：\n\n问题：我也可以将其它部件匹配到字母吗？\n\n回答：是的。你可以根据形状特征将全部5个组、25类部件匹配到25个大写字母。\n\n我们现在介绍这些类别。"),
   Local(515, "念出读音和字义, 下一个"),
   Local(516, "自定义打字练习"),
-  Local(517, "孙老师课本"),
+  Local(517, "Ty课本"),
   Local(518, "打字练习"),
+  Local(519, "猜一猜"),
+  Local(520, "课本.册"),
+  Local(521, "部件"),
 ];

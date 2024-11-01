@@ -63,7 +63,7 @@ class InputZiHintPainter extends BasePainter {
     for (int i = 0; i < typingComponentsAndSubComp.length; i++) {
       compColor = Colors.blue;
       if (selectedCompIndex == (i + 1)) {
-        compColor = Colors.purple;
+        compColor = Colors.orange; //Colors.purple;
       }
 
       if (i != 0) {

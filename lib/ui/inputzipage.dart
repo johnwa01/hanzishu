@@ -1304,6 +1304,7 @@ class _InputZiPageState extends State<InputZiPage> {
               ]
             ),
             getInputPrompt(),
+            Divider(color: Colors.brown,),
             getComponentRelated(),
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
@@ -2065,6 +2066,9 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
         Row(
             children: <Widget>[
+              Text(getString(521) + ': ', /*"Parts"*/
+                  style: TextStyle(fontSize: fontSize * 1.2, color:  Colors.black)),
+              //SizedBox(width: 30.0),
               SizedBox(
                 height: 40.0 * getSizeRatio(),
                 //width: 150.0,
@@ -2074,7 +2078,8 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
             ]
          ),
-          getCategoryAndSubCat1Row(),
+          getCategoryRow(),
+          getSubCategoryRow1(),
           getSubCategoryRow2(),
        ]
       ),
@@ -2082,7 +2087,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  getCategoryAndSubCat1Row() {
+  Widget getCategoryRow() {
     if (showHint == 0) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -2090,26 +2095,43 @@ class _InputZiPageState extends State<InputZiPage> {
     currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
 
     return Row(
-        children: getCategoriesAndSubCat1(),
+        children: getCategories(),
     );
   }
 
-  List<Widget> getCategoriesAndSubCat1() {
+  List<Widget> getCategories() {
     List<Widget> categories = [];
 
-    categories.add(Text('[', style: TextStyle(color: Colors.green)));
-    categories.add(getCategoryOneItem(1));
+    categories.add(Text(getString(519) + '： [', style: TextStyle(color: Colors.black))); // Guessing:
+    //categories.add(getCategoryOneItem(1));
     categories.add(getCategoryOneItem(2));
     categories.add(getCategoryOneItem(3));
     categories.add(getCategoryOneItem(4));
     categories.add(getCategoryOneItem(5));
-    categories.add(Text(']', style: TextStyle(color: Colors.green)));
-
-    addSubCategory1(categories);
+    categories.add(Text(']', style: TextStyle(color: Colors.black)));
 
     return categories;
   }
 
+  Widget getSubCategoryRow1() {
+    if (showHint == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
+
+    return Row(
+      children: getSubCategory1(),
+    );
+  }
+
+  List<Widget> getSubCategory1() {
+    List<Widget> subCategories = [];
+
+    addSubCategory1(subCategories);
+
+    return subCategories;
+  }
 
   getCategoryOneItem(int categoryIndex) {
     if (selectedCategoryIndex != 0) {
@@ -2173,7 +2195,7 @@ class _InputZiPageState extends State<InputZiPage> {
           selectedSubcategoryIndex = leadCompIndex;
         });
       },
-      child: Text(getString(theLeadComponentList[componentIndex].hint) /*"Start"*/,
+      child: Text(getString(theLeadComponentList[componentIndex].hint) ,/*"Start"*/ // lightBlue
           style: TextStyle(color: color)), // lightBlue
     );
   }
@@ -2185,6 +2207,7 @@ class _InputZiPageState extends State<InputZiPage> {
       currentCorrectSubcategoryIndex = theComponentManager.getCurrentCorrectSubcategoryIndex(currentTypingComponentsAndSub, selectedCompIndex, currentLeadCompList);
       widgetList.add(getSubCategoryOneItem(1, currentLeadCompList));
       widgetList.add(getSubCategoryOneItem(2, currentLeadCompList));
+      widgetList.add(getSubCategoryOneItem(3, currentLeadCompList));
     }
   }
 
@@ -2194,7 +2217,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     List<Widget> widgetList  = [];
-    for (int i = 2; i < currentLeadCompList.length; i++) {
+    for (int i = 3; i < currentLeadCompList.length; i++) {
       widgetList.add(getSubCategoryOneItem(i + 1, currentLeadCompList));
     }
 

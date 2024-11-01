@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Hanzi"),
+  Local(1, "Literacy Tree"),
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -496,7 +496,7 @@ var theString_en_US = [
   Local(486, "Please use following methods to search word"),
   Local(487, "(built-in, please set system input mode to English.)"),
   Local(488, "Test Sound to Hanzi"),
-  Local(489, "Read and type Hanzi"),
+  Local(489, "Typing Hanzi"),
   Local(490, "Yuwen： Hanzi"),
   Local(491, "Listen and type Hanzi"),
   Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
@@ -507,7 +507,7 @@ var theString_en_US = [
   Local(497, "Semester"),
   Local(498, "Learn Hanzi"),
   Local(499, "Lesson"),
-  Local(500, "Study and test Hanzi"),
+  Local(500, "Study Hanzi"),
   Local(501, "Snowball stories"),
   Local(502, "You have completed this typing exercise."),
   Local(503, "(under English mode)"),
@@ -524,6 +524,9 @@ var theString_en_US = [
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 5 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
   Local(515, "Read sound & meaning, Next"),
   Local(516, "Customized typing exercises"),
-  Local(517, "Sun Lao Shi Text"),
+  Local(517, "Ty Textbook"),
   Local(518, "Typing exercises"),
+  Local(519, "Guess"),
+  Local(520, "Textbook Volume"),
+  Local(521, "Alphabets"),
 ];

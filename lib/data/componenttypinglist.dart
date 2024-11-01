@@ -2,7 +2,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/utility.dart';
 
 var theComponentCategoryList = [
-  ComponentCategory('A', 465), // directions
+  ComponentCategory('A', 465), // directions //Note: It's empty now and won't show in UI. Leave here for easy code change.
   ComponentCategory('B', 460), // mouth
   ComponentCategory('C', 461), // legs
   ComponentCategory('D', 462), // common
@@ -45,26 +45,26 @@ var theLeadComponentList = [
   LeadComponent(2, "Ta", "丁", true, true, 1, 1, "C11.png", "nmdc", 319/*"T shape"*/, [], 'D'),
   LeadComponent(3, "Ea", "三", false, true, 1, 3, "C13.png", "nmdc", 316/*"horizontal"*/, [4.0,0.45,0.375,8.0,0.9,0.375,4.0,0.45,0.375,8.0,0.45,0.625,8.0,0.45,0.925,8.0,0.9,0.925,4.0,0.3,0.625,8.0,0.45,0.625,8.0,0.975,0.625], 'E'),
   LeadComponent(4, "Aa", "人", true, true, 3, 5, "C35.png", "nmdc", 353/*"human legs"*/, [], 'C'),
-  LeadComponent(5, "Qa", "田", true, true, 1, 5, "C15.png", "nmdc", 351/*"four mouths"*/, [], 'B'),
-  LeadComponent(6, "Ca", "区字框", false, true, 5, 3, "C53.png", "nmdc", 317/*"open to right"*/, [4.0,0.125,0.1,8.0,0.875,0.1,4.0,0.125,0.1,8.0,0.125,0.9,8.0,0.925,0.9], 'A'),
-  LeadComponent(7, "Ua", "画字框", true, true, 2, 2, "C22.png", "nmdc", 345/*"open to top"*/, [4.0,0.125,0.25,8.0,0.125,0.85,8.0,0.875,0.85,8.0,0.875,0.25], 'A'),
-  LeadComponent(8, "Ia", "竖", false, true, 2, 3, "C23.png", "nmdc", 342/*"verticle"*/, [4.0,0.5,0.0,8.0,0.5,1.0], 'E'),
-  LeadComponent(9, "Ra", "尺", true, true, 1, 2, "C12.png", "nmdc", 325/*"two legs"*/, [], 'C'),
-  LeadComponent(10, "Pa", "单耳", false, true, 2, 5, "C25.png", "nmdc", 320/*"ear"*/, [4.0,0.475,0.05,8.0,0.475,0.975,4.0,0.475,0.05,8.0,0.8,0.05,8.0,0.8,0.225,8.0,0.7875,0.25,8.0,0.75,0.275,8.0,0.6,0.3], 'D'),
-  LeadComponent(11, "Ga", "厶", false, true, 3, 1, "C31.png", "nmdc", 321/*"triangle"*/, [4.0,0.7,0.075,8.0,0.65,0.25,8.0,0.625,0.35,8.0,0.575,0.45,8.0,0.5375,0.55,8.0,0.5,0.65,8.0,0.45,0.725,8.0,0.375,0.825,8.0,0.85,0.725,4.0,0.725,0.4125,8.0,0.7625,0.55,8.0,0.8125,0.65,8.0,0.85,0.725,8.0,0.9,0.875], 'D'),
-  LeadComponent(12, "Fa", "厂", true, true, 3, 2, "C32.png", "nmdc", 349/*"cliff"*/, [], 'D'),
-  LeadComponent(13, "Da", "刀", false, true, 3, 3, "C33.png", "nmdc", 326/*"knife"*/, [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875], 'D'),
-  LeadComponent(14, "Sa", "右三框", true, true, 3, 4, "C34.png", "nmdc", 323/*"open left"*/, [], 'A'),
-  LeadComponent(15, "Wa", "学字头", true, true, 1, 4, "C14.png", "nmdc", 324/*"pure dots"*/, [], 'E'),
-  LeadComponent(16, "Ha", "草字头", true, true, 4, 1, "C41.png", "nmdc", 344/*"grass"*/, [], 'D'),
-  LeadComponent(17, "Ja", "撇", false, true, 4, 2, "C42.png", "nmdc", 318/*"throw away"*/, [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92], 'E'),
-  LeadComponent(18, "Ka", "长", true, true, 4, 3, "C43.png", "nmdc", 346/*"K shape"*/, [], 'D'),
-  LeadComponent(19, "La", "竖折", false, true, 4, 4, "C44.png", "nmdc", 343/*"break"*/, [4.0,0.175,0.125,8.0,0.175,0.875,8.0,0.775,0.875], 'E'),
-  LeadComponent(20, "Ba", "日", true, true, 5, 1, "C51.png", "nmdc", 327/*"up & down mouths"*/, [], 'B'),
+  LeadComponent(5, "Ba", "日", true, true, 5, 1, "C51.png", "nmdc", 327/*"up & down mouths"*/, [], 'B'),
+  LeadComponent(6, "Qa", "田", true, true, 1, 5, "C15.png", "nmdc", 351/*"four mouths"*/, [], 'B'),
+  LeadComponent(7, "Ca", "区字框", false, true, 5, 3, "C53.png", "nmdc", 317/*"open to right"*/, [4.0,0.125,0.1,8.0,0.875,0.1,4.0,0.125,0.1,8.0,0.125,0.9,8.0,0.925,0.9], 'B'),
+  LeadComponent(8, "Ua", "画字框", true, true, 2, 2, "C22.png", "nmdc", 345/*"open to top"*/, [4.0,0.125,0.25,8.0,0.125,0.85,8.0,0.875,0.85,8.0,0.875,0.25], 'B'),
+  LeadComponent(9, "Ia", "竖", false, true, 2, 3, "C23.png", "nmdc", 342/*"verticle"*/, [4.0,0.5,0.0,8.0,0.5,1.0], 'E'),
+  LeadComponent(10, "Ra", "尺", true, true, 1, 2, "C12.png", "nmdc", 325/*"two legs"*/, [], 'C'),
+  LeadComponent(11, "Pa", "单耳", false, true, 2, 5, "C25.png", "nmdc", 320/*"ear"*/, [4.0,0.475,0.05,8.0,0.475,0.975,4.0,0.475,0.05,8.0,0.8,0.05,8.0,0.8,0.225,8.0,0.7875,0.25,8.0,0.75,0.275,8.0,0.6,0.3], 'D'),
+  LeadComponent(12, "Ga", "厶", false, true, 3, 1, "C31.png", "nmdc", 321/*"triangle"*/, [4.0,0.7,0.075,8.0,0.65,0.25,8.0,0.625,0.35,8.0,0.575,0.45,8.0,0.5375,0.55,8.0,0.5,0.65,8.0,0.45,0.725,8.0,0.375,0.825,8.0,0.85,0.725,4.0,0.725,0.4125,8.0,0.7625,0.55,8.0,0.8125,0.65,8.0,0.85,0.725,8.0,0.9,0.875], 'D'),
+  LeadComponent(13, "Fa", "厂", true, true, 3, 2, "C32.png", "nmdc", 349/*"cliff"*/, [], 'D'),
+  LeadComponent(14, "Da", "刀", false, true, 3, 3, "C33.png", "nmdc", 326/*"knife"*/, [4.0,0.1625,0.475,8.0,0.825,0.475,8.0,0.825,0.8,4.0,0.2125,0.65,8.0,0.85,0.65,4.0,0.1625,0.7875,8.0,0.825,0.7875], 'D'),
+  LeadComponent(15, "Sa", "右三框", true, true, 3, 4, "C34.png", "nmdc", 323/*"open left"*/, [], 'B'),
+  LeadComponent(16, "Wa", "学字头", true, true, 1, 4, "C14.png", "nmdc", 324/*"pure dots"*/, [], 'E'),
+  LeadComponent(17, "Ha", "草字头", true, true, 4, 1, "C41.png", "nmdc", 344/*"grass"*/, [], 'D'),
+  LeadComponent(18, "Ja", "撇", false, true, 4, 2, "C42.png", "nmdc", 318/*"throw away"*/, [4.0,0.6875,0.05,8.0,0.675,0.35,8.0,0.65,0.5,8.0,0.6125,0.6,8.0,0.55,0.7,8.0,0.45,0.8,8.0,0.25,0.92], 'E'),
+  LeadComponent(19, "Ka", "长", true, true, 4, 3, "C43.png", "nmdc", 346/*"K shape"*/, [], 'D'),
+  LeadComponent(20, "La", "竖折", false, true, 4, 4, "C44.png", "nmdc", 343/*"break"*/, [4.0,0.175,0.125,8.0,0.175,0.875,8.0,0.775,0.875], 'E'),
   LeadComponent(21, "Va", "八", true, true, 5, 2, "C52.png", "nmdc", 347/*"divided shapes"*/, [], 'C'),
   LeadComponent(22, "Ya", "点", false, true, 2, 1, "C21.png", "nmdc", 352/*"mixed dots"*/, [4.0,0.425,0.2,8.0,0.6,0.35], 'E'),
   LeadComponent(23, "Xa", "艾字底", false, true, 5, 4, "C54.png", "nmdc", 350/*"crossed legs"*/, [4.0,0.75,0.05,8.0,0.6,0.475,8.0,0.5,0.65,8.0,0.325,0.85,8.0,0.025,0.975,4.0,0.2,0.05,8.0,0.325,0.375,8.0,0.5,0.65,8.0,0.725,0.825,8.0,0.925,0.925], 'C'),
-  LeadComponent(24, "Na", "同字框", false, true, 6, 1, "C61.png", "nmdc", 348/*"open to bottom"*/, [4.0,0.125,0.075,8.0,0.125,0.95,4.0,0.125,0.075,8.0,0.875,0.075,8.0,0.875,0.85,8.0,0.85,0.8875,8.0,0.8,0.9,8.0,0.7125,0.9125], 'A'),
+  LeadComponent(24, "Na", "同字框", false, true, 6, 1, "C61.png", "nmdc", 348/*"open to bottom"*/, [4.0,0.125,0.075,8.0,0.125,0.95,4.0,0.125,0.075,8.0,0.875,0.075,8.0,0.875,0.85,8.0,0.85,0.8875,8.0,0.8,0.9,8.0,0.7125,0.9125], 'B'),
   LeadComponent(25, "Ma", "木", true, true, 6, 2,  "C62.png", "nmdc", 322/*"three legs"*/,[], 'C'),
 ];
 

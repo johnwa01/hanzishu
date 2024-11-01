@@ -103,7 +103,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
       if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType) {
         if (theThirdPartyLessonList[i].levelId != levelIndex) {
-          var levelName = ThirdPartyLevel.getLevelName(theThirdPartyLessonList[i].levelId);
+          var levelName = ThirdPartyLevel.getLevelName(thirdPartyType, theThirdPartyLessonList[i].levelId);
           textButton = TextButton(
             style: TextButton.styleFrom(
               textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
@@ -127,7 +127,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
         }
 
         if (theThirdPartyLessonList[i].levelId == currentLevelId) {
-          var lessonName = ThirdPartyLesson.getLessonName(theThirdPartyLessonList[i].lessonId);
+          var lessonName = ThirdPartyLesson.getLessonName(thirdPartyType, theThirdPartyLessonList[i].lessonId);
           textButton = TextButton(
             style: TextButton.styleFrom(
               textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),

@@ -49,6 +49,11 @@ class ThirdParty {
           wholeString = getString(498) + " " + indexString;
         }
         break;
+      case "t":
+        {
+          wholeString = getString(520) + " " + indexString;
+        }
+        break;
       case "l":
         {
           String gradeString = getString(496);
@@ -101,9 +106,9 @@ class ThirdPartyLevel {
     //this.startingLessonId = startingLessonId;
   }
 
-  static String? getLevelName(int levelId) {
+  static String? getLevelName(ThirdPartyType thirdPartyType, int levelId) {
     for (int i = 0; i < theThirdPartyLevelList.length; i++) {
-      if (theThirdPartyLevelList[i].levelId == levelId) {
+      if (theThirdPartyLevelList[i].thirdPartyType == thirdPartyType && theThirdPartyLevelList[i].levelId == levelId) {
         return ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode);
       }
     }
@@ -128,9 +133,9 @@ class ThirdPartyLesson {
     this.lessonNameCode = lessonNameCode;
   }
 
-  static String? getLessonName(int lessonId) {
+  static String? getLessonName(ThirdPartyType thirdPartyType, int lessonId) {
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
-      if (theThirdPartyLessonList[i].lessonId == lessonId) {
+      if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType && theThirdPartyLessonList[i].lessonId == lessonId) {
         return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
       }
     }
