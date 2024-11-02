@@ -45,7 +45,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     theComponentManager.setCurrentType(questionType);
     theComponentManager.initCurrentIndex();
-    preIndexAtCurrentIndex0 = 0;
+    preIndexAtCurrentIndex0 = 1;
     currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();
@@ -370,7 +370,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
   Widget getHeaderOfComponentInGroup() {
     String componentKeyPairingHeaderString = getString(126)/*'Memorize the above Component-key pairings.'*/;
-    if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 == 0) {
+    if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 == 1) {
       componentKeyPairingHeaderString = getString(388);
     }
     else if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
@@ -426,7 +426,7 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getHeaderOfComponent() {
     var str;
     if (currentIndex == 0) {
-      if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 0) {
+      if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 1) {
         str = getString(514); /* 25 categories of Chinese alphabets*/
       }
       else if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
@@ -658,7 +658,7 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     else if (questionType == QuestionType.Component) { // for the header only
-      if (preIndexAtCurrentIndex0 == 0) {
+      if (preIndexAtCurrentIndex0 == 0 || preIndexAtCurrentIndex0 == 1) {
         return SizedBox(width: 0.0, height: 0.0);
       }
 
@@ -1313,7 +1313,7 @@ class _ComponentPageState extends State<ComponentPage> {
       var result = getString(405); // "Previous one"
 
       //skip the first real question
-      if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1)) {
+      if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2)) {
         return Container(
           child: TextButton(
             child: Text(result,
@@ -1328,7 +1328,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 if (currentIndex >= 1) {
                   currentIndex = theComponentManager.getPreviousIndex();
                 }
-                else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1) {
+                else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2) {
                   preIndexAtCurrentIndex0--;
                 }
               });

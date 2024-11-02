@@ -1304,14 +1304,14 @@ class _InputZiPageState extends State<InputZiPage> {
               ]
             ),
             getInputPrompt(),
-            Divider(color: Colors.brown,),
+            // Divider(color: Colors.brown,),
             getComponentRelated(),
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
-            SizedBox(
-              height: 40.0, //40
-            ),
+            //SizedBox(
+            //  height: 40.0, //40
+            //),
             //SizedBox(
             //    child: getContinue(),
             //),
@@ -1990,9 +1990,13 @@ class _InputZiPageState extends State<InputZiPage> {
                 //  ),
                 //),
                 //SizedBox(width: fontSize),
-                //SizedBox(
-                //  width: 90.0 * getSizeRatio(),
-                  /*child:*/ TextButton(
+                SizedBox(
+                  //width: 50.0 * getSizeRatio(),
+                  child: TextButton(
+                    style: ButtonStyle(
+                  //    backgroundColor: MaterialStateProperty.all(Colors.green),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
                     //color: Colors.white,
                     //textColor: hint1Color,
                     //padding: EdgeInsets.zero,
@@ -2010,11 +2014,15 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-               // ),
+                ),
                 //SizedBox(width: 140.0 * getSizeRatio()), //140.0
-                //SizedBox(
-                //  width: 90.0 * getSizeRatio(),
-                  /*child:*/ TextButton(
+                SizedBox(
+                  //width: 50.0 * getSizeRatio(),
+                  child: TextButton(
+                    style: ButtonStyle(
+                    //   backgroundColor: MaterialStateProperty.all(Colors.green),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
                     //color: Colors.white,
                     //textColor: hint2Color,
                     //padding: EdgeInsets.zero,
@@ -2032,13 +2040,17 @@ class _InputZiPageState extends State<InputZiPage> {
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-                //),
-                //SizedBox(
-                //  width: 60.0 * getSizeRatio(),
-                  /*child:*/ TextButton(
+                ),
+                SizedBox(
+                  //width: 30.0 * getSizeRatio(),
+                  child: TextButton(
                     //color: Colors.white,
                     //textColor: hint0Color,
                     //padding: EdgeInsets.zero,
+                    style: ButtonStyle(
+                  //    backgroundColor: MaterialStateProperty.all(Colors.green),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
                     onPressed: () {
                       initOverlay();
 
@@ -2053,24 +2065,22 @@ class _InputZiPageState extends State<InputZiPage> {
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
-                //),
+                ),
                 //SizedBox(
                 //  height: 30.0 * getSizeRatio(),
-                  //width: 150.0,
+                  //width: 180.0 * getSizeRatio(),
                 //  child: CustomPaint(
-          //      CustomPaint(
-          //          foregroundPainter: inputZiHintPainter,
-          //        ),
+                //    foregroundPainter: inputZiHintPainter,
+                //  ),
                 //),
               ]
           ),
         Row(
             children: <Widget>[
-              Text(getString(521) + ': ', /*"Parts"*/
-                  style: TextStyle(fontSize: fontSize * 1.2, color:  Colors.black)),
-              //SizedBox(width: 30.0),
+              //getAlphabetsText(fontSize),
+              SizedBox(width: 30.0),
               SizedBox(
-                height: 40.0 * getSizeRatio(),
+                height: 20.0 * getSizeRatio(),
                 //width: 150.0,
                 child:  CustomPaint(
                   foregroundPainter: inputZiHintPainter,
@@ -2078,8 +2088,7 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
             ]
          ),
-          getCategoryRow(),
-          getSubCategoryRow1(),
+          getCategoryAndSubCat1Row(),
           getSubCategoryRow2(),
        ]
       ),
@@ -2087,7 +2096,16 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Widget getCategoryRow() {
+  Widget getAlphabetsText(double fontSize) {
+    if (showHint == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    return Text(getString(521) + ': ', //"Alphabets"
+          style: TextStyle(fontSize: fontSize * 1.2, color: Colors.black));
+  }
+
+  Widget getCategoryAndSubCat1Row() {
     if (showHint == 0) {
       return SizedBox(width: 0.0, height: 0.0);
     }
@@ -2095,47 +2113,37 @@ class _InputZiPageState extends State<InputZiPage> {
     currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
 
     return Row(
-        children: getCategories(),
+        children: getCategoriesAndSubCat1(),
     );
   }
 
-  List<Widget> getCategories() {
+  List<Widget> getCategoriesAndSubCat1() {
     List<Widget> categories = [];
 
-    categories.add(Text(getString(519) + '： [', style: TextStyle(color: Colors.black))); // Guessing:
+    if (selectedCategoryIndex < 2) { // before selection of a category
+      categories.add(Text(getString(519) + '： [',
+        style: TextStyle(color: Colors.black))); // Guess
+    }
     //categories.add(getCategoryOneItem(1));
     categories.add(getCategoryOneItem(2));
     categories.add(getCategoryOneItem(3));
     categories.add(getCategoryOneItem(4));
     categories.add(getCategoryOneItem(5));
-    categories.add(Text(']', style: TextStyle(color: Colors.black)));
+    if (selectedCategoryIndex < 2) {
+      categories.add(Text(']', style: TextStyle(color: Colors.black)));
+    }
+    else {
+      categories.add(Text(': ', style: TextStyle(color: Colors.black)));
+    }
+
+    addSubCategory1(categories);
 
     return categories;
   }
 
-  Widget getSubCategoryRow1() {
-    if (showHint == 0) {
-      return SizedBox(width: 0.0, height: 0.0);
-    }
-
-    currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
-
-    return Row(
-      children: getSubCategory1(),
-    );
-  }
-
-  List<Widget> getSubCategory1() {
-    List<Widget> subCategories = [];
-
-    addSubCategory1(subCategories);
-
-    return subCategories;
-  }
-
   getCategoryOneItem(int categoryIndex) {
     if (selectedCategoryIndex != 0) {
-      if (categoryIndex != selectedCategoryIndex && categoryIndex != currentCorrectCategoryIndex) {
+      if (/*categoryIndex != selectedCategoryIndex &&*/ categoryIndex != currentCorrectCategoryIndex) {
         return SizedBox(width: 0.0, height: 0.0);
       }
     }
@@ -2187,16 +2195,16 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16.0 * getSizeRatio()),
-      ),
+      style: ButtonStyle(
+         padding: MaterialStateProperty.all(EdgeInsets.zero),
+       ),
       onPressed: () {
         setState(() {
           selectedSubcategoryIndex = leadCompIndex;
         });
       },
-      child: Text(getString(theLeadComponentList[componentIndex].hint) ,/*"Start"*/ // lightBlue
-          style: TextStyle(color: color)), // lightBlue
+      child: Text('[' + getString(theLeadComponentList[componentIndex].hint) + ']' ,/*"Start"*/ // lightBlue
+          style: TextStyle(color: color, fontSize: 16.0 * getSizeRatio())), // lightBlue
     );
   }
 

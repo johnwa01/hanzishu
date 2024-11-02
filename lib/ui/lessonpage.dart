@@ -295,6 +295,7 @@ class _LessonPageState extends State<LessonPage> {
           SizedBox(
             height: 60.0, //40
           ),
+          /*
           Container(
             child: Text(getString(403), style: TextStyle(fontSize: 16.0),),
             //padding: EdgeInsets.all(15),
@@ -330,11 +331,12 @@ class _LessonPageState extends State<LessonPage> {
             ),
             //padding: EdgeInsets.all(20),
           ),
+          */
           Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
-                getButton(context, lessonId, 6),
+         //       getButton(context, lessonId, 6),
                 getButton(context, lessonId, 7),
               ],
             ),
