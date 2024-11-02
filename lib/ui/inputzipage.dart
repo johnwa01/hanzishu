@@ -1296,7 +1296,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   //alignment: Alignment.topRight,
                   child: getSwitchInputMethodOrInputModeMessage(),
                 ),
-                //SizedBox(width: 10),
+                SizedBox(width: 250.0 * getSizeRatio()), //push skip section into right
                 Container(
                   alignment: Alignment.topRight,
                   child: getSkipThisSection(),
@@ -2369,7 +2369,7 @@ class _InputZiPageState extends State<InputZiPage> {
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: Text("OK", style: TextStyle(color: Colors.blue)),
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog

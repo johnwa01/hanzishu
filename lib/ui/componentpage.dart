@@ -912,25 +912,25 @@ class _ComponentPageState extends State<ComponentPage> {
               //mainAxisSize: MainAxisSize.max,
               //crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual15)),
+                getOneKeyboardAnswer(AnswerPosition.individual15),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual14)),
+                getOneKeyboardAnswer(AnswerPosition.individual14),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual13)),
+                getOneKeyboardAnswer(AnswerPosition.individual13),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual12)),
+                getOneKeyboardAnswer(AnswerPosition.individual12),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual11)),
+                getOneKeyboardAnswer(AnswerPosition.individual11),
                 SizedBox(width: 5),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual21)),
+                getOneKeyboardAnswer(AnswerPosition.individual21),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual22)),
+                getOneKeyboardAnswer(AnswerPosition.individual22),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual23)),
+                getOneKeyboardAnswer(AnswerPosition.individual23),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual24)),
+                getOneKeyboardAnswer(AnswerPosition.individual24),
                 SizedBox(width: 2),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual25)),
+                getOneKeyboardAnswer(AnswerPosition.individual25),
               ]
           ),
         Row(
@@ -943,25 +943,25 @@ class _ComponentPageState extends State<ComponentPage> {
             //mainAxisSize: MainAxisSize.max,
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual35)),
+              getOneKeyboardAnswer(AnswerPosition.individual35),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual34)),
+              getOneKeyboardAnswer(AnswerPosition.individual34),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual33)),
+              getOneKeyboardAnswer(AnswerPosition.individual33),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual32)),
+              getOneKeyboardAnswer(AnswerPosition.individual32),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual31)),
+              getOneKeyboardAnswer(AnswerPosition.individual31),
               SizedBox(width: 5),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual41)),
+              getOneKeyboardAnswer(AnswerPosition.individual41),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual42)),
+              getOneKeyboardAnswer(AnswerPosition.individual42),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual43)),
+              getOneKeyboardAnswer(AnswerPosition.individual43),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual44)),
+              getOneKeyboardAnswer(AnswerPosition.individual44),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
+              getOneKeyboardAnswer(AnswerPosition.none),
             ]
         ),
           Row(
@@ -974,25 +974,25 @@ class _ComponentPageState extends State<ComponentPage> {
             //mainAxisSize: MainAxisSize.max,
             //crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual55)),
+              getOneKeyboardAnswer(AnswerPosition.individual55),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual54)),
+              getOneKeyboardAnswer(AnswerPosition.individual54),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual53)),
+              getOneKeyboardAnswer(AnswerPosition.individual53),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual52)),
+              getOneKeyboardAnswer(AnswerPosition.individual52),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual51)),
+              getOneKeyboardAnswer(AnswerPosition.individual51),
               SizedBox(width: 5),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual61)),
+              getOneKeyboardAnswer(AnswerPosition.individual61),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.individual62)),
+              getOneKeyboardAnswer(AnswerPosition.individual62),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
+              getOneKeyboardAnswer(AnswerPosition.none),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
+              getOneKeyboardAnswer(AnswerPosition.none),
               SizedBox(width: 2),
-              Flexible(child: getOneKeyboardAnswer(AnswerPosition.none)),
+              getOneKeyboardAnswer(AnswerPosition.none),
             ]
         )
       ]
@@ -1082,17 +1082,24 @@ class _ComponentPageState extends State<ComponentPage> {
       backgroundColor = Colors.white;
     }
 
-    var width = 35.0 * getSizeRatioWithLimit();
-    var height = 36.0  * getSizeRatioWithLimit();
+    var width = 29.0 * getSizeRatioWithLimit();
+    var height = 30.0  * getSizeRatioWithLimit();
     if (isAGroupAnswerType) {
       width = 150.0  * getSizeRatioWithLimit();
       height = 40.0  * getSizeRatioWithLimit();
     }
 
     return TextButton(
-      //color: backgroundColor,
-      //textColor: Colors.blueAccent,
-      //padding: EdgeInsets.all(2.0), //EdgeInsets.zero,
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(backgroundColor),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(0.0)),  // 0.0 is rectangle
+        ),
+        minimumSize: WidgetStateProperty.all(Size(20.0, 20.0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: WidgetStateProperty.all(EdgeInsets.all(2.0)), // 2.0 for showing color for correct or wrong ones
+      ),
       onPressed: () {
         setPositionState(position);
         wasLastAnswerCorrect = false;
