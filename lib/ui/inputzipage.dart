@@ -1561,7 +1561,7 @@ class _InputZiPageState extends State<InputZiPage> {
       FocusScope.of(context).unfocus();
       // set up the button
       Widget okButton = TextButton(
-        child: Text(getString(286)/*Ok*/),
+        child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
         onPressed: () {
           Navigator.pop(context);
         },
@@ -2467,7 +2467,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(115)/*"Good job!"*/;
       content = getString(410)/*"You have completed typing exercises."*/;
     }
-    else if (typingType == TypingType.Custom) {
+    else if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
       title = getString(115)/*"Good job!"*/;
       content = getString(502)/*"You have completed this typing exercises."*/;
     }

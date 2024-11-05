@@ -1466,7 +1466,7 @@ class BasePainter extends CustomPainter{
     var typingCode = DictionaryManager.getTypingCode(searchingZiIndex);
     displayTextWithValue(
         getString(89)/*"Typing code"*/ + ": ", posi.transX, posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.black, false);
-    displayTextWithValue(typingCode, posi.transX + applyRatio(230.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false); //170
+    displayTextWithValue(typingCode, posi.transX + applyRatio(225.0), posi.transY, posi.charFontSize/*thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize)*/, Colors.blue, false); //170
   }
 
   displayTypingCodePlaceholder(PositionAndSize posi) {

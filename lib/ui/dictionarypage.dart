@@ -121,7 +121,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
                     Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
                     SizedBox(width: 30 * getSizeRatioWithLimit()),
 
-                    SizedBox(width: 50 * getSizeRatioWithLimit()),
+                    SizedBox(width: 25 * getSizeRatioWithLimit()),
 
                     TextButton(
                       style: TextButton.styleFrom(

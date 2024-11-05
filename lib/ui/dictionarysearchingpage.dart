@@ -843,9 +843,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     if (flashcardList.length != 0) {
       var fontSize4 = applyRatio(20.0);
       var fontSize8 = applyRatio(15.0); //115
-      var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 1.1,
+      var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 10.0,
           0.0 /*getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3 */,
-          fontSize4 * 15, fontSize4 * 1.2, 10.0, 10.0);
+          fontSize4 * 5, fontSize4 * 2.0, 0.0, 0.0);
       buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
     }
 
@@ -915,7 +915,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var posiCenter = Positioned(
         top: 0.0, //y
         left: screenWidth - applyRatio(80.0),
-        height: applyRatio(25.0),
+        height: applyRatio(40.0),
         width: applyRatio(85.0),
         child: butt
     );
@@ -926,7 +926,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text(getString(286)/*"OK"*/),
+      child: Text(getString(286)/*"OK"*/, style: TextStyle(color: Colors.blue)),
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out of this dialog first

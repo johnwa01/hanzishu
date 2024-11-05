@@ -994,7 +994,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text(getString(286)/*"OK"*/),
+      child: Text(getString(286)/*"OK"*/, style: TextStyle(color: Colors.blue)),
       onPressed: () {
       },
     );

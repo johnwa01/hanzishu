@@ -60,6 +60,7 @@ class _SettingsPageState extends State<SettingsPage> {
     );
   }
 
+  // not used
   onChangeDropdownItem(Language selectedLanguage) {
     setState(() {
       theDefaultLocale = selectedLanguage.name;
@@ -95,6 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
       onChanged: (selectedLanguage) {
         setState(() {
           _selectedLanguage = selectedLanguage as Language;
+          theDefaultLocale = selectedLanguage.name;
         });
       },
       //onChangeDropdownItem,

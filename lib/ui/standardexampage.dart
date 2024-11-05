@@ -431,7 +431,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text(getString(286)/*"Ok"*/),
+      child: Text(getString(286)/*"Ok"*/, style: TextStyle(color: Colors.blue)),
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog

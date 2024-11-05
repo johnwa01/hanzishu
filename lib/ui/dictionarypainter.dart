@@ -238,10 +238,10 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue, false);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
+    displayStructure(ziIndex, posiSize, fontSize4, fontSize6);
+
     displayComponentsOrStrokes(ziIndex, posiSize, true);
     posiSize.transY += fontSize6;
-
-    displayStructure(ziIndex, posiSize, fontSize4, fontSize6);
 
     if (showBreakoutDetails) {
       displayTypingCodePlaceholder(posiSize);  // hide when diamond icon is selected

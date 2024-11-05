@@ -290,7 +290,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   showInvalidInputDialog() {
     // set up the button
     Widget okButton = TextButton(
-      child: Text(getString(286)/*Ok*/),
+      child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
       onPressed: () {
         Navigator.pop(context);
       },

@@ -335,7 +335,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
   showCompletedDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: Text("OK", style: TextStyle(color: Colors.blue)),
       onPressed: () {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog

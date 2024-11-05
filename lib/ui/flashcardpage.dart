@@ -54,6 +54,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
 
     theCurrentCenterZiId = searchingZiIndex;
     //_controller.addListener(handleKeyInput);
+    theAllZiLearned = false;
 
     setState(() {
       searchingZiIndex = searchingZiIndex;
@@ -255,7 +256,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
   showInvalidInputDialog() {
     // set up the button
     Widget okButton = TextButton(
-      child: Text(getString(286)/*Ok*/),
+      child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
       onPressed: () {
         Navigator.pop(context);
       },

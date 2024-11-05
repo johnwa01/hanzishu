@@ -93,9 +93,12 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
     }
 
     return TextButton(
-      //color: Colors.white,
-      //textColor: Colors.blueAccent,
-      //padding: EdgeInsets.zero,
+      style: ButtonStyle(
+        //backgroundColor: WidgetStateProperty.all(Colors.white),
+        minimumSize: WidgetStateProperty.all(Size(20.0, 20.0)),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        padding: WidgetStateProperty.all(EdgeInsets.all(0.0)),), // 2.0 for showing color for correct or wrong ones
+
       onPressed: () {
         if (keyGroup != 0 && keyIndex != 0) {
           Navigator.push(
@@ -108,13 +111,24 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
           );
         }
       },
-      child: Image.asset(
+      child: getTextOrImage(keyGroup, keyIndex)
+    );
+  }
+
+  Widget getTextOrImage(int keyGroup, int keyIndex) {
+    if (keyGroup == 0 && keyIndex == 0) {
+      return Text('', style: TextStyle(color: Colors.redAccent));
+    }
+    else {
+      var image = theComponentManager.getComponentByGroupAndIndex(
+          keyGroup, keyIndex).image;
+      return Image.asset(
         "assets/components/L" + image,
         width: 30.0 * getSizeRatioWithLimit(),
         height: 55.0 * getSizeRatioWithLimit(),
         fit: BoxFit.fitWidth,
-      ),
-    );
+      );
+    }
   }
 
   Widget getHelpContentView(BuildContext context) {

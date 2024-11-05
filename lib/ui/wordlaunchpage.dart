@@ -376,35 +376,73 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
     if(drillCategory != DrillCategory.custom) {
       return SizedBox(width: 0.0, height: 0.0);
     }
-    else {
-      return RawMaterialButton(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(33),
-            ),
-            side: BorderSide(color: Colors.blue, width: 0.5)
-        ),
-        fillColor: Colors.blue.shade100,
-        onPressed: () {
-          var typingType = TypingType.Custom;
-          if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
-            typingType = TypingType.ThirdParty;
-            ThirdPartyContent.setThirdPartyTypeAndLessonId(ThirdPartyType.sunlaoshi, subItemId);
-          }
 
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  InputZiPage(typingType: typingType,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+        ThirdPartyContent.setThirdPartyTypeAndLessonId(
+            ThirdPartyType.sunlaoshi, subItemId);
+        return TextButton(
+          style: ButtonStyle(
+            //backgroundColor: WidgetStateProperty.all(backgroundColor),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(0.0)),  // 0.0 is rectangle
             ),
-          );
-        },
-        child: Text(getString(489), //"Read and type Hanzi"
-            style: TextStyle(color: Colors.brown)), // lightBlue
-      );
-    }
+            minimumSize: WidgetStateProperty.all(Size(0.0, 0.0)),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: WidgetStateProperty.all(EdgeInsets.all(0.0)), // 2.0 for showing color for correct or wrong ones
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    InputZiPage(typingType: TypingType.ThirdParty,
+                        lessonId: 0,
+                        wordsStudy: customString,
+                        isSoundPrompt: false,
+                        inputMethod: InputMethod.Pinxin,
+                        showHint: 1,
+                        includeSkipSection: false,
+                        showSwitchMethod: false), //InputZiPage(),
+              ),
+            );
+          },
+          child: Image.asset("assets/core/typing.png",
+            width: 180.0,
+            height: 90.0,
+          //    fit: fit,
+          )
+        );
+      }
+      else {
+        return RawMaterialButton(
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(33.0),
+              ),
+              side: BorderSide(color: Colors.blue, width: 0.5)
+          ),
+          fillColor: Colors.blue.shade100,
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    InputZiPage(typingType: TypingType.Custom,
+                        lessonId: 0,
+                        wordsStudy: customString,
+                        isSoundPrompt: false,
+                        inputMethod: InputMethod.Pinxin,
+                        showHint: 1,
+                        includeSkipSection: false,
+                        showSwitchMethod: false), //InputZiPage(),
+              ),
+            );
+          },
+          child: Text(getString(489), //"Read and type Hanzi"
+              style: TextStyle(color: Colors.brown)),
+        );
+      }
   }
 
   Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
