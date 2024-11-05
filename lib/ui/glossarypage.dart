@@ -48,7 +48,7 @@ class _GlossaryPageState extends State<GlossaryPage> {
 
     fontSize1 = TheConst.fontSizes[1]; //* getSizeRatioWithLimit();
     fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
-    fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
+    fontSize3 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
