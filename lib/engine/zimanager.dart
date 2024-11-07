@@ -228,7 +228,7 @@ class ZiManager {
   }
 
   // consider the case for each lesson
-  List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId) {
+  List<int> getRealGroupMembers(int id, ZiListType listType, DrillCategory drillCategory, int internalStartLessonId, int internalEndLessonId, bool skipCustomPseudoLayer) {
     //TODO: filter by endId
     List<int> realGroupMembers = [];
     if (listType == ZiListType.searching) {
@@ -244,7 +244,7 @@ class ZiManager {
         var groupMembers = theSearchingZiList[id].groupMembers;
 
         if (drillCategory == DrillCategory.custom &&
-            id == 1) { // skip the pseudo layer from root level
+            id == 1 && skipCustomPseudoLayer) { // skip the pseudo layer from root level
           var tmpMembers;
           for (var memberId in groupMembers) {
             tmpMembers = theSearchingZiList[memberId].groupMembers;

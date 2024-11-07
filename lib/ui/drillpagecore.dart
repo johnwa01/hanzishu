@@ -33,6 +33,7 @@ class DrillPageCore extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
   Map<int, List<int>>realGroupMembersCache = Map();
   PositionAndSize? centerPositionAndSizeCache;
+  static int MaximumPseudoLayerLength = 15;
 
   DrillPageCore({required this.drillCategory, required this.startingCenterZiId, required this.subItemId, required this.isFromReviewPage, required this.customString});
 
@@ -273,6 +274,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     //      "", 345 /*currentZiId*/);
     //}
 
+    bool skipCustomPseudoLayer = false;
+    if (drillCategory == DrillCategory.custom &&  centerZiId == 1 && customString.length <  DrillPageCore.MaximumPseudoLayerLength) {
+      skipCustomPseudoLayer = true;
+    }
+
     return Scaffold
       (
       appBar: AppBar
@@ -305,6 +311,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                         startingCenterZiId,
                         currentCenterZiRelatedBottum,
                         widget.isFromReviewPage,
+                        skipCustomPseudoLayer,
                     ),
                     child: Center(
                       child: Stack(
@@ -701,7 +708,11 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
           bool setParentTo1 = false;
           if (drillCategory == DrillCategory.custom) {
             // during going back toward root. skip the pseudo zi
-            if (currentZiId != 1 && (ZiManager.parentIdEqual1(
+            bool skipCustomPseudoLayer = false;
+            if (customString.length < DrillPageCore.MaximumPseudoLayerLength) {
+              skipCustomPseudoLayer = true;
+            }
+            if (currentZiId != 1 && skipCustomPseudoLayer && (ZiManager.parentIdEqual1(
                 DrillCategory.custom, newCenterZiId) ||
                 Utility.isSearchingNonZiPseudoZiId(newCenterZiId))) {
               setParentTo1 = true;
@@ -927,7 +938,14 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       /*subMenuUptoId*/subItemId = _selectedSubMenu!.id;
     }
 
-    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory!, internalStartItemId, internalEndItemId, widget.realGroupMembersCache);
+    bool skipCustomPseudoLayer = false;
+    if (drillCategory == DrillCategory.custom) {
+      if (customString.length < 15) {
+        skipCustomPseudoLayer = true;
+      }
+    }
+
+    var realGroupMembers = BasePainter.getRealGroupMembers(centerZiId, ZiListType.searching, drillCategory!, internalStartItemId, internalEndItemId, widget.realGroupMembersCache, skipCustomPseudoLayer);
     var totalSideNumberOfZis = theZiManager.getNumberOfZis(ZiListType.searching, realGroupMembers);
     for (var i = 0; i < realGroupMembers.length; i++) {
       var memberZiId = realGroupMembers[i];
@@ -1249,6 +1267,13 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
       }
     }
 
+    bool skipCustomPseudoLayer = false;
+    if (drillCategory == DrillCategory.custom) {
+      if (customString.length < DrillPageCore.MaximumPseudoLayerLength) {
+        bool skipCustomPseudoLayer = true;
+      }
+    }
+
     drillPainter = new DrillPainter(
     Colors.amber,
     Colors.blueAccent,
@@ -1267,6 +1292,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
     startingCenterZiId,
         currentCenterZiRelatedBottum,
       widget.isFromReviewPage,
+      skipCustomPseudoLayer,
     );
 
     var breakoutPositions = drillPainter!.getDrillBreakoutPositions();

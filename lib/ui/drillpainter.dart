@@ -15,7 +15,7 @@ class DrillPainter extends BasePainter {
   late CenterZiRelatedBottum centerZiRelatedBottum;
   late Map<int, PositionAndSize> drillBreakoutPositions = Map();
 
-  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize? centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType? ziListType, DrillCategory? drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage) {
+  DrillPainter(Color lineColor, Color completeColor, int centerId, bool shouldDrawCenter, double width, int startLessonId, int endLessonId, Map<int, PositionAndSize> sidePositionsCache, Map<int, List<int>> realGroupMembersCache, PositionAndSize? centerPositionAndSizeCache, Map<int, bool> allLearnedZis, int compoundZiCurrentComponentId, ZiListType? ziListType, DrillCategory? drillCategory, int startingCenterZiId, CenterZiRelatedBottum centerZiRelatedBottum, bool isFromReviewPage, bool skipCustomPseudoLayer) {
     this.lineColor = lineColor;
     this.completeColor = completeColor;
     this.centerId = centerId; /*this.completePercent,*/
@@ -33,6 +33,7 @@ class DrillPainter extends BasePainter {
     this.startingCenterZiId = startingCenterZiId;
     this.centerZiRelatedBottum = centerZiRelatedBottum;
     this.isFromReviewPage = isFromReviewPage;
+    this.skipCustomPseudoLayer = skipCustomPseudoLayer;
   }
 
   @override
