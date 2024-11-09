@@ -529,4 +529,5 @@ var theString_en_US = [
   Local(519, "Guess"),
   Local(520, "Textbook Volume"),
   Local(521, "Alphabets"),
+  Local(522, "Explanation"),
 ];

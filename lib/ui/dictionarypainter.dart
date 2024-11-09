@@ -163,7 +163,7 @@ class DictionaryPainter extends BreakoutPainter {
     var fontSize9 = applyRatio(210.0);
     var fontSize10 = applyRatio(245.0);
     var fontSize11 = applyRatio(295.0);
-    var fontSize12 = applyRatio(397.0);
+    var fontSize12 = applyRatio(457.0); // 397.0 // need to update breakdownPositionAndSize in another file as well for hittest
 
     //drawFrameWithColors(
     //    getFrameWidth(), PositionManager.FrameLeftEdgeSize,
@@ -238,6 +238,10 @@ class DictionaryPainter extends BreakoutPainter {
     displayTextWithValue(detailedZi.meaning, fontSize3 + applyRatio(90.0), fontSize10, fontSize4, Colors.blue, false);
 
     var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
+    displayExplanation(ziIndex, posiSize, fontSize4, fontSize6);
+    //posiSize.transY += fontSize6;
+
+    //var posiSize = PositionAndSize(fontSize3, fontSize11, fontSize4, fontSize4, fontSize4, fontSize1);
     displayStructure(ziIndex, posiSize, fontSize4, fontSize6);
 
     displayComponentsOrStrokes(ziIndex, posiSize, true);
@@ -258,6 +262,22 @@ class DictionaryPainter extends BreakoutPainter {
     breakoutPositions = getDicBreakoutPositions(ziIndex); // get breakPosition;
     bool isGetPositionOnly = false;
     var yPosi = displayCharBreakout(ziIndex, isGetPositionOnly);
+  }
+
+  displayExplanation(int ziIndex, PositionAndSize posiSize, double fontSize4, double fontSize6) {
+    var explanation = theSearchingZiList[ziIndex].explanation;
+
+    displayTextWithValue(
+        getString(522) + ": ",
+        posiSize.transX, posiSize.transY,
+        fontSize4,
+        Colors.black, false);
+    displayTextWithValue(explanation,
+        posiSize.transX + applyRatio(125.0), posiSize.transY,
+        fontSize4,
+        Colors.blue, false);
+
+    posiSize.transY += fontSize6 + applyRatio(20.0);
   }
 
   displayStructure(int ziIndex, PositionAndSize posiSize, double fontSize4, double fontSize6) {
@@ -294,7 +314,7 @@ class DictionaryPainter extends BreakoutPainter {
     //breakoutIndex.value = 0;
     isBreakoutPositionsOnly = isGetPositionOnly;
 
-    var fontSize1 = applyRatio(432.0); //425.0
+    var fontSize1 = applyRatio(492.0); //432.0
     //displayTextWithValue("[Break out] ", 10.0, 370.0, 20.0, Colors.blue);
     var yPositionWrapper = YPositionWrapper(fontSize1);  //170.0
     displayOneCharDissembling(yPositionWrapper, ziId, ZiListType.searching, 0, showBreakoutDetails, isBreakoutPositionsOnly, breakoutPositions);

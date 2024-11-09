@@ -526,4 +526,5 @@ var theString_zh_CN = [
   Local(519, "猜一猜"),
   Local(520, "课本.册"),
   Local(521, "部件"),
+  Local(522, "解释"),
 ];

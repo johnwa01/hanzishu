@@ -47,6 +47,7 @@ class SearchingZi {
   String structure = '';
   String phrase = '';
   int lessonYuwen = -1;
+  String explanation = '';
 
   SearchingZi(
       int id,
@@ -66,7 +67,8 @@ class SearchingZi {
       int levelHSK,
       String structure,
       String phrase,
-      int lessonYuwen
+      int lessonYuwen,
+      String explanation,
     ) {
       this.id = id;
       this.char = char;
@@ -86,6 +88,7 @@ class SearchingZi {
       this.structure = structure;
       this.phrase = phrase;
       this.lessonYuwen = lessonYuwen;
+      this.explanation = explanation;
   }
 
   bool isSingleComponentZi() {
