@@ -51,7 +51,11 @@ class ThirdParty {
         break;
       case "t":
         {
-          wholeString = getString(520) + " " + indexString;
+          String subIndexLetter = '';
+          if (index == 1) {
+            subIndexLetter = 'A';
+          }
+          wholeString = getString(520) + " " + indexString + subIndexLetter;
         }
         break;
       case "l":
@@ -83,6 +87,16 @@ class ThirdParty {
               wholeString += "下" + whichHalfString;
             }
           }
+        }
+        break;
+      case "m":
+        {
+          int unit = ((index + 1) / 2).toInt();
+          int lesson = index % 2;
+          if (lesson == 0) {
+            lesson = 2;
+          }
+          wholeString = getString(9) + ' ' + unit.toString() + ' ' + getString(7) + ' ' + lesson.toString();
         }
         break;
     }
