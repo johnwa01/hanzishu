@@ -467,11 +467,15 @@ class _InputZiPageState extends State<InputZiPage> {
     return selectionPosi;
   }
 
-  checkAndUpdateCurrentIndex(TextEditingController edidController) {
+  checkAndUpdateCurrentIndex(TextEditingController edidController, String newChar) {
     // for guarded typing
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
+      var checkedText = newChar;
+      if (checkedText.length == 0) {
+        checkedText = edidController.text;
+      }
       if (theInputZiManager.doesTypingResultContainTheZi(
-          typingType, currentIndex, edidController.text, lessonId)) {
+          typingType, currentIndex, checkedText/*edidController.text*/, lessonId)) {
         if (edidController == _controller) {
           initHintSelected(); // reset the hint selection parameters
         }
@@ -517,7 +521,7 @@ class _InputZiPageState extends State<InputZiPage> {
             }
             else if(typingType == TypingType.ThirdParty) {
               var charIndex = PrimitiveWrapper(0);
-          String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(
+              String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(
                   currentIndex, charIndex);
               if (charIndex.value == 0) {
                 TextToSpeech.speak(
@@ -574,13 +578,15 @@ class _InputZiPageState extends State<InputZiPage> {
     hasVerifiedToBeALowerCase = false;
 
     // pronounce the typed char
+    var typedZiString = '';
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
-      var typedZiString = InputZiManager.getCandidateZiString(selectionIndex);
+      typedZiString = InputZiManager.getCandidateZiString(selectionIndex)!;
       //TextToSpeech.speak("zh-CN", typedZiString);
     }
 
     var newText = getInputText(selectionIndex, isFromNumber);
 
+    //String newChar = getNewChar(previousText, newText);
     previousText = newText;
     if (isFromCharCandidateList) {
       // in this case, it has no chance to go through handleKeyInputHelper to set the init value. Therefore we are setting it specifically.
@@ -605,7 +611,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     //showHint = 0;
 
-    checkAndUpdateCurrentIndex(_controller);
+    checkAndUpdateCurrentIndex(_controller, typedZiString);
 
     //restart a typing cycle
     InputZiManager.previousFirstPositionList.clear();
@@ -614,12 +620,33 @@ class _InputZiPageState extends State<InputZiPage> {
     updateTypingStatusAndHintCompIndex('');
   }
 
+  // delete process doesn't call this
+  String getNewChar(String previousText, String newText) {
+    String previousOneChar;
+    String newOneChar = '';
+    int previousLength = previousText.length;
+
+    for (int i = 0; i < newText.length; i++) {
+      newOneChar = newText.substring(i, i + 1);
+      if ((previousLength - 1) < i) {
+        return newOneChar;
+      }
+      previousOneChar = previousText.substring(i, i + 1);
+
+      if (previousOneChar != newOneChar) {
+        return newOneChar;
+      }
+    }
+
+    return '';
+  }
+
   void handleKeyInput() {
     handleKeyInputHelper(0);
   }
 
   void handleKeyInputStandard() {
-         checkAndUpdateCurrentIndex(_controllerStandard);
+         checkAndUpdateCurrentIndex(_controllerStandard, '');
   }
 
   workaroundWebCases() {
@@ -1762,7 +1789,7 @@ class _InputZiPageState extends State<InputZiPage> {
       return Container(width: 0.0, height: 0.0);
     }
 
-    var promptStr = getString(113) + "： "; //"Please type"
+    var promptStr = getString(113) + "： "; //"Type"
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
     currentTypingChar = getEitherCharFromCurrentId(typingType!, currentIndex, lessonId);

@@ -95,8 +95,14 @@ class ThirdParty {
           int lesson = index % 2;
           if (lesson == 0) {
             lesson = 2;
+            wholeString =
+                '            ' + getString(7) +
+                    ' ' + lesson.toString();
           }
-          wholeString = getString(9) + ' ' + unit.toString() + ' ' + getString(7) + ' ' + lesson.toString();
+          else {
+            wholeString = getString(9) + ' ' + unit.toString() + ' ' + getString(7) +
+                    ' ' + lesson.toString();
+          }
         }
         break;
     }
