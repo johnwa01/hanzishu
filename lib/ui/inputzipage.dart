@@ -51,6 +51,7 @@ class _InputZiPageState extends State<InputZiPage> {
   bool includeSkipSection = true;
   bool showSwitchMethod = false;
   int currentIndex = -1;
+  var charIndexInSentence = PrimitiveWrapper(0);
   BuildContext? currentBuildContext;
   double _progressValue = 0.0;
   int totalQuestions = -1;
@@ -1852,36 +1853,36 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputSentence(TypingType typingType, int currentTypingCharsIndex, String promptStr, double fontSize) {
       var sentenceIndex = PrimitiveWrapper(0);
-      var charIndex = PrimitiveWrapper(0);
+      //var charIndexInSentence = PrimitiveWrapper(0);
       String conv = '';
       if (typingType == TypingType.FromLessons) {
         var oneLesson = theLessonList[lessonId];
         oneLesson.getSentenceAndCharIndex(
-            currentTypingCharsIndex, sentenceIndex, charIndex);
+            currentTypingCharsIndex, sentenceIndex, charIndexInSentence);
         conv = theSentenceList[sentenceIndex.value].conv;
       }
       else if (typingType == TypingType.ThirdParty) {
-        conv = ThirdPartyContent.getCurrentSentenceAndCharIndex(currentIndex, charIndex);
+        conv = ThirdPartyContent.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
       }
 
       String strBeforeChar;
       String strChar;
       String strAfterChar;
 
-      if (charIndex.value == 0) {
+      if (charIndexInSentence.value == 0) {
         strBeforeChar = '';
       }
       else {
-        strBeforeChar = conv.substring(0, charIndex.value);
+        strBeforeChar = conv.substring(0, charIndexInSentence.value);
       }
 
-      strChar = conv.substring(charIndex.value, charIndex.value + 1);
+      strChar = conv.substring(charIndexInSentence.value, charIndexInSentence.value + 1);
 
-      if (charIndex == conv.length - 1) { // the char is the last one
+      if (charIndexInSentence == conv.length - 1) { // the char is the last one
         strAfterChar = '';
       }
       else {
-        strAfterChar = conv.substring(charIndex.value + 1, conv.length);
+        strAfterChar = conv.substring(charIndexInSentence.value + 1, conv.length);
       }
 
       return Row(
@@ -1967,7 +1968,8 @@ class _InputZiPageState extends State<InputZiPage> {
         //selectedCategoryIndex: selectedCategoryIndex,
         //selectedSubcategoryIndex: selectedSubcategoryIndex,
         char: char, //zi.zi,
-        typingType: typingType!
+        typingType: typingType!,
+        ziIndex: charIndexInSentence.value,
     );
 
     //var promptStr = getString(113) + "： "; //"Please type"
@@ -1987,6 +1989,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var hint1Color = Colors.blue;
     var hint2Color = Colors.blue;
+    var hint3Color = Colors.blue;
     var hint0Color = Colors.blue;
 
     if(showHint == 1) {
@@ -1994,6 +1997,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if(showHint == 2) {
       hint2Color = Colors.green;
+    }
+    else if(showHint == 3) {
+      hint3Color = Colors.green;
     }
     else if(showHint == 0) {
       hint0Color = Colors.green;
@@ -2008,6 +2014,19 @@ class _InputZiPageState extends State<InputZiPage> {
           //getImageTiedToZi(),
           Row(
               children: <Widget>[
+                //getAlphabetsText(fontSize),
+                SizedBox(width: 30.0),
+                SizedBox(
+                  height: 20.0 * getSizeRatio(),
+                  //width: 150.0,
+                  child:  CustomPaint(
+                    foregroundPainter: inputZiHintPainter,
+                  ),
+                ),
+              ]
+          ),
+          Row(
+              children: <Widget>[
                 //SizedBox(
                 //  width: promptWidth * getSizeRatio(), //130 //55
                 //  child: Text(
@@ -2017,32 +2036,32 @@ class _InputZiPageState extends State<InputZiPage> {
                 //  ),
                 //),
                 //SizedBox(width: fontSize),
+                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
                     style: ButtonStyle(
-                  //    backgroundColor: MaterialStateProperty.all(Colors.green),
+                      //   backgroundColor: MaterialStateProperty.all(Colors.green),
                       padding: MaterialStateProperty.all(EdgeInsets.zero),
                     ),
                     //color: Colors.white,
-                    //textColor: hint1Color,
+                    //textColor: hint2Color,
                     //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
                       setState(() {
-                        showHint = 1; // show Hint1
+                        showHint = 3; // show Hint2
                         _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
                     child: Text(
-                      "[" + getString(90) + "1]"/*"Hint1"*/,
-                      style: TextStyle(fontSize: fontSize * 1.2, color: hint1Color), // 1.6
-                      textAlign: TextAlign.left //TextAlign.center
+                        "[" + getString(523) + "]"/*"Hint3"*/,
+                        style: TextStyle(fontSize: fontSize * 1.2, color: hint3Color), // 1.6
+                        textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
-                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
@@ -2064,6 +2083,31 @@ class _InputZiPageState extends State<InputZiPage> {
                     child: Text(
                         "[" + getString(438) + "]"/*"Hint2"*/,
                         style: TextStyle(fontSize: fontSize * 1.2, color: hint2Color), // 1.6
+                        textAlign: TextAlign.left //TextAlign.center
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  //width: 50.0 * getSizeRatio(),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      //    backgroundColor: MaterialStateProperty.all(Colors.green),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
+                    //color: Colors.white,
+                    //textColor: hint1Color,
+                    //padding: EdgeInsets.zero,
+                    onPressed: () {
+                      initOverlay();
+
+                      setState(() {
+                        showHint = 1; // show Hint1
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                      });
+                    },
+                    child: Text(
+                        "[" + getString(90) + "1]"/*"Hint1"*/,
+                        style: TextStyle(fontSize: fontSize * 1.2, color: hint1Color), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
@@ -2102,19 +2146,6 @@ class _InputZiPageState extends State<InputZiPage> {
                 //),
               ]
           ),
-        Row(
-            children: <Widget>[
-              //getAlphabetsText(fontSize),
-              SizedBox(width: 30.0),
-              SizedBox(
-                height: 20.0 * getSizeRatio(),
-                //width: 150.0,
-                child:  CustomPaint(
-                  foregroundPainter: inputZiHintPainter,
-                ),
-              ),
-            ]
-         ),
           getCategoryAndSubCat1Row(),
           getSubCategoryRow2(),
        ]

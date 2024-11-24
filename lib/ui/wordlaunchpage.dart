@@ -401,7 +401,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                         wordsStudy: customString,
                         isSoundPrompt: false,
                         inputMethod: InputMethod.Pinxin,
-                        showHint: 1,
+                        showHint: 3,
                         includeSkipSection: false,
                         showSwitchMethod: false), //InputZiPage(),
               ),
@@ -433,7 +433,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
                         wordsStudy: customString,
                         isSoundPrompt: false,
                         inputMethod: InputMethod.Pinxin,
-                        showHint: 1,
+                        showHint: 3,
                         includeSkipSection: false,
                         showSwitchMethod: false), //InputZiPage(),
               ),
@@ -468,7 +468,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 1, includeSkipSection: false, showSwitchMethod: false) //InputZiPage(),
+                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: 3, includeSkipSection: false, showSwitchMethod: false) //InputZiPage(),
             ),
           );
         },

@@ -18,9 +18,10 @@ class InputZiHintPainter extends BasePainter {
   int selectedCompIndex = -1;
   String char = '';
   late TypingType typingType;
+  int ziIndex = -1;
 
   InputZiHintPainter({
-    required this.lineColor, required this.completeColor, required this.screenWidth, required this.showHint, required this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ required this.char, required this.typingType
+    required this.lineColor, required this.completeColor, required this.screenWidth, required this.showHint, required this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ required this.char, required this.typingType, required this.ziIndex
   });
 
   @override
@@ -28,8 +29,9 @@ class InputZiHintPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth; // set the base class width variable
 
-    if (showHint == 1 || showHint == 2) {
-      displayHintMessage(15.0 * getSizeRatio(), char);  // 18.0
+    if (showHint == 1 || showHint == 2 || showHint == 3) {
+      // Need to match the inputzipage's prompt string
+      displayHintMessage(13.0 * 1.2 * getSizeRatio(), char, ziIndex);  // 18.0
     }
     else {
       //TODO: displayShiftKeyNote();
@@ -49,7 +51,7 @@ class InputZiHintPainter extends BasePainter {
     displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue, false); // 18.0
   }
 
-  displayHintMessage(double fontSize, String char) {
+  displayHintMessage(double fontSize, String char, int ziIndex) {
     var typingComponentsAndSubComp = ComponentManager.getTypingComponentsAndSubComp(char);
 
     double size = 24 * getSizeRatio(); //14.4
@@ -57,7 +59,13 @@ class InputZiHintPainter extends BasePainter {
       size = 20 * getSizeRatio(); //14.4
     }
     double halfSize = size/1.2;
-    double xPosi = 8.0; //10.0
+    double xPosi = 8.0 * getSizeRatio(); //10.0
+
+    if (showHint == 3) {
+      xPosi += size * 1.7; // one time deal
+    }
+
+    xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
     var compColor;
 
     for (int i = 0; i < typingComponentsAndSubComp.length; i++) {
@@ -71,9 +79,21 @@ class InputZiHintPainter extends BasePainter {
       }
 
       var comp = typingComponentsAndSubComp[i];
-      drawComponentZi(comp, xPosi, 0.0, size, size, size, compColor, true, 1);
+      if (showHint != 3) {
+        drawComponentZi(
+            comp,
+            xPosi,
+            0.0,
+            size,
+            size,
+            size,
+            compColor,
+            true,
+            1);
+        xPosi += size * 1.2;
+      }
 
-      xPosi += size * 1.2;
+
       if (showHint == 2) {
         displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
         xPosi += halfSize / 1.5;
@@ -83,6 +103,17 @@ class InputZiHintPainter extends BasePainter {
 
         xPosi += size; //* 1.2;
         displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
+        //xPosi += halfSize / 1.5;
+      }
+      if (showHint == 3) {
+        //displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
+        //xPosi += halfSize / 1.5;
+        var typingCode = ComponentManager.getTypingCode(comp);
+        displayTextWithValue(
+            typingCode!.toUpperCase(), xPosi, 0.0, size, compColor, false);
+
+        xPosi += halfSize / 4; //* 1.2;
+        //displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
         //xPosi += halfSize / 1.5;
       }
     }
