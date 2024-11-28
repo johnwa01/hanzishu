@@ -10,6 +10,7 @@ var theThirdPartyLevelList = [
   ThirdPartyLevel(ThirdPartyType.yuwen, 1, "l1"), // 100: temp
   ThirdPartyLevel(ThirdPartyType.yuwen, 2, "l2"), // 100: temp
   ThirdPartyLevel(ThirdPartyType.sunlaoshi, 1, "t1"), // 100: temp
+  ThirdPartyLevel(ThirdPartyType.sunlaoshi, 2, "t2"), // 100: temp
 ];
 
 var theThirdPartyLessonList = [
@@ -81,4 +82,10 @@ var theThirdPartyLessonList = [
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 14, "m14"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 15, "m15"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 1, 16, "m16"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 17, "m17"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 18, "m18"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 19, "m19"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 20, "m20"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 21, "m21"),
+  ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 22, "m22"),
 ];

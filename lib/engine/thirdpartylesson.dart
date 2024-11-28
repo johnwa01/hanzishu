@@ -55,6 +55,9 @@ class ThirdParty {
           if (index == 1) {
             subIndexLetter = 'A';
           }
+          if (index == 2) {
+            subIndexLetter = 'B';
+          }
           wholeString = getString(520) + " " + indexString + subIndexLetter;
         }
         break;

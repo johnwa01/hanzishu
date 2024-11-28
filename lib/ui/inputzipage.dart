@@ -345,9 +345,10 @@ class _InputZiPageState extends State<InputZiPage> {
     return inputTextWithoutUpperCaseLetter;
   }
 
+  /*
   showOverlay(BuildContext context, String latestOverleyLetter
-      /*InputZiOverlayParameters overlayParameters*/
-      /*TypingType type, int index, bool isFullComponents, String fullComponentsLetter*/) {
+      //InputZiOverlayParameters overlayParameters
+      //TypingType type, int index, bool isFullComponents, String fullComponentsLetter) {
     initOverlay();
 
     if (latestOverleyLetter != previousOverlayLetter) {
@@ -397,6 +398,7 @@ class _InputZiPageState extends State<InputZiPage> {
       ""; // this time no display = dismiss the display; prepare for next time to re-display
     }
   }
+  */
 
   String getFullComposingText(int startComposing, int endComposing) {
     var str = "";
@@ -788,11 +790,11 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
-    else if (Utility.isAUpperCaseLetter(latestInputKeyLetter) || Utility.isArrow(latestInputKeyLetter)) { // space key
-      if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) {
-        showOverlay(context, latestInputKeyLetter);
-      }
-      else if (Utility.isForwardArrow(latestInputKeyLetter)) {
+    else if (/*Utility.isAUpperCaseLetter(latestInputKeyLetter) ||*/ Utility.isArrow(latestInputKeyLetter)) { // space key
+      //if (Utility.isAUpperCaseLetter(latestInputKeyLetter)) {
+      //  showOverlay(context, latestInputKeyLetter);
+      //}
+      /*else */if (Utility.isForwardArrow(latestInputKeyLetter)) {
         // if just '>' char with text length of 1, no non-default candidates yet, there skip
         if (_controller.text.length != 1) {
           if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
