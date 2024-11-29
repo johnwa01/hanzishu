@@ -2139,6 +2139,10 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
+                  SizedBox(width: 15),
+                  SizedBox(
+                   child: getTypingScore(),
+                  ),
                 //SizedBox(
                 //  height: 30.0 * getSizeRatio(),
                   //width: 180.0 * getSizeRatio(),
@@ -2277,6 +2281,11 @@ class _InputZiPageState extends State<InputZiPage> {
       widgetList.add(getSubCategoryOneItem(2, currentLeadCompList));
       widgetList.add(getSubCategoryOneItem(3, currentLeadCompList));
     }
+  }
+
+  Widget getTypingScore() {
+    var fontSize = 13.0 * getSizeRatio() * 1.2;
+    return Text(getString(524) + ": " + currentIndex.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple));
   }
 
   getSubCategoryRow2() {
@@ -2521,7 +2530,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(120)/*"Your typing exercise is complete for this lesson."*/;
+      content = getString(120) + getString(524) + ": " + (currentIndex+1).toString()/*"Your typing exercise is complete for this lesson."*/;
     }
     else if (typingType == TypingType.ComponentTyping) {
       title = getString(115)/*"Good job!"*/;
@@ -2529,7 +2538,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(502)/*"You have completed this typing exercises."*/;
+      content = getString(502) + getString(524) + ": " + (currentIndex+1).toString()/*"You have completed this typing exercises."*/;
     }
 
     // set up the AlertDialog
