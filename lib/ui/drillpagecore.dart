@@ -866,17 +866,24 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
   }
 
   Positioned getPositionedMeaningSpeakButton(PositionAndSize posiAndSize, int ziId) {
+    String meaning;
+    if (theDefaultLocale == "en_US") {
+      meaning = theSearchingZiList[ziId].meaning;
+    }
+    else {
+      meaning = theSearchingZiList[ziId].explanation;
+    }
     var butt = TextButton(
       onPressed: () {
         initOverlay();
 
         //var zi = theZiManager.getZi(ziId);
-        TextToSpeech.speak("en-US", theSearchingZiList[ziId].meaning);
+        TextToSpeech.speak("en-US", meaning);
       },
         onLongPress: () {
           initOverlay();
-          TextToSpeech.speak("en-US", theSearchingZiList[ziId].meaning);
-          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, theSearchingZiList[ziId].meaning, -1);
+          TextToSpeech.speak("en-US", meaning);
+          showOverlay(context, posiAndSize.transX, posiAndSize.transY /*- scrollOffset*/, meaning, -1);
         },
       child: Text('', style: TextStyle(fontSize: 20.0),),
     );

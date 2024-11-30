@@ -308,21 +308,38 @@ class BasePainter extends CustomPainter{
   }
 
   void displayTextForMeaning(ZiListType listType, int id, double transX, double transY, double charFontSize, Color color, bool trim) {
-    var zi;
-    if (listType == ZiListType.zi) {
-      zi = theZiManager.getZi(id);
-    }
-    else if (listType == ZiListType.searching) {
-      zi = theSearchingZiList[id];
-    }
-    var char = zi.meaning;
+   // var zi;
+   // if (listType == ZiListType.zi) {
+   //   zi = theZiManager.getZi(id);
+   // }
+   // else if (listType == ZiListType.searching) {
+      var zi = theSearchingZiList[id];
+    //}
 
-    var firstMeaning = Utility.getFirstMeaning(char);
+    var char;
+    var firstMeaning;
+    int maxLength;
+    if (theDefaultLocale == "en_US") {
+      char = zi.meaning;
+      firstMeaning = Utility.getFirstMeaning(char);
+      maxLength = 8;
+    }
+
+    else { // CN
+      firstMeaning = zi.explanation;
+      maxLength = 3;
+    }
     var displayMeaning = firstMeaning;
 
-    if (trim && firstMeaning.length > 8) {
-      displayMeaning = firstMeaning.substring(0, 5);
-      displayMeaning += "...";
+    if (trim && firstMeaning.length > maxLength) {
+      if (theDefaultLocale == "en_US") {
+        displayMeaning = firstMeaning.substring(0, 5);
+        displayMeaning += "...";
+      }
+      else {
+        displayMeaning = firstMeaning.substring(0, maxLength);
+        displayMeaning += "...";
+      }
     }
 
     displayTextWithValue(displayMeaning, transX, transY, charFontSize, color, false);
@@ -746,7 +763,9 @@ class BasePainter extends CustomPainter{
       posi.transY += (3 * fontSize);
     }
     else {
-      DisplayHint(listType, id, false, posi, true);
+      if(theDefaultLocale == "en_US") {
+        DisplayHint(listType, id, false, posi, true);
+      }
 
       posi.transY += (2.5 * fontSize);  // Need to match treepage
       displayZiStructure(posi, centerZiRelatedBottum);
