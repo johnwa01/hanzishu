@@ -15,6 +15,7 @@ import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/inputzipainter.dart';
 import 'package:hanzishu/ui/inputzihintpainter.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
+import 'package:hanzishu/ui/inputgamepainter.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/utility.dart';
@@ -32,7 +33,7 @@ class InputZiPage extends StatefulWidget {
   final String wordsStudy;
   final bool isSoundPrompt;
   final InputMethod inputMethod;
-  final int showHint;
+  final HintType showHint;
   final bool includeSkipSection;
   final bool showSwitchMethod;
   InputZiPage({required this.typingType, required this.lessonId, required this.wordsStudy, required this.isSoundPrompt, required this.inputMethod, required this.showHint, required this.includeSkipSection, required this.showSwitchMethod});
@@ -47,7 +48,7 @@ class _InputZiPageState extends State<InputZiPage> {
   String wordsStudy = '';
   bool isSoundPrompt = false;
   InputMethod? inputMethod;
-  int showHint = -1;
+  HintType showHint = HintType.None;
   bool includeSkipSection = true;
   bool showSwitchMethod = false;
   int currentIndex = -1;
@@ -1846,7 +1847,12 @@ class _InputZiPageState extends State<InputZiPage> {
       );
     }
     else if (typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty) {
-      return getInputSentence(typingType!, currentIndex, promptStr, fontSize);
+      if (showHint == HintType.Game) {
+        return showGameInput(currentTypingChar);
+      }
+      else {
+        return getInputSentence(typingType!, currentIndex, promptStr, fontSize);
+      }
     }
     else {
       return SizedBox(width: 0.0, height: 0.0);
@@ -1914,9 +1920,33 @@ class _InputZiPageState extends State<InputZiPage> {
       );
   }
 
+  Widget showGameInput(String currentTypingChar) {
+    double hei = 160.0; // * getSizeRatio()
+    var inputGamePainter = InputGamePainter(
+      currentChar: currentTypingChar,
+      height: hei,
+      screenWidth: screenWidth,
+    );
+
+    return SizedBox(
+      height: hei,
+      width: screenWidth,
+      child:  Container(color: Colors.blue,
+                      child: CustomPaint(
+                        foregroundPainter: inputGamePainter,)),
+    );
+    /*
+    return Text(
+        currentTypingChar,
+        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+        textAlign: TextAlign.left
+    );
+    */
+  }
+
   Widget getWarningMessage() {
     var fontSize = 15.0 * getSizeRatio();     //15.0
-    if (currentTypingCodeIsCorrect || theZiCandidatesFromPinyin) {
+    if (currentTypingCodeIsCorrect || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {
@@ -1993,18 +2023,22 @@ class _InputZiPageState extends State<InputZiPage> {
     var hint2Color = Colors.blue;
     var hint3Color = Colors.blue;
     var hint0Color = Colors.blue;
+    var gameColor = Colors.blue;
 
-    if(showHint == 1) {
+    if(showHint == HintType.Hint1) {
       hint1Color = Colors.green;
     }
-    else if(showHint == 2) {
+    else if(showHint == HintType.Hint2) {
       hint2Color = Colors.green;
     }
-    else if(showHint == 3) {
+    else if(showHint == HintType.Hint3) {
       hint3Color = Colors.green;
     }
-    else if(showHint == 0) {
+    else if(showHint == HintType.Hint0) {
       hint0Color = Colors.green;
+    }
+    else if(showHint == HintType.Game) {
+      gameColor = Colors.green;
     }
 
     return WillPopScope(
@@ -2053,7 +2087,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = 3; // show Hint2
+                        showHint = HintType.Hint3; // show Hint3
                         _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -2078,7 +2112,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = 2; // show Hint2
+                        showHint = HintType.Hint2; // show Hint2
                         _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -2103,7 +2137,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = 1; // show Hint1
+                        showHint = HintType.Hint1; // show Hint1
                         _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -2128,7 +2162,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       initOverlay();
 
                       setState(() {
-                        showHint = 0; // show Hint0 - no hint
+                        showHint = HintType.Hint0; // show Hint0 - no hint
                         _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
                       });
                     },
@@ -2139,7 +2173,32 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
-                  SizedBox(width: 15),
+                SizedBox(
+                  //width: 30.0 * getSizeRatio(),
+                  child: TextButton(
+                    //color: Colors.white,
+                    //textColor: hint0Color,
+                    //padding: EdgeInsets.zero,
+                    style: ButtonStyle(
+                      //    backgroundColor: MaterialStateProperty.all(Colors.green),
+                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                    ),
+                    onPressed: () {
+                      initOverlay();
+
+                      setState(() {
+                        showHint = HintType.Game; // show Hint4 - Game
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                      });
+                    },
+                    child: Text(
+                        "[" + getString(525) + "]"/*"Game"*/,
+                        style: TextStyle(fontSize: fontSize * 1.2, color:  gameColor), // 1.6
+                        textAlign: TextAlign.left //TextAlign.center
+                    ),
+                  ),
+                ),
+                  //SizedBox(width: 1),
                   SizedBox(
                    child: getTypingScore(),
                   ),
@@ -2161,7 +2220,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getAlphabetsText(double fontSize) {
-    if (showHint == 0) {
+    if (showHint == HintType.Hint0 || showHint == HintType.Game) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -2170,7 +2229,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getCategoryAndSubCat1Row() {
-    if (showHint == 0) {
+    if (showHint == HintType.Hint0 || showHint == HintType.Game) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -2242,7 +2301,7 @@ class _InputZiPageState extends State<InputZiPage> {
   getSubCategoryOneItem(int leadCompIndex, List<int> leadComponentList) {
     bool isSubCategoryEmpty = leadCompIndex > leadComponentList.length;
 
-    if (isSubCategoryEmpty || showHint == 0 || selectedCategoryIndex == 0 /*|| selectedSubCategoryIndex == 0*/) {
+    if (isSubCategoryEmpty || showHint == HintType.Hint0 || showHint == HintType.Game || selectedCategoryIndex == 0 /*|| selectedSubCategoryIndex == 0*/) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -2273,7 +2332,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   addSubCategory1(List<Widget> widgetList) {
-    if (showHint != 0 && selectedCategoryIndex != 0) {
+    if (showHint != HintType.Hint0 && showHint != HintType.Game && selectedCategoryIndex != 0) {
       String category = theComponentCategoryList[currentCorrectCategoryIndex - 1].categoryType;
       currentLeadCompList = ComponentManager.getLeadComponentsForCategory(category);
       currentCorrectSubcategoryIndex = theComponentManager.getCurrentCorrectSubcategoryIndex(currentTypingComponentsAndSub, selectedCompIndex, currentLeadCompList);
@@ -2285,11 +2344,11 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getTypingScore() {
     var fontSize = 13.0 * getSizeRatio() * 1.2;
-    return Text(getString(524) + ": " + currentIndex.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple));
+    return Text(getString(524) + ":" + currentIndex.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
   }
 
   getSubCategoryRow2() {
-    if (showHint == 0 || selectedCategoryIndex == 0 || currentLeadCompList.length <= 2) {
+    if (showHint == HintType.Hint0 || showHint == HintType.Game || selectedCategoryIndex == 0 || currentLeadCompList.length <= 2) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 

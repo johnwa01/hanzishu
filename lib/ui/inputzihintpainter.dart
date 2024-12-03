@@ -14,7 +14,7 @@ class InputZiHintPainter extends BasePainter {
   late Color lineColor;
   late Color completeColor;
   double screenWidth = 0.0;
-  int showHint = -1;
+  HintType showHint = HintType.None;
   int selectedCompIndex = -1;
   String char = '';
   late TypingType typingType;
@@ -29,7 +29,7 @@ class InputZiHintPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth; // set the base class width variable
 
-    if (showHint == 1 || showHint == 2 || showHint == 3) {
+    if (showHint == HintType.Hint1 || showHint == HintType.Hint2 || showHint == HintType.Hint3) {
       // Need to match the inputzipage's prompt string
       displayHintMessage(13.0 * 1.2 * getSizeRatio(), char, ziIndex);  // 18.0
     }
@@ -55,13 +55,13 @@ class InputZiHintPainter extends BasePainter {
     var typingComponentsAndSubComp = ComponentManager.getTypingComponentsAndSubComp(char);
 
     double size = 24 * getSizeRatio(); //14.4
-    if (showHint == 2) {
+    if (showHint == HintType.Hint2) {
       size = 20 * getSizeRatio(); //14.4
     }
     double halfSize = size/1.2;
     double xPosi = 8.0 * getSizeRatio(); //10.0
 
-    if (showHint == 3) {
+    if (showHint == HintType.Hint3) {
       xPosi += size * 1.7; // one time deal
     }
 
@@ -79,7 +79,7 @@ class InputZiHintPainter extends BasePainter {
       }
 
       var comp = typingComponentsAndSubComp[i];
-      if (showHint != 3) {
+      if (showHint != HintType.Hint3) {
         drawComponentZi(
             comp,
             xPosi,
@@ -94,7 +94,7 @@ class InputZiHintPainter extends BasePainter {
       }
 
 
-      if (showHint == 2) {
+      if (showHint == HintType.Hint2) {
         displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
         xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
@@ -105,7 +105,7 @@ class InputZiHintPainter extends BasePainter {
         displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
         //xPosi += halfSize / 1.5;
       }
-      if (showHint == 3) {
+      if (showHint == HintType.Hint3) {
         //displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
         //xPosi += halfSize / 1.5;
         var typingCode = ComponentManager.getTypingCode(comp);

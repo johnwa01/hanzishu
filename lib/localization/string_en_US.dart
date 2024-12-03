@@ -463,7 +463,7 @@ var theString_en_US = [
   Local(453, "Not show Hanzi"),
   Local(454, "Hanzi practice sheet"),
   Local(455, "HSK Hanzi"),
-  Local(456, "Literacy Tree"), // "Learn or review Hanzi"
+  Local(456, "Literacy tree"), // "Learn or review Hanzi"
   Local(457, "In current test, it's estimated that you know about "),
   Local(458, "Total is "),
   Local(459, "All levels combined"),
@@ -471,7 +471,7 @@ var theString_en_US = [
   Local(461, "Legs"),
   Local(462, "Common"),
   Local(463, "Warning: Wrong typing code."),
-  Local(464, "No Hint"),
+  Local(464, "NoHint"),
   Local(465, "Direction"),
   Local(466, "Good effort"),
   Local(467, "You have passed this quiz with a score of"),
@@ -532,4 +532,5 @@ var theString_en_US = [
   Local(522, "Explanation"),
   Local(523, "Hint3"),
   Local(524, "Score"),
+  Local(525, "Game"),
 ];

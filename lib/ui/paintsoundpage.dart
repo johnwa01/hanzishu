@@ -537,7 +537,7 @@ class _PaintSoundPageState extends State<PaintSoundPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 3, includeSkipSection: true, showSwitchMethod: false),
+                    typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: true, showSwitchMethod: false),
           ),
         ).then((val) => {_getRequests()});
         break;

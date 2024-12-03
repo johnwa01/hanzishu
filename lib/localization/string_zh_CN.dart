@@ -529,4 +529,5 @@ var theString_zh_CN = [
   Local(522, "解释"),
   Local(523, "提示3"),
   Local(524, "分数"),
+  Local(525, "游戏"),
 ];

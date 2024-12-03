@@ -177,20 +177,6 @@ class _MePageState extends State<MePage> {
               },
             ),
             ListTile(
-              leading: Image.asset('assets/core/characterdrill.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(409)/*"Study new words"*/, textDirection: TextDirection.ltr),
-              //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        StudyCustomizedWordsPage(titleStringId: 409, customString: '', studyType: StudyType.all),
-                  ),
-                );
-              },
-            ),
-            ListTile(
               leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
               title: Text(getString(449)/*"Hanzi practice sheet"*/, textDirection: TextDirection.ltr),
               //trailing: Image.asset('assets/core/itemicon.png'),

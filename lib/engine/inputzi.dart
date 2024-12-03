@@ -29,6 +29,15 @@ enum InputMethod {
   Both,
 }
 
+enum HintType {
+  Hint0,
+  Hint1,
+  Hint2,
+  Hint3,
+  Game,
+  None,
+}
+
 class InputZi {
   String zi = '';
   String doubleByteCode = '';

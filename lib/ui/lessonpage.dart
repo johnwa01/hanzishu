@@ -180,9 +180,9 @@ class _LessonPageState extends State<LessonPage> {
           includeSkipSection = true;
         }
 
-        int lessonShowHint = 3;
+        HintType lessonShowHint = HintType.Hint3;
         if (lessonId > 30) { // half way of beginner level
-          lessonShowHint = 0; // default to no hint
+          lessonShowHint = HintType.Hint0; // default to no hint
         }
 
         Navigator.push(
