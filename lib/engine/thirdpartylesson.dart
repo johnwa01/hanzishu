@@ -99,11 +99,11 @@ class ThirdParty {
           if (lesson == 0) {
             lesson = 2;
             wholeString =
-                '            ' + getString(7) +
+                '            ' + getString(295) +
                     ' ' + lesson.toString();
           }
           else {
-            wholeString = getString(9) + ' ' + unit.toString() + ' ' + getString(7) +
+            wholeString = getString(9) + ' ' + unit.toString() + ' ' + getString(295) +
                     ' ' + lesson.toString();
           }
         }
