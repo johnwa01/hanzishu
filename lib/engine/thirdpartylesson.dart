@@ -58,7 +58,7 @@ class ThirdParty {
           if (index == 2) {
             subIndexLetter = 'B';
           }
-          wholeString = getString(520) + " " + indexString + subIndexLetter;
+          wholeString = getString(520) + " 1"  + subIndexLetter;
         }
         break;
       case "l":

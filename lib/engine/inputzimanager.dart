@@ -161,7 +161,7 @@ class InputZiManager {
   static List<String>? getZiCandidates(String input) {
     if (isPinyinInput(input)) {
       if (input.length == 1) {
-        return null;
+        return []; //null;
       }
       theZiCandidatesFromPinyin = true;
       return getZiCandidatesFromPinyinList(input.substring(1));
@@ -190,7 +190,7 @@ class InputZiManager {
   }
 
   List<int> getPinyinListIndex() {
-    if (pinyinLetterIndex == null) {
+    if (pinyinLetterIndex.length == 0) {
       int letterStartingIndex = 1;
       // 23 + 1 = 24, 'i' 'u' 'v'don't exist in Pinyin as the first letter
       pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
