@@ -152,10 +152,10 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             //SizedBox(width: spaceStart * getSizeRatioWithLimit()),
-            getOnePinyinType(PinyinType.None),
-            getOnePinyinType(PinyinType.OnlyFirst),
+            getOnePinyinType(PinyinType.Full),
             getOnePinyinType(PinyinType.OnlyNewZi),
-            getOnePinyinType(PinyinType.Full)
+            getOnePinyinType(PinyinType.OnlyFirst),
+            getOnePinyinType(PinyinType.None),
           ]
 
       ),
@@ -163,7 +163,12 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   }
 
   Widget getOnePinyinType(PinyinType onePinyinType) {
-    var display = getString(507); // None pinyin
+    var color = Colors.black;
+    if (pinyinType == onePinyinType)
+    {
+      color = Colors.green;
+    }
+    var display = '';
     if (onePinyinType == PinyinType.OnlyFirst) {
       display = getString(508);
     }
@@ -172,6 +177,9 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
     }
     else if (onePinyinType == PinyinType.Full) {
       display = getString(510);
+    }
+    else if (onePinyinType == PinyinType.None) {
+      display = getString(507);
     }
 
     return TextButton(
@@ -184,7 +192,7 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
         });
       },
       child: Text(display,
-          style: TextStyle(color: Colors.black)),
+          style: TextStyle(color: color)),
     );
   }
 

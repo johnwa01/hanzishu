@@ -605,10 +605,20 @@ class _InputZiPageState extends State<InputZiPage> {
     var selectionPosi = getCursorPosition(
         candidateCharLength, isFromCharCandidateList, isFromOverlay);
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
-
+    
     _controller.value = _controller.value.copyWith(text: newText,
           composing: TextRange.empty,
           selection: TextSelection.collapsed(offset: selectionPosi));
+
+    if (kIsWeb) {
+      _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disappear.
+      Future.delayed(Duration(milliseconds: 100), ()
+      {
+        // make sure to select nothing
+        _controller.selection = TextSelection(baseOffset: _controller.text.length,
+          extentOffset: _controller.text.length, );
+      });
+    }
 
     previousStartComposing = -1;
     previousEndComposing = -1;
@@ -1830,6 +1840,10 @@ class _InputZiPageState extends State<InputZiPage> {
       );
     }
     else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.Custom) {
+      if (showHint == HintType.Game) {
+        return showGameInput(currentTypingChar);
+      }
+
       return Row(
           children: <Widget>[
             SizedBox(width: fontSize),

@@ -104,7 +104,7 @@ class _LessonPageState extends State<LessonPage> {
   }
 
   launchLessonSection(BuildContext context, int lessonId, int lessonSection) {
-    var pinyinType = PinyinType.OnlyNewZi;
+    var pinyinType = PinyinType.Full;
     if (lessonId <= Lesson.numberOfLessonsInUnit1) {
       pinyinType = PinyinType.None;
     }
