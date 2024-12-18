@@ -97,7 +97,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   _getRequests() async {
     if (widget.studyType == StudyType.typingOnly && currentIndex == 2) {
       theIsBackArrowExit = true;
-      this.currentIndex = 0;
+      //this.currentIndex = 0;
       return; //done for typing only, exit now
     }
 
@@ -355,12 +355,17 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
           break;
           */
         case 2:
+          bool includeSkipSection = true;
+          if (widget.studyType == StudyType.typingOnly) {
+            includeSkipSection = false;
+          }
+
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: true, showSwitchMethod: false),
+                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: includeSkipSection, showSwitchMethod: false),
             ),
           ).then((val) => {_getRequests()});
           break;

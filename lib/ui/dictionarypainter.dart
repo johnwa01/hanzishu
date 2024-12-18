@@ -266,7 +266,9 @@ class DictionaryPainter extends BreakoutPainter {
 
   displayExplanation(int ziIndex, PositionAndSize posiSize, double fontSize4, double fontSize6) {
     var explanation = theSearchingZiList[ziIndex].explanation;
-
+    if (explanation.length > 26) { // estimated length for two lines
+      explanation = explanation.substring(0, 26);
+    }
     displayTextWithValue(
         getString(522) + ": ",
         posiSize.transX, posiSize.transY,
