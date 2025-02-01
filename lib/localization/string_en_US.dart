@@ -497,7 +497,7 @@ var theString_en_US = [
   Local(487, "(built-in, please set system input mode to English.)"),
   Local(488, "Test Sound to Hanzi"),
   Local(489, "Typing Hanzi"),
-  Local(490, "Yuwen (Standard Textbook - before 2024)"),
+  Local(490, "Yuwen - （Standard Textbook) - old"),
   Local(491, "Listen and type Hanzi"),
   Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
   Local(493, "Change method"),
@@ -533,4 +533,5 @@ var theString_en_US = [
   Local(523, "Hint3"),
   Local(524, "Score"),
   Local(525, "Game"),
+  Local(526, "Yuwen 2017"),
 ];

@@ -8,6 +8,7 @@ import 'package:hanzishu/variables.dart';
 enum ThirdPartyType {
   yuwen,
   sunlaoshi,
+  yuwen2017,
   none
 }
 
@@ -159,7 +160,12 @@ class ThirdPartyLesson {
   static String? getLessonName(ThirdPartyType thirdPartyType, int lessonId) {
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
       if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType && theThirdPartyLessonList[i].lessonId == lessonId) {
-        return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
+        if (thirdPartyType == ThirdPartyType.yuwen || thirdPartyType == ThirdPartyType.sunlaoshi) { // these two are older mechanism
+          return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
+        }
+        else {
+          return theThirdPartyLessonList[i].lessonNameCode;
+        }
       }
     }
 

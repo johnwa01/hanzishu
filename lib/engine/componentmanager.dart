@@ -1193,6 +1193,9 @@ class ComponentManager {
 
   static List<String> getTypingComponentsAndSubComp(String char) {
     var searchingZiId = DictionaryManager.getSearchingZiId(char);
+    if (searchingZiId == -1) {
+      return [];
+    }
     List<String> components = []; //List<String>();
     DictionaryManager.getAllComponents(searchingZiId, components);
 /*

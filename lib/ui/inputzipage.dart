@@ -2243,7 +2243,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getCategoryAndSubCat1Row() {
-    if (showHint == HintType.Hint0 || showHint == HintType.Game) {
+    // if length is 0, it means the char isn't in the searching zi list (although exists in typinglist
+    if (showHint == HintType.Hint0 || showHint == HintType.Game || currentTypingComponentsAndSub.length == 0) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 

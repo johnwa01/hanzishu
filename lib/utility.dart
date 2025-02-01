@@ -476,7 +476,7 @@ class Utility {
   static bool specialChar(String char) {
     return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
         char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
-        char == ':' || char == '：' || char == ';' || char == '；';
+        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ';
   }
 
   static bool isALowerCaseLetter(String value) {

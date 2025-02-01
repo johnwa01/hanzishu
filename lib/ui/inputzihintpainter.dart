@@ -6,6 +6,7 @@ import 'package:hanzishu/ui/basepainter.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/utility.dart';
 
@@ -66,6 +67,17 @@ class InputZiHintPainter extends BasePainter {
     }
 
     xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
+
+    // non-existin char in searchingzilist
+    if (typingComponentsAndSubComp.length == 0) {
+      if (showHint == HintType.Hint3 || showHint == HintType.Hint2 || showHint == HintType.Hint1) {
+        // fine the code from inputzilist
+        var code = InputZiManager.getInputCodeByCharFromInputList(char);
+        displayTextWithValue(code.toUpperCase(), xPosi, 0.0, size, Colors.blue, false);
+      }
+      return;
+    }
+
     var compColor;
 
     for (int i = 0; i < typingComponentsAndSubComp.length; i++) {

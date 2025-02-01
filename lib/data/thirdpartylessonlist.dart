@@ -4,6 +4,7 @@ import 'package:hanzishu/engine/thirdpartylesson.dart';
 var theThirdPartyList = [
   ThirdParty(ThirdPartyType.yuwen, 490), // Yuwen
   ThirdParty(ThirdPartyType.sunlaoshi, 517), // Yuwen
+  ThirdParty(ThirdPartyType.yuwen2017, 526), // Yuwen2017
 ];
 
 var theThirdPartyLevelList = [
@@ -11,6 +12,7 @@ var theThirdPartyLevelList = [
   ThirdPartyLevel(ThirdPartyType.yuwen, 2, "l2"), // 100: temp
   ThirdPartyLevel(ThirdPartyType.sunlaoshi, 1, "t1"), // 100: temp
   ThirdPartyLevel(ThirdPartyType.sunlaoshi, 2, "t2"), // 100: temp
+  ThirdPartyLevel(ThirdPartyType.yuwen2017, 4, "l4"), // 100: temp
 ];
 
 var theThirdPartyLessonList = [
@@ -98,4 +100,14 @@ var theThirdPartyLessonList = [
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 30, "m30"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 31, "m31"),
   ThirdPartyLesson(ThirdPartyType.sunlaoshi, 2, 32, "m32"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 1, "1（A）. 古诗二首：村居"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 2, "1（B）. 古诗二首：咏柳"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 3, "2. 找春天"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 4, "3. 开满鲜花的小路"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 5, "4. 邓小平爷爷植树"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 6, "A. 语文园地1: 识字加油站"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 7, "B. 语文园地1: 赋得古原草送别"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 8, "C. 语文园地1: 笋茅儿"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 9, "5. 雷锋叔叔，你在哪里"),
+  ThirdPartyLesson(ThirdPartyType.yuwen2017, 4, 10, "6. 千人糕"),
 ];

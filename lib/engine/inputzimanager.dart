@@ -836,4 +836,15 @@ class InputZiManager {
       return mixedString.substring(nonLetterId + 1);
     }
   }
+
+  static String getInputCodeByCharFromInputList(String char) {
+    int len = theInputZiList.length;
+    for (int i = 0; i < len; i++) {
+      if (char == theInputZiList[i].zi) {
+        return theInputZiList[i].doubleByteCode;
+      }
+    }
+
+    return "";
+  }
 }
