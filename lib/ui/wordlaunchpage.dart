@@ -197,7 +197,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getDrillPageCore(drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -229,7 +229,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamSoundToHanzi(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -277,7 +277,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamHanziToSound(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -325,7 +325,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamMeaning(drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -377,14 +377,14 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
         if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
           ThirdPartyContent.setThirdPartyTypeAndLessonId(
               ThirdPartyType.sunlaoshi, subItemId);
         }
-        else if (widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+        else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
           ThirdPartyContent.setThirdPartyTypeAndLessonId(
-              ThirdPartyType.yuwen2017, subItemId);
+              ThirdPartyType.yuwenAll, subItemId);
         }
 
         return TextButton(
@@ -453,7 +453,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -486,7 +486,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getFlashcard(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -526,7 +526,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getStudyCustomizedWordsPage(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwen2017) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 

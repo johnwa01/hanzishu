@@ -530,5 +530,5 @@ var theString_zh_CN = [
   Local(523, "提示3"),
   Local(524, "分数"),
   Local(525, "游戏"),
-  Local(526, "语文 2017"),
+  Local(526, "语文"),
 ];

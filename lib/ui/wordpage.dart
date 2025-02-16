@@ -123,14 +123,14 @@ class _MeWordState extends State<WordPage> {
         ),
         ListTile(
           leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(526)/*"Yuwen2017"*/, textDirection: TextDirection.ltr),
+          title: Text(getString(526)/*"Yuwen"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
             Navigator.push(
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwen2017),
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
               ),
             );
           },

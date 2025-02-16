@@ -533,5 +533,5 @@ var theString_en_US = [
   Local(523, "Hint3"),
   Local(524, "Score"),
   Local(525, "Game"),
-  Local(526, "Yuwen 2017"),
+  Local(526, "Yuwen"),
 ];

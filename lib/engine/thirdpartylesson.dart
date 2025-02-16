@@ -8,7 +8,7 @@ import 'package:hanzishu/variables.dart';
 enum ThirdPartyType {
   yuwen,
   sunlaoshi,
-  yuwen2017,
+  yuwenAll,
   none
 }
 
@@ -117,23 +117,26 @@ class ThirdParty {
 
 class ThirdPartyLevel {
   ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  String version = '';
   int levelId = -1;
   String levelNameCode = '';  // 'a1', 'b3' etc
   //int startingLessonId;
 
   ThirdPartyLevel(ThirdPartyType thirdPartyType,
+      String version,
       int levelId,
       String levelNameCode) {
     this.thirdPartyType = thirdPartyType;
+    this.version = version;
     this.levelId = levelId;
     this.levelNameCode = levelNameCode;
     //this.startingLessonId = startingLessonId;
   }
 
-  static String? getLevelName(ThirdPartyType thirdPartyType, int levelId) {
+  static String? getLevelName(ThirdPartyType thirdPartyType, String version, int levelId) {
     for (int i = 0; i < theThirdPartyLevelList.length; i++) {
-      if (theThirdPartyLevelList[i].thirdPartyType == thirdPartyType && theThirdPartyLevelList[i].levelId == levelId) {
-        return ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode);
+      if (theThirdPartyLevelList[i].thirdPartyType == thirdPartyType && theThirdPartyLevelList[i].version == version && theThirdPartyLevelList[i].levelId == levelId) {
+        return ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode) + ' (' + version + ')';
       }
     }
 
@@ -143,28 +146,31 @@ class ThirdPartyLevel {
 
 class ThirdPartyLesson {
   ThirdPartyType thirdPartyType = ThirdPartyType.none;
+  String version = '';
   int levelId = -1;
   int lessonId = -1;
   String lessonNameCode = ''; // 'a1', 'c4' etc
 
   ThirdPartyLesson(ThirdPartyType thirdPartyType,
+      String version,
       int levelId,
       int lessonId,
       String lessonNameCode) {
     this.thirdPartyType = thirdPartyType;
+    this.version = version;
     this.levelId = levelId;
     this.lessonId = lessonId;
     this.lessonNameCode = lessonNameCode;
   }
 
-  static String? getLessonName(ThirdPartyType thirdPartyType, int lessonId) {
+  static String? getLessonName(ThirdPartyType thirdPartyType, String version, int lessonId) {
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
-      if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType && theThirdPartyLessonList[i].lessonId == lessonId) {
+      if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType  && theThirdPartyLessonList[i].version == version && theThirdPartyLessonList[i].lessonId == lessonId) {
         if (thirdPartyType == ThirdPartyType.yuwen || thirdPartyType == ThirdPartyType.sunlaoshi) { // these two are older mechanism
           return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
         }
         else {
-          return theThirdPartyLessonList[i].lessonNameCode;
+          return version + ' ' + theThirdPartyLessonList[i].lessonNameCode;
         }
       }
     }
