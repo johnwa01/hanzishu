@@ -5312,7 +5312,7 @@ var theInputZiList=[
   InputZi("迂", "ty", 3726),
   InputZi("抨", "ttw", 3731),
   InputZi("撩", "tawbi", 3752),
-  InputZi("遨", "tdxw", 3756),
+  InputZi("遨", "tdxy", 3756),
   InputZi("搪", "tfpo", 3760),
   InputZi("憩", "tobl", 3766),
   InputZi("拽", "tq", 3768),

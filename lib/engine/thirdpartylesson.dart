@@ -136,7 +136,11 @@ class ThirdPartyLevel {
   static String? getLevelName(ThirdPartyType thirdPartyType, String version, int levelId) {
     for (int i = 0; i < theThirdPartyLevelList.length; i++) {
       if (theThirdPartyLevelList[i].thirdPartyType == thirdPartyType && theThirdPartyLevelList[i].version == version && theThirdPartyLevelList[i].levelId == levelId) {
-        return ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode) + ' (' + version + ')';
+        String versionStr = ThirdParty.getStringFromCode(theThirdPartyLevelList[i].levelNameCode);
+        if (version.length > 0) {
+          versionStr += ' (' + version + ')';
+        }
+        return versionStr;
       }
     }
 
@@ -170,7 +174,7 @@ class ThirdPartyLesson {
           return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
         }
         else {
-          return version + ' ' + theThirdPartyLessonList[i].lessonNameCode;
+          return /*version + ' ' +*/ theThirdPartyLessonList[i].lessonNameCode;
         }
       }
     }
