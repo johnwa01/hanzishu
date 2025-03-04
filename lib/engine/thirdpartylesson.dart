@@ -1,4 +1,3 @@
-import 'package:hanzishu/data/thirdpartycontentlist.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/data/thirdpartylessonlist.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
@@ -154,17 +153,27 @@ class ThirdPartyLesson {
   int levelId = -1;
   int lessonId = -1;
   String lessonNameCode = ''; // 'a1', 'c4' etc
+  String newChars = '';
+  String content = '';
+  static int currentContentIndex = -1;
+
+  //int currentWordIndex = -1;
+  int realWordsLength = -1;
 
   ThirdPartyLesson(ThirdPartyType thirdPartyType,
       String version,
       int levelId,
       int lessonId,
-      String lessonNameCode) {
+      String lessonNameCode,
+      String newChars,
+      String content) {
     this.thirdPartyType = thirdPartyType;
     this.version = version;
     this.levelId = levelId;
     this.lessonId = lessonId;
     this.lessonNameCode = lessonNameCode;
+    this.newChars = newChars;
+    this.content = content;
   }
 
   static String? getLessonName(ThirdPartyType thirdPartyType, String version, int lessonId) {
@@ -201,35 +210,15 @@ class ThirdPartyLesson {
       }
     }
     else if (thirdPartyType == ThirdPartyType.sunlaoshi) {
-      lessonString = ThirdPartyContent.getContent(ThirdPartyType.sunlaoshi, lessonId);
+      lessonString = getContent(ThirdPartyType.sunlaoshi, lessonId);
     }
 
     return lessonString;
   }
-}
-
-class ThirdPartyContent {
-  static int currentContentIndex = -1;
-
-  ThirdPartyType thirdPartyType = ThirdPartyType.none;
-  int lessonId = -1;
-  String content = '';
-
-  //int currentWordIndex = -1;
-  int realWordsLength = -1;
-  //String realWords = '';
-
-  ThirdPartyContent(ThirdPartyType thirdPartyType,
-      int lessonId,
-      String content) {
-    this.thirdPartyType = thirdPartyType;
-    this.lessonId = lessonId;
-    this.content = content;
-  }
 
   static void setThirdPartyTypeAndLessonId(ThirdPartyType thirdPartyType, int lessonId) {
-    for (int i = 0; i < theThirdPartyContentList.length; i++) {
-      if (thirdPartyType == theThirdPartyContentList[i].thirdPartyType && theThirdPartyContentList[i].lessonId == theThirdPartyLessonList[lessonId - 1].lessonId) {
+    for (int i = 0; i < theThirdPartyLessonList.length; i++) {
+      if (thirdPartyType == theThirdPartyLessonList[i].thirdPartyType && theThirdPartyLessonList[i].lessonId == theThirdPartyLessonList[lessonId - 1].lessonId) {
         currentContentIndex = i;
         break;
       }
@@ -238,31 +227,26 @@ class ThirdPartyContent {
 
   static String getContent(ThirdPartyType thirdPartyType, int lessonId) {
     String content = '';
-    for (int i = 0; i < theThirdPartyContentList.length; i++) {
-      if (thirdPartyType == theThirdPartyContentList[i].thirdPartyType && lessonId == theThirdPartyContentList[i].lessonId) {
-          content = theThirdPartyContentList[i].content;
-          break;
+    for (int i = 0; i < theThirdPartyLessonList.length; i++) {
+      if (thirdPartyType == theThirdPartyLessonList[i].thirdPartyType && lessonId == theThirdPartyLessonList[i].lessonId) {
+        content = theThirdPartyLessonList[i].content;
+        break;
       }
     }
 
     return content;
   }
 
-  static String getChar(int currentIndex) {
-    PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
-    String sentence = getCurrentSentenceAndCharIndex(currentIndex, charIndex);
-    return sentence.substring(charIndex.value, charIndex.value + 1);
-  }
-
   static int getCurrentRealWordsLength() {
-    var content = theThirdPartyContentList[currentContentIndex];
+    var content = theThirdPartyLessonList[currentContentIndex];
     return content.getRealWordsLength();
   }
 
   static String getCurrentSentenceAndCharIndex(int typingCharsIndex, PrimitiveWrapper charIndex) {
-    var content = theThirdPartyContentList[currentContentIndex];
+    var content = theThirdPartyLessonList[currentContentIndex];
     return content.getSentenceAndCharIndex(typingCharsIndex, charIndex);
   }
+
 
   int getRealWordsLength() {
     if (realWordsLength != -1)  {
@@ -280,47 +264,30 @@ class ThirdPartyContent {
     return realWordsLength;
   }
 
-  /*
-  String getCurrentRealWords() {
-    if (currentRealWordsLength != -1)  {
-      // already initialized
-      return currentRealWords;
-    }
-
-    for (int i = 0; i < currentContent.length; i++) {
-        if (!Utility.specialChar(currentContent[i])) {
-          currentRealWords += currentContent[i];
-        }
-    }
-
-    return currentRealWords;
-  }
-  */
-
   String getSentenceAndCharIndex(int typingCharsIndex, PrimitiveWrapper charIndex) {
     int charIndexCount = -1;
     int lastNonCharIndex = -1;
     String currentSentence = '';
 
-      for (int i = 0; i < content.length; i++) {
-        if (!Utility.specialChar(content[i])) {
-          charIndexCount++;
-          //currentSentence += currentContent[i];
-        }
-        else {
-          // record the current non-char index for later sentence creation
-          lastNonCharIndex = i;
-        }
-
-        if (charIndexCount == typingCharsIndex) {
-          // this is the one wanted
-          charIndex.value = i - lastNonCharIndex - 1;
-          currentSentence = getCurrentSentenceHelper(lastNonCharIndex);
-          break;
-        }
+    for (int i = 0; i < content.length; i++) {
+      if (!Utility.specialChar(content[i])) {
+        charIndexCount++;
+        //currentSentence += currentContent[i];
+      }
+      else {
+        // record the current non-char index for later sentence creation
+        lastNonCharIndex = i;
       }
 
-      return currentSentence;
+      if (charIndexCount == typingCharsIndex) {
+        // this is the one wanted
+        charIndex.value = i - lastNonCharIndex - 1;
+        currentSentence = getCurrentSentenceHelper(lastNonCharIndex);
+        break;
+      }
+    }
+
+    return currentSentence;
   }
 
   String getCurrentSentenceHelper(int lastNonCharIndex) {
@@ -329,12 +296,18 @@ class ThirdPartyContent {
     for (int i = lastNonCharIndex + 1; i < content.length; i++) {
       sentence += content[i];
       if (Utility.specialChar(content[i])) {
-          if (sentence.length != 0) {
-            break;
-          }
+        if (sentence.length != 0) {
+          break;
+        }
       }
     }
 
     return sentence;
+  }
+
+  static String getChar(int currentIndex) {
+    PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+    String sentence = getCurrentSentenceAndCharIndex(currentIndex, charIndex);
+    return sentence.substring(charIndex.value, charIndex.value + 1);
   }
 }

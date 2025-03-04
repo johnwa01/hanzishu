@@ -1,4 +1,3 @@
-
 enum TypingType {
   none,
   //GiveItATry,
@@ -51,6 +50,7 @@ class InputZi {
       int usageFrequency,
    //   String pinyin,
       ) {
+
     this.zi = zi;
     this.doubleByteCode = doubleByteCode;
     this.usageFrequency = usageFrequency;

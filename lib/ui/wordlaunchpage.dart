@@ -379,11 +379,11 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
 
       if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
         if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
-          ThirdPartyContent.setThirdPartyTypeAndLessonId(
+          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
               ThirdPartyType.sunlaoshi, subItemId);
         }
         else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
-          ThirdPartyContent.setThirdPartyTypeAndLessonId(
+          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
               ThirdPartyType.yuwenAll, subItemId);
         }
 

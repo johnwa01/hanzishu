@@ -183,7 +183,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       else if(typingType == TypingType.ThirdParty) {
         PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
-        String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(0, charIndex);
+        String sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(0, charIndex);
         TextToSpeech.speak(
             "zh-CN", sentence);
       }
@@ -525,7 +525,7 @@ class _InputZiPageState extends State<InputZiPage> {
             }
             else if(typingType == TypingType.ThirdParty) {
               var charIndex = PrimitiveWrapper(0);
-              String sentence = ThirdPartyContent.getCurrentSentenceAndCharIndex(
+              String sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(
                   currentIndex, charIndex);
               if (charIndex.value == 0) {
                 TextToSpeech.speak(
@@ -1884,7 +1884,7 @@ class _InputZiPageState extends State<InputZiPage> {
         conv = theSentenceList[sentenceIndex.value].conv;
       }
       else if (typingType == TypingType.ThirdParty) {
-        conv = ThirdPartyContent.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
+        conv = ThirdPartyLesson.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
       }
 
       String strBeforeChar;
