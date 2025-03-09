@@ -26,6 +26,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/drillpage.dart';
+import 'package:hanzishu/engine/triemanager.dart';
 
 import 'dart:io';
 import "package:hanzishu/utility.dart";
@@ -103,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
     theStandardExamManager = StandardExamManager();
 
     theStatisticsManager.init(LessonQuizResult(dateString : '', lessonId : -1, cor : -1, answ : -1));
-
+    theTrieManager = TrieManager();
     //move to lesson
     //LessonManager.populateLessonsInfo();
   }

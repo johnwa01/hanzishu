@@ -19,6 +19,8 @@ var theStrokeManager;
 var theDictionaryManager;
 var theStandardExamManager;
 
+var theTrieManager;
+
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 60; //TODO: to lessonmanager?
 var theNumberOfLessonsInLevels = [9, 7, 5, 5, 7, 5, 5, 6, 4, 7,      3, 4, 3, 4, 4, 2,      5, 6, 4, 7];

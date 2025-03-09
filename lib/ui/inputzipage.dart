@@ -23,6 +23,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
+import 'package:hanzishu/engine/triemanager.dart';
 
 import 'dart:core';
 import 'dart:io';
@@ -472,6 +473,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   checkAndUpdateCurrentIndex(TextEditingController edidController, String newChar) {
+    theTrieManager.find('test');
+
     // for guarded typing
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       var checkedText = newChar;
@@ -873,6 +876,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
       //currentComposingText = composingText;
       fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+      //TODO: switch when data format is ready
+      //var originalFullZiCandidates = theTrieManager.find(composingText);
+      //fullZiCandidates = InputZiManager.ExtractFullCandidates(originalFullZiCandidates);
+
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
       theCurrentZiCandidates = fullZiCandidates!;

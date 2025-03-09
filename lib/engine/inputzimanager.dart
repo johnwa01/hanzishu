@@ -789,7 +789,28 @@ class InputZiManager {
     return -1;
   }
 
-  static getCurrentFromFullZiCandidates(List<String>fullCandidates, int groupIndex) {
+  static List<String> ExtractFullCandidates(List<String> originalFullCandidates) {
+    List<String> extractedFullCandidates = [];
+    String oneOriginalCandidate;
+
+    for (int i = 0; i < originalFullCandidates.length; i++) {
+      oneOriginalCandidate = originalFullCandidates[i];
+      if (oneOriginalCandidate.length == 1) {
+        extractedFullCandidates.add(oneOriginalCandidate);
+      }
+      else if (oneOriginalCandidate.length > 1) {
+        // extract null separated string
+        List oneExtractedCandidates = oneOriginalCandidate.split(',');
+        for (int j = 0; j < oneExtractedCandidates.length; j++) {
+          extractedFullCandidates.add(oneExtractedCandidates[j]);
+        }
+      }
+    }
+
+    return extractedFullCandidates;
+  }
+
+  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int groupIndex) {
     List<String> currentCandidates = [];
     int starting = groupIndex * maxTypingCandidates;
     int ending = (groupIndex + 1) * maxTypingCandidates;
