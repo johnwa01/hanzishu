@@ -95,7 +95,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool hasVerifiedToBeALowerCase = false;
 
-  int candidateGroupIndex = 0;
+  //int candidateGroupIndex = 0;
+  int fullCandidateStartingIndex = 0;
   //For one specific typing string like "ooo", to be used by < or > action
   List<String>? fullZiCandidates;
 
@@ -553,22 +554,26 @@ class _InputZiPageState extends State<InputZiPage> {
     if (selectionIndex == (InputZiManager.maxTypingCandidates+1)) { // '>'
       // if empty text, therefore no non-default candidates yet, then skip
       if (_controller.text.length > 0) {
-        if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
-            fullZiCandidates!.length) {
-          candidateGroupIndex++;
-          setState(() {
-            theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
-            isFromArrowCandidate = true;
-            updateCounter++;
-          });
+        //if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates!.length) {
+        int tempNextStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, true/*forwardArrlow*/);
+        if(tempNextStartingIndex > 0) {
+            //candidateGroupIndex++;
+            fullCandidateStartingIndex = tempNextStartingIndex;
+            setState(() {
+              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+              isFromArrowCandidate = true;
+              updateCounter++;
+            });
         }
       }
     }
     else if (selectionIndex == InputZiManager.maxTypingCandidates) { // '<'
-      if (candidateGroupIndex > 0) {
-        candidateGroupIndex--;
+      //if (candidateGroupIndex > 0) {
+      if (fullCandidateStartingIndex > 0) {
+        //candidateGroupIndex--;
+        fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*forwardArrlow*/);
         setState(() {
-          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
+          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
           isFromArrowCandidate = true;
           updateCounter++;
         });
@@ -753,7 +758,7 @@ class _InputZiPageState extends State<InputZiPage> {
     latestInputKeyLetter = getLatestInputLetter();
 
     if (latestInputKeyLetter == " " /*32*/) { // space key
-      candidateGroupIndex = 0;
+      fullCandidateStartingIndex = 0;
 
       initOverlay();
 
@@ -771,7 +776,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     */
     else if (isFromDeletion) {
-      candidateGroupIndex = 0;
+      fullCandidateStartingIndex = 0;
       initOverlay();
       /*
       if (_controller.text.length == 0) {
@@ -811,16 +816,22 @@ class _InputZiPageState extends State<InputZiPage> {
       /*else */if (Utility.isForwardArrow(latestInputKeyLetter)) {
         // if just '>' char with text length of 1, no non-default candidates yet, there skip
         if (_controller.text.length != 1) {
-          if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates <
-              fullZiCandidates!.length) {
-            candidateGroupIndex++;
+          int tempNextStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, true/*forwardArrlow*/);
+          if(tempNextStartingIndex > 0) {
+            fullCandidateStartingIndex = tempNextStartingIndex;
           }
+          //if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates!.length) {
+            //candidateGroupIndex++;
+          //}
         }
       }
       else if (Utility.isBackArrow(latestInputKeyLetter)) {
-        if (candidateGroupIndex > 0) {
-          candidateGroupIndex--;
+        if (fullCandidateStartingIndex > 0) {
+          fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*forwardArrlow*/);;
         }
+        //if (candidateGroupIndex > 0) {
+        //  candidateGroupIndex--;
+        //}
       }
 
       setPreviousComposing();
@@ -853,12 +864,12 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       if (Utility.isArrow(latestInputKeyLetter)) {
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, candidateGroupIndex);
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
       if (_controller.text != previousText) {
-        candidateGroupIndex = 0;
+        fullCandidateStartingIndex = 0;
         initOverlay();
       }
 
@@ -866,7 +877,8 @@ class _InputZiPageState extends State<InputZiPage> {
       setTextByChosenZiIndex(
           getZeroBasedNumber(latestInputKeyLetter), false, false, true);
     }
-    else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {candidateGroupIndex = 0;
+    else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
+      fullCandidateStartingIndex = 0;
       hasVerifiedToBeALowerCase = true;
       initOverlay();
       setPreviousComposing();
@@ -908,7 +920,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else {
       initOverlay();
-      candidateGroupIndex = 0;
+      fullCandidateStartingIndex = 0;
       previousStartComposing = -1;
       previousEndComposing = -1;
       theCurrentZiCandidates = theDefaultZiCandidates;
@@ -1138,7 +1150,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var leftArrowColor; // black is default
     // if the first one, no way to go left
-    if (candidateGroupIndex == 0) {
+    if (fullCandidateStartingIndex == 0) {
       leftArrowColor = Colors.grey;
     }
     else {
@@ -1150,9 +1162,10 @@ class _InputZiPageState extends State<InputZiPage> {
       rightArrowColor = Colors.grey;
     }
     else {
-      int candidateGroupCount = (fullZiCandidates!.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
+      //int candidateGroupCount = (fullZiCandidates!.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
       // if it's the last one, no way to go right.
-      if (candidateGroupIndex == (candidateGroupCount - 1)) {
+      //if (candidateGroupIndex == (candidateGroupCount - 1)) {
+      if((fullCandidateStartingIndex + InputZiManager.maxTypingCandidates) >= fullZiCandidates!.length) {
         rightArrowColor = Colors.grey;
       }
       else {

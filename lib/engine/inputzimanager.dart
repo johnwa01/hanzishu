@@ -810,12 +810,13 @@ class InputZiManager {
     return extractedFullCandidates;
   }
 
-  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int groupIndex) {
+  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
     List<String> currentCandidates = [];
-    int starting = groupIndex * maxTypingCandidates;
-    int ending = (groupIndex + 1) * maxTypingCandidates;
+    //int starting = groupIndex * maxTypingCandidates;
+    //int ending = (groupIndex + 1) * maxTypingCandidates;
+    int ending = fullCandidateStartingIndex + maxTypingCandidates;
 
-    for (int i = starting; i < ending; i++) {
+    for (int i = fullCandidateStartingIndex; i < ending; i++) {
       if (i < fullCandidates.length) {
         currentCandidates.add(fullCandidates[i]);
       }
@@ -825,6 +826,23 @@ class InputZiManager {
     }
 
     return currentCandidates;
+  }
+
+  static int  getFullCandidateNextStartingIndex(List<String>fullCandidates, int fullCandidateStartingIndex, bool forwardArrow) { //backArrow = false
+      int nextFullCandidateStartingIndex = 0;
+
+      if (forwardArrow) {
+        if ((fullCandidateStartingIndex + maxTypingCandidates) < fullCandidates.length) {
+          nextFullCandidateStartingIndex = fullCandidateStartingIndex + maxTypingCandidates;
+        }
+      }
+      else { // backarrow
+        if ((fullCandidateStartingIndex - maxTypingCandidates) >= 0) {
+          nextFullCandidateStartingIndex = fullCandidateStartingIndex - maxTypingCandidates;
+        }
+      }
+
+      return nextFullCandidateStartingIndex;
   }
 
   static bool isLastLetterArrow(String str) {
