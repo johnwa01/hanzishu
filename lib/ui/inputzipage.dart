@@ -790,7 +790,8 @@ class _InputZiPageState extends State<InputZiPage> {
         previousEndComposing--;
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
-        theCurrentZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+        fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
@@ -894,7 +895,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
-      theCurrentZiCandidates = fullZiCandidates!;
+      theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;

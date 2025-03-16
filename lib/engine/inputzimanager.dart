@@ -18,6 +18,7 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
+  static int maxTypingCharacters = 7; // to be same as maxTypingCandidates for now
   String wordsStudy = '';
   List<int> pinyinLetterIndex = <int>[];
   List<int> inputCodeLetterIndex = <int>[];
@@ -814,11 +815,12 @@ class InputZiManager {
     List<String> currentCandidates = [];
     //int starting = groupIndex * maxTypingCandidates;
     //int ending = (groupIndex + 1) * maxTypingCandidates;
-    int ending = fullCandidateStartingIndex + maxTypingCandidates;
-
-    for (int i = fullCandidateStartingIndex; i < ending; i++) {
-      if (i < fullCandidates.length) {
+    //int ending = fullCandidateStartingIndex + maxTypingCandidates;
+    int charCount = 0;
+    for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
+      if (charCount + fullCandidates[i].length <= maxTypingCandidates) {
         currentCandidates.add(fullCandidates[i]);
+        charCount += fullCandidates[i].length;
       }
       else {
         break;
@@ -831,15 +833,43 @@ class InputZiManager {
   static int  getFullCandidateNextStartingIndex(List<String>fullCandidates, int fullCandidateStartingIndex, bool forwardArrow) { //backArrow = false
       int nextFullCandidateStartingIndex = 0;
 
+      int charCount = 0;
+      int validIndex = 0;
       if (forwardArrow) {
-        if ((fullCandidateStartingIndex + maxTypingCandidates) < fullCandidates.length) {
-          nextFullCandidateStartingIndex = fullCandidateStartingIndex + maxTypingCandidates;
+        // to next index with total number of characters <= maxTypingCharacters
+        if (fullCandidateStartingIndex < fullCandidates.length - 1) {
+          for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
+            if ((charCount + fullCandidates[i].length) <= maxTypingCharacters) {
+              charCount += fullCandidates[i].length;
+              validIndex = i;
+            }
+            else {
+              break;
+            }
+          }
+          if (validIndex < fullCandidates.length - 1) {
+            nextFullCandidateStartingIndex = validIndex + 1;
+          }
         }
       }
       else { // backarrow
-        if ((fullCandidateStartingIndex - maxTypingCandidates) >= 0) {
-          nextFullCandidateStartingIndex = fullCandidateStartingIndex - maxTypingCandidates;
+        if (fullCandidateStartingIndex > 0) {
+          // to next backarrow index with total number of characters <= maxTypingCharacters
+          for (int i = fullCandidateStartingIndex - 1; i >= 0; i--) {
+            if ((charCount + fullCandidates[i].length) <= maxTypingCharacters) {
+              charCount += fullCandidates[i].length;
+              validIndex = i;
+            }
+            else {
+              break;
+            }
+          }
+
+          nextFullCandidateStartingIndex = validIndex;
         }
+        //if ((fullCandidateStartingIndex - maxTypingCandidates) >= 0) {
+          //nextFullCandidateStartingIndex = fullCandidateStartingIndex - maxTypingCandidates;
+        //}
       }
 
       return nextFullCandidateStartingIndex;

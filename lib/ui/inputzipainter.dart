@@ -40,14 +40,17 @@ class InputZiPainter extends BasePainter {
 
       var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
 
-      if (activeCandidatesLength > InputZiManager.maxTypingCandidates) {  // Temp: for testing, leave 7 for test
-        activeCandidatesLength = InputZiManager.maxTypingCandidates;
-      }
+      //if (activeCandidatesLength > InputZiManager.maxTypingCandidates) {  // Temp: for testing, leave 7 for test
+      //  activeCandidatesLength = InputZiManager.maxTypingCandidates;
+      //}
       var widthSizeRatio = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
-           displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRatio);
-           displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
-           x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 18.0 * widthSizeRatio);
+                  displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRatio);
+                  //displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
+                  //x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 18.0 * widthSizeRatio);
+                  x += 30.0 * getSizeRatio() * theCurrentZiCandidates[i].length;
+                  displayTextWithValue((i+1).toString(), x /*+ 30.0 * getSizeRatio()*/, 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
+                  x += (18.0 * widthSizeRatio);
       }
 
       x = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 12.0)* getSizeRatio();
@@ -92,8 +95,15 @@ class InputZiPainter extends BasePainter {
   }
 
   displayOneCandidate(String candidate, double x, double y, double fontSize) {
-    displayTextWithValue(candidate, x, y, fontSize, Colors.blue, false);
+    var widthSizeRatio = Utility.getSizeRatio(screenWidth);
+    for (int i = 0; i < candidate.length; i++) {
+      displayTextWithValue(candidate[i], x + i * 30.0 * getSizeRatio(), y, fontSize, Colors.blue, false);
+    }
   }
+
+  //displayOneCandidate(String candidate, double x, double y, double fontSize) {
+  //  displayTextWithValue(candidate, x, y, fontSize, Colors.blue, false);
+  //}
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
