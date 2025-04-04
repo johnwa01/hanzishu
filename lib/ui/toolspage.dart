@@ -152,25 +152,6 @@ class _ToolsPageState extends State<ToolsPage> {
     return ListView(
       children: <Widget>[
         ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            launchTypingAppPageOrHtml();
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiHelpPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
           title: Text(str, textDirection: TextDirection.ltr),
         ),
         ListTile(
@@ -230,6 +211,25 @@ class _ToolsPageState extends State<ToolsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            launchTypingAppPageOrHtml();
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiHelpPage(),
               ),
             );
           },
