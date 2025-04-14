@@ -134,7 +134,7 @@ var theString_en_US = [
   Local(128, "Please tap or mouse click a key image below that maps the above Chinese alphabet."),
   Local(129, "Please review above given type of Chinese alphabets, then mouse click or tap their mapping key letter in the screen below."),
   Local(130, "Please choose the key group that matches the above Chinese alphabet group."),
-  Local(131, "Step 3:\n\nQuestion: There are over couple hundreds of common Chinese alphabets and only 26 letters, how do I map all those Chinese alphabets?\n\nAnswer: All Chinese alphabets of same type map to one letter.\n\nThe above chart shows all Chinese alphabets of 'human legs' type. They share a same keyboard key letter of 'A'.\n\nWe'll go through details of 25 types of Chinese alphabets."),
+  Local(131, "Step 3:\n\nQuestion: There are over couple hundreds of common Chinese alphabets and only 26 letters, how do I map all those Chinese alphabets?\n\nAnswer: All Chinese alphabets of same type map to one letter.\n\nThe above chart shows all Chinese alphabets of 'human legs' type. They share a same keyboard key letter of 'A'."), // not enough space for /*\n\nWe'll go through details of 25 types of Chinese alphabets.*/
   Local(132, "Note: The Expanded Chinese alphabets have similar shapes to their Lead Chinese alphabet."), // TODO: not used
   Local(133, "You remember the Chinese alphabets by group! In the next exercise, you will review the Chinese alphabets."),
   Local(134, "Way to go!"),
