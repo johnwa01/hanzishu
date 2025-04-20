@@ -14,6 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/webviewpage.dart';
 import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'package:hanzishu/engine/studywords.dart';
+import 'package:hanzishu/engine/thirdpartylesson.dart';
+import 'package:hanzishu/ui/thirdpartylessonpage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -22,11 +24,18 @@ class ToolsPage extends StatefulWidget {
 
 class _ToolsPageState extends State<ToolsPage> {
   //var exerciseCompleted = [false, false, false, false, false, false, false, false, false, false, false];
+  double? screenWidth;
 
   int numberOfExercises = 0;
 
+  double getSizeRatioWithLimit() {
+    return Utility.getSizeRatioWithLimit(screenWidth!);
+  }
+
   @override
   Widget build(BuildContext context) {
+    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+
     return Scaffold
       (
       appBar: AppBar
@@ -133,6 +142,8 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   Widget getMeListView(BuildContext context) {
+    var imageSize = 35.0 * getSizeRatioWithLimit();
+
     var str = getString(99);/*"Please finish exercise 1 - 10 to learn the input method"*/
     if (kIsWeb) {
       str = str + " " + getString(372) + "]";
@@ -167,6 +178,58 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(516)/*"Customized typing exercises"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(517)/*"sunlaoshi"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(526)/*"Yuwen"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
           title: Text(/*"2. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),
           onTap: () {
@@ -186,31 +249,6 @@ class _ToolsPageState extends State<ToolsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => TypingComponentSelectionPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(516)/*"Customized typing exercises"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
               ),
             );
           },

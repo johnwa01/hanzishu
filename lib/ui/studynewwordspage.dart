@@ -48,7 +48,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   //     0.0, 0.0, "");
   FocusNode _textNode = new FocusNode();
 
-  TextEditingController _controller = new TextEditingController(text: "您份成");
+  late TextEditingController _controller;
 
   int compoundZiComponentNum = 0;
   List<int> compoundZiAllComponents = [];
@@ -58,6 +58,10 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
   String inputText = '';
   int currentIndex = 0;
+
+  double getSizeRatio() {
+    return Utility.getSizeRatio(screenWidth);
+  }
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -69,6 +73,13 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
 
     if (widget.studyType == StudyType.typingOnly) {
       currentIndex = 2; // directly set to the typing section
+    }
+
+    if (widget.studyType == StudyType.typingOnly) {
+      _controller = new TextEditingController(text: "你好！我是王。很高兴认识你。");
+    }
+    else {
+      _controller = new TextEditingController(text: "您好吗");
     }
 
     theCurrentCenterZiId = searchingZiIndex;
@@ -147,7 +158,8 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
       }
     }
 
-    screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    //screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    screenWidth = Utility.getScreenWidth(context);
 
     try {
       return Scaffold
@@ -167,6 +179,11 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                         children: <Widget>[
                           SizedBox(width: 10 * getSizeRatioWithLimit()),
                           getTextField(),
+                          //SizedBox(width: 10 * getSizeRatioWithLimit()),
+                        ]
+                      ),
+                      Row(
+                        children: <Widget>[
                           SizedBox(width: 10 * getSizeRatioWithLimit()),
                           TextButton(
                             style: TextButton.styleFrom(
@@ -174,14 +191,6 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                             ),
                             onPressed: () {
                               processInputs();
-                              /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DictionaryHelpPage(),
-                                ),
-                              );
-                              */
                             },
                             child: Text(getString(301)/*"Start"*/,
                                 style: TextStyle(color: Colors.lightBlue)),
@@ -226,7 +235,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     //}
     //else {
       return SizedBox(
-        width: 280 * getSizeRatioWithLimit(), //double.infinity,
+        width: 340 * getSizeRatio(),
         //height: 120,
         child: TextField(
           //decoration: InputDecoration(
@@ -243,14 +252,14 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                 getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
             //height: 1.0 // 1.3
           ),
-          maxLines: 1,
+          maxLines: 8,
           //expands: true,
           keyboardType: TextInputType.text,
           //multiline,  //TextInputType.visiblePassword
           decoration: InputDecoration(
             //hintText: 'This test',
             filled: true,
-            fillColor: Colors.grey, //lightBlueAccent, //black12,
+            fillColor: Colors.lightBlueAccent, //black12,
           ),
         ), //focusNode: _textNode,
       );
@@ -269,7 +278,11 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
       inputText = _controller.value.text;
 
       if (inputText != null && inputText.length > 0) {
-        var resultStr = DictionaryManager.validateChars(inputText);
+        var resultStr =  inputText;
+        if (widget.studyType != StudyType.typingOnly) {
+           resultStr = DictionaryManager.validateChars(inputText);
+        }
+
         if (resultStr.length == 0) {
           showInvalidInputDialog();
         }

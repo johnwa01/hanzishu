@@ -521,7 +521,8 @@ class InputZiManager {
       );
     }
     else if (typingType == TypingType.Custom) {
-      return ZiWithComponentsAndStrokes(wordsStudy[index], [""], "", 0);
+      String char = ThirdPartyLesson.getOneChar(wordsStudy, index);
+      return ZiWithComponentsAndStrokes(char, [""], "", 0);
     }
 
     return null;
@@ -633,7 +634,8 @@ class InputZiManager {
     }
     else if (typingType == TypingType.Custom) {
       //var lesson = theLessonManager.getLesson(lessonId);
-      if (currentIndex >= wordsStudy.length) {
+      var currentTotal = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
+      if (currentIndex >= currentTotal) {
         currentIndex = -1;
       }
     }
@@ -716,7 +718,7 @@ class InputZiManager {
       result = typingResult.contains(char);
     }
     else if (typingType == TypingType.Custom) {
-      var char = wordsStudy[currentIndex];
+      var char = ThirdPartyLesson.getOneChar(wordsStudy, currentIndex);
       result = typingResult.contains(char);
     }
     else if (typingType == TypingType.ComponentTyping) {
@@ -781,7 +783,7 @@ class InputZiManager {
       return ThirdPartyLesson.getCurrentRealWordsLength();
     }
     else if (typingType == TypingType.Custom) {
-      return wordsStudy.length;
+      return ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
     }
     else if (typingType == TypingType.ComponentTyping) {
       return theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length;

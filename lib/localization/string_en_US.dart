@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Literacy tree"),
+  Local(1, "Puzzle Game"), //Literacy tree
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -110,7 +110,7 @@ var theString_en_US = [
   Local(104, "Guided typing"),
   Local(105, "Learn Chinese alphabets"),
   Local(106, "Typing exercises"),
-  Local(107, "Typing exercises for commonly used Hanzi"),
+  Local(107, "Exercises -- commonly used Hanzi"),
   Local(108, "Editor"),
   Local(109, "Try a few"),
   Local(110, "Let's try to type a few Hanzi.\n\n\Notes:\n\n 1) There are five different modes of hints, from hint 3 with full answer to game mode with no help. You can switch the modes as you need. \n\n2) If you are not sure about which letter to type, you can also guess clicking one of the four listed groups of Chinese alphabets, a green color indicates a correct guess, and a red color indicates a wrong guess. Then you can further guess clicking which type of Chinese alphabet it is."),
@@ -146,7 +146,7 @@ var theString_en_US = [
   Local(140, "Glossary"),
   Local(141, "Privacy policy & contact us"),
   Local(142, "About the Hanzishu Dictionary"),
-  Local(143, "The Hanzishu Dictionary is organized according to radicals based on the basic character-forming components (roughly single body words). Its main characteristic is that the radical of each word is the the first radical that the word contains. It houses nearly 3,800 Chinese words and 50,000 phrases."),
+  Local(143, "The main Hanzishu Dictionary is organized according to the shape order. Its radicals are based on the basic character-forming components (roughly single body words). Its main characteristic is that the radical of each word is the the first radical that the word contains. It houses nearly 3,800 Chinese words and 50,000 phrases."),
   Local(144, "How to search a target word?"),
   Local(145, "1. Enter the main page of the dictionary - Open the radical table. (The numbers in the table represent the stroke count of radicals.)"),
   Local(146, "2. Choose radical"),
@@ -414,13 +414,13 @@ var theString_en_US = [
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
   Local(407, "You have completed all the flashcards!"),
-  Local(408, "Copy/paste or type in your method:"),
+  Local(408, "Copy/paste or enter in your method like Pinyin etc:"),
   Local(409, "Study customized Hanzi"),
   Local(410, "You have completed this component typing exercise. Please move on to next one."),
   Local(411, "Hanzishu Introduction"),
   Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words. You will learn Chinese fast through this system. \n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
   //Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words.\n\nThe Hanzishu puzzle typing method, dictionary, word puzzle, and conversational lessons were invented and developed by Microsoft Senior Engineer John Zhongqi Wang. The Paint Sound symbols and lessons were invented by children education expert Kang Baoling.\n\nYou will learn Chinese fast through this system. Non-Chinese heritage students should start from conversation, and Chinese heritage students should start from Paint Sound section directly.\n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
-  Local(413, "Typing exercises for single alphabet words"), //"Typing exercises by component characteristics"
+  Local(413, "Exercises -- single alphabet words"), //"Typing exercises by component characteristics"
   Local(414, "Practice typing of all components by their characteristics."),
   Local(415, "Hanzishu pictographic typing course"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),
@@ -463,7 +463,7 @@ var theString_en_US = [
   Local(453, "Not show Hanzi"),
   Local(454, "Hanzi practice sheet"),
   Local(455, "HSK Hanzi"),
-  Local(456, "Literacy tree"), // "Learn or review Hanzi"
+  Local(456, "Puzzle Game"), // "Literacy tree/Learn or review Hanzi"
   Local(457, "In current test, it's estimated that you know about "),
   Local(458, "Total is "),
   Local(459, "All levels combined"),
@@ -497,7 +497,7 @@ var theString_en_US = [
   Local(487, "(built-in, please set system input mode to English.)"),
   Local(488, "Test Sound to Hanzi"),
   Local(489, "Typing Hanzi"),
-  Local(490, "Yuwen - （Standard Textbook) - old"),
+  Local(490, "Yuwen - Standard Textbook"),
   Local(491, "Listen and type Hanzi"),
   Local(492, "Hanzi: learn, flashcard, typing, and quiz."),
   Local(493, "Change method"),
@@ -523,8 +523,8 @@ var theString_en_US = [
   Local(513, "In this three-step typing course, you will learn how to type Hanzi (Chinese character) into computer using Hanzishu Pictographic Typing method.\n\nStep1:\n\nQuestion: How can I type Hanzi '口' into computer?\n\nAnswer: You find uppercase letter 'O' whose shape has similar characteristic as '口'， then type 'o'. \n\nThen choose '口' from a candidate list below the editing field by typing its number, mouse clicking, tapping it, or using space bar to choose the 1st candidate. You can also use arrow '>' key to see more candidates when necessary."),
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 4 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
   Local(515, "Next"),
-  Local(516, "Customized typing exercises"),
-  Local(517, "Ty Textbook Typing Exercises"),
+  Local(516, "Customized Typing Exercises"),
+  Local(517, "Exercises -- Ty Textbook Typing"),
   Local(518, "Typing exercises"),
   Local(519, "Guess"),
   Local(520, "Textbook"),
@@ -533,5 +533,5 @@ var theString_en_US = [
   Local(523, "Hint3"),
   Local(524, "Score"),
   Local(525, "Game"),
-  Local(526, "Yuwen"),
+  Local(526, "Exercises -- Yuwen"),
 ];

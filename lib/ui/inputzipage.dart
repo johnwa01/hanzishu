@@ -167,6 +167,10 @@ class _InputZiPageState extends State<InputZiPage> {
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
 
+    if (typingType == TypingType.Custom) {
+      wordsStudy = ThirdPartyLesson.divideLongSentences(wordsStudy);
+    }
+
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
 
@@ -1137,7 +1141,7 @@ class _InputZiPageState extends State<InputZiPage> {
     int maxNumberOfLines;
     if (typingType == TypingType.FreeTyping) {
       maxNumberOfLines = 10;  // 4
-      editFontSize = 26 * getSizeRatio();
+      editFontSize = 24 * getSizeRatio();
     }
     else {
       maxNumberOfLines = 1;
@@ -1860,7 +1864,7 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
-    else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.Custom) {
+    else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping) {
       if (showHint == HintType.Game) {
         return showGameInput(currentTypingChar);
       }
@@ -1881,7 +1885,7 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
-    else if (typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty) {
+    else if (typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty || typingType == TypingType.Custom) {
       if (showHint == HintType.Game) {
         return showGameInput(currentTypingChar);
       }
@@ -1906,6 +1910,9 @@ class _InputZiPageState extends State<InputZiPage> {
       }
       else if (typingType == TypingType.ThirdParty) {
         conv = ThirdPartyLesson.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
+      }
+      else if (typingType == TypingType.Custom) {
+        conv = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndexInSentence);
       }
 
       String strBeforeChar;
