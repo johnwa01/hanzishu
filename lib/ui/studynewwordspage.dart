@@ -172,7 +172,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             child: WillPopScope(
                 child: new Column( //Stack(
                     children: <Widget>[
-                      SizedBox(height: 40 * getSizeRatioWithLimit()),
+                      SizedBox(height: 10 * getSizeRatioWithLimit()), //40
                       getCopyPasteDictionry(),
                       SizedBox(height: 10 * getSizeRatioWithLimit()),
                       Row(
