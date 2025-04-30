@@ -34,6 +34,8 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 android {
     compileSdkVersion 34
 
+    namespace 'com.hanzishu'
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
