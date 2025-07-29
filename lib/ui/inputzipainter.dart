@@ -45,20 +45,21 @@ class InputZiPainter extends BasePainter {
       //}
       var widthSizeRatio = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
-                  displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 30.0 * widthSizeRatio);
+                  displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 20.0 * widthSizeRatio);
                   //displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
                   //x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 18.0 * widthSizeRatio);
-                  x += 30.0 * getSizeRatio() * theCurrentZiCandidates[i].length;
+                  x += 20.0 * getSizeRatio() * theCurrentZiCandidates[i].length;
                   displayTextWithValue((i+1).toString(), x /*+ 30.0 * getSizeRatio()*/, 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
                   x += (18.0 * widthSizeRatio);
       }
 
+      // note: the 20.0 arrow position calculation is fixed here, not change with candidates' font sizes
       x = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 12.0)* getSizeRatio();
 
-      displayTextWithValue('<', x, 0.0, 30.0 * getSizeRatio(), this.lineColor, false);
+      displayTextWithValue('<', x, 0.0, 20.0 * getSizeRatio(), this.lineColor, false);
       x += (20.0 + 14.0) * getSizeRatio();
 
-      displayTextWithValue('>', x, 0.0, 30.0 * getSizeRatio(), this.completeColor, false);
+      displayTextWithValue('>', x, 0.0, 20.0 * getSizeRatio(), this.completeColor, false);
 
       /* Temp: for testing component stroke drawing only
       if (globalTestDoubleByteCode.length == 2) {
@@ -96,8 +97,12 @@ class InputZiPainter extends BasePainter {
 
   displayOneCandidate(String candidate, double x, double y, double fontSize) {
     var widthSizeRatio = Utility.getSizeRatio(screenWidth);
-    for (int i = 0; i < candidate.length; i++) {
-      displayTextWithValue(candidate[i], x + i * 30.0 * getSizeRatio(), y, fontSize, Colors.blue, false);
+    var chars = candidate.characters;
+    //for (int i = 0; i < chars.length; i++) {
+    int i = 0;
+    for (var char in chars) {
+      displayTextWithValue(char, x + i * 20.0 * getSizeRatio(), y, fontSize, Colors.blue, false);
+      i++;
     }
   }
 

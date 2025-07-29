@@ -378,12 +378,16 @@ class BasePainter extends CustomPainter{
           fontSize: charFontSize /*, fontFamily: 'Roboto'*/), text: char);
     }
     //TextPainter tp = TextPainter(span, TextDirection.ltr);
-    var tp = TextPainter(text: span, textDirection: TextDirection.ltr);
-    tp.layout(
-      minWidth: 0,
-      maxWidth: this.width - transX,
-    );
-    tp.paint(canvas!, Offset(transX, transY));
+    //TODO: exceeding text will be skipped without warning
+    var mWidth = this.width - transX;
+    if (mWidth > 0) {
+      var tp = TextPainter(text: span, textDirection: TextDirection.ltr);
+      tp.layout(
+        minWidth: 0,
+        maxWidth: mWidth, //this.width - transX,
+      );
+      tp.paint(canvas!, Offset(transX, transY));
+    }
   }
 
   double textTransYAdjust(double transY, double heightY) {

@@ -2,6 +2,7 @@ import 'package:characters/characters.dart';
 
 import 'trie_node.dart';
 import 'utils.dart';
+import 'dart:collection';
 
 class KeyValueTrie<T> {
   final _root = TrieNode<T>(key: null, value: null);
@@ -38,11 +39,12 @@ class KeyValueTrie<T> {
       return [];
     }
 
-    final stack = [lastCharacterNode];
+    final Queue<TrieNode<T>> queue = new Queue<TrieNode<T>>();
+    queue.add(lastCharacterNode);
     final foundWords = <T>[];
 
-    while (stack.isNotEmpty) {
-      final partialMatchNode = stack.removeLast();
+    while (queue.isNotEmpty) {
+      final partialMatchNode = queue.removeFirst();
 
       // The partial match node corresponds to an entire word.
       if (partialMatchNode.isEndOfWord) {
@@ -51,7 +53,7 @@ class KeyValueTrie<T> {
 
       // Walk each of the child node of the partial match.
       for (final child in partialMatchNode.getChildren()) {
-        stack.add(child);
+        queue.add(child);
       }
     }
 

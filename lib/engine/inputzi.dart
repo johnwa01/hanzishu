@@ -38,42 +38,46 @@ enum HintType {
 }
 
 class InputZi {
-  String zi = '';
   String doubleByteCode = '';
-  int usageFrequency = -1;
+  String zi = '';
+
+  //int usageFrequency = -1;
  // String pinyin;
 
-
   InputZi(
-      String zi,
       String doubleByteCode,
-      int usageFrequency,
+      String zi,
+   //   int usageFrequency,
    //   String pinyin,
       ) {
 
-    this.zi = zi;
     this.doubleByteCode = doubleByteCode;
-    this.usageFrequency = usageFrequency;
+    this.zi = zi;
+
+    //this.usageFrequency = usageFrequency;
    // this.pinyin = pinyin;
   }
 }
 
 class PinyinInputZi {
-  String zi = '';
   String pinyin = '';
-  int usageFrequency = -1;
-  String typingCode = '';
+  String zi = '';
+
+  //int usageFrequency = -1;
+  //String typingCode = '';
 
   PinyinInputZi(
-      String zi,
       String pinyin,
-      int usageFrequency,
-      String typingCode,
+      String zi,
+
+      //int usageFrequency,
+      //String typingCode,
       ) {
-    this.zi = zi;
+
     this.pinyin = pinyin;
-    this.usageFrequency = usageFrequency;
-    this.typingCode = typingCode;
+    this.zi = zi;
+    //this.usageFrequency = usageFrequency;
+    //this.typingCode = typingCode;
   }
 }
 

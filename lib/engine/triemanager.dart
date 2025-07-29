@@ -1,10 +1,12 @@
 import 'package:hanzishu/trie/key_value_trie.dart';
 //import 'package:hanzishu/trie/trie.dart';
 import 'package:hanzishu/data/inputzilist.dart';
+import 'package:hanzishu/data/pinyininputzilist.dart';
 
 class TrieManager {
   // Use a key-value trie to associate each word with a value.
   final keyValueTrie = KeyValueTrie<String>(); // Values of type String.
+  final keyValueTriePinyin = KeyValueTrie<String>();
 
   TrieManager() {
     init();
@@ -12,6 +14,10 @@ class TrieManager {
 
   List<String> find(String code) {
     return keyValueTrie.find(code);
+  }
+
+  List<String> findPinyin(String pinyin) {
+    return keyValueTriePinyin.find(pinyin);
   }
 
   void init() {
@@ -47,6 +53,11 @@ class TrieManager {
       //print(keyValueTrie.find('tr')); // ['🚆', '🏆']
       //print(keyValueTrie.find('trophy')); // ['🏆']
       //print(keyValueTrie.find('trie')); // []
+    }
+
+    for (var index = 0; index <= thePinyinInputZiList.length - 1; index++) {
+      keyValueTriePinyin.insert(
+          thePinyinInputZiList[index].pinyin, thePinyinInputZiList[index].zi);
     }
   }
 }

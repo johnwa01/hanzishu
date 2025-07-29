@@ -18,7 +18,7 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
-  static int maxTypingCharacters = 7; // to be same as maxTypingCandidates for now
+  static int maxTypingCharacters = 12; // to be same as maxTypingCandidates for now
   String wordsStudy = '';
   List<int> pinyinLetterIndex = <int>[];
   List<int> inputCodeLetterIndex = <int>[];
@@ -107,10 +107,10 @@ class InputZiManager {
     for (var i = 0; i < activeCandidatesLength; i++) {
       if (canUpdate(currentInputCodeLength, inputZi.doubleByteCode.length,
           candidates[i].doubleByteCode.length)) {
-        if (inputZi.usageFrequency > candidates[i].usageFrequency) {
-          candidates.insert(i, inputZi);
-          return;
-        }
+        //if (inputZi.usageFrequency > candidates[i].usageFrequency) {
+        //  candidates.insert(i, inputZi);
+        //  return;
+        //}
       }
     }
 
@@ -160,29 +160,21 @@ class InputZiManager {
   // the only public method for this feature
   // current input as input, and a string as the output
   static List<String>? getZiCandidates(String input) {
+    var originalFullZiCandidates;
+
     if (isPinyinInput(input)) {
       if (input.length == 1) {
         return []; //null;
       }
       theZiCandidatesFromPinyin = true;
-      return getZiCandidatesFromPinyinList(input.substring(1));
+      //return getZiCandidatesFromPinyinList(input.substring(1));
+      originalFullZiCandidates = theTrieManager.findPinyin(input.substring(1));
     }
     else {
       theZiCandidatesFromPinyin = false;
-      return getZiCandidatesFromInputZiList(input);
-      /*
-      var first = findFirst(input);
-      var currentInputCodeLength = input.length;
-      if (first != -1) {
-        var last = findLast(first, input);
-        if (last != -1) {
-          return getZiCandidatesHelper(first, last, currentInputCodeLength);
-        }
-      }
-
-      return null;
-      */
+      originalFullZiCandidates = theTrieManager.find(input);
     }
+    return InputZiManager.ExtractFullCandidates(originalFullZiCandidates);
   }
 
   int getPinyinIndexByValue(String oneLetter) {
@@ -803,10 +795,8 @@ class InputZiManager {
       }
       else if (oneOriginalCandidate.length > 1) {
         // extract null separated string
-        List oneExtractedCandidates = oneOriginalCandidate.split(',');
-        for (int j = 0; j < oneExtractedCandidates.length; j++) {
-          extractedFullCandidates.add(oneExtractedCandidates[j]);
-        }
+        List<String> oneExtractedCandidates = oneOriginalCandidate.split(',');
+        extractedFullCandidates.addAll(oneExtractedCandidates);
       }
     }
 
@@ -818,11 +808,13 @@ class InputZiManager {
     //int starting = groupIndex * maxTypingCandidates;
     //int ending = (groupIndex + 1) * maxTypingCandidates;
     //int ending = fullCandidateStartingIndex + maxTypingCandidates;
+    int candidatesCount = 0;
     int charCount = 0;
-    for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
-      if (charCount + fullCandidates[i].length <= maxTypingCandidates) {
+    for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
+      if (charCount + fullCandidates[i].runes.length <= maxTypingCharacters) {
         currentCandidates.add(fullCandidates[i]);
-        charCount += fullCandidates[i].length;
+        candidatesCount++;
+        charCount += fullCandidates[i].runes.length;
       }
       else {
         break;
@@ -835,14 +827,15 @@ class InputZiManager {
   static int  getFullCandidateNextStartingIndex(List<String>fullCandidates, int fullCandidateStartingIndex, bool forwardArrow) { //backArrow = false
       int nextFullCandidateStartingIndex = 0;
 
+      int candidatesCount = 0;
       int charCount = 0;
       int validIndex = 0;
       if (forwardArrow) {
         // to next index with total number of characters <= maxTypingCharacters
         if (fullCandidateStartingIndex < fullCandidates.length - 1) {
-          for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
-            if ((charCount + fullCandidates[i].length) <= maxTypingCharacters) {
-              charCount += fullCandidates[i].length;
+          for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
+            if ((charCount + fullCandidates[i].runes.length) <= maxTypingCharacters) {
+              charCount += fullCandidates[i].runes.length;
               validIndex = i;
             }
             else {
@@ -857,9 +850,9 @@ class InputZiManager {
       else { // backarrow
         if (fullCandidateStartingIndex > 0) {
           // to next backarrow index with total number of characters <= maxTypingCharacters
-          for (int i = fullCandidateStartingIndex - 1; i >= 0; i--) {
-            if ((charCount + fullCandidates[i].length) <= maxTypingCharacters) {
-              charCount += fullCandidates[i].length;
+          for (int i = fullCandidateStartingIndex - 1; i >= 0 && candidatesCount < maxTypingCandidates; i--) {
+            if ((charCount + fullCandidates[i].runes.length) <= maxTypingCharacters) {
+              charCount += fullCandidates[i].runes.length;
               validIndex = i;
             }
             else {
@@ -917,5 +910,9 @@ class InputZiManager {
     }
 
     return "";
+  }
+
+  static String removePinyin(String newText) {
+    return newText.replaceAll(RegExp(r'[a-zA-Z\s]'), '');
   }
 }

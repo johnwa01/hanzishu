@@ -478,7 +478,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   checkAndUpdateCurrentIndex(TextEditingController edidController, String newChar) {
-    theTrieManager.find('test');
+    //theTrieManager.find('test');
 
     // for guarded typing
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
@@ -617,8 +617,10 @@ class _InputZiPageState extends State<InputZiPage> {
     var selectionPosi = getCursorPosition(
         candidateCharLength, isFromCharCandidateList, isFromOverlay);
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
-    
-    _controller.value = _controller.value.copyWith(text: newText,
+
+    var newTextWithPinyinAndSpaceRemoved = InputZiManager.removePinyin(newText);
+
+    _controller.value = _controller.value.copyWith(text: newTextWithPinyinAndSpaceRemoved,
           composing: TextRange.empty,
           selection: TextSelection.collapsed(offset: selectionPosi));
 
@@ -893,9 +895,6 @@ class _InputZiPageState extends State<InputZiPage> {
 
       //currentComposingText = composingText;
       fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
-      //TODO: switch when data format is ready
-      //var originalFullZiCandidates = theTrieManager.find(composingText);
-      //fullZiCandidates = InputZiManager.ExtractFullCandidates(originalFullZiCandidates);
 
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
@@ -2488,11 +2487,12 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
+    // note: the 20.0 arrow position calculation is fixed by max, not changing with the candidates' size
     if (candidateIndex == InputZiManager.maxTypingCandidates) { // left arrow
       xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio();
     }
     else if (candidateIndex == (InputZiManager.maxTypingCandidates + 1)) { // right arrow
-      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio() + 30.0 * getSizeRatio();
+      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio() + 35.0 * getSizeRatio();
     }
 
     var butt = TextButton(
@@ -2502,18 +2502,18 @@ class _InputZiPageState extends State<InputZiPage> {
         initOverlay();
         setTextByChosenZiIndex(candidateIndex, true, false, false);
       },
-      child: Text('', style: TextStyle(fontSize: 30.0 * getSizeRatio(), color: Colors.blueAccent),),
+      child: Text('', style: TextStyle(fontSize: 20.0 * getSizeRatio(), color: Colors.blueAccent),),
     );
 
     var posiCenter = Positioned(
         top: 5.0 * getSizeRatio(),
         left: xPosi.value,
-        height: 30.0 * getSizeRatio(), //posiAndSize.height,
-        width: 30.0 * getSizeRatio() * zi.length, //posiAndSize.width,
+        height: 20.0 * getSizeRatio(), //posiAndSize.height,
+        width: 20.0 * getSizeRatio() * zi.length, //posiAndSize.width,
         child: butt
     );
 
-    xPosi.value += (30.0 * getSizeRatio() * zi.length + 18.0 * getSizeRatio());
+    xPosi.value += (20.0 * getSizeRatio() * zi.length + 18.0 * getSizeRatio());
 
     return posiCenter;
   }
