@@ -10,6 +10,8 @@ import 'dart:math';
 
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:characters/characters.dart';
+import 'package:video_player/video_player.dart';
 
 
 class InputZiManager {
@@ -803,18 +805,49 @@ class InputZiManager {
     return extractedFullCandidates;
   }
 
-  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
+
+  static bool isLetter(String char) { // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
+    // Define a regular expression to match letters (case-insensitive)
+    final letterRegExp = RegExp(r'[a-zA-Z]');
+    return letterRegExp.hasMatch(char);
+  }
+
+  static bool isMiddleSpace(String char) { // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
+    // Define a regular expression to match letters (case-insensitive)
+    final letterRegExp = RegExp(r'[ ]');
+    return letterRegExp.hasMatch(char);
+  }
+
+  // the oneCandidate might contain complex chinese char and mid space etc
+  static double getOneCandidateLength(String oneCandidate) {
+    double oneCandidateLength = 0.0;
+    var chars = oneCandidate.characters;
+    for (final char in chars) {
+      if (isMiddleSpace(char)) {
+        oneCandidateLength += InputZiManager.getCandidateMiddleSpaceLength();
+      }
+      else if (isLetter(char)) {
+        oneCandidateLength += InputZiManager.getCandidateLetterLength();
+      }
+      else { // Hanzi
+        oneCandidateLength += InputZiManager.getCandidateHanziLength();
+      }
+
+    }
+    oneCandidateLength += InputZiManager.getCandidateIndexLength();
+
+    return oneCandidateLength;
+  }
+
+  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex, double sizeRatio) {
     List<String> currentCandidates = [];
-    //int starting = groupIndex * maxTypingCandidates;
-    //int ending = (groupIndex + 1) * maxTypingCandidates;
-    //int ending = fullCandidateStartingIndex + maxTypingCandidates;
     int candidatesCount = 0;
-    int charCount = 0;
+    double candidatesLength = 0.0;
     for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
-      if (charCount + fullCandidates[i].runes.length <= maxTypingCharacters) {
+      candidatesLength += getOneCandidateLength(fullCandidates[i])/* sizeRatio*/;
+      if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()/* sizeRatio*/) {
         currentCandidates.add(fullCandidates[i]);
         candidatesCount++;
-        charCount += fullCandidates[i].runes.length;
       }
       else {
         break;
@@ -830,13 +863,16 @@ class InputZiManager {
       int candidatesCount = 0;
       int charCount = 0;
       int validIndex = 0;
+      double candidatesLength = 0.0;
+
       if (forwardArrow) {
         // to next index with total number of characters <= maxTypingCharacters
         if (fullCandidateStartingIndex < fullCandidates.length - 1) {
           for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
-            if ((charCount + fullCandidates[i].runes.length) <= maxTypingCharacters) {
-              charCount += fullCandidates[i].runes.length;
+            candidatesLength += getOneCandidateLength(fullCandidates[i]);
+            if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
               validIndex = i;
+              candidatesCount++;
             }
             else {
               break;
@@ -851,9 +887,10 @@ class InputZiManager {
         if (fullCandidateStartingIndex > 0) {
           // to next backarrow index with total number of characters <= maxTypingCharacters
           for (int i = fullCandidateStartingIndex - 1; i >= 0 && candidatesCount < maxTypingCandidates; i--) {
-            if ((charCount + fullCandidates[i].runes.length) <= maxTypingCharacters) {
-              charCount += fullCandidates[i].runes.length;
+            candidatesLength += getOneCandidateLength(fullCandidates[i]);
+            if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
               validIndex = i;
+              candidatesCount++;
             }
             else {
               break;
@@ -914,5 +951,37 @@ class InputZiManager {
 
   static String removePinyin(String newText) {
     return newText.replaceAll(RegExp(r'[a-zA-Z\s]'), '');
+  }
+
+  static double getMaxTotalCandidateLength() {
+    return getCandidateLeftArrowXPosition() - 13.0;
+  }
+
+  static double getCandidateLeftArrowXPosition() {
+    return (maxTypingCandidates * (20.0 + 14.0 + 12.0) + 22.0); //* getSizeRatio(); //12.0->22.0
+  }
+
+  static double getCandidateRightArrowXPosition() {
+    return  getCandidateLeftArrowXPosition() + 20.0 + 4.0; //20.0+14.0 ->20.0+4.0
+  }
+
+  static double getCandidateHanziLength() {
+    return 20.0;
+  }
+
+  static double getCandidateMiddleSpaceLength() {
+    return 3.0;
+  }
+
+  static double getCandidateLetterLength() {
+    return 12.0;
+  }
+
+  static double getCandidateIndexLength() {
+    return 12.0;
+  }
+
+  static double getCandidateSpaceLength() {
+    return 12.0 ;
   }
 }

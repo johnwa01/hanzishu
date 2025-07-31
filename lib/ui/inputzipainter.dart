@@ -45,21 +45,23 @@ class InputZiPainter extends BasePainter {
       //}
       var widthSizeRatio = Utility.getSizeRatio(screenWidth);
       for (int i = 0; i < activeCandidatesLength; i++) {
-                  displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 20.0 * widthSizeRatio);
+                  x = displayOneCandidate(theCurrentZiCandidates[i], x, 0.0, 0.0 * widthSizeRatio);
                   //displayTextWithValue((i+1).toString(), x + 30.0 * getSizeRatio(), 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
                   //x += (30.0 * widthSizeRatio * theCurrentZiCandidates[i].length + 18.0 * widthSizeRatio);
-                  x += 20.0 * getSizeRatio() * theCurrentZiCandidates[i].length;
+                  ///x += 20.0 * getSizeRatio() * theCurrentZiCandidates[i].length;
                   displayTextWithValue((i+1).toString(), x /*+ 30.0 * getSizeRatio()*/, 5.0 * widthSizeRatio, 12.0 * getSizeRatio(), Colors.black, false);
-                  x += (18.0 * widthSizeRatio);
+                  x += (InputZiManager.getCandidateIndexLength() * widthSizeRatio); // 18.0
       }
 
       // note: the 20.0 arrow position calculation is fixed here, not change with candidates' font sizes
-      x = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 12.0)* getSizeRatio();
+      x = InputZiManager.getCandidateLeftArrowXPosition() * getSizeRatio();
 
-      displayTextWithValue('<', x, 0.0, 20.0 * getSizeRatio(), this.lineColor, false);
-      x += (20.0 + 14.0) * getSizeRatio();
+      //var temp = InputZiManager.getMaxTotalCandidateLength() * getSizeRatio();
+      // Y 5.0 to make arrow move down to bit to be in center
+      displayTextWithValue('<', x, 4.0 * getSizeRatio(), 20.0 * getSizeRatio(), this.lineColor, false);
+      x = InputZiManager.getCandidateRightArrowXPosition() * getSizeRatio(); // 20.0 + 14.0
 
-      displayTextWithValue('>', x, 0.0, 20.0 * getSizeRatio(), this.completeColor, false);
+      displayTextWithValue('>', x, 4.0 * getSizeRatio(), 20.0 * getSizeRatio(), this.completeColor, false);
 
       /* Temp: for testing component stroke drawing only
       if (globalTestDoubleByteCode.length == 2) {
@@ -95,15 +97,33 @@ class InputZiPainter extends BasePainter {
     }
   }
 
-  displayOneCandidate(String candidate, double x, double y, double fontSize) {
-    var widthSizeRatio = Utility.getSizeRatio(screenWidth);
+  double displayOneCandidate(String candidate, double x, double y, double fontSize) {
+    //var widthSizeRatio = Utility.getSizeRatio(screenWidth);
     var chars = candidate.characters;
-    //for (int i = 0; i < chars.length; i++) {
-    int i = 0;
+    double size = 0.0;
+    double updatedY;
+    double updatedX = x;
+
     for (var char in chars) {
-      displayTextWithValue(char, x + i * 20.0 * getSizeRatio(), y, fontSize, Colors.blue, false);
-      i++;
+      updatedY = y;
+      if (InputZiManager.isMiddleSpace(char)) {
+        // move x a little bit, not a full letter width
+        size = InputZiManager.getCandidateMiddleSpaceLength() * getSizeRatio();
+      }
+      else if (InputZiManager.isLetter(char)) {
+        size = InputZiManager.getCandidateLetterLength();
+        updatedY += 8.0 * getSizeRatio(); // make up a bit to stay in middle
+      }
+      else {
+        size = InputZiManager.getCandidateHanziLength();
+      }
+      size *= getSizeRatio();
+      displayTextWithValue(
+          char, updatedX, updatedY, size, Colors.blue, false);
+      updatedX += size;
     }
+
+    return updatedX;
   }
 
   //displayOneCandidate(String candidate, double x, double y, double fontSize) {

@@ -1,7 +1,7 @@
 import 'package:hanzishu/engine/inputzi.dart';
 
 var theInputZiList=[
-  InputZi("a", "人,大,个,金,入,食,央,火,夫,久,犬,夷,臾,夬"),
+  InputZi("a", "人,大,双好个,金,入,食,央,火,夫,久双好,犬,夷,臾,夬"),
   InputZi("aa", "从,炎,灸,炔"),
   InputZi("aaa", "众,鑫,焱"),
   InputZi("aaaa", "燚"),

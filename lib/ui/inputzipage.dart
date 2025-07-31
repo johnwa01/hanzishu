@@ -65,7 +65,8 @@ class _InputZiPageState extends State<InputZiPage> {
   TextEditingController _controller = new TextEditingController(text: "");
 
   //For standard typing methods only, not related to Hanzishu specific typing
-  TextEditingController _controllerStandard = new TextEditingController(text: "");
+  TextEditingController _controllerStandard = new TextEditingController(
+      text: "");
 
   FocusNode _focusNode = new FocusNode();
   FocusNode _focusNodeStandard = new FocusNode();
@@ -74,6 +75,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int previousEndSelection = -1;
   String initialControllerTextValue = ''; // = "unlikelyIniStr876";
   String previousText = "";
+
   //List<String> ziCandidates;
   int selectedCompIndex = -1;
   int selectedCategoryIndex = -1;
@@ -81,6 +83,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int currentCorrectCategoryIndex = -1;
   int currentCorrectSubcategoryIndex = -1;
   bool currentTypingCodeIsCorrect = false;
+
   //String currentComposingText;
   List<String> currentTypingComponentsAndSub = [];
   String currentCorrectTypingCode = '';
@@ -97,6 +100,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   //int candidateGroupIndex = 0;
   int fullCandidateStartingIndex = 0;
+
   //For one specific typing string like "ooo", to be used by < or > action
   List<String>? fullZiCandidates;
 
@@ -104,7 +108,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   //bool showZiCandidates = false;
 
-  final stopwatch = Stopwatch()..start();
+  final stopwatch = Stopwatch()
+    ..start();
 
   double getSizeRatio() {
     return Utility.getSizeRatio(screenWidth);
@@ -149,8 +154,7 @@ class _InputZiPageState extends State<InputZiPage> {
     super.initState();
 
     _scrollController = ScrollController()
-      ..addListener(() {
-      });
+      ..addListener(() {});
 
     //_focusNode.addListener(_onFocusChange);
 
@@ -175,21 +179,24 @@ class _InputZiPageState extends State<InputZiPage> {
     theInputZiManager.initCurrentIndex();
 
     // first char, put here instead of Build so that it does only once.
-    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
+    if (typingType != TypingType.FreeTyping &&
+        typingType != TypingType.DicSearchTyping) {
       String typeChar;
       if (isSoundPrompt) {
         typeChar = getEitherCharFromCurrentId(
-            typingType!, 0 /*currentIndex*/, widget.lessonId);// custom, and sound prompt
+            typingType!, 0 /*currentIndex*/,
+            widget.lessonId); // custom, and sound prompt
         speakHanziAndPhrase(typeChar);
       }
-      else if(typingType == TypingType.FromLessons) {
+      else if (typingType == TypingType.FromLessons) {
         var sentenceList = theLessonList[widget.lessonId].sentenceList;
         TextToSpeech.speak(
             "zh-CN", theSentenceList[sentenceList[0]].conv);
       }
-      else if(typingType == TypingType.ThirdParty) {
+      else if (typingType == TypingType.ThirdParty) {
         PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
-        String sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(0, charIndex);
+        String sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(
+            0, charIndex);
         TextToSpeech.speak(
             "zh-CN", sentence);
       }
@@ -200,7 +207,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
 
-    showHint = widget.showHint;  // this is the default
+    showHint = widget.showHint; // this is the default
     initHintSelected();
 
     setState(() {
@@ -211,7 +218,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   @override
   void dispose() {
-    _scrollController!.dispose(); // it is a good practice to dispose the controller
+    _scrollController!
+        .dispose(); // it is a good practice to dispose the controller
     //_focusNode.removeListener(_onFocusChange);
     //showZiCandidates = false;
     _focusNode.dispose();
@@ -564,7 +572,7 @@ class _InputZiPageState extends State<InputZiPage> {
             //candidateGroupIndex++;
             fullCandidateStartingIndex = tempNextStartingIndex;
             setState(() {
-              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
               isFromArrowCandidate = true;
               updateCounter++;
             });
@@ -577,7 +585,7 @@ class _InputZiPageState extends State<InputZiPage> {
         //candidateGroupIndex--;
         fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*forwardArrlow*/);
         setState(() {
-          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
           isFromArrowCandidate = true;
           updateCounter++;
         });
@@ -797,7 +805,7 @@ class _InputZiPageState extends State<InputZiPage> {
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
         fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
@@ -871,7 +879,7 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       if (Utility.isArrow(latestInputKeyLetter)) {
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
@@ -898,7 +906,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
-      theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+      theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;
@@ -2488,13 +2496,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Positioned getZiCandidateButton(PrimitiveWrapper xPosi, int candidateIndex, String zi) {
     // note: the 20.0 arrow position calculation is fixed by max, not changing with the candidates' size
+    // -4.0 to make the highlight on center
     if (candidateIndex == InputZiManager.maxTypingCandidates) { // left arrow
-      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio();
+      xPosi.value = (InputZiManager.getCandidateLeftArrowXPosition() - 4.0 ) * getSizeRatio();
     }
     else if (candidateIndex == (InputZiManager.maxTypingCandidates + 1)) { // right arrow
-      xPosi.value = (InputZiManager.maxTypingCandidates * (20.0 + 14.0 + 12.0) + 6.0)* getSizeRatio() + 35.0 * getSizeRatio();
+      xPosi.value = (InputZiManager.getCandidateRightArrowXPosition() - 4.0) * getSizeRatio();
     }
-
+    var oneCandidateLength = InputZiManager.getOneCandidateLength(zi) * getSizeRatio();
     var butt = TextButton(
       //color: Colors.white,
       //textColor: Colors.blueAccent,
@@ -2508,12 +2517,12 @@ class _InputZiPageState extends State<InputZiPage> {
     var posiCenter = Positioned(
         top: 5.0 * getSizeRatio(),
         left: xPosi.value,
-        height: 20.0 * getSizeRatio(), //posiAndSize.height,
-        width: 20.0 * getSizeRatio() * zi.length, //posiAndSize.width,
+        height: InputZiManager.getCandidateHanziLength() * getSizeRatio(), //posiAndSize.height,
+        width: oneCandidateLength, //posiAndSize.width,
         child: butt
     );
 
-    xPosi.value += (20.0 * getSizeRatio() * zi.length + 18.0 * getSizeRatio());
+    xPosi.value += oneCandidateLength; //(20.0 * getSizeRatio() * zi.length + 13.0 * getSizeRatio()); // 13.0 was 18.0
 
     return posiCenter;
   }
