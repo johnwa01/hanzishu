@@ -332,7 +332,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     var candidateZiString = InputZiManager.getCandidateZiString(index);
     if (candidateZiString != null) {
-      newInputText += candidateZiString;
+      newInputText += InputZiManager.removePinyin(candidateZiString);
     }
 
     newInputText += getInputTextAfterComposingAndSelectionEnd();
@@ -418,6 +418,10 @@ class _InputZiPageState extends State<InputZiPage> {
   String getFullComposingText(int startComposing, int endComposing) {
     var str = "";
     if (endComposing > startComposing) {
+      // adding an error fixing mechanism
+      if (endComposing > _controller.value.text.length) {
+        endComposing = _controller.value.text.length;
+      }
       str = _controller.value.text.substring(startComposing, endComposing);
     }
 
@@ -485,18 +489,18 @@ class _InputZiPageState extends State<InputZiPage> {
     return selectionPosi;
   }
 
-  checkAndUpdateCurrentIndex(TextEditingController edidController, String newChar) {
+  checkAndUpdateCurrentIndex(TextEditingController editController, String newChar) {
     //theTrieManager.find('test');
 
     // for guarded typing
     if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
       var checkedText = newChar;
       if (checkedText.length == 0) {
-        checkedText = edidController.text;
+        checkedText = editController.text;
       }
       if (theInputZiManager.doesTypingResultContainTheZi(
           typingType, currentIndex, checkedText/*edidController.text*/, lessonId)) {
-        if (edidController == _controller) {
+        if (editController == _controller) {
           initHintSelected(); // reset the hint selection parameters
         }
 
@@ -572,7 +576,7 @@ class _InputZiPageState extends State<InputZiPage> {
             //candidateGroupIndex++;
             fullCandidateStartingIndex = tempNextStartingIndex;
             setState(() {
-              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
+              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
               isFromArrowCandidate = true;
               updateCounter++;
             });
@@ -583,9 +587,9 @@ class _InputZiPageState extends State<InputZiPage> {
       //if (candidateGroupIndex > 0) {
       if (fullCandidateStartingIndex > 0) {
         //candidateGroupIndex--;
-        fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*forwardArrlow*/);
+        fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*backward Arrlow*/);
         setState(() {
-          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
+          theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
           isFromArrowCandidate = true;
           updateCounter++;
         });
@@ -598,15 +602,22 @@ class _InputZiPageState extends State<InputZiPage> {
     if (isFromCharCandidateList && selectionIndex >= InputZiManager.maxTypingCandidates) {
       return handleArrowCandidate(selectionIndex);
     }
+    fullCandidateStartingIndex = 0;
+    initOverlay();
 
     hasVerifiedToBeALowerCase = false;
 
     // pronounce the typed char
     var typedZiString = '';
-    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
-      typedZiString = InputZiManager.getCandidateZiString(selectionIndex)!;
+    //if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
+      //typedZiString = InputZiManager.getCandidateZiString(selectionIndex)!;
       //TextToSpeech.speak("zh-CN", typedZiString);
-    }
+      var candidateZiString = InputZiManager.getCandidateZiString(selectionIndex);
+      if (candidateZiString != null) {
+        typedZiString = InputZiManager.removePinyin(candidateZiString);
+      }
+    var candidateCharLength = typedZiString.characters.length; //theCurrentZiCandidates[selectionIndex].characters.length;
+    //}
 
     var newText = getInputText(selectionIndex, isFromNumber);
 
@@ -617,7 +628,6 @@ class _InputZiPageState extends State<InputZiPage> {
       initialControllerTextValue = "newText";
     }
 
-    var candidateCharLength = theCurrentZiCandidates[selectionIndex].length;
     // reset the candidate. might set to global ini value
     fullZiCandidates = theDefaultZiCandidates;
     theCurrentZiCandidates = theDefaultZiCandidates;
@@ -626,9 +636,7 @@ class _InputZiPageState extends State<InputZiPage> {
         candidateCharLength, isFromCharCandidateList, isFromOverlay);
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
-    var newTextWithPinyinAndSpaceRemoved = InputZiManager.removePinyin(newText);
-
-    _controller.value = _controller.value.copyWith(text: newTextWithPinyinAndSpaceRemoved,
+    _controller.value = _controller.value.copyWith(text: newText,
           composing: TextRange.empty,
           selection: TextSelection.collapsed(offset: selectionPosi));
 
@@ -660,14 +668,14 @@ class _InputZiPageState extends State<InputZiPage> {
   String getNewChar(String previousText, String newText) {
     String previousOneChar;
     String newOneChar = '';
-    int previousLength = previousText.length;
+    int previousLength = previousText.characters.length;
 
-    for (int i = 0; i < newText.length; i++) {
-      newOneChar = newText.substring(i, i + 1);
+    for (int i = 0; i < newText.characters.length; i++) {
+      newOneChar = newText.characters.elementAt(i); //newText.substring(i, i + 1);
       if ((previousLength - 1) < i) {
         return newOneChar;
       }
-      previousOneChar = previousText.substring(i, i + 1);
+      previousOneChar = previousText.characters.elementAt(i); //previousText.substring(i, i + 1);
 
       if (previousOneChar != newOneChar) {
         return newOneChar;
@@ -734,7 +742,7 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
     else {
-      if (_controller.value.text.length < previousText.length) {
+      if (_controller.value.text.characters.length < previousText.characters.length) {
         isFromDeletion = true;
       }
       // set it as the comparision standard
@@ -805,7 +813,7 @@ class _InputZiPageState extends State<InputZiPage> {
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
         fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
@@ -879,14 +887,14 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       if (Utility.isArrow(latestInputKeyLetter)) {
-        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
+        theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
       }
     }
     else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
-      if (_controller.text != previousText) {
+      //if (_controller.text != previousText) {
         fullCandidateStartingIndex = 0;
         initOverlay();
-      }
+      //}
 
       previousEndComposing += 1;
       setTextByChosenZiIndex(
@@ -906,7 +914,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
-      theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex, getSizeRatio());
+      theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;
@@ -1177,7 +1185,8 @@ class _InputZiPageState extends State<InputZiPage> {
       //int candidateGroupCount = (fullZiCandidates!.length / InputZiManager.maxTypingCandidates).ceil();  //toInt();
       // if it's the last one, no way to go right.
       //if (candidateGroupIndex == (candidateGroupCount - 1)) {
-      if((fullCandidateStartingIndex + InputZiManager.maxTypingCandidates) >= fullZiCandidates!.length) {
+      //if((fullCandidateStartingIndex + InputZiManager.maxTypingCandidates) >= fullZiCandidates!.length) {
+      if (InputZiManager.isLastGroupOfCandidates(fullZiCandidates!, fullCandidateStartingIndex))  {
         rightArrowColor = Colors.grey;
       }
       else {
@@ -1905,6 +1914,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  // Note: this function doesn't handle the case with non-common chinese characters
+  // in the sentence which is fine in our current usage. need to use string.characters
+  // like in other places in this file if there is a need for it.
   Widget getInputSentence(TypingType typingType, int currentTypingCharsIndex, String promptStr, double fontSize) {
       var sentenceIndex = PrimitiveWrapper(0);
       //var charIndexInSentence = PrimitiveWrapper(0);
@@ -2679,7 +2691,7 @@ class _InputZiPageState extends State<InputZiPage> {
         selectedCompIndex = sameStartSubstring + 1;
       }
 
-      if (sameStartSubstring < composingText.length) {
+      if (sameStartSubstring < composingText.characters.length) {
         currentTypingCodeIsCorrect = false;
       }
       else {

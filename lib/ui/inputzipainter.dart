@@ -112,7 +112,7 @@ class InputZiPainter extends BasePainter {
       }
       else if (InputZiManager.isLetter(char)) {
         size = InputZiManager.getCandidateLetterLength();
-        updatedY += 8.0 * getSizeRatio(); // make up a bit to stay in middle
+        updatedY += 10.0 * getSizeRatio(); // make up a bit to stay in middle
       }
       else {
         size = InputZiManager.getCandidateHanziLength();

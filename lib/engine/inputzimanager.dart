@@ -20,7 +20,7 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
-  static int maxTypingCharacters = 12; // to be same as maxTypingCandidates for now
+  //static int maxTypingCharacters = 12; // to be same as maxTypingCandidates for now
   String wordsStudy = '';
   List<int> pinyinLetterIndex = <int>[];
   List<int> inputCodeLetterIndex = <int>[];
@@ -839,13 +839,13 @@ class InputZiManager {
     return oneCandidateLength;
   }
 
-  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex, double sizeRatio) {
+  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
     List<String> currentCandidates = [];
     int candidatesCount = 0;
     double candidatesLength = 0.0;
     for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
-      candidatesLength += getOneCandidateLength(fullCandidates[i])/* sizeRatio*/;
-      if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()/* sizeRatio*/) {
+      candidatesLength += getOneCandidateLength(fullCandidates[i]);
+      if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
         currentCandidates.add(fullCandidates[i]);
         candidatesCount++;
       }
@@ -855,6 +855,20 @@ class InputZiManager {
     }
 
     return currentCandidates;
+  }
+
+  static bool isLastGroupOfCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
+    bool isLastCandidate = true;
+    double candidatesLength = 0.0;
+    for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
+      candidatesLength += getOneCandidateLength(fullCandidates[i]);
+      if (candidatesLength > InputZiManager.getMaxTotalCandidateLength()) {
+        isLastCandidate = false;
+        break;
+      }
+    }
+
+    return isLastCandidate;
   }
 
   static int  getFullCandidateNextStartingIndex(List<String>fullCandidates, int fullCandidateStartingIndex, bool forwardArrow) { //backArrow = false
@@ -974,7 +988,7 @@ class InputZiManager {
   }
 
   static double getCandidateLetterLength() {
-    return 12.0;
+    return 9.0; // 12.0
   }
 
   static double getCandidateIndexLength() {
