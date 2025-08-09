@@ -414,7 +414,7 @@ var theString_en_US = [
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
   Local(407, "You have completed all the flashcards!"),
-  Local(408, "Copy/paste or type in Pinyin.\nNote: Turn on Pinyin from system before\n typing; turn it off before continue."),
+  Local(408, "Copy/paste or type using Pinyin.\nNote: Make sure to turn off Pinyin\n after using it and before continuing."),
   Local(409, "Study customized Hanzi"),
   Local(410, "You have completed this component typing exercise. Please move on to next one."),
   Local(411, "Hanzishu Introduction"),

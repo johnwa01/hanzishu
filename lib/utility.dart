@@ -479,6 +479,43 @@ class Utility {
         char == ':' || char == '：' || char == ';' || char == '；' || char == ' ';
   }
 
+  static String convertSpecialCharToChineseForm(String char) {
+    String convertedString = "";
+    switch(char) {
+      case '!':
+        convertedString = '！';
+        break;
+      case '.':
+        convertedString = '。';
+        break;
+      case ',':
+        convertedString = '，';
+        break;
+      case '?':
+        convertedString = '？';
+        break;
+      case ':':
+        convertedString = '：';
+        break;
+      case ';':
+        convertedString = '；';
+        break;
+      case '`':
+        convertedString = '`';
+        break;
+      case '\\':
+        convertedString = '、';
+        break;
+      default:
+        break;
+    }
+
+    return convertedString;
+    //return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
+    //    char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
+    //    char == ':' || char == '：' || char == ';' || char == '；' || char == ' ';
+  }
+
   static bool isALowerCaseLetter(String value) {
     if(value.length > 0) {
       var charCodeUnits = value[0].codeUnits;

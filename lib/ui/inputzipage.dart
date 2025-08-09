@@ -890,7 +890,7 @@ class _InputZiPageState extends State<InputZiPage> {
         theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
       }
     }
-    else if (/*kIsWeb &&*/ isNumberOneToSeven(latestInputKeyLetter)) {
+    else if (isNumberOneToSeven(latestInputKeyLetter)) {
       //if (_controller.text != previousText) {
         fullCandidateStartingIndex = 0;
         initOverlay();
@@ -937,6 +937,10 @@ class _InputZiPageState extends State<InputZiPage> {
                   start: previousStartComposing, end: previousEndComposing));
         }
       }
+    }
+    else if (Utility.specialChar(latestInputKeyLetter)) {
+      String convertedSpecialChar = Utility.convertSpecialCharToChineseForm(latestInputKeyLetter);
+      checkAndUpdateCurrentIndex(_controller, convertedSpecialChar);
     }
     else {
       initOverlay();
@@ -1938,20 +1942,22 @@ class _InputZiPageState extends State<InputZiPage> {
       String strChar;
       String strAfterChar;
 
+      var chars = conv.characters;
+
       if (charIndexInSentence.value == 0) {
         strBeforeChar = '';
       }
       else {
-        strBeforeChar = conv.substring(0, charIndexInSentence.value);
+        strBeforeChar = chars.getRange(0, charIndexInSentence.value).toString();
       }
 
-      strChar = conv.substring(charIndexInSentence.value, charIndexInSentence.value + 1);
+      strChar = chars.getRange(charIndexInSentence.value, charIndexInSentence.value + 1).toString();
 
-      if (charIndexInSentence == conv.length - 1) { // the char is the last one
+      if (charIndexInSentence == chars.length - 1) { // the char is the last one
         strAfterChar = '';
       }
       else {
-        strAfterChar = conv.substring(charIndexInSentence.value + 1, conv.length);
+        strAfterChar = chars.getRange(charIndexInSentence.value + 1, chars.length).toString();
       }
 
       return Row(

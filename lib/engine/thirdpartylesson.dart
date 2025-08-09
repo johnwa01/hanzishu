@@ -3,6 +3,7 @@ import 'package:hanzishu/data/thirdpartylessonlist.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:characters/characters.dart';
 
 enum ThirdPartyType {
   yuwen,
@@ -262,10 +263,11 @@ class ThirdPartyLesson {
   static int getRealWordsLengthUtil(String str) {
     int wordsLength = -1;
 
-    for (int i = 0; i < str.length; i++) {
-      if (!Utility.specialChar(str[i])) {
+    //Leave this way for now in case we need this structure
+    for (int i = 0; i < str.characters.length; i++) {
+      //if (!Utility.specialChar(str.characters.elementAt(i))) {
         wordsLength++;
-      }
+      //}
     }
 
     wordsLength++; // 0 indexed, therefore need to add one for length
@@ -277,21 +279,20 @@ class ThirdPartyLesson {
     int lastNonCharIndex = -1;
     String currentSentence = '';
 
-    for (int i = 0; i < oneContent.length; i++) {
-      if (!Utility.specialChar(oneContent[i])) {
-        charIndexCount++;
-        //currentSentence += currentContent[i];
-      }
-      else {
-        // record the current non-char index for later sentence creation
-        lastNonCharIndex = i;
-      }
+    var chars = oneContent.characters;
+    for (int i = 0; i < chars.length; i++) {
+      charIndexCount++;
 
       if (charIndexCount == typingCharsIndex) {
         // this is the one wanted
         charIndex.value = i - lastNonCharIndex - 1;
         currentSentence = getCurrentSentenceHelper(oneContent, lastNonCharIndex);
         break;
+      }
+
+      if (Utility.specialChar(chars.elementAt(i)/*oneContent[i]*/)) {
+        // record the current non-char index for later sentence creation
+        lastNonCharIndex = i;
       }
     }
 
@@ -301,10 +302,10 @@ class ThirdPartyLesson {
   static String getCurrentSentenceHelper(String oneContent, int lastNonCharIndex) {
     String sentence = '';
 
-    for (int i = lastNonCharIndex + 1; i < oneContent.length; i++) {
-      sentence += oneContent[i];
-      if (Utility.specialChar(oneContent[i])) {
-        if (sentence.length != 0) {
+    for (int i = lastNonCharIndex + 1; i < oneContent.characters.length; i++) {
+      sentence += oneContent.characters.elementAt(i);
+      if (Utility.specialChar(oneContent.characters.elementAt(i)/*oneContent[i]*/)) {
+        if (sentence.characters.length != 0) {
           break;
         }
       }
@@ -322,7 +323,7 @@ class ThirdPartyLesson {
   static String getOneChar(String oneContent, int currentIndex) {
     PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
     String sentence = getSentenceAndCharIndex(oneContent, currentIndex, charIndex);
-    return sentence.substring(charIndex.value, charIndex.value + 1);
+    return sentence.characters.elementAt(charIndex.value); //substring(charIndex.value, charIndex.value + 1);
   }
 
   static String divideLongSentences(String oneContent) {
