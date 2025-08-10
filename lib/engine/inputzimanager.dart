@@ -560,12 +560,22 @@ class InputZiManager {
 
   static int checkCurrentIndexWithSpace(TypingType typingType, int currentIndex, int lessonId, int currentTotal) {
     //handle the space case
-    if (currentIndex < currentTotal) {
-      //check next space
-      var nextChar = InputZiManager.getEitherCharFromCurrentId(
-          typingType, currentIndex, lessonId);
-      if (nextChar.compareTo(' ') == 0) {
-        currentIndex += 1; // skip it
+
+    bool finished = false;
+    while (!finished) {
+      if (currentIndex < currentTotal) {
+        //check next space
+        var nextChar = InputZiManager.getEitherCharFromCurrentId(
+            typingType, currentIndex, lessonId);
+        if (nextChar.compareTo(' ') == 0) {
+          currentIndex += 1; // skip it
+        }
+        else {
+          finished = true; // not a space, out of loop
+        }
+      }
+      else {
+        finished = true;
       }
     }
 
