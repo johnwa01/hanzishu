@@ -562,6 +562,7 @@ class InputZiManager {
     //handle the space case
 
     bool finished = false;
+    // handle multiple spaces in sequence
     while (!finished) {
       if (currentIndex < currentTotal) {
         //check next space

@@ -99,7 +99,7 @@ class InputZiPainter extends BasePainter {
 
   double displayOneCandidate(String candidate, double x, double y, double fontSize) {
     //var widthSizeRatio = Utility.getSizeRatio(screenWidth);
-    var chars = candidate.characters;
+    var chars = candidate.characters.toUpperCase();
     double size = 0.0;
     double updatedY;
     double updatedX = x;
