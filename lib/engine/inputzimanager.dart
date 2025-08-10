@@ -20,6 +20,7 @@ class InputZiManager {
   static List<InputZi> typingCandidates = [];
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
+  static int maxTypingLength = 10;
   //static int maxTypingCharacters = 12; // to be same as maxTypingCandidates for now
   String wordsStudy = '';
   List<int> pinyinLetterIndex = <int>[];
@@ -543,6 +544,34 @@ class InputZiManager {
     return index * 38 + 51 + lessonId; // where 51 is the last non-char index in the searchingZilist
   }
 
+  static String getEitherCharFromCurrentId(TypingType typingType, int currentIndex, int lessonId) {
+    var typingChar;
+    if (typingType == TypingType.ComponentTyping) {
+      typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+    }
+    else {
+      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
+          typingType, currentIndex, lessonId);
+      typingChar = zi.zi;
+    }
+
+    return typingChar;
+  }
+
+  static int checkCurrentIndexWithSpace(TypingType typingType, int currentIndex, int lessonId, int currentTotal) {
+    //handle the space case
+    if (currentIndex < currentTotal) {
+      //check next space
+      var nextChar = InputZiManager.getEitherCharFromCurrentId(
+          typingType, currentIndex, lessonId);
+      if (nextChar.compareTo(' ') == 0) {
+        currentIndex += 1; // skip it
+      }
+    }
+
+    return currentIndex;
+  }
+
   int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId) {
     currentIndex++;
 
@@ -622,13 +651,18 @@ class InputZiManager {
     }
     else if (typingType == TypingType.ThirdParty) {
       var currentTotal = ThirdPartyLesson.getCurrentRealWordsLength();
+      //skip it if it's a space
+      currentIndex = checkCurrentIndexWithSpace(typingType, currentIndex, lessonId, currentTotal);
+
       if (currentIndex >= currentTotal) { /*lesson.convCharsIds.length + lesson.charsIds.length*/
         currentIndex = -1;
       }
     }
     else if (typingType == TypingType.Custom) {
       //var lesson = theLessonManager.getLesson(lessonId);
+      // skip it if it's space
       var currentTotal = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
+      currentIndex = checkCurrentIndexWithSpace(typingType, currentIndex, lessonId, currentTotal);
       if (currentIndex >= currentTotal) {
         currentIndex = -1;
       }

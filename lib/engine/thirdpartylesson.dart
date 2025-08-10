@@ -3,6 +3,7 @@ import 'package:hanzishu/data/thirdpartylessonlist.dart';
 import 'package:hanzishu/data/searchingzilist.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:characters/characters.dart';
 
 enum ThirdPartyType {
@@ -278,10 +279,13 @@ class ThirdPartyLesson {
     int charIndexCount = -1;
     int lastNonCharIndex = -1;
     String currentSentence = '';
+    int countAfterLastSpecial = -1;
 
     var chars = oneContent.characters;
+
     for (int i = 0; i < chars.length; i++) {
       charIndexCount++;
+      countAfterLastSpecial++;
 
       if (charIndexCount == typingCharsIndex) {
         // this is the one wanted
@@ -290,9 +294,10 @@ class ThirdPartyLesson {
         break;
       }
 
-      if (Utility.specialChar(chars.elementAt(i)/*oneContent[i]*/)) {
+      if (Utility.specialChar(chars.elementAt(i)) || countAfterLastSpecial >= InputZiManager.maxTypingLength) {
         // record the current non-char index for later sentence creation
         lastNonCharIndex = i;
+        countAfterLastSpecial = 0;
       }
     }
 
@@ -301,10 +306,12 @@ class ThirdPartyLesson {
 
   static String getCurrentSentenceHelper(String oneContent, int lastNonCharIndex) {
     String sentence = '';
+    int countTypingLength = 0;
 
     for (int i = lastNonCharIndex + 1; i < oneContent.characters.length; i++) {
       sentence += oneContent.characters.elementAt(i);
-      if (Utility.specialChar(oneContent.characters.elementAt(i)/*oneContent[i]*/)) {
+      countTypingLength++;
+      if (Utility.specialChar(oneContent.characters.elementAt(i)) || countTypingLength >= InputZiManager.maxTypingLength) {
         if (sentence.characters.length != 0) {
           break;
         }

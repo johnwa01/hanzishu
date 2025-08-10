@@ -171,9 +171,9 @@ class _InputZiPageState extends State<InputZiPage> {
     totalQuestions =
         theInputZiManager.getTotal(widget.typingType, widget.lessonId);
 
-    if (typingType == TypingType.Custom) {
-      wordsStudy = ThirdPartyLesson.divideLongSentences(wordsStudy);
-    }
+    //if (typingType == TypingType.Custom) {
+    //  wordsStudy = ThirdPartyLesson.divideLongSentences(wordsStudy);
+    //}
 
     // start over every time. not worth the confusion otherwise.
     theInputZiManager.initCurrentIndex();
@@ -183,7 +183,7 @@ class _InputZiPageState extends State<InputZiPage> {
         typingType != TypingType.DicSearchTyping) {
       String typeChar;
       if (isSoundPrompt) {
-        typeChar = getEitherCharFromCurrentId(
+        typeChar = InputZiManager.getEitherCharFromCurrentId(
             typingType!, 0 /*currentIndex*/,
             widget.lessonId); // custom, and sound prompt
         speakHanziAndPhrase(typeChar);
@@ -201,7 +201,7 @@ class _InputZiPageState extends State<InputZiPage> {
             "zh-CN", sentence);
       }
       else {
-        typeChar = getEitherCharFromCurrentId(
+        typeChar = InputZiManager.getEitherCharFromCurrentId(
             typingType!, 0 /*currentIndex*/, widget.lessonId);
         TextToSpeech.speak("zh-CN", typeChar);
       }
@@ -523,7 +523,7 @@ class _InputZiPageState extends State<InputZiPage> {
             currentIndex =
                 theInputZiManager.getNextIndex(
                     typingType, /*currentIndex,*/ lessonId);
-            String typeChar = getEitherCharFromCurrentId(
+            String typeChar = InputZiManager.getEitherCharFromCurrentId(
                 typingType!, currentIndex, lessonId);
 
             if (isSoundPrompt) { // custom, and sound prompt
@@ -1828,20 +1828,6 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  String getEitherCharFromCurrentId(TypingType typingType, int currentIndex, int lessonId) {
-    var typingChar;
-    if (typingType == TypingType.ComponentTyping) {
-      typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
-    }
-    else {
-      var zi = theInputZiManager.getZiWithComponentsAndStrokes(
-          typingType, currentIndex, lessonId);
-      typingChar = zi.zi;
-    }
-
-    return typingChar;
-  }
-
   Widget getInputPrompt() {
     // an empty box
     if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
@@ -1851,7 +1837,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var promptStr = getString(113) + "： "; //"Type"
     var fontSize = 13.0 * getSizeRatio();     //15.0
 
-    currentTypingChar = getEitherCharFromCurrentId(typingType!, currentIndex, lessonId);
+    currentTypingChar = InputZiManager.getEitherCharFromCurrentId(typingType!, currentIndex, lessonId);
 
       // prepare hint stuff, running once per zi, therefore to put here.
       currentTypingComponentsAndSub =
