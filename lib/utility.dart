@@ -476,7 +476,39 @@ class Utility {
   static bool specialChar(String char) {
     return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
         char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
-        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ';
+        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ' || char == '\\' || char == '＼' || char == '"' || char == '“' || char == '”';
+  }
+
+  static String updateSpecialCharValue(String latestInputKeyLetter, String text) {
+    String updatedValue = text;
+
+    switch (latestInputKeyLetter) {
+      case '.':
+        updatedValue = text.replaceAll('.', '。');
+        break;
+      case ',':
+        updatedValue = text.replaceAll(',', '，');
+        break;
+      case '\\':
+        updatedValue = text.replaceAll('\\', '、');
+        break;
+      case '?':
+        updatedValue = text.replaceAll('?', '？');
+        break;
+      case '!':
+        updatedValue = text.replaceAll('!', '！');
+        break;
+      case ':':
+        updatedValue = text.replaceAll(':', '：');
+        break;
+      case ';':
+        updatedValue = text.replaceAll(';', '；');
+        break;
+      default:
+        break;
+    }
+
+    return updatedValue;
   }
 
   static String convertSpecialCharToChineseForm(String char) {
@@ -501,7 +533,7 @@ class Utility {
         convertedString = '；';
         break;
       case '`':
-        convertedString = '`';
+        convertedString = '‵';
         break;
       case '\\':
         convertedString = '、';

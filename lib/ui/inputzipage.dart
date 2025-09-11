@@ -946,6 +946,10 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (Utility.specialChar(latestInputKeyLetter)) {
       String convertedSpecialChar = Utility.convertSpecialCharToChineseForm(latestInputKeyLetter);
+      String updatedText = Utility.updateSpecialCharValue(latestInputKeyLetter, _controller.value.text);
+      _controller.value = _controller.value.copyWith(text: updatedText,
+          composing: TextRange.empty/*,
+          selection: TextSelection.collapsed(offset: selectionPosi)*/);
       checkAndUpdateCurrentIndex(_controller, convertedSpecialChar);
     }
     else {
@@ -1388,7 +1392,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   //alignment: Alignment.topRight,
                   child: getSwitchInputMethodOrInputModeMessage(),
                 ),
-                SizedBox(width: 250.0 * getSizeRatio()), //push skip section into right
+                SizedBox(width: 100.0 * getSizeRatio()), //push skip section into right
                 Container(
                   alignment: Alignment.topRight,
                   child: getSkipThisSection(),
@@ -2564,6 +2568,7 @@ class _InputZiPageState extends State<InputZiPage> {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
+        Navigator.of(context).pop(); // to the textbook page. used to be just two pops, not sure why needs 3 now.
       },
     );
 
