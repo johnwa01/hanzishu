@@ -327,6 +327,12 @@ class ThirdPartyLesson {
     return sentence.substring(charIndex.value, charIndex.value + 1);
   }
 
+  static String getRemainingChars(int currentIndex) {
+    PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+    String sentence = getCurrentSentenceAndCharIndex(currentIndex, charIndex);
+    return sentence.substring(charIndex.value); //, charIndex.value + 1);
+  }
+
   static String getOneChar(String oneContent, int currentIndex) {
     PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
     String sentence = getSentenceAndCharIndex(oneContent, currentIndex, charIndex);

@@ -504,9 +504,15 @@ class _InputZiPageState extends State<InputZiPage> {
           initHintSelected(); // reset the hint selection parameters
         }
 
+        var remainingSubstring = ThirdPartyLesson.getRemainingChars(currentIndex);
+        int numberOfCharsTyped = InputZiManager.calculateHowManyTyped(checkedText, remainingSubstring);
+        if (numberOfCharsTyped < 1) {
+          numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
+        }
+
         // tell Flutter to refresh with the next index
         setState(() {
-          if ((currentIndex + 1) ==
+          if ((currentIndex + numberOfCharsTyped) ==
               theInputZiManager.getTotal(typingType, lessonId)) {
             /*
             if (lessonId == 38) {
@@ -522,7 +528,7 @@ class _InputZiPageState extends State<InputZiPage> {
           else {
             currentIndex =
                 theInputZiManager.getNextIndex(
-                    typingType, /*currentIndex,*/ lessonId);
+                    typingType, /*currentIndex,*/ lessonId, numberOfCharsTyped);
             String typeChar = InputZiManager.getEitherCharFromCurrentId(
                 typingType!, currentIndex, lessonId);
 

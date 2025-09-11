@@ -470,7 +470,7 @@ var theString_en_US = [
   Local(460, "Mouth"),
   Local(461, "Legs"),
   Local(462, "Common"),
-  Local(463, "Warning: Wrong typing code."),
+  Local(463, "Warning: Wrong typing code（if typing a single character)."),
   Local(464, "NoHint"),
   Local(465, "Direction"),
   Local(466, "Good effort"),

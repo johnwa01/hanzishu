@@ -21,10 +21,12 @@ class InputZiManager {
   static List<String> previousFirstPositionList = [];
   static int maxTypingCandidates = 7; //20;
   static int maxTypingLength = 10;
+
   //static int maxTypingCharacters = 12; // to be same as maxTypingCandidates for now
   String wordsStudy = '';
   List<int> pinyinLetterIndex = <int>[];
   List<int> inputCodeLetterIndex = <int>[];
+
 //  TypingType typingType;
 
   TypingType getCurrentType() {
@@ -136,7 +138,8 @@ class InputZiManager {
 
   static List<String> convertZiListToStringList(
       List<InputZi> typingCandidates) {
-    List<String> candidates = <String>[]; //new List<String>(typingCandidates.length);
+    List<String> candidates = <String>[
+    ]; //new List<String>(typingCandidates.length);
 
     for (var i = 0; i < typingCandidates.length; i++) {
       candidates[i] = typingCandidates[i].zi;
@@ -181,7 +184,6 @@ class InputZiManager {
   }
 
   int getPinyinIndexByValue(String oneLetter) {
-
     return 0;
   }
 
@@ -189,9 +191,11 @@ class InputZiManager {
     if (pinyinLetterIndex.length == 0) {
       int letterStartingIndex = 1;
       // 23 + 1 = 24, 'i' 'u' 'v'don't exist in Pinyin as the first letter
-      pinyinLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      pinyinLetterIndex =
+      [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       for (int i = 1; i < thePinyinInputZiList.length; i++) {
-        if (thePinyinInputZiList[i].pinyin[0] != thePinyinInputZiList[i-1].pinyin[0]) {
+        if (thePinyinInputZiList[i].pinyin[0] !=
+            thePinyinInputZiList[i - 1].pinyin[0]) {
           pinyinLetterIndex[letterStartingIndex++] = i;
         }
       }
@@ -205,9 +209,37 @@ class InputZiManager {
     if (inputCodeLetterIndex.isEmpty) {
       int letterStartingIndex = 1;
       // 25 + 1 = 26
-      inputCodeLetterIndex = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      inputCodeLetterIndex = [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ];
       for (int i = 1; i < theInputZiList.length; i++) {
-        if (theInputZiList[i].doubleByteCode[0] != theInputZiList[i-1].doubleByteCode[0]) {
+        if (theInputZiList[i].doubleByteCode[0] !=
+            theInputZiList[i - 1].doubleByteCode[0]) {
           inputCodeLetterIndex[letterStartingIndex++] = i;
         }
       }
@@ -241,16 +273,15 @@ class InputZiManager {
   }
 
 
-
   static List<String> getZiCandidatesFromPinyinList(String pinyin) {
     //typingCandidates.clear();
-    List<String> pinyinCandidates =[];
+    List<String> pinyinCandidates = [];
 
     var listIndex = theInputZiManager.getPinyinListIndex();
     var id = getPinyinLetterIndex(pinyin.substring(0, 1));
 
-    int start= listIndex[id];
-    int end = listIndex[id+1];
+    int start = listIndex[id];
+    int end = listIndex[id + 1];
 
     var pinyinLength = pinyin.length;
 
@@ -284,7 +315,7 @@ class InputZiManager {
     var id = getLetterIndex(input.substring(0, 1));
 
     int start = listIndex[id];
-    int end = listIndex[id+1];
+    int end = listIndex[id + 1];
 
     var inputLength = input.length;
 
@@ -311,7 +342,7 @@ class InputZiManager {
 
   static bool isPinyinInput(String input) {
     if (input.length >= 1) {
-      if(input[0] == 'z') {
+      if (input[0] == 'z') {
         return true;
       }
     }
@@ -389,8 +420,10 @@ class InputZiManager {
       return;
     }
 
-    if (candidateExistsInFirstPositionList(currentCandidatesToUpdate[0], previousFirstPositionList)) {
-          pushANeverFirstToFirst(currentCandidatesToUpdate, previousFirstPositionList);
+    if (candidateExistsInFirstPositionList(
+        currentCandidatesToUpdate[0], previousFirstPositionList)) {
+      pushANeverFirstToFirst(
+          currentCandidatesToUpdate, previousFirstPositionList);
     }
 
     // push the new first into the firstPostion list
@@ -446,18 +479,21 @@ class InputZiManager {
   // index 0->100, lessonId == exerciseId -> 1 to 38 (1 based).
   ZiWithComponentsAndStrokes? getCommonZi(int index, int lessonId) {
     // every other 38 items.
-    int searchingZiId = getSearchingZiId(index, lessonId); // skip the index 0 in theSearchingZiList
+    int searchingZiId = getSearchingZiId(
+        index, lessonId); // skip the index 0 in theSearchingZiList
     if (searchingZiId < theSearchingZiList.length) {
       var oneSearchingItem = theSearchingZiList[searchingZiId];
       var components = <String>[]; //List<String>();
       DictionaryManager.getAllComponents(searchingZiId, components);
-      return ZiWithComponentsAndStrokes(oneSearchingItem.char, components, "", 0);
+      return ZiWithComponentsAndStrokes(
+          oneSearchingItem.char, components, "", 0);
     }
 
     return null;
   }
 
-  ZiWithComponentsAndStrokes? getZiWithComponentsAndStrokes(TypingType typingType, int index, int lessonId) {
+  ZiWithComponentsAndStrokes? getZiWithComponentsAndStrokes(
+      TypingType typingType, int index, int lessonId) {
     //if (typingType == TypingType.GiveItATry) {
     //  return theZiForIntroductionList[index];
     //}
@@ -503,7 +539,7 @@ class InputZiManager {
           char,
           [""],
           "noimage",
-          0/*"nohelpyet"*/
+          0 /*"nohelpyet"*/
       );
     }
     else if (typingType == TypingType.ThirdParty) {
@@ -512,7 +548,7 @@ class InputZiManager {
           char,
           [""],
           "noimage",
-          0/*"nohelpyet"*/
+          0 /*"nohelpyet"*/
       );
     }
     else if (typingType == TypingType.Custom) {
@@ -541,13 +577,16 @@ class InputZiManager {
 */
 
   static int getSearchingZiId(int index, int lessonId) {
-    return index * 38 + 51 + lessonId; // where 51 is the last non-char index in the searchingZilist
+    return index * 38 + 51 +
+        lessonId; // where 51 is the last non-char index in the searchingZilist
   }
 
-  static String getEitherCharFromCurrentId(TypingType typingType, int currentIndex, int lessonId) {
+  static String getEitherCharFromCurrentId(TypingType typingType,
+      int currentIndex, int lessonId) {
     var typingChar;
     if (typingType == TypingType.ComponentTyping) {
-      typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+      typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId]
+          .chars[currentIndex];
     }
     else {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
@@ -558,7 +597,8 @@ class InputZiManager {
     return typingChar;
   }
 
-  static int checkCurrentIndexWithSpace(TypingType typingType, int currentIndex, int lessonId, int currentTotal) {
+  static int checkCurrentIndexWithSpace(TypingType typingType, int currentIndex,
+      int lessonId, int currentTotal) {
     //handle the space case
 
     bool finished = false;
@@ -583,8 +623,8 @@ class InputZiManager {
     return currentIndex;
   }
 
-  int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId) {
-    currentIndex++;
+  int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId, int numberOfCharsTyped) {
+    currentIndex += numberOfCharsTyped;
 
     //if (typingType == TypingType.GiveItATry) {
     //  if (currentIndex >= theZiForIntroductionList.length) {
@@ -645,7 +685,9 @@ class InputZiManager {
       // overall index = 0, 69, 77, 160
       var searchingZiId = getSearchingZiId(currentIndex, lessonId);
       // Note: there are 52 index which are not chars
-      if (searchingZiId < 52 || DictionaryManager.isNonCharacter(searchingZiId) || DictionaryManager.isEmpty(searchingZiId)) {
+      if (searchingZiId < 52 ||
+          DictionaryManager.isNonCharacter(searchingZiId) ||
+          DictionaryManager.isEmpty(searchingZiId)) {
         currentIndex++; // skip to next one
       }
       else if (searchingZiId >= theSearchingZiList.length) {
@@ -656,16 +698,19 @@ class InputZiManager {
       //if (currentIndex >= theZiWithOneComponentList.length) {
       var lesson = theLessonManager.getLesson(lessonId);
       var typingChars = lesson.getAllTypingChars();
-      if (currentIndex >= typingChars.length) { /*lesson.convCharsIds.length + lesson.charsIds.length*/
+      if (currentIndex >= typingChars.length) {
+        /*lesson.convCharsIds.length + lesson.charsIds.length*/
         currentIndex = -1;
       }
     }
     else if (typingType == TypingType.ThirdParty) {
       var currentTotal = ThirdPartyLesson.getCurrentRealWordsLength();
       //skip it if it's a space
-      currentIndex = checkCurrentIndexWithSpace(typingType, currentIndex, lessonId, currentTotal);
+      currentIndex = checkCurrentIndexWithSpace(
+          typingType, currentIndex, lessonId, currentTotal);
 
-      if (currentIndex >= currentTotal) { /*lesson.convCharsIds.length + lesson.charsIds.length*/
+      if (currentIndex >= currentTotal) {
+        /*lesson.convCharsIds.length + lesson.charsIds.length*/
         currentIndex = -1;
       }
     }
@@ -673,13 +718,16 @@ class InputZiManager {
       //var lesson = theLessonManager.getLesson(lessonId);
       // skip it if it's space
       var currentTotal = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
-      currentIndex = checkCurrentIndexWithSpace(typingType, currentIndex, lessonId, currentTotal);
+      currentIndex = checkCurrentIndexWithSpace(
+          typingType, currentIndex, lessonId, currentTotal);
       if (currentIndex >= currentTotal) {
         currentIndex = -1;
       }
     }
     else if (typingType == TypingType.ComponentTyping) {
-      if (currentIndex >= theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length) {
+      if (currentIndex >=
+          theComponentCategoryStringIdAndTypingCharsList[lessonId].chars
+              .length) {
         currentIndex = -1;
       }
     }
@@ -687,7 +735,8 @@ class InputZiManager {
     return currentIndex;
   }
 
-  bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex, String typingResult, int lessonId) {
+  bool doesTypingResultContainTheZi(TypingType typingType, int currentIndex,
+      String typingResult, int lessonId) {
     bool result = false;
 
     if (currentIndex < 0) {
@@ -761,7 +810,8 @@ class InputZiManager {
       result = typingResult.contains(char);
     }
     else if (typingType == TypingType.ComponentTyping) {
-      var char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+      var char = theComponentCategoryStringIdAndTypingCharsList[lessonId]
+          .chars[currentIndex];
       result = typingResult.contains(char);
     }
 
@@ -806,7 +856,7 @@ class InputZiManager {
       return theZiForGeneralExerciseList.length;
     }
     else if (typingType == TypingType.CommonZiTyping) {
-      int total = ((theSearchingZiList.length - 52) / 38).truncate();    // 37
+      int total = ((theSearchingZiList.length - 52) / 38).truncate(); // 37
       int remain = (theSearchingZiList.length - 52) % 38; // first 30
       if (lessonId <= remain) {
         total += 1;
@@ -816,7 +866,9 @@ class InputZiManager {
     else if (typingType == TypingType.FromLessons) {
       var lesson = theLessonManager.getLesson(lessonId);
       //return lesson.convCharsIds.length + lesson.charsIds.length;
-      return lesson.getAllTypingChars().length;
+      return lesson
+          .getAllTypingChars()
+          .length;
     }
     else if (typingType == TypingType.ThirdParty) {
       return ThirdPartyLesson.getCurrentRealWordsLength();
@@ -825,13 +877,15 @@ class InputZiManager {
       return ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
     }
     else if (typingType == TypingType.ComponentTyping) {
-      return theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length;
+      return theComponentCategoryStringIdAndTypingCharsList[lessonId].chars
+          .length;
     }
 
     return -1;
   }
 
-  static List<String> ExtractFullCandidates(List<String> originalFullCandidates) {
+  static List<String> ExtractFullCandidates(
+      List<String> originalFullCandidates) {
     List<String> extractedFullCandidates = [];
     String oneOriginalCandidate;
 
@@ -851,13 +905,15 @@ class InputZiManager {
   }
 
 
-  static bool isLetter(String char) { // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
+  static bool isLetter(String char) {
+    // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
     // Define a regular expression to match letters (case-insensitive)
     final letterRegExp = RegExp(r'[a-zA-Z]');
     return letterRegExp.hasMatch(char);
   }
 
-  static bool isMiddleSpace(String char) { // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
+  static bool isMiddleSpace(String char) {
+    // char here includes those graphic kinds of stuff, like mark or unusual chinese char.
     // Define a regular expression to match letters (case-insensitive)
     final letterRegExp = RegExp(r'[ ]');
     return letterRegExp.hasMatch(char);
@@ -877,18 +933,19 @@ class InputZiManager {
       else { // Hanzi
         oneCandidateLength += InputZiManager.getCandidateHanziLength();
       }
-
     }
     oneCandidateLength += InputZiManager.getCandidateIndexLength();
 
     return oneCandidateLength;
   }
 
-  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
+  static List<String> getCurrentFromFullZiCandidates(List<String>fullCandidates,
+      int fullCandidateStartingIndex) {
     List<String> currentCandidates = [];
     int candidatesCount = 0;
     double candidatesLength = 0.0;
-    for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
+    for (int i = fullCandidateStartingIndex; i < fullCandidates.length &&
+        candidatesCount < maxTypingCandidates; i++) {
       candidatesLength += getOneCandidateLength(fullCandidates[i]);
       if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
         currentCandidates.add(fullCandidates[i]);
@@ -902,7 +959,8 @@ class InputZiManager {
     return currentCandidates;
   }
 
-  static bool isLastGroupOfCandidates(List<String>fullCandidates, int fullCandidateStartingIndex) {
+  static bool isLastGroupOfCandidates(List<String>fullCandidates,
+      int fullCandidateStartingIndex) {
     bool isLastCandidate = true;
     double candidatesLength = 0.0;
     for (int i = fullCandidateStartingIndex; i < fullCandidates.length; i++) {
@@ -916,54 +974,58 @@ class InputZiManager {
     return isLastCandidate;
   }
 
-  static int  getFullCandidateNextStartingIndex(List<String>fullCandidates, int fullCandidateStartingIndex, bool forwardArrow) { //backArrow = false
-      int nextFullCandidateStartingIndex = 0;
+  static int getFullCandidateNextStartingIndex(List<String>fullCandidates,
+      int fullCandidateStartingIndex, bool forwardArrow) {
+    //backArrow = false
+    int nextFullCandidateStartingIndex = 0;
 
-      int candidatesCount = 0;
-      int charCount = 0;
-      int validIndex = 0;
-      double candidatesLength = 0.0;
+    int candidatesCount = 0;
+    int charCount = 0;
+    int validIndex = 0;
+    double candidatesLength = 0.0;
 
-      if (forwardArrow) {
-        // to next index with total number of characters <= maxTypingCharacters
-        if (fullCandidateStartingIndex < fullCandidates.length - 1) {
-          for (int i = fullCandidateStartingIndex; i < fullCandidates.length && candidatesCount < maxTypingCandidates; i++) {
-            candidatesLength += getOneCandidateLength(fullCandidates[i]);
-            if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
-              validIndex = i;
-              candidatesCount++;
-            }
-            else {
-              break;
-            }
+    if (forwardArrow) {
+      // to next index with total number of characters <= maxTypingCharacters
+      if (fullCandidateStartingIndex < fullCandidates.length - 1) {
+        for (int i = fullCandidateStartingIndex; i < fullCandidates.length &&
+            candidatesCount < maxTypingCandidates; i++) {
+          candidatesLength += getOneCandidateLength(fullCandidates[i]);
+          if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
+            validIndex = i;
+            candidatesCount++;
           }
-          if (validIndex < fullCandidates.length - 1) {
-            nextFullCandidateStartingIndex = validIndex + 1;
+          else {
+            break;
           }
         }
-      }
-      else { // backarrow
-        if (fullCandidateStartingIndex > 0) {
-          // to next backarrow index with total number of characters <= maxTypingCharacters
-          for (int i = fullCandidateStartingIndex - 1; i >= 0 && candidatesCount < maxTypingCandidates; i--) {
-            candidatesLength += getOneCandidateLength(fullCandidates[i]);
-            if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
-              validIndex = i;
-              candidatesCount++;
-            }
-            else {
-              break;
-            }
-          }
-
-          nextFullCandidateStartingIndex = validIndex;
+        if (validIndex < fullCandidates.length - 1) {
+          nextFullCandidateStartingIndex = validIndex + 1;
         }
-        //if ((fullCandidateStartingIndex - maxTypingCandidates) >= 0) {
-          //nextFullCandidateStartingIndex = fullCandidateStartingIndex - maxTypingCandidates;
-        //}
       }
+    }
+    else { // backarrow
+      if (fullCandidateStartingIndex > 0) {
+        // to next backarrow index with total number of characters <= maxTypingCharacters
+        for (int i = fullCandidateStartingIndex - 1; i >= 0 &&
+            candidatesCount < maxTypingCandidates; i--) {
+          candidatesLength += getOneCandidateLength(fullCandidates[i]);
+          if (candidatesLength <= InputZiManager.getMaxTotalCandidateLength()) {
+            validIndex = i;
+            candidatesCount++;
+          }
+          else {
+            break;
+          }
+        }
 
-      return nextFullCandidateStartingIndex;
+        nextFullCandidateStartingIndex = validIndex;
+      }
+      //if ((fullCandidateStartingIndex - maxTypingCandidates) >= 0) {
+      //nextFullCandidateStartingIndex = fullCandidateStartingIndex - maxTypingCandidates;
+      //}
+    }
+
+    return nextFullCandidateStartingIndex;
   }
 
   static bool isLastLetterArrow(String str) {
@@ -1017,11 +1079,12 @@ class InputZiManager {
   }
 
   static double getCandidateLeftArrowXPosition() {
-    return (maxTypingCandidates * (20.0 + 14.0 + 12.0) + 22.0); //* getSizeRatio(); //12.0->22.0
+    return (maxTypingCandidates * (20.0 + 14.0 + 12.0) +
+        22.0); //* getSizeRatio(); //12.0->22.0
   }
 
   static double getCandidateRightArrowXPosition() {
-    return  getCandidateLeftArrowXPosition() + 20.0 + 4.0; //20.0+14.0 ->20.0+4.0
+    return getCandidateLeftArrowXPosition() + 20.0 + 4.0; //20.0+14.0 ->20.0+4.0
   }
 
   static double getCandidateHanziLength() {
@@ -1041,6 +1104,21 @@ class InputZiManager {
   }
 
   static double getCandidateSpaceLength() {
-    return 12.0 ;
+    return 12.0;
+  }
+
+  static int calculateHowManyTyped(String str1, String str2) {
+    int count = 0;
+    int minLength = str1.length < str2.length ? str1.length : str2.length;
+
+    for (int i = 0; i < minLength; i++) {
+      if (str1[i] == str2[i]) {
+        count++;
+      } else {
+        // Mismatch found, stop counting
+        break;
+      }
+    }
+    return count;
   }
 }
