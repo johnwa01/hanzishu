@@ -1107,6 +1107,20 @@ class InputZiManager {
     return 12.0;
   }
 
+  static String getRemainingChars(TypingType typingType, int currentIndex, String wordsStudy) {
+    PrimitiveWrapper charIndexInSentence = PrimitiveWrapper(-1);
+    String sentence = "";
+
+    if (typingType == TypingType.ThirdParty) {
+      sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
+    }
+    else if (typingType == TypingType.Custom) {
+      sentence = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndexInSentence);
+    }
+
+    return sentence.substring(charIndexInSentence.value); //, charIndex.value + 1);
+  }
+
   static int calculateHowManyTyped(String str1, String str2) {
     int count = 0;
     int minLength = str1.length < str2.length ? str1.length : str2.length;

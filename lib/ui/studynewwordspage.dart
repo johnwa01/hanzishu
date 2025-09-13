@@ -76,7 +76,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     }
 
     if (widget.studyType == StudyType.typingOnly) {
-      _controller = new TextEditingController(text: "你好！我是王。很高兴认识你。");
+      _controller = new TextEditingController(text: "你好！我是王月。很高兴认识你。");
     }
     else {
       _controller = new TextEditingController(text: "您好吗");
@@ -373,12 +373,13 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             includeSkipSection = false;
           }
 
+          String convertedText = Utility.convertSpecialChars(inputText);
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) =>
                   InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: inputText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: includeSkipSection, showSwitchMethod: false),
+                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: convertedText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: includeSkipSection, showSwitchMethod: false),
             ),
           ).then((val) => {_getRequests()});
           break;

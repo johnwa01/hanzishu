@@ -512,7 +512,7 @@ class Utility {
   }
 
   static String convertSpecialCharToChineseForm(String char) {
-    String convertedString = "";
+    String convertedString = char;
     switch(char) {
       case '!':
         convertedString = '！';
@@ -546,6 +546,18 @@ class Utility {
     //return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
     //    char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
     //    char == ':' || char == '：' || char == ';' || char == '；' || char == ' ';
+  }
+
+  static String convertSpecialChars(String inputText) {
+    String converted = "";
+    String newOneChar = '';
+
+    for (int i = 0; i < inputText.characters.length; i++) {
+      newOneChar = inputText.characters.elementAt(i);
+      converted += convertSpecialCharToChineseForm(newOneChar);
+    }
+
+    return converted;
   }
 
   static bool isALowerCaseLetter(String value) {

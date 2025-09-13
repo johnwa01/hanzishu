@@ -504,7 +504,7 @@ class _InputZiPageState extends State<InputZiPage> {
           initHintSelected(); // reset the hint selection parameters
         }
 
-        var remainingSubstring = ThirdPartyLesson.getRemainingChars(currentIndex);
+        var remainingSubstring = InputZiManager.getRemainingChars(typingType!, currentIndex, wordsStudy);
         int numberOfCharsTyped = InputZiManager.calculateHowManyTyped(checkedText, remainingSubstring);
         if (numberOfCharsTyped < 1) {
           numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
