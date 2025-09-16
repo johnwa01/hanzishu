@@ -115,7 +115,7 @@ var theThirdPartyLessonList = [
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 12, "D. 识字加油站", "", "识字加油站 教师，工程师，魔术师，建筑师，理发师，演员，营业员，服务员，裁判员，饲养员。"),
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 13, "E. 日积月累", "", "日积月累 予人玫瑰,手有余香。平时肯帮人,急时有人帮。与其锦上添花，不如雪中送炭。"),
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 14, "F. 一株紫丁香", "", "一株紫丁香 踮起脚尖儿，走进安静的小院，我们把一株紫丁香，栽在老师窗前。"),
-  ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 15, "G. 神州谣", "", "神州谣 我神州，称中华，山川美，可入画。黄河奔，长江涌,长城长,珠峰耸。台湾岛，隔海峡，与大陆，是一家。"),
+  ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 15, "G. 神州谣", "", "神州谣 我神州，称中华，山川美，可入画。黄河奔，长江涌，长城长,珠峰耸。台湾岛，隔海峡，与大陆，是一家。"),
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 16, "H. 传统节日", "", "传统节日 春节到，人欢笑，贴窗花，放鞭炮。元宵节，看花灯，大街小巷人如潮。"),
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 17, "I. 贝的故事", "", "贝的故事 一些生活在 水里的动物，用贝壳保护自己的身体。甲骨文中的贝字 就像一种海贝的样子。"),
   ThirdPartyLesson(ThirdPartyType.yuwenAll, '2017', 4, 18, "J. 中国美食", "", "中国美食 凉拌菠菜，香煎豆腐，红烧茄子，烤鸭，水煮鱼。"),
