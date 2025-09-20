@@ -145,12 +145,12 @@ class _ToolsPageState extends State<ToolsPage> {
     var imageSize = 35.0 * getSizeRatioWithLimit();
 
     var str = getString(99);/*"Please finish exercise 1 - 10 to learn the input method"*/
-    if (kIsWeb) {
-      str = str + " " + getString(372) + "]";
-    }
-    else {
+    //if (kIsWeb) {
+    //  str = str + " " + getString(372) + "]";
+    //}
+    //else {
       str = str + "]";
-    }
+    //}
 
     var keyboardImageName;
     //if (theDefaultLocale == "zh_CN") {

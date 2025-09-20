@@ -1377,6 +1377,8 @@ class _ComponentPageState extends State<ComponentPage> {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out of this dialog first
         Navigator.of(context).pop(); // then to the lesson page
+        //Navigator.of(context, rootNavigator: true).pop();
+        //Navigator.of(context).pop(); // TODO: not sure why have to add this?
       },
     );
 

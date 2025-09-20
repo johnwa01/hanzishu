@@ -149,6 +149,15 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  // For the first one (without a chance for check, other cases are handled in init, but the ones with explanation have to wait until explanation completes.
+  speakFirstZiAfterExplanationPage() {
+    if ((typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) && currentIndex == 0) {
+      String typeChar = InputZiManager.getEitherCharFromCurrentId(
+        typingType!, 1 /*currentIndex*/, widget.lessonId); // skip the '0' position placeholder one
+      TextToSpeech.speak("zh-CN", typeChar);
+    }
+  }
+
   @override
   initState() {
     super.initState();
@@ -200,10 +209,18 @@ class _InputZiPageState extends State<InputZiPage> {
         TextToSpeech.speak(
             "zh-CN", sentence);
       }
+      else if (typingType == TypingType.Custom) {
+        PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+        String sentence = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, 0, charIndex);
+        TextToSpeech.speak(
+            "zh-CN", sentence);
+      }
       else {
-        typeChar = InputZiManager.getEitherCharFromCurrentId(
+        if (!((typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) && (currentIndex == -1))) {
+          typeChar = InputZiManager.getEitherCharFromCurrentId(
             typingType!, 0 /*currentIndex*/, widget.lessonId);
-        TextToSpeech.speak("zh-CN", typeChar);
+          TextToSpeech.speak("zh-CN", typeChar);
+        }
       }
     }
 
@@ -504,10 +521,15 @@ class _InputZiPageState extends State<InputZiPage> {
           initHintSelected(); // reset the hint selection parameters
         }
 
-        var remainingSubstring = InputZiManager.getRemainingChars(typingType!, currentIndex, wordsStudy);
-        int numberOfCharsTyped = InputZiManager.calculateHowManyTyped(checkedText, remainingSubstring);
-        if (numberOfCharsTyped < 1) {
-          numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
+        int numberOfCharsTyped = 1; // default is typing 1 char
+        if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
+          var remainingSubstring = InputZiManager.getRemainingChars(
+              typingType!, currentIndex, wordsStudy);
+              numberOfCharsTyped = InputZiManager.calculateHowManyTyped(
+              checkedText, remainingSubstring);
+          if (numberOfCharsTyped < 1) {
+            numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
+          }
         }
 
         // tell Flutter to refresh with the next index
@@ -1072,9 +1094,11 @@ class _InputZiPageState extends State<InputZiPage> {
                     textStyle: TextStyle(fontSize: 18.0 * getSizeRatio()),
                   ),
                   onPressed: () {
+                    //TextToSpeech.speak("zh-CN", "好"/*typingChar*/);
+                    speakFirstZiAfterExplanationPage();
                     setState(() {
                       //currentIndex = 1;
-                      currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex,*/ lessonId);;
+                      currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex*/ lessonId, 1); //skip first non-real entry
                     });
                   },
                   child: Text(buttonText /*'Try a few/Let's start'*/,
@@ -1154,7 +1178,6 @@ class _InputZiPageState extends State<InputZiPage> {
 
     typingType = widget.typingType; //theComponentManager.getCurrentType();
     lessonId = widget.lessonId;
-
     if (currentIndex < 0) {
       return Container(width:0.0, height: 0.0);
     }
@@ -2568,7 +2591,10 @@ class _InputZiPageState extends State<InputZiPage> {
         theIsBackArrowExit = false;
         Navigator.of(context).pop(); // out this dialog
         Navigator.of(context).pop(); // to the lesson page
-        Navigator.of(context).pop(); // to the textbook page. used to be just two pops, not sure why needs 3 now.
+        // these two types support multiple sentences which is actually another layer. so pop one more time.
+        if (typingType == TypingType.ThirdParty || typingType == TypingType.Custom) {
+          Navigator.of(context).pop();
+        }
       },
     );
 
