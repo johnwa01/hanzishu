@@ -297,6 +297,20 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
+  String getNextToLatestInputLetter() {
+    var newInputText = "";
+    var selectionEnd;
+
+    if (_controller.value.text != null && _controller.value.text.length != 0) {
+      selectionEnd = _controller.value.selection.end;
+      if (selectionEnd >= 2) {
+        return _controller.value.text.substring(selectionEnd - 2, selectionEnd -1);
+      }
+    }
+
+    return newInputText;
+  }
+
   String getInputTextBeforeComposingAndSelectionStart(bool isFromNumber) {
     var newInputText = "";
 
@@ -919,14 +933,19 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
-      //if (_controller.text != previousText) {
+      //TODO: make default mode not selectable for a candidate
+      //  Candidate list have to be brought up by lower case letter only!
+      //String nextToLast = getNextToLatestInputLetter();
+      //if (nextToLast is a lower case letter) {
+        //if (_controller.text != previousText) {
         fullCandidateStartingIndex = 0;
         initOverlay();
-      //}
+        //}
 
-      previousEndComposing += 1;
-      setTextByChosenZiIndex(
-          getZeroBasedNumber(latestInputKeyLetter), false, false, true);
+        previousEndComposing += 1;
+        setTextByChosenZiIndex(
+            getZeroBasedNumber(latestInputKeyLetter), false, false, true);
+      //}
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       fullCandidateStartingIndex = 0;
@@ -2431,7 +2450,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getTypingScore() {
     var fontSize = 13.0 * getSizeRatio() * 1.2;
-    return Text(getString(524) + ":" + currentIndex.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
+    int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+    return Text(getString(524) + ":" + currentIndex.toString() + "/" + totalLen.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
   }
 
   getSubCategoryRow2() {
@@ -2682,7 +2702,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(120) + getString(524) + ": " + (currentIndex+1).toString()/*"Your typing exercise is complete for this lesson."*/;
+      int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+      content = getString(120) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"Your typing exercise is complete for this lesson."*/;
     }
     else if (typingType == TypingType.ComponentTyping) {
       title = getString(115)/*"Good job!"*/;
@@ -2690,7 +2711,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
       title = getString(115)/*"Good job!"*/;
-      content = getString(502) + getString(524) + ": " + (currentIndex+1).toString()/*"You have completed this typing exercises."*/;
+      int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+      content = getString(502) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"You have completed this typing exercises."*/;
     }
 
     // set up the AlertDialog

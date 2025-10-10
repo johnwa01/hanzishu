@@ -476,7 +476,7 @@ class Utility {
   static bool specialChar(String char) {
     return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
         char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
-        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ' || char == '\\' || char == '＼' || char == '"' || char == '“' || char == '”';
+        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ' || char == '\\' || char == '＼' || char == '"' /*|| char == '“' || char == '”' || char == "‘" || char == "’"*/;
   }
 
   static String updateSpecialCharValue(String latestInputKeyLetter, String text) {
@@ -538,6 +538,21 @@ class Utility {
       case '\\':
         convertedString = '、';
         break;
+        // convert chinese quotes to English quote to display
+      // to user so that they just type English quote even in Chinese content.
+      // not perfect, but a work around I can think of.
+      //case '“': // chinese left double quote
+      //  convertedString = '"'; // standard English double quote
+      //  break;
+      //case '”': // chinese right double quote
+      //  convertedString = '"'; // standard Engl;ish double quote
+      //  break;
+      //case '‘':
+      //  convertedString = '\'';
+      //  break;
+      //case '’':
+      //  convertedString = '\'';
+      //  break;
       default:
         break;
     }

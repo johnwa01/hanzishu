@@ -60,7 +60,12 @@ class ThirdParty {
           if (index == 2) {
             subIndexLetter = 'B';
           }
-          wholeString = getString(520) + " 1"  + subIndexLetter;
+          if (index == 3) {
+            wholeString = getString(520) + " 2";
+          }
+          else {
+            wholeString = getString(520) + " 1" + subIndexLetter;
+          }
         }
         break;
       case "l":
@@ -182,7 +187,7 @@ class ThirdPartyLesson {
   static String? getLessonName(ThirdPartyType thirdPartyType, String version, int lessonId) {
     for (int i = 0; i < theThirdPartyLessonList.length; i++) {
       if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType  && theThirdPartyLessonList[i].version == version && theThirdPartyLessonList[i].lessonId == lessonId) {
-        if (thirdPartyType == ThirdPartyType.yuwen || thirdPartyType == ThirdPartyType.sunlaoshi) { // these two are older mechanism
+        if (thirdPartyType == ThirdPartyType.yuwen || (thirdPartyType == ThirdPartyType.sunlaoshi && (version == "1" || version == "2"))) { // these two are older mechanism
           return ThirdParty.getStringFromCode(theThirdPartyLessonList[i].lessonNameCode);
         }
         else {

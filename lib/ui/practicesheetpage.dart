@@ -92,7 +92,10 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
 
     /*"Grid shows Hanzi"*/
     var gridShowOrNotShowZiString = gridShowZi ? getString(452) : getString(453);/*"Grid (not) show Hanzi"*/;
-
+    String displ = "";
+    if (theDefaultLocale == "en_US") {
+      displ = getString(408); // copy/paste ...
+    }
     try {
       return Scaffold
         (
@@ -109,7 +112,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(width: 10 * getSizeRatioWithLimit()),
-                            Text(getString(408)/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
+                            Text(displ/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
                             SizedBox(width: 15 * getSizeRatioWithLimit()),
                             TextButton(
                               style: TextButton.styleFrom(

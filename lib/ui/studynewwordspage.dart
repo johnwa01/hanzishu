@@ -76,7 +76,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     }
 
     if (widget.studyType == StudyType.typingOnly) {
-      _controller = new TextEditingController(text: "你好！我是王月。很高兴认识你。");
+      _controller = new TextEditingController(text: "你好！请你将内容复制并粘帖到这里，然后开始练习。");
     }
     else {
       _controller = new TextEditingController(text: "您好吗");
