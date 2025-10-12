@@ -619,6 +619,7 @@ class _InputZiPageState extends State<InputZiPage> {
             fullCandidateStartingIndex = tempNextStartingIndex;
             setState(() {
               theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+              theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
               isFromArrowCandidate = true;
               updateCounter++;
             });
@@ -632,6 +633,7 @@ class _InputZiPageState extends State<InputZiPage> {
         fullCandidateStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, false/*backward Arrlow*/);
         setState(() {
           theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+          theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
           isFromArrowCandidate = true;
           updateCounter++;
         });
@@ -856,6 +858,7 @@ class _InputZiPageState extends State<InputZiPage> {
             previousStartComposing, previousEndComposing);
         fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
         theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+        theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
         InputZiManager.updateFirstCandidate(
             theCurrentZiCandidates, InputZiManager.previousFirstPositionList);
         previousText = _controller.text;
@@ -930,6 +933,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
       if (Utility.isArrow(latestInputKeyLetter)) {
         theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+        theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
       }
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
@@ -962,6 +966,7 @@ class _InputZiPageState extends State<InputZiPage> {
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);
       theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+      theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
       if (theCurrentZiCandidates == null) {
         List<String> composingList = [composingText];
         theCurrentZiCandidates = composingList;

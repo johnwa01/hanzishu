@@ -358,6 +358,27 @@ class InputZiManager {
     return null;
   }
 
+  static List<String> removeDupCandidates(List<String> candidates) {
+    List<String> newCandidates = [];
+    if (candidates.length > 0) {
+      bool existed;
+      for (var i = 0; i < candidates.length; i++) {
+        existed = false;
+        for (var j = 0; j < newCandidates.length; j++) {
+          if (candidates[i] == newCandidates[j]) {
+            existed = true;
+            break;
+          }
+        }
+        if (!existed) {
+          newCandidates.add(candidates[i]);
+        }
+      }
+    }
+
+    return newCandidates;
+  }
+
   static String? getCandidateZiString(int index) {
     if (theCurrentZiCandidates.length > index) {
       return theCurrentZiCandidates[index];
