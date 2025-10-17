@@ -319,12 +319,14 @@ var theZiForExpandedReviewExerciseList=[
   //ZiWithComponentsAndStrokes("道", [], "E21.png,E51.png", 0),
   //ZiWithComponentsAndStrokes("俱", [], "E42.png,E51.png", 0),
   ////ZiWithComponentsAndStrokes("梅", [], "E42.png,E51.png", 0),
-  ZiWithComponentsAndStrokes("摩", [], "E32.png,E13.png", 0),
+ // ZiWithComponentsAndStrokes("摩", [], "E32.png,E13.png", 0),
   //ZiWithComponentsAndStrokes("京", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("匈", [], "E21.png,E52.png", 0),
   ////ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),
 //  ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
 //  ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
+  ZiWithComponentsAndStrokes("从前", [], "E62.png,E23.png", 0),   //
+  ZiWithComponentsAndStrokes("中国人", [], "E62.png,E23.png", 0),   // not sure png purposes
 ];
 
 var theZiForExpandedGeneralExerciseList=[
