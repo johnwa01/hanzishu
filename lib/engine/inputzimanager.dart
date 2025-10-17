@@ -756,56 +756,6 @@ class InputZiManager {
     return currentIndex;
   }
 
-  int getTotalTypingLength(TypingType typingType, int lessonId) {
-    int totalTypingLength =  -1;
-    if (typingType == TypingType.LeadComponents) {
-      totalTypingLength = theZiForLeadCompExerciseList.length;
-    }
-    else if (typingType == TypingType.ExpandedReview) {
-      totalTypingLength = theZiForExpandedReviewExerciseList.length;
-    }
-    else if (typingType == TypingType.ExpandedGeneral) {
-      totalTypingLength = theZiForExpandedGeneralExerciseList.length;
-    }
-    else if (typingType == TypingType.AttachedComponents) {
-      totalTypingLength = theZiForAttachedCompExerciseList.length;
-    }
-    else if (typingType == TypingType.TwinComponents) {
-      totalTypingLength = theZiForTwinCompExerciseList.length;
-    }
-    else if (typingType == TypingType.SubComponents) {
-      totalTypingLength = theZiForSubCompExerciseList.length;
-    }
-    else if (typingType == TypingType.FirstTyping) {
-      totalTypingLength = theZiForFirstTypingExerciseList.length;
-    }
-    else if (typingType == TypingType.GeneralExercise) {
-      totalTypingLength = theZiForGeneralExerciseList.length;
-    }
-    else if (typingType == TypingType.CommonZiTyping) {
-       double totalLen =  (theSearchingZiList.length - 51 - lessonId) / 38;
-       totalTypingLength = totalLen.ceil();
-    }
-    else if (typingType == TypingType.FromLessons) {
-      var lesson = theLessonManager.getLesson(lessonId);
-      var typingChars = lesson.getAllTypingChars();
-      totalTypingLength = typingChars.length;
-    }
-    else if (typingType == TypingType.ThirdParty) {
-      totalTypingLength = ThirdPartyLesson.getCurrentRealWordsLength();
-    }
-    else if (typingType == TypingType.Custom) {
-      totalTypingLength = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
-    }
-    else if (typingType == TypingType.ComponentTyping) {
-      totalTypingLength =
-          theComponentCategoryStringIdAndTypingCharsList[lessonId].chars
-              .length;
-    }
-
-    return totalTypingLength;
-  }
-
   static bool checkTypingResultWithQuoteMark(String typingResult, String char) {
     bool result = false;
     if (typingResult == '"') { // english double quote

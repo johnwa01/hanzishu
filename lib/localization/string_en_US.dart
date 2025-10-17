@@ -138,9 +138,9 @@ var theString_en_US = [
   Local(132, "Note: The Expanded Chinese alphabets have similar shapes to their Lead Chinese alphabet."), // TODO: not used
   Local(133, "You remember the Chinese alphabets by group! In the next exercise, you will review the Chinese alphabets."),
   Local(134, "Way to go!"),
-  Local(135, "You know 25 types of Chinese alphabets! Let’s test your knowledge with some guided typing."),
+  Local(135, "You know types of Chinese alphabets now! Let’s test your knowledge with some guided typing."),
   Local(136, "Wow!"),
-  Local(137, "You know all the Chinese alphabets! Let’s use them in next exercise."),
+  Local(137, "You know Chinese alphabets now! Let’s use them in next exercise."),
   Local(138, "Next"),
   Local(139, "Word drill Hanzishu lesson review"),
   Local(140, "Glossary"),

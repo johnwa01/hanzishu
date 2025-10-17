@@ -2455,7 +2455,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getTypingScore() {
     var fontSize = 13.0 * getSizeRatio() * 1.2;
-    int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+    int totalLen = theInputZiManager.getTotal(typingType, lessonId);
+    if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) {
+      totalLen--;
+    }
     return Text(getString(524) + ":" + currentIndex.toString() + "/" + totalLen.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
   }
 
@@ -2707,7 +2710,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
-      int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+      int totalLen = theInputZiManager.getTotal(typingType, lessonId);
       content = getString(120) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"Your typing exercise is complete for this lesson."*/;
     }
     else if (typingType == TypingType.ComponentTyping) {
@@ -2716,7 +2719,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
       title = getString(115)/*"Good job!"*/;
-      int totalLen = theInputZiManager.getTotalTypingLength(typingType, lessonId);
+      int totalLen = theInputZiManager.getTotal(typingType, lessonId);
       content = getString(502) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"You have completed this typing exercises."*/;
     }
 

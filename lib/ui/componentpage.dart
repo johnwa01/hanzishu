@@ -26,9 +26,11 @@ class _ComponentPageState extends State<ComponentPage> {
   int currentIndex = -1; // assign the value from the one in ComponentManager every time so that we can keep its state per exit/re-enter case
   double _progressValue = 0.0;
   int totalQuestions = -1;
+  int totalCorrectAnswers = 0;
   double screenWidth = 0.0;
   int preIndexAtCurrentIndex0 = -1;
   bool wasLastAnswerCorrect = false;
+  bool wasLastQuestionEverIncorrect = false;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -52,6 +54,8 @@ class _ComponentPageState extends State<ComponentPage> {
 
     totalQuestions = theComponentManager.getTotalQuestions(widget.questionType);
     wasLastAnswerCorrect = false;
+    wasLastQuestionEverIncorrect = false;
+    totalCorrectAnswers = 0;
 
     setState(() {
       answeredPosition = AnswerPosition.none;
@@ -790,9 +794,12 @@ class _ComponentPageState extends State<ComponentPage> {
       if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ShowAttachedComponent) {
         questionSize = size * 1.5; // 3.0
       }
+      if (!wasLastAnswerCorrect) {
+        wasLastQuestionEverIncorrect = true; // as long as incorrect once, it'll be counted as incorrect for this question.
+      }
       return Container(width:0.0, height: questionSize);
     }
-    else {
+    else { // continueNext
       String question = "";
       if (wasLastAnswerCorrect) {
         question = getString(284)/*"Correct. "*/;
@@ -1103,6 +1110,7 @@ class _ComponentPageState extends State<ComponentPage> {
       onPressed: () {
         setPositionState(position);
         wasLastAnswerCorrect = false;
+        wasLastQuestionEverIncorrect = false;
 
         if (answeredPosition == theComponentManager.getCorrectAnswerPosition()) {
           wasLastAnswerCorrect = true;
@@ -1353,6 +1361,13 @@ class _ComponentPageState extends State<ComponentPage> {
     // prepare for next one
     // Could be done in Build(), but Build won't allow showCompletedDialog() there.
 
+    if (wasLastQuestionEverIncorrect == false) {
+      totalCorrectAnswers++;
+    }
+    else {
+      wasLastQuestionEverIncorrect == false;
+    }
+
     if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
       preIndexAtCurrentIndex0++;
     }
@@ -1403,19 +1418,32 @@ class _ComponentPageState extends State<ComponentPage> {
         theNewlyCompletedTypingExercise = 2;
       }
      */
+      String correctRatioString = totalCorrectAnswers.toString() + '/' + totalQuestions.toString() + "! ";
+
+
       if (questionType == QuestionType.Component) {
         title = getString(134)/*"Way to go!"*/;
-        content = getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
+        totalCorrectAnswers -= 8; // 10 extra hits of buttons
+        if (totalCorrectAnswers < 0) {
+          totalCorrectAnswers = 0;
+        }
+        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions - 3).toString() + "! ";
+        content = correctRatioString + getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
         //theNewlyCompletedTypingExercise = 0;
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
-        content = getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
+        totalCorrectAnswers -= 1; // 1 extra hit of buttons
+        if (totalCorrectAnswers < 0) {
+          totalCorrectAnswers = 0;
+        }
+        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions - 1).toString() + "! ";
+        content = correctRatioString + getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
          //theNewlyCompletedTypingExercise = 2;
       }
       if (questionType == QuestionType.ShowAttachedComponent) {
         title = getString(391)/*"Wow!"*/;
-        content = getString(355)/*"You know your Attached Components! Let’s review it in next exercise."*/;
+        content = correctRatioString + getString(355)/*"You know your Attached Components! Let’s review it in next exercise."*/;
         //theNewlyCompletedTypingExercise = 7;
       }
       /*
