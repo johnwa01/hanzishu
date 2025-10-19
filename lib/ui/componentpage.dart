@@ -794,7 +794,12 @@ class _ComponentPageState extends State<ComponentPage> {
       if (questionType == QuestionType.ExpandedComponent || questionType == QuestionType.ShowAttachedComponent) {
         questionSize = size * 1.5; // 3.0
       }
-      if (!wasLastAnswerCorrect) {
+      if (wasLastAnswerCorrect) {
+        if (wasLastQuestionEverIncorrect == false) {
+          totalCorrectAnswers++;
+        }
+      }
+      else {
         wasLastQuestionEverIncorrect = true; // as long as incorrect once, it'll be counted as incorrect for this question.
       }
       return Container(width:0.0, height: questionSize);
@@ -803,6 +808,12 @@ class _ComponentPageState extends State<ComponentPage> {
       String question = "";
       if (wasLastAnswerCorrect) {
         question = getString(284)/*"Correct. "*/;
+        if (wasLastQuestionEverIncorrect == false) {
+          totalCorrectAnswers++;
+        }
+      }
+      else {
+        wasLastQuestionEverIncorrect = true; // as long as incorrect once, it'll be counted as incorrect for this question.
       }
 
       //var hint;
@@ -1361,12 +1372,12 @@ class _ComponentPageState extends State<ComponentPage> {
     // prepare for next one
     // Could be done in Build(), but Build won't allow showCompletedDialog() there.
 
-    if (wasLastQuestionEverIncorrect == false) {
-      totalCorrectAnswers++;
-    }
-    else {
+    //if (wasLastQuestionEverIncorrect == false) {
+    //  totalCorrectAnswers++;
+    //}
+    //else {
       wasLastQuestionEverIncorrect == false;
-    }
+    //}
 
     if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
       preIndexAtCurrentIndex0++;
@@ -1423,7 +1434,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
       if (questionType == QuestionType.Component) {
         title = getString(134)/*"Way to go!"*/;
-        totalCorrectAnswers -= 8; // 10 extra hits of buttons
+        totalCorrectAnswers++; // 10 extra hits of buttons
         if (totalCorrectAnswers < 0) {
           totalCorrectAnswers = 0;
         }
@@ -1433,7 +1444,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
-        totalCorrectAnswers -= 1; // 1 extra hit of buttons
+        totalCorrectAnswers++; // 1 extra hit of buttons
         if (totalCorrectAnswers < 0) {
           totalCorrectAnswers = 0;
         }
