@@ -53,7 +53,17 @@ class InputZiHintPainter extends BasePainter {
   }
 
   displayHintMessage(double fontSize, String char, int ziIndex) {
-    var typingComponentsAndSubComp = ComponentManager.getTypingComponentsAndSubComp(char);
+    var typingComponentsAndSubComp;
+    if (char == "从前") { // two special phrase examples
+      typingComponentsAndSubComp = ["Ha", "Ha", "Mb", "Im"];
+    }
+    else if (char == "中国人") {
+      typingComponentsAndSubComp = ["Jd", "Ja", "Ha"];
+    }
+    else {
+      typingComponentsAndSubComp = ComponentManager
+          .getTypingComponentsAndSubComp(char);
+    }
 
     double size = 24 * getSizeRatio(); //14.4
     if (showHint == HintType.Hint2) {
