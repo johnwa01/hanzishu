@@ -531,4 +531,5 @@ var theString_zh_CN = [
   Local(524, "分数"),
   Local(525, "游戏"),
   Local(526, "练习 -- 语文"),
+  Local(527, "注：这个字没有提示。"),
 ];

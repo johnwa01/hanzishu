@@ -53,12 +53,15 @@ class InputZiHintPainter extends BasePainter {
   }
 
   displayHintMessage(double fontSize, String char, int ziIndex) {
-    var typingComponentsAndSubComp;
+    List<String> typingComponentsAndSubComp = [];
     if (char == "从前") { // two special phrase examples
       typingComponentsAndSubComp = ["Ha", "Ha", "Mb", "Im"];
     }
     else if (char == "中国人") {
       typingComponentsAndSubComp = ["Jd", "Ja", "Ha"];
+    }
+    else if (char == "淇") {
+      typingComponentsAndSubComp = ["Mi", "Wh", "Fa"];
     }
     else {
       typingComponentsAndSubComp = ComponentManager
@@ -77,6 +80,12 @@ class InputZiHintPainter extends BasePainter {
     }
 
     xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
+
+    if (typingComponentsAndSubComp.isEmpty) {
+      // "Note: hint unavailable
+      displayTextWithValue(getString(527), xPosi, 0.0, size / 1.3, Colors.blue, false);
+      return;
+    }
 
     // non-existin char in searchingzilist
     if (typingComponentsAndSubComp.length == 0) {

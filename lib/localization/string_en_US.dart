@@ -534,4 +534,5 @@ var theString_en_US = [
   Local(524, "Score"),
   Local(525, "Game"),
   Local(526, "Exercises -- Yuwen"),
+  Local(527, "Note: hint unavailable for it."),
 ];

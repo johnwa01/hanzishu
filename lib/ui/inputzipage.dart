@@ -2056,7 +2056,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getWarningMessage() {
     var fontSize = 15.0 * getSizeRatio();     //15.0
-    if (currentTypingCodeIsCorrect || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game || typingType == TypingType.FreeTyping) {
+    if (currentTypingCodeIsCorrect || currentCorrectTypingCode == "" || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game || typingType == TypingType.FreeTyping) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {
