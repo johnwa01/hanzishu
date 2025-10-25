@@ -476,7 +476,7 @@ class Utility {
   static bool specialChar(String char) {
     return char == '！' || char == '？' || char == '。' || char == '，' || char == '`' || char == '、' ||
         char == '!' || char == '?' || char == '.' || char == ',' || char == '【' || char == '】' ||
-        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ' || char == '\\' || char == '＼' || char == '"' /*|| char == '“' || char == '”' || char == "‘" || char == "’"*/;
+        char == ':' || char == '：' || char == ';' || char == '；' || char == ' ' || char == '\\' || char == '＼' || char == '/' || char == '/' || char == '"' /*|| char == '“' || char == '”' || char == "‘" || char == "’"*/;
   }
 
   static String updateSpecialCharValue(String latestInputKeyLetter, String text) {
@@ -491,6 +491,9 @@ class Utility {
         break;
       case '\\':
         updatedValue = text.replaceAll('\\', '、');
+        break;
+      case '/':
+        updatedValue = text.replaceAll('/', '/');
         break;
       case '?':
         updatedValue = text.replaceAll('?', '？');
@@ -537,6 +540,9 @@ class Utility {
         break;
       case '\\':
         convertedString = '、';
+        break;
+      case '/':
+        convertedString = '/';
         break;
         // convert chinese quotes to English quote to display
       // to user so that they just type English quote even in Chinese content.
