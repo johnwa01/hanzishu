@@ -31,6 +31,8 @@ class _ComponentPageState extends State<ComponentPage> {
   int preIndexAtCurrentIndex0 = -1;
   bool wasLastAnswerCorrect = false;
   bool wasLastQuestionEverIncorrect = false;
+  bool isFromPreviousButton = false;
+  int previousButtonCount = 0;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -795,7 +797,7 @@ class _ComponentPageState extends State<ComponentPage> {
         questionSize = size * 1.5; // 3.0
       }
       if (wasLastAnswerCorrect) {
-        if (wasLastQuestionEverIncorrect == false) {
+        if (!wasLastQuestionEverIncorrect && !isFromPreviousButton) {
           totalCorrectAnswers++;
         }
         else { // re-init
@@ -811,7 +813,7 @@ class _ComponentPageState extends State<ComponentPage> {
       String question = "";
       if (wasLastAnswerCorrect) {
         question = getString(284)/*"Correct. "*/;
-        if (wasLastQuestionEverIncorrect == false) {
+        if (!wasLastQuestionEverIncorrect && !isFromPreviousButton) {
           totalCorrectAnswers++;
         }
         else { // re-init
@@ -1122,6 +1124,7 @@ class _ComponentPageState extends State<ComponentPage> {
         padding: WidgetStateProperty.all(EdgeInsets.all(2.0)), // 2.0 for showing color for correct or wrong ones
       ),
       onPressed: () {
+        isFromPreviousButton = false;
         setPositionState(position);
         wasLastAnswerCorrect = false;
 
@@ -1251,6 +1254,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
 
   Widget getContinue(BuildContext context) {
+    isFromPreviousButton = false;
     //bool isHeaderOfComponentInGroup = theComponentManager.isHeaderOfComponentInGroup();
     //bool isFirstHeaderOfGroups = theComponentManager.isFirstHeaderOfGroups();
     //bool isSecondHeaderOfGroups = theComponentManager.isSecondHeaderOfGroups();
@@ -1350,6 +1354,10 @@ class _ComponentPageState extends State<ComponentPage> {
             //textColor: Colors.white,
             onPressed: () {
               setPositionState(AnswerPosition.continueNext);
+              if (currentIndex > 0) { // in real component stage, not preIndex
+                isFromPreviousButton = true; // ideally previous should be a AnswerPosition state
+                previousButtonCount++;
+              }
               theComponentManager.resetCorrectAnswerPosition();
               //answeredPosition = AnswerPosition.none;
               setState(() {
@@ -1429,25 +1437,25 @@ class _ComponentPageState extends State<ComponentPage> {
 
       if (questionType == QuestionType.Component) {
         title = getString(134)/*"Way to go!"*/;
-        if (wasLastAnswerCorrect && wasLastQuestionEverIncorrect == false) {
+        if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
           totalCorrectAnswers++;
         }
         if (totalCorrectAnswers < 0) {
           totalCorrectAnswers = 0;
         }
-        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions - 3).toString() + "! ";
+        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 3).toString() + "! ";
         content = correctRatioString + getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
         //theNewlyCompletedTypingExercise = 0;
       }
       if (questionType == QuestionType.ExpandedComponent) {
         title = getString(136)/*"Wow!"*/;
-        if (wasLastAnswerCorrect && wasLastQuestionEverIncorrect == false) {
+        if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
           totalCorrectAnswers++;
         }
         if (totalCorrectAnswers < 0) {
           totalCorrectAnswers = 0;
         }
-        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions - 1).toString() + "! ";
+        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 1).toString() + "! ";
         content = correctRatioString + getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
          //theNewlyCompletedTypingExercise = 2;
       }

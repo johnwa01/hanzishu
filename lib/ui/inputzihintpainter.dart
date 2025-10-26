@@ -81,7 +81,7 @@ class InputZiHintPainter extends BasePainter {
 
     xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
 
-    if (typingComponentsAndSubComp.isEmpty) {
+    if (typingComponentsAndSubComp.isEmpty && !Utility.specialChar(char)) {
       // "Note: hint unavailable
       displayTextWithValue(getString(527), xPosi, 0.0, size / 1.3, Colors.blue, false);
       return;
