@@ -1449,6 +1449,7 @@ class _InputZiPageState extends State<InputZiPage> {
             getInputPrompt(),
             // Divider(color: Colors.brown,),
             getComponentRelated(),
+            SizedBox(height: 10),
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
@@ -2160,19 +2161,6 @@ class _InputZiPageState extends State<InputZiPage> {
           //getImageTiedToZi(),
           Row(
               children: <Widget>[
-                //getAlphabetsText(fontSize),
-                SizedBox(width: 30.0),
-                SizedBox(
-                  height: 20.0 * getSizeRatio(),
-                  //width: 150.0,
-                  child:  CustomPaint(
-                    foregroundPainter: inputZiHintPainter,
-                  ),
-                ),
-              ]
-          ),
-          Row(
-              children: <Widget>[
                 //SizedBox(
                 //  width: promptWidth * getSizeRatio(), //130 //55
                 //  child: Text(
@@ -2321,8 +2309,21 @@ class _InputZiPageState extends State<InputZiPage> {
                 //),
               ]
           ),
-          getCategoryAndSubCat1Row(),
-          getSubCategoryRow2(),
+          Row(
+              children: <Widget>[
+                //getAlphabetsText(fontSize),
+                SizedBox(width: 30.0),
+                SizedBox(
+                  height: 20.0 * getSizeRatio(),
+                  //width: 150.0,
+                  child:  CustomPaint(
+                    foregroundPainter: inputZiHintPainter,
+                  ),
+                ),
+              ]
+          ),
+          // getCategoryAndSubCat1Row(),  // disable this for now to keep it simple
+          // getSubCategoryRow2(),
        ]
       ),
       onWillPop: _onWillPop

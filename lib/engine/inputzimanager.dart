@@ -1127,23 +1127,23 @@ class InputZiManager {
   }
 
   static double getCandidateHanziLength() {
-    return 20.0;
+    return 24.0;   // 20.0
   }
 
   static double getCandidateMiddleSpaceLength() {
-    return 3.0;
+    return 3.6;     // 3.0
   }
 
   static double getCandidateLetterLength() {
-    return 9.0; // 12.0
+    return 10.8; // 12.0, 9.0
   }
 
   static double getCandidateIndexLength() {
-    return 12.0;
+    return 14.4; //12.0
   }
 
   static double getCandidateSpaceLength() {
-    return 12.0;
+    return 14.4;  //12.0
   }
 
   static String getRemainingChars(TypingType typingType, int currentIndex, String wordsStudy) {
