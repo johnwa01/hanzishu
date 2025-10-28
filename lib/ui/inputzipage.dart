@@ -2161,26 +2161,12 @@ class _InputZiPageState extends State<InputZiPage> {
           //getImageTiedToZi(),
           Row(
               children: <Widget>[
-                //SizedBox(
-                //  width: promptWidth * getSizeRatio(), //130 //55
-                //  child: Text(
-                //      promptStr,
-                //      style: TextStyle(fontSize: fontSize * 1.2),
-                //      textAlign: TextAlign.left
-                //  ),
-                //),
-                //SizedBox(width: fontSize),
-                //SizedBox(width: 140.0 * getSizeRatio()), //140.0
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
                     style: ButtonStyle(
-                      //   backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                     ),
-                    //color: Colors.white,
-                    //textColor: hint2Color,
-                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -2190,22 +2176,19 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                        "[" + getString(523) + "]"/*"Hint3"*/,
-                        style: TextStyle(fontSize: fontSize * 1.2, color: hint3Color), // 1.6
+                        getString(523) /*"Hint3"*/,
+                        style: TextStyle(fontSize: fontSize /* 1.2*/, color: hint3Color), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
+                  SizedBox(width: 2.0),
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
                     style: ButtonStyle(
-                    //   backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                     ),
-                    //color: Colors.white,
-                    //textColor: hint2Color,
-                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -2215,22 +2198,19 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                        "[" + getString(438) + "]"/*"Hint2"*/,
-                        style: TextStyle(fontSize: fontSize * 1.2, color: hint2Color), // 1.6
+                        getString(438) /*"Hint2"*/,
+                        style: TextStyle(fontSize: fontSize /* 1.2*/, color: hint2Color), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
+                SizedBox(width: 2.0),
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
                     style: ButtonStyle(
-                      //    backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                     ),
-                    //color: Colors.white,
-                    //textColor: hint1Color,
-                    //padding: EdgeInsets.zero,
                     onPressed: () {
                       initOverlay();
 
@@ -2240,21 +2220,18 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                        "[" + getString(90) + "1]"/*"Hint1"*/,
-                        style: TextStyle(fontSize: fontSize * 1.2, color: hint1Color), // 1.6
+                        getString(90) + "1" /*"Hint1"*/,
+                        style: TextStyle(fontSize: fontSize /* 1.2*/, color: hint1Color), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
+                SizedBox(width: 2.0),
                 SizedBox(
                   //width: 30.0 * getSizeRatio(),
                   child: TextButton(
-                    //color: Colors.white,
-                    //textColor: hint0Color,
-                    //padding: EdgeInsets.zero,
                     style: ButtonStyle(
-                  //    backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                     ),
                     onPressed: () {
                       initOverlay();
@@ -2265,21 +2242,18 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                      "[" + getString(464) + "]"/*"Hint0"*/,
-                      style: TextStyle(fontSize: fontSize * 1.2, color:  hint0Color), // 1.6
+                      getString(464) /*"Hint0"*/,
+                      style: TextStyle(fontSize: fontSize /* 1.2*/, color:  hint0Color), // 1.6
                       textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
                 ),
+                SizedBox(width: 2.0),
                 SizedBox(
                   //width: 30.0 * getSizeRatio(),
                   child: TextButton(
-                    //color: Colors.white,
-                    //textColor: hint0Color,
-                    //padding: EdgeInsets.zero,
                     style: ButtonStyle(
-                      //    backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(EdgeInsets.zero),
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                     ),
                     onPressed: () {
                       initOverlay();
@@ -2290,8 +2264,8 @@ class _InputZiPageState extends State<InputZiPage> {
                       });
                     },
                     child: Text(
-                        "[" + getString(525) + "]"/*"Game"*/,
-                        style: TextStyle(fontSize: fontSize * 1.2, color:  gameColor), // 1.6
+                        getString(525) /*"Game"*/,
+                        style: TextStyle(fontSize: fontSize /* 1.2*/, color:  gameColor), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
@@ -2300,13 +2274,6 @@ class _InputZiPageState extends State<InputZiPage> {
                   SizedBox(
                    child: getTypingScore(),
                   ),
-                //SizedBox(
-                //  height: 30.0 * getSizeRatio(),
-                  //width: 180.0 * getSizeRatio(),
-                //  child: CustomPaint(
-                //    foregroundPainter: inputZiHintPainter,
-                //  ),
-                //),
               ]
           ),
           Row(

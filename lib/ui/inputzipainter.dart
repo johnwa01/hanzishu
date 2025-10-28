@@ -112,11 +112,11 @@ class InputZiPainter extends BasePainter {
     }
     else {
       realCandidate = chars.substring(0, spacePosi);
-      int len = chars.length - spacePosi + 1;
+      int len = chars.length - spacePosi - 1;
       if (len > 4 ) {
         len = 4;
       }
-      typingCode = chars.substring(spacePosi + 1);
+      typingCode = chars.substring(spacePosi + 1, spacePosi + 1 + len);
     }
 
     size = InputZiManager.getCandidateHanziLength();
