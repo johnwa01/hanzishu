@@ -958,22 +958,23 @@ class InputZiManager {
     return letterRegExp.hasMatch(char);
   }
 
+  static int getRealCharCount(String oneCandidate) {
+    var chars = oneCandidate.characters;
+    int realCharCount = 0;
+
+    for (final char in chars) {
+      if (char == ' ') {
+        break;
+      }
+      realCharCount++;
+    }
+
+    return realCharCount;
+  }
+
   // the oneCandidate might contain complex chinese char and mid space etc
   static double getOneCandidateLength(String oneCandidate) {
-    double oneCandidateLength = 0.0;
-    var chars = oneCandidate.characters;
-    for (final char in chars) {
-      if (isMiddleSpace(char)) {
-        oneCandidateLength += InputZiManager.getCandidateMiddleSpaceLength();
-      }
-      else if (isLetter(char)) {
-        oneCandidateLength += InputZiManager.getCandidateLetterLength();
-      }
-      else { // Hanzi
-        oneCandidateLength += InputZiManager.getCandidateHanziLength();
-      }
-    }
-    oneCandidateLength += InputZiManager.getCandidateIndexLength();
+    double oneCandidateLength = InputZiManager.getRealCharCount(oneCandidate) * InputZiManager.getCandidateHanziLength();
 
     return oneCandidateLength;
   }
@@ -1114,16 +1115,20 @@ class InputZiManager {
   }
 
   static double getMaxTotalCandidateLength() {
-    return getCandidateLeftArrowXPosition() - 13.0;
+    return getCandidateLeftArrowXPosition() - 100.0; // 13.0
   }
 
   static double getCandidateLeftArrowXPosition() {
     return (maxTypingCandidates * (20.0 + 14.0 + 12.0) +
-        22.0); //* getSizeRatio(); //12.0->22.0
+        22.0); // getSizeRatio(); //12.0->22.0
   }
 
   static double getCandidateRightArrowXPosition() {
     return getCandidateLeftArrowXPosition() + 20.0 + 4.0; //20.0+14.0 ->20.0+4.0
+  }
+
+  static double getBeginningLength() {
+    return 5.0;
   }
 
   static double getCandidateHanziLength() {

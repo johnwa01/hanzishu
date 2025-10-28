@@ -36,7 +36,7 @@ class InputZiPainter extends BasePainter {
 
   displayCandidates() {
     if (theCurrentZiCandidates != null) {
-      double x = 0.0;
+      double x = InputZiManager.getBeginningLength(); // 0.0
 
       var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
 
@@ -99,36 +99,41 @@ class InputZiPainter extends BasePainter {
 
   double displayOneCandidate(String candidate, double x, double y, double fontSize) {
     //var widthSizeRatio = Utility.getSizeRatio(screenWidth);
-    var chars = candidate.characters.toUpperCase();
+    String chars = candidate; //.toUpperCase();
     double size = 0.0;
-    double updatedY;
+    //double updatedY;
     double updatedX = x;
 
-    for (var char in chars) {
-      updatedY = y;
-      if (InputZiManager.isMiddleSpace(char)) {
-        // move x a little bit, not a full letter width
-        size = InputZiManager.getCandidateMiddleSpaceLength() * getSizeRatio();
+    int spacePosi = chars.indexOf(' ');
+    String realCandidate;
+    String typingCode = "";
+    if (spacePosi < 0) {
+      realCandidate = chars;
+    }
+    else {
+      realCandidate = chars.substring(0, spacePosi);
+      int len = chars.length - spacePosi + 1;
+      if (len > 4 ) {
+        len = 4;
       }
-      else if (InputZiManager.isLetter(char)) {
-        size = InputZiManager.getCandidateLetterLength();
-        updatedY += 10.0 * getSizeRatio(); // make up a bit to stay in middle
-      }
-      else {
-        size = InputZiManager.getCandidateHanziLength();
-      }
-      size *= getSizeRatio();
+      typingCode = chars.substring(spacePosi + 1);
+    }
+
+    size = InputZiManager.getCandidateHanziLength();
+    size *= getSizeRatio();
+    for (var char in realCandidate.characters) {
       displayTextWithValue(
-          char, updatedX, updatedY, size, Colors.blue, false);
+          char, updatedX, y, size, Colors.blue, false);
       updatedX += size;
+    }
+    if (spacePosi >= 0) {
+      displayTextWithValue(
+            typingCode.toUpperCase(), x, y + 35.0 * getSizeRatio(), size/2,
+            Colors.blue, false);
     }
 
     return updatedX;
   }
-
-  //displayOneCandidate(String candidate, double x, double y, double fontSize) {
-  //  displayTextWithValue(candidate, x, y, fontSize, Colors.blue, false);
-  //}
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {

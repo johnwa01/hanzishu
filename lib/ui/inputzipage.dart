@@ -2598,11 +2598,12 @@ class _InputZiPageState extends State<InputZiPage> {
 
     buttons.add (Container(height: 60.0 * getSizeRatio() /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
 
-    PrimitiveWrapper xPosi = PrimitiveWrapper(0.0);
+    PrimitiveWrapper xPosi = PrimitiveWrapper(InputZiManager.getBeginningLength()); // 0.0
 
     if (ziCandidates != null) {
       for (var i = 0; i < ziCandidates.length; i++) {
         buttons.add(getZiCandidateButton(xPosi, i, ziCandidates[i]));
+        xPosi.value += InputZiManager.getCandidateIndexLength() * getSizeRatio();
       }
     }
 
