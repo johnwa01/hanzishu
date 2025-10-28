@@ -1940,12 +1940,18 @@ class _InputZiPageState extends State<InputZiPage> {
                 promptStr,
                 style: TextStyle(fontSize: fontSize * 1.2),
                 textAlign: TextAlign.left
-            ),
-            Text(
-                currentTypingChar,
-                style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
-                textAlign: TextAlign.left
-            ),
+              ),
+
+              GestureDetector(
+                onTap: () {
+                  TextToSpeech.speak("zh-CN", currentTypingChar);
+                },
+                child: Text(
+                  currentTypingChar,
+                  style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                  textAlign: TextAlign.left
+                ),
+              ),
           ]
       );
     }
@@ -2013,14 +2019,19 @@ class _InputZiPageState extends State<InputZiPage> {
                 textAlign: TextAlign.left
             ),
             Text(
-                  strBeforeChar,
+                strBeforeChar,
                 style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
                 textAlign: TextAlign.left
             ),
-            Text(
+            GestureDetector(
+              onTap: () {
+                TextToSpeech.speak("zh-CN", strChar);
+              },
+              child: Text(
                   strChar,
                   style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                   textAlign: TextAlign.left
+              ),
             ),
             Text(
                   strAfterChar,
