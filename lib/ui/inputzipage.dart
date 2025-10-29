@@ -2193,7 +2193,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
-                  SizedBox(width: 2.0),
+                  SizedBox(width: 1.0),
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
@@ -2215,7 +2215,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 2.0),
+                SizedBox(width: 1.0),
                 SizedBox(
                   //width: 50.0 * getSizeRatio(),
                   child: TextButton(
@@ -2237,7 +2237,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 2.0),
+                SizedBox(width: 1.0),
                 SizedBox(
                   //width: 30.0 * getSizeRatio(),
                   child: TextButton(
@@ -2259,7 +2259,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 2.0),
+                SizedBox(width: 1.0),
                 SizedBox(
                   //width: 30.0 * getSizeRatio(),
                   child: TextButton(
@@ -2438,7 +2438,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) {
       totalLen--;
     }
-    return Text(getString(524) + ":" + currentIndex.toString() + "/" + totalLen.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
+    return Text(/*getString(524) + ":" + */  currentIndex.toString() + "/" + totalLen.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
   }
 
   getSubCategoryRow2() {
