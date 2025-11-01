@@ -197,7 +197,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getDrillPageCore(drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -229,7 +229,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamSoundToHanzi(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -277,7 +277,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamHanziToSound(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -325,7 +325,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getExamMeaning(drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -377,7 +377,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
         if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
           ThirdPartyLesson.setThirdPartyTypeAndLessonId(
               ThirdPartyType.sunlaoshi, subItemId);
@@ -385,6 +385,10 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
           ThirdPartyLesson.setThirdPartyTypeAndLessonId(
               ThirdPartyType.yuwenAll, subItemId);
+        }
+        else if (widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
+          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+              ThirdPartyType.cMadeEasy, subItemId);
         }
 
         return TextButton(
@@ -453,7 +457,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -486,7 +490,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getFlashcard(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
@@ -526,7 +530,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   }
 
   Widget getStudyCustomizedWordsPage(DrillCategory drillCategory) {
-    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 

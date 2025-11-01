@@ -229,6 +229,20 @@ class _ToolsPageState extends State<ToolsPage> {
           },
         ),
         ListTile(
+          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
+          title: Text(getString(528)/*"Chinese Made Easy"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.cMadeEasy),
+              ),
+            );
+          },
+        ),
+        ListTile(
           leading: Image.asset('assets/core/itemicon.png'),
           title: Text(/*"2. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
           //trailing: Image.asset('assets/core/itemicon.png'),

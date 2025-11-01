@@ -10,6 +10,7 @@ enum ThirdPartyType {
   yuwen,
   sunlaoshi,
   yuwenAll,
+  cMadeEasy,
   none
 }
 
@@ -35,10 +36,14 @@ class ThirdParty {
 
   static String getStringFromCode(String code) {
     String stringType = code.substring(0, 1);
+    if (stringType != 'k' && stringType != 's' && stringType != 't' && stringType != 'l' && stringType != 'm')
+    {
+      return code;
+    }
     String indexString = code.substring(1);
     int index = Utility.StringToInt(indexString);
 
-    String wholeString = '';
+    String wholeString = "";
 
     switch (stringType) {
       case "k":
