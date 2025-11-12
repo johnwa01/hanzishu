@@ -96,7 +96,7 @@ var theString_en_US = [
   Local(90, "Hint"),
   Local(91, "Lessons"),
   Local(92, "Dictionary"),
-  Local(93, "Typing"),
+  Local(93, "Input Method"), // Typing
   Local(94, "More"),
   Local(95, "Hanzishu Dictionary"),
   Local(96, "First-Hanzi Radical Table"),

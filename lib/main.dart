@@ -6,6 +6,7 @@ import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/engine/statisticsmanager.dart';
 import 'package:hanzishu/engine/storagehandler.dart';
 import 'package:hanzishu/ui/lessonspage.dart';
+import 'package:hanzishu/ui/launchpage.dart';
 import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/ui/theme.dart';
@@ -131,7 +132,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children =
   [
-    LessonsPage(),
+    //LessonsPage(),
+    LaunchPage(),
     //DictionaryPage(),
     InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
     WordPage(),

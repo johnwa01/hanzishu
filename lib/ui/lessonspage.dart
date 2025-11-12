@@ -44,10 +44,10 @@ var courseMenuList = [
 class _LessonsPageState extends State<LessonsPage> {
   static List<int> NumberOfLessonsInLevel = [60, 2];
 
-  late bool hasLoadedStorage;
+  //late bool hasLoadedStorage;
   int newFinishedLessons = -1;
 
-  late String currentLocale;
+  //late String currentLocale;
 
   late double screenWidth;
 
@@ -98,7 +98,7 @@ class _LessonsPageState extends State<LessonsPage> {
     super.initState();
 
     setState(() {
-      this.hasLoadedStorage = false;
+    //  this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
       currentSoundCategory = SoundCategory.hanzishuLessons;
       currentSoundPaintSection = 0;
@@ -112,6 +112,7 @@ class _LessonsPageState extends State<LessonsPage> {
     super.dispose();
   }
 
+  /*
   handleStorage() {
     // doing nothing for web for now
     if (!kIsWeb) {
@@ -147,6 +148,7 @@ class _LessonsPageState extends State<LessonsPage> {
       }
     }
   }
+  */
 
   @override
   Widget build(BuildContext context) {
@@ -159,7 +161,7 @@ class _LessonsPageState extends State<LessonsPage> {
     _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
 //    _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
 
-    handleStorage();
+    //handleStorage();
 
     return Scaffold
       (
@@ -314,7 +316,7 @@ class _LessonsPageState extends State<LessonsPage> {
               SizedBox(width: 30, height: 0),
               //SizedBox(width: 30, height: 0),
               //getSpaceAsNeeded(unit),
-              getLanguageSwitchButtonAsNeeded(unit),
+              // getLanguageSwitchButtonAsNeeded(unit),
               //
             ]
           ),
@@ -379,6 +381,7 @@ class _LessonsPageState extends State<LessonsPage> {
     return getUnitReview(unit);
   }
 
+  /*
   Widget getLanguageSwitchButtonAsNeeded(int unit) {
     if (unit != 1 && unit != 11)  {
       return SizedBox(width: 0, height: 0);
@@ -441,6 +444,7 @@ class _LessonsPageState extends State<LessonsPage> {
 
     return localString;
   }
+  */
 
   Widget getSpaceAsNeeded(int unit) {
     if (unit != 1) {
