@@ -431,7 +431,7 @@ class _LaunchPageState extends State<LaunchPage> {
   }
 
   Widget getHanzishuHistoryLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //blue,
@@ -441,11 +441,11 @@ class _LaunchPageState extends State<LaunchPage> {
         child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 
   Widget getNewStageOfLearningChineseLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
@@ -455,11 +455,11 @@ class _LaunchPageState extends State<LaunchPage> {
         child: Text(getString(471)/*"New scientific stage of Chinese character education"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 
   Widget getInputMethodAndTeachingLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
@@ -469,11 +469,11 @@ class _LaunchPageState extends State<LaunchPage> {
         child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 
   Widget getTulReportLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
@@ -483,11 +483,11 @@ class _LaunchPageState extends State<LaunchPage> {
         child: Text("象形电打走进美国大学课堂", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 
   Widget getWestsideReportLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
@@ -497,20 +497,20 @@ class _LaunchPageState extends State<LaunchPage> {
         child: Text("在教室里种汉字树", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 
   Widget getPublishReportLink() {
-    if (kIsWeb)
+    //if (kIsWeb)
       return TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
         },
-        child: Text("汉字树公告栏", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+        child: Text("更多汉字树相关文章和视频", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
-    return SizedBox(width: 0, height: 0);
+    //return SizedBox(width: 0, height: 0);
   }
 }
