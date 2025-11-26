@@ -114,6 +114,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
     );
   }
 
+  // this page is only used for '口‘ firstzi group right now. TODO: should move others to here as well.
   DisplaySearchingZis(int firstZiIndex) {
     var length = DictionaryPainter.getSearchingZiCount(firstZiIndex);
     var searchingZiId = theFirstZiList[firstZiIndex].searchingZiId;
@@ -125,7 +126,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
     String charOrStrokeIndexStr;
     List<String> rowStringList = [];
     var count = 0;
-    for (var j = 0; j < 30; j++) {
+    for (var j = 0; j < 40; j++) {
       currentDisplayRow = j;
       for (var i = 0; i < 12 /*actualColumnCount.value*/; i++) {  //12
         var searchingZi = theSearchingZiList[searchingZiId];
@@ -177,13 +178,13 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
       int ziId;
       currentZiOrLable = rowStringList[i];
       if (currentZiOrLable[0] == '(') {
-        fontSize = 13.0 * getSizeRatioWithLimit();
+        fontSize = 12.0 /*13.0*/ * getSizeRatioWithLimit();
         isChar = false;
         color = Colors.black;
         ziId = -1;
       }
       else {
-        fontSize = 30.0 * getSizeRatioWithLimit();
+        fontSize = 25.5 /*30.0*/ * getSizeRatioWithLimit();
         isChar = true;
         color = Colors.blueAccent;
         ziId = ZiManager.findIdFromChar(ZiListType.searching, currentZiOrLable);;

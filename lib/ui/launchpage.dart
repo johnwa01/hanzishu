@@ -255,7 +255,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           SizedBox(height: 15 * getSizeRatioWithLimit()),
           Text(
-            "热点: (Hot topic, Chinese only)",
+            "热点: (Hot topics, Chinese only)",
             style: TextStyle(
               color: Colors.brown,
               //fontSize: 24 * getSizeRatioWithLimit(),

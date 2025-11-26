@@ -420,6 +420,7 @@ class DictionaryPainter extends BreakoutPainter {
   DisplaySearchingZis(int firstZiIndex) {
     var length = getSearchingZiCount(firstZiIndex);
     var searchingZiId = theFirstZiList[firstZiIndex].searchingZiId;
+
     PrimitiveWrapper actualColumnCount = new PrimitiveWrapper(0);
     PositionAndSize startPosition = new PositionAndSize(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
