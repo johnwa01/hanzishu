@@ -597,6 +597,16 @@ class _InputZiPageState extends State<InputZiPage> {
                 TextToSpeech.speak("zh-CN", sentence[charIndex.value]);
               }
             }
+            else if (typingType == TypingType.Custom) {
+              PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+              String sentence = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndex);
+              if (charIndex.value == 0) {
+                TextToSpeech.speak("zh-CN", sentence);
+              }
+              else {
+                TextToSpeech.speak("zh-CN", sentence[charIndex.value]);
+              }
+            }
             else {
                 TextToSpeech.speak("zh-CN", typeChar);
             }
@@ -606,6 +616,30 @@ class _InputZiPageState extends State<InputZiPage> {
         //       return;
       }
     }
+  }
+
+  String getCurrentSentence(TypingType typingType) {
+    String sentence = '';
+
+    if(typingType == TypingType.FromLessons) {
+      var sentenceIndex = PrimitiveWrapper(0);
+      var charIndex = PrimitiveWrapper(0);
+      var oneLesson = theLessonList[lessonId];
+      oneLesson.getSentenceAndCharIndex(
+        currentIndex, sentenceIndex, charIndex);
+      sentence = theSentenceList[sentenceIndex.value].conv;
+    }
+    else if(typingType == TypingType.ThirdParty) {
+      var charIndex = PrimitiveWrapper(0);
+      sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(
+      currentIndex, charIndex);
+    }
+    else if (typingType == TypingType.Custom) {
+      PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+      sentence = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndex);
+    }
+
+    return sentence;
   }
 
   void handleArrowCandidate(int selectionIndex) {
@@ -2010,17 +2044,29 @@ class _InputZiPageState extends State<InputZiPage> {
         strAfterChar = chars.getRange(charIndexInSentence.value + 1, chars.length).toString();
       }
 
+      PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+      String sentence = getCurrentSentence(typingType); //ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, 0, charIndex);
+
       return Row(
           children: <Widget>[
             SizedBox(width: fontSize),
             Text(
                 promptStr,
-                style: TextStyle(fontSize: fontSize * 1.2),
+                style: TextStyle(fontSize: fontSize * 1.1 * getSizeRatio()), //1.2
                 textAlign: TextAlign.left
             ),
+            IconButton(
+                  icon: Icon(
+                    Icons.volume_up,
+                    size: fontSize * 1.5 * getSizeRatio(),   //
+                  ),
+                  color: Colors.cyan, //Colors.green,
+                  onPressed: () {
+                    speakHanziAndPhrase(sentence);
+                  }),
             Text(
                 strBeforeChar,
-                style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.blueAccent),  //2.0
                 textAlign: TextAlign.left
             ),
             GestureDetector(
@@ -2029,13 +2075,13 @@ class _InputZiPageState extends State<InputZiPage> {
               },
               child: Text(
                   strChar,
-                  style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
+                  style: TextStyle(fontSize: fontSize * 2.7 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.orangeAccent),  // 3.0
                   textAlign: TextAlign.left
               ),
             ),
             Text(
                   strAfterChar,
-                  style: TextStyle(fontSize: fontSize * 2.0, fontWeight: FontWeight.bold, color: Colors.blueAccent),
+                  style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.blueAccent), // 2.0
                   textAlign: TextAlign.left
             ),
           ]

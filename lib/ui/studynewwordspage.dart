@@ -182,18 +182,19 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                           //SizedBox(width: 10 * getSizeRatioWithLimit()),
                         ]
                       ),
+                      SizedBox(height: 10 * getSizeRatioWithLimit()),
                       Row(
                         children: <Widget>[
                           SizedBox(width: 10 * getSizeRatioWithLimit()),
                           TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.grey[350])
                             ),
                             onPressed: () {
                               processInputs();
                             },
                             child: Text(getString(301)/*"Start"*/,
-                                style: TextStyle(color: Colors.lightBlue)),
+                                style: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit(), color: Colors.lightBlue)),
                           ),
                         ],
                       ),
