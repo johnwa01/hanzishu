@@ -723,8 +723,8 @@ class _InputZiPageState extends State<InputZiPage> {
       Future.delayed(Duration(milliseconds: 100), ()
       {
         // make sure to select nothing
-        _controller.selection = TextSelection(baseOffset: _controller.text.length,
-          extentOffset: _controller.text.length, );
+        _controller.selection = TextSelection(baseOffset: selectionPosi,
+          extentOffset: selectionPosi, );
       });
     }
 

@@ -24317,7 +24317,7 @@ var theInputZiList=[
   InputZi("iyyl","北京市民"),
   InputZi("iyyt","惊讶"),
   InputZi("iyyy","惊诧"),
-  InputZi("j","行,钅,亻,豸,饣,犭,彳,丿,彡"),
+  InputZi("j","你,行,钅,亻,豸,饣,犭,彳,丿,彡"),
   InputZi("ja","失,伙,欠,伏,矢,夭,狄,钬,𫓧"),
   InputZi("jaa","锬,倓,每个人,犹太人,铝合金,伙食,矮人,失火,钛合金"),
   InputZi("jaaae","矬"),
