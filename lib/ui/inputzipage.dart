@@ -707,8 +707,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // reset the candidate. might set to global ini value
-    fullZiCandidates = theDefaultZiCandidates;
-    theCurrentZiCandidates = theDefaultZiCandidates;
+    fullZiCandidates = []; //theDefaultZiCandidates;
+    theCurrentZiCandidates = []; //theDefaultZiCandidates;
 
     var selectionPosi = getCursorPosition(
         candidateCharLength, isFromCharCandidateList, isFromOverlay);
@@ -903,7 +903,7 @@ class _InputZiPageState extends State<InputZiPage> {
       else {
         previousStartComposing = -1;
         previousEndComposing = -1;
-        theCurrentZiCandidates = theDefaultZiCandidates;
+        theCurrentZiCandidates = []; // theDefaultZiCandidates;
         previousText = _controller.text;
         //currentComposingText = previousText;
         var lastComposingText = InputZiManager.getLastComposingTextAfterDelete(previousText);
@@ -1037,7 +1037,7 @@ class _InputZiPageState extends State<InputZiPage> {
       fullCandidateStartingIndex = 0;
       previousStartComposing = -1;
       previousEndComposing = -1;
-      theCurrentZiCandidates = theDefaultZiCandidates;
+      theCurrentZiCandidates = []; //theDefaultZiCandidates;
       previousText = _controller.text;
     }
   }
@@ -2620,20 +2620,24 @@ class _InputZiPageState extends State<InputZiPage> {
   List<Widget> createHittestButtons(BuildContext context, List<String> ziCandidates) {
     List<Widget> buttons = [];
 
-    buttons.add (Container(height: 60.0 * getSizeRatio() /*contentLength.value*/, width: screenWidth));  // workaround to avoid infinite size error
+    buttons.add(Container(height: 60.0 * getSizeRatio() /*contentLength.value*/,
+        width: screenWidth)); // workaround to avoid infinite size error
 
-    PrimitiveWrapper xPosi = PrimitiveWrapper(InputZiManager.getBeginningLength()); // 0.0
+    PrimitiveWrapper xPosi = PrimitiveWrapper(
+        InputZiManager.getBeginningLength()); // 0.0
 
-    if (ziCandidates != null) {
+    if (ziCandidates != null && ziCandidates.length != 0) {
       for (var i = 0; i < ziCandidates.length; i++) {
         buttons.add(getZiCandidateButton(xPosi, i, ziCandidates[i]));
-        xPosi.value += InputZiManager.getCandidateIndexLength() * getSizeRatio();
+        xPosi.value +=
+            InputZiManager.getCandidateIndexLength() * getSizeRatio();
       }
+
+      buttons.add(
+        getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates, '<'));
+      buttons.add(getZiCandidateButton(
+        xPosi, InputZiManager.maxTypingCandidates + 1, '>'));
     }
-
-    buttons.add(getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates, '<'));
-    buttons.add(getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates + 1, '>'));
-
     return buttons;
   }
 

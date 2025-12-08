@@ -35,7 +35,7 @@ class InputZiPainter extends BasePainter {
   }
 
   displayCandidates() {
-    if (theCurrentZiCandidates != null) {
+    if (theCurrentZiCandidates != null && theCurrentZiCandidates.length != 0) {
       double x = InputZiManager.getBeginningLength(); // 0.0
 
       var activeCandidatesLength = min(InputZiManager.maxTypingCandidates, theCurrentZiCandidates.length);
