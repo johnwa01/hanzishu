@@ -971,10 +971,11 @@ class _InputZiPageState extends State<InputZiPage> {
       }
     }
     else if (isNumberOneToSeven(latestInputKeyLetter)) {
-      //TODO: make default mode not selectable for a candidate
-      //  Candidate list have to be brought up by lower case letter only!
-      //String nextToLast = getNextToLatestInputLetter();
-      //if (nextToLast is a lower case letter) {
+      if (theCurrentZiCandidates != null && theCurrentZiCandidates.length != 0) {
+        //TODO: make default mode not selectable for a candidate
+        //  Candidate list have to be brought up by lower case letter only!
+        //String nextToLast = getNextToLatestInputLetter();
+        //if (nextToLast is a2 lower case letter) {
         //if (_controller.text != previousText) {
         fullCandidateStartingIndex = 0;
         initOverlay();
@@ -983,7 +984,8 @@ class _InputZiPageState extends State<InputZiPage> {
         previousEndComposing += 1;
         setTextByChosenZiIndex(
             getZeroBasedNumber(latestInputKeyLetter), false, false, true);
-      //}
+        //}
+      }
     }
     else if (Utility.isALowerCaseLetter(latestInputKeyLetter)) {
       fullCandidateStartingIndex = 0;
