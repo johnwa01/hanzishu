@@ -1035,6 +1035,16 @@ class _InputZiPageState extends State<InputZiPage> {
       checkAndUpdateCurrentIndex(_controller, convertedSpecialChar);
     }
     else {
+      // Note: in case of a single line editor, it doesn't seem to take this value which makes sense.
+      if (latestInputKeyLetter == "\n") {  // "enter" key
+        if (theCurrentZiCandidates != null && theCurrentZiCandidates.length != 0) {
+          // Hit 'Enter/new line' key in the middle of composing a character indicated by candidates length,
+          // just remove the return key and stay there without moving to next line
+          String textTrimReturnKey = _controller.text.replaceRange(previousEndComposing, previousEndComposing+1, ''); //_controller.text.substring(0, previousEndComposing);
+          _controller.value = _controller.value.copyWith(text: textTrimReturnKey,
+              composing: TextRange.empty, selection: TextSelection.collapsed(offset: previousEndComposing));
+        }
+      }
       initOverlay();
       fullCandidateStartingIndex = 0;
       previousStartComposing = -1;
