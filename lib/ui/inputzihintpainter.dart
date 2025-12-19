@@ -121,19 +121,28 @@ class InputZiHintPainter extends BasePainter {
             compColor,
             true,
             1);
-        xPosi += size * 1.2;
+        xPosi += size * 1.1;
       }
+    }
 
-
+    if (showHint == HintType.Hint2) {
+      xPosi += 10.0 * getSizeRatio();
+      displayTextWithValue("(", xPosi, 0.0, size, Colors.blue, false);
+      xPosi += size;
+    }
+    for (int i = 0; i < typingComponentsAndSubComp.length; i++) {
+      compColor = Colors.blue;
+      if (selectedCompIndex == (i + 1)) {
+        compColor = Colors.orange; //Colors.purple;
+      }
+      var comp = typingComponentsAndSubComp[i];
       if (showHint == HintType.Hint2) {
-        displayTextWithValue('(', xPosi, 0.0, size, compColor, false);
-        xPosi += halfSize / 1.5;
+        //xPosi += halfSize; // / 2.0; //1.5;
         var typingCode = ComponentManager.getTypingCode(comp);
         displayTextWithValue(
             typingCode!.toUpperCase(), xPosi, 0.0, size, compColor, false);
 
-        xPosi += size; //* 1.2;
-        displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
+        xPosi += size; // / 2.0; //* 1.2;
         //xPosi += halfSize / 1.5;
       }
       if (showHint == HintType.Hint3) {
@@ -143,10 +152,13 @@ class InputZiHintPainter extends BasePainter {
         displayTextWithValue(
             typingCode!.toUpperCase(), xPosi, 0.0, size, compColor, false);
 
-        xPosi += halfSize / 4; //* 1.2;
+        xPosi += halfSize / 1.1; //4; //* 1.2;
         //displayTextWithValue(')', xPosi, 0.0, size, compColor, false);
         //xPosi += halfSize / 1.5;
       }
+    }
+    if (showHint == HintType.Hint2) {
+      displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
     }
   }
 
