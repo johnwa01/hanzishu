@@ -263,6 +263,7 @@ class _LaunchPageState extends State<LaunchPage> {
             ),
           ),
 
+          getSkylineReportLink(),
           getTulReportLink(),
           getWestsideReportLink(),
           getPublishReportLink(),
@@ -472,6 +473,20 @@ class _LaunchPageState extends State<LaunchPage> {
     //return SizedBox(width: 0, height: 0);
   }
 
+  Widget getSkylineReportLink() {
+    //if (kIsWeb)
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish/skyline.html"), webOnlyWindowName: '_self');
+      },
+      child: Text("用科技重构识字之路——“汉字树”走进华州高中课堂(作者：江凌欧)", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
   Widget getTulReportLink() {
     //if (kIsWeb)
       return TextButton(
@@ -480,7 +495,7 @@ class _LaunchPageState extends State<LaunchPage> {
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish/tul.html"), webOnlyWindowName: '_self');
         },
-        child: Text("象形电打走进美国大学课堂", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+        child: Text("汉字树象形电打法美国塔尔萨大学首秀告捷（作者：张新颖）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     //return SizedBox(width: 0, height: 0);
@@ -494,7 +509,7 @@ class _LaunchPageState extends State<LaunchPage> {
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish/westside.html"), webOnlyWindowName: '_self');
         },
-        child: Text("在教室里种汉字树", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+        child: Text("在教室里种汉字树（作者：洪璐斯）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     //return SizedBox(width: 0, height: 0);

@@ -6,6 +6,7 @@ import 'package:hanzishu/ui/componentpage.dart';
 import 'package:hanzishu/ui/inputzihelppage.dart';
 import 'package:hanzishu/ui/typingselectionpage.dart';
 import 'package:hanzishu/ui/typingcomponentselectionpage.dart';
+import 'package:hanzishu/ui/componentcombinationselectionpage.dart';
 import 'package:hanzishu/ui/typingapppage.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
@@ -185,6 +186,18 @@ class _ToolsPageState extends State<ToolsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(/*"3. " + */getString(529)/*"Basic Typing Exercises"*/, textDirection: TextDirection.ltr),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ComponentCombinationSelectionPage(),
               ),
             );
           },

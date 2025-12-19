@@ -536,4 +536,6 @@ var theString_en_US = [
   Local(526, "Exercises -- Yuwen"),
   Local(527, "Note: hint unavailable for it."),
   Local(528, "Exercises -- Chinese Made Easy"),
+  Local(529, "Basic Typing Exercises"),
+  Local(530, "Please type characters using the given letters in each group only!"),
 ];

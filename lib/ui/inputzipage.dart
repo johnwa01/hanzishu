@@ -1366,12 +1366,15 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.ComponentTyping) {
       title = getString(413)/*'Practice typing by component characteristics'*/;
     }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      title = getString(529) + " (" + wordsStudy + ")"; /*'Basic Hanzishu Typing Exercises'*/
+    }
     else if (typingType == TypingType.ThirdParty) {
       title = getString(518)/*'Typing exercises'*/;
     }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.ThirdParty && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.ThirdParty && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && typingType != TypingType.ComponentCombinationTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -1974,7 +1977,7 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
-    else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping) {
+    else if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview || typingType == TypingType.CommonZiTyping || typingType == TypingType.ComponentTyping || typingType == TypingType.ComponentCombinationTyping) {
       if (showHint == HintType.Game) {
         return showGameInput(currentTypingChar);
       }
@@ -2162,6 +2165,9 @@ class _InputZiPageState extends State<InputZiPage> {
     var char;
     if (typingType == TypingType.ComponentTyping) {
       char = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars[currentIndex];
+    }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      char = theComponentCombinationCharsList[lessonId].chars[currentIndex];
     }
     else {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
@@ -2755,7 +2761,7 @@ class _InputZiPageState extends State<InputZiPage> {
       int totalLen = theInputZiManager.getTotal(typingType, lessonId);
       content = getString(120) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"Your typing exercise is complete for this lesson."*/;
     }
-    else if (typingType == TypingType.ComponentTyping) {
+    else if (typingType == TypingType.ComponentTyping || typingType == TypingType.ComponentCombinationTyping) {
       title = getString(115)/*"Good job!"*/;
       content = getString(410)/*"You have completed typing exercises."*/;
     }

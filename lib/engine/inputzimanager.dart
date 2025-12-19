@@ -609,6 +609,10 @@ class InputZiManager {
       typingChar = theComponentCategoryStringIdAndTypingCharsList[lessonId]
           .chars[currentIndex];
     }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      typingChar = theComponentCombinationCharsList[lessonId]
+          .chars[currentIndex];
+    }
     else {
       var zi = theInputZiManager.getZiWithComponentsAndStrokes(
           typingType, currentIndex, lessonId);
@@ -752,6 +756,13 @@ class InputZiManager {
         currentIndex = -1;
       }
     }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      if (currentIndex >=
+          theComponentCombinationCharsList[lessonId].chars
+              .length) {
+        currentIndex = -1;
+      }
+    }
 
     return currentIndex;
   }
@@ -853,6 +864,11 @@ class InputZiManager {
           .chars[currentIndex];
       result = typingResult.contains(char);
     }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      var char = theComponentCombinationCharsList[lessonId]
+          .chars[currentIndex];
+      result = typingResult.contains(char);
+    }
 
     return result;
   }
@@ -917,6 +933,10 @@ class InputZiManager {
     }
     else if (typingType == TypingType.ComponentTyping) {
       return theComponentCategoryStringIdAndTypingCharsList[lessonId].chars
+          .length;
+    }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      return theComponentCombinationCharsList[lessonId].chars
           .length;
     }
 

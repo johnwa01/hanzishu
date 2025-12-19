@@ -20,6 +20,7 @@ enum TypingType {
   DicSearchTyping,
   FirstTyping,
   ThirdParty,
+  ComponentCombinationTyping,
 }
 
 enum InputMethod {

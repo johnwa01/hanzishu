@@ -622,6 +622,34 @@ var theComponentCategoryStringIdAndTypingCharsList=[
   ComponentCategoryStringIdAndTypingChars(352, "Y", "之丫立"), ///*道班蛇函祸衩前鬲*/"), // other dots
  ];
 
+var theComponentCombinationCharsList=[
+  ComponentCombinationChars("M", 322, "U", 345, "", 0, "木标本林未山森末耒杯米求栋禾爪橡凹永棘承示乐楝东不束出缶柬水禁豕象"),
+  ComponentCombinationChars("L", 343, "Y", 352, "", 0, "七比匕之己忌毛已巴也记巳丫屯它乙礼飞心瓦氏民祀立气世弋"),
+  ComponentCombinationChars("N", 348, "C", 317, "", 0, "门需贝见骨巨巾冉朋内臣肉舰而雨亡肺两甫脯月丹匝舟丘肓册禹"),
+  ComponentCombinationChars("T", 319, "P", 320, "", 0, "丁打于牙尸轩乎了子抒孑户予矛护下手卫十邪干千尹牛阵才聿寸车阡年事丰羊"),
+  ComponentCombinationChars("X", 350, "G", 321, "", 0, "乂双文丈戏幺女奴戈戋娥又皮袭爻父紊乡我级戊戢线必龙纹衣及缀史吏"),
+  ComponentCombinationChars("A", 353, "E", 316, "H", 344, "人从入王炎井火灸个玉金众工食亚全廿臾垂灶大一甘圭犬二夫耸三央开土耳夷弄士久"),
+  ComponentCombinationChars("B", 327, "S", 323, "V", 347, "日昌刁曰八白眼习儿臼冒夕兆母晶川目歹多自州专羽且非躬弓身竹旸丐艮"),
+  ComponentCombinationChars("D", 326, "I", 342, "F", 349, "刀劢力卜步厂为所书爿卡韦历广弗上厉万止斤羞方业乃虏斥小丑"),
+  ComponentCombinationChars("O", 315, "R", 325, "W", 324,"口回凸虽尺吕石唁言嘿几盅中品串磊虫蛔九叽皿矾四尽西尤丸凡酉酒黑冲兀洒熏酋革浊"),
+  ComponentCombinationChars("Q", 351, "K", 346, "J", 318, "田便由长伸甲申偶电里钾果龟毋片笛鬼狸曳更佃禺重傀曲"),
+];
+
+/* list including non-basic chars
+var theComponentCombinationCharsList=[
+  ComponentCombinationChars("M", 322, "U", 345, "", 0, "标林杯栋橡棘楝栎秣柰栐椓籼凼岽出屾禁森淼木本未山末耒米求禾爪凹永承示乐东不束缶柬水豕象"),
+  ComponentCombinationChars("L", 343, "Y", 352, "", 0, "比乙忌忒记它礼祀祇毳毛七匕之己已巳巴也丫屯乙飞心瓦氏民立气世弋"),
+  ComponentCombinationChars("N", 348, "C", 317, "", 0, "需骨朋舰肺脯肭赑臑匝肓门贝见巨巾冉内臣肉而雨亡两甫月丹舟丘册禹"),
+  ComponentCombinationChars("T", 319, "P", 320, "", 0, "打轩抒扦轷扞孖犇护邪邗邘阵阡丁于牙尸乎了子孑户予矛下手卫十干千尹牛才聿寸车年事丰羊"),
+  ComponentCombinationChars("X", 350, "G", 321, "", 0, "双戏奴娥爻叕袭紊级线纹缀乂文丈幺女戈戋又皮父乡我戊戢必龙衣及史吏"),
+  ComponentCombinationChars("A", 353, "E", 316, "H", 344, "从炎灸炔众鑫焱燚全夫奎灶仝圭耸珏垩垭埵玒瑛开弄坩珥荃人入王井火个玉金工食亚廿臾垂大一甘犬二夫三央土耳夷士久"),
+  ComponentCombinationChars("B", 327, "S", 323, "V", 347, "眼昌冒晶皛多羽躬眄旸日刁曰八白习儿臼夕兆母川目歹自州专且非弓身竹丐艮"),
+  ComponentCombinationChars("D", 326, "I", 342, "F", 349, "劢步所痄卡尕忻怍历厉羞虏疠刀力卜厂为书爿韦广弗上万止斤方业乃斥小丑"),
+  ComponentCombinationChars("O", 315, "R", 325, "W", 324,"回虽吕唁硒嘿盅蛊醺哂詈品磊蛔矶叽虮靰矾尽尤凡酒冲洒酋浊泗洄口凸尺石言几中串虫九皿四西丸酉黑兀熏革"),
+  ComponentCombinationChars("Q", 351, "K", 346, "J", 318, "比乙忌忒毳田由长甲申电里果毋片鬼曳更禺重曲"),
+];
+*/
+
 //var theComponentList = [
 //  Component("Aa", "", false, "", "", [4.0,0.125,0.7,8.0,0.125,0.4,8.0,0.875,0.4,8.0,0.875,0.7]),
 //];

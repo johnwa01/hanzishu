@@ -287,3 +287,31 @@ class ComponentCategoryStringIdAndTypingChars {
   }
 }
 
+class ComponentCombinationChars {
+  String letter1 = '';
+  int stringId1 = -1;
+  String letter2 = '';
+  int stringId2 = -1;
+  String letter3 = '';
+  int stringId3 = -1;
+  String chars = '';
+
+  ComponentCombinationChars(
+      String letter1,
+      int stringId1,
+      String letter2,
+      int stringId2,
+      String letter3,
+      int stringId3,
+      String chars)
+  {
+    this.letter1 = letter1;
+    this.stringId1 = stringId1;
+    this.letter2 = letter2;
+    this.stringId2 = stringId2;
+    this.letter3 = letter3;
+    this.stringId3 = stringId3;
+    this.chars = chars;
+  }
+}
+
