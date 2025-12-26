@@ -179,19 +179,6 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         ListTile(
           leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
-              ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
           title: Text(/*"3. " + */getString(529)/*"Basic Typing Exercises"*/, textDirection: TextDirection.ltr),
           onTap: () {
             Navigator.push(
@@ -210,6 +197,19 @@ class _ToolsPageState extends State<ToolsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
+              ),
+            );
+          },
+        ),
+        ListTile(
+          leading: Image.asset('assets/core/itemicon.png'),
+          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
+          //trailing: Image.asset('assets/core/itemicon.png'),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
               ),
             );
           },

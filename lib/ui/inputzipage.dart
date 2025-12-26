@@ -2187,7 +2187,7 @@ class _InputZiPageState extends State<InputZiPage> {
         //selectedSubcategoryIndex: selectedSubcategoryIndex,
         char: char, //zi.zi,
         typingType: typingType!,
-        ziIndex: charIndexInSentence.value,
+        typingScoreString: getTypingScoreString(),
     );
 
     //var promptStr = getString(113) + "： "; //"Please type"
@@ -2212,19 +2212,19 @@ class _InputZiPageState extends State<InputZiPage> {
     var gameColor = Colors.blue;
 
     if(showHint == HintType.Hint1) {
-      hint1Color = Colors.green;
+      hint1Color = Colors.orange;
     }
     else if(showHint == HintType.Hint2) {
-      hint2Color = Colors.green;
+      hint2Color = Colors.orange;
     }
     else if(showHint == HintType.Hint3) {
-      hint3Color = Colors.green;
+      hint3Color = Colors.orange;
     }
     else if(showHint == HintType.Hint0) {
-      hint0Color = Colors.green;
+      hint0Color = Colors.orange;
     }
     else if(showHint == HintType.Game) {
-      gameColor = Colors.green;
+      gameColor = Colors.orange;
     }
 
     return WillPopScope(
@@ -2346,9 +2346,9 @@ class _InputZiPageState extends State<InputZiPage> {
                   ),
                 ),
                   //SizedBox(width: 1),
-                  SizedBox(
-                   child: getTypingScore(),
-                  ),
+                  //SizedBox(
+                  // child: getTypingScore(),
+                  //),
               ]
           ),
           Row(
@@ -2496,14 +2496,18 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  Widget getTypingScore() {
-    var fontSize = 13.0 * getSizeRatio() * 1.2;
+  String getTypingScoreString() {
     int totalLen = theInputZiManager.getTotal(typingType, lessonId);
     if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) {
       totalLen--;
     }
-    return Text(/*getString(524) + ":" + */  currentIndex.toString() + "/" + totalLen.toString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
+    return currentIndex.toString() + "/" + totalLen.toString(); // Score string
   }
+
+  //Widget getTypingScore() {
+  //  var fontSize = 13.0 * getSizeRatio() * 1.2;
+  //  return Text(getTypingScoreString(), style: TextStyle(fontSize: fontSize, color: Colors.deepPurple)); // Score
+  //}
 
   getSubCategoryRow2() {
     if (showHint == HintType.Hint0 || showHint == HintType.Game || selectedCategoryIndex == 0 || currentLeadCompList.length <= 2) {

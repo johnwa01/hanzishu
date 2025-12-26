@@ -264,6 +264,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
 
           getSkylineReportLink(),
+          getGaochengsixiaoReportLink(),
           getTulReportLink(),
           getWestsideReportLink(),
           getPublishReportLink(),
@@ -482,6 +483,18 @@ class _LaunchPageState extends State<LaunchPage> {
         launchUrl(Uri.parse("https://hanzishu.com/publish/skyline.html"), webOnlyWindowName: '_self');
       },
       child: Text("用科技重构识字之路——“汉字树”走进华州高中课堂(作者：江凌欧)", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getGaochengsixiaoReportLink() {
+    //if (kIsWeb)
+    return TextButton(
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish/gaochengsixiao.html"), webOnlyWindowName: '_self');
+      },
+      child: Text("山东省成武县郜城四小第一次象形电打课程总结(作者：朱君)", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
     );
 
     //return SizedBox(width: 0, height: 0);

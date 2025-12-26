@@ -9,6 +9,7 @@ import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
 
 
 class InputZiHintPainter extends BasePainter {
@@ -19,10 +20,10 @@ class InputZiHintPainter extends BasePainter {
   int selectedCompIndex = -1;
   String char = '';
   late TypingType typingType;
-  int ziIndex = -1;
+  String typingScoreString;
 
   InputZiHintPainter({
-    required this.lineColor, required this.completeColor, required this.screenWidth, required this.showHint, required this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ required this.char, required this.typingType, required this.ziIndex
+    required this.lineColor, required this.completeColor, required this.screenWidth, required this.showHint, required this.selectedCompIndex, /*this.selectedCategoryIndex, this.selectedSubcategoryIndex,*/ required this.char, required this.typingType, required this.typingScoreString
   });
 
   @override
@@ -32,11 +33,13 @@ class InputZiHintPainter extends BasePainter {
 
     if (showHint == HintType.Hint1 || showHint == HintType.Hint2 || showHint == HintType.Hint3) {
       // Need to match the inputzipage's prompt string
-      displayHintMessage(13.0 * 1.2 * getSizeRatio(), char, ziIndex);  // 18.0
+      displayHintMessage(13.0 * 1.2 * getSizeRatio(), char);  // 18.0
+
+      typingScoreText();
     }
-    else {
+    //else {
       //TODO: displayShiftKeyNote();
-    }
+    //}
   }
 
   displayShiftKeyNote() {
@@ -52,7 +55,7 @@ class InputZiHintPainter extends BasePainter {
     displayTextWithValue(note, 10.0, 0.0, 15.0 * getSizeRatio(), Colors.blue, false); // 18.0
   }
 
-  displayHintMessage(double fontSize, String char, int ziIndex) {
+  displayHintMessage(double fontSize, String char) {
     List<String> typingComponentsAndSubComp = [];
     if (char == "从前") { // two special phrase examples
       typingComponentsAndSubComp = ["Ha", "Ha", "Mb", "Im"];
@@ -70,16 +73,21 @@ class InputZiHintPainter extends BasePainter {
 
     double size = 24 * getSizeRatio(); //14.4
     if (showHint == HintType.Hint2) {
+
       size = 20 * getSizeRatio(); //14.4
+      if (typingComponentsAndSubComp.length > 4) {
+        // take 4 components as the standard, if more than 4, make size smaller
+        size = size * 4.0 / typingComponentsAndSubComp.length;
+      }
     }
     double halfSize = size/1.2;
-    double xPosi = 8.0 * getSizeRatio(); //10.0
+    double xPosi = 5.0 * getSizeRatio(); //8.0 //10.0
 
     if (showHint == HintType.Hint3) {
       xPosi += size * 1.7; // one time deal
     }
 
-    xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
+    //xPosi += fontSize * 1.8 * ziIndex; // 2.0 in inputzipage?
 
     if (typingComponentsAndSubComp.isEmpty && !Utility.specialChar(char)) {
       // "Note: hint unavailable
@@ -106,7 +114,7 @@ class InputZiHintPainter extends BasePainter {
       }
 
       if (i != 0) {
-        xPosi += halfSize / 1.5;
+        xPosi += halfSize / 1.8; //1.5
       }
 
       var comp = typingComponentsAndSubComp[i];
@@ -121,7 +129,7 @@ class InputZiHintPainter extends BasePainter {
             compColor,
             true,
             1);
-        xPosi += size * 1.1;
+        xPosi += size; // * 1.1;
       }
     }
 
@@ -158,8 +166,13 @@ class InputZiHintPainter extends BasePainter {
       }
     }
     if (showHint == HintType.Hint2) {
-      displayTextWithValue(')', xPosi, 0.0, size, Colors.blue, false);
+      displayTextWithValue(' )', xPosi, 0.0, size, Colors.blue, false);
     }
+  }
+
+ typingScoreText() {
+    var fontSize = 13.0 * getSizeRatio() * 1.2;
+    displayTextWithValue(typingScoreString, screenWidth - 50.0 * getSizeRatio(), 0.0, fontSize, Colors.deepPurple, false);
   }
 
   @override
