@@ -35,6 +35,7 @@ enum HintType {
   Hint2,
   Hint3,
   Game,
+  TingDa,
   None,
 }
 

@@ -538,4 +538,6 @@ var theString_en_US = [
   Local(528, "Exercises -- Chinese Made Easy"),
   Local(529, "Basic Typing Exercises"),
   Local(530, "Please type characters using the given letters in each group only!"),
+  Local(531, "Listen"),
+  Local(532, "Next Sentence"),
 ];

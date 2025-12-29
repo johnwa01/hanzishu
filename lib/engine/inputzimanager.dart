@@ -648,123 +648,114 @@ class InputZiManager {
     return currentIndex;
   }
 
-  int getNextIndex(TypingType typingType, /*int currentIndex,*/ int lessonId, int numberOfCharsTyped) {
-    currentIndex += numberOfCharsTyped;
+  int getTypingTotal(TypingType typingType, int lessonId) {
+    int typingTotal = -1;
 
-    //if (typingType == TypingType.GiveItATry) {
-    //  if (currentIndex >= theZiForIntroductionList.length) {
-    //    currentIndex = -1;
-    //  }
-    //}
     if (typingType == TypingType.LeadComponents) {
-      if (currentIndex >= theZiForLeadCompExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForLeadCompExerciseList.length;
     }
-    //else if (typingType == TypingType.ExpandedInitial) {
-    //  if (currentIndex >= theZiForExpandedInitialExerciseList.length) {
-    //    currentIndex = -1;
-    //  }
-    //}
     else if (typingType == TypingType.ExpandedReview) {
-      if (currentIndex >= theZiForExpandedReviewExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForExpandedReviewExerciseList.length;
     }
     else if (typingType == TypingType.ExpandedGeneral) {
-      if (currentIndex >= theZiForExpandedGeneralExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForExpandedGeneralExerciseList.length;
     }
     else if (typingType == TypingType.AttachedComponents) {
-      if (currentIndex >= theZiForAttachedCompExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForAttachedCompExerciseList.length;
     }
     else if (typingType == TypingType.TwinComponents) {
-      if (currentIndex >= theZiForTwinCompExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForTwinCompExerciseList.length;
     }
     else if (typingType == TypingType.SubComponents) {
-      if (currentIndex >= theZiForSubCompExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForSubCompExerciseList.length;
     }
-    //else if (typingType == TypingType.SingleComponent) {
-    //  if (currentIndex >= theZiForSingleCompExerciseList.length) {
-    //    currentIndex = -1;
-    //  }
-    //}
     else if (typingType == TypingType.FirstTyping) {
-      if (currentIndex >= theZiForFirstTypingExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForFirstTypingExerciseList.length;
     }
     else if (typingType == TypingType.GeneralExercise) {
-      if (currentIndex >= theZiForGeneralExerciseList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theZiForGeneralExerciseList.length;
     }
     else if (typingType == TypingType.CommonZiTyping) {
-      // overall index = 0, 69, 77, 160
-      var searchingZiId = getSearchingZiId(currentIndex, lessonId);
-      // Note: there are 52 index which are not chars
-      if (searchingZiId < 52 ||
-          DictionaryManager.isNonCharacter(searchingZiId) ||
-          DictionaryManager.isEmpty(searchingZiId)) {
-        currentIndex++; // skip to next one
-      }
-      else if (searchingZiId >= theSearchingZiList.length) {
-        currentIndex = -1;
-      }
+      typingTotal = theSearchingZiList.length;
     }
     else if (typingType == TypingType.FromLessons) {
       //if (currentIndex >= theZiWithOneComponentList.length) {
       var lesson = theLessonManager.getLesson(lessonId);
       var typingChars = lesson.getAllTypingChars();
-      if (currentIndex >= typingChars.length) {
-        /*lesson.convCharsIds.length + lesson.charsIds.length*/
-        currentIndex = -1;
+      typingTotal = typingChars.length;
+    }
+    else if (typingType == TypingType.ThirdParty) {
+      typingTotal = ThirdPartyLesson.getCurrentRealWordsLength();
+    }
+    else if (typingType == TypingType.Custom) {
+      typingTotal = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
+    }
+    else if (typingType == TypingType.ComponentTyping) {
+      typingTotal = theComponentCategoryStringIdAndTypingCharsList[lessonId].chars.length;
+    }
+    else if (typingType == TypingType.ComponentCombinationTyping) {
+      typingTotal =
+          theComponentCombinationCharsList[lessonId].chars.length;
+    }
+
+    return typingTotal;
+  }
+
+  int getNextIndex(TypingType typingType, int curIndex, int lessonId, int numberOfCharsTyped) {
+    curIndex += numberOfCharsTyped;
+    int typingTotal = getTypingTotal(typingType, lessonId);
+
+    if (typingType == TypingType.CommonZiTyping) {
+      // overall index = 0, 69, 77, 160
+      var searchingZiId = getSearchingZiId(curIndex, lessonId);
+      // Note: there are 52 index which are not chars
+      if (searchingZiId < 52 ||
+          DictionaryManager.isNonCharacter(searchingZiId) ||
+          DictionaryManager.isEmpty(searchingZiId)) {
+        curIndex++; // skip to next one
+      }
+      else if (searchingZiId >= typingTotal) {
+        curIndex = -1;
       }
     }
     else if (typingType == TypingType.ThirdParty) {
-      var currentTotal = ThirdPartyLesson.getCurrentRealWordsLength();
       //skip it if it's a space
-      currentIndex = checkCurrentIndexWithSpace(
-          typingType, currentIndex, lessonId, currentTotal);
+      curIndex = checkCurrentIndexWithSpace(
+          typingType, curIndex, lessonId, typingTotal);
 
-      if (currentIndex >= currentTotal) {
+      if (curIndex >= typingTotal) {
         /*lesson.convCharsIds.length + lesson.charsIds.length*/
-        currentIndex = -1;
+        curIndex = -1;
       }
     }
     else if (typingType == TypingType.Custom) {
       //var lesson = theLessonManager.getLesson(lessonId);
       // skip it if it's space
-      var currentTotal = ThirdPartyLesson.getRealWordsLengthUtil(wordsStudy);
-      currentIndex = checkCurrentIndexWithSpace(
-          typingType, currentIndex, lessonId, currentTotal);
-      if (currentIndex >= currentTotal) {
-        currentIndex = -1;
+      curIndex = checkCurrentIndexWithSpace(
+          typingType, curIndex, lessonId, typingTotal);
+      if (curIndex >= typingTotal) {
+        curIndex = -1;
       }
     }
-    else if (typingType == TypingType.ComponentTyping) {
-      if (currentIndex >=
-          theComponentCategoryStringIdAndTypingCharsList[lessonId].chars
-              .length) {
-        currentIndex = -1;
-      }
-    }
-    else if (typingType == TypingType.ComponentCombinationTyping) {
-      if (currentIndex >=
-          theComponentCombinationCharsList[lessonId].chars
-              .length) {
-        currentIndex = -1;
+    else {
+      if (curIndex >= typingTotal) {
+        curIndex = -1;
       }
     }
 
-    return currentIndex;
+    return curIndex;
+  }
+
+  int getNextSentenceFirstIndex(TypingType typingType, int currentSentenceFirstCharIndex, int lessonId, int currentSentenceLength) {
+    int typingTotal = getTypingTotal(typingType, lessonId);
+
+    int possibleNextFirstIndex = currentSentenceFirstCharIndex + currentSentenceLength;
+
+    if (possibleNextFirstIndex >= typingTotal) {
+      possibleNextFirstIndex = -1;
+    }
+
+    return possibleNextFirstIndex;
   }
 
   static bool checkTypingResultWithQuoteMark(String typingResult, String char) {
@@ -1208,6 +1199,27 @@ class InputZiManager {
         break;
       }
     }
+    return count;
+  }
+
+  static int calculateAccurateTypedCount(String listenModeTypedOneSentence, String sentence) {
+    int count = 0;
+
+    List<String> listenStringList = [];
+    for (int i = 0; i < listenModeTypedOneSentence.length; i++) {
+      listenStringList.add(listenModeTypedOneSentence[i]);
+    }
+
+    for (int i = 0; i < sentence.length; i++) {
+      for (int j = 0; j < listenStringList.length; j++) {
+        if (sentence[i] == listenStringList[j]) {
+          count++;
+          listenStringList.removeAt(j);
+          break;
+        }
+      }
+    }
+
     return count;
   }
 }

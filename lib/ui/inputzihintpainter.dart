@@ -31,7 +31,7 @@ class InputZiHintPainter extends BasePainter {
     this.canvas = canvas;
     this.width = screenWidth; // set the base class width variable
 
-    if (showHint == HintType.Hint1 || showHint == HintType.Hint2 || showHint == HintType.Hint3) {
+    if (showHint == HintType.Hint1 || showHint == HintType.Hint2 || showHint == HintType.Hint3 || showHint == HintType.TingDa) {
       // Need to match the inputzipage's prompt string
       displayHintMessage(13.0 * 1.2 * getSizeRatio(), char);  // 18.0
 
@@ -118,7 +118,7 @@ class InputZiHintPainter extends BasePainter {
       }
 
       var comp = typingComponentsAndSubComp[i];
-      if (showHint != HintType.Hint3) {
+      if (showHint != HintType.Hint3 && showHint != HintType.TingDa) {
         drawComponentZi(
             comp,
             xPosi,

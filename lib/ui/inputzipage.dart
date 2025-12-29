@@ -106,6 +106,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
   bool isFromArrowCandidate = false;
 
+  String listenModeTypedOneSentence = "";
+  int totalAccurateCount = 0;
+  int sentenceFirstCharIndex = 0;
+
   //bool showZiCandidates = false;
 
   final stopwatch = Stopwatch()
@@ -212,6 +216,7 @@ class _InputZiPageState extends State<InputZiPage> {
       else if (typingType == TypingType.Custom) {
         PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
         String sentence = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, 0, charIndex);
+
         TextToSpeech.speak(
             "zh-CN", sentence);
       }
@@ -529,7 +534,12 @@ class _InputZiPageState extends State<InputZiPage> {
       if (checkedText.length == 0) {
         checkedText = editController.text;
       }
-      if (theInputZiManager.doesTypingResultContainTheZi(
+
+      if (showHint == HintType.TingDa) {
+        listenModeTypedOneSentence += newChar;
+      }
+
+      if (showHint != HintType.TingDa && theInputZiManager.doesTypingResultContainTheZi(
           typingType, currentIndex, checkedText/*edidController.text*/, lessonId)) {
         if (editController == _controller) {
           initHintSelected(); // reset the hint selection parameters
@@ -545,6 +555,8 @@ class _InputZiPageState extends State<InputZiPage> {
             numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
           }
         }
+
+        totalAccurateCount += numberOfCharsTyped;
 
         // tell Flutter to refresh with the next index
         setState(() {
@@ -564,7 +576,7 @@ class _InputZiPageState extends State<InputZiPage> {
           else {
             currentIndex =
                 theInputZiManager.getNextIndex(
-                    typingType, /*currentIndex,*/ lessonId, numberOfCharsTyped);
+                    typingType, currentIndex, lessonId, numberOfCharsTyped);
             String typeChar = InputZiManager.getEitherCharFromCurrentId(
                 typingType!, currentIndex, lessonId);
 
@@ -612,7 +624,6 @@ class _InputZiPageState extends State<InputZiPage> {
             }
           }
         });
-
         //       return;
       }
     }
@@ -1168,7 +1179,7 @@ class _InputZiPageState extends State<InputZiPage> {
                     speakFirstZiAfterExplanationPage();
                     setState(() {
                       //currentIndex = 1;
-                      currentIndex = theInputZiManager.getNextIndex(typingType, /*currentIndex*/ lessonId, 1); //skip first non-real entry
+                      currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex, lessonId, 1); //skip first non-real entry
                     });
                   },
                   child: Text(buttonText /*'Try a few/Let's start'*/,
@@ -2017,7 +2028,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  // Note: this function doesn't handle the case with non-common chinese characters
+  // Note: TODO this function doesn't handle the case with non-common chinese characters
   // in the sentence which is fine in our current usage. need to use string.characters
   // like in other places in this file if there is a need for it.
   Widget getInputSentence(TypingType typingType, int currentTypingCharsIndex, String promptStr, double fontSize) {
@@ -2037,6 +2048,73 @@ class _InputZiPageState extends State<InputZiPage> {
         conv = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndexInSentence);
       }
 
+      return Row(
+          children:
+            getSentenceRowContent(typingType, conv, promptStr, fontSize),
+      );
+  }
+
+  List<Widget> getSentenceRowContent(TypingType typingType, String conv, String promptStr, double fontSize) {
+    List<Widget> contentList = [];
+
+    PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
+    String sentence = getCurrentSentence(typingType); //ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, 0, charIndex);
+
+    contentList.add(SizedBox(width: fontSize));
+    contentList.add(Text(
+      promptStr,
+      style: TextStyle(fontSize: fontSize * 1.1 * getSizeRatio()), //1.2
+      textAlign: TextAlign.left
+    ));
+    contentList.add(IconButton(
+      icon: Icon(
+        Icons.volume_up,
+        size: fontSize * 1.5 * getSizeRatio(),   //
+      ),
+      color: Colors.cyan, //Colors.green,
+      onPressed: () {
+        speakHanziAndPhrase(sentence);
+      }));
+    if (showHint == HintType.TingDa) {
+      contentList.add( TextButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.grey[350])
+            ),
+            onPressed: () {
+              initOverlay();
+
+              setState(() {
+                // new sentence: update sentenceFirstCharIndex now
+                sentenceFirstCharIndex= theInputZiManager.getNextSentenceFirstIndex(typingType, sentenceFirstCharIndex, lessonId, sentence.length);
+                currentIndex = sentenceFirstCharIndex;
+                if (currentIndex == -1) {
+                  int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
+                  totalAccurateCount += oneSentenceAccurateCount;
+                  listenModeTypedOneSentence = ""; // reinit
+                  theInputZiManager.initCurrentIndex();
+                  showCompletedDialog(currentBuildContext!);
+                }
+                else {
+                  // check how many chars typed for the current sentence before moving to next
+                  // compare listenModeTypedOneSentence and sentence
+                  int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
+                  totalAccurateCount += oneSentenceAccurateCount;
+                  listenModeTypedOneSentence = ""; // reinit
+                  speakHanziAndPhrase(getCurrentSentence(typingType));
+                  _focusNode
+                      .requestFocus(); // Maybe: without this line, phone would still focus on TextField, but web cursor would disapper.
+                }
+              });
+            },
+            child: Text(
+                getString(532), // Next Sentence
+                style: TextStyle(fontSize: fontSize, color: Colors.orangeAccent), // 1.6
+                textAlign: TextAlign.left //TextAlign.center
+            ),
+          ));
+      //));
+    }
+    else {
       String strBeforeChar;
       String strChar;
       String strAfterChar;
@@ -2049,7 +2127,6 @@ class _InputZiPageState extends State<InputZiPage> {
       else {
         strBeforeChar = chars.getRange(0, charIndexInSentence.value).toString();
       }
-
       strChar = chars.getRange(charIndexInSentence.value, charIndexInSentence.value + 1).toString();
 
       if (charIndexInSentence == chars.length - 1) { // the char is the last one
@@ -2059,48 +2136,35 @@ class _InputZiPageState extends State<InputZiPage> {
         strAfterChar = chars.getRange(charIndexInSentence.value + 1, chars.length).toString();
       }
 
-      PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
-      String sentence = getCurrentSentence(typingType); //ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, 0, charIndex);
+      contentList.add(Text(
+          strBeforeChar,
+          style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(),
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent), //2.0
+          textAlign: TextAlign.left
+      ));
+      contentList.add(GestureDetector(
+        onTap: () {
+          TextToSpeech.speak("zh-CN", strChar);
+        },
+        child: Text(
+            strChar,
+            style: TextStyle(fontSize: fontSize * 2.7 * getSizeRatio(),
+                fontWeight: FontWeight.bold,
+                color: Colors.orangeAccent), // 3.0
+            textAlign: TextAlign.left
+        ),
+      ));
+      contentList.add(Text(
+          strAfterChar,
+          style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(),
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent), // 2.0
+          textAlign: TextAlign.left
+      ));
+    }
 
-      return Row(
-          children: <Widget>[
-            SizedBox(width: fontSize),
-            Text(
-                promptStr,
-                style: TextStyle(fontSize: fontSize * 1.1 * getSizeRatio()), //1.2
-                textAlign: TextAlign.left
-            ),
-            IconButton(
-                  icon: Icon(
-                    Icons.volume_up,
-                    size: fontSize * 1.5 * getSizeRatio(),   //
-                  ),
-                  color: Colors.cyan, //Colors.green,
-                  onPressed: () {
-                    speakHanziAndPhrase(sentence);
-                  }),
-            Text(
-                strBeforeChar,
-                style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.blueAccent),  //2.0
-                textAlign: TextAlign.left
-            ),
-            GestureDetector(
-              onTap: () {
-                TextToSpeech.speak("zh-CN", strChar);
-              },
-              child: Text(
-                  strChar,
-                  style: TextStyle(fontSize: fontSize * 2.7 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.orangeAccent),  // 3.0
-                  textAlign: TextAlign.left
-              ),
-            ),
-            Text(
-                  strAfterChar,
-                  style: TextStyle(fontSize: fontSize * 1.8 * getSizeRatio(), fontWeight: FontWeight.bold, color: Colors.blueAccent), // 2.0
-                  textAlign: TextAlign.left
-            ),
-          ]
-      );
+    return contentList;
   }
 
   Widget showGameInput(String currentTypingChar) {
@@ -2129,7 +2193,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getWarningMessage() {
     var fontSize = 15.0 * getSizeRatio();     //15.0
-    if (currentTypingCodeIsCorrect || currentCorrectTypingCode == "" || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game || typingType == TypingType.FreeTyping) {
+    if (currentTypingCodeIsCorrect || currentCorrectTypingCode == "" || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game  || showHint == HintType.TingDa|| typingType == TypingType.FreeTyping) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {
@@ -2210,6 +2274,7 @@ class _InputZiPageState extends State<InputZiPage> {
     var hint3Color = Colors.blue;
     var hint0Color = Colors.blue;
     var gameColor = Colors.blue;
+    var listenColor = Colors.blue;
 
     if(showHint == HintType.Hint1) {
       hint1Color = Colors.orange;
@@ -2225,6 +2290,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else if(showHint == HintType.Game) {
       gameColor = Colors.orange;
+    }
+    else if(showHint == HintType.TingDa) {
+      listenColor = Colors.orange;
     }
 
     return WillPopScope(
@@ -2341,6 +2409,35 @@ class _InputZiPageState extends State<InputZiPage> {
                     child: Text(
                         getString(525) /*"Game"*/,
                         style: TextStyle(fontSize: fontSize /* 1.2*/, color:  gameColor), // 1.6
+                        textAlign: TextAlign.left //TextAlign.center
+                    ),
+                  ),
+                ),
+                SizedBox(width: 1.0),
+                SizedBox(
+                  //width: 30.0 * getSizeRatio(),
+                  child: TextButton(
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Colors.grey[350])
+                    ),
+                    onPressed: () {
+                      initOverlay();
+
+                      setState(() {
+                        //trim the sentence to keep the remaining part only
+                        String sentence = getCurrentSentence(typingType!);
+                        //if (charIndexInSentence != 0) {
+                        //  sentence = sentence.substring(charIndexInSentence
+                        //      .value);
+                        //}
+                        speakHanziAndPhrase(sentence);
+                        showHint = HintType.TingDa;
+                        _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+                      });
+                    },
+                    child: Text(
+                        getString(531) /*"Listen"*/,
+                        style: TextStyle(fontSize: fontSize /* 1.2*/, color:  listenColor), // 1.6
                         textAlign: TextAlign.left //TextAlign.center
                     ),
                   ),
@@ -2501,7 +2598,12 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) {
       totalLen--;
     }
-    return currentIndex.toString() + "/" + totalLen.toString(); // Score string
+
+    if (totalAccurateCount > totalLen) {
+      totalAccurateCount = totalLen; // error control
+    }
+
+    return totalAccurateCount.toString() + "/" + totalLen.toString(); // Score string
   }
 
   //Widget getTypingScore() {
@@ -2763,7 +2865,11 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.FromLessons) {
       title = getString(115)/*"Good job!"*/;
       int totalLen = theInputZiManager.getTotal(typingType, lessonId);
-      content = getString(120) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"Your typing exercise is complete for this lesson."*/;
+      int completedCharCountLessons = currentIndex+1;
+      if (showHint == HintType.TingDa) {
+        completedCharCountLessons = totalAccurateCount;
+      }
+      content = getString(120) + getString(524) + ": " + completedCharCountLessons.toString() + "/" + totalLen.toString()/*"Your typing exercise is complete for this lesson."*/;
     }
     else if (typingType == TypingType.ComponentTyping || typingType == TypingType.ComponentCombinationTyping) {
       title = getString(115)/*"Good job!"*/;
@@ -2772,7 +2878,11 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
       title = getString(115)/*"Good job!"*/;
       int totalLen = theInputZiManager.getTotal(typingType, lessonId);
-      content = getString(502) + getString(524) + ": " + (currentIndex+1).toString() + "/" + totalLen.toString()/*"You have completed this typing exercises."*/;
+      int completedCharCount = currentIndex+1;
+      if (showHint == HintType.TingDa) {
+        completedCharCount = totalAccurateCount;
+      }
+      content = getString(502) + getString(524) + ": " + completedCharCount.toString() + "/" + totalLen.toString()/*"You have completed this typing exercises."*/;
     }
 
     // set up the AlertDialog
