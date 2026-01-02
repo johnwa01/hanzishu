@@ -1222,4 +1222,48 @@ class InputZiManager {
 
     return count;
   }
+
+  static String validateChars(String str) {
+    String tempStr1 = "";
+    String tempStr = "";
+    int strLength = str.length;
+    int codeUnit = -1;
+
+    for (int k = 0; k < strLength; k++) {
+      codeUnit = str.codeUnitAt(k);
+      if (((codeUnit >= 65 && codeUnit <= 90) || // A-Z
+          (codeUnit >= 97 && codeUnit <= 122)) == false) {
+        tempStr1 += str[k];
+      }
+    }
+
+    int listLength = theInputZiList.length;
+    String oneChar;
+    List<String> individualChars;
+    bool isBreak;
+    for (int j = 0; j < tempStr1.length; j++) {
+      oneChar = tempStr1[j];
+      if (Utility.specialChar(oneChar)) {
+        tempStr += oneChar;
+      }
+      else {
+        for (int i = 0; i < listLength; i++) {
+          isBreak = false;
+          individualChars = theInputZiList[i].zi.split(',');
+          for (int m = 0; m < individualChars.length; m++) {
+            if (individualChars[m] == oneChar) {
+              tempStr += oneChar;
+              isBreak = true;
+              break;
+            }
+          }
+          if (isBreak) {
+            break;
+          }
+        }
+      }
+    }
+
+    return tempStr;
+  }
 }

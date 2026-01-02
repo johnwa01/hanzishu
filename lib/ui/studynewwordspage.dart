@@ -12,6 +12,7 @@ import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/inputzimanager.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
@@ -282,6 +283,9 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
         var resultStr =  inputText;
         if (widget.studyType != StudyType.typingOnly) {
            resultStr = DictionaryManager.validateChars(inputText);
+        }
+        else { // typingOnly
+            resultStr = InputZiManager.validateChars(inputText);
         }
 
         if (resultStr.length == 0) {

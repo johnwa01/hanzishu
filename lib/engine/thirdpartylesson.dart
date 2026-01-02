@@ -289,7 +289,7 @@ class ThirdPartyLesson {
     int charIndexCount = -1;
     int lastNonCharIndex = -1;
     String currentSentence = '';
-    int countAfterLastSpecial = -1;
+    int countAfterLastSpecial = 0;
 
     var chars = oneContent.characters;
 

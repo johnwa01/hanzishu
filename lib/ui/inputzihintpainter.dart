@@ -171,8 +171,8 @@ class InputZiHintPainter extends BasePainter {
   }
 
  typingScoreText() {
-    var fontSize = 13.0 * getSizeRatio() * 1.2;
-    displayTextWithValue(typingScoreString, screenWidth - 50.0 * getSizeRatio(), 0.0, fontSize, Colors.deepPurple, false);
+    var fontSize = 13.0 * getSizeRatio(); //* 1.2;
+    displayTextWithValue(typingScoreString, screenWidth - 70.0 * getSizeRatio(), 0.0, fontSize, Colors.deepPurple, false);
   }
 
   @override

@@ -1052,6 +1052,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     else {
       // Note: in case of a single line editor, it doesn't seem to take this value which makes sense.
+      //TODO: for single line typing exercise, I won't be able to support real English letters.
+      //    I should eliminate such chars and I should eliminate chars beyond my 8,105 chars.
       if (latestInputKeyLetter == "\n") {  // "enter" key
         if (theCurrentZiCandidates != null && theCurrentZiCandidates.length != 0) {
           // Hit 'Enter/new line' key in the middle of composing a character indicated by candidates length,
@@ -2444,8 +2446,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getHintPainter() {
-    if (currentIndex < 0) {
-      return Container(width:0.0, height: 0.0);
+    if (currentIndex < 0 || typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
+      return Container(width: 0.0, height: 0.0);
     }
 
     var char;
