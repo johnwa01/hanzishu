@@ -2412,7 +2412,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getHintTingDa(double fontSize, Color listenColor) {
-    if (firstTypedLetterHintType != HintType.TingDa /*&& firstTypedLetterHintType != HintType.None*/ && !(typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty || typingType == TypingType.Custom)) {
+    if ((firstTypedLetterHintType != HintType.TingDa && firstTypedLetterHintType != HintType.None) || !(typingType == TypingType.FromLessons || typingType == TypingType.ThirdParty || typingType == TypingType.Custom)) {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
