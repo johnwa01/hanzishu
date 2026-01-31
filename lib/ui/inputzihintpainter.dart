@@ -57,8 +57,8 @@ class InputZiHintPainter extends BasePainter {
 
   displayHintMessage(double fontSize, String char) {
     List<String> typingComponentsAndSubComp = [];
-    if (char == "从前") { // two special phrase examples
-      typingComponentsAndSubComp = ["Ha", "Ha", "Mb", "Im"];
+    if (char == "松林") { // two special phrase examples
+      typingComponentsAndSubComp = ["Fd", "Fa", "Fd", "Fd"];
     }
     else if (char == "中国人") {
       typingComponentsAndSubComp = ["Jd", "Ja", "Ha"];

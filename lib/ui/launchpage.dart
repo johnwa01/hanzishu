@@ -224,13 +224,15 @@ class _LaunchPageState extends State<LaunchPage> {
           //    textAlign: TextAlign.start
           //),
           SizedBox(height: fontSize1),
+          getHanzishuInputGameLink(),
+          SizedBox(height: fontSize1 * 2),
           Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getLessonsButton(),
+                getInputMethodButton(),
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getDictionaryButton(),
+                getLessonsButton(),
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
               ]
           ),
@@ -239,9 +241,9 @@ class _LaunchPageState extends State<LaunchPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getPuzzleButton(),
+                getDictionaryButton(),
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getInputMethodButton(),
+                getPuzzleButton(),
                 SizedBox(width: 30 * getSizeRatioWithLimit()),
               ]
           ),
@@ -496,6 +498,27 @@ class _LaunchPageState extends State<LaunchPage> {
       },
       child: Text("山东省成武县郜城四小第一次象形电打课程总结(作者：朱君)", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
     );
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getHanzishuInputGameLink() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/typing/2026"),
+              webOnlyWindowName: '_self');
+        },
+        child: Text(getString(533), style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.redAccent)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
 
     //return SizedBox(width: 0, height: 0);
   }

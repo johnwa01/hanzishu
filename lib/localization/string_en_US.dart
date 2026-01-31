@@ -96,7 +96,7 @@ var theString_en_US = [
   Local(90, "Hint"),
   Local(91, "Lessons"),
   Local(92, "Dictionary"),
-  Local(93, "Input Method"), // Typing
+  Local(93, "Hanzishu Input Method"), // Typing
   Local(94, "More"),
   Local(95, "Hanzishu Dictionary"),
   Local(96, "First-Hanzi Radical Table"),
@@ -422,7 +422,7 @@ var theString_en_US = [
   //Local(412, "Hanzishu is a complete set of Chinese language learning methods and tools that are based on the shapes, components, and sound of Chinese words.\n\nThe Hanzishu puzzle typing method, dictionary, word puzzle, and conversational lessons were invented and developed by Microsoft Senior Engineer John Zhongqi Wang. The Paint Sound symbols and lessons were invented by children education expert Kang Baoling.\n\nYou will learn Chinese fast through this system. Non-Chinese heritage students should start from conversation, and Chinese heritage students should start from Paint Sound section directly.\n\nHanzishu has iPhone App Store version, Android Google Play version and Hanzishu web version."),
   Local(413, "Exercises -- single alphabet words"), //"Typing exercises by component characteristics"
   Local(414, "Practice typing of all components by their characteristics."),
-  Local(415, "Hanzishu pictographic typing course"),
+  Local(415, "Hanzishu Pictographic Input Method Tutorial"),
   Local(416, "Please learn and remember above component categories, names and keyboard mapping carefully. It's the foundation of this method!"),
   Local(417, "For dictionary, pictographic typing, conversational lessons and more, choose the options from the bottom."),
   Local(418, "Phrases"),
@@ -524,7 +524,7 @@ var theString_en_US = [
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 4 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
   Local(515, "Next"),
   Local(516, "Customized Typing Exercises"),
-  Local(517, "Exercises -- Ty Textbook Typing"),
+  Local(517, "Exercises -- Ty & Od Textbook Typing"),
   Local(518, "Typing exercises"),
   Local(519, "Guess"),
   Local(520, "Textbook"),
@@ -540,4 +540,5 @@ var theString_en_US = [
   Local(530, "Please type characters using the given letters in each group only!"),
   Local(531, "Listen"),
   Local(532, "Next Sentence"),
+  Local(533, "2nd Hanzishu Cup Global Youth Hanzi Input Game"),
 ];

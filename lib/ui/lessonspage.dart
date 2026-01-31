@@ -748,7 +748,7 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.FirstTyping, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: true, showSwitchMethod: false),
+                    typingType: TypingType.FirstTyping, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -786,7 +786,7 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.ExpandedReview, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint3, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.ExpandedReview, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;

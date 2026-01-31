@@ -1619,6 +1619,53 @@ class _InputZiPageState extends State<InputZiPage> {
         cursorColor: Colors.black,
         //autocorrect: false,
         //enableSuggestions: false,
+        //enableInteractiveSelection: false,
+        //toolbarOptions: ToolbarOptions(
+        //  copy: false,
+        //  cut: false,
+        //  paste: false, // Disables the paste button
+        //  selectAll: false,
+        //),
+
+        //contextMenuBuilder: (BuildContext context, EditableTextState editableTextState) {
+        //  return AdaptiveTextSelectionToolbar.editable(
+        //    anchors: editableTextState.contextMenuAnchors,
+        //    clipboardStatus: ClipboardStatus.notPasteable,
+            // to apply the normal behavior when click on copy (copy in clipboard close toolbar)
+            // use an empty function `() {}` to hide this option from the toolbar
+        //    onCopy: () => editableTextState
+        //        .copySelection(SelectionChangedCause.toolbar),
+            // to apply the normal behavior when click on cut
+        //    onCut: () => editableTextState
+        //        .cutSelection(SelectionChangedCause.toolbar),
+        //    onPaste: () {
+              // HERE will be called when the paste button is clicked in the toolbar
+              // apply your own logic here
+
+              // to apply the normal behavior when click on paste (add in input and close toolbar)
+              // editableTextState.pasteText(SelectionChangedCause.tap);
+        //    },
+            // to apply the normal behavior when click on select all
+        //    onSelectAll: () =>
+        //        editableTextState.selectAll(SelectionChangedCause.toolbar),
+        //    onLookUp: () {},
+        //      onSearchWeb: () {},
+        //    onShare: () {},
+        //    onLiveTextInput: () {},
+        //  );
+        //},
+
+        // 1. disable the "Paste" button in popup menu
+        //contextMenuBuilder:(context, state) {
+        //  return AdaptiveTextSelectionToolbar.buttonItems(anchors: state.contextMenuAnchors,
+        //      buttonItems: state.contextMenuButtonItems..removeWhere((item) =>
+        //      item.type == ContextMenuButtonType.paste),);
+        //},
+        // 2. disable physical keyboard shorts (Ctrl+V / Cmd+V)
+        //onAppPrivateCommand: (command, args) {
+        //  return;
+        //},
+
         decoration: InputDecoration(
           border: OutlineInputBorder(),
           labelText: '', //'Full Name',
@@ -1681,6 +1728,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  // non-Hanzishu input methods?
   Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
     double fieldWidth = 300.0; //double.infinity;
     if (withQueryButton) {

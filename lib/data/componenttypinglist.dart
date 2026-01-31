@@ -325,7 +325,7 @@ var theZiForExpandedReviewExerciseList=[
   ////ZiWithComponentsAndStrokes("敌", [], "E43.png,E54.png", 0),
 //  ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
 //  ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
-  ZiWithComponentsAndStrokes("从前", [], "E62.png,E23.png", 0),   //
+  ZiWithComponentsAndStrokes("松林", [], "E62.png,E23.png", 0),   //
   ZiWithComponentsAndStrokes("中国人", [], "E62.png,E23.png", 0),   // not sure png purposes
 ];
 

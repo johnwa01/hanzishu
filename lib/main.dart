@@ -33,41 +33,88 @@ import 'dart:io';
 import "package:hanzishu/utility.dart";
 import 'dart:ui';
 
+import 'package:go_router/go_router.dart';
+import 'package:go_router/src/state.dart';
+
+// Define your routes and associate them with screens.
+final GoRouter _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => MyHomePage(),
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/details?id=55&x=99
+      path: '/details',
+      builder: (context, state) {
+        // Access the query parameter 'id'
+        final itemId = state.uri.queryParameters['id'];
+        final xValue = state.uri.queryParameters['x'];
+
+        return DetailPage(itemId: itemId, xValue: xValue);
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/dictionary?id=55&x=99
+      path: '/lessons',
+      builder: (context, state) {
+        return LaunchPage();
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/dictionary?id=55&x=99
+      path: '/dictionary',
+      builder: (context, state) {
+        return InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false);
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/dictionary?id=55&x=99
+      path: '/puzzle',
+      builder: (context, state) {
+        return WordPage();
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/dictionary?id=55&x=99
+      path: '/input',
+      builder: (context, state) {
+        return ToolsPage();
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/dictionary?id=55&x=99
+      path: '/more',
+      builder: (context, state) {
+        return MePage();
+      },
+    ),
+    // Example with a path parameter
+    //  GoRoute(
+    //    path: '/profile/:userId',
+    //    builder: (context, state) {
+    //      final userId = state.pathParameters['userId']!;
+    //      return ProfileScreen(userId: userId);
+    //    },
+    //  ),
+  ],
+  // Optional: Add an error screen builder
+  // errorBuilder: (context, state) => const NotFoundScreen(),
+);
+
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
-
-//void main() => runApp(
-//  new MaterialApp(
-//    home: new AnimatedPathDemo(),
-//  ),
-//);
-
 class MyApp extends StatelessWidget {
+  const MyApp();
 
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
-      theme: _buildShrineTheme(),
-      title: 'Hanzishu',
-      home: MyHomePage(),
+    // 2. Attach the GoRouter to your app
+    return MaterialApp.router(
+      routerConfig: _router,
       debugShowCheckedModeBanner: false,
-      builder: (context, child) {
-        // Obtain the current media query information.
-        final mediaQueryData = MediaQuery.of(context);
-        return MediaQuery(
-          // Set the default textScaleFactor to 1.0 for
-          // the whole subtree.
-          data: mediaQueryData.copyWith(textScaleFactor: 1.0),
-          child: child!,
-        );
-      },
     );
   }
 }
@@ -243,3 +290,17 @@ const ColorScheme _shrineColorScheme = ColorScheme(
   onError: shrineSurfaceWhite,
   brightness: Brightness.light,
 );
+
+class DetailPage extends StatelessWidget {
+  final String? itemId;
+  final String? xValue;
+  const DetailPage({this.itemId, this.xValue});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Detail Screen')),
+      body: Center(child: Text('Item ID: ${itemId ?? "None"} xValue: ${xValue ?? "None"}')),
+    );
+  }
+}
