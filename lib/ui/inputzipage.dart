@@ -18,6 +18,7 @@ import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/ui/inputgamepainter.dart';
 import 'package:hanzishu/ui/dictionarysearchingpage.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
+import 'package:hanzishu/engine/inputgamemanager.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
@@ -1587,11 +1588,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return TextButton(
       onPressed: () {
+          if (!InputGameManager.isInputGameQuestionIdValid(currentInputGameQuestionId + 1)) {
+            showInputGameCompleteDialog();
+          }
           setState(() {
             currentInputGameQuestionId += 1;
           });
       },
-      child: Text(currentInputGameQuestionId.toString() + "When you are done, copy/paste it to answer sheet, then click continue.",
+      child: Text("When you are done, copy/paste it to answer sheet, then click continue.",
           style: TextStyle(color: Colors.brown)),
     );
   }
@@ -1876,6 +1880,34 @@ class _InputZiPageState extends State<InputZiPage> {
       );
     }
   }
+
+  showInputGameCompleteDialog() {
+    Widget okButton = TextButton(
+      child: Text("好的 Ok", style: TextStyle(color: Colors.blue)),
+      onPressed: () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text(getString(375)/*Result*/),
+      content: Text("祝贺你完成汉字输入大赛某项比赛 Congrats for finishing Hanzishu Cup one competion."),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+
 
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {

@@ -6,6 +6,7 @@ import 'package:hanzishu/data/inputgameanswersheetlist.dart';
 import 'package:hanzishu/engine/inputgameanswersheet.dart';
 import 'package:hanzishu/data/inputgamequestionlist.dart';
 import 'package:hanzishu/engine/inputgamequestion.dart';
+import 'package:hanzishu/data/schoollist.dart';
 
 class InputGameManager {
   int currentGameQuestionId = -1;
@@ -78,5 +79,24 @@ class InputGameManager {
     }
 
     return "";
+  }
+
+  static bool isInputGamePasscodeValid(String inputPasscode) {
+    for (int i = 0; i < theSchoolList.length; i++) {
+      if (theSchoolList[i].code == inputPasscode) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static bool isInputGameQuestionIdValid(int inputGameQuestionId) {
+    for (int i = 0; i < theInputGameQuestionList.length; i++) {
+      if (theInputGameQuestionList[i].id == inputGameQuestionId) {
+        return true;
+      }
+    }
+
+    return false;
   }
 }

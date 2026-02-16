@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:hanzishu/data/searchingzilist.dart';
-//import 'package:hanzishu/ui/InputGamecorepage.dart';
-import 'dart:ui';
 import 'dart:async';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/inputzipage.dart';
-import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/engine/inputgamemanager.dart';
 
 class InputGamePage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
@@ -80,16 +77,11 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       theIsBackArrowExit = true;
       this.currentIndex = 0;
     }
-    //}
   }
 
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-    //initZis = widget.initZis;
-    //if (initZis == null) {
-    //  initZis = "合体字练习部件非笔画";
-    //}
     _controller = new TextEditingController(text: ""/*initZis*/);
 
     /*"Grid shows Hanzi"*/
@@ -104,7 +96,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         (
         appBar: AppBar
           (
-          title: Text(getString(449)/*"Hanzi practice sheet"*/),
+          title: Text("汉字树杯输入大赛 | Hanzishu Cup  Input Competition"),
         ),
         body: Container(
             child: WillPopScope(
@@ -194,34 +186,20 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   }
 
   processInputs() {
-    //var latestValue;
     var ziId = -1;
-    //if (_controller.value.text != null && _controller.value.text.length != 0) {
-      inputText = _controller.value.text;
-      //valid the input string here!
-      //var resultStr = DictionaryManager.validateChars(inputText);
-      if (inputText.length == 0) {
-        showInvalidInputDialog();
-      }
-      else {
-        //if (inputText.length != inputText.length) {
-        //  inputText = resultStr;
-        //}
+    inputText = _controller.value.text;
 
-        launchInputGame(int.parse(currentGameId!));
-      }
-    //}
-    //else {
-      // assert
-    //}
+    if (InputGameManager.isInputGamePasscodeValid(inputText)) {
+      launchInputGame(int.parse(currentGameId!));
+    }
+    else {
+      //if (inputText.length == 0) {
+      showInvalidInputDialog();
+    }
   }
 
   launchInputGame(int gameid) {
-    //var ziId = DictionaryManager.getSearchingZiId("灵"/*inputText[index]*/);
-    //inputText = "灵巧的"; //TODO
     if (inputText != null && inputText.length > 0) {
-      //_controller.clear();
-      //FocusScope.of(context).unfocus();
       Navigator.push(
         context,
         MaterialPageRoute(
