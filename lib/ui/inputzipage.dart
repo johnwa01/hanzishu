@@ -113,6 +113,9 @@ class _InputZiPageState extends State<InputZiPage> {
   //bool showZiCandidates = false;
   HintType firstTypedLetterHintType = HintType.None;
 
+  int currentInputGameId = -1;
+  int currentInputGameQuestionId = -1;
+
   final stopwatch = Stopwatch()
     ..start();
 
@@ -193,7 +196,7 @@ class _InputZiPageState extends State<InputZiPage> {
     theInputZiManager.initCurrentIndex();
 
     // first char, put here instead of Build so that it does only once.
-    if (typingType != TypingType.FreeTyping &&
+    if (typingType != TypingType.FreeTyping && typingType != TypingType.InputGame &&
         typingType != TypingType.DicSearchTyping) {
       String typeChar;
       if (isSoundPrompt) {
@@ -233,9 +236,16 @@ class _InputZiPageState extends State<InputZiPage> {
     showHint = widget.showHint; // this is the default
     initHintSelected();
 
+    if (typingType == TypingType.InputGame) {
+      currentInputGameId = widget.lessonId;
+    }
+
     setState(() {
       updateCounter = 0;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
+      if (typingType == TypingType.InputGame) {
+        currentInputGameQuestionId = 1;
+      }
     });
   }
 
@@ -530,7 +540,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //theTrieManager.find('test');
 
     // for guarded typing
-    if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
+    if (typingType != TypingType.FreeTyping && typingType != TypingType.InputGame && typingType != TypingType.DicSearchTyping) {
       var checkedText = newChar;
       if (checkedText.length == 0) {
         checkedText = editController.text;
@@ -1279,7 +1289,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //initParameters();
 
     int maxNumberOfLines;
-    if (typingType == TypingType.FreeTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.InputGame) {
       maxNumberOfLines = 10;  // 4
       editFontSize = 24 * getSizeRatio();
     }
@@ -1366,6 +1376,9 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.FreeTyping) {
       title = getString(108)/*'Free typing and help'*/;
     }
+    else if (typingType == TypingType.InputGame) {
+      title = getString(534)/*'Chinese Input Method Competition and help'*/;
+    }
     else if (typingType == TypingType.DicSearchTyping) {
       title = getString(95)/*'Dictionary'*/;
     }
@@ -1392,7 +1405,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // first index is for explaination
-    if (typingType != TypingType.FromLessons && typingType != TypingType.ThirdParty && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && typingType != TypingType.ComponentCombinationTyping && currentIndex == 0) {
+    if (typingType != TypingType.FromLessons && typingType != TypingType.ThirdParty && typingType != TypingType.CommonZiTyping && typingType != TypingType.FreeTyping && typingType != TypingType.InputGame && typingType != TypingType.DicSearchTyping && typingType != TypingType.Custom && typingType != TypingType.ComponentTyping && typingType != TypingType.ComponentCombinationTyping && currentIndex == 0) {
       return getExplainationPage();
     }
 
@@ -1521,6 +1534,7 @@ class _InputZiPageState extends State<InputZiPage> {
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
+            getNextInputGameQuestionButton(),
             //SizedBox(
             //  height: 40.0, //40
             //),
@@ -1564,6 +1578,22 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
+  }
+
+  getNextInputGameQuestionButton() {
+    if (typingType != TypingType.InputGame) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    return TextButton(
+      onPressed: () {
+          setState(() {
+            currentInputGameQuestionId += 1;
+          });
+      },
+      child: Text(currentInputGameQuestionId.toString() + "When you are done, copy/paste it to answer sheet, then click continue.",
+          style: TextStyle(color: Colors.brown)),
+    );
   }
 
   Widget getSwitchInputMethodOrInputModeMessage() {
@@ -1885,7 +1915,7 @@ class _InputZiPageState extends State<InputZiPage> {
 */
 
   Widget getHelpOrProgressIndicator() {
-    if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.InputGame || typingType == TypingType.DicSearchTyping) {
       return SizedBox(width: 0.0, height: 0.0);
 
       /*
@@ -2006,6 +2036,10 @@ class _InputZiPageState extends State<InputZiPage> {
     // an empty box
     if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
       return Container(width: 0.0, height: 0.0);
+    }
+
+    if (typingType == TypingType.InputGame) {
+      return getInputGameQuestion(currentInputGameId, currentInputGameQuestionId);
     }
 
     var promptStr = getString(113) + "： "; //"Type"
@@ -2248,9 +2282,25 @@ class _InputZiPageState extends State<InputZiPage> {
     */
   }
 
+  Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
+    var questionString = theInputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
+
+    if (questionString.length != 0) {
+      return Text(
+          questionString,
+          style: TextStyle(fontSize: 15.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.blueAccent),
+          textAlign: TextAlign.left
+      );
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
   Widget getWarningMessage() {
     var fontSize = 15.0 * getSizeRatio();     //15.0
-    if (currentTypingCodeIsCorrect || currentCorrectTypingCode == "" || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game  || showHint == HintType.TingDa|| typingType == TypingType.FreeTyping) {
+    if (currentTypingCodeIsCorrect || currentCorrectTypingCode == "" || theZiCandidatesFromPinyin || showHint == HintType.Hint0 || showHint == HintType.Game  || showHint == HintType.TingDa || typingType == TypingType.FreeTyping || typingType == TypingType.InputGame) {
       return SizedBox(width: 0.0, height: 0.0);
     }
     else {
@@ -2268,7 +2318,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     // an empty box
-    if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
+    if (typingType == TypingType.FreeTyping || typingType == TypingType.InputGame || typingType == TypingType.DicSearchTyping) {
       return Container(width:0.0, height: 0.0);
         /*SizedBox(
         width: double.infinity,
@@ -2494,7 +2544,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getHintPainter() {
-    if (currentIndex < 0 || typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
+    if (currentIndex < 0 || typingType == TypingType.FreeTyping || typingType == TypingType.InputGame || typingType == TypingType.DicSearchTyping) {
       return Container(width: 0.0, height: 0.0);
     }
 

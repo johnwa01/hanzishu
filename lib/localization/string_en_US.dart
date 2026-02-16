@@ -541,4 +541,5 @@ var theString_en_US = [
   Local(531, "Listen"),
   Local(532, "Next Sentence"),
   Local(533, "2nd Hanzishu Cup Global Youth Hanzi Input Game"),
+  Local(534, "Chinese Input Method Competition"),
 ];

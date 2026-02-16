@@ -20,6 +20,7 @@ var theDictionaryManager;
 var theStandardExamManager;
 
 var theTrieManager;
+var theInputGameManager;
 
 var theCurrentZiComponents = [0, 0, 0, 0, 0, 0, 0, 0];
 var theTotalBeginnerLessons = 60; //TODO: to lessonmanager?

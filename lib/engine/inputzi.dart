@@ -21,6 +21,7 @@ enum TypingType {
   FirstTyping,
   ThirdParty,
   ComponentCombinationTyping,
+  InputGame,
 }
 
 enum InputMethod {

@@ -28,6 +28,7 @@ import 'package:hanzishu/engine/strokemanager.dart';
 import 'package:hanzishu/engine/dictionarymanager.dart';
 import 'package:hanzishu/ui/drillpage.dart';
 import 'package:hanzishu/engine/triemanager.dart';
+import 'package:hanzishu/engine/inputgamemanager.dart';
 
 import 'dart:io';
 import "package:hanzishu/utility.dart";
@@ -35,6 +36,8 @@ import 'dart:ui';
 
 import 'package:go_router/go_router.dart';
 import 'package:go_router/src/state.dart';
+
+import 'package:hanzishu/ui/inputgamepage.dart';
 
 // Define your routes and associate them with screens.
 final GoRouter _router = GoRouter(
@@ -87,6 +90,14 @@ final GoRouter _router = GoRouter(
       path: '/more',
       builder: (context, state) {
         return MePage();
+      },
+    ),
+    GoRoute(
+      //Example: hanzishu.com/#/inputgame?gameid=1
+      path: '/inputgame',
+      builder: (context, state) {
+        final gameid = state.uri.queryParameters['gameid'];
+        return InputGamePage(gameid: gameid);
       },
     ),
     // Example with a path parameter
@@ -155,6 +166,8 @@ class _MyHomePageState extends State<MyHomePage> {
     theTrieManager = TrieManager();
     //move to lesson
     //LessonManager.populateLessonsInfo();
+
+    theInputGameManager = InputGameManager();
   }
 
   void initDefaultLocale() {
