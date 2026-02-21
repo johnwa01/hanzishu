@@ -83,6 +83,7 @@ class _LessonPageState extends State<LessonPage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
 
     //theIsFromLessonContinuedSection = false;
     theCurrentLessonId = widget.lessonId;

@@ -75,6 +75,7 @@ class _QuizPageState extends State<QuizPage> {
     //}
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     //bool isCurrentCategoryMeaning = theQuizManager.getCurrentCategory() == QuizCategory.meaning;
     //if (fromPaintSound) {
     //  isCurrentCategoryMeaning = false; // directly skip to the sound category

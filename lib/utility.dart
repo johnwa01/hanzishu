@@ -316,7 +316,7 @@ class Utility {
       screenWidth = screenSize.width * ratio / 1.6;
     }
 
-    thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
+    //thePositionManager.setFrameWidth(screenWidth - 10.0); //TODO
 
     return screenWidth;
   }

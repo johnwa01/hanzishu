@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/ui/positionmanager.dart';
 import 'package:hanzishu/ui/practicesheetpainter.dart';
 
@@ -43,6 +44,7 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     //var realBrowserSize = Utility.getScreenWidth(context);
     //bool isPhoneBrowser = (realBrowserSize < 850.0) ? true : false;
 

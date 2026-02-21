@@ -119,6 +119,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
 
     try {
       return Scaffold

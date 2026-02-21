@@ -45,6 +45,7 @@ class _MeWordState extends State<WordPage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth/* - 10.0*/);
 
     return Scaffold
       (

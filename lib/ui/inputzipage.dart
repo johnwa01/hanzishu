@@ -116,6 +116,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   int currentInputGameId = -1;
   int currentInputGameQuestionId = -1;
+  bool isPictographicInputGame = true;
 
   final stopwatch = Stopwatch()
     ..start();
@@ -1282,6 +1283,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     double editFontSize = 30.0 * getSizeRatio();
 
     //To be sure
@@ -2315,7 +2317,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
-    var questionString = theInputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
+    var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
 
     if (questionString.length != 0) {
       return Text(

@@ -176,6 +176,7 @@ class _DrillPageState extends State<DrillPage> with SingleTickerProviderStateMix
 
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
     //var subMenuUptoId = 0;

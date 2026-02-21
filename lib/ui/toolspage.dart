@@ -36,6 +36,7 @@ class _ToolsPageState extends State<ToolsPage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth/* - 10.0*/);
 
     return Scaffold
       (

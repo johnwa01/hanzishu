@@ -201,6 +201,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     //screenWidth = Utility.getScreenWidth(context);
 
     if (compoundZiComponentNum > 0 && compoundZiComponentNum <= compoundZiTotalComponentNum) {

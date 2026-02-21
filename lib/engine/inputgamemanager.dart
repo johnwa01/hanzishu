@@ -17,7 +17,7 @@ class InputGameManager {
     isCurrentPinyinInput = isPinyinInput;
   }
 
-  Country getCountryById(int id) {
+  static Country getCountryById(int id) {
     for (int i = 0; i < theCountryList.length; i++) {
       if (theCountryList[i].id == id) {
         return theCountryList[i];
@@ -27,7 +27,7 @@ class InputGameManager {
     return Country(-1, "", "", -1);
   }
 
-  Continent getContinentById(int id) {
+  static Continent getContinentById(int id) {
     for (int i = 0; i < theContinentList.length; i++) {
       if (theContinentList[i].id == id) {
         return theContinentList[i];
@@ -37,17 +37,17 @@ class InputGameManager {
     return Continent(-1, "", "");
   }
 
-  InputGame getInputGameById(int id) {
+  static InputGame getInputGameById(int id) {
     for (int i = 0; i < theInputGameList.length; i++) {
       if (theInputGameList[i].id == id) {
         return theInputGameList[i];
       }
     }
 
-    return InputGame(-1, "", "", []);
+    return InputGame(-1, -1, "", "", []);
   }
 
-  InputGameQuestion getInputGameQuestionById(int id) {
+  static InputGameQuestion getInputGameQuestionById(int id) {
     for (int i = 0; i < theInputGameQuestionList.length; i++) {
       if (theInputGameQuestionList[i].id == id) {
         return theInputGameQuestionList[i];
@@ -57,7 +57,7 @@ class InputGameManager {
     return InputGameQuestion(-1, "");
   }
 
-  InputGameAnswerSheet getInputGameAnswerSheetById(int id) {
+  static InputGameAnswerSheet getInputGameAnswerSheetById(int id) {
     for (int i = 0; i < theInputGameAnswerSheetList.length; i++) {
       if (theInputGameAnswerSheetList[i].id == id) {
         return theInputGameAnswerSheetList[i];
@@ -67,7 +67,7 @@ class InputGameManager {
     return InputGameAnswerSheet(-1, "", "");
   }
 
-  String getInputGameQuestionString(int inputGameId, inputGameQuestionId) {
+  static String getInputGameQuestionString(int inputGameId, inputGameQuestionId) {
     var game = getInputGameById(inputGameId);
     var questionIds = game.inputGameQuestionIdList;
     var question;

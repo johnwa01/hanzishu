@@ -142,6 +142,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
 */
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth /*- 10.0*/);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
 /*

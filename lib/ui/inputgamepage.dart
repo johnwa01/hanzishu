@@ -7,6 +7,8 @@ import 'package:hanzishu/ui/inputzipage.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputgamemanager.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/data/inputgameanswersheetlist.dart';
 
 class InputGamePage extends StatefulWidget {
   Map<int, PositionAndSize> sidePositionsCache = Map();
@@ -25,8 +27,8 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   late bool shouldDrawCenter;
   late double screenWidth;
   //late String initZis;
-  late String? currentGameId;
-
+  late int? currentGameId;
+  late int? currentGameType; // 1: pictographic, 2: Pinyin input
 
   FocusNode _textNode = new FocusNode();
 
@@ -51,7 +53,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   void initState() {
     super.initState();
 
-    currentGameId = widget.gameid;
+    currentGameId = int.parse(widget.gameid!);
 
     theCurrentCenterZiId = searchingZiIndex;
 
@@ -82,14 +84,12 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     _controller = new TextEditingController(text: ""/*initZis*/);
 
     /*"Grid shows Hanzi"*/
     var gridShowOrNotShowZiString = gridShowZi ? getString(452) : getString(453);/*"Grid (not) show Hanzi"*/;
-    String displ = "";
-    if (theDefaultLocale == "en_US") {
-      displ = getString(408); // copy/paste ...
-    }
+    String displ = "请输入参赛码：Please enter participation code:";
 
     try {
       return Scaffold
@@ -107,8 +107,9 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             SizedBox(width: 10 * getSizeRatioWithLimit()),
-                            Text(displ/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                            SizedBox(width: 15 * getSizeRatioWithLimit()),
+                            Text(displ/*"Please enter participation code"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
+
+                            /* SizedBox(width: 15 * getSizeRatioWithLimit()),
                             TextButton(
                               style: TextButton.styleFrom(
                                 textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
@@ -121,6 +122,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
                               child: Text(gridShowOrNotShowZiString,
                                   style: TextStyle(color: Colors.lightBlue)),
                             ),
+                            */
                           ]
                       ),
                       SizedBox(height: 10 * getSizeRatioWithLimit()),
@@ -166,7 +168,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
                               );
                               */
                             },
-                            child: Text(getString(301)/*"Start"*/,
+                            child: Text("开始 Start",
                                 style: TextStyle(color: Colors.lightBlue)),
                           ),
                         ],
@@ -183,34 +185,6 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
     // should not reach here
     return SizedBox(width: 0.0, height: 0.0);
-  }
-
-  processInputs() {
-    var ziId = -1;
-    inputText = _controller.value.text;
-
-    if (InputGameManager.isInputGamePasscodeValid(inputText)) {
-      launchInputGame(int.parse(currentGameId!));
-    }
-    else {
-      //if (inputText.length == 0) {
-      showInvalidInputDialog();
-    }
-  }
-
-  launchInputGame(int gameid) {
-    if (inputText != null && inputText.length > 0) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) =>
-              InputZiPage(typingType: TypingType.InputGame, lessonId: int.parse(currentGameId!), wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
-        ),
-      );
-    }
-    else {
-      showInvalidInputDialog();
-    }
   }
 
   showInvalidInputDialog() {
@@ -239,6 +213,43 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         return alert;
       },
     );
+  }
+
+  launchInputGame(int gameid) {
+    if (inputText != null && inputText.length > 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              InputZiPage(typingType: TypingType.InputGame, lessonId: currentGameId!, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+        ),
+      );
+    }
+    else {
+      showInvalidInputDialog();
+    }
+  }
+
+  processInputs() {
+    var ziId = -1;
+    inputText = _controller.value.text;
+
+    if (InputGameManager.isInputGamePasscodeValid(inputText)) {
+      launchAnswerSheetWindow(currentGameId!);
+      launchInputGame(currentGameId!);
+    }
+    else {
+      //if (inputText.length == 0) {
+      showInvalidInputDialog();
+    }
+  }
+
+  launchAnswerSheetWindow(int gameId) {
+    int gameType = InputGameManager
+        .getInputGameById(gameId)
+        .gameType;
+
+    launchUrl(Uri.parse(theInputGameAnswerSheetList[gameType].url), mode: LaunchMode.externalApplication/*, webOnlyWindowName: '_self'*/);
   }
 
   Future<bool>_onWillPop() {

@@ -84,6 +84,7 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     initZis = widget.initZis;
     //if (initZis == null) {
     //  initZis = "合体字练习部件非笔画";

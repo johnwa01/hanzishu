@@ -62,7 +62,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     var title = ThirdParty.getThirdPartyName(thirdPartyType);
 
     return Scaffold

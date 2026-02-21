@@ -68,6 +68,7 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget build(BuildContext context) {
     //screenWidth = Utility.getScreenWidth(context);
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
 
     if (currentIndex < 0) {
       return Container(width: 0.0, height: 0.0);

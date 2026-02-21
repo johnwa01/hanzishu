@@ -40,6 +40,7 @@ class _PinyinPageState extends State<PinyinPage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth/* - 10.0*/);
 
     String pinyinExerciseName = getString(505) /*"Pinyin exercise"*/ + " " + (currentPinyinLessonId + 10).toString();
 

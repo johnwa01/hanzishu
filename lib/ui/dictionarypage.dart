@@ -100,6 +100,7 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
 
     try {
       return Scaffold

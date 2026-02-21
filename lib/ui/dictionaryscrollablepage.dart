@@ -69,6 +69,7 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    thePositionManager.setFrameWidth(screenWidth - 10.0);
     firstZiIndex = widget.firstZiIndex;
 
     // init positionmanager frame size
