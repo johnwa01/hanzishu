@@ -877,6 +877,27 @@ class _InputZiPageState extends State<InputZiPage> {
     //TODO: temp testing for comp shapes
     globalTestDoubleByteCode = _controller.text;
 
+    // start with this special InputGame case first.
+    if (typingType == TypingType.InputGame) {
+      // In order to prevent copy/paste action during competition
+      // Actually remove the copy/paste content here
+      var composingString = getLatestComposingLetters();
+      if (containChineseChars(composingString)) {
+        // remove the copy/paste content.
+        String textTrimReturnKey = _controller.text.replaceRange(
+            previousEndSelection, _controller.value.selection.end,
+            ''); //_controller.text.substring(0, previousEndComposing);
+        // replace _controller.value
+        _controller.value =
+            _controller.value.copyWith(text: textTrimReturnKey,
+                composing: TextRange.empty,
+                selection: TextSelection.collapsed(
+                    offset: previousEndSelection));
+        // in case of copy/paste for inputgame mode, just remove it and no need to go further.
+        return;
+      }
+    }
+
     /*
     // for guarded typing
     if (typingType != TypingType.FreeTyping) {
@@ -950,6 +971,10 @@ class _InputZiPageState extends State<InputZiPage> {
         //currentComposingText = previousText;
         var lastComposingText = InputZiManager.getLastComposingTextAfterDelete(previousText);
         updateTypingStatusAndHintCompIndex(lastComposingText);
+      }
+
+      if (typingType == TypingType.InputGame) {
+        previousEndSelection = _controller.value.selection.end;
       }
     }
     //Note: Temp disable UpperCase and LowerCase if want to test component shapes
@@ -1091,22 +1116,6 @@ class _InputZiPageState extends State<InputZiPage> {
           String textTrimReturnKey = _controller.text.replaceRange(previousEndComposing, previousEndComposing+1, ''); //_controller.text.substring(0, previousEndComposing);
           _controller.value = _controller.value.copyWith(text: textTrimReturnKey,
               composing: TextRange.empty, selection: TextSelection.collapsed(offset: previousEndComposing));
-        }
-      }
-      if (typingType == TypingType.InputGame) {
-        // In order to skip/remove copy/paste content
-        var composingString = getLatestComposingLetters();
-        if (containChineseChars(composingString)) {
-          // remove the selectionString from current typing
-          String textTrimReturnKey = _controller.text.replaceRange(
-              previousEndSelection, _controller.value.selection.end,
-              ''); //_controller.text.substring(0, previousEndComposing);
-          // replace _controller.value
-          _controller.value =
-              _controller.value.copyWith(text: textTrimReturnKey,
-                  composing: TextRange.empty,
-                  selection: TextSelection.collapsed(
-                      offset: previousEndSelection));
         }
       }
 
