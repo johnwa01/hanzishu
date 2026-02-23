@@ -329,6 +329,17 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
+  String getLatestComposingLetters() {
+    var selectionEnd = _controller.value.selection.end;
+    if (selectionEnd >= 1 && selectionEnd > previousEndSelection) {
+      if (_controller.value.text.length != 0) {
+        return _controller.value.text.substring(previousEndSelection, selectionEnd);
+      }
+    }
+
+    return "";
+  }
+
   String getInputTextBeforeComposingAndSelectionStart(bool isFromNumber) {
     var newInputText = "";
 
@@ -838,9 +849,16 @@ class _InputZiPageState extends State<InputZiPage> {
         workaroundWebCases();
       }
 
+      if (typingType == TypingType.InputGame && previousEndSelection != _controller.value.selection.end) {
+        previousEndSelection = _controller.value.selection.end;
+      }
+
       return;
     }
     else if (_controller.text == previousText) {
+      if (typingType == TypingType.InputGame && previousEndSelection != _controller.value.selection.end) {
+        previousEndSelection = _controller.value.selection.end;
+      }
       return;
     }
     else {
@@ -1075,6 +1093,23 @@ class _InputZiPageState extends State<InputZiPage> {
               composing: TextRange.empty, selection: TextSelection.collapsed(offset: previousEndComposing));
         }
       }
+      if (typingType == TypingType.InputGame) {
+        // In order to skip/remove copy/paste content
+        var composingString = getLatestComposingLetters();
+        if (containChineseChars(composingString)) {
+          // remove the selectionString from current typing
+          String textTrimReturnKey = _controller.text.replaceRange(
+              previousEndSelection, _controller.value.selection.end,
+              ''); //_controller.text.substring(0, previousEndComposing);
+          // replace _controller.value
+          _controller.value =
+              _controller.value.copyWith(text: textTrimReturnKey,
+                  composing: TextRange.empty,
+                  selection: TextSelection.collapsed(
+                      offset: previousEndSelection));
+        }
+      }
+
       initOverlay();
       fullCandidateStartingIndex = 0;
       previousStartComposing = -1;
@@ -1082,6 +1117,16 @@ class _InputZiPageState extends State<InputZiPage> {
       theCurrentZiCandidates = []; //theDefaultZiCandidates;
       previousText = _controller.text;
     }
+  }
+
+  bool containChineseChars(String selectionString) {
+    // \u4e00-\u9fa5bie Unicode编码中中文字符的范围，如果字符串中含有这个范围内的字符，则匹配成功。
+    RegExp exp = RegExp(r"[\u4e00-\u9fa5]");
+    if (exp.hasMatch(selectionString)) {
+      return true;
+    }
+
+    return false;
   }
 
   setPreviousComposing() {
