@@ -116,7 +116,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   int currentInputGameId = -1;
   int currentInputGameQuestionId = -1;
-  bool isPictographicInputGame = true;
+  bool isPictographicInputGame = true; // will read from inputgame file
 
   final stopwatch = Stopwatch()
     ..start();
@@ -240,6 +240,13 @@ class _InputZiPageState extends State<InputZiPage> {
 
     if (typingType == TypingType.InputGame) {
       currentInputGameId = widget.lessonId;
+      int inputGameType = InputGameManager.getInputGameById(currentInputGameId).gameType;
+      if (inputGameType == 1) {
+        isPictographicInputGame = true;
+      }
+      else { // == 2
+        isPictographicInputGame = false;
+      }
     }
 
     setState(() {
@@ -329,11 +336,11 @@ class _InputZiPageState extends State<InputZiPage> {
     return newInputText;
   }
 
-  String getLatestComposingLetters() {
-    var selectionEnd = _controller.value.selection.end;
+  String getLatestComposingLetters(TextEditingController activeController) {
+    var selectionEnd = activeController.value.selection.end;
     if (selectionEnd >= 1 && selectionEnd > previousEndSelection) {
-      if (_controller.value.text.length != 0) {
-        return _controller.value.text.substring(previousEndSelection, selectionEnd);
+      if (activeController.value.text.length != 0) {
+        return activeController.value.text.substring(previousEndSelection, selectionEnd);
       }
     }
 
@@ -803,7 +810,19 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   void handleKeyInputStandard() {
-         checkAndUpdateCurrentIndex(_controllerStandard, '');
+    //   checkAndUpdateCurrentIndex(_controllerStandard, ''); // We don't really need this?
+    if (typingType != TypingType.InputGame) {
+      return;
+    }
+
+    if (_controllerStandard.value.selection.end > previousEndSelection) {
+      PreventCopyAndPasteAction(_controllerStandard);
+    }
+
+    if (typingType == TypingType.InputGame &&
+        previousEndSelection != _controllerStandard.value.selection.end) {
+      previousEndSelection = _controllerStandard.value.selection.end;
+    }
   }
 
   workaroundWebCases() {
@@ -821,6 +840,29 @@ class _InputZiPageState extends State<InputZiPage> {
           selection: TextSelection.collapsed(offset: posi));
       //_controller.value = _controller.value.copyWith(selection: TextSelection.collapsed(offset: _controller.text.length));
       //_controller.selection = TextSelection.fromPosition(TextPosition(offset: _controller.text.length));
+    }
+  }
+
+  void PreventCopyAndPasteAction(TextEditingController activeController) {
+    // start with this special InputGame case first.
+    if (typingType == TypingType.InputGame) {
+      // In order to prevent copy/paste action during competition
+      // Actually remove the copy/paste content here
+      var composingString = getLatestComposingLetters(activeController);
+      if (containChineseChars(composingString)) {
+        // remove the copy/paste content.
+        String textTrimReturnKey = activeController.text.replaceRange(
+            previousEndSelection, activeController.value.selection.end,
+            ''); //_controller.text.substring(0, previousEndComposing);
+        // replace _controller.value
+        activeController.value =
+            activeController.value.copyWith(text: textTrimReturnKey,
+                composing: TextRange.empty,
+                selection: TextSelection.collapsed(
+                    offset: previousEndSelection));
+        // in case of copy/paste for inputgame mode, just remove it and no need to go further.
+        return;
+      }
     }
   }
 
@@ -856,6 +898,9 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
     else if (_controller.text == previousText) {
+      // set an End reference point for next copy/paste prevention
+      // as long as setting this, and realize that new copy/paste's End must be longer than previous End,
+      // then if seeing Chinese chars showing up, it must be a copy paste action.
       if (typingType == TypingType.InputGame && previousEndSelection != _controller.value.selection.end) {
         previousEndSelection = _controller.value.selection.end;
       }
@@ -877,26 +922,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //TODO: temp testing for comp shapes
     globalTestDoubleByteCode = _controller.text;
 
-    // start with this special InputGame case first.
-    if (typingType == TypingType.InputGame) {
-      // In order to prevent copy/paste action during competition
-      // Actually remove the copy/paste content here
-      var composingString = getLatestComposingLetters();
-      if (containChineseChars(composingString)) {
-        // remove the copy/paste content.
-        String textTrimReturnKey = _controller.text.replaceRange(
-            previousEndSelection, _controller.value.selection.end,
-            ''); //_controller.text.substring(0, previousEndComposing);
-        // replace _controller.value
-        _controller.value =
-            _controller.value.copyWith(text: textTrimReturnKey,
-                composing: TextRange.empty,
-                selection: TextSelection.collapsed(
-                    offset: previousEndSelection));
-        // in case of copy/paste for inputgame mode, just remove it and no need to go further.
-        return;
-      }
-    }
+    PreventCopyAndPasteAction(_controller);
 
     /*
     // for guarded typing
@@ -1499,7 +1525,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Column getTypingContent(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-    if (typingType == TypingType.DicSearchTyping)
+    if (typingType == TypingType.DicSearchTyping || (typingType == TypingType.InputGame && !isPictographicInputGame))
     {
       return getDicSearchTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
     }
@@ -1510,50 +1536,89 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Column  getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,   //spaceAround,
-      //mainAxisSize:  MainAxisSize.max,
-        children: <Widget>[
-          Row(mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatio()),
-                Text(getString(486), textAlign:TextAlign.left),
-              ]
-          ),
-          SizedBox(height: 15.0),
-          getDicSearchFirstZi(),
-          SizedBox(height: 15.0),
-          Row(mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(width: 30 * getSizeRatio()),
-              Text("2. " + getString(484), textAlign:TextAlign.left),
-            ]
-          ),
-          getOtherInputMethodTextField(_controllerStandard, true),
-          SizedBox(height: 15.0),
-          Row(mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatio()),
-                Text("3. " + getString(485), textAlign:TextAlign.left, maxLines: 2, softWrap: true),
-              ]
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatio()),
-                Text(getString(487), textAlign:TextAlign.left, maxLines: 2, softWrap: true),
-              ]
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(width: 30.0),
-              getHanzishuTextField(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
-              getQueryButton(_controller, true),
-            ]
-          ),
-          getZiCandidates(inputZiPainter),
-        ]
-    );
+    if (typingType == TypingType.InputGame && !isPictographicInputGame) {
+      return Column(
+          mainAxisAlignment: MainAxisAlignment.start, //spaceAround,
+          //mainAxisSize:  MainAxisSize.max,
+          children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text(getString(486), textAlign: TextAlign.left),
+                ]
+            ),
+            SizedBox(height: 15.0),
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text("2. " + getString(484), textAlign: TextAlign.left),
+                ]
+            ),
+            getOtherInputMethodTextField(_controllerStandard, false),
+            SizedBox(height: 15.0),
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text(getString(487), textAlign: TextAlign.left,
+                      maxLines: 2,
+                      softWrap: true),
+                ]
+            ),
+          ]
+      );
+    }
+    else {
+      return Column(
+          mainAxisAlignment: MainAxisAlignment.start, //spaceAround,
+          //mainAxisSize:  MainAxisSize.max,
+          children: <Widget>[
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text(getString(486), textAlign: TextAlign.left),
+                ]
+            ),
+            SizedBox(height: 15.0),
+            getDicSearchFirstZi(),
+            SizedBox(height: 15.0),
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text("2. " + getString(484), textAlign: TextAlign.left),
+                ]
+            ),
+            getOtherInputMethodTextField(_controllerStandard, true),
+            SizedBox(height: 15.0),
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text("3. " + getString(485), textAlign: TextAlign.left,
+                      maxLines: 2,
+                      softWrap: true),
+                ]
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30 * getSizeRatio()),
+                  Text(getString(487), textAlign: TextAlign.left,
+                      maxLines: 2,
+                      softWrap: true),
+                ]
+            ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(width: 30.0),
+                  getHanzishuTextField(
+                      fieldWidth, editFieldFontRatio, editFontSize,
+                      maxNumberOfLines),
+                  getQueryButton(_controller, true),
+                ]
+            ),
+            getZiCandidates(inputZiPainter),
+          ]
+      );
+    }
   }
 
   Column getRegularOneTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
@@ -1825,6 +1890,11 @@ class _InputZiPageState extends State<InputZiPage> {
       fieldWidth = 120.0;
     }
 
+    int maxLines = 1;
+    if (typingType == TypingType.InputGame && !isPictographicInputGame) {
+     maxLines = 10;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
@@ -1846,7 +1916,7 @@ class _InputZiPageState extends State<InputZiPage> {
               fontSize: 20 * getSizeRatio(),
               //height: 1.0 // 1.3
             ),
-            maxLines: 1,
+            maxLines: maxLines,
             //expands: true,
             keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
             decoration: InputDecoration(
