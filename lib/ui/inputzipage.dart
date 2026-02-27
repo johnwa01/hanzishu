@@ -815,12 +815,25 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
 
+    if (_controllerStandard.text == previousText) {
+      // set an End reference point for next copy/paste prevention
+      // as long as setting this, and realize that new copy/paste's End must be longer than previous End,
+      // then if seeing Chinese chars showing up, it must be a copy paste action.
+      if (previousEndSelection != _controllerStandard.value.selection.end) {
+        previousEndSelection = _controllerStandard.value.selection.end;
+      }
+      return;
+    }
+
     if (_controllerStandard.value.selection.end > previousEndSelection) {
       PreventCopyAndPasteAction(_controllerStandard);
     }
 
-    if (typingType == TypingType.InputGame &&
-        previousEndSelection != _controllerStandard.value.selection.end) {
+    if (previousText != _controllerStandard.text) {
+      previousText = _controllerStandard.text;
+    }
+
+    if (previousEndSelection != _controllerStandard.value.selection.end) {
       previousEndSelection = _controllerStandard.value.selection.end;
     }
   }
@@ -911,7 +924,7 @@ class _InputZiPageState extends State<InputZiPage> {
         isFromDeletion = true;
       }
       // set it as the comparision standard
-      setInitialControllerTextValue();
+      setInitialControllerTextValue(_controller);
       hasVerifiedToBeALowerCase = false;
     }
 
@@ -1175,10 +1188,10 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  setInitialControllerTextValue() {
+  setInitialControllerTextValue(TextEditingController activeController) {
     initialControllerTextValue =
-        _controller.text; // will not change until next letter input.
-    previousText = _controller
+        activeController.text; // will not change until next letter input.
+    previousText = activeController
         .text; // can change with the updated value within the same letter input.
   }
 
@@ -1885,7 +1898,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   // non-Hanzishu input methods?
   Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
-    double fieldWidth = 300.0; //double.infinity;
+    double fieldWidth = 400.0; //double.infinity; //300.0;
     if (withQueryButton) {
       fieldWidth = 120.0;
     }
@@ -1903,7 +1916,7 @@ class _InputZiPageState extends State<InputZiPage> {
         SizedBox(width: 30 * getSizeRatio()),
 
         SizedBox(
-          width: fieldWidth, // * getSizeRatio(),
+          width: fieldWidth * getSizeRatio(),
           //height: 120,
           // Note: this is the standard for Dic Search only, not related to the Hanzishu typing field.
           child: TextField(
