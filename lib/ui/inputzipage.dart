@@ -1695,13 +1695,15 @@ class _InputZiPageState extends State<InputZiPage> {
     return TextButton(
       onPressed: () {
           if (isInputGameInHashMode) {
-            if (!InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
-              showInputGameCompleteDialog();
+            if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
+              setState(() {
+                currentInputGameQuestionListIndex += 1;
+                isInputGameInHashMode = false;
+              });
             }
-            setState(() {
-              currentInputGameQuestionListIndex += 1;
-              isInputGameInHashMode = false;
-            });
+            else {
+              showInputGameCompletedDialog();
+            }
           }
           else  {
             setState(() {
@@ -2017,12 +2019,12 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  showInputGameCompleteDialog() {
+  showInputGameCompletedDialog() {
     Widget okButton = TextButton(
       child: Text("好的 Ok", style: TextStyle(color: Colors.blue)),
       onPressed: () {
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
     );
 
