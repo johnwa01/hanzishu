@@ -115,8 +115,8 @@ class _InputZiPageState extends State<InputZiPage> {
   HintType firstTypedLetterHintType = HintType.None;
 
   int currentInputGameId = -1;
-  int currentInputGameQuestionId = -1;
-  bool isPictographicInputGame = true; // will read from inputgame file
+  int currentInputGameQuestionListIndex = -1;
+  bool isInputGameInHashMode = false;
 
   final stopwatch = Stopwatch()
     ..start();
@@ -240,20 +240,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
     if (typingType == TypingType.InputGame) {
       currentInputGameId = widget.lessonId;
-      int inputGameType = InputGameManager.getInputGameById(currentInputGameId).gameType;
-      if (inputGameType == 1) {
-        isPictographicInputGame = true;
-      }
-      else { // == 2
-        isPictographicInputGame = false;
-      }
     }
 
     setState(() {
       updateCounter = 0;
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
       if (typingType == TypingType.InputGame) {
-        currentInputGameQuestionId = 1;
+        currentInputGameQuestionListIndex = 0;
+        isInputGameInHashMode = false;
       }
     });
   }
@@ -1538,7 +1532,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Column getTypingContent(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-    if (typingType == TypingType.DicSearchTyping || (typingType == TypingType.InputGame && !isPictographicInputGame))
+    if (typingType == TypingType.DicSearchTyping)
     {
       return getDicSearchTyping(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter);
     }
@@ -1549,38 +1543,6 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Column  getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-    if (typingType == TypingType.InputGame && !isPictographicInputGame) {
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.start, //spaceAround,
-          //mainAxisSize:  MainAxisSize.max,
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text(getString(486), textAlign: TextAlign.left),
-                ]
-            ),
-            SizedBox(height: 15.0),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text("2. " + getString(484), textAlign: TextAlign.left),
-                ]
-            ),
-            getOtherInputMethodTextField(_controllerStandard, false),
-            SizedBox(height: 15.0),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text(getString(487), textAlign: TextAlign.left,
-                      maxLines: 2,
-                      softWrap: true),
-                ]
-            ),
-          ]
-      );
-    }
-    else {
       return Column(
           mainAxisAlignment: MainAxisAlignment.start, //spaceAround,
           //mainAxisSize:  MainAxisSize.max,
@@ -1631,10 +1593,18 @@ class _InputZiPageState extends State<InputZiPage> {
             getZiCandidates(inputZiPainter),
           ]
       );
-    }
   }
 
   Column getRegularOneTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    if (typingType == TypingType.InputGame && isInputGameInHashMode) {
+      return Column(
+          children: <Widget>[
+            getHashString(),
+            getNextInputGameQuestionButton(),
+          ]
+      );
+    }
+
     if (inputMethod == InputMethod.Pinxin) {
       return Column(
         //mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -1707,9 +1677,11 @@ class _InputZiPageState extends State<InputZiPage> {
                 ]
             ),
             getInputPrompt(),
+            getHashString(),
             SizedBox(height: 30.0),
             getOtherInputMethodTextField(_controllerStandard, false),
             SizedBox(height: 40.0),
+            getNextInputGameQuestionButton(),
           ]
       );
     }
@@ -1722,12 +1694,20 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return TextButton(
       onPressed: () {
-          if (!InputGameManager.isInputGameQuestionIdValid(currentInputGameQuestionId + 1)) {
-            showInputGameCompleteDialog();
+          if (isInputGameInHashMode) {
+            if (!InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
+              showInputGameCompleteDialog();
+            }
+            setState(() {
+              currentInputGameQuestionListIndex += 1;
+              isInputGameInHashMode = false;
+            });
           }
-          setState(() {
-            currentInputGameQuestionId += 1;
-          });
+          else  {
+            setState(() {
+              isInputGameInHashMode = true;
+            });
+          }
       },
       child: Text("When you are done, copy/paste it to answer sheet, then click continue.",
           style: TextStyle(color: Colors.brown)),
@@ -1896,7 +1876,23 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  // non-Hanzishu input methods?
+  Widget getHashString() {
+    if (typingType == TypingType.InputGame &&  isInputGameInHashMode ) {
+      String existingText;
+      if (inputMethod == InputMethod.Pinxin) {
+        existingText = _controller.value.text;
+      }
+      else {
+        existingText = _controllerStandard.value.text;
+      }
+
+      return Text("Copy this text into answer sheet:" + existingText) ;
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  // non-Hanzishu input methods
   Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
     double fieldWidth = 400.0; //double.infinity; //300.0;
     if (withQueryButton) {
@@ -1904,8 +1900,8 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     int maxLines = 1;
-    if (typingType == TypingType.InputGame && !isPictographicInputGame) {
-     maxLines = 10;
+    if (typingType == TypingType.InputGame && inputMethod == InputMethod.Others) {
+      maxLines = 10;
     }
 
     return Row(
@@ -1923,7 +1919,7 @@ class _InputZiPageState extends State<InputZiPage> {
             autocorrect: false,
             enableSuggestions: false,
             controller: oneController,
-            focusNode:   _focusNodeStandard,
+            focusNode: _focusNodeStandard,
             autofocus: false,
             style: TextStyle(
               fontSize: 20 * getSizeRatio(),
@@ -1931,15 +1927,16 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             maxLines: maxLines,
             //expands: true,
-            keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
+            keyboardType: TextInputType.text,
+            //multiline,  //TextInputType.visiblePassword
             decoration: InputDecoration(
               //hintText: 'This test',
               filled: true,
               fillColor: Colors.black12, //lightBlueAccent,
             ),
-          ),//focusNode: _focusNodeStandard,
+          ), //focusNode: _focusNodeStandard,
         ),
-          getQueryButton(oneController, withQueryButton),
+        getQueryButton(oneController, withQueryButton),
       ],
     );
   }
@@ -2208,9 +2205,13 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.FreeTyping || typingType == TypingType.DicSearchTyping) {
       return Container(width: 0.0, height: 0.0);
     }
-
     if (typingType == TypingType.InputGame) {
-      return getInputGameQuestion(currentInputGameId, currentInputGameQuestionId);
+      if(!isInputGameInHashMode) {
+        return getInputGameQuestion(currentInputGameId, currentInputGameQuestionListIndex);
+      }
+      else {
+        return Container(width: 0.0, height: 0.0);
+      }
     }
 
     var promptStr = getString(113) + "： "; //"Type"

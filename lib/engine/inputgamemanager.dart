@@ -70,6 +70,8 @@ class InputGameManager {
   static String getInputGameQuestionString(int inputGameId, inputGameQuestionId) {
     var game = getInputGameById(inputGameId);
     var questionIds = game.inputGameQuestionIdList;
+    return theInputGameQuestionList[questionIds[inputGameQuestionId]].content;
+    /*
     var question;
     for (int i = 0; i < questionIds.length; i++) {
       question = getInputGameQuestionById(questionIds[i]);
@@ -79,6 +81,7 @@ class InputGameManager {
     }
 
     return "";
+    */
   }
 
   static bool isInputGamePasscodeValid(String inputPasscode) {
@@ -88,6 +91,16 @@ class InputGameManager {
       }
     }
     return false;
+  }
+
+  static bool isInputGameQuestionListIndexValid(int gameid, int inputGameQuestionListIndex) {
+    // the index is within the length of the question list for the game
+    if (inputGameQuestionListIndex < theInputGameList[gameid].inputGameQuestionIdList.length) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   static bool isInputGameQuestionIdValid(int inputGameQuestionId) {

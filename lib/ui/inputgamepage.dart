@@ -216,12 +216,18 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   }
 
   launchInputGame(int gameid) {
+    InputMethod inputMethod = InputMethod.Pinxin;
+    int inputGameType = InputGameManager.getInputGameById(gameid).gameType;
+    if (inputGameType == 2) { // 1 == Pinxin
+      inputMethod = InputMethod.Others;
+    }
+
     if (inputText != null && inputText.length > 0) {
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) =>
-              InputZiPage(typingType: TypingType.InputGame, lessonId: currentGameId!, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+              InputZiPage(typingType: TypingType.InputGame, lessonId: currentGameId!, wordsStudy: '', isSoundPrompt: false, inputMethod: inputMethod, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
         ),
       );
     }
