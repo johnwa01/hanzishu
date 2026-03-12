@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/localization/string_en_US.dart';
 import 'package:hanzishu/localization/string_zh_CN.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 /*
 enum HittestState {
@@ -721,6 +723,17 @@ class Utility {
     return false;
   }
   // var newStr = replaceCharAt("hello", 1, "E") //usage
+
+  static String getMD5HashString(String inputStr) {
+    String hashStr = "";
+
+    Digest md5Hash = md5.convert(utf8.encode(inputStr));
+
+    hashStr = md5Hash.toString();
+    //print('MD5 Hash: ${md5Hash.toString()}');
+    // Example Output: MD5 Hash: 89c755b7a0b1632366e3f93786524e51
+    return hashStr;
+  }
 }
 
 //TODO: check - this is not used anymore I think.

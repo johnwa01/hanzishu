@@ -25,9 +25,11 @@ import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/data/lessonlist.dart';
 import 'package:hanzishu/data/sentencelist.dart';
 import 'package:hanzishu/engine/triemanager.dart';
+import 'package:hanzishu/utility.dart';
 
 import 'dart:core';
 import 'dart:io';
+import 'package:flutter/services.dart';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
@@ -1600,6 +1602,7 @@ class _InputZiPageState extends State<InputZiPage> {
       return Column(
           children: <Widget>[
             getHashString(),
+            copyHashToClipboard(),
             getNextInputGameQuestionButton(),
           ]
       );
@@ -1639,6 +1642,7 @@ class _InputZiPageState extends State<InputZiPage> {
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
+            copyTextToClipboard(),
             getNextInputGameQuestionButton(),
             //SizedBox(
             //  height: 40.0, //40
@@ -1681,6 +1685,7 @@ class _InputZiPageState extends State<InputZiPage> {
             SizedBox(height: 30.0),
             getOtherInputMethodTextField(_controllerStandard, false),
             SizedBox(height: 40.0),
+            copyTextToClipboard(),
             getNextInputGameQuestionButton(),
           ]
       );
@@ -1878,18 +1883,55 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Widget getHashString() {
-    if (typingType == TypingType.InputGame &&  isInputGameInHashMode ) {
-      String existingText;
-      if (inputMethod == InputMethod.Pinxin) {
-        existingText = _controller.value.text;
-      }
-      else {
-        existingText = _controllerStandard.value.text;
-      }
-
-      return Text("Copy this text into answer sheet:" + existingText) ;
+  String getEditFieldStringValue() {
+    String existingText;
+    if (inputMethod == InputMethod.Pinxin) {
+      existingText = _controller.value.text;
     }
+    else {
+      existingText = _controllerStandard.value.text;
+    }
+
+    return existingText;
+  }
+
+  String getHashStringValue() {
+    return Utility.getMD5HashString(getEditFieldStringValue());
+  }
+
+  Widget getHashString() {
+    if (typingType == TypingType.InputGame &&  isInputGameInHashMode )
+    {
+      return SelectableText("Copy this text into answer sheet:" + getHashStringValue());
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget copyTextToClipboard() {
+    if (typingType == TypingType.InputGame)
+    {
+      return TextButton(
+        child: const Text('Click here to copy the above data'),
+        onPressed: () async {
+          await Clipboard.setData(ClipboardData(text: getEditFieldStringValue()));
+        },
+      );
+    };
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget copyHashToClipboard() {
+    if (typingType == TypingType.InputGame)
+    {
+      return TextButton(
+        child: const Text('Click here to copy the above data'),
+        onPressed: () async {
+          await Clipboard.setData(ClipboardData(text: getHashStringValue()));
+        },
+      );
+    };
 
     return SizedBox(width: 0.0, height: 0.0);
   }
