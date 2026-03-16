@@ -8,6 +8,7 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/inputzi.dart';
 import 'package:hanzishu/engine/inputgamemanager.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/engine/inputgame.dart';
 import 'package:hanzishu/data/inputgameanswersheetlist.dart';
 
 class InputGamePage extends StatefulWidget {
@@ -15,8 +16,9 @@ class InputGamePage extends StatefulWidget {
   Map<int, List<int>>realGroupMembersCache = Map();
   late PositionAndSize centerPositionAndSizeCache;
   final String? gameid;
+  final String? gameid2;
 
-  InputGamePage({required this.gameid});
+  InputGamePage({required this.gameid, this.gameid2});
 
   @override
   _InputGamePageState createState() => _InputGamePageState();
@@ -44,6 +46,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   int currentIndex = 0;
 
   bool gridShowZi = true;
+  InputGameState inputGameState = InputGameState.login;
 
   double getSizeRatioWithLimit() {
     return Utility.getSizeRatioWithLimit(screenWidth);
@@ -59,26 +62,13 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
     setState(() {
       gridShowZi = true;
+      inputGameState = InputGameState.login;
     });
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  _getRequests() async {
-    this.currentIndex += 1;
-
-    if (!theIsBackArrowExit && this.currentIndex <= inputText.length) {
-      // reinit
-      theIsBackArrowExit = true;
-      launchInputGame(this.currentIndex);
-    }
-    else {
-      theIsBackArrowExit = true;
-      this.currentIndex = 0;
-    }
   }
 
   @override
@@ -101,79 +91,8 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         body: Container(
             child: WillPopScope(
                 child: new Column( //Stack(
-                    children: <Widget>[
-                      SizedBox(height: 40 * getSizeRatioWithLimit()),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            SizedBox(width: 10 * getSizeRatioWithLimit()),
-                            Text(displ/*"Please enter participation code"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-
-                            /* SizedBox(width: 15 * getSizeRatioWithLimit()),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  gridShowZi = gridShowZi ? false : true;
-                                });
-                              },
-                              child: Text(gridShowOrNotShowZiString,
-                                  style: TextStyle(color: Colors.lightBlue)),
-                            ),
-                            */
-                          ]
-                      ),
-                      SizedBox(height: 10 * getSizeRatioWithLimit()),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          SizedBox(
-                            width: 280 * getSizeRatioWithLimit(), //double.infinity,
-                            //height: 120,
-                            child: TextField(
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              controller: _controller,
-                              focusNode: _textNode,
-                              autofocus: false,
-                              style: TextStyle(
-                                fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-                                //height: 1.0 // 1.3
-                              ),
-                              maxLines: 1,
-                              //expands: true,
-                              keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
-                              decoration: InputDecoration(
-                                //hintText: 'This test',
-                                filled: true,
-                                fillColor: Colors.grey, //lightBlueAccent, //black12,
-                              ),
-                            ),//focusNode: _textNode,
-                          ),
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-                            ),
-                            onPressed: () {
-                              processInputs();
-                              /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DictionaryHelpPage(),
-                                ),
-                              );
-                              */
-                            },
-                            child: Text("开始 Start",
-                                style: TextStyle(color: Colors.lightBlue)),
-                          ),
-                        ],
-                      ),
-                    ]
+                    children: //<Widget>[
+                      getUIByInputGameState(),
                 ),
                 onWillPop: _onWillPop
             )
@@ -185,6 +104,139 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
     // should not reach here
     return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  List<Widget> getUIByInputGameState() {
+    switch (inputGameState) {
+      case InputGameState.login:
+        return getLogins();
+      case InputGameState.gameType:
+        return getGameTypes();
+      case InputGameState.answerSheet:
+        return getAnswerSheets();
+      case InputGameState.game:
+        return getGame();
+    }
+
+    return [];
+  }
+
+  List<Widget> getLogins() {
+    List<Widget> logins = [];
+    logins.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    logins.add(SizedBox(
+      width: 280 * getSizeRatioWithLimit(), //double.infinity,
+      //height: 120,
+      child: TextField(
+        autocorrect: false,
+        enableSuggestions: false,
+        controller: _controller,
+        focusNode: _textNode,
+        autofocus: false,
+        style: TextStyle(
+          fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
+          //height: 1.0 // 1.3
+          ),
+        maxLines: 1,
+        //expands: true,
+        keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
+        decoration: InputDecoration(
+          //hintText: 'This test',
+          filled: true,
+          fillColor: Colors.grey, //lightBlueAccent, //black12,
+        ),
+      ),//focusNode: _textNode,
+    ));
+    logins.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    logins.add(TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        processInputs();
+      },
+      child: Text("开始 Start login",
+        style: TextStyle(color: Colors.lightBlue)),
+    ));
+
+    return logins;
+  }
+
+  List<Widget> getGameTypes() {
+    List<Widget> gameTypes = [];
+
+    gameTypes.add(TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        setState(() {
+          currentGameId = int.parse(widget.gameid!);
+          inputGameState = InputGameState.answerSheet;
+        });
+      },
+      child: Text("开始 Choose Hanzishu Input Method",
+          style: TextStyle(color: Colors.lightBlue)),
+    ));
+
+    if (widget.gameid2 != null) {
+      if (int.parse(widget.gameid2!) > 0) {
+        gameTypes.add(TextButton(
+          style: TextButton.styleFrom(
+            textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+          ),
+          onPressed: () {
+            setState(() {
+              currentGameId = int.parse(widget.gameid2!);
+              inputGameState = InputGameState.answerSheet;
+            });
+          },
+          child: Text("开始 Choose Pinyin Input Method",
+              style: TextStyle(color: Colors.lightBlue)),
+        ));
+      }
+    }
+
+    return gameTypes;
+  }
+
+  List<Widget> getAnswerSheets() {
+    List<Widget> launchAnswerSheets = [];
+    launchAnswerSheets.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+
+    launchAnswerSheets.add(TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        launchAnswerSheetWindow(currentGameId!);
+        setState(() {
+          inputGameState = InputGameState.game;
+        });
+      },
+      child: Text("开始 Start to launch answer sheet",
+          style: TextStyle(color: Colors.lightBlue)),
+    ));
+
+    return launchAnswerSheets;
+  }
+
+  List<Widget> getGame() {
+    List<Widget> games = [];
+    games.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+
+    games.add(TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+      ),
+      onPressed: () {
+        launchInputGame(currentGameId!);
+      },
+      child: Text("开始 Start game",
+          style: TextStyle(color: Colors.lightBlue)),
+    ));
+
+    return games;
   }
 
   showInvalidInputDialog() {
@@ -241,8 +293,9 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     inputText = _controller.value.text;
 
     if (InputGameManager.isInputGamePasscodeValid(inputText)) {
-      launchAnswerSheetWindow(currentGameId!);
-      launchInputGame(currentGameId!);
+      setState(() {
+        inputGameState = InputGameState.gameType;
+      });
     }
     else {
       //if (inputText.length == 0) {

@@ -93,11 +93,12 @@ final GoRouter _router = GoRouter(
       },
     ),
     GoRoute(
-      //Example: hanzishu.com/#/inputgame?gameid=1
+      //Example: hanzishu.com/#/inputgame?gameid=1&gameid2=2
       path: '/inputgame',
       builder: (context, state) {
         final gameid = state.uri.queryParameters['gameid'];
-        return InputGamePage(gameid: gameid);
+        final gameid2 = state.uri.queryParameters['gameid2'];
+        return InputGamePage(gameid: gameid, gameid2: gameid2);
       },
     ),
     // Example with a path parameter

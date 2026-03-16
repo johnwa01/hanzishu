@@ -1,5 +1,12 @@
 import 'package:hanzishu/engine/inputgamequestion.dart';
 
+enum InputGameState {
+  login,
+  gameType,
+  answerSheet,
+  game
+}
+
 class InputGame {
   int id = -1;
   int gameType = -1;
