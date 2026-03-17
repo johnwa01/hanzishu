@@ -2067,6 +2067,7 @@ class _InputZiPageState extends State<InputZiPage> {
       onPressed: () {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
+        Navigator.of(context).pop();
       },
     );
 

@@ -14,6 +14,7 @@ import 'package:hanzishu/ui/mepage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/inputgamepage.dart';
 
 // Note: this file is no longer used
 class LaunchPage extends StatefulWidget {
@@ -223,6 +224,8 @@ class _LaunchPageState extends State<LaunchPage> {
           //    style: TextStyle(color: Colors.blue, fontSize: fontSize2),
           //    textAlign: TextAlign.start
           //),
+          SizedBox(height: fontSize1),
+          getRealInputGameLink(),
           SizedBox(height: fontSize1),
           getHanzishuInputGameLink(),
           SizedBox(height: fontSize1 * 2),
@@ -498,6 +501,31 @@ class _LaunchPageState extends State<LaunchPage> {
       },
       child: Text("山东省成武县郜城四小第一次象形电打课程总结(作者：朱君)", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
     );
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getRealInputGameLink() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => InputGamePage(gameid: "1", gameid2: "2"),
+            ),
+          );
+        },
+        child: Text("汉字树杯赛热身赛 | Hanzishu Cup competition warm up game", style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.redAccent)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
 
     //return SizedBox(width: 0, height: 0);
   }
