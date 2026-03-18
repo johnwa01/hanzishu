@@ -510,6 +510,7 @@ class _LaunchPageState extends State<LaunchPage> {
       return Center(child: TextButton(
         //color: Colors.blueAccent, //white,
         //textColor: Colors.brown, //brown,
+
         onPressed: () {
           Navigator.push(
             context,
@@ -518,7 +519,17 @@ class _LaunchPageState extends State<LaunchPage> {
             ),
           );
         },
-        child: Text("汉字树杯赛热身赛 | Hanzishu Cup competition warm up game", style: TextStyle(
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: Text("汉字树杯汉字输入热身赛\nHanzishu Cup Hanzi Input Warm Up Games", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.redAccent)),
       ),
       );

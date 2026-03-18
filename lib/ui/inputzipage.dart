@@ -1601,8 +1601,13 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame && isInputGameInHashMode) {
       return Column(
           children: <Widget>[
+            SizedBox(height: 50.0),
             getHashString(),
+            SizedBox(height: 10.0),
             copyHashToClipboard(),
+            SizedBox(height: 10.0),
+            inputGameInstruction(),
+            SizedBox(height: 10.0),
             getNextInputGameQuestionButton(),
           ]
       );
@@ -1643,6 +1648,9 @@ class _InputZiPageState extends State<InputZiPage> {
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
             copyTextToClipboard(),
+            SizedBox(height: 10),
+            inputGameInstruction(),
+            SizedBox(height: 10),
             getNextInputGameQuestionButton(),
             //SizedBox(
             //  height: 40.0, //40
@@ -1664,15 +1672,15 @@ class _InputZiPageState extends State<InputZiPage> {
             Row(
                 children: <Widget>[
                   SizedBox(width: 10),
-                  Container(
-                    alignment: Alignment.topLeft,
-                    child: getShortTypingTitle(),
-                  ),
+                  //Container(
+                  //  alignment: Alignment.topLeft,
+                  //  child: getShortTypingTitle(),
+                  //),
                   //SizedBox(width: 10),
-                  Container(
+                  //Container(
                     //alignment: Alignment.topRight,
-                    child: getSwitchInputMethod(),
-                  ),
+                  //  child: getSwitchInputMethod(),
+                  //),
                   //SizedBox(width: 10),
                   Container(
                     alignment: Alignment.topRight,
@@ -1683,9 +1691,12 @@ class _InputZiPageState extends State<InputZiPage> {
             getInputPrompt(),
             getHashString(),
             SizedBox(height: 30.0),
-            getOtherInputMethodTextField(_controllerStandard, false),
+            Center(child: getOtherInputMethodTextField(_controllerStandard, false)),
             SizedBox(height: 40.0),
             copyTextToClipboard(),
+            SizedBox(height: 10.0),
+            inputGameInstruction(),
+            SizedBox(height: 10.0),
             getNextInputGameQuestionButton(),
           ]
       );
@@ -1697,7 +1708,18 @@ class _InputZiPageState extends State<InputZiPage> {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-    return TextButton(
+    return Center(child: TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
       onPressed: () {
           if (isInputGameInHashMode) {
             if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
@@ -1716,8 +1738,10 @@ class _InputZiPageState extends State<InputZiPage> {
             });
           }
       },
-      child: Text("When you are done, copy/paste it to answer sheet, then click continue.",
-          style: TextStyle(color: Colors.brown)),
+      child: Text("3. 最后，点击这里继续。Last， click here to continue.",
+          style: TextStyle(
+            fontSize: 20.0 * getSizeRatio(), // Set the desired font size
+          ),)),
     );
   }
 
@@ -1749,6 +1773,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  /*
   Widget getShortTypingTitle() {
     String switchLabel;
     if (inputMethod == InputMethod.Pinxin) {
@@ -1760,6 +1785,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return Text(switchLabel, style: TextStyle(color: Colors.lightBlue/*, fontSize: 15 * getSizeRatio()*/));
   }
+  */
 
   Widget getHanzishuTextField(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines) {
     return SizedBox(
@@ -1902,7 +1928,23 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getHashString() {
     if (typingType == TypingType.InputGame &&  isInputGameInHashMode )
     {
-      return SelectableText("Copy this text into answer sheet:" + getHashStringValue());
+      return SelectableText(getHashStringValue(), style: TextStyle(
+          fontSize: 20.0 * getSizeRatio(), // Set the font size
+          fontWeight: FontWeight.bold, // Optional: customize other properties
+          color: Colors.blue, // Optional: change color
+      ),);
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget inputGameInstruction() {
+    if (typingType == TypingType.InputGame) {
+      return Center(child: Text("    2. 然后，到答卷表，将刚才拷贝的内容复制到那里。Then, go to answer sheet to paste data there.",   style: TextStyle(
+        fontSize: 20.0 * getSizeRatio(), // Set the font size
+        fontWeight: FontWeight.bold, // Optional: customize other properties
+        color: Colors.blue, // Optional: change color
+      ),));
     }
 
     return SizedBox(width: 0.0, height: 0.0);
@@ -1912,7 +1954,18 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame)
     {
       return TextButton(
-        child: const Text('Click here to copy the above data'),
+        child: const Text('1. 打完以后，点击这里来拷贝打字栏里的内容. After finishing typing, click here to copy the above data.'),
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         onPressed: () async {
           await Clipboard.setData(ClipboardData(text: getEditFieldStringValue()));
         },
@@ -1925,12 +1978,29 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget copyHashToClipboard() {
     if (typingType == TypingType.InputGame)
     {
-      return TextButton(
-        child: const Text('Click here to copy the above data'),
+      return Center(child: TextButton(
+        child: const Text('1. 点击这里来拷贝以上内容 Click here to copy the above data'),
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         onPressed: () async {
           await Clipboard.setData(ClipboardData(text: getHashStringValue()));
+          if (inputMethod == InputMethod.Pinxin) {
+            _controller.clear();
+          }
+          else {
+            _controllerStandard.clear();
+          }
         },
-      );
+      ));
     };
 
     return SizedBox(width: 0.0, height: 0.0);
@@ -2073,7 +2143,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     AlertDialog alert = AlertDialog(
       title: Text(getString(375)/*Result*/),
-      content: Text("祝贺你完成汉字输入大赛某项比赛 Congrats for finishing Hanzishu Cup one competion."),
+      content: Text("祝贺你完成汉字输入大赛一项比赛! 别忘了提交答卷。\n\nCongrats for finishing Hanzishu Cup one competition! Don't forget to submit the answer sheet."),
       actions: [
         okButton,
       ],
@@ -2501,11 +2571,12 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
     var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
+    String instruction = "[请打如下内容 Please type following:]";
 
     if (questionString.length != 0) {
       return Text(
-          questionString,
-          style: TextStyle(fontSize: 15.0,
+          instruction + questionString,
+          style: TextStyle(fontSize: 20.0 * getSizeRatio(),
               fontWeight: FontWeight.bold,
               color: Colors.blueAccent),
           textAlign: TextAlign.left

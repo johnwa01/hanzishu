@@ -123,40 +123,47 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
   List<Widget> getLogins() {
     List<Widget> logins = [];
-    logins.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
-    logins.add(SizedBox(
-      width: 280 * getSizeRatioWithLimit(), //double.infinity,
-      //height: 120,
-      child: TextField(
-        autocorrect: false,
-        enableSuggestions: false,
-        controller: _controller,
-        focusNode: _textNode,
-        autofocus: false,
-        style: TextStyle(
-          fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-          //height: 1.0 // 1.3
+    logins.add(SizedBox(height: 50));
+    logins.add(Center(child: Row(
+        children: <Widget>[
+          SizedBox(width: 50 * getSizeRatioWithLimit()),
+          SizedBox(
+            width: 200 * getSizeRatioWithLimit(), //double.infinity,
+            //height: 120,
+            child: TextField(
+              autocorrect: false,
+              enableSuggestions: false,
+              controller: _controller,
+              focusNode: _textNode,
+              autofocus: false,
+              style: TextStyle(
+                 fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
+                  //height: 1.0 // 1.0
+                 ),
+              maxLines: 1,
+              //expands: true,
+              keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
+              decoration: InputDecoration(
+                //hintText: 'This test',
+                filled: true,
+                fillColor: Colors.grey, //lightBlueAccent, //black12,
+              ),
+            ),//focusNode: _textNode,
           ),
-        maxLines: 1,
-        //expands: true,
-        keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
-        decoration: InputDecoration(
-          //hintText: 'This test',
-          filled: true,
-          fillColor: Colors.grey, //lightBlueAccent, //black12,
-        ),
-      ),//focusNode: _textNode,
-    ));
-    logins.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
-    logins.add(TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-      ),
-      onPressed: () {
-        processInputs();
-      },
-      child: Text("开始 Start login",
-        style: TextStyle(color: Colors.lightBlue)),
+          SizedBox(width: 10 * getSizeRatioWithLimit()),
+          TextButton(
+            style: TextButton.styleFrom(
+              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+            ),
+
+            onPressed: () {
+              processInputs();
+            },
+            child: Text("开始 Start login",
+              style: TextStyle(color: Colors.lightBlue)),
+          ),
+        ]
+    ),
     ));
 
     return logins;
@@ -165,9 +172,18 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   List<Widget> getGameTypes() {
     List<Widget> gameTypes = [];
 
+    gameTypes.add(SizedBox(height: 50.0));
     gameTypes.add(TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       onPressed: () {
         setState(() {
@@ -175,15 +191,25 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.answerSheet;
         });
       },
-      child: Text("开始 Choose Hanzishu Input Method",
+      child: Text("汉字树象形输入法热身赛\n\nHanzishu Pictographic Input Method Games",
           style: TextStyle(color: Colors.lightBlue)),
     ));
 
+    gameTypes.add(SizedBox(height: 50.0));
+
     if (widget.gameid2 != null) {
       if (int.parse(widget.gameid2!) > 0) {
-        gameTypes.add(TextButton(
+        gameTypes.add(Center(child: TextButton(
           style: TextButton.styleFrom(
             textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+            side: BorderSide(
+              color: Colors.blue, // The border color
+              width: 2,          // The border width
+            ),
+            // You can also add rounded corners
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
           onPressed: () {
             setState(() {
@@ -191,9 +217,9 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
               inputGameState = InputGameState.answerSheet;
             });
           },
-          child: Text("开始 Choose Pinyin Input Method",
-              style: TextStyle(color: Colors.lightBlue)),
-        ));
+          child: Text("拼音输入法热身赛\n\nPinyin Input Method Warm Up Games",
+              style: TextStyle(color: Colors.lightBlue),
+        ))));
       }
     }
 
@@ -202,11 +228,20 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
   List<Widget> getAnswerSheets() {
     List<Widget> launchAnswerSheets = [];
-    launchAnswerSheets.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
 
-    launchAnswerSheets.add(TextButton(
+    launchAnswerSheets.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
+
+    launchAnswerSheets.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       onPressed: () {
         launchAnswerSheetWindow(currentGameId!);
@@ -214,27 +249,48 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.game;
         });
       },
-      child: Text("开始 Start to launch answer sheet",
-          style: TextStyle(color: Colors.lightBlue)),
-    ));
+      child: Text("1. 先读下面内容，然后点击这里。First read content below, then click this button",
+          style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
+    )));
+
+    launchAnswerSheets.add(SizedBox(height: 10.0));
+    launchAnswerSheets.add(Text("2. 然后，在打开的比赛答卷中填写你个人的信息部分。Then, at the opened answer sheet for the game, fill out the part about yourself.",   style: TextStyle(color: Colors.lightBlue,
+      fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
+      //fontWeight: FontWeight.bold, // Optional: also set font weight
+    ),));
+    launchAnswerSheets.add(SizedBox(height: 10.0));
+    launchAnswerSheets.add(Text("3. 最后，回到这里。",   style: TextStyle(color: Colors.lightBlue,
+    fontSize: 20.0 * getSizeRatioWithLimit()), // Set the font size in logical pixels
+      //fontWeight: FontWeight.bold, // Optional: also set font weight
+    ),);
 
     return launchAnswerSheets;
   }
 
   List<Widget> getGame() {
     List<Widget> games = [];
-    games.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    games.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
 
-    games.add(TextButton(
+    games.add(Center(child: Text("1. Make sure you are at right input mode.", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
+    games.add(SizedBox(height: 10));
+    games.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
       ),
       onPressed: () {
         launchInputGame(currentGameId!);
       },
-      child: Text("开始 Start game",
-          style: TextStyle(color: Colors.lightBlue)),
-    ));
+      child: Text("2. 开始比赛 Start the Game",
+          style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit(),)),
+    )));
 
     return games;
   }
