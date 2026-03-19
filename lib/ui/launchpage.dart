@@ -552,7 +552,7 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://hanzishu.com/typing/2026/warmupresults.html"),
               webOnlyWindowName: '_self');
         },
-        child: Text("热身赛成绩 Warm up game results (可做多次 You can do multiple times)", style: TextStyle(
+        child: Text("热身赛擂台榜 Warm Up Game Results", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
