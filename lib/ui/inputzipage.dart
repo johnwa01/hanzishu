@@ -1381,8 +1381,12 @@ class _InputZiPageState extends State<InputZiPage> {
     //initParameters();
 
     int maxNumberOfLines;
-    if (typingType == TypingType.FreeTyping || typingType == TypingType.InputGame) {
+    if (typingType == TypingType.FreeTyping) {
       maxNumberOfLines = 10;  // 4
+      editFontSize = 24 * getSizeRatio();
+    }
+    else if (typingType == TypingType.InputGame) {
+      maxNumberOfLines = 8;
       editFontSize = 24 * getSizeRatio();
     }
     else {
@@ -1469,7 +1473,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(108)/*'Free typing and help'*/;
     }
     else if (typingType == TypingType.InputGame) {
-      title = getString(534)/*'Chinese Input Method Competition and help'*/;
+      title = "汉字树杯输入大赛 Hanzishu Cup Input Competition"; //getString(534)/*'Chinese Input Method Competition and help'*/;
     }
     else if (typingType == TypingType.DicSearchTyping) {
       title = getString(95)/*'Dictionary'*/;
@@ -1922,7 +1926,15 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   String getHashStringValue() {
-    return Utility.getMD5HashString(getEditFieldStringValue());
+    var hashExtra = "";
+    if (InputGameManager.getInputGameById(currentInputGameId) == "1") {
+      hashExtra = "Xiangxing";
+    }
+    else {
+      hashExtra = "Pinyin";
+    }
+
+    return Utility.getMD5HashString(getEditFieldStringValue() + hashExtra);
   }
 
   Widget getHashString() {
@@ -1940,7 +1952,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget inputGameInstruction() {
     if (typingType == TypingType.InputGame) {
-      return Center(child: Text("    2. 然后，到答卷表，将刚才拷贝的内容复制到那里。Then, go to answer sheet to paste data there.",   style: TextStyle(
+      return Center(child: Text("    2. 然后，到答卷单，将刚才拷贝的内容复制到那里。Then, go to answer sheet to paste data there.",   style: TextStyle(
         fontSize: 20.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
@@ -1954,7 +1966,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame)
     {
       return TextButton(
-        child: const Text('1. 打完以后，点击这里来拷贝打字栏里的内容. After finishing typing, click here to copy the above data.'),
+        child: const Text('1. 打完以后，点击这里(来拷贝打字栏里的内容). After finishing typing, click here to copy the above data.'),
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
           side: BorderSide(
@@ -1979,7 +1991,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame)
     {
       return Center(child: TextButton(
-        child: const Text('1. 点击这里来拷贝以上内容 Click here to copy the above data'),
+        child: const Text('1. 点击这里来拷贝以上检证码 Click here to copy the above verification code.'),
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
           side: BorderSide(
@@ -2008,14 +2020,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
   // non-Hanzishu input methods
   Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
-    double fieldWidth = 400.0; //double.infinity; //300.0;
+    double fieldWidth = 400.0; //double.infinity
     if (withQueryButton) {
       fieldWidth = 120.0;
     }
 
     int maxLines = 1;
     if (typingType == TypingType.InputGame && inputMethod == InputMethod.Others) {
-      maxLines = 10;
+      maxLines = 8;
     }
 
     return Row(
@@ -2143,7 +2155,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     AlertDialog alert = AlertDialog(
       title: Text(getString(375)/*Result*/),
-      content: Text("祝贺你完成汉字输入大赛一项比赛! 别忘了提交答卷。\n\nCongrats for finishing Hanzishu Cup one competition! Don't forget to submit the answer sheet."),
+      content: Text("祝贺你完成汉字输入大赛一项比赛! 别忘了提交答卷!\n\nCongrats for finishing Hanzishu Cup one competition! Don't forget to submit the answer sheet!"),
       actions: [
         okButton,
       ],
@@ -2571,15 +2583,24 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
     var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
-    String instruction = "[请打如下内容 Please type following:]";
+    String instruction = "[请打第" + (inputGameQuestionId+1).toString() + "道题 Please Type Question " + (inputGameQuestionId+1).toString() + "]";
 
     if (questionString.length != 0) {
-      return Text(
-          instruction + questionString,
-          style: TextStyle(fontSize: 20.0 * getSizeRatio(),
-              fontWeight: FontWeight.bold,
-              color: Colors.blueAccent),
-          textAlign: TextAlign.left
+      return Column(
+          children: <Widget>[
+            Text(instruction,
+              style: TextStyle(fontSize: 20.0 * getSizeRatio(),
+                fontWeight: FontWeight.bold,
+                color: Colors.brown),
+              textAlign: TextAlign.left
+            ),
+            Text(questionString,
+              style: TextStyle(fontSize: 20.0 * getSizeRatio(),
+                fontWeight: FontWeight.bold,
+                color: Colors.blueAccent),
+              textAlign: TextAlign.left
+            ),
+          ]
       );
     }
 

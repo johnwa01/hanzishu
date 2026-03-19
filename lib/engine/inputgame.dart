@@ -13,6 +13,7 @@ class InputGame {
   String EnglishName = "";
   String ChineseName = "";
   List<int> inputGameQuestionIdList = [];
+  String answerSheetUrl = "";
 
   InputGame(
       int id,
@@ -20,6 +21,7 @@ class InputGame {
       String EnglishName,
       String ChineseName,
       List<int> inputGameQuestionIdList,
+      String answerSheetUrl,
       )
   {
     this.id = id;
@@ -27,5 +29,6 @@ class InputGame {
     this.EnglishName = EnglishName;
     this.ChineseName = ChineseName;
     this.inputGameQuestionIdList = inputGameQuestionIdList;
+    this.answerSheetUrl = answerSheetUrl;
   }
 }

@@ -44,7 +44,7 @@ class InputGameManager {
       }
     }
 
-    return InputGame(-1, -1, "", "", []);
+    return InputGame(-1, -1, "", "", [], "");
   }
 
   static InputGameQuestion getInputGameQuestionById(int id) {

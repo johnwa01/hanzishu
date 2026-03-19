@@ -30,7 +30,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   late double screenWidth;
   //late String initZis;
   late int? currentGameId;
-  late int? currentGameType; // 1: pictographic, 2: Pinyin input
+  //late int? currentGameType; // 1: pictographic, 2: Pinyin input
 
   FocusNode _textNode = new FocusNode();
 
@@ -191,7 +191,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.answerSheet;
         });
       },
-      child: Text("汉字树象形输入法热身赛\n\nHanzishu Pictographic Input Method Games",
+      child: Text("汉字树象形输入法热身赛\n\nHanzishu Pictographic Input Method Warm Up Game",
           style: TextStyle(color: Colors.lightBlue)),
     ));
 
@@ -217,7 +217,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
               inputGameState = InputGameState.answerSheet;
             });
           },
-          child: Text("拼音输入法热身赛\n\nPinyin Input Method Warm Up Games",
+          child: Text("拼音输入法热身赛\n\nPinyin Input Method Warm Up Game",
               style: TextStyle(color: Colors.lightBlue),
         ))));
       }
@@ -249,17 +249,18 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.game;
         });
       },
-      child: Text("1. 先读下面内容，然后点击这里。First read content below, then click this button",
+      child: Text("1. 先读下面内容，然后点击这里(打开比赛答卷）。First read content below (to open answer sheet), then click this button",
           style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
     )));
-
+    var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
+    launchAnswerSheets.add(SelectableText("注：比赛答卷的网址是 Note: The answer sheet web address is: " + answerSheetUrl, style: TextStyle(fontSize: 20)));
     launchAnswerSheets.add(SizedBox(height: 10.0));
-    launchAnswerSheets.add(Text("2. 然后，在打开的比赛答卷中填写你个人的信息部分。Then, at the opened answer sheet for the game, fill out the part about yourself.",   style: TextStyle(color: Colors.lightBlue,
+    launchAnswerSheets.add(Text("2. 然后，在比赛答卷中开始记时,并且填写你个人的信息部分。Then, at the opened answer sheet for the game, start the clock and fill out the part about yourself.",   style: TextStyle(color: Colors.lightBlue,
       fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
       //fontWeight: FontWeight.bold, // Optional: also set font weight
     ),));
     launchAnswerSheets.add(SizedBox(height: 10.0));
-    launchAnswerSheets.add(Text("3. 最后，回到这里。",   style: TextStyle(color: Colors.lightBlue,
+    launchAnswerSheets.add(Text("3. 最后，回到这里。Last, come back here.",   style: TextStyle(color: Colors.lightBlue,
     fontSize: 20.0 * getSizeRatioWithLimit()), // Set the font size in logical pixels
       //fontWeight: FontWeight.bold, // Optional: also set font weight
     ),);
@@ -269,9 +270,20 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
   List<Widget> getGame() {
     List<Widget> games = [];
-    games.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
 
-    games.add(Center(child: Text("1. Make sure you are at right input mode.", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
+    var inputTypeEng;
+    var inputTypeChi;
+    if (InputGameManager.getInputGameById(currentGameId!).gameType == 1) {
+      inputTypeEng = "English";
+      inputTypeChi = "英文";
+    }
+    else { // 2
+      inputTypeEng = "Pinyin";
+      inputTypeChi = "拼音";
+    }
+
+    games.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
+    games.add(Center(child: Text("1. 核查一下你的输入模式是" + inputTypeChi + " Make sure your input mode is " + inputTypeEng + ".", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
     games.add(SizedBox(height: 10));
     games.add(Center(child: TextButton(
       style: TextButton.styleFrom(
@@ -360,11 +372,11 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   }
 
   launchAnswerSheetWindow(int gameId) {
-    int gameType = InputGameManager
+    var answerSheetUrl = InputGameManager
         .getInputGameById(gameId)
-        .gameType;
+        .answerSheetUrl;
 
-    launchUrl(Uri.parse(theInputGameAnswerSheetList[gameType].url), mode: LaunchMode.externalApplication/*, webOnlyWindowName: '_self'*/);
+    launchUrl(Uri.parse(answerSheetUrl), mode: LaunchMode.externalApplication/*, webOnlyWindowName: '_self'*/);
   }
 
   Future<bool>_onWillPop() {

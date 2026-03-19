@@ -2,8 +2,8 @@ import 'package:hanzishu/engine/inputgamequestion.dart';
 
 var theInputGameQuestionList = [
   InputGameQuestion(0, "没有比赛。"),
-  InputGameQuestion(1, "第二届比赛。"),
-  InputGameQuestion(2, "中国真伟大。"),
-  InputGameQuestion(3, "美国真伟大。"),
-  InputGameQuestion(4, "中国也伟大。"),
+  InputGameQuestion(1, "他是学生，也是咖啡店的服务员。这个男孩是谁。那个女孩是他妹妹。他做什么工作。"),
+  InputGameQuestion(2, "一些生活在水里的动物，用贝壳保护自己的身体。甲骨文中的贝字就像一种海贝的样子。"),
+  InputGameQuestion(3, "为了看日出，我常常早起。那时天还没有大亮，周围非常清静，船上只有机器的响声。天空还是一片浅蓝，颜色很浅。转眼间天边出现了一道红霞，慢慢地在扩大它的范围，加强它的亮光。我知道太阳要从天边升起来了，便不转眼地望着那里。婴啼未息，声断复续。时啼夜醒，哭尽无力。乳哺频频，抱行再三。臂酸背痛，心乱意烦。"),
+  InputGameQuestion(4, "第二天早晨，船驶进邻国宏伟都城的港口。所有教堂的钟都敲响了，高高的塔顶上军号齐鸣，兵士们拿着飘扬的旗子，佩带着闪亮的军刀在敬礼。每天都有欢庆活动，宴会和舞会一个接着一个，可是公主还没有露面。人们说她在一个遥远的地方接受教育，学习各种皇家的美德。最后，她终于来了。室冷灯昏，夜深风急。墙暗影动，窗细声微。被轻难御，露重衣湿。身寒手僵，心惊梦迟。"),
 ];
