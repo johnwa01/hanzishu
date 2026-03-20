@@ -86,7 +86,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         (
         appBar: AppBar
           (
-          title: Text("汉字树杯输入大赛 | Hanzishu Cup  Input Competition"),
+          title: Text("汉字树杯汉字输入大赛 | Hanzishu Cup Hanzi Input Competition"),
         ),
         body: Container(
             child: WillPopScope(
@@ -112,6 +112,8 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         return getLogins();
       case InputGameState.gameType:
         return getGameTypes();
+      case InputGameState.inputGameHelper:
+        return getInputGameHelper();
       case InputGameState.answerSheet:
         return getAnswerSheets();
       case InputGameState.game:
@@ -124,7 +126,16 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   List<Widget> getLogins() {
     List<Widget> logins = [];
     logins.add(SizedBox(height: 50));
-    logins.add(Center(child: Row(
+    logins.add(Row(
+        children: <Widget>[
+          SizedBox(width: 50 * getSizeRatioWithLimit()),
+          Text("请打入参赛码:",
+            style: TextStyle(color: Colors.lightBlue, fontSize: 20.0* getSizeRatioWithLimit())),
+        ]
+    ));
+
+    logins.add(SizedBox(width: 10 * getSizeRatioWithLimit()));
+    logins.add(/*Center(child: */Row(
         children: <Widget>[
           SizedBox(width: 50 * getSizeRatioWithLimit()),
           SizedBox(
@@ -159,11 +170,11 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
             onPressed: () {
               processInputs();
             },
-            child: Text("开始 Start login",
+            child: Text("进入 Start login",
               style: TextStyle(color: Colors.lightBlue)),
           ),
         ]
-    ),
+    //),
     ));
 
     return logins;
@@ -188,10 +199,10 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       onPressed: () {
         setState(() {
           currentGameId = int.parse(widget.gameid!);
-          inputGameState = InputGameState.answerSheet;
+          inputGameState = InputGameState.inputGameHelper;
         });
       },
-      child: Text("汉字树象形输入法热身赛\n\nHanzishu Pictographic Input Method Warm Up Game",
+      child: Text("汉字树象形输入法热身练习\n\nHanzishu Pictographic Input Method Warm Up Exercise",
           style: TextStyle(color: Colors.lightBlue)),
     ));
 
@@ -214,10 +225,10 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           onPressed: () {
             setState(() {
               currentGameId = int.parse(widget.gameid2!);
-              inputGameState = InputGameState.answerSheet;
+              inputGameState = InputGameState.inputGameHelper;
             });
           },
-          child: Text("拼音输入法热身赛\n\nPinyin Input Method Warm Up Game",
+          child: Text("拼音输入法热身练习\n\nPinyin Input Method Warm Up Exercises",
               style: TextStyle(color: Colors.lightBlue),
         ))));
       }
@@ -226,11 +237,50 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     return gameTypes;
   }
 
+  List<Widget> getInputGameHelper() {
+    List<Widget> inputGameHelper = [];
+    inputGameHelper.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
+
+    inputGameHelper.add(Image.asset('assets/core/inputgamehelper.jpg',
+      width: 300.0 * getSizeRatioWithLimit(),
+      height: 250.0 * getSizeRatioWithLimit(),
+      fit: BoxFit.fitWidth,));
+
+    inputGameHelper.add(Text("注意： 你可以点击图示区域来变换网页。Note：You can hit marked area to change a page.",
+        style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())));
+
+    inputGameHelper.add(Center(child: TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+      onPressed: () {
+        setState(() {
+          inputGameState = InputGameState.answerSheet;
+        });
+      },
+      child: Text("好的，我明白。 Ok, I understand.",
+          style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
+    )));
+
+    return inputGameHelper;
+  }
+
   List<Widget> getAnswerSheets() {
     List<Widget> launchAnswerSheets = [];
 
     launchAnswerSheets.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
-
+    launchAnswerSheets.add(Text("注意：你将打开新的比赛答卷网页，开始记时，并且填写你个人的信息部分。然后回到这页。Note：You will open answer sheet web page for the game, start the clock and fill out your personal information. Then come back to this page.",   style: TextStyle(color: Colors.lightBlue,
+      fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
+    ),));
+    launchAnswerSheets.add(SizedBox(height: 10.0));
     launchAnswerSheets.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
@@ -249,21 +299,12 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.game;
         });
       },
-      child: Text("1. 先读下面内容，然后点击这里(打开比赛答卷）。First read content below (to open answer sheet), then click this button",
+      child: Text("打开比赛答卷网页 Open answer sheet web page。",
           style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
     )));
+    launchAnswerSheets.add(SizedBox(height: 10.0));
     var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
-    launchAnswerSheets.add(SelectableText("注：比赛答卷的网址是 Note: The answer sheet web address is: " + answerSheetUrl, style: TextStyle(fontSize: 20)));
-    launchAnswerSheets.add(SizedBox(height: 10.0));
-    launchAnswerSheets.add(Text("2. 然后，在比赛答卷中开始记时,并且填写你个人的信息部分。Then, at the opened answer sheet for the game, start the clock and fill out the part about yourself.",   style: TextStyle(color: Colors.lightBlue,
-      fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
-      //fontWeight: FontWeight.bold, // Optional: also set font weight
-    ),));
-    launchAnswerSheets.add(SizedBox(height: 10.0));
-    launchAnswerSheets.add(Text("3. 最后，回到这里。Last, come back here.",   style: TextStyle(color: Colors.lightBlue,
-    fontSize: 20.0 * getSizeRatioWithLimit()), // Set the font size in logical pixels
-      //fontWeight: FontWeight.bold, // Optional: also set font weight
-    ),);
+    launchAnswerSheets.add(SelectableText("注：如果上面没有打开比赛答卷的网网，你可以手工打开。Note: If it does not open the answer sheet web page, you can manually open it: " + answerSheetUrl, style: TextStyle(fontSize: 20)));
 
     return launchAnswerSheets;
   }

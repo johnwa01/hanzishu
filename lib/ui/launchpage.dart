@@ -229,6 +229,8 @@ class _LaunchPageState extends State<LaunchPage> {
           SizedBox(height: fontSize1),
           getWarmupResults(),
           SizedBox(height: fontSize1),
+          getInputGameRegistration(),
+          SizedBox(height: fontSize1),
           getHanzishuInputGameLink(),
           SizedBox(height: fontSize1 * 2),
           Row(
@@ -388,7 +390,7 @@ class _LaunchPageState extends State<LaunchPage> {
         );
       },
       child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width
+        width: 150 * getSizeRatioWithLimit(), // Example width 150
         height: 80 * getSizeRatioWithLimit(), // Example height
         decoration: BoxDecoration(
           color: Colors.blue, // Example background color
@@ -396,7 +398,7 @@ class _LaunchPageState extends State<LaunchPage> {
         ),
         child: Center(
           child: Text(
-            getString(93), // 'Typing'
+            getString(535), // 'Typing'
             style: TextStyle(
               color: Colors.white,
               fontSize: 24 * getSizeRatioWithLimit(),
@@ -419,7 +421,7 @@ class _LaunchPageState extends State<LaunchPage> {
           );
       },
       child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width
+        width: 150 * getSizeRatioWithLimit(), // Example width 150
         height: 80 * getSizeRatioWithLimit(), // Example height
         decoration: BoxDecoration(
           color: Colors.blue, // Example background color
@@ -531,7 +533,7 @@ class _LaunchPageState extends State<LaunchPage> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Text("汉字树杯汉字输入热身赛\nHanzishu Cup Hanzi Input Warm Up Games", style: TextStyle(
+        child: Text("汉字树杯汉字输入大赛热身练习\nHanzishu Cup Hanzi Input Game Warm Up Exercises", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
@@ -539,9 +541,8 @@ class _LaunchPageState extends State<LaunchPage> {
     else {
       return SizedBox(width: 0.0, height: 0.0);
     }
-
-    //return SizedBox(width: 0, height: 0);
   }
+
 
   Widget getWarmupResults() {
     if (kIsWeb) {
@@ -552,7 +553,7 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://hanzishu.com/typing/2026/warmupresults.html"),
               webOnlyWindowName: '_self');
         },
-        child: Text("热身赛擂台榜 Warm Up Game Results", style: TextStyle(
+        child: Text("热身练习前十名榜单 Warm Up Exercise Top 10 Results", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
@@ -560,8 +561,25 @@ class _LaunchPageState extends State<LaunchPage> {
     else {
       return SizedBox(width: 0.0, height: 0.0);
     }
+  }
 
-    //return SizedBox(width: 0, height: 0);
+  Widget getInputGameRegistration() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://forms.microsoft.com/r/03LeSte8HU?origin=lprLink"),
+              webOnlyWindowName: '_self');
+        },
+        child: Text("报名：汉字树杯汉字输入大赛 Registration: Hanzishu Cup Competition", style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
   }
 
   Widget getHanzishuInputGameLink() {
