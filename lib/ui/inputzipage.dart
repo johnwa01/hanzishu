@@ -832,6 +832,12 @@ class _InputZiPageState extends State<InputZiPage> {
     if (previousEndSelection != _controllerStandard.value.selection.end) {
       previousEndSelection = _controllerStandard.value.selection.end;
     }
+
+    if (typingType == TypingType.InputGame) {
+      setState(() {
+        updateCounter++; // for Hash value refresh
+      });
+    }
   }
 
   workaroundWebCases() {
