@@ -118,7 +118,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   int currentInputGameId = -1;
   int currentInputGameQuestionListIndex = -1;
-  bool isInputGameInHashMode = false;
+  //bool isInputGameInHashMode = false;
 
   final stopwatch = Stopwatch()
     ..start();
@@ -249,7 +249,7 @@ class _InputZiPageState extends State<InputZiPage> {
       currentIndex = theInputZiManager.getCurrentIndex(typingType);
       if (typingType == TypingType.InputGame) {
         currentInputGameQuestionListIndex = 0;
-        isInputGameInHashMode = false;
+        //isInputGameInHashMode = false;
       }
     });
   }
@@ -1602,6 +1602,7 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Column getRegularOneTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    /*
     if (typingType == TypingType.InputGame && isInputGameInHashMode) {
       return Column(
           children: <Widget>[
@@ -1616,6 +1617,7 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
+    */
 
     if (inputMethod == InputMethod.Pinxin) {
       return Column(
@@ -1651,10 +1653,18 @@ class _InputZiPageState extends State<InputZiPage> {
             getHanzishuTextField(
                 fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines),
             getZiCandidates(inputZiPainter),
-            copyTextToClipboard(),
-            SizedBox(height: 10),
+            //SizedBox(height: 10),
+            getInputGameCompleteString(),
             inputGameInstruction(),
             SizedBox(height: 10),
+            //copyTextToClipboard(),
+            //SizedBox(height: 10.0),
+            inputGameHashInstruction(),
+            SizedBox(height: 10.0),
+            getInputGameHashString(),
+            SizedBox(height: 10),
+            //copyHashToClipboard(),
+            //SizedBox(height: 10.0),
             getNextInputGameQuestionButton(),
             //SizedBox(
             //  height: 40.0, //40
@@ -1693,14 +1703,19 @@ class _InputZiPageState extends State<InputZiPage> {
                 ]
             ),
             getInputPrompt(),
-            getHashString(),
-            SizedBox(height: 30.0),
             Center(child: getOtherInputMethodTextField(_controllerStandard, false)),
-            SizedBox(height: 40.0),
-            copyTextToClipboard(),
-            SizedBox(height: 10.0),
+            //SizedBox(height: 10.0),
+            getInputGameCompleteString(),
             inputGameInstruction(),
             SizedBox(height: 10.0),
+            //copyTextToClipboard(),
+            //SizedBox(height: 10.0),
+            inputGameHashInstruction(),
+            SizedBox(height: 10.0),
+            getInputGameHashString(),
+            SizedBox(height: 10.0),
+            //copyHashToClipboard(),
+            //SizedBox(height: 10.0),
             getNextInputGameQuestionButton(),
           ]
       );
@@ -1725,24 +1740,31 @@ class _InputZiPageState extends State<InputZiPage> {
         ),
       ),
       onPressed: () {
-          if (isInputGameInHashMode) {
-            if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
-              setState(() {
-                currentInputGameQuestionListIndex += 1;
-                isInputGameInHashMode = false;
-              });
-            }
-            else {
-              showInputGameCompletedDialog();
-            }
-          }
-          else  {
-            setState(() {
-              isInputGameInHashMode = true;
-            });
-          }
+          //if (isInputGameInHashMode) {
+        if (inputMethod == InputMethod.Pinxin) {
+          _controller.clear();
+        }
+        else {
+          _controllerStandard.clear();
+        }
+
+        if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
+          setState(() {
+            currentInputGameQuestionListIndex += 1;
+            //isInputGameInHashMode = false;
+          });
+        }
+        else {
+          showInputGameCompletedDialog();
+        }
+        //}
+        //else  {
+        //  setState(() {
+        //    isInputGameInHashMode = true;
+        //  });
+        //}
       },
-      child: Text("3. 最后，点击这里继续。Last， click here to continue.",
+      child: Text("3. 下一道题。Next question.",
           style: TextStyle(
             fontSize: 20.0 * getSizeRatio(), // Set the desired font size
           ),)),
@@ -1937,13 +1959,26 @@ class _InputZiPageState extends State<InputZiPage> {
     return Utility.getMD5HashString(getEditFieldStringValue() + hashExtra);
   }
 
-  Widget getHashString() {
-    if (typingType == TypingType.InputGame &&  isInputGameInHashMode )
+  Widget getInputGameCompleteString() {
+    if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
+    {
+      return Text("  打完以后: after finishing typing:", style: TextStyle(
+        fontSize: 20.0 * getSizeRatio(), // Set the font size
+        fontWeight: FontWeight.bold, // Optional: customize other properties
+        color: Colors.brown, // Optional: change color
+      ),);
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget getInputGameHashString() {
+    if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
     {
       return SelectableText(getHashStringValue(), style: TextStyle(
           fontSize: 20.0 * getSizeRatio(), // Set the font size
           fontWeight: FontWeight.bold, // Optional: customize other properties
-          color: Colors.blue, // Optional: change color
+          color: Colors.brown, // Optional: change color
       ),);
     }
 
@@ -1952,7 +1987,19 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget inputGameInstruction() {
     if (typingType == TypingType.InputGame) {
-      return Center(child: Text("    2. 然后，到答卷单，将刚才拷贝的内容复制到那里。Then, go to answer sheet to paste data there.",   style: TextStyle(
+      return Center(child: Text("    1. 请将以上打字内容拷贝/复制到答卷。Please copy/paste typed content to answer sheet.",   style: TextStyle(
+        fontSize: 20.0 * getSizeRatio(), // Set the font size
+        fontWeight: FontWeight.bold, // Optional: customize other properties
+        color: Colors.blue, // Optional: change color
+      ),));
+    }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget inputGameHashInstruction() {
+    if (typingType == TypingType.InputGame) {
+      return Center(child: Text("    2. 请将下面的验证码拷贝/复制到答卷。Please copy/paste following verification code to answer sheet.",   style: TextStyle(
         fontSize: 20.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
@@ -1966,7 +2013,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame)
     {
       return TextButton(
-        child: const Text('1. 打完以后，点击这里(来拷贝打字栏里的内容). After finishing typing, click here to copy the above data.'),
+        child: const Text('拷贝 Copy'),
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
           side: BorderSide(
@@ -1991,7 +2038,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame)
     {
       return Center(child: TextButton(
-        child: const Text('1. 点击这里来拷贝以上检证码 Click here to copy the above verification code.'),
+        child: const Text('拷贝 Copy'),
         style: TextButton.styleFrom(
           textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
           side: BorderSide(
@@ -2333,12 +2380,12 @@ class _InputZiPageState extends State<InputZiPage> {
       return Container(width: 0.0, height: 0.0);
     }
     if (typingType == TypingType.InputGame) {
-      if(!isInputGameInHashMode) {
+      //if(!isInputGameInHashMode) {
         return getInputGameQuestion(currentInputGameId, currentInputGameQuestionListIndex);
-      }
-      else {
-        return Container(width: 0.0, height: 0.0);
-      }
+      //}
+      //else {
+      //  return Container(width: 0.0, height: 0.0);
+      //}
     }
 
     var promptStr = getString(113) + "： "; //"Type"

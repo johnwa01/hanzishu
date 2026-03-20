@@ -277,7 +277,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     List<Widget> launchAnswerSheets = [];
 
     launchAnswerSheets.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
-    launchAnswerSheets.add(Text("注意：你将打开新的比赛答卷网页，开始记时，并且填写你个人的信息部分。然后回到这页。Note：You will open answer sheet web page for the game, start the clock and fill out your personal information. Then come back to this page.",   style: TextStyle(color: Colors.lightBlue,
+    launchAnswerSheets.add(Text("注意：你将打开新的比赛答卷网页，开始记时，并且填写你个人的信息部分。然后点击这页回来。Note：You will open answer sheet web page for the game, start the clock and fill out your personal information. Then click this page to come back.",   style: TextStyle(color: Colors.lightBlue,
       fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
     ),));
     launchAnswerSheets.add(SizedBox(height: 10.0));

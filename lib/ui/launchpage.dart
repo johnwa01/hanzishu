@@ -533,7 +533,7 @@ class _LaunchPageState extends State<LaunchPage> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Text("汉字树杯汉字输入大赛热身练习\nHanzishu Cup Hanzi Input Game Warm Up Exercises", style: TextStyle(
+        child: Text("汉字树杯汉字输入大赛热身练习\nHanzishu Cup Hanzi Input Competition Warm Up Exercises", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
@@ -572,7 +572,7 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://forms.microsoft.com/r/03LeSte8HU?origin=lprLink"),
               webOnlyWindowName: '_self');
         },
-        child: Text("报名：汉字树杯汉字输入大赛 Registration: Hanzishu Cup Competition", style: TextStyle(
+        child: Text("报名：汉字树杯汉字输入大赛 Registration: Hanzishu Cup Hanzi Input Competition", style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
