@@ -833,11 +833,9 @@ class _InputZiPageState extends State<InputZiPage> {
       previousEndSelection = _controllerStandard.value.selection.end;
     }
 
-    if (typingType == TypingType.InputGame) {
-      setState(() {
+    setState(() {
         updateCounter++; // for Hash value refresh
-      });
-    }
+    });
   }
 
   workaroundWebCases() {
@@ -1709,7 +1707,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 ]
             ),
             getInputPrompt(),
-            Center(child: getOtherInputMethodTextField(_controllerStandard, false)),
+            /*Center(child: */getOtherInputMethodTextField(_controllerStandard, false)/*)*/,
             //SizedBox(height: 10.0),
             getInputGameCompleteString(),
             inputGameInstruction(),
@@ -2084,11 +2082,13 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      //mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         //SizedBox(width: 20 * getSizeRatio()),
         //Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatio(), color: Colors.blueGrey), ),
-        SizedBox(width: 30 * getSizeRatio()),
+
+        //SizedBox(width: 10 * getSizeRatio()),
 
         SizedBox(
           width: fieldWidth * getSizeRatio(),

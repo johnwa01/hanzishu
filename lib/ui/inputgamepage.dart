@@ -202,7 +202,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.inputGameHelper;
         });
       },
-      child: Text("汉字树象形输入法热身练习\n\nHanzishu Pictographic Input Method Warm Up Exercise",
+      child: Text("象形输入法热身练习\n\nPictographic Input Method Warm Up Exercise",
           style: TextStyle(color: Colors.lightBlue)),
     ));
 
@@ -246,9 +246,10 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       height: 250.0 * getSizeRatioWithLimit(),
       fit: BoxFit.fitWidth,));
 
-    inputGameHelper.add(Text("注意： 你可以点击图示区域来变换网页。Note：You can hit marked area to change a page.",
+    inputGameHelper.add(Text("注意： 你可以点击图示区域在‘打字’网页和‘答卷’网页之间变换。Note：You can hit marked areas to switch between 'Typing web page' and 'Answer sheet web page'.",
         style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())));
 
+    inputGameHelper.add(SizedBox(height: 10.0));
     inputGameHelper.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
@@ -304,7 +305,8 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     )));
     launchAnswerSheets.add(SizedBox(height: 10.0));
     var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
-    launchAnswerSheets.add(SelectableText("注：如果上面没有打开比赛答卷的网网，你可以手工打开。Note: If it does not open the answer sheet web page, you can manually open it: " + answerSheetUrl, style: TextStyle(fontSize: 20)));
+    launchAnswerSheets.add(Text("注：如果上面没有打开比赛答卷的网网，你可以用游览器打入以下网址。Note: If it does not open the answer sheet web page, you can use browser to open following address.", style: TextStyle(fontSize: 20)));
+    launchAnswerSheets.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 20)));
 
     return launchAnswerSheets;
   }
