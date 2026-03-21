@@ -184,29 +184,6 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     List<Widget> gameTypes = [];
 
     gameTypes.add(SizedBox(height: 50.0));
-    gameTypes.add(TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-        side: BorderSide(
-          color: Colors.blue, // The border color
-          width: 2,          // The border width
-        ),
-        // You can also add rounded corners
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      onPressed: () {
-        setState(() {
-          currentGameId = int.parse(widget.gameid!);
-          inputGameState = InputGameState.inputGameHelper;
-        });
-      },
-      child: Text("象形输入法热身练习\n\nPictographic Input Method Warm Up Exercise",
-          style: TextStyle(color: Colors.lightBlue)),
-    ));
-
-    gameTypes.add(SizedBox(height: 50.0));
 
     if (widget.gameid2 != null) {
       if (int.parse(widget.gameid2!) > 0) {
@@ -233,6 +210,29 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         ))));
       }
     }
+
+    gameTypes.add(SizedBox(height: 50.0));
+    gameTypes.add(TextButton(
+      style: TextButton.styleFrom(
+        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+        side: BorderSide(
+          color: Colors.blue, // The border color
+          width: 2,          // The border width
+        ),
+        // You can also add rounded corners
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
+      onPressed: () {
+        setState(() {
+          currentGameId = int.parse(widget.gameid!);
+          inputGameState = InputGameState.inputGameHelper;
+        });
+      },
+      child: Text("象形输入法热身练习\n\nPictographic Input Method Warm Up Exercises",
+          style: TextStyle(color: Colors.lightBlue)),
+    ));
 
     return gameTypes;
   }
