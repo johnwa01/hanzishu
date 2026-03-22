@@ -92,7 +92,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         (
         appBar: AppBar
           (
-          title: Text("汉字树杯汉字输入大赛 | Hanzishu Cup Hanzi Input Competition"),
+          title: Text(getString(551)),
         ),
         body: Container(
           child: SingleChildScrollView(
@@ -139,7 +139,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     logins.add(Row(
         children: <Widget>[
           SizedBox(width: 50 * getSizeRatioWithLimit()),
-          Text("请打入参赛码: Please enter participation code:\n然后按‘回车键’ then press 'Enter'.",
+          Text(getString(539),
             style: TextStyle(color: Colors.lightBlue, fontSize: 20.0* getSizeRatioWithLimit())),
         ]
     ));
@@ -218,7 +218,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
               inputGameState = InputGameState.answerSheet;
             });
           },
-          child: Text("拼音输入法热身练习\n\nPinyin Input Method Warm Up Exercises",
+          child: Text(getString(555),
               style: TextStyle(color: Colors.lightBlue),
         ))));
       }
@@ -243,7 +243,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.answerSheet;
         });
       },
-      child: Text("象形输入法热身练习\n\nPictographic Input Method Warm Up Exercises",
+      child: Text(getString(556),
           style: TextStyle(color: Colors.lightBlue)),
     ));
 
@@ -291,7 +291,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     List<Widget> launchAnswerSheets = [];
 
     launchAnswerSheets.add(SizedBox(height: 30 * getSizeRatioWithLimit()));
-    launchAnswerSheets.add(Text("注意：你将进入一页新的'答卷'网页，并且在那里打开钟记时，填写你的个人信息部分；然后点击下图所示的红角星区域，返回到‘打字’网页打比赛题。Note：You will open a new answer sheet web page, and start the clock and fill out your personal information there. You will Then click this red star area as shown in the following picture to come back to the 'typing page' to start game typing.",   style: TextStyle(color: Colors.lightBlue,
+    launchAnswerSheets.add(Text(getString(540),   style: TextStyle(color: Colors.lightBlue,
       fontSize: 17.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
     ),));
     launchAnswerSheets.add(Image.asset('assets/core/inputgamehelper.jpg',
@@ -300,7 +300,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       fit: BoxFit.fitWidth,));
     launchAnswerSheets.add(SizedBox(height: 10.0));
     var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
-    launchAnswerSheets.add(Text("注：如果下列行动没打开'答卷'网页，你可以用以下链接自己打开：Note: If the following action can't open the 'answer sheet' web page, you can open it yourself with following address：", style: TextStyle(fontSize: 17)));
+    launchAnswerSheets.add(Text(getString(541), style: TextStyle(fontSize: 17)));
     launchAnswerSheets.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 17)));
     launchAnswerSheets.add(SizedBox(height: 10.0));
     launchAnswerSheets.add(Center(child: TextButton(
@@ -321,7 +321,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           inputGameState = InputGameState.game;
         });
       },
-      child: Text("打开比赛答卷网页 Open answer sheet web page。",
+      child: Text(getString(542),
           style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
     )));
 
@@ -331,19 +331,22 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   List<Widget> getGame() {
     List<Widget> games = [];
 
-    var inputTypeEng;
-    var inputTypeChi;
+    //var inputTypeEng;
+    //var inputTypeChi;
+    var inputTypeStr;
     if (InputGameManager.getInputGameById(currentGameId!).gameType == 1) {
-      inputTypeEng = "English";
-      inputTypeChi = "英文";
+      //inputTypeEng = "English";
+      //inputTypeChi = "英文";
+      inputTypeStr = getString(553);
     }
     else { // 2
-      inputTypeEng = "Pinyin";
-      inputTypeChi = "拼音";
+      //inputTypeEng = "Pinyin";
+      //inputTypeChi = "拼音";
+      inputTypeStr = getString(554);
     }
 
     games.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
-    games.add(Center(child: Text("1. 核查一下你的输入模式是" + inputTypeChi + " Make sure your input mode is " + inputTypeEng + ".", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
+    games.add(Center(child: Text(getString(543) + inputTypeStr + ".", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
     games.add(SizedBox(height: 10));
     games.add(Center(child: TextButton(
       style: TextButton.styleFrom(
@@ -360,7 +363,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       onPressed: () {
         launchInputGame(currentGameId!);
       },
-      child: Text("2. 开始比赛 Start the Game",
+      child: Text(getString(544),
           style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit(),)),
     )));
 

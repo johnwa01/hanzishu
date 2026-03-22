@@ -1477,7 +1477,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(108)/*'Free typing and help'*/;
     }
     else if (typingType == TypingType.InputGame) {
-      title = "汉字树杯输入大赛 Hanzishu Cup Input Competition"; //getString(534)/*'Chinese Input Method Competition and help'*/;
+      title = getString(534)/*'Chinese Cup Input Competition'*/;
     }
     else if (typingType == TypingType.DicSearchTyping) {
       title = getString(95)/*'Dictionary'*/;
@@ -1731,6 +1731,14 @@ class _InputZiPageState extends State<InputZiPage> {
       return SizedBox(width: 0.0, height: 0.0);
     }
 
+    String nextQuestionButtonText;
+    if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
+      nextQuestionButtonText = getString(550);
+    }
+    else {
+      nextQuestionButtonText = getString(557);
+    }
+
     return Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
@@ -1768,7 +1776,7 @@ class _InputZiPageState extends State<InputZiPage> {
         //  });
         //}
       },
-      child: Text("3. 下一道题。Next question.",
+      child: Text(nextQuestionButtonText,
           style: TextStyle(
             fontSize: 20.0 * getSizeRatio(), // Set the desired font size
           ),)),
@@ -1966,7 +1974,7 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getInputGameCompleteString() {
     if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
     {
-      return Text("  打完以后: After finishing typing:", style: TextStyle(
+      return Text(getString(547), style: TextStyle(
         fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.brown, // Optional: change color
@@ -1991,7 +1999,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget inputGameInstruction() {
     if (typingType == TypingType.InputGame) {
-      return Center(child: Text("    1. 请将以上打字内容拷贝/复制到答卷。Please copy/paste typed content to answer sheet.",   style: TextStyle(
+      return Center(child: Text(getString(548),   style: TextStyle(
         fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
@@ -2003,7 +2011,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget inputGameHashInstruction() {
     if (typingType == TypingType.InputGame) {
-      return Center(child: Text("    2. 请将下面的验证码拷贝/复制到答卷。Please copy/paste following verification code to answer sheet.",   style: TextStyle(
+      return Center(child: Text(getString(549),   style: TextStyle(
         fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
@@ -2198,7 +2206,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
   showInputGameCompletedDialog() {
     Widget okButton = TextButton(
-      child: Text("好的 Ok", style: TextStyle(color: Colors.blue)),
+      child: Text(getString(286), style: TextStyle(color: Colors.blue)),
       onPressed: () {
         Navigator.of(context).pop();
         Navigator.of(context).pop();
@@ -2208,7 +2216,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     AlertDialog alert = AlertDialog(
       title: Text(getString(375)/*Result*/),
-      content: Text("祝贺你完成汉字输入大赛一项比赛! 别忘了提交答卷!\n\nCongrats for finishing Hanzishu Cup one competition! Don't forget to submit the answer sheet!"),
+      content: Text(getString(552)),
       actions: [
         okButton,
       ],
@@ -2636,7 +2644,14 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
     var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
-    String instruction = "[请打第" + (inputGameQuestionId+1).toString() + "道题 Please Type Question " + (inputGameQuestionId+1).toString() + "]";
+    String instruction;
+    if (theDefaultLocale == "en_US") {
+      instruction = "[" + getString(545) + ' ' + getString(546) + ' ' +
+          (inputGameQuestionId + 1).toString() + "]";
+    }
+    else {
+      instruction = "[" + getString(545) + (inputGameQuestionId + 1).toString() + getString(546) + "]";
+    }
 
     if (questionString.length != 0) {
       return Column(

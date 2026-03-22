@@ -140,7 +140,7 @@ class _LaunchPageState extends State<LaunchPage> {
   Widget getLanguageSwitchButton() {
     return TextButton(
       style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 16.0),
+        textStyle: TextStyle(fontSize: 24.0),
       ),
       onPressed: () {
         setState(() {
@@ -149,7 +149,7 @@ class _LaunchPageState extends State<LaunchPage> {
         });
       },
       child: Text(getOppositeDefaultLocale(), /*English/中文*/
-          style: TextStyle(color: Colors.blue)),
+          style: TextStyle(color: Colors.blue, fontSize: 24.0)),
     );
   }
 
@@ -533,7 +533,7 @@ class _LaunchPageState extends State<LaunchPage> {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Text("汉字树杯汉字输入大赛热身练习\nHanzishu Cup Hanzi Input Competition Warm Up Exercises", style: TextStyle(
+        child: Text(getString(536), style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
@@ -553,7 +553,7 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://hanzishu.com/typing/2026/warmupresults.html"),
               webOnlyWindowName: '_self');
         },
-        child: Text("热身练习前十名榜单 Warm Up Exercise Top 10 Results", style: TextStyle(
+        child: Text(getString(537), style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
@@ -572,7 +572,7 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://forms.microsoft.com/r/03LeSte8HU?origin=lprLink"),
               webOnlyWindowName: '_self');
         },
-        child: Text("报名：汉字树杯汉字输入大赛 Registration: Hanzishu Cup Hanzi Input Competition", style: TextStyle(
+        child: Text(getString(538), style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
       );
