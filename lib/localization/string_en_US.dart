@@ -565,4 +565,5 @@ var theString_en_US = [
   Local(555, "Pinyin Input Method Warm Up Exercises"),
   Local(556, "Pictographic Input Method Warm Up Exercises"),
   Local(557, "Done"),
+  Local(558, "[Currently only support desktop or notebook computer, not phone/iPad.]"),
 ];
