@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/inputgamequestion.dart';
 enum InputGameState {
   login,
   gameType,
-  inputGameHelper,
+  //inputGameHelper,
   answerSheet,
   game
 }

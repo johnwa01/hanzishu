@@ -1966,8 +1966,8 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget getInputGameCompleteString() {
     if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
     {
-      return Text("  打完以后: after finishing typing:", style: TextStyle(
-        fontSize: 20.0 * getSizeRatio(), // Set the font size
+      return Text("  打完以后: After finishing typing:", style: TextStyle(
+        fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.brown, // Optional: change color
       ),);
@@ -1980,7 +1980,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
     {
       return SelectableText(getHashStringValue(), style: TextStyle(
-          fontSize: 20.0 * getSizeRatio(), // Set the font size
+          fontSize: 17.0 * getSizeRatio(), // Set the font size
           fontWeight: FontWeight.bold, // Optional: customize other properties
           color: Colors.brown, // Optional: change color
       ),);
@@ -1992,7 +1992,7 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget inputGameInstruction() {
     if (typingType == TypingType.InputGame) {
       return Center(child: Text("    1. 请将以上打字内容拷贝/复制到答卷。Please copy/paste typed content to answer sheet.",   style: TextStyle(
-        fontSize: 20.0 * getSizeRatio(), // Set the font size
+        fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
       ),));
@@ -2004,7 +2004,7 @@ class _InputZiPageState extends State<InputZiPage> {
   Widget inputGameHashInstruction() {
     if (typingType == TypingType.InputGame) {
       return Center(child: Text("    2. 请将下面的验证码拷贝/复制到答卷。Please copy/paste following verification code to answer sheet.",   style: TextStyle(
-        fontSize: 20.0 * getSizeRatio(), // Set the font size
+        fontSize: 17.0 * getSizeRatio(), // Set the font size
         fontWeight: FontWeight.bold, // Optional: customize other properties
         color: Colors.blue, // Optional: change color
       ),));

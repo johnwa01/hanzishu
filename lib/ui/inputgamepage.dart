@@ -31,7 +31,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   //late String initZis;
   late int? currentGameId;
   //late int? currentGameType; // 1: pictographic, 2: Pinyin input
-
+  late ScrollController _scrollController;
   FocusNode _textNode = new FocusNode();
 
   late TextEditingController _controller;
@@ -56,6 +56,11 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   void initState() {
     super.initState();
 
+    _scrollController = ScrollController()
+      ..addListener(() {
+        //print("offset = ${_scrollController.offset}");
+      });
+
     currentGameId = int.parse(widget.gameid!);
 
     theCurrentCenterZiId = searchingZiIndex;
@@ -68,6 +73,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
   @override
   void dispose() {
+    _scrollController.dispose(); // it is a good practice to dispose the controller
     super.dispose();
   }
 
@@ -79,7 +85,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
     /*"Grid shows Hanzi"*/
     var gridShowOrNotShowZiString = gridShowZi ? getString(452) : getString(453);/*"Grid (not) show Hanzi"*/;
-    String displ = "请输入参赛码：Please enter participation code:";
+    //String displ = "请输入参赛码：Please enter participation code:";
 
     try {
       return Scaffold
@@ -89,6 +95,9 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           title: Text("汉字树杯汉字输入大赛 | Hanzishu Cup Hanzi Input Competition"),
         ),
         body: Container(
+          child: SingleChildScrollView(
+              controller: _scrollController,
+              scrollDirection: Axis.vertical,
             child: WillPopScope(
                 child: new Column( //Stack(
                     children: //<Widget>[
@@ -96,6 +105,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
                 ),
                 onWillPop: _onWillPop
             )
+          ),
         ),
       );
     } catch (e, s) {
@@ -112,8 +122,8 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
         return getLogins();
       case InputGameState.gameType:
         return getGameTypes();
-      case InputGameState.inputGameHelper:
-        return getInputGameHelper();
+      //case InputGameState.inputGameHelper:
+        //return getInputGameHelper();
       case InputGameState.answerSheet:
         return getAnswerSheets();
       case InputGameState.game:
@@ -129,7 +139,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     logins.add(Row(
         children: <Widget>[
           SizedBox(width: 50 * getSizeRatioWithLimit()),
-          Text("请打入参赛码:",
+          Text("请打入参赛码: Please enter participation code:\n然后按‘回车键’ then press 'Enter'.",
             style: TextStyle(color: Colors.lightBlue, fontSize: 20.0* getSizeRatioWithLimit())),
         ]
     ));
@@ -144,7 +154,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
             child: TextField(
               autocorrect: false,
               enableSuggestions: false,
-              controller: _controller,
+              //controller: _controller,
               focusNode: _textNode,
               autofocus: false,
               style: TextStyle(
@@ -159,20 +169,23 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
                 filled: true,
                 fillColor: Colors.grey, //lightBlueAccent, //black12,
               ),
+              onSubmitted: (text) {
+                processInputs(text);
+              },
             ),//focusNode: _textNode,
           ),
           SizedBox(width: 10 * getSizeRatioWithLimit()),
-          TextButton(
-            style: TextButton.styleFrom(
-              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-            ),
+          //TextButton(
+          //  style: TextButton.styleFrom(
+          //    textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
+          //  ),
 
-            onPressed: () {
-              processInputs();
-            },
-            child: Text("进入 Start login",
-              style: TextStyle(color: Colors.lightBlue)),
-          ),
+            //onPressed: () {
+            //  processInputs();
+            //},
+          //  child: Text("进入 Start login",
+          //    style: TextStyle(color: Colors.lightBlue)),
+          //),
         ]
     //),
     ));
@@ -202,7 +215,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
           onPressed: () {
             setState(() {
               currentGameId = int.parse(widget.gameid2!);
-              inputGameState = InputGameState.inputGameHelper;
+              inputGameState = InputGameState.answerSheet;
             });
           },
           child: Text("拼音输入法热身练习\n\nPinyin Input Method Warm Up Exercises",
@@ -227,7 +240,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       onPressed: () {
         setState(() {
           currentGameId = int.parse(widget.gameid!);
-          inputGameState = InputGameState.inputGameHelper;
+          inputGameState = InputGameState.answerSheet;
         });
       },
       child: Text("象形输入法热身练习\n\nPictographic Input Method Warm Up Exercises",
@@ -277,10 +290,18 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
   List<Widget> getAnswerSheets() {
     List<Widget> launchAnswerSheets = [];
 
-    launchAnswerSheets.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
-    launchAnswerSheets.add(Text("注意：你将打开新的比赛答卷网页，开始记时，并且填写你个人的信息部分。然后点击这页回来。Note：You will open answer sheet web page for the game, start the clock and fill out your personal information. Then click this page to come back.",   style: TextStyle(color: Colors.lightBlue,
-      fontSize: 20.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
+    launchAnswerSheets.add(SizedBox(height: 30 * getSizeRatioWithLimit()));
+    launchAnswerSheets.add(Text("注意：你将进入一页新的'答卷'网页，并且在那里打开钟记时，填写你的个人信息部分；然后点击下图所示的红角星区域，返回到‘打字’网页打比赛题。Note：You will open a new answer sheet web page, and start the clock and fill out your personal information there. You will Then click this red star area as shown in the following picture to come back to the 'typing page' to start game typing.",   style: TextStyle(color: Colors.lightBlue,
+      fontSize: 17.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
     ),));
+    launchAnswerSheets.add(Image.asset('assets/core/inputgamehelper.jpg',
+      width: 300.0 * getSizeRatioWithLimit(),
+      height: 250.0 * getSizeRatioWithLimit(),
+      fit: BoxFit.fitWidth,));
+    launchAnswerSheets.add(SizedBox(height: 10.0));
+    var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
+    launchAnswerSheets.add(Text("注：如果下列行动没打开'答卷'网页，你可以用以下链接自己打开：Note: If the following action can't open the 'answer sheet' web page, you can open it yourself with following address：", style: TextStyle(fontSize: 17)));
+    launchAnswerSheets.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 17)));
     launchAnswerSheets.add(SizedBox(height: 10.0));
     launchAnswerSheets.add(Center(child: TextButton(
       style: TextButton.styleFrom(
@@ -303,10 +324,6 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       child: Text("打开比赛答卷网页 Open answer sheet web page。",
           style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit())),
     )));
-    launchAnswerSheets.add(SizedBox(height: 10.0));
-    var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
-    launchAnswerSheets.add(Text("注：如果上面没有打开比赛答卷的网网，你可以用游览器打入以下网址。Note: If it does not open the answer sheet web page, you can use browser to open following address.", style: TextStyle(fontSize: 20)));
-    launchAnswerSheets.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 20)));
 
     return launchAnswerSheets;
   }
@@ -350,7 +367,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     return games;
   }
 
-  showInvalidInputDialog() {
+  showInvalidInputDialog(String text) {
     // set up the button
     Widget okButton = TextButton(
       child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
@@ -363,7 +380,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     AlertDialog alert = AlertDialog(
       title: Text(getString(375)/*Result*/),
       content: Text(
-          getString(374)/*cannot find: */ + inputText + "."),
+          getString(374)/*cannot find: */ + text + "."),
       actions: [
         okButton,
       ],
@@ -395,13 +412,14 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
       );
     }
     else {
-      showInvalidInputDialog();
+      showInvalidInputDialog(gameid.toString());
     }
   }
 
-  processInputs() {
+  processInputs(String text) {
     var ziId = -1;
-    inputText = _controller.value.text;
+    //inputText = _controller.value.text;
+    inputText = text;
 
     if (InputGameManager.isInputGamePasscodeValid(inputText)) {
       setState(() {
@@ -410,7 +428,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     }
     else {
       //if (inputText.length == 0) {
-      showInvalidInputDialog();
+      showInvalidInputDialog(inputText);
     }
   }
 

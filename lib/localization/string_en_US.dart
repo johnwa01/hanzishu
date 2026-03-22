@@ -380,7 +380,7 @@ var theString_en_US = [
   Local(371, "Please type"),
   Local(372, "Recommend Chrome browser."),
   Local(373, "Snowball conversation"), //Unit
-  Local(374, "Can not find character: "),
+  Local(374, "Can not find: "),
   Local(375, "Result"),
   Local(376, "minutes"),
   Local(377, "seconds"),

@@ -378,7 +378,7 @@ var theString_zh_CN = [
   Local(371, "请输入"),
   Local(372, "建议使用Chrome游览器."),
   Local(373, "滚雪球会话"),
-  Local(374, "找不到汉字: "),
+  Local(374, "找不到: "),
   Local(375, "结果"),
   Local(376, "分"),
   Local(377, "秒"),
