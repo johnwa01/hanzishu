@@ -298,15 +298,13 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     launchAnswerSheets.add(Text(getString(540),   style: TextStyle(color: Colors.lightBlue,
       fontSize: 17.0 * getSizeRatioWithLimit(), // Set the font size in logical pixels
     ),));
+    launchAnswerSheets.add(SizedBox(height: 20 * getSizeRatioWithLimit()));
     launchAnswerSheets.add(Image.asset('assets/core/inputgamehelper.jpg',
       width: 300.0 * getSizeRatioWithLimit(),
       height: 250.0 * getSizeRatioWithLimit(),
-      fit: BoxFit.fitWidth,));
+      fit: BoxFit.fitHeight,));
     launchAnswerSheets.add(SizedBox(height: 10.0));
-    var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
-    launchAnswerSheets.add(Text(getString(541), style: TextStyle(fontSize: 17)));
-    launchAnswerSheets.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 17)));
-    launchAnswerSheets.add(SizedBox(height: 10.0));
+
     launchAnswerSheets.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
@@ -352,6 +350,10 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     games.add(SizedBox(height: 50 * getSizeRatioWithLimit()));
     games.add(Center(child: Text(getString(543) + inputTypeStr + ".", style: TextStyle(color: Colors.lightBlue, fontSize: 20.0 * getSizeRatioWithLimit()))));
     games.add(SizedBox(height: 10));
+    var answerSheetUrl = InputGameManager.getInputGameById(currentGameId!).answerSheetUrl;
+    games.add(Text(getString(541), style: TextStyle(fontSize: 17)));
+    games.add(SelectableText(answerSheetUrl, style: TextStyle(fontSize: 17)));
+    games.add(SizedBox(height: 10.0));
     games.add(Center(child: TextButton(
       style: TextButton.styleFrom(
         textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
