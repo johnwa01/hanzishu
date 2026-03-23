@@ -572,6 +572,16 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://forms.microsoft.com/r/03LeSte8HU?origin=lprLink"),
               webOnlyWindowName: '_self');
         },
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         child: Text(getString(538), style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
@@ -591,6 +601,16 @@ class _LaunchPageState extends State<LaunchPage> {
           launchUrl(Uri.parse("https://hanzishu.com/typing/2026"),
               webOnlyWindowName: '_self');
         },
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
         child: Text(getString(533), style: TextStyle(
             fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       ),
