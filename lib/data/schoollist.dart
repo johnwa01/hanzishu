@@ -32,4 +32,7 @@ var theSchoolList = [
   School(29, "Z7Na", "赵冉", "UV", -1),
   School(30, "A8BC", "Individuals", "Public", -1),
   School(31, "T8BA", "Trials", "Teachers", -1),
+  School(32, "P8Te", "Public", "Public Students", -1),
+  School(33, "Wh4q", "Joanne Wang", "Cheng Cheng Chinese School", -1),
+  School(34, "Lb9B", "爱尔兰利中中爱文笔中心", "娄风泉", -1),
 ];
