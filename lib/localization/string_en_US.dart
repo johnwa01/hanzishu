@@ -566,4 +566,5 @@ var theString_en_US = [
   Local(556, "Pictographic Input Method Warm Up Exercises"),
   Local(557, "Done"),
   Local(558, "[Currently only support desktop or notebook computer, not phone/iPad.]"),
+  Local(559, "Note: At formal game day, please reload/refresh this web page to show game link."),
 ];

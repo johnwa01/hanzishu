@@ -119,6 +119,7 @@ class _InputZiPageState extends State<InputZiPage> {
   int currentInputGameId = -1;
   int currentInputGameQuestionListIndex = -1;
   //bool isInputGameInHashMode = false;
+  bool isCurrentlySimplifiedChineseCharacters = true;
 
   final stopwatch = Stopwatch()
     ..start();
@@ -2643,7 +2644,8 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getInputGameQuestion(int inputGameId, inputGameQuestionId) {
-    var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId);
+    var questionString = InputGameManager.getInputGameQuestionString(inputGameId, inputGameQuestionId, isCurrentlySimplifiedChineseCharacters);
+
     String instruction;
     if (theDefaultLocale == "en_US") {
       instruction = "[" + getString(545) + ' ' + getString(546) + ' ' +
@@ -2656,11 +2658,18 @@ class _InputZiPageState extends State<InputZiPage> {
     if (questionString.length != 0) {
       return Column(
           children: <Widget>[
-            Text(instruction,
-              style: TextStyle(fontSize: 20.0 * getSizeRatio(),
-                fontWeight: FontWeight.bold,
-                color: Colors.brown),
-              textAlign: TextAlign.left
+            Row(
+              children: <Widget>[
+                SizedBox(width: 20.0 * getSizeRatio()),
+                Text(instruction,
+                  style: TextStyle(fontSize: 20.0 * getSizeRatio(),
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown),
+                  textAlign: TextAlign.left
+                ),
+                SizedBox(width: 10.0),
+                getCharacterTypeButton(),
+              ]
             ),
             Text(questionString,
               style: TextStyle(fontSize: 20.0 * getSizeRatio(),
@@ -2671,6 +2680,53 @@ class _InputZiPageState extends State<InputZiPage> {
           ]
       );
     }
+
+    return SizedBox(width: 0.0, height: 0.0);
+  }
+
+  Widget getCharacterTypeButton() {
+    // for Pinyin inputgame only
+    if (typingType == TypingType.InputGame && InputGameManager.getInputGameById(currentInputGameId).gameType == 2) {
+      String showCharacterTypeButtonText = "";
+      if (theDefaultLocale == "en_US") {
+        if (isCurrentlySimplifiedChineseCharacters) {
+          showCharacterTypeButtonText = "Traditional Chinese";
+       }
+        else {
+          showCharacterTypeButtonText = "Simplified Chinese";
+        }
+      }
+      else { // Chinese
+        if (isCurrentlySimplifiedChineseCharacters) {
+          showCharacterTypeButtonText = "繁体中文";
+        }
+        else {
+          showCharacterTypeButtonText = "简体中文";
+        }
+      }
+
+      return TextButton(
+          style: TextButton.styleFrom(
+            textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
+            side: BorderSide(
+              color: Colors.blue, // The border color
+              width: 2,          // The border width
+            ),
+            // You can also add rounded corners
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              isCurrentlySimplifiedChineseCharacters = !isCurrentlySimplifiedChineseCharacters;
+            });
+          },
+          child: Text(showCharacterTypeButtonText,
+            style: TextStyle(
+              fontSize: 20.0 * getSizeRatio(), // Set the desired font size
+            ),));
+    };
 
     return SizedBox(width: 0.0, height: 0.0);
   }

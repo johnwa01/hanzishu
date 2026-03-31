@@ -54,7 +54,7 @@ class InputGameManager {
       }
     }
 
-    return InputGameQuestion(-1, "");
+    return InputGameQuestion(-1, "", "");
   }
 
   static InputGameAnswerSheet getInputGameAnswerSheetById(int id) {
@@ -67,10 +67,17 @@ class InputGameManager {
     return InputGameAnswerSheet(-1, "", "");
   }
 
-  static String getInputGameQuestionString(int inputGameId, inputGameQuestionId) {
+  static String getInputGameQuestionString(int inputGameId, int inputGameQuestionId, bool isSimplifiedCharacters) {
     var game = getInputGameById(inputGameId);
     var questionIds = game.inputGameQuestionIdList;
-    return theInputGameQuestionList[questionIds[inputGameQuestionId]].content;
+
+    if (isSimplifiedCharacters == true) {
+      return theInputGameQuestionList[questionIds[inputGameQuestionId]].content;
+    }
+    else {
+      return theInputGameQuestionList[questionIds[inputGameQuestionId]].contentTraditional;
+    }
+
     /*
     var question;
     for (int i = 0; i < questionIds.length; i++) {

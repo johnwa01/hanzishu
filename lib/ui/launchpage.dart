@@ -225,6 +225,8 @@ class _LaunchPageState extends State<LaunchPage> {
           //    textAlign: TextAlign.start
           //),
           SizedBox(height: fontSize1),
+          getRefreshNotice(),
+          SizedBox(height: fontSize1),
           getRealInputGameLink(),
           SizedBox(height: fontSize1),
           getWarmupResults(),
@@ -543,6 +545,16 @@ class _LaunchPageState extends State<LaunchPage> {
     }
   }
 
+  Widget getRefreshNotice() {
+    if (kIsWeb) {
+      return Center(child:  Text(getString(559), style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+  }
 
   Widget getWarmupResults() {
     if (kIsWeb) {

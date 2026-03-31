@@ -34,5 +34,9 @@ var theSchoolList = [
   School(31, "T8BA", "Trials", "Teachers", -1),
   School(32, "P8Te", "Public", "Public Students", -1),
   School(33, "Wh4q", "Joanne Wang", "Cheng Cheng Chinese School", -1),
-  School(34, "Lb9B", "爱尔兰利中中爱文笔中心", "娄风泉", -1),
+  School(34, "J3He", "Joanne Wang", "Folsom Chinese School", -1),
+  School(35, "Lb9B", "娄风泉", "爱尔兰利中中爱文笔中心", -1),
+  School(36, "Ar5N", "张瑞朋", "中山大学", -1),
+  School(37, "B3FQ", "王海平", "Black River Middle School", -1),
+  School(38, "HT9a", "王海平", "华夏中文学校桥水分校", -1),
 ];
