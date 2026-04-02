@@ -39,4 +39,7 @@ var theSchoolList = [
   School(36, "Ar5N", "张瑞朋", "中山大学", -1),
   School(37, "B3FQ", "王海平", "Black River Middle School", -1),
   School(38, "HT9a", "王海平", "华夏中文学校桥水分校", -1),
+  School(39, "LA5M", "梁爱珊", "良爱补习中心", -1),
+  School(40, "D2bA", "王婉清", "青岛城市学院", -1),
+  School(41, "Ne8T", "Jessie", "新东方学苑 （Las Vegas）", -1),
 ];
