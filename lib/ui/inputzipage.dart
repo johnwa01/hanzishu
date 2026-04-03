@@ -1108,7 +1108,12 @@ class _InputZiPageState extends State<InputZiPage> {
           previousStartComposing, previousEndComposing);
 
       //currentComposingText = composingText;
-      fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+      if (InputZiManager.isPinyinInput(composingText) && typingType == TypingType.InputGame) {
+        fullZiCandidates = []; //null;
+      }
+      else {
+        fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+      }
 
       InputZiManager.updateFirstCandidate(
           fullZiCandidates!, InputZiManager.previousFirstPositionList);

@@ -567,4 +567,7 @@ var theString_en_US = [
   Local(557, "Done"),
   Local(558, "[Currently only support desktop or notebook computer, not phone/iPad.]"),
   Local(559, "Note: On formal game day, please reload/refresh this web page to show game link."),
+  Local(560, "Warm up exercise is expired. Welcome to formal competition from main page."),
+  Local(561, "The formal competition has not started yet. Please come back at scheduled time."),
+  Local(562, "***Formal Competition：Hanzishu Cup Hanzi Input Competition***"),
 ];

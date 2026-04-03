@@ -225,12 +225,14 @@ class _LaunchPageState extends State<LaunchPage> {
           //    textAlign: TextAlign.start
           //),
           SizedBox(height: fontSize1),
-          getRefreshNotice(),
+          getRefreshNotice(), // TODO: can remove this after adding real inputgame link
           SizedBox(height: fontSize1),
-          getRealInputGameLink(),
+          //getRealInputGameLink(),
+          //SizedBox(height: fontSize1),
+          getWarmupInputGameLink(),
           SizedBox(height: fontSize1),
-          getWarmupResults(),
-          SizedBox(height: fontSize1),
+          //getWarmupResults(), //TODO: move it into under the game section
+          //SizedBox(height: fontSize1),
           getInputGameRegistration(),
           SizedBox(height: fontSize1),
           getHanzishuInputGameLink(),
@@ -521,7 +523,41 @@ class _LaunchPageState extends State<LaunchPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => InputGamePage(gameid: "1", gameid2: "2"),
+              builder: (context) => InputGamePage(gameid: "3", gameid2: "4"),
+            ),
+          );
+        },
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: Text(getString(562), style: TextStyle(
+            fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blue)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+  }
+
+  Widget getWarmupInputGameLink() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InputGamePage(gameid: "1", gameid2: "2"),
             ),
           );
         },

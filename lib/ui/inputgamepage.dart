@@ -135,6 +135,7 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
   List<Widget> getLogins() {
     List<Widget> logins = [];
+
     logins.add(SizedBox(height: 50));
 
     logins.add(Text(getString(558),
@@ -404,6 +405,41 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     );
   }
 
+  getInvalidDateTimeDialog(int currentGameId) {
+    String display;
+    if (currentGameId == 1 || currentGameId == 2) {
+      display = getString(560);
+    }
+    else {
+      display = getString(561);
+    }
+
+    // set up the button
+    Widget okButton = TextButton(
+      child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text(getString(375)/*Result*/),
+      content: Text(display),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   launchInputGame(int gameid) {
     InputMethod inputMethod = InputMethod.Pinxin;
     int inputGameType = InputGameManager.getInputGameById(gameid).gameType;
@@ -430,15 +466,20 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
     //inputText = _controller.value.text;
     inputText = text;
 
-    if (InputGameManager.isInputGamePasscodeValid(inputText)) {
-      setState(() {
-        inputGameState = InputGameState.gameType;
-      });
-    }
-    else {
-      //if (inputText.length == 0) {
-      showInvalidInputDialog(inputText);
-    }
+      if (InputGameManager.isInputGamePasscodeValid(inputText)) {
+        if (theInputGameManager.isValidDateTime(inputText, currentGameId)) {
+          setState(() {
+            inputGameState = InputGameState.gameType;
+          });
+        }
+        else {
+          getInvalidDateTimeDialog(currentGameId!);
+        }
+      }
+      else {
+        //if (inputText.length == 0) {
+        showInvalidInputDialog(inputText);
+      }
   }
 
   launchAnswerSheetWindow(int gameId) {

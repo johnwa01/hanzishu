@@ -2,6 +2,7 @@ import 'package:hanzishu/data/countrylist.dart';
 import 'package:hanzishu/engine/country.dart';
 import 'package:hanzishu/data/inputgamelist.dart';
 import 'package:hanzishu/engine/inputgame.dart';
+import 'package:hanzishu/engine/school.dart';
 import 'package:hanzishu/data/inputgameanswersheetlist.dart';
 import 'package:hanzishu/engine/inputgameanswersheet.dart';
 import 'package:hanzishu/data/inputgamequestionlist.dart';
@@ -118,5 +119,40 @@ class InputGameManager {
     }
 
     return false;
+  }
+
+  // Format: "2023-10-25 14:30:00"
+  bool isTimeLater(String timeString) {
+    // 1. Get current local time
+    DateTime now = DateTime.now();
+
+    // 2. Parse the input string
+    DateTime givenTime = DateTime.parse(timeString);
+
+    // 3. Compare (returns true if givenTime is in the future)
+    return givenTime.isAfter(now);
+  }
+
+  bool isValidDateTime(inputText, currentGameId) {
+    School school = InputGameManager.getSchoolByCode(inputText);
+    bool isLater = isTimeLater(school.datetime);
+    bool isValidDateTime = true;
+    if ((!isLater && (currentGameId == 1 || currentGameId == 2)) ||
+        (isLater && (currentGameId == 3 || currentGameId == 4)))
+    {
+      isValidDateTime = false;
+    }
+
+    return isValidDateTime;
+  }
+
+  static School getSchoolByCode(String code) {
+    for (int i = 0; i < theSchoolList.length; i++) {
+      if (theSchoolList[i].code == code) {
+        return theSchoolList[i];
+      }
+    }
+
+    return School(-1, "", "", "", "2026-01-01 00:00:00", -1);
   }
 }
