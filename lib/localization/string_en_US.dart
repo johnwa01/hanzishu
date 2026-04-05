@@ -547,7 +547,7 @@ var theString_en_US = [
   Local(537, "Warm Up Exercise Top 10 Results"),
   Local(538, "Registration: Hanzishu Cup Hanzi Input Competition"),
   Local(539, "Enter participation code, then press 'Enter' or 'Done'."),
-  Local(540, "Note：You will open a new #2 'answer sheet' tab page. After you fill out personal information in #2 tab page, as shown below, click #1 tab to come back to the 'typing' tab page to start typing."),
+  Local(540, "Note：You will open a new #2 'answer sheet' tab page. After you fill out personal information in #2 tab page, as shown below, click #1 tab to come back to the 'Hanzishu com' typing tab page to start typing."),
   Local(541, "Note: In case the 'answer sheet' page was not opened, you can open it yourself with following address："),
   Local(542, "Open #2 new 'Answer Sheet' tab page"),
   Local(543, "1. Make sure your input mode is set at: "),
