@@ -224,11 +224,11 @@ class _LaunchPageState extends State<LaunchPage> {
           //    style: TextStyle(color: Colors.blue, fontSize: fontSize2),
           //    textAlign: TextAlign.start
           //),
-          SizedBox(height: fontSize1),
-          getRefreshNotice(), // TODO: can remove this after adding real inputgame link
-          SizedBox(height: fontSize1),
-          //getRealInputGameLink(),
           //SizedBox(height: fontSize1),
+          //getRefreshNotice(), // TODO: can remove this after adding real inputgame link
+          SizedBox(height: fontSize1),
+          getRealInputGameLink(),
+          SizedBox(height: fontSize1),
           getWarmupInputGameLink(),
           SizedBox(height: fontSize1),
           //getWarmupResults(), //TODO: move it into under the game section

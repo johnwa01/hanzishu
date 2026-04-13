@@ -138,9 +138,9 @@ class _InputGamePageState extends State<InputGamePage> with SingleTickerProvider
 
     logins.add(SizedBox(height: 50));
 
-    logins.add(Text(getString(558),
-        style: TextStyle(color: Colors.lightBlue, fontSize: 20 * getSizeRatioWithLimit())),);
-    logins.add(SizedBox(height: 30 * getSizeRatioWithLimit()));
+    //logins.add(Text(getString(558),
+    //    style: TextStyle(color: Colors.lightBlue, fontSize: 20 * getSizeRatioWithLimit())),);
+    //logins.add(SizedBox(height: 30 * getSizeRatioWithLimit()));
     logins.add(Row(
         children: <Widget>[
           SizedBox(width: 50 * getSizeRatioWithLimit()),

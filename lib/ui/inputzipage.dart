@@ -822,9 +822,9 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
 
-    if (_controllerStandard.value.selection.end > previousEndSelection) {
-      PreventCopyAndPasteAction(_controllerStandard);
-    }
+    //if (_controllerStandard.value.selection.end > previousEndSelection) {
+    //  PreventCopyAndPasteAction(_controllerStandard);
+    //}
 
     if (previousText != _controllerStandard.text) {
       previousText = _controllerStandard.text;
@@ -857,6 +857,9 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
+  //TODO: this method does not work for iPhone and iPad, as well as seeing problem in
+  // computers like Sanxing and Lenovo. Basically in normal cases, the typed Chinese characters
+  // are disappearing after choosing them from candidate list.
   void PreventCopyAndPasteAction(TextEditingController activeController) {
     // start with this special InputGame case first.
     if (typingType == TypingType.InputGame) {
@@ -936,7 +939,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //TODO: temp testing for comp shapes
     globalTestDoubleByteCode = _controller.text;
 
-    PreventCopyAndPasteAction(_controller);
+    //PreventCopyAndPasteAction(_controller);
 
     /*
     // for guarded typing
