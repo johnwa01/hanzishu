@@ -36,7 +36,7 @@ var theSchoolList = [
   School(33, "Wh4q", "Joanne Wang", "Chang Cheng Chinese School", "2026-04-18 09:50:00", -1),
   School(34, "J3He", "Joanne Wang", "Folsom Chinese School", "2026-04-18 09:50:00", -1),
   School(35, "Lb9B", "娄风泉", "爱尔兰利中中爱文笔中心", "2026-04-18 09:50:00", -1),
-  School(36, "Ar5N", "张瑞朋", "中山大学", "2026-04-15 09:50:00", -1),
+  School(36, "Ar5N", "张瑞朋", "中山大学", "2026-04-18 09:50:00", -1),
   School(37, "B3FQ", "王海平", "Black River Middle School", "2026-04-18 09:50:00", -1),
   School(38, "HT9a", "王海平", "华夏中文学校桥水分校", "2026-04-18 09:50:00", -1),
   School(39, "LA5M", "梁爱珊", "良爱补习中心", "2026-04-18 09:50:00", -1),
