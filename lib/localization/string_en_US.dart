@@ -540,7 +540,7 @@ var theString_en_US = [
   Local(530, "Please type characters using the given letters in each group only!"),
   Local(531, "Listen"),
   Local(532, "Next Sentence"),
-  Local(533, "Announcements: The 2nd Hanzishu Cup Global Youth Hanzi Input Competition"),
+  Local(533, "In progress: The 2nd Hanzishu Cup Global Youth Hanzi Input Competition"),
   Local(534, "Chinese Cup Input Competition"),
   Local(535, "Hanzishu\nInput Method"), // Typing
   Local(536, "Warm Up Exercises：Hanzishu Cup Hanzi Input Competition"),
