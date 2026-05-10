@@ -234,6 +234,9 @@ class _LaunchPageState extends State<LaunchPage> {
           //getWarmupResults(), //TODO: move it into under the game section
           //SizedBox(height: fontSize1),
           //getInputGameRegistration(),
+          //getFinalGameInfo(),
+          SizedBox(height: fontSize1),
+          getFormalGameResults(),
           SizedBox(height: fontSize1),
           getHanzishuInputGameLink(),
           SizedBox(height: fontSize1 * 2),
@@ -473,6 +476,68 @@ class _LaunchPageState extends State<LaunchPage> {
     //return SizedBox(width: 0, height: 0);
   }
 
+  Widget getFinalGameInfo() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://hanzishu.com/typing/2026/finalgameinfo.html"),
+              webOnlyWindowName: '_self');
+        },
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: Text(getString(563), style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
+  Widget getFormalGameResults() {
+    if (kIsWeb) {
+      return Center(child: TextButton(
+        //color: Colors.blueAccent, //white,
+        //textColor: Colors.brown, //brown,
+        onPressed: () {
+          launchUrl(Uri.parse("https://www.52hrtt.com/mobileview/news/fifm2026042622034213408793.html"),
+              webOnlyWindowName: '_self');
+        },
+        style: TextButton.styleFrom(
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        child: Text(getString(564), style: TextStyle(
+            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
+      ),
+      );
+    }
+    else {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    //return SizedBox(width: 0, height: 0);
+  }
+
   Widget getInputMethodAndTeachingLink() {
     //if (kIsWeb)
       return TextButton(
@@ -523,7 +588,7 @@ class _LaunchPageState extends State<LaunchPage> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => InputGamePage(gameid: "3", gameid2: "4"),
+              builder: (context) => InputGamePage(gameid: "5", gameid2: "6"),
             ),
           );
         },

@@ -540,7 +540,7 @@ var theString_en_US = [
   Local(530, "Please type characters using the given letters in each group only!"),
   Local(531, "Listen"),
   Local(532, "Next Sentence"),
-  Local(533, "In progress: The 2nd Hanzishu Cup Global Youth Hanzi Input Competition"),
+  Local(533, "The 2nd Hanzishu Cup Global Youth Hanzi Input Competition"),
   Local(534, "Chinese Cup Input Competition"),
   Local(535, "Hanzishu\nInput Method"), // Typing
   Local(536, "Warm Up Exercises：Hanzishu Cup Hanzi Input Competition"),
@@ -566,8 +566,10 @@ var theString_en_US = [
   Local(556, "Hanzishu Pictographic Input Method"),
   Local(557, "Done"),
   Local(558, "[Currently only support desktop or notebook computer, not phone/iPad. Apple computer please uses Chrome browser.]"),
-  Local(559, "Note: On formal game day, please reload/refresh this web page to show game link."),
+  Local(559, "On final game day, please reload/clean cache to show final game link."),
   Local(560, "Warm up exercise is expired. Welcome to formal competition from main page."),
   Local(561, "The formal competition has not started yet. Please come back at scheduled time."),
-  Local(562, "***Formal Competition：Hanzishu Cup Hanzi Input Competition***"),
+  Local(562, "***Championship Game：Hanzishu Cup Hanzi Input Competition***"),
+  Local(563, "Final Championship Game Info"),
+  Local(564, "Formal Game Results"),
 ];

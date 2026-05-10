@@ -822,9 +822,9 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
 
-    //if (_controllerStandard.value.selection.end > previousEndSelection) {
-    //  PreventCopyAndPasteAction(_controllerStandard);
-    //}
+    if (_controllerStandard.value.selection.end > previousEndSelection) {
+      PreventCopyAndPasteAction(_controllerStandard);
+    }
 
     if (previousText != _controllerStandard.text) {
       previousText = _controllerStandard.text;
@@ -939,7 +939,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //TODO: temp testing for comp shapes
     globalTestDoubleByteCode = _controller.text;
 
-    //PreventCopyAndPasteAction(_controller);
+    PreventCopyAndPasteAction(_controller);
 
     /*
     // for guarded typing
@@ -996,7 +996,12 @@ class _InputZiPageState extends State<InputZiPage> {
         previousEndComposing--;
         var composingText = getFullComposingText(
             previousStartComposing, previousEndComposing);
-        fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+        if (InputZiManager.isPinyinInput(composingText) && typingType == TypingType.InputGame) {
+          fullZiCandidates = []; //null;
+        }
+        else {
+          fullZiCandidates = InputZiManager.getZiCandidates(composingText)!;
+        }
         theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
         theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
         InputZiManager.updateFirstCandidate(
