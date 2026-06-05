@@ -193,14 +193,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final List<Widget> _children =
   [
-    //LessonsPage(),
-    LaunchPage(),
-    //DictionaryPage(),
-    InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+    LaunchPage(), // Main
+    LessonsPage(),
+    InputZiPage(
+      typingType: TypingType.DicSearchTyping,
+      lessonId: 0,
+      wordsStudy: '',
+      isSoundPrompt: false,
+      inputMethod: InputMethod.Both,
+      showHint: HintType.Hint1,
+      includeSkipSection: false,
+      showSwitchMethod: false,
+    ),
     WordPage(),
-    //DrillPage(drillCategory: DrillCategory.all, subItemId: 0, customString: null),
-    ToolsPage(), // typing
-    MePage()
+    ToolsPage(), // Input Method
   ];
 
   onTappedBar(int index)
@@ -230,29 +236,29 @@ class _MyHomePageState extends State<MyHomePage> {
         //unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
-            label: getString(91)/*'Lessons'*/,
+            label: 'Main',
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
+          ),
+          BottomNavigationBarItem(
+            label: getString(91), // Lessons
             icon: Image.asset('assets/core/lessonsicon1.png'),
             activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: getString(92)/*'Dictionary'*/,
+            label: getString(92), // Dictionary
             icon: Image.asset('assets/core/dictionaryicon1.png'),
             activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: getString(1)/*'Drills'*/,
+            label: getString(1), // Puzzle Game
             icon: Image.asset('assets/core/meicon1.png'),
             activeIcon: Image.asset('assets/core/meicon0.png'),
           ),
           BottomNavigationBarItem(
-            label: getString(93)/*'Typing'*/,
+            label: getString(93), // Hanzishu Input Method
             icon: Image.asset('assets/core/typingicon1.png'),
             activeIcon: Image.asset('assets/core/typingicon0.png'),
-          ),
-          BottomNavigationBarItem(
-            label: getString(94)/*'Me'*/,
-            icon: Image.asset('assets/core/moreicon1.png'),
-            activeIcon: Image.asset('assets/core/moreicon0.png'),
           ),
         ],
       ),

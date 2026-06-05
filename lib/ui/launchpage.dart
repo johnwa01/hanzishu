@@ -213,11 +213,24 @@ class _LaunchPageState extends State<LaunchPage> {
               mainAxisAlignment: MainAxisAlignment.center,
             children: [
             Image.asset('assets/core/logo.jpg',
-              width: 40.0 * getSizeRatioWithLimit(),
-              height: 40.0 * getSizeRatioWithLimit(),
+              width: 70.0 * getSizeRatioWithLimit(),
+              height: 70.0 * getSizeRatioWithLimit(),
               fit: BoxFit.fitWidth,),
               getLanguageSwitchButton(),
             ]
+          ),
+          SizedBox(height: 10),
+
+          Center(
+            child: Text(
+              "Learn Chinese Through Character Structure & Typing",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.blueGrey,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
           ),
           //Text(
           //    getString(412)/*"detailed Launch stuff"*/,
@@ -235,55 +248,127 @@ class _LaunchPageState extends State<LaunchPage> {
           //SizedBox(height: fontSize1),
           //getInputGameRegistration(),
           //getFinalGameInfo(),
-          SizedBox(height: fontSize1),
-          getFormalGameResults(),
-          SizedBox(height: fontSize1),
-          getHanzishuInputGameLink(),
+          //SizedBox(height: fontSize1),
+          //getFormalGameResults(),
+          //SizedBox(height: fontSize1),
+          //getHanzishuInputGameLink(),
           SizedBox(height: fontSize1 * 2),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getInputMethodButton(),
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getLessonsButton(),
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-              ]
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 30 * getSizeRatioWithLimit(),
+            runSpacing: 15 * getSizeRatioWithLimit(),
+            children: [
+              getHomeFeatureButton(getString(535), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ToolsPage()),
+                );
+              }),
+              getHomeFeatureButton(getString(91), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LessonsPage()),
+                );
+              }),
+              getHomeFeatureButton(getString(92), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InputZiPage(
+                      typingType: TypingType.DicSearchTyping,
+                      lessonId: 0,
+                      wordsStudy: '',
+                      isSoundPrompt: false,
+                      inputMethod: InputMethod.Both,
+                      showHint: HintType.Hint1,
+                      includeSkipSection: false,
+                      showSwitchMethod: false,
+                    ),
+                  ),
+                );
+              }),
+              getHomeFeatureButton(getString(1), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => WordPage()),
+                );
+              }),
+              getHomeFeatureButton(getString(94), () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MePage()),
+                );
+              }),
+            ],
           ),
           SizedBox(height: 15 * getSizeRatioWithLimit()),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getDictionaryButton(),
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getPuzzleButton(),
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-              ]
-          ),
-          SizedBox(height: 15 * getSizeRatioWithLimit()),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 30 * getSizeRatioWithLimit()),
-                getMoreButton(),
-              ]
-          ),
-          SizedBox(height: 15 * getSizeRatioWithLimit()),
-          Text(
-            "热点: (Hot topics, Chinese only)",
-            style: TextStyle(
-              color: Colors.brown,
-              //fontSize: 24 * getSizeRatioWithLimit(),
-              fontWeight: FontWeight.bold,
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20 * getSizeRatioWithLimit()),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Discover Hanzishu",
+                  style: TextStyle(
+                    color: Colors.brown,
+                    fontSize: 24 * getSizeRatioWithLimit(),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 6),
+                Text(
+                  "Articles, videos, classroom stories and research.",
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                    fontSize: 14 * getSizeRatioWithLimit(),
+                  ),
+                ),
+                SizedBox(height: 12),
+                Wrap(
+                  spacing: 14 * getSizeRatioWithLimit(),
+                  runSpacing: 14 * getSizeRatioWithLimit(),
+                  children: [
+                    getDiscoverCard(
+                      "华州高中课堂",
+                      "“汉字树”走进美国高中中文课堂",
+                      "https://hanzishu.com/publish/skyline.html",
+                    ),
+                    getDiscoverCard(
+                      "塔尔萨大学首秀",
+                      "象形电打法在美国大学课堂的体验",
+                      "https://hanzishu.com/publish/tul.html",
+                    ),
+                    getDiscoverCard(
+                      "在教室里种汉字树",
+                      "一线中文课堂中的实践故事",
+                      "https://hanzishu.com/publish/westside.html",
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8),
+                TextButton(
+                  onPressed: () {
+                    launchUrl(Uri.parse("https://hanzishu.com/publish"),
+                        webOnlyWindowName: '_self');
+                  },
+                  child: Text(
+                    "View All Articles & Videos →",
+                    style: TextStyle(
+                      fontSize: 15 * getSizeRatioWithLimit(),
+                      color: Colors.brown,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-
-          getSkylineReportLink(),
-          getGaochengsixiaoReportLink(),
-          getTulReportLink(),
-          getWestsideReportLink(),
-          getPublishReportLink(),
+          //getSkylineReportLink(),
+          //getGaochengsixiaoReportLink(),
+          //getTulReportLink(),
+          //getWestsideReportLink(),
+          //getPublishReportLink(),
           //getHanzishuHistoryLink(),
           //getMakaylaHanzishuDiaryLink(),
           //getPinyinNotGoodForTeachingLink(),
@@ -293,29 +378,24 @@ class _LaunchPageState extends State<LaunchPage> {
     );
   }
 
-  Widget getLessonsButton() {
+  Widget getHomeFeatureButton(String title, VoidCallback onTap) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => LessonsPage()
-          ),
-        );
-      },
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width
-        height: 80 * getSizeRatioWithLimit(), // Example height
+        width: 150 * getSizeRatioWithLimit(),
+        height: 80 * getSizeRatioWithLimit(),
         decoration: BoxDecoration(
-          color: Colors.blue, // Example background color
-          borderRadius: BorderRadius.circular(10), // Example rounded corners
+          color: Colors.blue,
+          borderRadius: BorderRadius.circular(12),
         ),
         child: Center(
           child: Text(
-            getString(91), //'Lessons'
+            title,
+            textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 24 * getSizeRatioWithLimit(),
+              fontSize: 23 * getSizeRatioWithLimit(),
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -324,125 +404,40 @@ class _LaunchPageState extends State<LaunchPage> {
     );
   }
 
-  Widget getDictionaryButton() {
+  Widget getDiscoverCard(String title, String subtitle, String url) {
     return InkWell(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => InputZiPage(typingType: TypingType.DicSearchTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Both, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false)
-          ),
-        );
+        launchUrl(Uri.parse(url), webOnlyWindowName: '_self');
       },
+      borderRadius: BorderRadius.circular(12),
       child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width
-        height: 80 * getSizeRatioWithLimit(), // Example height
+        width: 210 * getSizeRatioWithLimit(),
+        padding: EdgeInsets.all(14 * getSizeRatioWithLimit()),
         decoration: BoxDecoration(
-          color: Colors.blue, // Example background color
-          borderRadius: BorderRadius.circular(10), // Example rounded corners
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.brown.withOpacity(0.25)),
         ),
-        child: Center(
-          child: Text(
-            getString(92), //'Dictionary'
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24 * getSizeRatioWithLimit(),
-              fontWeight: FontWeight.bold,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.brown,
+                fontSize: 15 * getSizeRatioWithLimit(),
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget getPuzzleButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => WordPage()
-          ),
-        );
-      },
-      child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width
-        height: 80 * getSizeRatioWithLimit(), // Example height
-        decoration: BoxDecoration(
-          color: Colors.blue, // Example background color
-          borderRadius: BorderRadius.circular(10), // Example rounded corners
-        ),
-        child: Center(
-          child: Text(
-            getString(1), ///'Drills'
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24 * getSizeRatioWithLimit(),
-              fontWeight: FontWeight.bold,
+            SizedBox(height: 8),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: Colors.grey[700],
+                fontSize: 13 * getSizeRatioWithLimit(),
+              ),
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget getInputMethodButton() {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ToolsPage()
-          ),
-        );
-      },
-      child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width 150
-        height: 80 * getSizeRatioWithLimit(), // Example height
-        decoration: BoxDecoration(
-          color: Colors.blue, // Example background color
-          borderRadius: BorderRadius.circular(10), // Example rounded corners
-        ),
-        child: Center(
-          child: Text(
-            getString(535), // 'Typing'
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24 * getSizeRatioWithLimit(),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget getMoreButton() {
-    return InkWell(
-      onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => MePage()
-            ),
-          );
-      },
-      child: Container(
-        width: 150 * getSizeRatioWithLimit(), // Example width 150
-        height: 80 * getSizeRatioWithLimit(), // Example height
-        decoration: BoxDecoration(
-          color: Colors.blue, // Example background color
-          borderRadius: BorderRadius.circular(10), // Example rounded corners
-        ),
-        child: Center(
-          child: Text(
-            getString(94), //'Me'
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 24 * getSizeRatioWithLimit(),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          ],
         ),
       ),
     );
@@ -772,7 +767,7 @@ class _LaunchPageState extends State<LaunchPage> {
         onPressed: () {
           launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
         },
-        child: Text("更多汉字树相关文章和视频", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+        child: Text("View All Articles & Videos →", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
       );
 
     //return SizedBox(width: 0, height: 0);
