@@ -236,7 +236,7 @@ class _MyHomePageState extends State<MyHomePage> {
         //unselectedLabelStyle: textTheme.caption,
         items: [
           BottomNavigationBarItem(
-            label: 'Main',
+            label: getString(565), // Home
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
           ),

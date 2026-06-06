@@ -572,4 +572,5 @@ var theString_en_US = [
   Local(562, "***Championship Game：Hanzishu Cup Hanzi Input Competition***"),
   Local(563, "Final Championship Game Info"),
   Local(564, "Formal Game Results"),
+  Local(565, "Home"),
 ];
