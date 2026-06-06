@@ -309,8 +309,8 @@ class _LaunchPageState extends State<LaunchPage> {
                       "Discover Hanzishu",
                       style: TextStyle(
                         color: Colors.brown,
-                        fontSize: 24 * getSizeRatioWithLimit(),
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20 * getSizeRatioWithLimit(),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     TextButton(
@@ -337,38 +337,29 @@ class _LaunchPageState extends State<LaunchPage> {
                   ),
                 ),
                 SizedBox(height: 14 * getSizeRatioWithLimit()),
-                SizedBox(
-                  height: 205 * getSizeRatioWithLimit(),
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      getDiscoverCard(
-                        "华州高中课堂",
-                        "“汉字树”走进美国高中中文课堂",
-                        "https://hanzishu.com/publish/skyline.html",
-                        Icons.school,
-                      ),
 
-                      SizedBox(width: 14 * getSizeRatioWithLimit()),
+                Wrap(
+                  spacing: 18 * getSizeRatioWithLimit(),
+                  runSpacing: 6 * getSizeRatioWithLimit(),
+                  children: [
 
-                      getDiscoverCard(
-                        "塔尔萨大学首秀",
-                        "象形电打法在美国大学课堂的体验",
-                        "https://hanzishu.com/publish/tul.html",
-                        Icons.play_circle_fill,
-                      ),
+                    getDiscoverTextLink(
+                      "🏫 华州高中课堂",
+                      "https://hanzishu.com/publish/skyline.html",
+                    ),
 
-                      SizedBox(width: 14 * getSizeRatioWithLimit()),
+                    getDiscoverTextLink(
+                      "▶ 塔尔萨大学首秀",
+                      "https://hanzishu.com/publish/tul.html",
+                    ),
 
-                      getDiscoverCard(
-                        "在教室里种汉字树",
-                        "一线中文课堂中的实践故事",
-                        "https://hanzishu.com/publish/westside.html",
-                        Icons.menu_book,
-                      ),
-                    ],
-                  ),
+                    getDiscoverTextLink(
+                      "📖 在教室里种汉字树",
+                      "https://hanzishu.com/publish/westside.html",
+                    ),
+                  ],
                 ),
+
               ],
             ),
           ),
@@ -384,6 +375,28 @@ class _LaunchPageState extends State<LaunchPage> {
           //getNewStageOfLearningChineseLink(),
           //getInputMethodAndTeachingLink(),
         ]
+    );
+  }
+
+  Widget getDiscoverTextLink(
+      String title,
+      String url,
+      ) {
+    return InkWell(
+      onTap: () {
+        launchUrl(
+          Uri.parse(url),
+          webOnlyWindowName: '_self',
+        );
+      },
+      child: Text(
+        title,
+        style: TextStyle(
+          color: Colors.blueGrey[700],
+          fontSize: 14 * getSizeRatioWithLimit(),
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 
