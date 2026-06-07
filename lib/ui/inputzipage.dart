@@ -166,7 +166,7 @@ class _InputZiPageState extends State<InputZiPage> {
   speakFirstZiAfterExplanationPage() {
     if ((typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) && currentIndex == 0) {
       String typeChar = InputZiManager.getEitherCharFromCurrentId(
-        typingType!, 1 /*currentIndex*/, widget.lessonId); // skip the '0' position placeholder one
+          typingType!, 1 /*currentIndex*/, widget.lessonId); // skip the '0' position placeholder one
       TextToSpeech.speak("zh-CN", typeChar);
     }
   }
@@ -232,7 +232,7 @@ class _InputZiPageState extends State<InputZiPage> {
       else {
         if (!((typingType == TypingType.FirstTyping || typingType == TypingType.LeadComponents || typingType == TypingType.ExpandedReview) && (currentIndex == -1))) {
           typeChar = InputZiManager.getEitherCharFromCurrentId(
-            typingType!, 0 /*currentIndex*/, widget.lessonId);
+              typingType!, 0 /*currentIndex*/, widget.lessonId);
           TextToSpeech.speak("zh-CN", typeChar);
         }
       }
@@ -577,7 +577,7 @@ class _InputZiPageState extends State<InputZiPage> {
         if (typingType == TypingType.Custom || typingType == TypingType.ThirdParty) {
           var remainingSubstring = InputZiManager.getRemainingChars(
               typingType!, currentIndex, wordsStudy);
-              numberOfCharsTyped = InputZiManager.calculateHowManyTyped(
+          numberOfCharsTyped = InputZiManager.calculateHowManyTyped(
               checkedText, remainingSubstring);
           if (numberOfCharsTyped < 1) {
             numberOfCharsTyped = 1; // loose count for 1 which is already verified earlier
@@ -648,7 +648,7 @@ class _InputZiPageState extends State<InputZiPage> {
               }
             }
             else {
-                TextToSpeech.speak("zh-CN", typeChar);
+              TextToSpeech.speak("zh-CN", typeChar);
             }
           }
         });
@@ -665,13 +665,13 @@ class _InputZiPageState extends State<InputZiPage> {
       var charIndex = PrimitiveWrapper(0);
       var oneLesson = theLessonList[lessonId];
       oneLesson.getSentenceAndCharIndex(
-        currentIndex, sentenceIndex, charIndex);
+          currentIndex, sentenceIndex, charIndex);
       sentence = theSentenceList[sentenceIndex.value].conv;
     }
     else if(typingType == TypingType.ThirdParty) {
       var charIndex = PrimitiveWrapper(0);
       sentence = ThirdPartyLesson.getCurrentSentenceAndCharIndex(
-      currentIndex, charIndex);
+          currentIndex, charIndex);
     }
     else if (typingType == TypingType.Custom) {
       PrimitiveWrapper charIndex = PrimitiveWrapper(-1);
@@ -688,14 +688,14 @@ class _InputZiPageState extends State<InputZiPage> {
         //if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates!.length) {
         int tempNextStartingIndex = InputZiManager.getFullCandidateNextStartingIndex(fullZiCandidates!, fullCandidateStartingIndex, true/*forwardArrlow*/);
         if(tempNextStartingIndex > 0) {
-            //candidateGroupIndex++;
-            fullCandidateStartingIndex = tempNextStartingIndex;
-            setState(() {
-              theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
-              theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
-              isFromArrowCandidate = true;
-              updateCounter++;
-            });
+          //candidateGroupIndex++;
+          fullCandidateStartingIndex = tempNextStartingIndex;
+          setState(() {
+            theCurrentZiCandidates = InputZiManager.getCurrentFromFullZiCandidates(fullZiCandidates!, fullCandidateStartingIndex);
+            theCurrentZiCandidates = InputZiManager.removeDupCandidates(theCurrentZiCandidates);
+            isFromArrowCandidate = true;
+            updateCounter++;
+          });
         }
       }
     }
@@ -727,12 +727,12 @@ class _InputZiPageState extends State<InputZiPage> {
     // pronounce the typed char
     var typedZiString = '';
     //if (typingType != TypingType.FreeTyping && typingType != TypingType.DicSearchTyping) {
-      //typedZiString = InputZiManager.getCandidateZiString(selectionIndex)!;
-      //TextToSpeech.speak("zh-CN", typedZiString);
-      var candidateZiString = InputZiManager.getCandidateZiString(selectionIndex);
-      if (candidateZiString != null) {
-        typedZiString = InputZiManager.removePinyin(candidateZiString);
-      }
+    //typedZiString = InputZiManager.getCandidateZiString(selectionIndex)!;
+    //TextToSpeech.speak("zh-CN", typedZiString);
+    var candidateZiString = InputZiManager.getCandidateZiString(selectionIndex);
+    if (candidateZiString != null) {
+      typedZiString = InputZiManager.removePinyin(candidateZiString);
+    }
     var candidateCharLength = typedZiString.characters.length; //theCurrentZiCandidates[selectionIndex].characters.length;
     //}
 
@@ -754,8 +754,8 @@ class _InputZiPageState extends State<InputZiPage> {
     previousEndSelection = selectionPosi; //_controller.value.selection.end;
 
     _controller.value = _controller.value.copyWith(text: newText,
-          composing: TextRange.empty,
-          selection: TextSelection.collapsed(offset: selectionPosi));
+        composing: TextRange.empty,
+        selection: TextSelection.collapsed(offset: selectionPosi));
 
     if (kIsWeb) {
       _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disappear.
@@ -835,7 +835,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     setState(() {
-        updateCounter++; // for Hash value refresh
+      updateCounter++; // for Hash value refresh
     });
   }
 
@@ -1038,7 +1038,7 @@ class _InputZiPageState extends State<InputZiPage> {
             fullCandidateStartingIndex = tempNextStartingIndex;
           }
           //if ((candidateGroupIndex + 1) * InputZiManager.maxTypingCandidates < fullZiCandidates!.length) {
-            //candidateGroupIndex++;
+          //candidateGroupIndex++;
           //}
         }
       }
@@ -1494,7 +1494,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(534)/*'Chinese Cup Input Competition'*/;
     }
     else if (typingType == TypingType.DicSearchTyping) {
-      title = getString(95)/*'Dictionary'*/;
+      title = "";
     }
     else if (typingType == TypingType.CommonZiTyping) {
       title = getString(112)/*'Customized exercises'*/;
@@ -1538,16 +1538,16 @@ class _InputZiPageState extends State<InputZiPage> {
       appBar: AppBar
         (
         title: Text(title),
-        ),
+      ),
       body: Container(
         child: SingleChildScrollView( // was trying to use this trying to avoid the issue of pushing content up in Android browser
-                                        // didn't help but didn't hurt, so leave it here for future flexibility.
+          // didn't help but didn't hurt, so leave it here for future flexibility.
           controller: _scrollController,
           //physics: NeverScrollableScrollPhysics(), // Didn't work: not allow to scroll to avoid the issue of pushing content up in Andorid browser
           scrollDirection: Axis.vertical,
           child: WillPopScope( // for dismissing overlay menu only when hitting back arrow
-            child:
-                  getTypingContent(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter),
+              child:
+              getTypingContent(fieldWidth, editFieldFontRatio, editFontSize, maxNumberOfLines, inputZiPainter),
               onWillPop: _onWillPop
           ),
         ),
@@ -1566,57 +1566,534 @@ class _InputZiPageState extends State<InputZiPage> {
     }
   }
 
-  Column  getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.start, //spaceAround,
-          //mainAxisSize:  MainAxisSize.max,
-          children: <Widget>[
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text(getString(486), textAlign: TextAlign.left),
-                ]
+  Column getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
+    final ratio = getSizeRatio();
+    final teal = Color(0xFF00897B);
+    final darkTeal = Color(0xFF005C55);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: <Widget>[
+        SizedBox(height: 24 * ratio),
+
+        _buildDictionaryHeader(ratio, darkTeal),
+
+        SizedBox(height: 28 * ratio),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
+          child: _buildFirstHanziSearchCard(ratio, teal, darkTeal),
+        ),
+
+        SizedBox(height: 28 * ratio),
+
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
+          child: _buildDictionarySearchSection(
+            ratio,
+            teal,
+            darkTeal,
+            editFieldFontRatio,
+            editFontSize,
+            maxNumberOfLines,
+            inputZiPainter,
+          ),
+        ),
+
+        SizedBox(height: 32 * ratio),
+      ],
+    );
+  }
+
+  Widget _buildDictionaryHeader(double ratio, Color darkTeal) {
+    return Column(
+      children: [
+        Icon(
+          Icons.menu_book_rounded,
+          color: darkTeal,
+          size: 42 * ratio,
+        ),
+        SizedBox(height: 10 * ratio),
+        Text(
+          "Hanzishu Dictionary",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color(0xFF111827),
+            fontSize: 32 * ratio,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 8 * ratio),
+        Text(
+          "Find and explore Chinese characters.",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Colors.blueGrey[700],
+            fontSize: 16 * ratio,
+            height: 1.35,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFirstHanziSearchCard(double ratio, Color teal, Color darkTeal) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20 * ratio),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DictionaryPage(),
             ),
-            SizedBox(height: 15.0),
-            getDicSearchFirstZi(),
-            SizedBox(height: 15.0),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text("2. " + getString(484), textAlign: TextAlign.left),
-                ]
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.all(26 * ratio),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFF3FBFA),
+                Colors.white,
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
             ),
-            getOtherInputMethodTextField(_controllerStandard, true),
-            SizedBox(height: 15.0),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text("3. " + getString(485), textAlign: TextAlign.left,
-                      maxLines: 2,
-                      softWrap: true),
-                ]
+            borderRadius: BorderRadius.circular(20 * ratio),
+            border: Border.all(
+              color: darkTeal.withOpacity(0.18),
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30 * getSizeRatio()),
-                  Text(getString(487), textAlign: TextAlign.left,
-                      maxLines: 2,
-                      softWrap: true),
-                ]
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 18 * ratio,
+                offset: Offset(0, 8 * ratio),
+              ),
+            ],
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final bool isNarrow = constraints.maxWidth < 620;
+
+              final iconWidget = Container(
+                width: 90 * ratio,
+                height: 90 * ratio,
+                decoration: BoxDecoration(
+                  color: teal.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.manage_search_rounded,
+                  color: darkTeal,
+                  size: 52 * ratio,
+                ),
+              );
+
+              final textColumn = Column(
+                crossAxisAlignment:
+                isNarrow ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "First-Hanzi Search",
+                    textAlign:
+                    isNarrow ? TextAlign.center : TextAlign.start,
+                    style: TextStyle(
+                      color: darkTeal,
+                      fontSize: 25 * ratio,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 10 * ratio),
+                  Text(
+                    "Find a character through its first Hanzi.",
+                    textAlign:
+                    isNarrow ? TextAlign.center : TextAlign.start,
+                    style: TextStyle(
+                      color: Colors.blueGrey[700],
+                      fontSize: 15.5 * ratio,
+                      height: 1.35,
+                    ),
+                  ),
+                  SizedBox(height: 18 * ratio),
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 28 * ratio,
+                      vertical: 16 * ratio,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16 * ratio),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 10 * ratio,
+                          offset: Offset(0, 3 * ratio),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.grid_view_rounded,
+                          color: darkTeal,
+                          size: 24 * ratio,
+                        ),
+                        SizedBox(width: 12 * ratio),
+                        Text(
+                          "Open First-Hanzi Table",
+                          style: TextStyle(
+                            color: darkTeal,
+                            fontSize: 17 * ratio,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(width: 12 * ratio),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                          color: darkTeal,
+                          size: 24 * ratio,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+
+              if (isNarrow) {
+                return Column(
+                  children: [
+                    iconWidget,
+                    SizedBox(height: 18 * ratio),
+                    textColumn,
+                  ],
+                );
+              }
+
+              return Row(
+                children: [
+                  iconWidget,
+                  SizedBox(width: 24 * ratio),
+                  Expanded(child: textColumn),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFirstHanziButton(double ratio, Color darkTeal) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 18 * ratio,
+        vertical: 12 * ratio,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(13 * ratio),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 10 * ratio,
+            offset: Offset(0, 4 * ratio),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.grid_view_rounded, color: darkTeal, size: 22 * ratio),
+          SizedBox(width: 10 * ratio),
+          Text(
+            "Open First-Hanzi Table",
+            style: TextStyle(
+              color: darkTeal,
+              fontSize: 15.5 * ratio,
+              fontWeight: FontWeight.bold,
             ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  SizedBox(width: 30.0),
-                  getHanzishuTextField(
-                      fieldWidth, editFieldFontRatio, editFontSize,
-                      maxNumberOfLines),
-                  getQueryButton(_controller, true),
-                ]
+          ),
+          SizedBox(width: 8 * ratio),
+          Icon(Icons.arrow_forward_rounded, color: darkTeal, size: 22 * ratio),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDictionarySearchSection(
+      double ratio,
+      Color teal,
+      Color darkTeal,
+      double editFieldFontRatio,
+      double editFontSize,
+      int maxNumberOfLines,
+      InputZiPainter inputZiPainter,
+      ) {
+    return Container(
+      padding: EdgeInsets.all(20 * ratio),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20 * ratio),
+        border: Border.all(color: Colors.black.withOpacity(0.06)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 18 * ratio,
+            offset: Offset(0, 8 * ratio),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 52 * ratio,
+                height: 52 * ratio,
+                decoration: BoxDecoration(
+                  color: teal.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.search_rounded, color: darkTeal, size: 32 * ratio),
+              ),
+              SizedBox(width: 14 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Search Characters",
+                      style: TextStyle(
+                        color: Color(0xFF111827),
+                        fontSize: 22 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4 * ratio),
+                    Text(
+                      "Choose a search method.",
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontSize: 14.5 * ratio,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 20 * ratio),
+
+          _buildDictionaryInputCard(
+            ratio: ratio,
+            teal: teal,
+            darkTeal: darkTeal,
+            icon: Icons.keyboard_rounded,
+            title: "Search with Hanzishu Input",
+            description: "Use the built-in Shape-Sequence input method.",
+            child: _buildDictionaryHanzishuSearchBox(
+              ratio,
+              teal,
+              editFieldFontRatio,
+              editFontSize,
+              maxNumberOfLines,
             ),
-            getZiCandidates(inputZiPainter),
-          ]
-      );
+          ),
+
+          getZiCandidates(inputZiPainter),
+
+          SizedBox(height: 16 * ratio),
+
+          _buildDictionaryInputCard(
+            ratio: ratio,
+            teal: teal,
+            darkTeal: darkTeal,
+            icon: Icons.translate_rounded,
+            title: "Search with Other Input Methods",
+            description: "Use Pinyin or other input methods.",
+            child: _buildDictionaryOtherSearchBox(ratio, teal),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDictionaryInputCard({
+    required double ratio,
+    required Color teal,
+    required Color darkTeal,
+    required IconData icon,
+    required String title,
+    required String description,
+    required Widget child,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(18 * ratio),
+      decoration: BoxDecoration(
+        color: Color(0xFFFCFCFD),
+        borderRadius: BorderRadius.circular(16 * ratio),
+        border: Border.all(color: Colors.black.withOpacity(0.06)),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final bool isNarrow = constraints.maxWidth < 620;
+
+          final leading = Container(
+            width: 72 * ratio,
+            height: 72 * ratio,
+            decoration: BoxDecoration(
+              color: teal.withOpacity(0.10),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: darkTeal, size: 38 * ratio),
+          );
+
+          final descriptionColumn = Column(
+            crossAxisAlignment: isNarrow ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                textAlign: isNarrow ? TextAlign.center : TextAlign.start,
+                style: TextStyle(
+                  color: darkTeal,
+                  fontSize: 17.5 * ratio,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 8 * ratio),
+              Text(
+                description,
+                textAlign: isNarrow ? TextAlign.center : TextAlign.start,
+                style: TextStyle(
+                  color: Colors.blueGrey[700],
+                  fontSize: 14 * ratio,
+                  height: 1.35,
+                ),
+              ),
+            ],
+          );
+
+          if (isNarrow) {
+            return Column(
+              children: [
+                leading,
+                SizedBox(height: 12 * ratio),
+                descriptionColumn,
+                SizedBox(height: 16 * ratio),
+                child,
+              ],
+            );
+          }
+
+          return Row(
+            children: [
+              leading,
+              SizedBox(width: 18 * ratio),
+              Expanded(child: descriptionColumn),
+              SizedBox(width: 18 * ratio),
+              Expanded(
+                flex: 2,
+                child: child,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildDictionaryHanzishuSearchBox(
+      double ratio,
+      Color teal,
+      double editFieldFontRatio,
+      double editFontSize,
+      int maxNumberOfLines,
+      ) {
+    return TextField(
+      autocorrect: false,
+      enableSuggestions: false,
+      controller: _controller,
+      focusNode: _focusNode,
+      autofocus: false,
+      cursorColor: teal,
+      decoration: InputDecoration(
+        hintText: "Enter Shape-Sequence code...",
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 14 * ratio,
+          vertical: 12 * ratio,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search_rounded, color: teal),
+          onPressed: () {
+            processZiQuery(_controller);
+          },
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal.withOpacity(0.75), width: 1.2 * ratio),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal, width: 1.6 * ratio),
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 18 * ratio,
+        height: 1.15,
+      ),
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+    );
+  }
+
+  Widget _buildDictionaryOtherSearchBox(double ratio, Color teal) {
+    return TextField(
+      autocorrect: false,
+      enableSuggestions: false,
+      controller: _controllerStandard,
+      focusNode: _focusNodeStandard,
+      autofocus: false,
+      cursorColor: teal,
+      decoration: InputDecoration(
+        hintText: "Enter Pinyin or other input...",
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 14 * ratio,
+          vertical: 12 * ratio,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search_rounded, color: teal),
+          onPressed: () {
+            processZiQuery(_controllerStandard);
+          },
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal.withOpacity(0.75), width: 1.2 * ratio),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal, width: 1.6 * ratio),
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 18 * ratio,
+        height: 1.15,
+      ),
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      onSubmitted: (_) {
+        processZiQuery(_controllerStandard);
+      },
+    );
   }
 
   Column getRegularOneTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
@@ -1646,23 +2123,23 @@ class _InputZiPageState extends State<InputZiPage> {
             getHintLabelRelated(),
             getHelpOrProgressIndicator(),
             Row(
-              children: <Widget>[
-                SizedBox(width: 10),
-                //Container(
-                //  alignment: Alignment.topLeft,
-                //  child: getShortTypingTitle(),
-                //),
-                //SizedBox(width: 10),
-                Container(
-                  //alignment: Alignment.topRight,
-                  child: getSwitchInputMethodOrInputModeMessage(),
-                ),
-                SizedBox(width: 100.0 * getSizeRatio()), //push skip section into right
-                Container(
-                  alignment: Alignment.topRight,
-                  child: getSkipThisSection(),
-                ),
-              ]
+                children: <Widget>[
+                  SizedBox(width: 10),
+                  //Container(
+                  //  alignment: Alignment.topLeft,
+                  //  child: getShortTypingTitle(),
+                  //),
+                  //SizedBox(width: 10),
+                  Container(
+                    //alignment: Alignment.topRight,
+                    child: getSwitchInputMethodOrInputModeMessage(),
+                  ),
+                  SizedBox(width: 100.0 * getSizeRatio()), //push skip section into right
+                  Container(
+                    alignment: Alignment.topRight,
+                    child: getSkipThisSection(),
+                  ),
+                ]
             ),
             getInputPrompt(),
             // Divider(color: Colors.brown,),
@@ -1710,7 +2187,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   //),
                   //SizedBox(width: 10),
                   //Container(
-                    //alignment: Alignment.topRight,
+                  //alignment: Alignment.topRight,
                   //  child: getSwitchInputMethod(),
                   //),
                   //SizedBox(width: 10),
@@ -1754,43 +2231,43 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return Center(child: TextButton(
-      style: TextButton.styleFrom(
-        textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
-        side: BorderSide(
-          color: Colors.blue, // The border color
-          width: 2,          // The border width
+        style: TextButton.styleFrom(
+          textStyle: TextStyle(fontSize: 20.0 * getSizeRatio()),
+          side: BorderSide(
+            color: Colors.blue, // The border color
+            width: 2,          // The border width
+          ),
+          // You can also add rounded corners
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
         ),
-        // You can also add rounded corners
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
-      onPressed: () {
+        onPressed: () {
           //if (isInputGameInHashMode) {
-        if (inputMethod == InputMethod.Pinxin) {
-          _controller.clear();
-        }
-        else {
-          _controllerStandard.clear();
-        }
+          if (inputMethod == InputMethod.Pinxin) {
+            _controller.clear();
+          }
+          else {
+            _controllerStandard.clear();
+          }
 
-        if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
-          setState(() {
-            currentInputGameQuestionListIndex += 1;
-            //isInputGameInHashMode = false;
-          });
-        }
-        else {
-          showInputGameCompletedDialog();
-        }
-        //}
-        //else  {
-        //  setState(() {
-        //    isInputGameInHashMode = true;
-        //  });
-        //}
-      },
-      child: Text(nextQuestionButtonText,
+          if (InputGameManager.isInputGameQuestionListIndexValid(currentInputGameId, currentInputGameQuestionListIndex + 1)) {
+            setState(() {
+              currentInputGameQuestionListIndex += 1;
+              //isInputGameInHashMode = false;
+            });
+          }
+          else {
+            showInputGameCompletedDialog();
+          }
+          //}
+          //else  {
+          //  setState(() {
+          //    isInputGameInHashMode = true;
+          //  });
+          //}
+        },
+        child: Text(nextQuestionButtonText,
           style: TextStyle(
             fontSize: 20.0 * getSizeRatio(), // Set the desired font size
           ),)),
@@ -1864,21 +2341,21 @@ class _InputZiPageState extends State<InputZiPage> {
         //  return AdaptiveTextSelectionToolbar.editable(
         //    anchors: editableTextState.contextMenuAnchors,
         //    clipboardStatus: ClipboardStatus.notPasteable,
-            // to apply the normal behavior when click on copy (copy in clipboard close toolbar)
-            // use an empty function `() {}` to hide this option from the toolbar
+        // to apply the normal behavior when click on copy (copy in clipboard close toolbar)
+        // use an empty function `() {}` to hide this option from the toolbar
         //    onCopy: () => editableTextState
         //        .copySelection(SelectionChangedCause.toolbar),
-            // to apply the normal behavior when click on cut
+        // to apply the normal behavior when click on cut
         //    onCut: () => editableTextState
         //        .cutSelection(SelectionChangedCause.toolbar),
         //    onPaste: () {
-              // HERE will be called when the paste button is clicked in the toolbar
-              // apply your own logic here
+        // HERE will be called when the paste button is clicked in the toolbar
+        // apply your own logic here
 
-              // to apply the normal behavior when click on paste (add in input and close toolbar)
-              // editableTextState.pasteText(SelectionChangedCause.tap);
+        // to apply the normal behavior when click on paste (add in input and close toolbar)
+        // editableTextState.pasteText(SelectionChangedCause.tap);
         //    },
-            // to apply the normal behavior when click on select all
+        // to apply the normal behavior when click on select all
         //    onSelectAll: () =>
         //        editableTextState.selectAll(SelectionChangedCause.toolbar),
         //    onLookUp: () {},
@@ -1944,18 +2421,18 @@ class _InputZiPageState extends State<InputZiPage> {
           Text("1. ", textAlign:TextAlign.left),
           TextButton(
             style: TextButton.styleFrom(
-            textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => DictionaryPage(),
-              ),
-            );
-          },
-          child: Text(getString(96)/*"First-Hanzi Radical Table"*/,
-            style: TextStyle(color: Colors.black)),
+              textStyle: TextStyle(fontSize: 15.0 * getSizeRatio()),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DictionaryPage(),
+                ),
+              );
+            },
+            child: Text(getString(96)/*"First-Hanzi Radical Table"*/,
+                style: TextStyle(color: Colors.black)),
           ),
         ]
     );
@@ -2002,9 +2479,9 @@ class _InputZiPageState extends State<InputZiPage> {
     if (typingType == TypingType.InputGame /*&&  isInputGameInHashMode */)
     {
       return SelectableText(getHashStringValue(), style: TextStyle(
-          fontSize: 17.0 * getSizeRatio(), // Set the font size
-          fontWeight: FontWeight.bold, // Optional: customize other properties
-          color: Colors.brown, // Optional: change color
+        fontSize: 17.0 * getSizeRatio(), // Set the font size
+        fontWeight: FontWeight.bold, // Optional: customize other properties
+        color: Colors.brown, // Optional: change color
       ),);
     }
 
@@ -2338,12 +2815,12 @@ class _InputZiPageState extends State<InputZiPage> {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           SizedBox( //Flexible
-            child: Image.asset(
-              "assets/typing/" + theZiForIntroductionList[0].hintImage,
-              width: 300.0 * sizeRatio,  // 350
-              height: 100.0 * sizeRatio, // 150
-              fit: BoxFit.fitWidth,
-            )
+              child: Image.asset(
+                "assets/typing/" + theZiForIntroductionList[0].hintImage,
+                width: 300.0 * sizeRatio,  // 350
+                height: 100.0 * sizeRatio, // 150
+                fit: BoxFit.fitWidth,
+              )
           ),
           /*
           FittedBox( //Flexible( //FittedBox
@@ -2409,7 +2886,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     if (typingType == TypingType.InputGame) {
       //if(!isInputGameInHashMode) {
-        return getInputGameQuestion(currentInputGameId, currentInputGameQuestionListIndex);
+      return getInputGameQuestion(currentInputGameId, currentInputGameQuestionListIndex);
       //}
       //else {
       //  return Container(width: 0.0, height: 0.0);
@@ -2421,10 +2898,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
     currentTypingChar = InputZiManager.getEitherCharFromCurrentId(typingType!, currentIndex, lessonId);
 
-      // prepare hint stuff, running once per zi, therefore to put here.
-      currentTypingComponentsAndSub =
-            ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
-      currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
+    // prepare hint stuff, running once per zi, therefore to put here.
+    currentTypingComponentsAndSub =
+        ComponentManager.getTypingComponentsAndSubComp(currentTypingChar);
+    currentCorrectTypingCode = theComponentManager.getCurrentCorrectTypingCode(currentTypingComponentsAndSub);
 
     //TextToSpeech.speak("zh-CN", currentTypingChar);
 
@@ -2440,14 +2917,14 @@ class _InputZiPageState extends State<InputZiPage> {
             SizedBox(
               width: 35.0 * getSizeRatio(), //50
               child: IconButton(
-                icon: Icon(
-                  Icons.volume_up,
-                  size: fontSize * 2 * getSizeRatio(),   // 150
-                ),
-                color: Colors.cyan, //Colors.green,
-                onPressed: () {
-                  speakHanziAndPhrase(currentTypingChar);
-                }),
+                  icon: Icon(
+                    Icons.volume_up,
+                    size: fontSize * 2 * getSizeRatio(),   // 150
+                  ),
+                  color: Colors.cyan, //Colors.green,
+                  onPressed: () {
+                    speakHanziAndPhrase(currentTypingChar);
+                  }),
             ),
           ]
       );
@@ -2464,18 +2941,18 @@ class _InputZiPageState extends State<InputZiPage> {
                 promptStr,
                 style: TextStyle(fontSize: fontSize * 1.2),
                 textAlign: TextAlign.left
-              ),
+            ),
 
-              GestureDetector(
-                onTap: () {
-                  TextToSpeech.speak("zh-CN", currentTypingChar);
-                },
-                child: Text(
+            GestureDetector(
+              onTap: () {
+                TextToSpeech.speak("zh-CN", currentTypingChar);
+              },
+              child: Text(
                   currentTypingChar,
                   style: TextStyle(fontSize: fontSize * 3.0, fontWeight: FontWeight.bold, color: Colors.orangeAccent),
                   textAlign: TextAlign.left
-                ),
               ),
+            ),
           ]
       );
     }
@@ -2496,26 +2973,26 @@ class _InputZiPageState extends State<InputZiPage> {
   // in the sentence which is fine in our current usage. need to use string.characters
   // like in other places in this file if there is a need for it.
   Widget getInputSentence(TypingType typingType, int currentTypingCharsIndex, String promptStr, double fontSize) {
-      var sentenceIndex = PrimitiveWrapper(0);
-      //var charIndexInSentence = PrimitiveWrapper(0);
-      String conv = '';
-      if (typingType == TypingType.FromLessons) {
-        var oneLesson = theLessonList[lessonId];
-        oneLesson.getSentenceAndCharIndex(
-            currentTypingCharsIndex, sentenceIndex, charIndexInSentence);
-        conv = theSentenceList[sentenceIndex.value].conv;
-      }
-      else if (typingType == TypingType.ThirdParty) {
-        conv = ThirdPartyLesson.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
-      }
-      else if (typingType == TypingType.Custom) {
-        conv = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndexInSentence);
-      }
+    var sentenceIndex = PrimitiveWrapper(0);
+    //var charIndexInSentence = PrimitiveWrapper(0);
+    String conv = '';
+    if (typingType == TypingType.FromLessons) {
+      var oneLesson = theLessonList[lessonId];
+      oneLesson.getSentenceAndCharIndex(
+          currentTypingCharsIndex, sentenceIndex, charIndexInSentence);
+      conv = theSentenceList[sentenceIndex.value].conv;
+    }
+    else if (typingType == TypingType.ThirdParty) {
+      conv = ThirdPartyLesson.getCurrentSentenceAndCharIndex(currentIndex, charIndexInSentence);
+    }
+    else if (typingType == TypingType.Custom) {
+      conv = ThirdPartyLesson.getSentenceAndCharIndex(wordsStudy, currentIndex, charIndexInSentence);
+    }
 
-      return Row(
-          children:
-            getSentenceRowContent(typingType, conv, promptStr, fontSize),
-      );
+    return Row(
+      children:
+      getSentenceRowContent(typingType, conv, promptStr, fontSize),
+    );
   }
 
   List<Widget> getSentenceRowContent(TypingType typingType, String conv, String promptStr, double fontSize) {
@@ -2526,57 +3003,57 @@ class _InputZiPageState extends State<InputZiPage> {
 
     contentList.add(SizedBox(width: fontSize));
     contentList.add(Text(
-      promptStr,
-      style: TextStyle(fontSize: fontSize * 1.1 * getSizeRatio()), //1.2
-      textAlign: TextAlign.left
+        promptStr,
+        style: TextStyle(fontSize: fontSize * 1.1 * getSizeRatio()), //1.2
+        textAlign: TextAlign.left
     ));
     contentList.add(IconButton(
-      icon: Icon(
-        Icons.volume_up,
-        size: fontSize * 1.5 * getSizeRatio(),   //
-      ),
-      color: Colors.cyan, //Colors.green,
-      onPressed: () {
-        speakHanziAndPhrase(sentence);
-      }));
+        icon: Icon(
+          Icons.volume_up,
+          size: fontSize * 1.5 * getSizeRatio(),   //
+        ),
+        color: Colors.cyan, //Colors.green,
+        onPressed: () {
+          speakHanziAndPhrase(sentence);
+        }));
     if (showHint == HintType.TingDa) {
       contentList.add( TextButton(
-            //style: ButtonStyle(
-            //    backgroundColor: MaterialStateProperty.all(Colors.grey[350])
-            //),
-            style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero,),backgroundColor: Colors.grey[350]),
-            onPressed: () {
-              initOverlay();
+        //style: ButtonStyle(
+        //    backgroundColor: MaterialStateProperty.all(Colors.grey[350])
+        //),
+        style: TextButton.styleFrom(shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero,),backgroundColor: Colors.grey[350]),
+        onPressed: () {
+          initOverlay();
 
-              setState(() {
-                // new sentence: update sentenceFirstCharIndex now
-                sentenceFirstCharIndex= theInputZiManager.getNextSentenceFirstIndex(typingType, sentenceFirstCharIndex, lessonId, sentence.length);
-                currentIndex = sentenceFirstCharIndex;
-                if (currentIndex == -1) {
-                  int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
-                  totalAccurateCount += oneSentenceAccurateCount;
-                  listenModeTypedOneSentence = ""; // reinit
-                  theInputZiManager.initCurrentIndex();
-                  showCompletedDialog(currentBuildContext!);
-                }
-                else {
-                  // check how many chars typed for the current sentence before moving to next
-                  // compare listenModeTypedOneSentence and sentence
-                  int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
-                  totalAccurateCount += oneSentenceAccurateCount;
-                  listenModeTypedOneSentence = ""; // reinit
-                  speakHanziAndPhrase(getCurrentSentence(typingType));
-                  _focusNode
-                      .requestFocus(); // Maybe: without this line, phone would still focus on TextField, but web cursor would disapper.
-                }
-              });
-            },
-            child: Text(
-                getString(532), // Next Sentence
-                style: TextStyle(fontSize: fontSize, color: Colors.blueAccent), // 1.6
-                textAlign: TextAlign.left //TextAlign.center
-            ),
-          ));
+          setState(() {
+            // new sentence: update sentenceFirstCharIndex now
+            sentenceFirstCharIndex= theInputZiManager.getNextSentenceFirstIndex(typingType, sentenceFirstCharIndex, lessonId, sentence.length);
+            currentIndex = sentenceFirstCharIndex;
+            if (currentIndex == -1) {
+              int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
+              totalAccurateCount += oneSentenceAccurateCount;
+              listenModeTypedOneSentence = ""; // reinit
+              theInputZiManager.initCurrentIndex();
+              showCompletedDialog(currentBuildContext!);
+            }
+            else {
+              // check how many chars typed for the current sentence before moving to next
+              // compare listenModeTypedOneSentence and sentence
+              int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
+              totalAccurateCount += oneSentenceAccurateCount;
+              listenModeTypedOneSentence = ""; // reinit
+              speakHanziAndPhrase(getCurrentSentence(typingType));
+              _focusNode
+                  .requestFocus(); // Maybe: without this line, phone would still focus on TextField, but web cursor would disapper.
+            }
+          });
+        },
+        child: Text(
+            getString(532), // Next Sentence
+            style: TextStyle(fontSize: fontSize, color: Colors.blueAccent), // 1.6
+            textAlign: TextAlign.left //TextAlign.center
+        ),
+      ));
       //));
     }
     else {
@@ -2644,8 +3121,8 @@ class _InputZiPageState extends State<InputZiPage> {
       height: hei,
       width: screenWidth,
       child:  Container(color: Colors.blue,
-                      child: CustomPaint(
-                        foregroundPainter: inputGamePainter,)),
+          child: CustomPaint(
+            foregroundPainter: inputGamePainter,)),
     );
     /*
     return Text(
@@ -2672,23 +3149,23 @@ class _InputZiPageState extends State<InputZiPage> {
       return Column(
           children: <Widget>[
             Row(
-              children: <Widget>[
-                SizedBox(width: 20.0 * getSizeRatio()),
-                Text(instruction,
-                  style: TextStyle(fontSize: 20.0 * getSizeRatio(),
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown),
-                  textAlign: TextAlign.left
-                ),
-                SizedBox(width: 10.0),
-                getCharacterTypeButton(),
-              ]
+                children: <Widget>[
+                  SizedBox(width: 20.0 * getSizeRatio()),
+                  Text(instruction,
+                      style: TextStyle(fontSize: 20.0 * getSizeRatio(),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.brown),
+                      textAlign: TextAlign.left
+                  ),
+                  SizedBox(width: 10.0),
+                  getCharacterTypeButton(),
+                ]
             ),
             Text(questionString,
-              style: TextStyle(fontSize: 20.0 * getSizeRatio(),
-                fontWeight: FontWeight.bold,
-                color: Colors.blueAccent),
-              textAlign: TextAlign.left
+                style: TextStyle(fontSize: 20.0 * getSizeRatio(),
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent),
+                textAlign: TextAlign.left
             ),
           ]
       );
@@ -2704,7 +3181,7 @@ class _InputZiPageState extends State<InputZiPage> {
       if (theDefaultLocale == "en_US") {
         if (isCurrentlySimplifiedChineseCharacters) {
           showCharacterTypeButtonText = "Traditional Chinese";
-       }
+        }
         else {
           showCharacterTypeButtonText = "Simplified Chinese";
         }
@@ -2766,7 +3243,7 @@ class _InputZiPageState extends State<InputZiPage> {
     // an empty box
     if (typingType == TypingType.FreeTyping || typingType == TypingType.InputGame || typingType == TypingType.DicSearchTyping) {
       return Container(width:0.0, height: 0.0);
-        /*SizedBox(
+      /*SizedBox(
         width: double.infinity,
         height: 0,
       );*/
@@ -2802,17 +3279,17 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return Row(
         children: <Widget>[
-                getHint3(fontSize, hint3Color),
-                SizedBox(width: 1.0),
-                getHint2(fontSize, hint2Color),
-                SizedBox(width: 1.0),
-                getHint1(fontSize, hint1Color),
-                SizedBox(width: 1.0),
-                getHint0(fontSize, hint0Color),
-                SizedBox(width: 1.0),
-                getGame(fontSize, gameColor),
-                SizedBox(width: 1.0),
-                getHintTingDa(fontSize, listenColor),
+          getHint3(fontSize, hint3Color),
+          SizedBox(width: 1.0),
+          getHint2(fontSize, hint2Color),
+          SizedBox(width: 1.0),
+          getHint1(fontSize, hint1Color),
+          SizedBox(width: 1.0),
+          getHint0(fontSize, hint0Color),
+          SizedBox(width: 1.0),
+          getGame(fontSize, gameColor),
+          SizedBox(width: 1.0),
+          getHintTingDa(fontSize, listenColor),
         ]
     );
   }
@@ -2879,26 +3356,26 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return SizedBox(
-        //width: 50.0 * getSizeRatio(),
-        child: TextButton(
-          style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.grey[350])
-          ),
-          onPressed: () {
-            initOverlay();
-
-            setState(() {
-              showHint = HintType.Hint1; // show Hint1
-              _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
-            });
-          },
-          child: Text(
-              getString(90) + "1" /*"Hint1"*/,
-              style: TextStyle(fontSize: fontSize /* 1.2*/, color: hint1Color), // 1.6
-              textAlign: TextAlign.left //TextAlign.center
-          ),
+      //width: 50.0 * getSizeRatio(),
+      child: TextButton(
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.grey[350])
         ),
-      );
+        onPressed: () {
+          initOverlay();
+
+          setState(() {
+            showHint = HintType.Hint1; // show Hint1
+            _focusNode.requestFocus(); // without this line, phone would still focus on TextField, but web cursor would disapper.
+          });
+        },
+        child: Text(
+            getString(90) + "1" /*"Hint1"*/,
+            style: TextStyle(fontSize: fontSize /* 1.2*/, color: hint1Color), // 1.6
+            textAlign: TextAlign.left //TextAlign.center
+        ),
+      ),
+    );
   }
 
   Widget getHint0(double fontSize, Color hint0Color) {
@@ -3041,7 +3518,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return Text(getString(521) + ': ', //"Alphabets"
-          style: TextStyle(fontSize: fontSize * 1.2, color: Colors.black));
+        style: TextStyle(fontSize: fontSize * 1.2, color: Colors.black));
   }
 
   Widget getCategoryAndSubCat1Row() {
@@ -3053,7 +3530,7 @@ class _InputZiPageState extends State<InputZiPage> {
     currentCorrectCategoryIndex = theComponentManager.getCurrentCorrectCategoryIndex(currentTypingComponentsAndSub, selectedCompIndex);
 
     return Row(
-        children: getCategoriesAndSubCat1(),
+      children: getCategoriesAndSubCat1(),
     );
   }
 
@@ -3062,7 +3539,7 @@ class _InputZiPageState extends State<InputZiPage> {
 
     if (selectedCategoryIndex < 2) { // before selection of a category
       categories.add(Text(getString(519) + '： [',
-        style: TextStyle(color: Colors.black))); // Guess
+          style: TextStyle(color: Colors.black))); // Guess
     }
     //categories.add(getCategoryOneItem(1));
     categories.add(getCategoryOneItem(2));
@@ -3136,8 +3613,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
     return TextButton(
       style: ButtonStyle(
-         padding: MaterialStateProperty.all(EdgeInsets.zero),
-       ),
+        padding: MaterialStateProperty.all(EdgeInsets.zero),
+      ),
       onPressed: () {
         setState(() {
           selectedSubcategoryIndex = leadCompIndex;
@@ -3201,7 +3678,7 @@ class _InputZiPageState extends State<InputZiPage> {
       //  image = theZiForLeadCompExerciseList[currentIndex].hintImage;
       //}
       if (typingType == TypingType.LeadComponents) {
-      //  image = "GG6.png"; // not show to avoid confusion on which keyboard
+        //  image = "GG6.png"; // not show to avoid confusion on which keyboard
       }
       else if (typingType == TypingType.ExpandedReview) {
         image = theZiForExpandedReviewExerciseList[currentIndex].hintImage;
@@ -3255,7 +3732,7 @@ class _InputZiPageState extends State<InputZiPage> {
     }
     if (typingType == TypingType.AttachedComponents || typingType == TypingType.TwinComponents) {
       width = 300.0 * getSizeRatio();
-    //  fit = BoxFit.fitWidth;
+      //  fit = BoxFit.fitWidth;
     }
 
     if (image.isNotEmpty) {
@@ -3265,7 +3742,7 @@ class _InputZiPageState extends State<InputZiPage> {
           "assets/typing/" + image,
           width: width,
           height: height,
-      //    fit: fit,
+          //    fit: fit,
         ),
       );
     }
@@ -3324,9 +3801,9 @@ class _InputZiPageState extends State<InputZiPage> {
       }
 
       buttons.add(
-        getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates, '<'));
+          getZiCandidateButton(xPosi, InputZiManager.maxTypingCandidates, '<'));
       buttons.add(getZiCandidateButton(
-        xPosi, InputZiManager.maxTypingCandidates + 1, '>'));
+          xPosi, InputZiManager.maxTypingCandidates + 1, '>'));
     }
     return buttons;
   }
@@ -3411,7 +3888,7 @@ class _InputZiPageState extends State<InputZiPage> {
     //else if (typingType == TypingType.GeneralExercise) {
     //  title = getString(118)/*"Congratulations!"*/;
     //  content = getString(355)/*"You have completed this exercise! Please move on to the next one."*/;
-      //theNewlyCompletedTypingExercise = 10;
+    //theNewlyCompletedTypingExercise = 10;
     //}
     else if (typingType == TypingType.CommonZiTyping) {
       title = getString(115)/*"Good job!"*/;
@@ -3422,7 +3899,7 @@ class _InputZiPageState extends State<InputZiPage> {
       var elapsedStr = inMin.toString() + " " + getString(376).toString() + " " + extraSec.toString() + " " + getString(377) + "! ";
 
       //if (inMin >= 10) {
-        content = elapsedStr + getString(383); /* repeat */
+      content = elapsedStr + getString(383); /* repeat */
       //}
       //else {
       //  content = elapsedStr + getString(119) /*"Wow, you are making great progress in typing Chinese characters. You can now move on to the next exercise!"*/;
