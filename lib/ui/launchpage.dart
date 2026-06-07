@@ -248,7 +248,7 @@ class _LaunchPageState extends State<LaunchPage> {
                 SizedBox(height: 6),
 
                 Text(
-                  "Learn Chinese Through Character Structure & Typing",
+                  "Learn Chinese through the Shape-Sequence Approach.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16 * getSizeRatioWithLimit(),
@@ -419,7 +419,7 @@ class _LaunchPageState extends State<LaunchPage> {
         children: [
           getHomeFeatureCard(
             title: getString(91),
-            subtitle: "Learn step by step with structured lessons.",
+            subtitle: "Learn Chinese through the Shape-Sequence Approach.",
             icon: Icons.menu_book_rounded,
             color: Colors.green,
             width: cardWidth,
@@ -432,7 +432,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(93),
-            subtitle: "Type Chinese easily and intuitively with Hanzishu.",
+            subtitle: "Learn, practice, and use the Hanzishu Input Method.",
             icon: Icons.keyboard_rounded,
             color: Colors.blue,
             width: cardWidth,
@@ -445,7 +445,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(92),
-            subtitle: "Search Chinese characters and words easily.",
+            subtitle: "Explore characters through Shape-Sequence relationships.",
             icon: Icons.menu_book_outlined,
             color: Colors.deepPurple,
             width: cardWidth,
@@ -469,7 +469,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(1),
-            subtitle: "Learn and have fun with interactive puzzles.",
+            subtitle: "Learn Chinese through Shape-Sequence play.",
             icon: Icons.extension_rounded,
             color: Colors.orange,
             width: cardWidth,
@@ -717,28 +717,28 @@ class _LaunchPageState extends State<LaunchPage> {
 
   Widget getHanzishuHistoryLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //blue,
-        onPressed: () {
-          launchUrl(Uri.parse("https://mp.weixin.qq.com/s/veT0HxXO3R_YTHvOUAnPLQ"), webOnlyWindowName: '_self');
-        },
-        child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //blue,
+      onPressed: () {
+        launchUrl(Uri.parse("https://mp.weixin.qq.com/s/veT0HxXO3R_YTHvOUAnPLQ"), webOnlyWindowName: '_self');
+      },
+      child: Text(getString(421)/*"Hanzishu's past and present"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }
 
   Widget getNewStageOfLearningChineseLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //brown,
-        onPressed: () {
-          launchUrl(Uri.parse("https://mp.weixin.qq.com/s/bAWvFFo0WlAuz62UTjkltQ"), webOnlyWindowName: '_self');
-        },
-        child: Text(getString(471)/*"New scientific stage of Chinese character education"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://mp.weixin.qq.com/s/bAWvFFo0WlAuz62UTjkltQ"), webOnlyWindowName: '_self');
+      },
+      child: Text(getString(471)/*"New scientific stage of Chinese character education"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }
@@ -807,14 +807,14 @@ class _LaunchPageState extends State<LaunchPage> {
 
   Widget getInputMethodAndTeachingLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //brown,
-        onPressed: () {
-          launchUrl(Uri.parse("https://hanzishu.com/publish/inputmethodandteaching.htm"), webOnlyWindowName: '_self');
-        },
-        child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish/inputmethodandteaching.htm"), webOnlyWindowName: '_self');
+      },
+      child: Text(getString(436)/*"Input method and teaching"*/, style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }
@@ -916,7 +916,7 @@ class _LaunchPageState extends State<LaunchPage> {
   Widget getRefreshNotice() {
     if (kIsWeb) {
       return Center(child:  Text(getString(559), style: TextStyle(
-            fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
+          fontSize: 16 * getSizeRatioWithLimit(), color: Colors.brown)),
       );
     }
     else {
@@ -1005,42 +1005,42 @@ class _LaunchPageState extends State<LaunchPage> {
 
   Widget getTulReportLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //brown,
-        onPressed: () {
-          launchUrl(Uri.parse("https://hanzishu.com/publish/tul.html"), webOnlyWindowName: '_self');
-        },
-        child: Text("汉字树象形电打法美国塔尔萨大学首秀告捷（作者：张新颖）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish/tul.html"), webOnlyWindowName: '_self');
+      },
+      child: Text("汉字树象形电打法美国塔尔萨大学首秀告捷（作者：张新颖）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }
 
   Widget getWestsideReportLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //brown,
-        onPressed: () {
-          launchUrl(Uri.parse("https://hanzishu.com/publish/westside.html"), webOnlyWindowName: '_self');
-        },
-        child: Text("在教室里种汉字树（作者：洪璐斯）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish/westside.html"), webOnlyWindowName: '_self');
+      },
+      child: Text("在教室里种汉字树（作者：洪璐斯）", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }
 
   Widget getPublishReportLink() {
     //if (kIsWeb)
-      return TextButton(
-        //color: Colors.blueAccent, //white,
-        //textColor: Colors.brown, //brown,
-        onPressed: () {
-          launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
-        },
-        child: Text("View All Articles & Videos →", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
-      );
+    return TextButton(
+      //color: Colors.blueAccent, //white,
+      //textColor: Colors.brown, //brown,
+      onPressed: () {
+        launchUrl(Uri.parse("https://hanzishu.com/publish"), webOnlyWindowName: '_self');
+      },
+      child: Text("View All Articles & Videos →", style: TextStyle(fontSize: 16.0/*applyRatio(20.0)*/, color: Colors.brown)),
+    );
 
     //return SizedBox(width: 0, height: 0);
   }

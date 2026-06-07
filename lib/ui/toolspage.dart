@@ -42,7 +42,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text(getString(368)/*"Component Input Method"*/),
+        title: Text(""),
       ),
       body: Center
         (
@@ -53,26 +53,26 @@ class _ToolsPageState extends State<ToolsPage> {
 
   _getRequests() async {
     //if (theNewlyCompletedTypingExercise != -1) {
-      //exerciseCompleted[theNewlyCompletedTypingExercise] = true;
-      //theNewlyCompletedTypingExercise = -1;
+    //exerciseCompleted[theNewlyCompletedTypingExercise] = true;
+    //theNewlyCompletedTypingExercise = -1;
 
-      //setState(() {
-        // force refresh every time to make sure to pick up completed icon
-        this.numberOfExercises += 1;
-      //});
+    //setState(() {
+    // force refresh every time to make sure to pick up completed icon
+    this.numberOfExercises += 1;
+    //});
 
-      if (!theIsBackArrowExit && this.numberOfExercises <= 4) {
-        // reinit
-        theIsBackArrowExit = true;
-        LaunchExercise(this.numberOfExercises);
-      }
-      else {
-        // init all variables
-        // either true back arrow or all done
-        theIsBackArrowExit = true;
-        theIsFromTypingContinuedSection = false;
-        this.numberOfExercises = 0;
-      }
+    if (!theIsBackArrowExit && this.numberOfExercises <= 4) {
+      // reinit
+      theIsBackArrowExit = true;
+      LaunchExercise(this.numberOfExercises);
+    }
+    else {
+      // init all variables
+      // either true back arrow or all done
+      theIsBackArrowExit = true;
+      theIsFromTypingContinuedSection = false;
+      this.numberOfExercises = 0;
+    }
     //}
   }
 
@@ -126,7 +126,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
+    /*
       case 5:
         Navigator.push(
           context,
@@ -144,185 +144,871 @@ class _ToolsPageState extends State<ToolsPage> {
   }
 
   Widget getMeListView(BuildContext context) {
-    var imageSize = 35.0 * getSizeRatioWithLimit();
-
-    var str = getString(99);/*"Please finish exercise 1 - 10 to learn the input method"*/
-    //if (kIsWeb) {
-    //  str = str + " " + getString(372) + "]";
-    //}
-    //else {
-      str = str + "]";
-    //}
-
-    var keyboardImageName;
-    //if (theDefaultLocale == "zh_CN") {
-      keyboardImageName = 'assets/core/typing.png'; //'assets/core/keyboard_cn.png';
-    //}
-    //else { // en_US
-    //  keyboardImageName = 'assets/core/keyboard_eng.png';
-    //}
+    final ratio = getSizeRatioWithLimit();
+    final horizontalPadding = 30.0 * ratio;
+    final sectionGap = 24.0 * ratio;
 
     return ListView(
+      padding: EdgeInsets.fromLTRB(
+        horizontalPadding,
+        10 * ratio,
+        horizontalPadding,
+        24 * ratio,
+      ),
       children: <Widget>[
-        ListTile(
-          title: Text(str, textDirection: TextDirection.ltr),
+        Center(
+          child: Text(
+            "Hanzishu Input Method",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 32 * ratio,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF111827),
+            ),
+          ),
         ),
-        ListTile(
-          //leading: Image.asset('assets/core/itemicon.png'),
-          leading: Image.asset(keyboardImageName, width: 50, height: 40),
-          //trailing: exerciseCompleted[0] ? Image.asset('assets/core/completedicon.png') : Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"1. " + */getString(415)/*"Hanzishu puzzle typing course"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            //TODO: can take this as a parameter to the typing and component pages.
-            theIsFromTypingContinuedSection = true;
-            LaunchExercise(0);
-          },
+        SizedBox(height: 8 * ratio),
+        Center(
+          child: Text(
+            "Learn, practice, and use the Hanzishu Input Method.",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16 * ratio,
+              color: Colors.blueGrey[700],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"3. " + */getString(529)/*"Basic Typing Exercises"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ComponentCombinationSelectionPage(),
+        SizedBox(height: 22 * ratio),
+
+        _buildEnglishInputNotice(),
+        SizedBox(height: sectionGap),
+
+        _buildTutorialHero(context),
+        SizedBox(height: sectionGap),
+
+        _buildPracticeSection(context),
+        SizedBox(height: sectionGap),
+
+        _buildUseSection(context),
+        SizedBox(height: 18 * ratio),
+
+        _buildAdditionalResource(context),
+        SizedBox(height: 18 * ratio),
+
+        _buildHelpNote(),
+      ],
+    );
+  }
+
+  Widget _buildEnglishInputNotice() {
+    final ratio = getSizeRatioWithLimit();
+
+    return Container(
+      padding: EdgeInsets.all(16 * ratio),
+      decoration: BoxDecoration(
+        color: Colors.orange.withOpacity(0.06),
+        borderRadius: BorderRadius.circular(12 * ratio),
+        border: Border.all(color: Colors.orange.withOpacity(0.22)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.lightbulb_outline_rounded,
+            color: Colors.orange[700],
+            size: 32 * ratio,
+          ),
+          SizedBox(width: 16 * ratio),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: TextStyle(
+                  fontSize: 15 * ratio,
+                  height: 1.45,
+                  color: Colors.black87,
+                ),
+                children: [
+                  TextSpan(text: "Please switch your computer or phone to "),
+                  TextSpan(
+                    text: "English input mode",
+                    style: TextStyle(
+                      color: Colors.deepOrange,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  TextSpan(text: ".\nHanzishu pictographic input is built into this website."),
+                ],
               ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(516)/*"Customized typing exercises"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTutorialHero(BuildContext context) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(18 * ratio),
+        onTap: () {
+          theIsFromTypingContinuedSection = true;
+          LaunchExercise(0);
+        },
+        child: Container(
+          padding: EdgeInsets.all(24 * ratio),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            /*
+            gradient: LinearGradient(
+              colors: [
+                Colors.deepPurple.withOpacity(0.02),
+                Colors.white,
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+            */
+            borderRadius: BorderRadius.circular(18 * ratio),
+            border: Border.all(color: Colors.deepPurple.withOpacity(0.16), width: 1.4 * ratio),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.deepPurple.withOpacity(0.06),
+                blurRadius: 14 * ratio,
+                offset: Offset(0, 5 * ratio),
               ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(108)/*"Editor"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiPage(typingType: TypingType.FreeTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
+            ],
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 120 * ratio,
+                height: 120 * ratio,
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple.withOpacity(0.07),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.school_rounded,
+                  color: Colors.deepPurple,
+                  size: 68 * ratio,
+                ),
               ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(517)/*"sunlaoshi"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
+              SizedBox(width: 28 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _buildPill(
+                      text: "1. START HERE",
+                      color: Colors.deepPurple,
+                    ),
+                    SizedBox(height: 16 * ratio),
+                    Text(
+                      "Hanzishu Input Method Tutorial",
+                      style: TextStyle(
+                        fontSize: 24 * ratio,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                    SizedBox(height: 10 * ratio),
+                    Text(
+                      "Learn the 25 pictographic categories and type any Chinese character.",
+                      style: TextStyle(
+                        fontSize: 15.5 * ratio,
+                        height: 1.4,
+                        color: Colors.blueGrey[800],
+                      ),
+                    ),
+                    SizedBox(height: 14 * ratio),
+                    _buildInfoRow(Icons.access_time_rounded, "20-minute guided tutorial", Colors.deepPurple),
+                    SizedBox(height: 6 * ratio),
+                    _buildInfoRow(Icons.group_rounded, "Recommended for all new users", Colors.deepPurple),
+                  ],
+                ),
               ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(526)/*"Yuwen"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
+              SizedBox(width: 20 * ratio),
+              Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 24 * ratio,
+                  vertical: 16 * ratio,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.deepPurple,
+                  borderRadius: BorderRadius.circular(16 * ratio),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.deepPurple.withOpacity(0.30),
+                      blurRadius: 12 * ratio,
+                      offset: Offset(0, 5 * ratio),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.menu_book_rounded, color: Colors.white, size: 28 * ratio),
+                    SizedBox(width: 12 * ratio),
+                    Text(
+                      "Start Tutorial",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(width: 8 * ratio),
+                    Icon(Icons.chevron_right_rounded, color: Colors.white, size: 28 * ratio),
+                  ],
+                ),
               ),
-            );
-          },
+            ],
+          ),
         ),
-        ListTile(
-          leading: Image.asset('assets/lessons/L30.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-          title: Text(getString(528)/*"Chinese Made Easy"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.cMadeEasy),
+      ),
+    );
+  }
+
+  Widget _buildPracticeSection(BuildContext context) {
+    final ratio = getSizeRatioWithLimit();
+
+    return _buildSectionContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionHeader(
+            icon: Icons.track_changes_rounded,
+            title: "2. PRACTICE TYPING",
+            subtitle: "Build speed and confidence with guided exercises.",
+            color: Colors.deepPurple,
+          ),
+          SizedBox(height: 20 * ratio),
+          _buildMainPracticeCard(context),
+          SizedBox(height: 16 * ratio),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final spacing = 14 * ratio;
+              final columns = constraints.maxWidth >= 840
+                  ? 3
+                  : constraints.maxWidth >= 560
+                  ? 2
+                  : 1;
+              final cardWidth = (constraints.maxWidth - spacing * (columns - 1)) / columns;
+
+              return Wrap(
+                spacing: spacing,
+                runSpacing: spacing,
+                children: [
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Basic Exercises",
+                    subtitle: "Start from the basics.\nImprove step by step.",
+                    icon: Icons.keyboard_rounded,
+                    color: Colors.orange,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ComponentCombinationSelectionPage()),
+                      );
+                    },
+                  ),
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Ty & Od Textbook",
+                    subtitle: "Practice with Ty & Od\ntextbook content.",
+                    icon: Icons.menu_book_rounded,
+                    color: Colors.blue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Yuwen",
+                    subtitle: "Practice with Yuwen\ntextbook content.",
+                    icon: Icons.menu_book_rounded,
+                    color: Colors.deepPurple,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Chinese Made Easy",
+                    subtitle: "Practice with Chinese\nMade Easy content.",
+                    icon: Icons.menu_book_rounded,
+                    color: Colors.teal,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.cMadeEasy),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Commonly Used Hanzi",
+                    subtitle: "Practice the most\ncommonly used characters.",
+                    icon: Icons.text_fields_rounded,
+                    color: Colors.redAccent,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TypingSelectionPage()),
+                      );
+                    },
+                  ),
+                  _buildSmallPracticeCard(
+                    width: cardWidth,
+                    title: "Single Alphabet Words",
+                    subtitle: "Practice simple\nalphabet words.",
+                    icon: Icons.font_download_rounded,
+                    color: Colors.amber[700]!,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TypingComponentSelectionPage()),
+                      );
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMainPracticeCard(BuildContext context) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(14 * ratio),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StudyCustomizedWordsPage(titleStringId: 516, customString: '', studyType: StudyType.typingOnly),
+            ),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.all(18 * ratio),
+          decoration: BoxDecoration(
+            color: Colors.green.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(14 * ratio),
+            border: Border.all(color: Colors.green.withOpacity(0.55), width: 1.2 * ratio),
+          ),
+          child: Row(
+            children: [
+              _buildRoundIcon(Icons.assignment_rounded, Colors.green, size: 68 * ratio, iconSize: 38 * ratio),
+              SizedBox(width: 18 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 10 * ratio,
+                      children: [
+                        Text(
+                          "Customized Typing Exercises",
+                          style: TextStyle(
+                            fontSize: 18 * ratio,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF111827),
+                          ),
+                        ),
+                        _buildPill(text: "★ MAIN PRACTICE TOOL", color: Colors.green),
+                      ],
+                    ),
+                    SizedBox(height: 8 * ratio),
+                    Text(
+                      "Paste your own text or content and start practicing right away.",
+                      style: TextStyle(
+                        fontSize: 14 * ratio,
+                        color: Colors.blueGrey[700],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            );
-          },
+              Icon(Icons.chevron_right_rounded, color: Colors.green[700], size: 34 * ratio),
+            ],
+          ),
         ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"2. " + */getString(107)/*"[Optional] Customized exercises"*/, textDirection: TextDirection.ltr),
-          //trailing: Image.asset('assets/core/itemicon.png'),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TypingSelectionPage(),
+      ),
+    );
+  }
+
+  Widget _buildUseSection(BuildContext context) {
+    final ratio = getSizeRatioWithLimit();
+
+    return _buildSectionContainer(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildSectionHeader(
+            icon: Icons.edit_rounded,
+            title: "3. USE THE INPUT METHOD",
+            subtitle: "Apply the Hanzishu Input Method to real-world typing.",
+            color: Colors.blue,
+          ),
+          SizedBox(height: 18 * ratio),
+          LayoutBuilder(
+            builder: (context, constraints) {
+              final spacing = 18 * ratio;
+              final columns = constraints.maxWidth >= 680 ? 2 : 1;
+              final cardWidth = (constraints.maxWidth - spacing * (columns - 1)) / columns;
+
+              return Wrap(
+                spacing: spacing,
+                runSpacing: 14 * ratio,
+                children: [
+                  _buildUseCard(
+                    width: cardWidth,
+                    title: "Web Editor",
+                    subtitle: "Use Hanzishu directly\nin your browser.",
+                    badge: "★ MAIN TOOL",
+                    icon: Icons.web_asset_rounded,
+                    color: Colors.blue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => InputZiPage(
+                            typingType: TypingType.FreeTyping,
+                            lessonId: 0,
+                            wordsStudy: '',
+                            isSoundPrompt: false,
+                            inputMethod: InputMethod.Pinxin,
+                            showHint: HintType.Hint1,
+                            includeSkipSection: false,
+                            showSwitchMethod: false,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  _buildUseCard(
+                    width: cardWidth,
+                    title: "Download Hanzishu App",
+                    subtitle: "Use Hanzishu in Word, Excel,\nand other applications.",
+                    badge: null,
+                    icon: Icons.download_for_offline_rounded,
+                    color: Colors.orange,
+                    onTap: () {
+                      launchTypingAppPageOrHtml();
+                    },
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAdditionalResource(BuildContext context) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.menu_book_outlined, color: Colors.deepPurple, size: 20 * ratio),
+            SizedBox(width: 8 * ratio),
+            Text(
+              "ADDITIONAL RESOURCES",
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 13 * ratio,
+                fontWeight: FontWeight.bold,
               ),
-            );
-          },
+            ),
+          ],
         ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(/*"3. " + */getString(413)/*"Typing exercises by component characcteristics"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => TypingComponentSelectionPage(),
+        SizedBox(height: 10 * ratio),
+        Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(12 * ratio),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => InputZiHelpPage()),
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.all(14 * ratio),
+              decoration: BoxDecoration(
+                color: Colors.deepPurple.withOpacity(0.04),
+                borderRadius: BorderRadius.circular(12 * ratio),
+                border: Border.all(color: Colors.deepPurple.withOpacity(0.12)),
               ),
-            );
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(379)/*"Hanzishu pinxing typing app"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            launchTypingAppPageOrHtml();
-          },
-        ),
-        ListTile(
-          leading: Image.asset('assets/core/itemicon.png'),
-          title: Text(getString(439)/*"Introduction"*/, textDirection: TextDirection.ltr),
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => InputZiHelpPage(),
+              child: Row(
+                children: [
+                  _buildRoundIcon(Icons.info_outline_rounded, Colors.deepPurple, size: 44 * ratio, iconSize: 24 * ratio),
+                  SizedBox(width: 14 * ratio),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Introduction to Hanzishu Input Method",
+                          style: TextStyle(
+                            fontSize: 15 * ratio,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF111827),
+                          ),
+                        ),
+                        SizedBox(height: 4 * ratio),
+                        Text(
+                          "Background, features and benefits of the Hanzishu Input Method.",
+                          style: TextStyle(
+                            fontSize: 13 * ratio,
+                            color: Colors.blueGrey[700],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(Icons.chevron_right_rounded, color: Colors.blueGrey[700], size: 28 * ratio),
+                ],
               ),
-            );
-          },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildHelpNote() {
+    final ratio = getSizeRatioWithLimit();
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 16 * ratio,
+        vertical: 12 * ratio,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.deepPurple.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(10 * ratio),
+        border: Border.all(color: Colors.deepPurple.withOpacity(0.12)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.favorite_rounded, color: Colors.deepPurple, size: 18 * ratio),
+          SizedBox(width: 10 * ratio),
+          Flexible(
+            child: Text(
+              "Need help? Check the Tutorial first. It will answer 90% of your questions.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.deepPurple,
+                fontSize: 13 * ratio,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSectionContainer({required Widget child}) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Container(
+      padding: EdgeInsets.all(22 * ratio),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16 * ratio),
+        border: Border.all(color: Colors.black.withOpacity(0.06)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 14 * ratio,
+            offset: Offset(0, 4 * ratio),
+          ),
+        ],
+      ),
+      child: child,
+    );
+  }
+
+  Widget _buildSectionHeader({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required Color color,
+  }) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildRoundIcon(icon, color, size: 42 * ratio, iconSize: 26 * ratio),
+        SizedBox(width: 12 * ratio),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 20 * ratio,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+              SizedBox(height: 6 * ratio),
+              Text(
+                subtitle,
+                style: TextStyle(
+                  fontSize: 14 * ratio,
+                  color: Colors.blueGrey[700],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSmallPracticeCard({
+    required double width,
+    required String title,
+    required String subtitle,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12 * ratio),
+        onTap: onTap,
+        child: Container(
+          width: width,
+          padding: EdgeInsets.all(14 * ratio),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12 * ratio),
+            border: Border.all(color: Colors.black.withOpacity(0.06)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 10 * ratio,
+                offset: Offset(0, 3 * ratio),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              _buildRoundIcon(icon, color, size: 52 * ratio, iconSize: 28 * ratio),
+              SizedBox(width: 12 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 14.5 * ratio,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                    SizedBox(height: 6 * ratio),
+                    Text(
+                      subtitle,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontSize: 12.5 * ratio,
+                        height: 1.3,
+                        color: Colors.blueGrey[700],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right_rounded, color: Colors.blueGrey[600], size: 24 * ratio),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUseCard({
+    required double width,
+    required String title,
+    required String subtitle,
+    required String? badge,
+    required IconData icon,
+    required Color color,
+    required VoidCallback onTap,
+  }) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12 * ratio),
+        onTap: onTap,
+        child: Container(
+          width: width,
+          padding: EdgeInsets.all(18 * ratio),
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.04),
+            borderRadius: BorderRadius.circular(12 * ratio),
+            border: Border.all(color: color.withOpacity(0.38)),
+          ),
+          child: Row(
+            children: [
+              _buildRoundIcon(icon, color, size: 70 * ratio, iconSize: 38 * ratio),
+              SizedBox(width: 18 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      crossAxisAlignment: WrapCrossAlignment.center,
+                      spacing: 8 * ratio,
+                      children: [
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 17 * ratio,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF111827),
+                          ),
+                        ),
+                        if (badge != null)
+                          _buildPill(text: badge, color: color),
+                      ],
+                    ),
+                    SizedBox(height: 8 * ratio),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: 13.5 * ratio,
+                        height: 1.35,
+                        color: Colors.blueGrey[800],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right_rounded, color: color, size: 30 * ratio),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoundIcon(IconData icon, Color color, {required double size, required double iconSize}) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.13),
+        shape: BoxShape.circle,
+      ),
+      child: Icon(icon, color: color, size: iconSize),
+    );
+  }
+
+  Widget _buildPill({required String text, required Color color}) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 10 * ratio,
+        vertical: 5 * ratio,
+      ),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.12),
+        borderRadius: BorderRadius.circular(16 * ratio),
+        border: Border.all(color: color.withOpacity(0.20)),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: color,
+          fontSize: 11.5 * ratio,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(IconData icon, String text, Color color) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Row(
+      children: [
+        Icon(icon, color: color, size: 20 * ratio),
+        SizedBox(width: 10 * ratio),
+        Text(
+          text,
+          style: TextStyle(
+            fontSize: 13.5 * ratio,
+            color: Colors.blueGrey[800],
+          ),
         ),
       ],
     );
   }
 
   launchTypingAppPageOrHtml() {
-      String urlStr;
-      if (theDefaultLocale == "zh_CN") {
-        urlStr = "https://hanzishu.com/xiangxing/index.htm";
-      }
-      else { // English
-        urlStr = "https://hanzishu.com/xiangxing/index-en.htm";
-      }
-      if (kIsWeb) {
-        launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
-      }
-      else {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => WebViewPage(urlStr, getString(368)/*"Component Input Method"*/),
-          ),
-        );
-      }
+    String urlStr;
+    if (theDefaultLocale == "zh_CN") {
+      urlStr = "https://hanzishu.com/xiangxing/index.htm";
+    }
+    else { // English
+      urlStr = "https://hanzishu.com/xiangxing/index-en.htm";
+    }
+    if (kIsWeb) {
+      launchUrl(Uri.parse(urlStr), webOnlyWindowName: '_self');
+    }
+    else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(urlStr, getString(368)/*"Component Input Method"*/),
+        ),
+      );
+    }
     //else {
     //  Navigator.push(
     //    context,
