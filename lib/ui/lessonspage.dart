@@ -66,16 +66,16 @@ class _LessonsPageState extends State<LessonsPage> {
   //final List<int> lessons = <int>[1, 2, 3, 5, 6, 8, 9, 11, 13, 16, 18, 19, 21, 22, 24, 26, 29, 31, 32, 34, 36, 37, 39, 41, 44, 46, 47, 49, 50, 53, 56, 59];
   //final List<int> lessons = <int>[1, 2, 4, 6, 7, 10, 11, 13, 16, 17, 18, 20, 22, 23, 25, 27, 28, 30, 33, 34, 35, 37, 39, 40, 42, 44, 45, 48, 50, 51, 53, 54, 55, 57, 60];
   final List<int> lessons = <int>[
-       1, 2, 4, 5, 7, 9,//1, 2, 4, 6, 8,
-       10, 11, 13, 15,
-       17, 18, 20,
-       22, 23, 25,
-       27, 28, 30, 32,
-       34, 35, 37,
-       39, 40, 42,
-       44, 45, 47, 49,
-       50, 51, 53,
-       54, 55, 57, 59, 60];
+    1, 2, 4, 5, 7, 9,//1, 2, 4, 6, 8,
+    10, 11, 13, 15,
+    17, 18, 20,
+    22, 23, 25,
+    27, 28, 30, 32,
+    34, 35, 37,
+    39, 40, 42,
+    44, 45, 47, 49,
+    50, 51, 53,
+    54, 55, 57, 59, 60];
 
   final List<int> level2Lessons = <int>[
     1, 2,
@@ -98,7 +98,7 @@ class _LessonsPageState extends State<LessonsPage> {
     super.initState();
 
     setState(() {
-    //  this.hasLoadedStorage = false;
+      //  this.hasLoadedStorage = false;
       this.newFinishedLessons = 0;
       currentSoundCategory = SoundCategory.hanzishuLessons;
       currentSoundPaintSection = 0;
@@ -163,15 +163,138 @@ class _LessonsPageState extends State<LessonsPage> {
 
     //handleStorage();
 
-    return Scaffold
-      (
-      appBar: AppBar
-        (
-        title: Text(getString(10)/*"Hanzishu Lessons"*/), // "Lessons Page"
+    return Scaffold(
+      backgroundColor: Color(0xFFF6F2FF),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 860),
+                child: _buildLessonsHero(),
+              ),
+            ),
+            Expanded(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 860),
+                  child: getCoursePage(),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Center
-        (
-        child: getCoursePage(),
+    );
+  }
+
+
+  Widget _buildLessonsHero() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFEAF8EF),
+              Color(0xFFF8F4FF),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(28),
+          border: Border.all(color: Color(0xFFDDEBDD)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.07),
+              blurRadius: 18,
+              offset: Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              'Hanzishu Lessons',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                height: 1.1,
+                fontWeight: FontWeight.w800,
+                color: Color(0xFF124A35),
+              ),
+            ),
+            SizedBox(height: 14),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: Color(0xFFE1E8E2)),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    width: 38,
+                    height: 38,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFE6F4EB),
+                    ),
+                    child: Icon(
+                      Icons.school_rounded,
+                      color: Color(0xFF2E6F50),
+                      size: 22,
+                    ),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Course',
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xFF6E746F),
+                          ),
+                        ),
+                        SizedBox(height: 2),
+                        DropdownButtonHideUnderline(
+                          child: DropdownButton(
+                            isDense: true,
+                            isExpanded: true,
+                            value: _selectedCourseMenu,
+                            items: _dropdownCourseMenuItems,
+                            icon: Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: Color(0xFF2E6F50),
+                            ),
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF264236),
+                            ),
+                            onChanged: (selectedCourseMenu) {
+                              setState(() {
+                                _selectedCourseMenu = selectedCourseMenu as CourseMenu;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -283,7 +406,7 @@ class _LessonsPageState extends State<LessonsPage> {
   // not use for now
   Widget getADivider(int lessonNumber) {
     if (lessonNumber == 1) {
-    return Container(width: 0.0, height: 0.0);
+      return Container(width: 0.0, height: 0.0);
     }
     else {
       return Divider(color: Colors.black);
@@ -305,37 +428,101 @@ class _LessonsPageState extends State<LessonsPage> {
 
   Widget getButtonRowWithUnitBegin(BuildContext context, int lessonNumber, int lessonCount, int unit, int levelNumber) {
     return Column(
-      children: <Widget>[
-        //getADivider(lessonNumber),
-        getUnitReview(unit-1), // "unit - 1" is the real unit for last unit's review
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget> [
-              getCourseType(context, lessonNumber),
-              SizedBox(width: 30, height: 0),
-              //SizedBox(width: 30, height: 0),
-              //getSpaceAsNeeded(unit),
-              // getLanguageSwitchButtonAsNeeded(unit),
-              //
-            ]
+        children: <Widget>[
+          //getADivider(lessonNumber),
+          getUnitReview(unit-1), // "unit - 1" is the real unit for last unit's review
+          _buildUnitHeader(unit),
+          getTypingCourseForLesson(unit),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: getRowSections(context, lessonNumber, lessonCount, unit, levelNumber),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
           ),
+        ]
+    );
+  }
+
+  Widget _buildCoursePanel(BuildContext context, int lessonNumber) {
+    var courseTypeWidget = getCourseType(context, lessonNumber);
+
+    if (courseTypeWidget is SizedBox) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
+        decoration: BoxDecoration(
+          color: Color(0xFFF1FBF5),
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Color(0xFFD8E9DE)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 12,
+              offset: Offset(0, 4),
+            ),
+          ],
         ),
-        Text(
-          getString(9)/*"Unit"*/ + " " + '$unit' + ": " + LessonUnitManager.getLessonUnitDescriptionString(unit),
-          textAlign: TextAlign.right,
-          style: TextStyle(fontSize: 16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Course',
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF47665A),
+              ),
+            ),
+            SizedBox(height: 4),
+            courseTypeWidget,
+          ],
         ),
-        Divider(color: Colors.black),
-        getTypingCourseForLesson(unit),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: getRowSections(context, lessonNumber, lessonCount, unit, levelNumber),
+      ),
+    );
+  }
+
+  Widget _buildUnitHeader(int unit) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 18, 20, 10),
+      child: Row(
+        children: [
+          Container(
+            width: 34,
+            height: 34,
+            decoration: BoxDecoration(
+              color: Color(0xFFEDE5FF),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(
+              Icons.bookmark_rounded,
+              size: 20,
+              color: Color(0xFF6A35B8),
+            ),
           ),
-          padding: EdgeInsets.all(20),
-        ),
-      ]
+          SizedBox(width: 10),
+          Text(
+            getString(9)/*"Unit"*/ + " " + '$unit' + " · " + LessonUnitManager.getLessonUnitDescriptionString(unit),
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF4E2B91),
+            ),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Container(
+              height: 1,
+              color: Color(0xFFD8C9F2),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -351,13 +538,13 @@ class _LessonsPageState extends State<LessonsPage> {
                   height: 110.0, //ySize,
                 ),
                 //Row(
-                    //children: [
-                      Text(
-                        "0. " + getString(494),
-                        style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
-                      ),
-                      //OpenHelper.getCompletedImage(lessonNumber),
-                   // ]
+                //children: [
+                Text(
+                  "0. " + getString(494),
+                  style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+                ),
+                //OpenHelper.getCompletedImage(lessonNumber),
+                // ]
                 //),
               ]
           ),
@@ -470,7 +657,7 @@ class _LessonsPageState extends State<LessonsPage> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: getRowSections(context, lessonNumber, lessonCount, unit, level),
       ),
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
     );
   }
 
@@ -530,48 +717,48 @@ class _LessonsPageState extends State<LessonsPage> {
   Widget getImageButton(BuildContext context, int lessonNumber, int unit, String imagePath, LessonSection lessonSection, bool isLesson, double xSize, double ySize) {
     //var lesson = theLessonManager.getLesson(lessonNumber);
     //String lessonOrSectionName = "";
-      //lessonOrSectionName = lesson.titleTranslation;
+    //lessonOrSectionName = lesson.titleTranslation;
 
-      return
-        InkWell(
-          child: Column(
-              children: [
-                Ink.image(
-                  image: AssetImage(imagePath),
-                  width: xSize,
-                  height: ySize,
-                ),
-                Row(
-                    children: [
-                      Text(
-                        LessonManager.getLessonTitle(lessonNumber, unit),
-                        style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
-                      ),
-                      OpenHelper.getCompletedImage(lessonNumber),
-                    ]
-                ),
-              ]
-          ),
+    return
+      InkWell(
+        child: Column(
+            children: [
+              Ink.image(
+                image: AssetImage(imagePath),
+                width: xSize,
+                height: ySize,
+              ),
+              Row(
+                  children: [
+                    Text(
+                      LessonManager.getLessonTitle(lessonNumber, unit),
+                      style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
+                    ),
+                    OpenHelper.getCompletedImage(lessonNumber),
+                  ]
+              ),
+            ]
+        ),
 
-          onTap: () => openPage(context, lessonNumber),
-        );
-    }
+        onTap: () => openPage(context, lessonNumber),
+      );
+  }
 
   Widget getCourseType(BuildContext context, int lessonNumber) {
-      if (currentSoundCategory == SoundCategory.hanzishuLessons && lessonNumber != 1 && lessonNumber != 61) {
-        return SizedBox(width: 0, height: 0);
-      }
+    if (currentSoundCategory == SoundCategory.hanzishuLessons && lessonNumber != 1 && lessonNumber != 61) {
+      return SizedBox(width: 0, height: 0);
+    }
 
-      return DropdownButton(
-        value: _selectedCourseMenu,
-        items: _dropdownCourseMenuItems,
-        onChanged: (selectedCourseMenu) {
-          setState(() {
-            _selectedCourseMenu = selectedCourseMenu as CourseMenu;
-          });
-        },
-        //onChangeDropdownCourseItem,
-      );
+    return DropdownButton(
+      value: _selectedCourseMenu,
+      items: _dropdownCourseMenuItems,
+      onChanged: (selectedCourseMenu) {
+        setState(() {
+          _selectedCourseMenu = selectedCourseMenu as CourseMenu;
+        });
+      },
+      //onChangeDropdownCourseItem,
+    );
   }
 
   Widget getUnitReview(int realUnit) {
@@ -584,9 +771,9 @@ class _LessonsPageState extends State<LessonsPage> {
           borderRadius: BorderRadius.all(
             Radius.circular(33),
           ),
-          side: BorderSide(color: Colors.blue, width: 0.5)
+          side: BorderSide(color: Color(0xFFCDBDF0), width: 1.0)
       ),
-      fillColor: Colors.blue,
+      fillColor: Color(0xFFEDE5FF),
       onPressed: () {
         var newHanziPerLevel = LessonUnitManager.getNewHanzi(realUnit);
         Navigator.of(context).push(
@@ -596,7 +783,7 @@ class _LessonsPageState extends State<LessonsPage> {
                     customString: newHanziPerLevel/*"品笑井输入法"*/, thirdPartyType: ThirdPartyType.none)));
       },
       child: Text(getString(296) + ' ' + getString(387) + ' ' + realUnit.toString(), //"Review unit 1"
-          style: TextStyle(color: Colors.brown)), // lightBlue
+          style: TextStyle(color: Color(0xFF5B2FAA), fontWeight: FontWeight.w600)), // lightBlue
     )
     ;
   }
@@ -765,9 +952,9 @@ class _LessonsPageState extends State<LessonsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                InputZiPage(typingType: TypingType.LeadComponents,
-                    lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false) //InputZiPage(),
+              builder: (context) =>
+                  InputZiPage(typingType: TypingType.LeadComponents,
+                      lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false) //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -790,7 +977,7 @@ class _LessonsPageState extends State<LessonsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-        /*
+    /*
       case 4:
         Navigator.push(
           context,

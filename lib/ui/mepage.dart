@@ -8,13 +8,10 @@ import 'package:hanzishu/ui/settingspage.dart';
 import 'package:hanzishu/ui/basiccomponentspage.dart';
 import 'package:hanzishu/ui/flashcardpage.dart';
 import 'package:hanzishu/ui/practicesheetpage.dart';
-import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'dart:io';
 import 'package:hanzishu/variables.dart';
-import 'package:hanzishu/ui/introductionpage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/webviewpage.dart';
-import 'package:hanzishu/engine/studywords.dart';
 
 class MePage extends StatefulWidget {
   @override
@@ -38,210 +35,357 @@ class _MePageState extends State<MePage> {
     return Utility.getSizeRatioWithLimit(screenWidth!);
   }
 
-  Widget getQuizResults() {
-    var imageSize = 35.0 * getSizeRatioWithLimit();
-
-    if (kIsWeb) {
-      return Container(width: 0.0, height: 0.0);
-    }
-    else {
-      return ListTile(
-        leading: Image.asset(
-            'assets/core/quizresults.png', width: imageSize, height: imageSize),
-        //Icon(Icons.location_city),
-        title: Text(getString(267)/*"Quiz results"*/, textDirection: TextDirection.ltr),
-        //trailing: Image.asset('assets/core/itemicon.png'),
-        //subtitle: Text(
-        //  "XXXXXXXXXX",
-        //  textDirection: TextDirection.rtl,
-        //),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => QuizResultPage(),
-            ),
-          );
-        },
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-    thePositionManager.setFrameWidth(screenWidth /*- 10.0*/);
+    thePositionManager.setFrameWidth(screenWidth);
 
-    return Scaffold
-      (
-      appBar: AppBar
-        (
-        title: Text(getString(94)/*"Me"*/),
-      ),
-      body: Center
-        (
-        child: getMeListView(context),
+    return Scaffold(
+      backgroundColor: Color(0xFFF7F4EC),
+      body: SafeArea(
+        child: Column(
+          children: [
+            _buildHeader(context),
+            Expanded(
+              child: Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 900),
+                  child: ListView(
+                    padding: const EdgeInsets.fromLTRB(22, 22, 22, 28),
+                    children: [
+                      _buildSectionHeader(
+                        icon: Icons.eco_rounded,
+                        title: 'Learn',
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.menu_book_rounded,
+                        iconColor: Color(0xFF2E8B57),
+                        iconBackground: Color(0xFFE3F5EA),
+                        title: 'Hanzishu Introduction',
+                        onTap: _openIntroduction,
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.translate_rounded,
+                        iconColor: Color(0xFF2B84D6),
+                        iconBackground: Color(0xFFE2F1FC),
+                        title: 'Chinese Alphabets',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BasicComponentsPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      if (kIsWeb)
+                        _buildMenuItem(
+                          icon: Icons.school_rounded,
+                          iconColor: Color(0xFF6B4BB5),
+                          iconBackground: Color(0xFFF0E8FB),
+                          title: 'Chinese Enlightening Classes',
+                          onTap: () {
+                            launchUrl(
+                              Uri.parse("https://hanzishu.com/lesson"),
+                              webOnlyWindowName: '_self',
+                            );
+                          },
+                        ),
+
+                      SizedBox(height: 22),
+                      _buildSectionHeader(
+                        icon: Icons.handyman_rounded,
+                        title: 'Tools',
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.style_rounded,
+                        iconColor: Color(0xFFE08A1E),
+                        iconBackground: Color(0xFFFFF0CE),
+                        title: 'Customized Flashcards',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => FlashcardPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.edit_note_rounded,
+                        iconColor: Color(0xFFE95367),
+                        iconBackground: Color(0xFFFFE3E7),
+                        title: 'Hanzi Practice Sheet Generator',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PracticeSheetPage(
+                                initZis: "合体字练习部件非笔画",
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.auto_stories_rounded,
+                        iconColor: Color(0xFF7B5AC8),
+                        iconBackground: Color(0xFFF0E8FB),
+                        title: 'Glossary',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GlossaryPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      if (!kIsWeb) _buildQuizResultsItem(),
+
+                      SizedBox(height: 22),
+                      _buildSectionHeader(
+                        icon: Icons.settings_rounded,
+                        title: 'Settings & Support',
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.language_rounded,
+                        iconColor: Color(0xFF2E8B57),
+                        iconBackground: Color(0xFFE3F5EA),
+                        title: 'Language Setting',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => SettingsPage(),
+                            ),
+                          ).then((val) => {_callbackFromSettingsPage()});
+                        },
+                      ),
+                      _buildMenuItem(
+                        icon: Icons.privacy_tip_rounded,
+                        iconColor: Color(0xFF2B84D6),
+                        iconBackground: Color(0xFFE2F1FC),
+                        title: 'Privacy Policy & Contact Us',
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PrivacyPolicyPage(),
+                            ),
+                          );
+                        },
+                      ),
+                      if (kIsWeb)
+                        _buildMenuItem(
+                          icon: Icons.link_rounded,
+                          iconColor: Color(0xFFF19A22),
+                          iconBackground: Color(0xFFFFEED8),
+                          title: 'Resources',
+                          onTap: () {
+                            launchUrl(
+                              Uri.parse("https://hanzishu.com/links"),
+                              webOnlyWindowName: '_self',
+                            );
+                          },
+                        ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 
-    _callbackFromSettingsPage() {
-      if (currentLocale != theDefaultLocale) {
-        setState(() {
-          // let this page refresh to pick up the locale change.
-          currentLocale = theDefaultLocale;
-        });
-        theStorageHandler.setLanguage(theDefaultLocale);
-        theStorageHandler.SaveToFile();
+  Widget _buildHeader(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 110,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF2E6F50),
+            Color(0xFF4F8D6B),
+          ],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(48),
+          topRight: Radius.circular(48),
+        ),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            left: 28,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.white, size: 34),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ),
+          Text(
+            'More',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 38,
+              fontWeight: FontWeight.w800,
+              color: Colors.white,
+              letterSpacing: 0.3,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-        // let main page refresh to pick up the language change for navigation bar items
-        final BottomNavigationBar navigationBar = globalKeyNav.currentWidget as BottomNavigationBar;
-        navigationBar.onTap!(3);
-      }
+  Widget _buildSectionHeader({
+    required IconData icon,
+    required String title,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 10, 8, 12),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            size: 34,
+            color: Color(0xFF5F8E52),
+          ),
+          SizedBox(width: 16),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.w800,
+              color: Color(0xFF0E5A35),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
-      /*
-      var bottomWidgetKey=new GlobalKey<State<BottomNavigationBar>>();
-      BottomNavigationBar navigationBar =  bottomWidgetKey.currentWidget as BottomNavigationBar;
-      navigationBar.onTap(1);
-      */
+  Widget _buildMenuItem({
+    required IconData icon,
+    required Color iconColor,
+    required Color iconBackground,
+    required String title,
+    required VoidCallback onTap,
+  }) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 10),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 14,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 12, 18, 12),
+            child: Row(
+              children: [
+                Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: iconBackground,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Icon(
+                    icon,
+                    size: 38,
+                    color: iconColor,
+                  ),
+                ),
+                SizedBox(width: 28),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+                Icon(
+                  Icons.chevron_right_rounded,
+                  size: 36,
+                  color: Colors.grey.shade600,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuizResultsItem() {
+    return _buildMenuItem(
+      icon: Icons.emoji_events_rounded,
+      iconColor: Color(0xFF9A6A22),
+      iconBackground: Color(0xFFFFF0CE),
+      title: getString(267),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => QuizResultPage(),
+          ),
+        );
+      },
+    );
+  }
+
+  void _openIntroduction() {
+    String webUrl;
+    if (theDefaultLocale == "en_US") {
+      webUrl = "https://hanzishu.com/publish/index-en.htm";
+    } else {
+      webUrl = "https://hanzishu.com/publish";
     }
 
-      Widget getMeListView(BuildContext context) {
-        var imageSize = 35.0 * getSizeRatioWithLimit();
+    if (kIsWeb) {
+      launchUrl(Uri.parse(webUrl), webOnlyWindowName: '_self');
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => WebViewPage(webUrl, getString(94)),
+        ),
+      );
+    }
+  }
 
-        return ListView(
-          children: <Widget>[
-            //Text(
-            //  "XXXXXXXXXXXXXXX",
-            //  textDirection: TextDirection.rtl,
-            //  textAlign: TextAlign.center,
-            //),
-            ListTile(
-              leading: Image.asset('assets/core/conversations.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title:  Text(getString(411)/*"Hanzishu Introduction"*/, textDirection: TextDirection.ltr),
-              onTap: () {
-                String webUrl;
-                if (theDefaultLocale == "en_US") {
-                  webUrl = "https://hanzishu.com/publish/index-en.htm";
-                }
-                else {
-                  webUrl = "https://hanzishu.com/publish";
-                }
-                if (kIsWeb) {
-                  launchUrl(Uri.parse(webUrl), webOnlyWindowName: '_self');
-                }
-                else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          WebViewPage(webUrl, getString(94) /*"Me"*/),
-                    ),
-                  );
-                }
-                },
-            ),
-            if (kIsWeb)
-              ListTile(
-                leading: Image.asset('assets/core/itemicon.png'),
-                title: Text(getString(420) /*"Hanzishu classes"*/,
-                    textDirection: TextDirection.ltr),
-                onTap: () {
-                    launchUrl(Uri.parse("https://hanzishu.com/lesson"),
-                        webOnlyWindowName: '_self');
-                },
-              ),
-            ListTile(
-              leading: Image.asset('assets/core/breakout.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(384)/*"Hanzi basic components"*/, textDirection: TextDirection.ltr),
-              //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BasicComponentsPage(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Image.asset('assets/core/characterlist.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(406)/*"Customized flashcard"*/, textDirection: TextDirection.ltr),
-              //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FlashcardPage(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Image.asset('assets/lessons/L28.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(449)/*"Hanzi practice sheet"*/, textDirection: TextDirection.ltr),
-              //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        PracticeSheetPage(initZis: "合体字练习部件非笔画"),
-                  ),
-                );
-              },
-            ),
-            getQuizResults(),
-            ListTile(
-              leading: Image.asset('assets/core/glossary.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title:  Text(getString(140)/*"Glossary"*/, textDirection: TextDirection.ltr),
-              //trailing: Image.asset('assets/core/itemicon.png'),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => GlossaryPage(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              leading: Image.asset('assets/core/settings.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(302)/*"Language Settings"*/, textDirection: TextDirection.ltr),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SettingsPage())).then((val)=>{_callbackFromSettingsPage()});
-                //      Navigator.of(context).push(
-                //          MaterialPageRoute(builder: (context) => LessonPage(lessonId: lessonId))).then((val)=>{_getRequests()});
-                //  ),
-                //);
-              },
-            ),
-            ListTile(
-              leading: Image.asset('assets/lessons/L9.png', width: imageSize, height: imageSize), //Icon(Icons.location_city),
-              title: Text(getString(141)/*"Privacy policy"*/, textDirection: TextDirection.ltr),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PrivacyPolicyPage(),
-                  ),
-                );
-              },
-            ),
-            if (kIsWeb)
-              ListTile(
-                leading: Image.asset('assets/core/itemicon.png'),
-                title: Text(getString(504) /*"Friendly links"*/,
-                    textDirection: TextDirection.ltr),
-                onTap: () {
-                  launchUrl(Uri.parse("https://hanzishu.com/links"),
-                      webOnlyWindowName: '_self');
-                },
-              ),
-          ],
-        );
-      }
+  void _callbackFromSettingsPage() {
+    if (currentLocale != theDefaultLocale) {
+      setState(() {
+        currentLocale = theDefaultLocale;
+      });
+      theStorageHandler.setLanguage(theDefaultLocale);
+      theStorageHandler.SaveToFile();
+
+      final BottomNavigationBar navigationBar =
+      globalKeyNav.currentWidget as BottomNavigationBar;
+      navigationBar.onTap!(3);
+    }
+  }
 }
