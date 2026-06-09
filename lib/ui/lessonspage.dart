@@ -152,42 +152,21 @@ class _LessonsPageState extends State<LessonsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // do here so that it'll refresh the lessonspage to reflect the lesson completed status from storage.
-    // also away from the main thread I think.
-    // do it only once
     screenWidth = Utility.getScreenWidth(context);
-
-    // make sure it picks up the right locale
     _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
-//    _selectedCourseMenu = _dropdownCourseMenuItems[0].value;
-
-    //handleStorage();
 
     return Scaffold(
       backgroundColor: Color(0xFFF6F2FF),
       body: SafeArea(
-        child: Column(
-          children: [
-            Center(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxWidth: 860),
-                child: _buildLessonsHero(),
-              ),
-            ),
-            Expanded(
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: 860),
-                  child: getCoursePage(),
-                ),
-              ),
-            ),
-          ],
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 860),
+            child: getCoursePage(),
+          ),
         ),
       ),
     );
   }
-
 
   Widget _buildLessonsHero() {
     return Padding(
@@ -323,81 +302,109 @@ class _LessonsPageState extends State<LessonsPage> {
 
   Widget getHanzishuLessons() {
     return ListView.builder(
-        itemCount/*itemExtent*/: lessons.length,
-        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-          //NOTE: the index has to go with row, not lesson, that's why the more complicated approach here.
-          int lessonCount = 1;
-
-          // assume last row has one item
-          if (index == lessons.length - 1) {
-            lessonCount = 1;  // have to specify the number of last row
-          }
-          else if (index < lessons.length - 1) {
-            lessonCount = lessons[index + 1] - lessons[index];
-          }
-
-          int unit = 1;
-          //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-          if (index == 0 || index == 6 || index == 10 || index == 13 || index == 16 || index == 20 || index == 23 || index == 26 || index == 30 || index == 33) {
-
-            if (index == 0) {unit = 1;}
-            else if (index == 6) { unit = 2;}
-            else if (index == 10) { unit = 3;}
-            else if (index == 13) { unit = 4;}
-            else if (index == 16) { unit = 5;}
-            else if (index == 20) { unit = 6;}
-            else if (index == 23) { unit = 7;}
-            else if (index == 26) { unit = 8;}
-            else if (index == 30) { unit = 9;}
-            else if (index == 33) { unit = 10;}
-            //else if (index == 34) { unit = 10;}
-            //return getLessonUnit(context, unit);
-            return getButtonRowWithUnitBegin(context, lessons[index], lessonCount, unit, 1 /*level 1*/);
-          }
-          else {
-            return getButtonRow(context, lessons[index], lessonCount, unit, 1/*level*/);
-          }
+      itemCount: lessons.length + 1,
+      itemBuilder: (BuildContext context, int index) {
+        if (index == 0) {
+          return _buildLessonsHero();
         }
+
+        int rowIndex = index - 1;
+        int lessonCount = 1;
+
+        if (rowIndex == lessons.length - 1) {
+          lessonCount = 1;
+        } else if (rowIndex < lessons.length - 1) {
+          lessonCount = lessons[rowIndex + 1] - lessons[rowIndex];
+        }
+
+        int unit = 1;
+
+        if (rowIndex == 0 || rowIndex == 6 || rowIndex == 10 || rowIndex == 13 ||
+            rowIndex == 16 || rowIndex == 20 || rowIndex == 23 || rowIndex == 26 ||
+            rowIndex == 30 || rowIndex == 33) {
+
+          if (rowIndex == 0) { unit = 1; }
+          else if (rowIndex == 6) { unit = 2; }
+          else if (rowIndex == 10) { unit = 3; }
+          else if (rowIndex == 13) { unit = 4; }
+          else if (rowIndex == 16) { unit = 5; }
+          else if (rowIndex == 20) { unit = 6; }
+          else if (rowIndex == 23) { unit = 7; }
+          else if (rowIndex == 26) { unit = 8; }
+          else if (rowIndex == 30) { unit = 9; }
+          else if (rowIndex == 33) { unit = 10; }
+
+          return getButtonRowWithUnitBegin(
+            context,
+            lessons[rowIndex],
+            lessonCount,
+            unit,
+            1,
+          );
+        } else {
+          return getButtonRow(
+            context,
+            lessons[rowIndex],
+            lessonCount,
+            unit,
+            1,
+          );
+        }
+      },
     );
   }
 
   Widget getHanzishuLessons2() {
     int unit = 1;
+
     return ListView.builder(
-        itemCount/*itemExtent*/: 12, //TODO: update everytime with new lessons. //level2Lessons.length, // Note: this is a row count.
-        itemBuilder/*IndexedWidgetBuilder*/: (BuildContext context, int index) {
-          int lessonCount = 1;
-
-          // assume last row has one item
-          if (index == level2Lessons.length - 1) {
-            lessonCount = 1;  // have to specify the number of last row
-          }
-          else if (index < level2Lessons.length - 1) {
-            lessonCount = level2Lessons[index + 1] - level2Lessons[index];
-          }
-
-          //if (index == 0 || index == 4 || index == 8 || index == 11 || index == 14 || index == 18 || index == 21 || index == 24 || index == 27 || index == 30 || index == 34) {
-          if (index == 0 || index == 2 || index == 5 || index == 7 || index == 9 || index == 11 || index == 23 || index == 26 || index == 30 || index == 33) {
-
-            if (index == 0) {unit = 1;}
-            else if (index == 2) { unit = 2;}
-            else if (index == 5) { unit = 3;}
-            else if (index == 7) { unit = 4;}
-            else if (index == 9) { unit = 5;}
-            else if (index == 11) { unit = 6;}
-            else if (index == 12) { unit = 7;}
-            else if (index == 26) { unit = 8;}
-            else if (index == 30) { unit = 9;}
-            else if (index == 33) { unit = 10;}
-            //else if (index == 34) { unit = 10;}
-            //return getLessonUnit(context, unit);
-            return getButtonRowWithUnitBegin(context, level2Lessons[index], lessonCount, unit + 10, 2/*level*/); // for level 2
-          }
-          else {
-            //unit += 10; // for level 2
-            return getButtonRow(context, level2Lessons[index], lessonCount, unit + 10, 2/*level*/); // for level 2
-          }
+      itemCount: 12 + 1,
+      itemBuilder: (BuildContext context, int index) {
+        if (index == 0) {
+          return _buildLessonsHero();
         }
+
+        int rowIndex = index - 1;
+        int lessonCount = 1;
+
+        if (rowIndex == level2Lessons.length - 1) {
+          lessonCount = 1;
+        } else if (rowIndex < level2Lessons.length - 1) {
+          lessonCount = level2Lessons[rowIndex + 1] - level2Lessons[rowIndex];
+        }
+
+        if (rowIndex == 0 || rowIndex == 2 || rowIndex == 5 || rowIndex == 7 ||
+            rowIndex == 9 || rowIndex == 11 || rowIndex == 23 || rowIndex == 26 ||
+            rowIndex == 30 || rowIndex == 33) {
+
+          if (rowIndex == 0) { unit = 1; }
+          else if (rowIndex == 2) { unit = 2; }
+          else if (rowIndex == 5) { unit = 3; }
+          else if (rowIndex == 7) { unit = 4; }
+          else if (rowIndex == 9) { unit = 5; }
+          else if (rowIndex == 11) { unit = 6; }
+          else if (rowIndex == 12) { unit = 7; }
+          else if (rowIndex == 26) { unit = 8; }
+          else if (rowIndex == 30) { unit = 9; }
+          else if (rowIndex == 33) { unit = 10; }
+
+          return getButtonRowWithUnitBegin(
+            context,
+            level2Lessons[rowIndex],
+            lessonCount,
+            unit + 10,
+            2,
+          );
+        } else {
+          return getButtonRow(
+            context,
+            level2Lessons[rowIndex],
+            lessonCount,
+            unit + 10,
+            2,
+          );
+        }
+      },
     );
   }
 
