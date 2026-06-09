@@ -408,18 +408,6 @@ class _LessonsPageState extends State<LessonsPage> {
     );
   }
 
-
-
-  // not use for now
-  Widget getADivider(int lessonNumber) {
-    if (lessonNumber == 1) {
-      return Container(width: 0.0, height: 0.0);
-    }
-    else {
-      return Divider(color: Colors.black);
-    }
-  }
-
   List<DropdownMenuItem<CourseMenu>> buildDropdownCourseMenuItems(List courseMenuList) {
     List<DropdownMenuItem<CourseMenu>> items = []; //List();
     for (CourseMenu courseMenu in courseMenuList) {
@@ -449,49 +437,6 @@ class _LessonsPageState extends State<LessonsPage> {
           padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
         ),
       ],
-    );
-  }
-
-  Widget _buildCoursePanel(BuildContext context, int lessonNumber) {
-    var courseTypeWidget = getCourseType(context, lessonNumber);
-
-    if (courseTypeWidget is SizedBox) {
-      return SizedBox(width: 0, height: 0);
-    }
-
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 18, 16, 14),
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 18),
-        decoration: BoxDecoration(
-          color: Color(0xFFF1FBF5),
-          borderRadius: BorderRadius.circular(18),
-          border: Border.all(color: Color(0xFFD8E9DE)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 12,
-              offset: Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Course',
-              style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w600,
-                color: Color(0xFF47665A),
-              ),
-            ),
-            SizedBox(height: 4),
-            courseTypeWidget,
-          ],
-        ),
-      ),
     );
   }
 
@@ -641,14 +586,6 @@ class _LessonsPageState extends State<LessonsPage> {
   }
   */
 
-  Widget getSpaceAsNeeded(int unit) {
-    if (unit != 1) {
-      return SizedBox(width: 0, height: 0);
-    }
-
-    return SizedBox(width: 60, height: 0);
-  }
-
   Widget getButtonRow(BuildContext context, int lessonNumber, int lessonCount, int unit, int level) {
     return Column(
         children: <Widget>[
@@ -794,13 +731,6 @@ class _LessonsPageState extends State<LessonsPage> {
           style: TextStyle(color: Color(0xFF5B2FAA), fontWeight: FontWeight.w600)), // lightBlue
     )
     ;
-  }
-
-  onChangeDropdownCourseItem(CourseMenu selectedCourseMenu) {
-    setState(() {
-      _dropdownCourseMenuItems = buildDropdownCourseMenuItems(courseMenuList);
-      _selectedCourseMenu = selectedCourseMenu;
-    });
   }
 
   Widget getPaintIndex(BuildContext context, SoundCategory soundCategory) {
