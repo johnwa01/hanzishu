@@ -177,14 +177,14 @@ class _LessonsPageState extends State<LessonsPage> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xFFEAF8EF),
-              Color(0xFFF8F4FF),
+              Color(0xFFF4EEFF),
+              Color(0xFFFDFBFF),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
           borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: Color(0xFFDDEBDD)),
+          border: Border.all(color: Color(0xFFE2D6FA)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.07),
@@ -358,7 +358,7 @@ class _LessonsPageState extends State<LessonsPage> {
     int unit = 1;
 
     return ListView.builder(
-      itemCount: 12 + 1,
+      itemCount: 12 + 1, //level2Lessons.length + 1,
       itemBuilder: (BuildContext context, int index) {
         if (index == 0) {
           return _buildLessonsHero();
@@ -435,19 +435,20 @@ class _LessonsPageState extends State<LessonsPage> {
 
   Widget getButtonRowWithUnitBegin(BuildContext context, int lessonNumber, int lessonCount, int unit, int levelNumber) {
     return Column(
-        children: <Widget>[
-          //getADivider(lessonNumber),
-          getUnitReview(unit-1), // "unit - 1" is the real unit for last unit's review
-          _buildUnitHeader(unit),
-          getTypingCourseForLesson(unit),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: getRowSections(context, lessonNumber, lessonCount, unit, levelNumber),
-            ),
-            padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+      children: <Widget>[
+        if (!(levelNumber == 2 && unit == 11))
+          getUnitReview(unit - 1),
+
+        _buildUnitHeader(unit),
+        getTypingCourseForLesson(unit),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: getRowSections(context, lessonNumber, lessonCount, unit, levelNumber),
           ),
-        ]
+          padding: EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+        ),
+      ],
     );
   }
 
@@ -769,7 +770,7 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getUnitReview(int realUnit) {
-    if (realUnit == 0 || realUnit == 10) { // first unit in level 1 and level 2
+    if (realUnit == 0 /*|| realUnit == 10*/) { // first unit in level 1 and level 2
       return SizedBox(width: 0, height: 0);
     }
 
