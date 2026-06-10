@@ -138,17 +138,16 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     // TODO: components don't seem relative here
     // compound zi is animating.
     if (compoundZiComponentNum > 0) {
-      List<String> componentCodes = <String>[]; //List<String>();
+      List<String> componentCodes = <String>[];
       if (compoundZiAllComponents == null || compoundZiAllComponents.length == 0) {
         DictionaryManager.getAllComponents(searchingZiIndex, componentCodes);
         DictionaryManager.getComponentIdsFromCodes(
             componentCodes, compoundZiAllComponents);
       }
-      //var compList = getAllZiComponents(searchingZiIndex);
+
       compoundZiTotalComponentNum = compoundZiAllComponents.length;
 
       if (compoundZiComponentNum == compoundZiTotalComponentNum + 1) {
-        // after looping through the compoundZiAllComponents.
         compoundZiCurrentComponentId = searchingZiIndex;
         currentZiListType = ZiListType.searching;
         shouldDrawCenter = true;
@@ -159,50 +158,37 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
       }
     }
 
-    //screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     screenWidth = Utility.getScreenWidth(context);
 
     try {
-      return Scaffold
-        (
-        appBar: AppBar
-          (
-          title: Text(getString(widget.titleStringId)/*"Customized ..."*/),
+      return Scaffold(
+        backgroundColor: Color(0xFFF8F3FF),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
-        body: Container(
-            child: WillPopScope(
-                child: new Column( //Stack(
+        body: SafeArea(
+          child: WillPopScope(
+            onWillPop: _onWillPop,
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 860),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 28),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(height: 10 * getSizeRatioWithLimit()), //40
-                      getCopyPasteDictionry(),
-                      SizedBox(height: 10 * getSizeRatioWithLimit()),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          getTextField(),
-                          //SizedBox(width: 10 * getSizeRatioWithLimit()),
-                        ]
-                      ),
-                      SizedBox(height: 10 * getSizeRatioWithLimit()),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          TextButton(
-                            style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.grey[350])
-                            ),
-                            onPressed: () {
-                              processInputs();
-                            },
-                            child: Text(getString(301)/*"Start"*/,
-                                style: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit(), color: Colors.lightBlue)),
-                          ),
-                        ],
-                      ),
-                    ]
+                      _buildHeroSection(),
+                      SizedBox(height: 22),
+                      _buildContentCard(),
+                      SizedBox(height: 22),
+                      _buildStartSection(),
+                    ],
+                  ),
                 ),
-                onWillPop: _onWillPop
-            )
+              ),
+            ),
+          ),
         ),
       );
     } catch (e, s) {
@@ -213,59 +199,292 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
     return SizedBox(width: 0.0, height: 0.0);
   }
 
-  Widget getCopyPasteDictionry() {
-    //if (inputText != null) {
-    //  return SizedBox(width: 0.0, height: 0.0);
-    //}
-    //else {
-      return Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+  Widget _buildHeroSection() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(26, 24, 26, 24),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFFF4EEFF),
+            Color(0xFFFDFBFF),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: Color(0xFFE2D6FA)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 18,
+            offset: Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  getString(widget.titleStringId),
+                  style: TextStyle(
+                    fontSize: 28,
+                    height: 1.12,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF4E2B91),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Practice any text with Hanzishu',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xFF7B6D95),
+                  ),
+                ),
+                SizedBox(height: 16),
+                Text(
+                  'Paste Chinese text, stories, articles, or lesson content to create your own typing exercise.',
+                  style: TextStyle(
+                    fontSize: 15,
+                    height: 1.45,
+                    color: Color(0xFF2B2140),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(width: 18),
+          Container(
+            width: 108,
+            height: 108,
+            decoration: BoxDecoration(
+              color: Color(0xFFEDE5FF),
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Icon(
+              Icons.edit_note_rounded,
+              size: 62,
+              color: Color(0xFF6A35B8),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContentCard() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.fromLTRB(24, 22, 24, 20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(22),
+        border: Border.all(color: Color(0xFFE6DFF6)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 16,
+            offset: Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 36,
+                height: 36,
+                decoration: BoxDecoration(
+                  color: Color(0xFFEDE5FF),
+                  borderRadius: BorderRadius.circular(11),
+                ),
+                child: Icon(
+                  Icons.subject_rounded,
+                  color: Color(0xFF6A35B8),
+                  size: 22,
+                ),
+              ),
+              SizedBox(width: 12),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Content',
+                    style: TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF4E2B91),
+                    ),
+                  ),
+                  SizedBox(height: 4),
+                  Text(
+                    getString(408),
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Color(0xFF7B6D95),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 18),
+          getTextField(),
+          SizedBox(height: 10),
+          Text(
+            _controller.text.length.toString() + ' / 10,000 characters',
+            style: TextStyle(
+              fontSize: 13,
+              color: Color(0xFF8A819A),
+            ),
+          ),
+          SizedBox(height: 20),
+          _buildIdeasBar(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildIdeasBar() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+      decoration: BoxDecoration(
+        color: Color(0xFFF5EFFF),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Wrap(
+        spacing: 18,
+        runSpacing: 8,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: <Widget>[
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Icon(Icons.lightbulb_outline_rounded, color: Color(0xFF6A35B8), size: 22),
+              SizedBox(width: 8),
+              Text(
+                'Try these ideas',
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w800,
+                  color: Color(0xFF4E2B91),
+                ),
+              ),
+            ],
+          ),
+          Text('•  Lesson content', style: TextStyle(color: Color(0xFF4E2B91))),
+          Text('•  Short stories', style: TextStyle(color: Color(0xFF4E2B91))),
+          Text('•  Competition passages', style: TextStyle(color: Color(0xFF4E2B91))),
+          Text('•  Chinese articles', style: TextStyle(color: Color(0xFF4E2B91))),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStartSection() {
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          width: 260,
+          height: 54,
+          child: RawMaterialButton(
+            fillColor: Color(0xFF6A35B8),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            elevation: 4,
+            onPressed: () {
+              processInputs();
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Icon(Icons.play_arrow_rounded, color: Colors.white, size: 28),
+                SizedBox(width: 8),
+                Text(
+                  getString(301),
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(width: 10 * getSizeRatioWithLimit()),
-            Text(getString(408) /*"Type or copy/paster all your words below"*/,
-              style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(),
-                  color: Colors.blueGrey),),
-            //SizedBox(width: 30 * getSizeRatioWithLimit()),
-          ]
-      );
-    //}
+            Icon(Icons.shield_outlined, size: 18, color: Color(0xFF6A35B8)),
+            SizedBox(width: 6),
+            Text(
+              'Your text is used only for practice and not stored.',
+              style: TextStyle(
+                fontSize: 13,
+                color: Color(0xFF7B6D95),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget getCopyPasteDictionry() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4),
+      child: Text(
+        getString(408),
+        style: TextStyle(
+          fontSize: 16 * getSizeRatioWithLimit(),
+          color: Color(0xFF7B6D95),
+        ),
+      ),
+    );
   }
 
   Widget getTextField() {
-    //if (inputText.length != 0) {
-    //  return SizedBox(width: 0.0, height: 0.0);
-    //}
-    //else {
-      return SizedBox(
-        width: 340 * getSizeRatio(),
-        //height: 120,
-        child: TextField(
-          //decoration: InputDecoration(
-          //hintText: 'Test text',
-          //),
-
-          autocorrect: false,
-          enableSuggestions: false,
-          controller: _controller,
-          focusNode: _textNode,
-          autofocus: false,
-          style: TextStyle(
-            fontSize: 18 *
-                getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-            //height: 1.0 // 1.3
-          ),
-          maxLines: 8,
-          //expands: true,
-          keyboardType: TextInputType.text,
-          //multiline,  //TextInputType.visiblePassword
-          decoration: InputDecoration(
-            //hintText: 'This test',
-            filled: true,
-            fillColor: Colors.lightBlueAccent, //black12,
-          ),
-        ), //focusNode: _textNode,
-      );
-    //}
+    return TextField(
+      autocorrect: false,
+      enableSuggestions: false,
+      controller: _controller,
+      focusNode: _textNode,
+      autofocus: false,
+      style: TextStyle(
+        fontSize: 18 * getSizeRatioWithLimit(),
+        height: 1.35,
+        color: Color(0xFF2B2140),
+      ),
+      maxLines: 8,
+      keyboardType: TextInputType.multiline,
+      onChanged: (value) {
+        setState(() {});
+      },
+      decoration: InputDecoration(
+        hintText: 'Paste Chinese text here...',
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Color(0xFFDCD4EE), width: 1.3),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: Color(0xFF8B63D9), width: 1.8),
+        ),
+      ),
+    );
   }
 
   processInputs() {
@@ -282,10 +501,10 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
       if (inputText != null && inputText.length > 0) {
         var resultStr =  inputText;
         if (widget.studyType != StudyType.typingOnly) {
-           resultStr = DictionaryManager.validateChars(inputText);
+          resultStr = DictionaryManager.validateChars(inputText);
         }
         else { // typingOnly
-            resultStr = InputZiManager.validateChars(inputText);
+          resultStr = InputZiManager.validateChars(inputText);
         }
 
         if (resultStr.length == 0) {
@@ -334,32 +553,32 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
   }
 
   launchContent(int contentIndex) {
-      //_controller.clear();
-      //FocusScope.of(context).unfocus();
-      switch (contentIndex) {
-        case 0:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, isFromReviewPage: true ,customString: inputText),
-            ),
-          ).then((val) => {_getRequests()});
-          break;
-        case 1:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  DictionarySearchingPage(
-                      dicStage: DictionaryStage.detailedzi,
-                      firstOrSearchingZiIndex: -1,
-                      flashcardList: inputText,
-                      dicCaller: DicCaller.WordsStudy),
-            ),
-          ).then((val) => {_getRequests()});
-          break;
-          /*
+    //_controller.clear();
+    //FocusScope.of(context).unfocus();
+    switch (contentIndex) {
+      case 0:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DrillPageCore(drillCategory: DrillCategory.custom, startingCenterZiId: 1, subItemId: 1, isFromReviewPage: true ,customString: inputText),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 1:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DictionarySearchingPage(
+                    dicStage: DictionaryStage.detailedzi,
+                    firstOrSearchingZiIndex: -1,
+                    flashcardList: inputText,
+                    dicCaller: DicCaller.WordsStudy),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+    /*
         case 2:
         // should add this to BreakoutPage parameter
           theIsFromLessonContinuedSection = true;
@@ -372,33 +591,33 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
           ).then((val) => {_getRequests()});
           break;
           */
-        case 2:
-          bool includeSkipSection = true;
-          if (widget.studyType == StudyType.typingOnly) {
-            includeSkipSection = false;
-          }
+      case 2:
+        bool includeSkipSection = true;
+        if (widget.studyType == StudyType.typingOnly) {
+          includeSkipSection = false;
+        }
 
-          String convertedText = Utility.convertSpecialChars(inputText);
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  InputZiPage(
-                      typingType: TypingType.Custom, lessonId: 0, wordsStudy: convertedText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: includeSkipSection, showSwitchMethod: false),
-            ),
-          ).then((val) => {_getRequests()});
-          break;
-        case 3:
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none, lessonId: 0, wordsStudy: inputText, includeSkipSection: true),
-            ),
-          ).then((val) => {_getRequests()});
-          break;
-        default:
-          break;
+        String convertedText = Utility.convertSpecialChars(inputText);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                InputZiPage(
+                    typingType: TypingType.Custom, lessonId: 0, wordsStudy: convertedText, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: includeSkipSection, showSwitchMethod: false),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 3:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.none, lessonId: 0, wordsStudy: inputText, includeSkipSection: true),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      default:
+        break;
     }
   }
 
