@@ -2120,7 +2120,7 @@ class _InputZiPageState extends State<InputZiPage> {
               fieldWidth,
               editFieldFontRatio,
               editFontSize,
-              1,
+              maxNumberOfLines,
             ),
           ),
           getZiCandidates(inputZiPainter),
@@ -2299,8 +2299,10 @@ class _InputZiPageState extends State<InputZiPage> {
           fontSize: editFontSize * editFieldFontRatio,
           height: 1.0,
         ),
-        maxLines: 1,
-        keyboardType: TextInputType.text,
+        maxLines: maxNumberOfLines,
+        keyboardType: maxNumberOfLines == 1
+            ? TextInputType.text
+            : TextInputType.multiline,
       ),
     );
   }

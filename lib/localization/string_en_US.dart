@@ -111,7 +111,7 @@ var theString_en_US = [
   Local(105, "Learn Chinese alphabets"),
   Local(106, "Typing exercises"),
   Local(107, "Exercises -- commonly used Hanzi"),
-  Local(108, "Editor"),
+  Local(108, "Hanzishu Editor"),
   Local(109, "Try a few"),
   Local(110, "Let's try to type a few Hanzi.\n\n\Notes:\n\n 1) There are five different modes of hints, from hint 3 with full answer to game mode with no help. You can switch the modes as you need. \n\n2) If you are not sure about which letter to type, you can also guess clicking one of the four listed groups of Chinese alphabets, a green color indicates a correct guess, and a red color indicates a wrong guess. Then you can further guess clicking which type of Chinese alphabet it is."),
   Local(111, "Reference this chart to visualize how Chinese alphabets are mapped to English letters. The five single-stroke Chinese alphabets sit in the two middle columns, so try to read from middle to two sides."),
