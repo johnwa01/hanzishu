@@ -3966,18 +3966,31 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   showCompletedDialog(BuildContext context) {
+    void closeDialogAndReturn() {
+      theIsBackArrowExit = false;
+      Navigator.of(context).pop(); // out this dialog
+      Navigator.of(context).pop(); // to the lesson page
+      // these two types support multiple sentences which is actually another layer. so pop one more time.
+      if (typingType == TypingType.ThirdParty || typingType == TypingType.Custom) {
+        Navigator.of(context).pop();
+      }
+    }
+
+    if (typingType == TypingType.FirstTyping) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext dialogContext) {
+          return _buildFirstTypingCompletedDialog(closeDialogAndReturn);
+        },
+      );
+      return;
+    }
+
     // set up the button
     Widget okButton = TextButton(
       child: Text("OK", style: TextStyle(color: Colors.blue)),
-      onPressed: () {
-        theIsBackArrowExit = false;
-        Navigator.of(context).pop(); // out this dialog
-        Navigator.of(context).pop(); // to the lesson page
-        // these two types support multiple sentences which is actually another layer. so pop one more time.
-        if (typingType == TypingType.ThirdParty || typingType == TypingType.Custom) {
-          Navigator.of(context).pop();
-        }
-      },
+      onPressed: closeDialogAndReturn,
     );
 
     String title = '';
@@ -4030,11 +4043,6 @@ class _InputZiPageState extends State<InputZiPage> {
     else if (typingType == TypingType.SingleComponent) {
       title = getString(118)/*"Congratulations!"*/;
       content = getString(355)/*"You have completed this typing course! ..."*/;
-      //theNewlyCompletedTypingExercise = 8;
-    }
-    else if (typingType == TypingType.FirstTyping) {
-      title = getString(118)/*"Congratulations!"*/;
-      content = getString(512)/*"You have typed your first Hanzi into computer!"*/;
       //theNewlyCompletedTypingExercise = 8;
     }
     else if (typingType == TypingType.TwoComponents) {
@@ -4103,6 +4111,254 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  Widget _buildFirstTypingCompletedDialog(VoidCallback onContinue) {
+    // Use a small, bounded design canvas for this success dialog, instead of
+    // scaling everything from the full page width. This keeps the layout close
+    // to the approved mockup on desktop and prevents the ratio from making the
+    // dialog too wide or too tall.
+    final rawRatio = getSizeRatio();
+    final ratio = rawRatio < 0.86 ? rawRatio : 0.86;
+    final primary = Color(0xFF6F35E8);
+    final darkText = Color(0xFF1F1B2D);
+
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: 28 * ratio,
+        vertical: 22 * ratio,
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 760 * ratio),
+        child: Container(
+          height: 620 * ratio,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(38 * ratio),
+                  border: Border.all(color: Color(0xFFE7D7FF), width: 2 * ratio),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white,
+                      Color(0xFFFFFCFF),
+                      Color(0xFFF5ECFF),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primary.withOpacity(0.22),
+                      blurRadius: 42 * ratio,
+                      offset: Offset(0, 20 * ratio),
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.14),
+                      blurRadius: 42 * ratio,
+                      offset: Offset(0, 18 * ratio),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Main text block
+              Positioned(
+                left: 52 * ratio,
+                right: 52 * ratio,
+                top: 58 * ratio,
+                child: Column(
+                  children: [
+                    Text(
+                      "You Did It!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 48 * ratio,
+                        fontWeight: FontWeight.w900,
+                        height: 1.0,
+                        letterSpacing: -0.8,
+                      ),
+                    ),
+                    SizedBox(height: 14 * ratio),
+                    _buildStepCompletePill(ratio, primary),
+                    SizedBox(height: 28 * ratio),
+                    Text(
+                      "You typed your first\nthree Chinese characters.",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: darkText,
+                        fontSize: 25 * ratio,
+                        fontWeight: FontWeight.w700,
+                        height: 1.24,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              // Key/character sequence: no big frame and no individual frames.
+              Positioned(
+                left: 140 * ratio, //92
+                top: 330 * ratio,
+                child: _buildFirstTypingSequence(ratio, primary),
+              ),
+
+              // Green mascot: raised to celebrate beside the characters.
+              Positioned(
+                right: 96 * ratio,
+                top: 286 * ratio,
+                child: _buildGreenHanzishuMascot(ratio),
+              ),
+
+              // Button
+              Positioned(
+                left: 200 * ratio,
+                bottom: 54 * ratio,
+                child: _buildLearnKeysButton(ratio, primary, onContinue),
+              ),
+
+              // Colorful celebration details. These avoid emoji rendering problems
+              // where a party icon can appear black-and-white on web.
+              Positioned(top: 42 * ratio, left: 48 * ratio, child: _buildConfettiIcon(ratio, 1.22)),
+              Positioned(top: 38 * ratio, right: 92 * ratio, child: _buildSparkle(ratio, Color(0xFFFFC928), 24)),
+              Positioned(top: 120 * ratio, left: 72 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 20)),
+              Positioned(top: 145 * ratio, right: 70 * ratio, child: _buildSparkle(ratio, Color(0xFFA855F7), 22)),
+              Positioned(top: 250 * ratio, left: 72 * ratio, child: _buildDot(ratio, Color(0xFF17BDF4), 13)),
+              Positioned(top: 254 * ratio, right: 58 * ratio, child: _buildDot(ratio, Color(0xFFFF7A7A), 12)),
+              Positioned(bottom: 112 * ratio, left: 72 * ratio, child: _buildSparkle(ratio, Color(0xFF17BDF4), 16)),
+              Positioned(bottom: 100 * ratio, right: 80 * ratio, child: _buildDot(ratio, Color(0xFFFFB000), 13)),
+              Positioned(bottom: 40 * ratio, left: 92 * ratio, child: _buildDot(ratio, Color(0xFF67D742), 12)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStepCompletePill(double ratio, Color primary) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18 * ratio, vertical: 7 * ratio),
+      decoration: BoxDecoration(
+        color: Color(0xFFF3EEFF),
+        borderRadius: BorderRadius.circular(99 * ratio),
+        border: Border.all(color: Color(0xFFD9C7FF), width: 1.4 * ratio),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check_circle_rounded, color: primary, size: 20 * ratio),
+          SizedBox(width: 8 * ratio),
+          Text(
+            "Step 1 Complete",
+            style: TextStyle(
+              color: primary,
+              fontSize: 16 * ratio,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildConfettiIcon(double ratio, [double scale = 1.0]) {
+    return SizedBox(
+      width: 76 * ratio * scale,
+      height: 76 * ratio * scale,
+      child: CustomPaint(
+        painter: _PartyPopperPainter(),
+      ),
+    );
+  }
+
+  Widget _buildFirstTypingSequence(double ratio, Color primary) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        _buildSequenceText("O", ratio, primary, true),
+        _buildSequenceArrow(ratio, primary),
+        _buildSequenceText("口", ratio, primary, false),
+        _buildSequenceArrow(ratio, primary),
+        _buildSequenceText("吕", ratio, primary, false),
+        _buildSequenceArrow(ratio, primary),
+        _buildSequenceText("品", ratio, primary, false),
+      ],
+    );
+  }
+
+  Widget _buildSequenceText(String text, double ratio, Color primary, bool isKey) {
+    return Text(
+      text,
+      style: TextStyle(
+        color: isKey ? primary : Color(0xFF17122A),
+        fontSize: (isKey ? 40 : 38) * ratio,
+        fontWeight: FontWeight.w900,
+        height: 1.0,
+        shadows: [
+          Shadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 6 * ratio,
+            offset: Offset(0, 3 * ratio),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSequenceArrow(double ratio, Color primary) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 11 * ratio),
+      child: Icon(Icons.arrow_forward_rounded, color: primary, size: 31 * ratio),
+    );
+  }
+
+  Widget _buildLearnKeysButton(double ratio, Color primary, VoidCallback onContinue) {
+    return SizedBox(
+      width: 360 * ratio,
+      height: 68 * ratio,
+      child: ElevatedButton(
+        onPressed: onContinue,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 9,
+          shadowColor: primary.withOpacity(0.35),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24 * ratio),
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Learn the 25 Keys",
+              style: TextStyle(
+                fontSize: 23 * ratio,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            SizedBox(width: 14 * ratio),
+            Icon(Icons.arrow_forward_rounded, size: 28 * ratio),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGreenHanzishuMascot(double ratio) {
+    return SizedBox(
+      width: 126 * ratio,
+      height: 156 * ratio,
+      child: CustomPaint(
+        painter: _GreenHanzishuMascotPainter(),
+      ),
+    );
+  }
+
   updateTypingStatusAndHintCompIndex(String composingText) {
     int sameStartSubstring = Utility.sameStartSubstring(
         composingText, currentCorrectTypingCode);
@@ -4128,6 +4384,201 @@ class _InputZiPageState extends State<InputZiPage> {
     updateTypingStatusAndHintCompIndex(composingText);
   }
 }
+class _PartyPopperPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    final conePaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.bottomLeft,
+        end: Alignment.topRight,
+        colors: [Color(0xFF7C3AED), Color(0xFFFFB000)],
+      ).createShader(Rect.fromLTWH(0, 0, w, h));
+
+    final cone = Path()
+      ..moveTo(w * 0.20, h * 0.78)
+      ..lineTo(w * 0.52, h * 0.36)
+      ..lineTo(w * 0.62, h * 0.88)
+      ..close();
+    canvas.drawPath(cone, conePaint);
+
+    final stripePaint = Paint()
+      ..color = Colors.white.withOpacity(0.68)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.055
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.30, h * 0.67), Offset(w * 0.56, h * 0.76), stripePaint);
+    canvas.drawLine(Offset(w * 0.39, h * 0.54), Offset(w * 0.59, h * 0.61), stripePaint);
+
+    final ribbonPaint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.055
+      ..strokeCap = StrokeCap.round;
+
+    ribbonPaint.color = Color(0xFFFF5E7E);
+    final ribbon1 = Path()
+      ..moveTo(w * 0.48, h * 0.24)
+      ..cubicTo(w * 0.58, h * 0.10, w * 0.75, h * 0.18, w * 0.66, h * 0.32);
+    canvas.drawPath(ribbon1, ribbonPaint);
+
+    ribbonPaint.color = Color(0xFF17BDF4);
+    final ribbon2 = Path()
+      ..moveTo(w * 0.62, h * 0.30)
+      ..cubicTo(w * 0.79, h * 0.22, w * 0.90, h * 0.34, w * 0.80, h * 0.44);
+    canvas.drawPath(ribbon2, ribbonPaint);
+
+    ribbonPaint.color = Color(0xFF72D72B);
+    final ribbon3 = Path()
+      ..moveTo(w * 0.43, h * 0.30)
+      ..cubicTo(w * 0.30, h * 0.18, w * 0.19, h * 0.34, w * 0.31, h * 0.43);
+    canvas.drawPath(ribbon3, ribbonPaint);
+
+    void dot(double x, double y, double r, Color color) {
+      canvas.drawCircle(Offset(w * x, h * y), w * r, Paint()..color = color);
+    }
+
+    dot(0.52, 0.10, 0.035, Color(0xFFFFC928));
+    dot(0.76, 0.12, 0.030, Color(0xFFA855F7));
+    dot(0.88, 0.28, 0.032, Color(0xFFFF7A7A));
+    dot(0.28, 0.18, 0.028, Color(0xFF17BDF4));
+
+    final sparklePaint = Paint()
+      ..color = Color(0xFFFFC928)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.035
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.16, h * 0.28), Offset(w * 0.16, h * 0.43), sparklePaint);
+    canvas.drawLine(Offset(w * 0.09, h * 0.36), Offset(w * 0.23, h * 0.36), sparklePaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
+class _GreenHanzishuMascotPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final w = size.width;
+    final h = size.height;
+
+    final shadowPaint = Paint()
+      ..color = Colors.black.withOpacity(0.12)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, w * 0.055);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(w * 0.50, h * 0.92),
+        width: w * 0.74,
+        height: h * 0.11,
+      ),
+      shadowPaint,
+    );
+
+    // Bean-like green mascot body, closer to the dictionary-cover mascot than
+    // to the Hanzishu logo leaf.
+    final body = Path()
+      ..moveTo(w * 0.48, h * 0.10)
+      ..cubicTo(w * 0.23, h * 0.12, w * 0.10, h * 0.34, w * 0.12, h * 0.58)
+      ..cubicTo(w * 0.14, h * 0.82, w * 0.32, h * 0.94, w * 0.52, h * 0.93)
+      ..cubicTo(w * 0.76, h * 0.92, w * 0.91, h * 0.75, w * 0.88, h * 0.53)
+      ..cubicTo(w * 0.84, h * 0.29, w * 0.68, h * 0.12, w * 0.48, h * 0.10)
+      ..close();
+
+    final bodyPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [Color(0xFFC7F86C), Color(0xFF85D83D), Color(0xFF55B62A)],
+      ).createShader(Rect.fromLTWH(0, 0, w, h));
+    canvas.drawPath(body, bodyPaint);
+
+    final outlinePaint = Paint()
+      ..color = Color(0xFF3EAD22)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.034
+      ..strokeJoin = StrokeJoin.round;
+    canvas.drawPath(body, outlinePaint);
+
+    final highlightPaint = Paint()..color = Colors.white.withOpacity(0.22);
+    canvas.drawOval(
+      Rect.fromLTWH(w * 0.22, h * 0.24, w * 0.23, h * 0.16),
+      highlightPaint,
+    );
+
+    // Short curved top tail like the green mascot, not the Hanzishu logo.
+    final tailPaint = Paint()
+      ..color = Color(0xFF59BB2D)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.060
+      ..strokeCap = StrokeCap.round;
+    final tail = Path()
+      ..moveTo(w * 0.47, h * 0.12)
+      ..cubicTo(w * 0.40, h * 0.06, w * 0.45, h * 0.02, w * 0.53, h * 0.04);
+    canvas.drawPath(tail, tailPaint);
+
+    // Arms celebrating.
+    final armPaint = Paint()
+      ..color = Color(0xFF60C82E)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.072
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.18, h * 0.58), Offset(w * 0.04, h * 0.48), armPaint);
+    canvas.drawLine(Offset(w * 0.82, h * 0.57), Offset(w * 0.98, h * 0.45), armPaint);
+
+    final handPaint = Paint()..color = Color(0xFF60C82E);
+    canvas.drawCircle(Offset(w * 0.04, h * 0.48), w * 0.045, handPaint);
+    canvas.drawCircle(Offset(w * 0.98, h * 0.45), w * 0.045, handPaint);
+
+    // Small brush in the raised hand, echoing the original mascot image.
+    final brushPaint = Paint()
+      ..color = Color(0xFF8B5A2B)
+      ..strokeWidth = w * 0.030
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.92, h * 0.40), Offset(w * 1.08, h * 0.28), brushPaint);
+    final brushTip = Paint()..color = Color(0xFF2B1B12);
+    final tip = Path()
+      ..moveTo(w * 1.08, h * 0.28)
+      ..lineTo(w * 1.15, h * 0.24)
+      ..lineTo(w * 1.11, h * 0.33)
+      ..close();
+    canvas.drawPath(tip, brushTip);
+
+    final eyePaint = Paint()..color = Color(0xFF58331F);
+    canvas.drawOval(Rect.fromLTWH(w * 0.32, h * 0.42, w * 0.085, h * 0.11), eyePaint);
+    canvas.drawOval(Rect.fromLTWH(w * 0.60, h * 0.42, w * 0.085, h * 0.11), eyePaint);
+
+    final eyeHighlight = Paint()..color = Colors.white.withOpacity(0.90);
+    canvas.drawCircle(Offset(w * 0.36, h * 0.45), w * 0.016, eyeHighlight);
+    canvas.drawCircle(Offset(w * 0.64, h * 0.45), w * 0.016, eyeHighlight);
+
+    final cheekPaint = Paint()..color = Color(0xFFFF9DB5).withOpacity(0.58);
+    canvas.drawOval(Rect.fromLTWH(w * 0.22, h * 0.57, w * 0.13, h * 0.07), cheekPaint);
+    canvas.drawOval(Rect.fromLTWH(w * 0.67, h * 0.57, w * 0.13, h * 0.07), cheekPaint);
+
+    final mouthPaint = Paint()
+      ..color = Color(0xFF8F2B20)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.034
+      ..strokeCap = StrokeCap.round;
+    final mouth = Path()
+      ..moveTo(w * 0.42, h * 0.61)
+      ..quadraticBezierTo(w * 0.50, h * 0.69, w * 0.59, h * 0.61);
+    canvas.drawPath(mouth, mouthPaint);
+
+    final legPaint = Paint()
+      ..color = Color(0xFF4DAF25)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = w * 0.066
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(w * 0.39, h * 0.90), Offset(w * 0.34, h * 0.98), legPaint);
+    canvas.drawLine(Offset(w * 0.62, h * 0.90), Offset(w * 0.68, h * 0.98), legPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
 class _AlphabetToyCubePainter extends CustomPainter {
   final Color frontColor;
   final Color sideColor;
