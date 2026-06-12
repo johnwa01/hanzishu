@@ -1210,6 +1210,10 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget getExplainationPage() {
+    if (typingType == TypingType.FirstTyping && currentIndex == 0) {
+      return _buildFirstTypingIntroPage();
+    }
+
     var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
 
     //if (typingType == TypingType.LeadComponents || typingType == TypingType.GiveItATry) {
@@ -1314,6 +1318,348 @@ class _InputZiPageState extends State<InputZiPage> {
               ),
             ),
           ]
+      ),
+    );
+  }
+
+  Widget _buildFirstTypingIntroPage() {
+    final ratio = getSizeRatio();
+    final primary = Color(0xFF6F35E8);
+    final darkText = Color(0xFF071B55);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          "Hanzishu Typing Tutorial",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: darkText,
+            fontSize: 24 * ratio,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: darkText,
+      ),
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xFFF8FAFF),
+              Color(0xFFF2EDFF),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final maxWidth = constraints.maxWidth;
+              final isNarrow = maxWidth < 520;
+              final contentWidth = isNarrow ? maxWidth * 0.92 : 760.0 * ratio;
+
+              return SingleChildScrollView(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: contentWidth),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 18 * ratio),
+                          _buildTutorialStepIndicator(1, 5, ratio, primary),
+                          SizedBox(height: 38 * ratio),
+                          Text(
+                            "Your First\nChinese Characters",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: darkText,
+                              fontSize: (isNarrow ? 30 : 36) * ratio,
+                              fontWeight: FontWeight.w800,
+                              height: 1.12,
+                              letterSpacing: -0.4,
+                            ),
+                          ),
+                          SizedBox(height: 34 * ratio),
+                          _buildIntroBlocks(ratio),
+                          SizedBox(height: 42 * ratio),
+                          _buildStartStepButton(ratio, primary),
+                          SizedBox(height: 12 * ratio),
+                          getSkipThisSection(),
+                          SizedBox(height: 20 * ratio),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTutorialStepIndicator(int activeStep, int totalSteps, double ratio, Color primary) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: List.generate(totalSteps * 2 - 1, (index) {
+        if (index.isOdd) {
+          return Container(
+            width: 62 * ratio,
+            height: 2 * ratio,
+            decoration: BoxDecoration(
+              color: Color(0xFFD7D7E2),
+              borderRadius: BorderRadius.circular(99),
+            ),
+          );
+        }
+
+        final step = index ~/ 2 + 1;
+        final isActive = step == activeStep;
+        return Container(
+          width: 48 * ratio,
+          height: 48 * ratio,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: isActive ? primary : Colors.white,
+            border: Border.all(
+              color: isActive ? primary : Color(0xFFC7C8D3),
+              width: 2.2 * ratio,
+            ),
+            boxShadow: isActive
+                ? [
+              BoxShadow(
+                color: primary.withOpacity(0.24),
+                blurRadius: 14 * ratio,
+                offset: Offset(0, 6 * ratio),
+              ),
+            ]
+                : [],
+          ),
+          child: Text(
+            step.toString(),
+            style: TextStyle(
+              color: isActive ? Colors.white : Color(0xFF8C8E9B),
+              fontSize: 21 * ratio,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        );
+      }),
+    );
+  }
+
+  Widget _buildIntroBlocks(double ratio) {
+    return SizedBox(
+      width: 430 * ratio,
+      height: 330 * ratio,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: Center(
+              child: Container(
+                width: 330 * ratio,
+                height: 240 * ratio,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFFFD76A).withOpacity(0.28),
+                      blurRadius: 86 * ratio,
+                      spreadRadius: 24 * ratio,
+                    ),
+                    BoxShadow(
+                      color: Color(0xFF7C3AED).withOpacity(0.10),
+                      blurRadius: 86 * ratio,
+                      spreadRadius: 8 * ratio,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Bottom cubes: draw first so the blue cube can sit on top of them.
+          Positioned(
+            left: 56 * ratio,
+            top: 156 * ratio,
+            child: _buildAlphabetCube(
+              ratio: ratio,
+              letter: "O",
+              frontColor: Color(0xFFFF9800),
+              sideColor: Color(0xFFE26300),
+              topColor: Color(0xFFFFD35A),
+              size: 132 * ratio,
+              angle: -0.045,
+            ),
+          ),
+          Positioned(
+            right: 52 * ratio,
+            top: 156 * ratio,
+            child: _buildAlphabetCube(
+              ratio: ratio,
+              letter: "A",
+              frontColor: Color(0xFF58D72E),
+              sideColor: Color(0xFF239A1D),
+              topColor: Color(0xFFA8F23A),
+              size: 132 * ratio,
+              angle: 0.045,
+            ),
+          ),
+
+          // Top cube overlaps the two bottom cubes, like a stack of toy blocks.
+          Positioned(
+            top: 56 * ratio,
+            left: 146 * ratio,
+            child: _buildAlphabetCube(
+              ratio: ratio,
+              letter: "M",
+              frontColor: Color(0xFF168BFF),
+              sideColor: Color(0xFF075AE8),
+              topColor: Color(0xFF58D9FF),
+              size: 132 * ratio,
+              angle: -0.02,
+            ),
+          ),
+
+          Positioned(top: 104 * ratio, left: 34 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 25)),
+          Positioned(top: 120 * ratio, right: 34 * ratio, child: _buildSparkle(ratio, Color(0xFFA855F7), 22)),
+          Positioned(bottom: 42 * ratio, left: 22 * ratio, child: _buildDot(ratio, Color(0xFF17BDF4), 14)),
+          Positioned(bottom: 28 * ratio, right: 32 * ratio, child: _buildDot(ratio, Color(0xFFFFB000), 13)),
+          Positioned(top: 190 * ratio, right: 20 * ratio, child: _buildDot(ratio, Color(0xFF72D72B), 12)),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAlphabetCube({
+    required double ratio,
+    required String letter,
+    required Color frontColor,
+    required Color sideColor,
+    required Color topColor,
+    required double size,
+    required double angle,
+  }) {
+    final depth = size * 0.24;
+
+    return Transform.rotate(
+      angle: angle,
+      child: SizedBox(
+        width: size + depth,
+        height: size + depth,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            CustomPaint(
+              size: Size(size + depth, size + depth),
+              painter: _AlphabetToyCubePainter(
+                frontColor: frontColor,
+                sideColor: sideColor,
+                topColor: topColor,
+                depth: depth,
+                radius: size * 0.035,
+              ),
+            ),
+            Positioned(
+              left: 0,
+              top: depth,
+              width: size,
+              height: size,
+              child: Center(
+                child: Text(
+                  letter,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: size * 0.48,
+                    fontWeight: FontWeight.w900,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black.withOpacity(0.24),
+                        blurRadius: 8 * ratio,
+                        offset: Offset(0, 4 * ratio),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSparkle(double ratio, Color color, double size) {
+    return Icon(
+      Icons.auto_awesome_rounded,
+      color: color,
+      size: size * ratio,
+    );
+  }
+
+  Widget _buildDot(double ratio, Color color, double size) {
+    return Container(
+      width: size * ratio,
+      height: size * ratio,
+      decoration: BoxDecoration(
+        color: color,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: color.withOpacity(0.35),
+            blurRadius: 8 * ratio,
+            offset: Offset(0, 3 * ratio),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildStartStepButton(double ratio, Color primary) {
+    return Container(
+      width: double.infinity,
+      height: 74 * ratio,
+      constraints: BoxConstraints(maxWidth: 560 * ratio),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 9,
+          shadowColor: primary.withOpacity(0.38),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24 * ratio),
+          ),
+        ),
+        onPressed: () {
+          speakFirstZiAfterExplanationPage();
+          setState(() {
+            currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex, lessonId, 1);
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Start",
+              style: TextStyle(
+                fontSize: 28 * ratio,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+            SizedBox(width: 18 * ratio),
+            Icon(Icons.arrow_forward_ios_rounded, size: 26 * ratio),
+          ],
+        ),
       ),
     );
   }
@@ -2643,7 +2989,8 @@ class _InputZiPageState extends State<InputZiPage> {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
+          (typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Step" : getString(401) /*"Skip this section"*/,
+          style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
         //color: Colors.white,
         //textColor: Colors.blueAccent,
         onPressed: () {
@@ -2764,14 +3111,14 @@ class _InputZiPageState extends State<InputZiPage> {
                 //if (showHint == HintType.Hint1 ||
                 //    showHint == HintType.Hint2 ||
                 //    showHint == HintType.Hint3)
-                  SizedBox(
-                    child: Text(
+                SizedBox(
+                  child: Text(
                       getString(90) /*"Hint"*/ + ": " +
-                      getString(theZiForIntroductionList[currentIndex].hintText),
+                          getString(theZiForIntroductionList[currentIndex].hintText),
                       style: TextStyle(fontSize: fontSize), // fontSize * 1.2
                       textAlign: TextAlign.center //left
                   ),
-              ),
+                ),
 
               ]
           ),
@@ -3781,3 +4128,161 @@ class _InputZiPageState extends State<InputZiPage> {
     updateTypingStatusAndHintCompIndex(composingText);
   }
 }
+class _AlphabetToyCubePainter extends CustomPainter {
+  final Color frontColor;
+  final Color sideColor;
+  final Color topColor;
+  final double depth;
+  final double radius;
+
+  _AlphabetToyCubePainter({
+    required this.frontColor,
+    required this.sideColor,
+    required this.topColor,
+    required this.depth,
+    required this.radius,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cubeSize = size.width - depth;
+
+    // Use clean aligned planes instead of a rounded-card face. This keeps the
+    // object reading as a real cube: top + side + front all meet at the same
+    // corners, so the block no longer looks visually broken.
+    final topLeft = Offset(depth, 0);
+    final topRight = Offset(depth + cubeSize, 0);
+    final frontTopLeft = Offset(0, depth);
+    final frontTopRight = Offset(cubeSize, depth);
+    final frontBottomRight = Offset(cubeSize, depth + cubeSize);
+    final frontBottomLeft = Offset(0, depth + cubeSize);
+    final sideTopRight = Offset(cubeSize + depth, 0);
+    final sideBottomRight = Offset(cubeSize + depth, cubeSize);
+
+    final topPath = Path()
+      ..moveTo(frontTopLeft.dx, frontTopLeft.dy)
+      ..lineTo(frontTopRight.dx, frontTopRight.dy)
+      ..lineTo(sideTopRight.dx, sideTopRight.dy)
+      ..lineTo(topLeft.dx, topLeft.dy)
+      ..close();
+
+    final sidePath = Path()
+      ..moveTo(frontTopRight.dx, frontTopRight.dy)
+      ..lineTo(sideTopRight.dx, sideTopRight.dy)
+      ..lineTo(sideBottomRight.dx, sideBottomRight.dy)
+      ..lineTo(frontBottomRight.dx, frontBottomRight.dy)
+      ..close();
+
+    final frontPath = Path()
+      ..moveTo(frontTopLeft.dx, frontTopLeft.dy)
+      ..lineTo(frontTopRight.dx, frontTopRight.dy)
+      ..lineTo(frontBottomRight.dx, frontBottomRight.dy)
+      ..lineTo(frontBottomLeft.dx, frontBottomLeft.dy)
+      ..close();
+
+    final frontRect = Rect.fromLTWH(0, depth, cubeSize, cubeSize);
+
+    // Soft shadow below and slightly behind the cube.
+    final shadowPaint = Paint()
+      ..color = sideColor.withOpacity(0.30)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, depth * 0.78);
+    canvas.drawPath(frontPath.shift(Offset(depth * 0.24, depth * 0.36)), shadowPaint);
+
+    final topPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          topColor,
+          frontColor.withOpacity(0.74),
+        ],
+      ).createShader(topPath.getBounds());
+    canvas.drawPath(topPath, topPaint);
+
+    final sidePaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          frontColor.withOpacity(0.86),
+          sideColor,
+        ],
+      ).createShader(sidePath.getBounds());
+    canvas.drawPath(sidePath, sidePaint);
+
+    final frontPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          topColor.withOpacity(0.95),
+          frontColor,
+          sideColor.withOpacity(0.96),
+        ],
+        stops: [0.0, 0.56, 1.0],
+      ).createShader(frontRect);
+    canvas.drawPath(frontPath, frontPaint);
+
+    // Broad front glow for the shiny toy-block look.
+    final glowPaint = Paint()
+      ..shader = RadialGradient(
+        center: Alignment(-0.60, -0.72),
+        radius: 1.14,
+        colors: [
+          Colors.white.withOpacity(0.48),
+          Colors.white.withOpacity(0.10),
+          Colors.transparent,
+        ],
+        stops: [0.0, 0.42, 1.0],
+      ).createShader(frontRect);
+    canvas.drawPath(frontPath, glowPaint);
+
+    // Glossy highlight strip on the front face.
+    final highlightRect = Rect.fromLTWH(
+      cubeSize * 0.13,
+      depth + cubeSize * 0.12,
+      cubeSize * 0.55,
+      cubeSize * 0.15,
+    );
+    final highlight = RRect.fromRectAndRadius(
+      highlightRect,
+      Radius.circular(cubeSize * 0.08),
+    );
+    final highlightPaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.centerLeft,
+        end: Alignment.centerRight,
+        colors: [
+          Colors.white.withOpacity(0.50),
+          Colors.white.withOpacity(0.10),
+        ],
+      ).createShader(highlightRect);
+    canvas.drawRRect(highlight, highlightPaint);
+
+    // Crisp edges make it read as a cube, not a rounded tile.
+    final edgePaint = Paint()
+      ..color = Colors.white.withOpacity(0.40)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.35;
+    canvas.drawPath(topPath, edgePaint);
+    canvas.drawPath(sidePath, edgePaint);
+    canvas.drawPath(frontPath, edgePaint);
+
+    final creasePaint = Paint()
+      ..color = Colors.black.withOpacity(0.08)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+    canvas.drawLine(frontTopRight, sideTopRight, creasePaint);
+    canvas.drawLine(frontBottomRight, sideBottomRight, creasePaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant _AlphabetToyCubePainter oldDelegate) {
+    return oldDelegate.frontColor != frontColor ||
+        oldDelegate.sideColor != sideColor ||
+        oldDelegate.topColor != topColor ||
+        oldDelegate.depth != depth ||
+        oldDelegate.radius != radius;
+  }
+}
+
