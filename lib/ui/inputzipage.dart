@@ -1372,22 +1372,22 @@ class _InputZiPageState extends State<InputZiPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          _buildTutorialStepIndicator(1, 5, ratio, primary),
+                          _buildTutorialStepIndicator(context, 1, 5, ratio, primary),
                           SizedBox(height: 38 * ratio),
                           Text(
                             "Your First\nChinese Characters",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: darkText,
-                              fontSize: (isNarrow ? 30 : 36) * ratio,
+                              fontSize: (isNarrow ? 25 : 30) * ratio,
                               fontWeight: FontWeight.w800,
                               height: 1.12,
                               letterSpacing: -0.4,
                             ),
                           ),
-                          SizedBox(height: 34 * ratio),
+                          //SizedBox(height: 10 * ratio),
                           _buildIntroBlocks(ratio),
-                          SizedBox(height: 42 * ratio),
+                          SizedBox(height: 19 * ratio),
                           _buildStartStepButton(ratio, primary),
                           SizedBox(height: 12 * ratio),
                           getSkipThisSection(),
@@ -1405,13 +1405,15 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
-  Widget _buildTutorialStepIndicator(int activeStep, int totalSteps, double ratio, Color primary) {
+  Widget _buildTutorialStepIndicator(BuildContext context, int activeStep, int totalSteps, double ratio, Color primary) {
+    final isNarrow = MediaQuery.of(context).size.width < 700;
+    final connectorWidth = isNarrow ? 28 * ratio : 62 * ratio;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(totalSteps * 2 - 1, (index) {
         if (index.isOdd) {
           return Container(
-            width: 62 * ratio,
+            width: connectorWidth,
             height: 2 * ratio,
             decoration: BoxDecoration(
               color: Color(0xFFD7D7E2),
@@ -1422,9 +1424,10 @@ class _InputZiPageState extends State<InputZiPage> {
 
         final step = index ~/ 2 + 1;
         final isActive = step == activeStep;
+        final circleSize = isNarrow ? 42 * ratio : 48 * ratio;
         return Container(
-          width: 48 * ratio,
-          height: 48 * ratio,
+          width: circleSize,
+          height: circleSize,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
@@ -1498,7 +1501,7 @@ class _InputZiPageState extends State<InputZiPage> {
               frontColor: Color(0xFFFF9800),
               sideColor: Color(0xFFE26300),
               topColor: Color(0xFFFFD35A),
-              size: 132 * ratio,
+              size: 118 * ratio,
               angle: -0.045,
             ),
           ),
@@ -1511,7 +1514,7 @@ class _InputZiPageState extends State<InputZiPage> {
               frontColor: Color(0xFF58D72E),
               sideColor: Color(0xFF239A1D),
               topColor: Color(0xFFA8F23A),
-              size: 132 * ratio,
+              size: 118 * ratio,
               angle: 0.045,
             ),
           ),
@@ -1526,7 +1529,7 @@ class _InputZiPageState extends State<InputZiPage> {
               frontColor: Color(0xFF168BFF),
               sideColor: Color(0xFF075AE8),
               topColor: Color(0xFF58D9FF),
-              size: 132 * ratio,
+              size: 118 * ratio,
               angle: -0.02,
             ),
           ),
@@ -1627,9 +1630,9 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget _buildStartStepButton(double ratio, Color primary) {
     return Container(
-      width: double.infinity,
+      width: 420 * ratio,
       height: 74 * ratio,
-      constraints: BoxConstraints(maxWidth: 560 * ratio),
+      constraints: BoxConstraints(maxWidth: 420 * ratio),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,

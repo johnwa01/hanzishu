@@ -250,126 +250,156 @@ class _ToolsPageState extends State<ToolsPage> {
   Widget _buildTutorialHero(BuildContext context) {
     final ratio = getSizeRatioWithLimit();
 
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(18 * ratio),
-        onTap: () {
-          theIsFromTypingContinuedSection = true;
-          LaunchExercise(0);
-        },
-        child: Container(
-          padding: EdgeInsets.all(24 * ratio),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            /*
-            gradient: LinearGradient(
-              colors: [
-                Colors.deepPurple.withOpacity(0.02),
-                Colors.white,
-              ],
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-            ),
-            */
-            borderRadius: BorderRadius.circular(18 * ratio),
-            border: Border.all(color: Colors.deepPurple.withOpacity(0.16), width: 1.4 * ratio),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.deepPurple.withOpacity(0.06),
-                blurRadius: 14 * ratio,
-                offset: Offset(0, 5 * ratio),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: 120 * ratio,
-                height: 120 * ratio,
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple.withOpacity(0.07),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.school_rounded,
-                  color: Colors.deepPurple,
-                  size: 68 * ratio,
-                ),
-              ),
-              SizedBox(width: 28 * ratio),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildPill(
-                      text: "1. START HERE",
-                      color: Colors.deepPurple,
-                    ),
-                    SizedBox(height: 16 * ratio),
-                    Text(
-                      "Hanzishu Input Method Tutorial",
-                      style: TextStyle(
-                        fontSize: 24 * ratio,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF111827),
-                      ),
-                    ),
-                    SizedBox(height: 10 * ratio),
-                    Text(
-                      "Learn the 25 pictographic categories and type any Chinese character.",
-                      style: TextStyle(
-                        fontSize: 15.5 * ratio,
-                        height: 1.4,
-                        color: Colors.blueGrey[800],
-                      ),
-                    ),
-                    SizedBox(height: 14 * ratio),
-                    _buildInfoRow(Icons.access_time_rounded, "20-minute guided tutorial", Colors.deepPurple),
-                    SizedBox(height: 6 * ratio),
-                    _buildInfoRow(Icons.group_rounded, "Recommended for all new users", Colors.deepPurple),
-                  ],
-                ),
-              ),
-              SizedBox(width: 20 * ratio),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 24 * ratio,
-                  vertical: 16 * ratio,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.deepPurple,
-                  borderRadius: BorderRadius.circular(16 * ratio),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.deepPurple.withOpacity(0.30),
-                      blurRadius: 12 * ratio,
-                      offset: Offset(0, 5 * ratio),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(Icons.menu_book_rounded, color: Colors.white, size: 28 * ratio),
-                    SizedBox(width: 12 * ratio),
-                    Text(
-                      "Start Tutorial",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17 * ratio,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(width: 8 * ratio),
-                    Icon(Icons.chevron_right_rounded, color: Colors.white, size: 28 * ratio),
-                  ],
-                ),
-              ),
-            ],
-          ),
+    Widget tutorialIcon(double size, double iconSize) {
+      return Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          color: Colors.deepPurple.withOpacity(0.07),
+          shape: BoxShape.circle,
         ),
-      ),
+        child: Icon(
+          Icons.school_rounded,
+          color: Colors.deepPurple,
+          size: iconSize,
+        ),
+      );
+    }
+
+    Widget tutorialText({required bool centered}) {
+      return Column(
+        crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+        children: [
+          _buildPill(
+            text: "1. START HERE",
+            color: Colors.deepPurple,
+          ),
+          SizedBox(height: 16 * ratio),
+          Text(
+            "Hanzishu Input Method Tutorial",
+            textAlign: centered ? TextAlign.center : TextAlign.start,
+            style: TextStyle(
+              fontSize: 24 * ratio,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF111827),
+            ),
+          ),
+          SizedBox(height: 10 * ratio),
+          Text(
+            "Learn the 25 pictographic categories and type any Chinese character.",
+            textAlign: centered ? TextAlign.center : TextAlign.start,
+            style: TextStyle(
+              fontSize: 15.5 * ratio,
+              height: 1.4,
+              color: Colors.blueGrey[800],
+            ),
+          ),
+          SizedBox(height: 14 * ratio),
+          _buildInfoRow(Icons.access_time_rounded, "20-minute guided tutorial", Colors.deepPurple),
+          SizedBox(height: 6 * ratio),
+          _buildInfoRow(Icons.group_rounded, "Recommended for all new users", Colors.deepPurple),
+        ],
+      );
+    }
+
+    Widget startTutorialButton({required bool fullWidth}) {
+      return Container(
+        width: fullWidth ? double.infinity : null,
+        padding: EdgeInsets.symmetric(
+          horizontal: 24 * ratio,
+          vertical: 16 * ratio,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.deepPurple,
+          borderRadius: BorderRadius.circular(16 * ratio),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.deepPurple.withOpacity(0.30),
+              blurRadius: 12 * ratio,
+              offset: Offset(0, 5 * ratio),
+            ),
+          ],
+        ),
+        child: Row(
+          mainAxisSize: fullWidth ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.menu_book_rounded, color: Colors.white, size: 28 * ratio),
+            SizedBox(width: 12 * ratio),
+            Flexible(
+              child: Text(
+                "Start Tutorial",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17 * ratio,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(width: 8 * ratio),
+            Icon(Icons.chevron_right_rounded, color: Colors.white, size: 28 * ratio),
+          ],
+        ),
+      );
+    }
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final isNarrow = constraints.maxWidth < 760;
+
+        return Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(18 * ratio),
+            onTap: () {
+              theIsFromTypingContinuedSection = true;
+              LaunchExercise(0);
+            },
+            child: Container(
+              padding: EdgeInsets.all(isNarrow ? 20 * ratio : 24 * ratio),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(18 * ratio),
+                border: Border.all(color: Colors.deepPurple.withOpacity(0.16), width: 1.4 * ratio),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.deepPurple.withOpacity(0.06),
+                    blurRadius: 14 * ratio,
+                    offset: Offset(0, 5 * ratio),
+                  ),
+                ],
+              ),
+              child: isNarrow
+                  ? Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  tutorialIcon(96 * ratio, 54 * ratio),
+                  SizedBox(height: 20 * ratio),
+                  tutorialText(centered: true),
+                  SizedBox(height: 22 * ratio),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 360 * ratio),
+                    child: startTutorialButton(fullWidth: true),
+                  ),
+                ],
+              )
+                  : Row(
+                children: [
+                  tutorialIcon(120 * ratio, 68 * ratio),
+                  SizedBox(width: 28 * ratio),
+                  Expanded(
+                    child: tutorialText(centered: false),
+                  ),
+                  SizedBox(width: 20 * ratio),
+                  startTutorialButton(fullWidth: false),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

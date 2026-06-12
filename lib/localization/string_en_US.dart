@@ -518,7 +518,7 @@ var theString_en_US = [
   Local(508, "First Only"),
   Local(509, "New Only"),
   Local(510, "Full Pinyin"),
-  Local(511, "Pictographic Typing intro"),
+  Local(511, "Hanzishu Input Method Tutorial"),
   Local(512, "You have typed your first three Hanzi into computer!"),
   Local(513, "In this three-step typing course, you will learn how to type Hanzi (Chinese character) into computer using Hanzishu Pictographic input method.\n\nStep1:\n\nQuestion: How can I type Hanzi '口' into computer?\n\nAnswer: You find uppercase letter 'O' whose shape has similar characteristic as '口'， then type 'o'. \n\nThen choose '口' from a candidate list below the editing field by typing its number, mouse clicking, tapping it, or using space bar to choose the 1st candidate. You can also use arrow '>' key to see more candidates when necessary."),
   Local(514, "Step 2:\n\nQuestion: Can I map other Chinese alphabets to letters as well?\n\nAnswer: Yes. You can map all 4 groups, 25 types of Chinese alphabets to 25 upper case letters by shape similarity.\n\nLet's go through those types now."),
