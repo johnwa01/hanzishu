@@ -78,7 +78,7 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
       backgroundColor: _pageBottom,
       appBar: AppBar(
         title: Text(
-          "Ty & Od Textbook Typing",
+          _getPageTitle(),
           style: TextStyle(
             color: _deepText,
             fontWeight: FontWeight.w700,
@@ -153,6 +153,81 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
     );
   }
 
+
+  String _getPageTitle() {
+    final category = _getThirdPartyCategoryKey();
+
+    if (category == "yuwen") {
+      return "Yuwen Typing";
+    }
+
+    if (category == "chineseMadeEasy") {
+      return "Chinese Made Easy Typing";
+    }
+
+    return "Ty & Od Textbook Typing";
+  }
+
+  List<String> _getIntroLines() {
+    final category = _getThirdPartyCategoryKey();
+
+    if (category == "yuwen") {
+      return ["Practice typing with Yuwen textbook content."];
+    }
+
+    if (category == "chineseMadeEasy") {
+      return ["Practice typing with Chinese Made Easy content."];
+    }
+
+    return [
+      "Practice typing with lessons from the",
+      "Ty & Od Chinese textbooks.",
+    ];
+  }
+
+  String _getThirdPartyCategoryKey() {
+    final typeName = thirdPartyType.toString().toLowerCase();
+    final firstLevelName = _getFirstLevelNameForCurrentType().toLowerCase();
+
+    // Yuwen level names look like: "Grade 2 Second Semester (2017)".
+    if (typeName.contains('yuwen') ||
+        firstLevelName.contains('grade')) {
+      return "yuwen";
+    }
+
+    // Chinese Made Easy level names look like:
+    // "第一册（第三版）| 1st Volume (3rd edition)".
+    if (typeName.contains('chinesemadeeasy') ||
+        typeName.contains('chinese_made_easy') ||
+        typeName.contains('chinesemade') ||
+        typeName.contains('cme') ||
+        firstLevelName.contains('volume') ||
+        firstLevelName.contains('edition') ||
+        firstLevelName.contains('第一册') ||
+        firstLevelName.contains('第二册') ||
+        firstLevelName.contains('第三册') ||
+        firstLevelName.contains('第四册')) {
+      return "chineseMadeEasy";
+    }
+
+    return "tyod";
+  }
+
+  String _getFirstLevelNameForCurrentType() {
+    for (int i = 0; i < theThirdPartyLessonList.length; i++) {
+      if (theThirdPartyLessonList[i].thirdPartyType == thirdPartyType) {
+        final levelName = ThirdPartyLevel.getLevelName(
+          thirdPartyType,
+          theThirdPartyLessonList[i].version,
+          theThirdPartyLessonList[i].levelId,
+        );
+        return levelName ?? "";
+      }
+    }
+
+    return "";
+  }
+
   Widget _buildIntro(double ratio) {
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -162,9 +237,9 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
           crossAxisAlignment:
           isNarrow ? CrossAxisAlignment.center : CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              "Practice typing with lessons from the",
+          children: _getIntroLines().map((line) {
+            return Text(
+              line,
               textAlign: isNarrow ? TextAlign.center : TextAlign.start,
               style: TextStyle(
                 color: _mutedText,
@@ -172,18 +247,8 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
                 fontWeight: FontWeight.w700,
                 height: 1.28,
               ),
-            ),
-            Text(
-              "Ty & Od Chinese textbooks.",
-              textAlign: isNarrow ? TextAlign.center : TextAlign.start,
-              style: TextStyle(
-                color: _mutedText,
-                fontSize: 14.5 * ratio,
-                fontWeight: FontWeight.w700,
-                height: 1.28,
-              ),
-            ),
-          ],
+            );
+          }).toList(),
         );
 
         final bookIllustration = _buildBookIllustration(ratio);
