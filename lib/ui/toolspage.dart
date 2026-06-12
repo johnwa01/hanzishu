@@ -373,6 +373,23 @@ class _ToolsPageState extends State<ToolsPage> {
     );
   }
 
+  Widget _buildPracticeLabel(String text) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Padding(
+      padding: EdgeInsets.only(left: 2 * ratio),
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Colors.blueGrey[600],
+          fontSize: 11.5 * ratio,
+          fontWeight: FontWeight.w700,
+          letterSpacing: 0.8,
+        ),
+      ),
+    );
+  }
+
   Widget _buildPracticeSection(BuildContext context) {
     final ratio = getSizeRatioWithLimit();
 
@@ -383,7 +400,7 @@ class _ToolsPageState extends State<ToolsPage> {
           _buildSectionHeader(
             icon: Icons.track_changes_rounded,
             title: "2. PRACTICE TYPING",
-            subtitle: "Build speed and confidence with guided exercises.",
+            subtitle: "Build speed and confidence through guided practice.",
             color: Colors.deepPurple,
           ),
           SizedBox(height: 20 * ratio),
@@ -399,93 +416,109 @@ class _ToolsPageState extends State<ToolsPage> {
                   : 1;
               final cardWidth = (constraints.maxWidth - spacing * (columns - 1)) / columns;
 
-              return Wrap(
-                spacing: spacing,
-                runSpacing: spacing,
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Basic Exercises",
-                    subtitle: "Start from the basics.\nImprove step by step.",
-                    icon: Icons.keyboard_rounded,
-                    color: Colors.orange,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => ComponentCombinationSelectionPage()),
-                      );
-                    },
+                  _buildPracticeLabel("GENERAL PRACTICE"),
+                  SizedBox(height: 10 * ratio),
+                  Wrap(
+                    spacing: spacing,
+                    runSpacing: spacing,
+                    children: [
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Basic Exercises",
+                        subtitle: "Start from the basics.\nImprove step by step.",
+                        icon: Icons.keyboard_rounded,
+                        color: Colors.orange,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ComponentCombinationSelectionPage()),
+                          );
+                        },
+                      ),
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Single Alphabet Words",
+                        subtitle: "Practice simple\nalphabet words.",
+                        icon: Icons.font_download_rounded,
+                        color: Colors.amber[700]!,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TypingComponentSelectionPage()),
+                          );
+                        },
+                      ),
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Commonly Used Hanzi",
+                        subtitle: "Practice the most\ncommonly used characters.",
+                        icon: Icons.text_fields_rounded,
+                        color: Colors.redAccent,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => TypingSelectionPage()),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Ty & Od Textbook",
-                    subtitle: "Practice with Ty & Od\ntextbook content.",
-                    icon: Icons.menu_book_rounded,
-                    color: Colors.blue,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Yuwen",
-                    subtitle: "Practice with Yuwen\ntextbook content.",
-                    icon: Icons.menu_book_rounded,
-                    color: Colors.deepPurple,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Chinese Made Easy",
-                    subtitle: "Practice with Chinese\nMade Easy content.",
-                    icon: Icons.menu_book_rounded,
-                    color: Colors.teal,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.cMadeEasy),
-                        ),
-                      );
-                    },
-                  ),
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Commonly Used Hanzi",
-                    subtitle: "Practice the most\ncommonly used characters.",
-                    icon: Icons.text_fields_rounded,
-                    color: Colors.redAccent,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TypingSelectionPage()),
-                      );
-                    },
-                  ),
-                  _buildSmallPracticeCard(
-                    width: cardWidth,
-                    title: "Single Alphabet Words",
-                    subtitle: "Practice simple\nalphabet words.",
-                    icon: Icons.font_download_rounded,
-                    color: Colors.amber[700]!,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => TypingComponentSelectionPage()),
-                      );
-                    },
+                  SizedBox(height: 20 * ratio),
+                  _buildPracticeLabel("TEXTBOOK PRACTICE"),
+                  SizedBox(height: 10 * ratio),
+                  Wrap(
+                    spacing: spacing,
+                    runSpacing: spacing,
+                    children: [
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Ty & Od Textbook",
+                        subtitle: "Practice with Ty & Od\ntextbook content.",
+                        icon: Icons.menu_book_rounded,
+                        color: Colors.blue,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.sunlaoshi),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Chinese Made Easy",
+                        subtitle: "Practice with Chinese\nMade Easy content.",
+                        icon: Icons.menu_book_rounded,
+                        color: Colors.teal,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.cMadeEasy),
+                            ),
+                          );
+                        },
+                      ),
+                      _buildSmallPracticeCard(
+                        width: cardWidth,
+                        title: "Yuwen",
+                        subtitle: "Practice with Yuwen\ntextbook content.",
+                        icon: Icons.menu_book_rounded,
+                        color: Colors.deepPurple,
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ThirdPartyLessonPage(thirdPartyType: ThirdPartyType.yuwenAll),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               );
