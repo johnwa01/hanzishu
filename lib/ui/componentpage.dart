@@ -227,11 +227,6 @@ class _ComponentPageState extends State<ComponentPage> {
     double ratio = getSizeRatioWithLimit();
     String hintText = getCurrentComponentHintString();
 
-    var componentInGroup = theRandomComponentList[currentIndex];
-    var component = theComponentManager.getComponentByGroupAndIndex(
-        componentInGroup.groupNumber, componentInGroup.indexInGroup);
-    String imagePath = 'assets/typing/' + component.image;
-
     double cardSize = 170.0 * ratio;
     if (cardSize > 280.0) {
       cardSize = 280.0;
@@ -293,9 +288,13 @@ class _ComponentPageState extends State<ComponentPage> {
                       ],
                     ),
                     padding: EdgeInsets.all(18.0 * ratio),
-                    child: Image.asset(
-                      imagePath,
-                      fit: BoxFit.contain,
+                    child: Padding(
+                        padding: EdgeInsets.all(8.0 * ratio),
+                        child: OverflowBox(
+                              maxWidth: double.infinity,
+                              maxHeight: double.infinity,
+                              child: getQuestionImage(),
+                        ),
                     ),
                   ),
                   SizedBox(height: 24.0 * ratio),
