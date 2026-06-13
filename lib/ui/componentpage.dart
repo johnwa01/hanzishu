@@ -80,10 +80,10 @@ class _ComponentPageState extends State<ComponentPage> {
     if (answeredPosition == AnswerPosition.continueNext ||
         answeredPosition == AnswerPosition.none) {
       // get values ready
-  //TODO:    theComponentManager.getUpdatedValues(currentIndex);
+      //TODO:    theComponentManager.getUpdatedValues(currentIndex);
       theComponentManager.getCurrentNoncharId();
       //currentCategory = theComponentManager.getCurrentCategory();
-  //    currentType = theComponentManager.getCurrentType();
+      //    currentType = theComponentManager.getCurrentType();
 
       //var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
       _progressValue = currentIndex/totalQuestions;
@@ -131,7 +131,7 @@ class _ComponentPageState extends State<ComponentPage> {
     if (theIsFromTypingContinuedSection) {
       return TextButton(
         child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent)),
+            getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent)),
         //color: Colors.white,
         //textColor: Colors.blueAccent,
         onPressed: () {
@@ -146,6 +146,12 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getComponentWizard(BuildContext context) {
+    if (questionType == QuestionType.Component &&
+        currentIndex == 0 &&
+        preIndexAtCurrentIndex0 == 1) {
+      return getStepTwoLandingPage(context);
+    }
+
     return Column(
         children: <Widget>[
           Container(
@@ -157,7 +163,7 @@ class _ComponentPageState extends State<ComponentPage> {
           ),
           Container(
             alignment: Alignment.topRight,
-             child: getSkipThisSection(),
+            child: getSkipThisSection(),
           ),
           getHintText(),
           Container(
@@ -172,13 +178,180 @@ class _ComponentPageState extends State<ComponentPage> {
             padding: EdgeInsets.only(top: 15.0 * getSizeRatioWithLimit()), //5.0
           ),
           Row(
-            children: <Widget>[
-              Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
-              SizedBox(width: 50.00 * getSizeRatioWithLimit()),
-              Container(child: getContinue(context), padding: EdgeInsets.all(5)),
-            ]
+              children: <Widget>[
+                Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+                SizedBox(width: 50.00 * getSizeRatioWithLimit()),
+                Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+              ]
           ),
         ]
+    );
+  }
+
+  Widget getStepTwoLandingPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+    double heroSize = 260.0 * ratio;
+    if (heroSize > 320.0) {
+      heroSize = 320.0;
+    }
+    if (heroSize < 210.0) {
+      heroSize = 210.0;
+    }
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 24.0 * ratio,
+              vertical: 20.0 * ratio,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: getSkipThisSection(),
+                ),
+                Text(
+                  'English keys to represent Chinese components',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 17.0 * ratio,
+                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF6A768A),
+                  ),
+                ),
+                SizedBox(height: 18.0 * ratio),
+                getStepTwoIndicators(ratio),
+                SizedBox(height: 18.0 * ratio),
+                Container(
+                  width: heroSize,
+                  height: heroSize * 0.88,
+                  child: CustomPaint(
+                    painter: StepTwoKeyCubePainter(),
+                  ),
+                ),
+                SizedBox(height: 22.0 * ratio),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(28.0 * ratio),
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Color(0x332F80ED),
+                        blurRadius: 18.0 * ratio,
+                        offset: Offset(0, 8.0 * ratio),
+                      ),
+                    ],
+                  ),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all(Color(0xFF2F80ED)),
+                      shape: WidgetStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28.0 * ratio),
+                        ),
+                      ),
+                      padding: WidgetStateProperty.all(
+                        EdgeInsets.symmetric(
+                          horizontal: 34.0 * ratio,
+                          vertical: 14.0 * ratio,
+                        ),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Start Learning',
+                          style: TextStyle(
+                            fontSize: 17.0 * ratio,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(width: 6),
+                        Icon(
+                          Icons.arrow_forward_rounded,
+                          color: Colors.white,
+                          size: 20.0 * ratio,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        runContinueLogic();
+                      });
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getStepTwoIndicators(double ratio) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        getOneStepIndicator('1', true, ratio),
+        getStepIndicatorLine(ratio, true),
+        getOneStepIndicator('2', true, ratio),
+        getStepIndicatorLine(ratio),
+        getOneStepIndicator('3', false, ratio),
+        getStepIndicatorLine(ratio),
+        getOneStepIndicator('4', false, ratio),
+        getStepIndicatorLine(ratio),
+        getOneStepIndicator('5', false, ratio),
+      ],
+    );
+  }
+
+  Widget getOneStepIndicator(String text, bool isCurrent, double ratio) {
+    return Container(
+      width: 30.0 * ratio,
+      height: 30.0 * ratio,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: isCurrent ? Color(0xFF2F80ED) : Colors.white,
+        border: Border.all(
+          color: isCurrent ? Color(0xFF2F80ED) : Color(0xFFD7E0EE),
+          width: 1.5,
+        ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 13.0 * ratio,
+          fontWeight: FontWeight.bold,
+          color: isCurrent ? Colors.white : Color(0xFF8B98AA),
+        ),
+      ),
+    );
+  }
+
+  Widget getStepIndicatorLine(double ratio, [bool isActive = false]) {
+    return Container(
+      width: 20.0 * ratio,
+      height: 2.0,
+      color: isActive
+          ? Color(0xFF2F80ED)
+          : Color(0xFFD7E0EE),
     );
   }
 
@@ -216,17 +389,17 @@ class _ComponentPageState extends State<ComponentPage> {
  */
       if (this.questionType == QuestionType.Component && theComponentManager.isHeaderOfRandomComponents()) {
         // just return an empty Widget
-      //  if (currentIndex == 0) {
-          return getHeaderOfComponent();
-      //  }
-      //  else {
-      //    return Container(width: 0.0, height: 0.0);
-      //  }
-          //padding: EdgeInsets.all(20), //10
+        //  if (currentIndex == 0) {
+        return getHeaderOfComponent();
+        //  }
+        //  else {
+        //    return Container(width: 0.0, height: 0.0);
+        //  }
+        //padding: EdgeInsets.all(20), //10
         //);
       }
       //else if (this.questionType == QuestionType.ExpandedComponent && theComponentManager.isHeaderOfExpandedComponents()) {
-        // just return an empty Widget
+      // just return an empty Widget
       //  return Container(
       //    padding: EdgeInsets.all(40), //10
       //  );
@@ -310,16 +483,16 @@ class _ComponentPageState extends State<ComponentPage> {
               ]
           ),
           Row(
-            children: <Widget>[
-              //SizedBox(width: 20),
-              Flexible (
-                child: Text(
-                  //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
-                  getString(122)/*'The pairings are divided into six groups (based on the first Stroke of each Component). Five single-stroke components are located in the middle, therefore remember each group from middle to sides.'*/,
-                  style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()) // 18
+              children: <Widget>[
+                //SizedBox(width: 20),
+                Flexible (
+                  child: Text(
+                    //'The 25 lead components are divided into six groups and mapped to the left side and right side of the keyboard.',
+                      getString(122)/*'The pairings are divided into six groups (based on the first Stroke of each Component). Five single-stroke components are located in the middle, therefore remember each group from middle to sides.'*/,
+                      style: TextStyle(fontSize: 15 * getSizeRatioWithLimit()) // 18
+                  ),
                 ),
-              ),
-            ]
+              ]
           ),
           Row(
               children: <Widget>[
@@ -339,9 +512,9 @@ class _ComponentPageState extends State<ComponentPage> {
               ]
           ),
           Row(
-            children: <Widget>[
-              SizedBox(height: 40 * getSizeRatioWithLimit()),
-            ]
+              children: <Widget>[
+                SizedBox(height: 40 * getSizeRatioWithLimit()),
+              ]
           ),
         ]
     );
@@ -399,8 +572,8 @@ class _ComponentPageState extends State<ComponentPage> {
                 //SizedBox(width: 20),
                 Flexible (
                   child: Text(
-                    getString(125)/*'The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group.'*/,
-                    style: TextStyle(fontSize: 15 * getSizeRatioWithLimit())  // 20
+                      getString(125)/*'The previous exercise introduced you to the Component-key pairings by group. In this exercise, you’ll memorize the Components within each group.'*/,
+                      style: TextStyle(fontSize: 15 * getSizeRatioWithLimit())  // 20
                   ),
                 ),
               ]
@@ -509,7 +682,7 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getQuestion(BuildContext context) {
     if (questionType == QuestionType.Component) {
       //if (theComponentManager.isHeaderOfRandomComponents()) {
-        return getQuestionImage();
+      return getQuestionImage();
       //}
       //else {
       //  return getZiContainer(/*AnswerPosition.center, */ false);
@@ -546,7 +719,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       else {
        */
-        return getQuestionImage();
+      return getQuestionImage();
       //}
     }
     /*
@@ -681,8 +854,8 @@ class _ComponentPageState extends State<ComponentPage> {
         imageHeight = 300.0 * getSizeRatioWithLimit();
       }
       else if (theComponentManager.isHeaderOfRandomComponents()) {
-         imageName = 'GG6.png';
-         //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
+        imageName = 'GG6.png';
+        //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
       }
       else {
         var componentInGroup = theRandomComponentList[currentIndex];
@@ -695,14 +868,14 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     return Container(
-        //color: Colors.grey,
-        //padding: EdgeInsets.all(1.0),
+      //color: Colors.grey,
+      //padding: EdgeInsets.all(1.0),
         alignment: Alignment.center,
         child: Image.asset(
-            imagePath,
-            width: imageWidth,
-            height: imageHeight,
-            //fit: BoxFit.fitWidth,
+          imagePath,
+          width: imageWidth,
+          height: imageHeight,
+          //fit: BoxFit.fitWidth,
         )
     );
   }
@@ -710,83 +883,83 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getGroupAnswers(BuildContext context) {
     return Column(
         children: <Widget>[
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 getAnswerQuestion()
               ]
-            ),
-            Row(
+          ),
+          Row(
               children: <Widget>[
                 SizedBox(height: 10 * getSizeRatioWithLimit()),  // 20.0
               ]
-            ),
-            Row(
-              textDirection: TextDirection.ltr,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 20 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition1)),
-                //Expanded(child: getText(AnswerPosition.groupPosition1)),
-                SizedBox(width: 10 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition2)),
-              ],
-            ),
-            Row(
-              textDirection: TextDirection.ltr,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 20 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
-                SizedBox(width: 10 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition4)),
-              ],
-            ),
-            Row(
-              textDirection: TextDirection.ltr,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(width: 20 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
-                SizedBox(width: 10 * getSizeRatioWithLimit()),
-                Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition6)),
-              ],
-            ),
+          ),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(width: 20 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition1)),
+              //Expanded(child: getText(AnswerPosition.groupPosition1)),
+              SizedBox(width: 10 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition2)),
+            ],
+          ),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(width: 20 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition3)),
+              SizedBox(width: 10 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition4)),
+            ],
+          ),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(width: 20 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition5)),
+              SizedBox(width: 10 * getSizeRatioWithLimit()),
+              Flexible(child: getOneKeyboardAnswer(AnswerPosition.groupPosition6)),
+            ],
+          ),
         ]
     );
   }
 
   Widget getHintText() {
     var hint;
-      if (questionType == QuestionType.Component) {
-        var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(
-            currentIndex);
+    if (questionType == QuestionType.Component) {
+      var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(
+          currentIndex);
 
-        if (leadCompIndex >= 0) {
-          hint = getString(theLeadComponentList[leadCompIndex].hint);
-        }
+      if (leadCompIndex >= 0) {
+        hint = getString(theLeadComponentList[leadCompIndex].hint);
       }
-      else if (questionType == QuestionType.ExpandedComponent) {
-        if (currentIndex > 0) {
-          hint = getString(theExpandedComponentList[currentIndex].hint);
-        }
+    }
+    else if (questionType == QuestionType.ExpandedComponent) {
+      if (currentIndex > 0) {
+        hint = getString(theExpandedComponentList[currentIndex].hint);
       }
-      else if (questionType == QuestionType.ShowAttachedComponent) {
-        if (currentIndex > 0) {
-          hint = getString(theShowAttachedComponentList[currentIndex].hint);
-        }
+    }
+    else if (questionType == QuestionType.ShowAttachedComponent) {
+      if (currentIndex > 0) {
+        hint = getString(theShowAttachedComponentList[currentIndex].hint);
       }
+    }
 
-      if (hint != null) {
-        return Text(
-            '[' + hint + ']',
-            style: TextStyle(color: Colors.lightBlue, fontSize: 16.0 * getSizeRatioWithLimit(),
-                fontWeight: FontWeight.bold)
-        );
-      }
-      else {
-        return SizedBox(width: 0, height: 0);
-      }
+    if (hint != null) {
+      return Text(
+          '[' + hint + ']',
+          style: TextStyle(color: Colors.lightBlue, fontSize: 16.0 * getSizeRatioWithLimit(),
+              fontWeight: FontWeight.bold)
+      );
+    }
+    else {
+      return SizedBox(width: 0, height: 0);
+    }
   }
 
   Widget getAnswerQuestion() {
@@ -882,17 +1055,17 @@ class _ComponentPageState extends State<ComponentPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Row(
-                children: <Widget>[
-                  Flexible(child: Text(
-                     headText,
-                    style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
-                    textAlign: TextAlign.start),),
-                ]
+                  children: <Widget>[
+                    Flexible(child: Text(
+                        headText,
+                        style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
+                        textAlign: TextAlign.start),),
+                  ]
               ),
               Row(
-                children: <Widget>[
-                  SizedBox(height: 15 * getSizeRatioWithLimit()),
-                ]
+                  children: <Widget>[
+                    SizedBox(height: 15 * getSizeRatioWithLimit()),
+                  ]
               ),
               /*
               Row(
@@ -904,7 +1077,7 @@ class _ComponentPageState extends State<ComponentPage> {
                   ]
               ),
                */
-          ]
+            ]
         );
 
         /*
@@ -957,69 +1130,69 @@ class _ComponentPageState extends State<ComponentPage> {
                 getOneKeyboardAnswer(AnswerPosition.individual25),
               ]
           ),
-        Row(
-          children: <Widget>[
-            SizedBox(height: 4.0 * getSizeRatioWithLimit()),
-          ]
-        ),
-        Row(
-            textDirection: TextDirection.ltr,
-            //mainAxisSize: MainAxisSize.max,
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              getOneKeyboardAnswer(AnswerPosition.individual35),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual34),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual33),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual32),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual31),
-              SizedBox(width: 5),
-              getOneKeyboardAnswer(AnswerPosition.individual41),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual42),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual43),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual44),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.none),
-            ]
-        ),
+          Row(
+              children: <Widget>[
+                SizedBox(height: 4.0 * getSizeRatioWithLimit()),
+              ]
+          ),
+          Row(
+              textDirection: TextDirection.ltr,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                getOneKeyboardAnswer(AnswerPosition.individual35),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual34),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual33),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual32),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual31),
+                SizedBox(width: 5),
+                getOneKeyboardAnswer(AnswerPosition.individual41),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual42),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual43),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual44),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.none),
+              ]
+          ),
           Row(
               children: <Widget>[
                 SizedBox(height: 4),
               ]
           ),
-        Row(
-            textDirection: TextDirection.ltr,
-            //mainAxisSize: MainAxisSize.max,
-            //crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              getOneKeyboardAnswer(AnswerPosition.individual55),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual54),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual53),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual52),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual51),
-              SizedBox(width: 5),
-              getOneKeyboardAnswer(AnswerPosition.individual61),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.individual62),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.none),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.none),
-              SizedBox(width: 2),
-              getOneKeyboardAnswer(AnswerPosition.none),
-            ]
-        )
-      ]
+          Row(
+              textDirection: TextDirection.ltr,
+              //mainAxisSize: MainAxisSize.max,
+              //crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                getOneKeyboardAnswer(AnswerPosition.individual55),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual54),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual53),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual52),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual51),
+                SizedBox(width: 5),
+                getOneKeyboardAnswer(AnswerPosition.individual61),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.individual62),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.none),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.none),
+                SizedBox(width: 2),
+                getOneKeyboardAnswer(AnswerPosition.none),
+              ]
+          )
+        ]
     );
   }
 
@@ -1204,7 +1377,7 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getZiContainer(/*AnswerPosition position,*/ bool withNonCharFrame) {
     var size = 55.0 * getSizeRatioWithLimit(); //35
     //if (position == AnswerPosition.center) {
-      size = 120.0 * getSizeRatioWithLimit();
+    size = 120.0 * getSizeRatioWithLimit();
     //}
 
     var backgroundColor = Colors.white;  // make it a non-material color first
@@ -1343,39 +1516,39 @@ class _ComponentPageState extends State<ComponentPage> {
     bool isHeaderOfExpandedComponents = theComponentManager.isHeaderOfExpandedComponents();
     bool isHeaderOfShowAttachedComponents = theComponentManager.isHeaderOfShowAttachedComponents();
 
-      var result = getString(405); // "Previous one"
+    var result = getString(405); // "Previous one"
 
-      //skip the first real question
-      if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2)) {
-        return Container(
-          child: TextButton(
-            child: Text(result,
-              style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.blue),),
-            //color: Colors.grey, // Colors.brown,
-            //textColor: Colors.white,
-            onPressed: () {
-              setPositionState(AnswerPosition.continueNext);
-              if (currentIndex > 0) { // in real component stage, not preIndex
-                isFromPreviousButton = true; // ideally previous should be a AnswerPosition state
-                previousButtonCount++;
+    //skip the first real question
+    if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2)) {
+      return Container(
+        child: TextButton(
+          child: Text(result,
+            style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.blue),),
+          //color: Colors.grey, // Colors.brown,
+          //textColor: Colors.white,
+          onPressed: () {
+            setPositionState(AnswerPosition.continueNext);
+            if (currentIndex > 0) { // in real component stage, not preIndex
+              isFromPreviousButton = true; // ideally previous should be a AnswerPosition state
+              previousButtonCount++;
+            }
+            theComponentManager.resetCorrectAnswerPosition();
+            //answeredPosition = AnswerPosition.none;
+            setState(() {
+              if (currentIndex >= 1) {
+                currentIndex = theComponentManager.getPreviousIndex();
               }
-              theComponentManager.resetCorrectAnswerPosition();
-              //answeredPosition = AnswerPosition.none;
-              setState(() {
-                if (currentIndex >= 1) {
-                  currentIndex = theComponentManager.getPreviousIndex();
-                }
-                else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2) {
-                  preIndexAtCurrentIndex0--;
-                }
-              });
-            },
-          ),
-        );
-      }
-      else { // correct answer - will not happen actually
-        return SizedBox(width: 0, height: 0);
-      }
+              else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2) {
+                preIndexAtCurrentIndex0--;
+              }
+            });
+          },
+        ),
+      );
+    }
+    else { // correct answer - will not happen actually
+      return SizedBox(width: 0, height: 0);
+    }
   }
 
   runContinueLogic() {
@@ -1433,46 +1606,46 @@ class _ComponentPageState extends State<ComponentPage> {
         theNewlyCompletedTypingExercise = 2;
       }
      */
-      String correctRatioString = totalCorrectAnswers.toString() + '/' + totalQuestions.toString() + "! ";
+    String correctRatioString = totalCorrectAnswers.toString() + '/' + totalQuestions.toString() + "! ";
 
 
-      if (questionType == QuestionType.Component) {
-        title = getString(134)/*"Way to go!"*/;
-        if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
-          totalCorrectAnswers++;
-        }
-        if (totalCorrectAnswers < 0) {
-          totalCorrectAnswers = 0;
-        }
-        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 3).toString() + "! ";
-        content = correctRatioString + getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
-        //theNewlyCompletedTypingExercise = 0;
+    if (questionType == QuestionType.Component) {
+      title = getString(134)/*"Way to go!"*/;
+      if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
+        totalCorrectAnswers++;
       }
-      if (questionType == QuestionType.ExpandedComponent) {
-        title = getString(136)/*"Wow!"*/;
-        if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
-          totalCorrectAnswers++;
-        }
-        if (totalCorrectAnswers < 0) {
-          totalCorrectAnswers = 0;
-        }
-        correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 1).toString() + "! ";
-        content = correctRatioString + getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
-         //theNewlyCompletedTypingExercise = 2;
+      if (totalCorrectAnswers < 0) {
+        totalCorrectAnswers = 0;
       }
-      if (questionType == QuestionType.ShowAttachedComponent) {
-        title = getString(391)/*"Wow!"*/;
-        content = correctRatioString + getString(355)/*"You know your Attached Components! Let’s review it in next exercise."*/;
-        //theNewlyCompletedTypingExercise = 7;
+      correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 3).toString() + "! ";
+      content = correctRatioString + getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
+      //theNewlyCompletedTypingExercise = 0;
+    }
+    if (questionType == QuestionType.ExpandedComponent) {
+      title = getString(136)/*"Wow!"*/;
+      if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
+        totalCorrectAnswers++;
       }
-      /*
+      if (totalCorrectAnswers < 0) {
+        totalCorrectAnswers = 0;
+      }
+      correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 1).toString() + "! ";
+      content = correctRatioString + getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
+      //theNewlyCompletedTypingExercise = 2;
+    }
+    if (questionType == QuestionType.ShowAttachedComponent) {
+      title = getString(391)/*"Wow!"*/;
+      content = correctRatioString + getString(355)/*"You know your Attached Components! Let’s review it in next exercise."*/;
+      //theNewlyCompletedTypingExercise = 7;
+    }
+    /*
     if (questionType == QuestionType.ReviewExpandedComponent) {
       title = getString(136)/*"Wow!"*/;
       content = getString(310)/*"You really know your Expanded Components! Let’s practice with some typing exercises."*/;
       theNewlyCompletedTypingExercise = 6;
     }
     */
-      //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
+    //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
 
 
@@ -1494,7 +1667,7 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
-  /*
+/*
   Widget getPreLeadComponentCategory0(BuildContext context) {
     return Column(
         children: <Widget>[
@@ -1612,3 +1785,166 @@ class _ComponentPageState extends State<ComponentPage> {
   }
   */
 }
+
+class StepTwoKeyCubePainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final double w = size.width;
+    final double h = size.height;
+
+    final Offset topA = Offset(w * 0.28, h * 0.16);
+    final Offset topB = Offset(w * 0.66, h * 0.05);
+    final Offset topC = Offset(w * 0.88, h * 0.29);
+    final Offset topD = Offset(w * 0.49, h * 0.42);
+
+    final Offset leftA = topA;
+    final Offset leftB = topD;
+    final Offset leftC = Offset(w * 0.49, h * 0.78);
+    final Offset leftD = Offset(w * 0.18, h * 0.58);
+
+    final Offset rightA = topD;
+    final Offset rightB = topC;
+    final Offset rightC = Offset(w * 0.80, h * 0.64);
+    final Offset rightD = leftC;
+
+    final Paint shadowPaint = Paint()
+      ..color = Color(0x3324344D)
+      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 16.0);
+    canvas.drawOval(
+      Rect.fromCenter(
+        center: Offset(w * 0.52, h * 0.82),
+        width: w * 0.66,
+        height: h * 0.16,
+      ),
+      shadowPaint,
+    );
+
+    _drawFace(
+      canvas,
+      <Offset>[leftA, leftB, leftC, leftD],
+      <Color>[Color(0xFFFFBE55), Color(0xFFFF8F3D)],
+    );
+    _drawFace(
+      canvas,
+      <Offset>[rightA, rightB, rightC, rightD],
+      <Color>[Color(0xFF55C7F7), Color(0xFF2F80ED)],
+    );
+    _drawFace(
+      canvas,
+      <Offset>[topA, topB, topC, topD],
+      <Color>[Color(0xFFFFF2A8), Color(0xFFFFCF5C)],
+    );
+
+    final Paint edgePaint = Paint()
+      ..color = Colors.white.withOpacity(0.65)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.2;
+    canvas.drawPath(_pathFromPoints(<Offset>[topA, topB, topC, rightC, leftC, leftD, topA]), edgePaint);
+    canvas.drawLine(topD, leftC, edgePaint);
+    canvas.drawLine(topD, topC, edgePaint);
+    canvas.drawLine(topD, topA, edgePaint);
+
+    final TextPainter hanziPainter = TextPainter(
+      text: TextSpan(
+        text: '木',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: w * 0.25,
+          fontWeight: FontWeight.w800,
+          shadows: <Shadow>[
+            Shadow(
+              color: Color(0x5524344D),
+              offset: Offset(0, 2),
+              blurRadius: 3,
+            ),
+          ],
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    hanziPainter.paint(
+      canvas,
+      Offset(w * 0.27, h * 0.36),
+    );
+
+    final TextPainter keyPainter = TextPainter(
+      text: TextSpan(
+        text: 'M',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: w * 0.22,
+          fontWeight: FontWeight.w900,
+          shadows: <Shadow>[
+            Shadow(
+              color: Color(0x5524344D),
+              offset: Offset(0, 2),
+              blurRadius: 3,
+            ),
+          ],
+        ),
+      ),
+      textDirection: TextDirection.ltr,
+    )..layout();
+    keyPainter.paint(
+      canvas,
+      Offset(w * 0.58, h * 0.37),
+    );
+
+    final Paint shinePaint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: <Color>[
+          Colors.white.withOpacity(0.42),
+          Colors.white.withOpacity(0.02),
+        ],
+      ).createShader(Rect.fromLTWH(0, 0, w, h));
+    canvas.drawPath(
+      _pathFromPoints(<Offset>[
+        Offset(w * 0.34, h * 0.18),
+        Offset(w * 0.55, h * 0.12),
+        Offset(w * 0.65, h * 0.22),
+        Offset(w * 0.43, h * 0.30),
+      ]),
+      shinePaint,
+    );
+  }
+
+  void _drawFace(Canvas canvas, List<Offset> points, List<Color> colors) {
+    final Rect bounds = _boundsFromPoints(points);
+    final Paint paint = Paint()
+      ..shader = LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: colors,
+      ).createShader(bounds);
+    canvas.drawPath(_pathFromPoints(points), paint);
+  }
+
+  Path _pathFromPoints(List<Offset> points) {
+    final Path path = Path()..moveTo(points.first.dx, points.first.dy);
+    for (int i = 1; i < points.length; i++) {
+      path.lineTo(points[i].dx, points[i].dy);
+    }
+    path.close();
+    return path;
+  }
+
+  Rect _boundsFromPoints(List<Offset> points) {
+    double left = points.first.dx;
+    double right = points.first.dx;
+    double top = points.first.dy;
+    double bottom = points.first.dy;
+    for (final Offset p in points) {
+      if (p.dx < left) left = p.dx;
+      if (p.dx > right) right = p.dx;
+      if (p.dy < top) top = p.dy;
+      if (p.dy > bottom) bottom = p.dy;
+    }
+    return Rect.fromLTRB(left, top, right, bottom);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+

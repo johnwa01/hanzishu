@@ -106,7 +106,7 @@ var theString_en_US = [
   Local(100, "Give it a try"),
   Local(101, "Chinese alphabet-key pairing groups"),
   Local(102, "Memorize by groups"),
-  Local(103, "Learn Chinese alphabet-key pairings"),
+  Local(103, "Learn the 25 Keys"),     //"Learn Chinese alphabet-key pairings",
   Local(104, "Guided typing"),
   Local(105, "Learn Chinese alphabets"),
   Local(106, "Typing exercises"),
