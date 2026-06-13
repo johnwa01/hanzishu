@@ -104,7 +104,12 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     if (questionType == QuestionType.Component) {
-      title = getString(103)/*'Memorize the pairings'*/;
+      if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1 && preIndexAtCurrentIndex0 <= 6) {
+        title = 'Learn the 25 Keys';
+      }
+      else {
+        title = getString(103)/*'Memorize the pairings'*/;
+      }
     }
     else if (questionType == QuestionType.ExpandedComponent) {
       title = getString(105)/*'Expanded Components'*/;
@@ -152,6 +157,24 @@ class _ComponentPageState extends State<ComponentPage> {
       return getStepTwoLandingPage(context);
     }
 
+    if (questionType == QuestionType.Component &&
+        currentIndex == 0 &&
+        preIndexAtCurrentIndex0 >= 2 &&
+        preIndexAtCurrentIndex0 < 6) {
+      return getStepTwoGroupPage(context);
+    }
+
+    if (questionType == QuestionType.Component &&
+        currentIndex == 0 &&
+        preIndexAtCurrentIndex0 == 6) {
+      return getStepTwoSummaryPage(context);
+    }
+
+    if (questionType == QuestionType.Component &&
+        currentIndex > 0) {
+      return getStepTwoQuizPage(context);
+    }
+
     return Column(
         children: <Widget>[
           Container(
@@ -187,6 +210,399 @@ class _ComponentPageState extends State<ComponentPage> {
         ]
     );
   }
+
+
+  String getCurrentComponentHintString() {
+    String hint = '';
+    if (questionType == QuestionType.Component) {
+      var leadCompIndex = ComponentManager.getHintIndexOfGivenComponent(currentIndex);
+      if (leadCompIndex >= 0) {
+        hint = getString(theLeadComponentList[leadCompIndex].hint);
+      }
+    }
+    return hint;
+  }
+
+  Widget getStepTwoQuizPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+    String hintText = getCurrentComponentHintString();
+
+    var componentInGroup = theRandomComponentList[currentIndex];
+    var component = theComponentManager.getComponentByGroupAndIndex(
+        componentInGroup.groupNumber, componentInGroup.indexInGroup);
+    String imagePath = 'assets/typing/' + component.image;
+
+    double cardSize = 170.0 * ratio;
+    if (cardSize > 280.0) {
+      cardSize = 280.0;
+    }
+    if (cardSize < 150.0) {
+      cardSize = 150.0;
+    }
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints pageConstraints) {
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 18.0 * ratio,
+                vertical: 6.0 * ratio,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: getSkipThisSection(),
+                  ),
+                  SizedBox(height: 6.0 * ratio),
+                  Text(
+                    hintText,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22.0 * ratio,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF24344D),
+                    ),
+                  ),
+                  SizedBox(height: 12.0 * ratio),
+                  Container(
+                    width: cardSize,
+                    height: cardSize,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0 * ratio),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(
+                          color: Color(0x1F24344D),
+                          blurRadius: 22.0 * ratio,
+                          offset: Offset(0, 10.0 * ratio),
+                        ),
+                      ],
+                    ),
+                    padding: EdgeInsets.all(18.0 * ratio),
+                    child: Image.asset(
+                      imagePath,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                  SizedBox(height: 24.0 * ratio),
+                  Text(
+                    'Choose the matching key',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20.0 * ratio,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF24344D),
+                    ),
+                  ),
+                  SizedBox(height: 14.0 * ratio),
+                  getCenteredKeyboardAnswers(context),
+                  SizedBox(height: 20.0 * ratio),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+                      SizedBox(width: 54.0 * ratio),
+                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getCenteredKeyboardAnswers(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Row(
+          textDirection: TextDirection.ltr,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            getModernKeyboardAnswer(AnswerPosition.individual15),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual14),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual13),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual12),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual11),
+            SizedBox(width: 5),
+            getModernKeyboardAnswer(AnswerPosition.individual21),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual22),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual23),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual24),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual25),
+          ],
+        ),
+        SizedBox(height: 4.0 * ratio),
+        Row(
+          textDirection: TextDirection.ltr,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            getModernKeyboardAnswer(AnswerPosition.individual35),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual34),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual33),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual32),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual31),
+            SizedBox(width: 5),
+            getModernKeyboardAnswer(AnswerPosition.individual41),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual42),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual43),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual44),
+          ],
+        ),
+        SizedBox(height: 4.0 * ratio),
+        Row(
+          textDirection: TextDirection.ltr,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            getModernKeyboardAnswer(AnswerPosition.individual55),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual54),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual53),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual52),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual51),
+            SizedBox(width: 5),
+            getModernKeyboardAnswer(AnswerPosition.individual61),
+            SizedBox(width: 2),
+            getModernKeyboardAnswer(AnswerPosition.individual62),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget getStepTwoGroupPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+    String imageName;
+    if (theDefaultLocale == "zh_CN") {
+      imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+    }
+    else {
+      imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
+    }
+    String imagePath = 'assets/typing/' + imageName;
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints pageConstraints) {
+            double maxImageHeight = pageConstraints.maxHeight - 78.0 * ratio;
+            if (maxImageHeight < 260.0) {
+              maxImageHeight = 260.0;
+            }
+
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8.0 * ratio,
+                vertical: 4.0 * ratio,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: getSkipThisSection(),
+                  ),
+                  SizedBox(height: 2.0 * ratio),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        double imageWidth = constraints.maxWidth * 0.96;
+                        if (imageWidth > 1120.0) {
+                          imageWidth = 1120.0;
+                        }
+
+                        double imageHeight = constraints.maxHeight;
+                        if (imageHeight > maxImageHeight) {
+                          imageHeight = maxImageHeight;
+                        }
+
+                        return Center(
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: imageWidth,
+                              maxHeight: imageHeight,
+                            ),
+                            child: InteractiveViewer(
+                              minScale: 1.0,
+                              maxScale: 3.0,
+                              panEnabled: true,
+                              scaleEnabled: true,
+                              child: Image.asset(
+                                imagePath,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 6.0 * ratio),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+                      SizedBox(width: 54.0 * ratio),
+                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+
+  Widget getStepTwoSummaryPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+    String imagePath = 'assets/typing/GG6.png';
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints pageConstraints) {
+            double maxImageHeight = pageConstraints.maxHeight - 128.0 * ratio;
+            if (maxImageHeight < 240.0) {
+              maxImageHeight = 240.0;
+            }
+
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 8.0 * ratio,
+                vertical: 4.0 * ratio,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.topRight,
+                    child: getSkipThisSection(),
+                  ),
+                  SizedBox(height: 2.0 * ratio),
+                  Text(
+                    'The 25 Keys at a Glance',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 24.0 * ratio,
+                      fontWeight: FontWeight.w800,
+                      color: Color(0xFF24344D),
+                    ),
+                  ),
+                  SizedBox(height: 8.0 * ratio),
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (BuildContext context, BoxConstraints constraints) {
+                        double imageWidth = constraints.maxWidth * 0.96;
+                        if (imageWidth > 1120.0) {
+                          imageWidth = 1120.0;
+                        }
+
+                        double imageHeight = constraints.maxHeight;
+                        if (imageHeight > maxImageHeight) {
+                          imageHeight = maxImageHeight;
+                        }
+
+                        return Center(
+                          child: Container(
+                            constraints: BoxConstraints(
+                              maxWidth: imageWidth,
+                              maxHeight: imageHeight,
+                            ),
+                            child: InteractiveViewer(
+                              minScale: 1.0,
+                              maxScale: 3.0,
+                              panEnabled: true,
+                              scaleEnabled: true,
+                              child: Image.asset(
+                                imagePath,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 6.0 * ratio),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+                      SizedBox(width: 54.0 * ratio),
+                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
 
   Widget getStepTwoLandingPage(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
@@ -272,7 +688,7 @@ class _ComponentPageState extends State<ComponentPage> {
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      children: [
+                      children: <Widget>[
                         Text(
                           'Start Learning',
                           style: TextStyle(
@@ -281,7 +697,7 @@ class _ComponentPageState extends State<ComponentPage> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: 6),
+                        SizedBox(width: 6.0 * ratio),
                         Icon(
                           Icons.arrow_forward_rounded,
                           color: Colors.white,
@@ -349,9 +765,7 @@ class _ComponentPageState extends State<ComponentPage> {
     return Container(
       width: 20.0 * ratio,
       height: 2.0,
-      color: isActive
-          ? Color(0xFF2F80ED)
-          : Color(0xFFD7E0EE),
+      color: isActive ? Color(0xFF2F80ED) : Color(0xFFD7E0EE),
     );
   }
 
@@ -850,8 +1264,8 @@ class _ComponentPageState extends State<ComponentPage> {
         else { // English
           imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
         }
-        imageWidth = 380.0 * getSizeRatioWithLimit();
-        imageHeight = 300.0 * getSizeRatioWithLimit();
+        imageWidth = 980.0;
+        imageHeight = 760.0;
       }
       else if (theComponentManager.isHeaderOfRandomComponents()) {
         imageName = 'GG6.png';
@@ -1279,8 +1693,8 @@ class _ComponentPageState extends State<ComponentPage> {
       backgroundColor = Colors.white;
     }
 
-    var width = 29.0 * getSizeRatioWithLimit();
-    var height = 30.0  * getSizeRatioWithLimit();
+    var width = 40.0 * getSizeRatioWithLimit();
+    var height = 41.0  * getSizeRatioWithLimit();
     if (isAGroupAnswerType) {
       width = 150.0  * getSizeRatioWithLimit();
       height = 40.0  * getSizeRatioWithLimit();
@@ -1487,7 +1901,7 @@ class _ComponentPageState extends State<ComponentPage> {
       if (!isCorrectAnswer || isHeaderOfRandomComponents || isHeaderOfExpandedComponents || isHeaderOfShowAttachedComponents) {
         return Container(
           child: TextButton(
-            child: Text(result,
+            child: Text(result + ' →',
               style: TextStyle(fontSize: 18.0 * getSizeRatioWithLimit(), color: Colors.blue),),
             //color: Colors.blueAccent, // Colors.brown,
             //textColor: Colors.white,
@@ -1667,6 +2081,71 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  Widget getModernKeyboardAnswer(AnswerPosition position) {
+    if (position == AnswerPosition.none) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    double ratio = getSizeRatioWithLimit();
+    String answerDisplayValue = theComponentManager.getAnswerDisplayValue(position);
+
+    Color borderColor = Color(0xFFD7E0EE);
+    Color backgroundColor = Colors.white;
+    Color textColor = Color(0xFF24344D);
+
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition)) {
+      if (position == theComponentManager.getCorrectAnswerPosition()) {
+        backgroundColor = Color(0xFFE8F7EE);
+        borderColor = Color(0xFF34A853);
+        textColor = Color(0xFF1E7A3B);
+      } else if (position == answeredPosition) {
+        backgroundColor = Color(0xFFFFECEC);
+        borderColor = Color(0xFFE55353);
+        textColor = Color(0xFFB3261E);
+      }
+    }
+
+    return TextButton(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.all(backgroundColor),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0 * ratio),
+            side: BorderSide(
+              color: borderColor,
+              width: 1.4,
+            ),
+          ),
+        ),
+        minimumSize: WidgetStateProperty.all(
+          Size(56.0 * ratio, 56.0 * ratio),
+        ),
+        padding: WidgetStateProperty.all(EdgeInsets.zero),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
+      onPressed: () {
+        isFromPreviousButton = false;
+        setPositionState(position);
+        wasLastAnswerCorrect = false;
+
+        if (answeredPosition == theComponentManager.getCorrectAnswerPosition()) {
+          wasLastAnswerCorrect = true;
+          setState(() {
+            runContinueLogic();
+          });
+        }
+      },
+      child: Text(
+        answerDisplayValue,
+        style: TextStyle(
+          fontSize: 26.0 * ratio,
+          fontWeight: FontWeight.w800,
+          color: textColor,
+        ),
+      ),
+    );
+  }
+
 /*
   Widget getPreLeadComponentCategory0(BuildContext context) {
     return Column(
@@ -1784,6 +2263,8 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
   */
+
+
 }
 
 class StepTwoKeyCubePainter extends CustomPainter {
