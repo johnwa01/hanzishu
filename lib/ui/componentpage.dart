@@ -104,15 +104,10 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     if (questionType == QuestionType.Component) {
-      if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 1 && preIndexAtCurrentIndex0 <= 6) {
-        title = 'Learn the 25 Keys';
-      }
-      else {
-        title = getString(103)/*'Memorize the pairings'*/;
-      }
+      title = 'Learn the 25 Keys';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = getString(105)/*'Expanded Components'*/;
+      title = 'Similar Shapes, Same Key';
     }
     else if (questionType == QuestionType.ShowAttachedComponent) {
       title = getString(328) /*'Show Attached Components'*/;
@@ -151,6 +146,16 @@ class _ComponentPageState extends State<ComponentPage> {
   }
 
   Widget getComponentWizard(BuildContext context) {
+    if (questionType == QuestionType.ExpandedComponent &&
+        currentIndex == 0) {
+      return getStepThreeLandingPage(context);
+    }
+
+    if (questionType == QuestionType.ExpandedComponent &&
+        currentIndex > 0) {
+      return getStepThreeKeyPage(context);
+    }
+
     if (questionType == QuestionType.Component &&
         currentIndex == 0 &&
         preIndexAtCurrentIndex0 == 1) {
@@ -169,6 +174,7 @@ class _ComponentPageState extends State<ComponentPage> {
         preIndexAtCurrentIndex0 == 6) {
       return getStepTwoSummaryPage(context);
     }
+
 
     if (questionType == QuestionType.Component &&
         currentIndex > 0) {
@@ -221,6 +227,193 @@ class _ComponentPageState extends State<ComponentPage> {
       }
     }
     return hint;
+  }
+
+
+  String getCurrentStepThreeHintString() {
+    String hint = '';
+    if (questionType == QuestionType.ExpandedComponent && currentIndex > 0) {
+      hint = getString(theExpandedComponentList[currentIndex].hint);
+    }
+    return hint;
+  }
+
+  Widget getStepThreeKeyPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+    String hintText = getCurrentStepThreeHintString();
+
+    double cardWidth = 300.0 * ratio;
+    if (cardWidth > 420.0) {
+      cardWidth = 420.0;
+    }
+    if (cardWidth < 240.0) {
+      cardWidth = 240.0;
+    }
+
+    double cardHeight = 170.0 * ratio;
+    if (cardHeight > 220.0) {
+      cardHeight = 220.0;
+    }
+    if (cardHeight < 140.0) {
+      cardHeight = 140.0;
+    }
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints pageConstraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: pageConstraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 18.0 * ratio,
+                    vertical: 8.0 * ratio,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      getStepThreeKeyProgress(ratio),
+                      SizedBox(height: 12.0 * ratio),
+                      Align(
+                        alignment: Alignment.topRight,
+                        child: getSkipThisSection(),
+                      ),
+                      SizedBox(height: 2.0 * ratio),
+                      Text(
+                        hintText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 22.0 * ratio,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF24344D),
+                        ),
+                      ),
+                      SizedBox(height: 14.0 * ratio),
+                      Container(
+                        width: cardWidth,
+                        height: cardHeight,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24.0 * ratio),
+                          boxShadow: <BoxShadow>[
+                            BoxShadow(
+                              color: Color(0x1F24344D),
+                              blurRadius: 20.0 * ratio,
+                              offset: Offset(0, 9.0 * ratio),
+                            ),
+                          ],
+                        ),
+                        padding: EdgeInsets.all(14.0 * ratio),
+                        child: getStepThreeQuestionImage(),
+                      ),
+                      SizedBox(height: 20.0 * ratio),
+                      Text(
+                        'Tap the matching key below.',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 19.0 * ratio,
+                          fontWeight: FontWeight.w800,
+                          color: Color(0xFF24344D),
+                        ),
+                      ),
+                      SizedBox(height: 14.0 * ratio),
+                      getCenteredKeyboardAnswers(context),
+                      SizedBox(height: 18.0 * ratio),
+                      getStepThreeBottomNavigation(context, ratio),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getStepThreeKeyProgress(double ratio) {
+    int totalKeyCount = 25;
+    int currentKeyNumber = currentIndex;
+    if (currentKeyNumber < 1) {
+      currentKeyNumber = 1;
+    }
+    if (currentKeyNumber > totalKeyCount) {
+      currentKeyNumber = totalKeyCount;
+    }
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: LinearProgressIndicator(
+            value: currentKeyNumber / totalKeyCount,
+            minHeight: 3.0,
+            backgroundColor: Color(0xFFD7E0EE),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF2F80ED)),
+          ),
+        ),
+        SizedBox(width: 10.0 * ratio),
+        Text(
+          currentKeyNumber.toString() + ' / ' + totalKeyCount.toString(),
+          style: TextStyle(
+            fontSize: 13.0 * ratio,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF7A8798),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget getStepThreeBottomNavigation(BuildContext context, double ratio) {
+    bool showContinue = false;
+    if (theComponentManager.isGroupOrIndividualAnswerType(answeredPosition)) {
+      showContinue = answeredPosition != theComponentManager.getCorrectAnswerPosition();
+    }
+
+    if (showContinue) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+          SizedBox(width: 54.0 * ratio),
+          Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+        ],
+      );
+    }
+
+    return Center(
+      child: Container(
+        child: getPrevious(context),
+        padding: EdgeInsets.all(5),
+      ),
+    );
+  }
+
+  Widget getStepThreeQuestionImage() {
+    if (questionType == QuestionType.ExpandedComponent && currentIndex > 0) {
+      String imagePath = 'assets/typing/' + theExpandedComponentList[currentIndex].imageName;
+      return Image.asset(
+        imagePath,
+        fit: BoxFit.contain,
+      );
+    }
+
+    return getQuestionImage();
   }
 
   Widget getStepTwoQuizPage(BuildContext context) {
@@ -289,12 +482,12 @@ class _ComponentPageState extends State<ComponentPage> {
                     ),
                     padding: EdgeInsets.all(18.0 * ratio),
                     child: Padding(
-                        padding: EdgeInsets.all(8.0 * ratio),
-                        child: OverflowBox(
-                              maxWidth: double.infinity,
-                              maxHeight: double.infinity,
-                              child: getQuestionImage(),
-                        ),
+                      padding: EdgeInsets.all(8.0 * ratio),
+                      child: OverflowBox(
+                        maxWidth: double.infinity,
+                        maxHeight: double.infinity,
+                        child: getQuestionImage(),
+                      ),
                     ),
                   ),
                   SizedBox(height: 24.0 * ratio),
@@ -330,79 +523,82 @@ class _ComponentPageState extends State<ComponentPage> {
   Widget getCenteredKeyboardAnswers(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Row(
-          textDirection: TextDirection.ltr,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            getModernKeyboardAnswer(AnswerPosition.individual15),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual14),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual13),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual12),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual11),
-            SizedBox(width: 5),
-            getModernKeyboardAnswer(AnswerPosition.individual21),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual22),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual23),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual24),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual25),
-          ],
-        ),
-        SizedBox(height: 4.0 * ratio),
-        Row(
-          textDirection: TextDirection.ltr,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            getModernKeyboardAnswer(AnswerPosition.individual35),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual34),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual33),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual32),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual31),
-            SizedBox(width: 5),
-            getModernKeyboardAnswer(AnswerPosition.individual41),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual42),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual43),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual44),
-          ],
-        ),
-        SizedBox(height: 4.0 * ratio),
-        Row(
-          textDirection: TextDirection.ltr,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            getModernKeyboardAnswer(AnswerPosition.individual55),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual54),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual53),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual52),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual51),
-            SizedBox(width: 5),
-            getModernKeyboardAnswer(AnswerPosition.individual61),
-            SizedBox(width: 2),
-            getModernKeyboardAnswer(AnswerPosition.individual62),
-          ],
-        ),
-      ],
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getModernKeyboardAnswer(AnswerPosition.individual15),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual14),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual13),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual12),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual11),
+              SizedBox(width: 5),
+              getModernKeyboardAnswer(AnswerPosition.individual21),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual22),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual23),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual24),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual25),
+            ],
+          ),
+          SizedBox(height: 4.0 * ratio),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getModernKeyboardAnswer(AnswerPosition.individual35),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual34),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual33),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual32),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual31),
+              SizedBox(width: 5),
+              getModernKeyboardAnswer(AnswerPosition.individual41),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual42),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual43),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual44),
+            ],
+          ),
+          SizedBox(height: 4.0 * ratio),
+          Row(
+            textDirection: TextDirection.ltr,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getModernKeyboardAnswer(AnswerPosition.individual55),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual54),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual53),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual52),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual51),
+              SizedBox(width: 5),
+              getModernKeyboardAnswer(AnswerPosition.individual61),
+              SizedBox(width: 2),
+              getModernKeyboardAnswer(AnswerPosition.individual62),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -719,20 +915,346 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+
+  Widget getStepThreeLandingPage(BuildContext context) {
+    double ratio = getSizeRatioWithLimit();
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: <Color>[
+            Color(0xFFFFFBF2),
+            Color(0xFFF4FAFF),
+          ],
+        ),
+      ),
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            double contentWidth = constraints.maxWidth;
+            double heroSize = contentWidth * 0.28;
+            if (heroSize > 180.0) {
+              heroSize = 180.0;
+            }
+            if (heroSize < 150.0) {
+              heroSize = 150.0;
+            }
+
+            double cardSize = contentWidth * 0.10;
+            if (cardSize > 92.0) {
+              cardSize = 92.0;
+            }
+            if (cardSize < 54.0) {
+              cardSize = 54.0;
+            }
+
+            double titleFontSize = 34.0 * ratio;
+            if (titleFontSize > 38.0) {
+              titleFontSize = 38.0;
+            }
+            if (titleFontSize < 24.0) {
+              titleFontSize = 24.0;
+            }
+
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.0 * ratio,
+                    vertical: 18.0 * ratio,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 110.0 * ratio,
+                          ),
+
+                          Expanded(
+                            child: Center(
+                              child: getStepThreeIndicators(ratio),
+                            ),
+                          ),
+
+                          SizedBox(
+                            width: 110.0 * ratio,
+                            child: Align(
+                              alignment: Alignment.centerRight,
+                              child: getSkipThisSection(),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      //SizedBox(height: 14.0 * ratio),
+                      SizedBox(height: 26.0 * ratio),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          getSmallOrangeBurst(ratio, false),
+                          Flexible(
+                            child: Text(
+                              '25 keys for all Chinese components',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: titleFontSize * 0.8,
+                                fontWeight: FontWeight.w900,
+                                color: Color(0xFF4A2BC6),
+                                height: 1.12,
+                              ),
+                            ),
+                          ),
+                          getSmallOrangeBurst(ratio, true),
+                        ],
+                      ),
+                      SizedBox(height: 26.0 * ratio), //36
+                      getStepThreeHeroKey(heroSize, ratio),
+                      SizedBox(height: 20.0 * ratio), // 26
+                      getStepThreeComponentCards(cardSize, ratio),
+                      SizedBox(height: 24.0 * ratio), // 34
+                      getStepThreeStartButton(ratio),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget getSmallOrangeBurst(double ratio, bool flip) {
+    double width = 35.0 * ratio;
+    if (width > 35.0) {
+      width = 35.0;
+    }
+    if (width < 28.0) {
+      width = 28.0;
+    }
+
+    return Container(
+      width: width,
+      height: width,
+      margin: EdgeInsets.symmetric(horizontal: 8.0 * ratio),
+      child: CustomPaint(
+        painter: StepThreeBurstPainter(flip: flip),
+      ),
+    );
+  }
+
+  Widget getStepThreeHeroKey(double heroSize, double ratio) {
+    return Container(
+      width: heroSize,
+      height: heroSize,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32.0 * ratio),
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: <Color>[
+            Color(0xFFFFC247),
+            Color(0xFFFF8A00),
+          ],
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Color(0x552F1A00),
+            blurRadius: 22.0 * ratio,
+            offset: Offset(0, 12.0 * ratio),
+          ),
+          BoxShadow(
+            color: Color(0x55FFFFFF),
+            blurRadius: 12.0 * ratio,
+            offset: Offset(-6.0 * ratio, -6.0 * ratio),
+          ),
+        ],
+      ),
+      child: Center(
+        child: Text(
+          'A',
+          style: TextStyle(
+            fontSize: heroSize * 0.56,
+            fontWeight: FontWeight.w900,
+            color: Colors.white,
+            shadows: <Shadow>[
+              Shadow(
+                color: Color(0x66000000),
+                blurRadius: 6.0 * ratio,
+                offset: Offset(0, 3.0 * ratio),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget getStepThreeComponentCards(double cardSize, double ratio) {
+    List<String> components = <String>['人', '火', '大', '央', '个', '金', '久'];
+
+    return Container(
+      constraints: BoxConstraints(maxWidth: cardSize * 4.8),
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 16.0 * ratio,
+        runSpacing: 16.0 * ratio,
+        children: components.map((String component) {
+          return Container(
+            width: cardSize,
+            height: cardSize,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(15.0 * ratio),
+              border: Border.all(
+                color: Color(0xFFE1D9FF),
+                width: 1.4,
+              ),
+              boxShadow: <BoxShadow>[
+                BoxShadow(
+                  color: Color(0x1F4A2BC6),
+                  blurRadius: 12.0 * ratio,
+                  offset: Offset(0, 7.0 * ratio),
+                ),
+              ],
+            ),
+            child: Text(
+              component,
+              style: TextStyle(
+                fontSize: cardSize * 0.56,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF303340),
+              ),
+            ),
+          );
+        }).toList(),
+      ),
+    );
+  }
+
+  Widget getStepThreeStartButton(double ratio) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(32.0 * ratio),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Color(0x442F1CCF),
+            blurRadius: 18.0 * ratio,
+            offset: Offset(0, 8.0 * ratio),
+          ),
+        ],
+      ),
+      child: TextButton(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(Color(0xFF6438E8)),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(32.0 * ratio),
+            ),
+          ),
+          padding: WidgetStateProperty.all(
+            EdgeInsets.symmetric(
+              horizontal: 42.0 * ratio,
+              vertical: 15.0 * ratio,
+            ),
+          ),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Text(
+              'Start Learning',
+              style: TextStyle(
+                fontSize: 18.0 * ratio,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 10.0 * ratio),
+            Icon(
+              Icons.arrow_forward_rounded,
+              color: Colors.white,
+              size: 24.0 * ratio,
+            ),
+          ],
+        ),
+        onPressed: () {
+          setState(() {
+            runContinueLogic();
+          });
+        },
+      ),
+    );
+  }
+
+  Widget getStepThreeIndicators(double ratio) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          getCompletedStepIndicator(ratio),
+          getStepIndicatorLine(ratio, true),
+          getCompletedStepIndicator(ratio),
+          getStepIndicatorLine(ratio, true),
+          getOneStepIndicator('3', true, ratio),
+          getStepIndicatorLine(ratio),
+          getOneStepIndicator('4', false, ratio),
+          getStepIndicatorLine(ratio),
+          getOneStepIndicator('5', false, ratio),
+        ],
+      ),
+    );
+  }
+
+  Widget getCompletedStepIndicator(double ratio) {
+    return Container(
+      width: 30.0 * ratio,
+      height: 30.0 * ratio,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Color(0xFF2F80ED),
+        border: Border.all(
+          color: Color(0xFF2F80ED),
+          width: 1.5,
+        ),
+      ),
+      child: Icon(
+        Icons.check_rounded,
+        color: Colors.white,
+        size: 19.0 * ratio,
+      ),
+    );
+  }
+
   Widget getStepTwoIndicators(double ratio) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        getOneStepIndicator('1', true, ratio),
-        getStepIndicatorLine(ratio, true),
-        getOneStepIndicator('2', true, ratio),
-        getStepIndicatorLine(ratio),
-        getOneStepIndicator('3', false, ratio),
-        getStepIndicatorLine(ratio),
-        getOneStepIndicator('4', false, ratio),
-        getStepIndicatorLine(ratio),
-        getOneStepIndicator('5', false, ratio),
-      ],
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          getOneStepIndicator('1', true, ratio),
+          getStepIndicatorLine(ratio, true),
+          getOneStepIndicator('2', true, ratio),
+          getStepIndicatorLine(ratio),
+          getOneStepIndicator('3', false, ratio),
+          getStepIndicatorLine(ratio),
+          getOneStepIndicator('4', false, ratio),
+          getStepIndicatorLine(ratio),
+          getOneStepIndicator('5', false, ratio),
+        ],
+      ),
     );
   }
 
@@ -2264,6 +2786,46 @@ class _ComponentPageState extends State<ComponentPage> {
   */
 
 
+}
+
+
+class StepThreeBurstPainter extends CustomPainter {
+  final bool flip;
+
+  StepThreeBurstPainter({required this.flip});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Paint paint = Paint()
+      ..color = Color(0xFFFFA000)
+      ..strokeWidth = size.width * 0.10
+      ..strokeCap = StrokeCap.round;
+
+    double direction = flip ? -1.0 : 1.0;
+    double centerX = flip ? size.width * 0.35 : size.width * 0.65;
+    double endX = flip ? size.width * 0.78 : size.width * 0.22;
+
+    canvas.drawLine(
+      Offset(centerX, size.height * 0.50),
+      Offset(endX, size.height * 0.50),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(centerX, size.height * 0.36),
+      Offset(centerX + direction * size.width * 0.34, size.height * 0.18),
+      paint,
+    );
+    canvas.drawLine(
+      Offset(centerX, size.height * 0.64),
+      Offset(centerX + direction * size.width * 0.34, size.height * 0.82),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant StepThreeBurstPainter oldDelegate) {
+    return oldDelegate.flip != flip;
+  }
 }
 
 class StepTwoKeyCubePainter extends CustomPainter {
