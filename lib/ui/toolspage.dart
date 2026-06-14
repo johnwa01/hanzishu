@@ -17,6 +17,7 @@ import 'package:hanzishu/ui/studynewwordspage.dart';
 import 'package:hanzishu/engine/studywords.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/ui/thirdpartylessonpage.dart';
+import 'package:hanzishu/ui/characterdecompositionpage.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -117,6 +118,15 @@ class _ToolsPageState extends State<ToolsPage> {
         ).then((val) => {_getRequests()});
         break;
       case 4:
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                CharacterDecompositionPage(),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
+      case 5:
         Navigator.push(
           context,
           MaterialPageRoute(
