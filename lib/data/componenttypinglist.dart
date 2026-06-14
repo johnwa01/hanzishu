@@ -294,6 +294,11 @@ var theZiForLeadCompExerciseList=[
 
 var theZiForExpandedReviewExerciseList=[
   ZiWithComponentsAndStrokes("键", [], "", 335), //
+  ZiWithComponentsAndStrokes("森", [], "", 0),
+  ZiWithComponentsAndStrokes("晶", [], "", 0),
+  ZiWithComponentsAndStrokes("网", [], "", 0),
+  ZiWithComponentsAndStrokes("松", [], "", 0),
+  ZiWithComponentsAndStrokes("谷", [], "", 0),
   ////ZiWithComponentsAndStrokes("份", [], "E42.png,E43.png", 0), //任
   ////ZiWithComponentsAndStrokes("柒", [], "E21.png,E31.png", 0), //畜
   ZiWithComponentsAndStrokes("昼", [], "E32.png,E13.png", 0),
@@ -326,7 +331,8 @@ var theZiForExpandedReviewExerciseList=[
 //  ZiWithComponentsAndStrokes("帘", [], "E21.png,E61.png", 0),
 //  ZiWithComponentsAndStrokes("梨", [], "E62.png,E23.png", 0),
   ZiWithComponentsAndStrokes("松林", [], "E62.png,E23.png", 0),   //
-  ZiWithComponentsAndStrokes("中国人", [], "E62.png,E23.png", 0),   // not sure png purposes
+  ZiWithComponentsAndStrokes("李连杰", [], "E62.png,E23.png", 0),   // not sure png purposes
+  ZiWithComponentsAndStrokes("科学技术", [], "", 0),
 ];
 
 var theZiForExpandedGeneralExerciseList=[

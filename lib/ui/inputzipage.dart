@@ -3990,6 +3990,17 @@ class _InputZiPageState extends State<InputZiPage> {
       return;
     }
 
+    if (typingType == TypingType.ExpandedReview) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext dialogContext) {
+          return _buildTutorialCompletedDialog(closeDialogAndReturn);
+        },
+      );
+      return;
+    }
+
     // set up the button
     Widget okButton = TextButton(
       child: Text("OK", style: TextStyle(color: Colors.blue)),
@@ -4111,6 +4122,176 @@ class _InputZiPageState extends State<InputZiPage> {
       builder: (BuildContext context) {
         return alert;
       },
+    );
+  }
+
+  Widget _buildTutorialCompletedDialog(VoidCallback onContinue) {
+    final rawRatio = getSizeRatio();
+    final ratio = rawRatio < 0.88 ? rawRatio : 0.88;
+    final primary = Color(0xFF6F35E8);
+    final darkText = Color(0xFF1F1B2D);
+
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      insetPadding: EdgeInsets.symmetric(
+        horizontal: 28 * ratio,
+        vertical: 22 * ratio,
+      ),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: 700 * ratio),
+        child: Container(
+          height: 560 * ratio,
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(38 * ratio),
+                  border: Border.all(color: Color(0xFFE7D7FF), width: 2 * ratio),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.white,
+                      Color(0xFFFFFCFF),
+                      Color(0xFFF5ECFF),
+                    ],
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: primary.withOpacity(0.22),
+                      blurRadius: 42 * ratio,
+                      offset: Offset(0, 20 * ratio),
+                    ),
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.14),
+                      blurRadius: 42 * ratio,
+                      offset: Offset(0, 18 * ratio),
+                    ),
+                  ],
+                ),
+              ),
+
+              Positioned(
+                left: 48 * ratio,
+                right: 48 * ratio,
+                top: 50 * ratio,
+                child: Column(
+                  children: [
+                    Text(
+                      "You Did It!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: primary,
+                        fontSize: 48 * ratio,
+                        fontWeight: FontWeight.w900,
+                        height: 1.0,
+                        letterSpacing: -0.8,
+                      ),
+                    ),
+                    SizedBox(height: 14 * ratio),
+                    _buildTutorialCompletePill(ratio, primary),
+                    SizedBox(height: 26 * ratio),
+                    Text(
+                      "Ready to Type Chinese!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: darkText,
+                        fontSize: 27 * ratio,
+                        fontWeight: FontWeight.w800,
+                        height: 1.12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 244 * ratio,
+                child: Center(
+                  child: Transform.scale(
+                    scale: 1.34,
+                    child: _buildGreenHanzishuMascot(ratio),
+                  ),
+                ),
+              ),
+
+              Positioned(
+                left: 210 * ratio,
+                bottom: 46 * ratio,
+                child: _buildDoneButton(ratio, primary, onContinue),
+              ),
+
+              Positioned(top: 40 * ratio, left: 46 * ratio, child: _buildConfettiIcon(ratio, 1.10)),
+              Positioned(top: 42 * ratio, right: 68 * ratio, child: _buildSparkle(ratio, Color(0xFFFFC928), 24)),
+              Positioned(top: 124 * ratio, left: 72 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 20)),
+              Positioned(top: 130 * ratio, right: 72 * ratio, child: _buildSparkle(ratio, Color(0xFFA855F7), 22)),
+              Positioned(top: 236 * ratio, left: 82 * ratio, child: _buildDot(ratio, Color(0xFF17BDF4), 13)),
+              Positioned(top: 260 * ratio, right: 76 * ratio, child: _buildDot(ratio, Color(0xFFFF7A7A), 12)),
+              Positioned(bottom: 110 * ratio, left: 80 * ratio, child: _buildSparkle(ratio, Color(0xFF17BDF4), 16)),
+              Positioned(bottom: 98 * ratio, right: 86 * ratio, child: _buildDot(ratio, Color(0xFFFFB000), 13)),
+              Positioned(bottom: 42 * ratio, left: 92 * ratio, child: _buildDot(ratio, Color(0xFF67D742), 12)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTutorialCompletePill(double ratio, Color primary) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18 * ratio, vertical: 7 * ratio),
+      decoration: BoxDecoration(
+        color: Color(0xFFF3EEFF),
+        borderRadius: BorderRadius.circular(99 * ratio),
+        border: Border.all(color: Color(0xFFD9C7FF), width: 1.4 * ratio),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.check_circle_rounded, color: primary, size: 20 * ratio),
+          SizedBox(width: 8 * ratio),
+          Text(
+            "Tutorial Complete",
+            style: TextStyle(
+              color: primary,
+              fontSize: 16 * ratio,
+              fontWeight: FontWeight.w800,
+              letterSpacing: 0.1,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDoneButton(double ratio, Color primary, VoidCallback onContinue) {
+    return SizedBox(
+      width: 280 * ratio,
+      height: 66 * ratio,
+      child: ElevatedButton(
+        onPressed: onContinue,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 9,
+          shadowColor: primary.withOpacity(0.35),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24 * ratio),
+          ),
+        ),
+        child: Text(
+          "Done",
+          style: TextStyle(
+            fontSize: 24 * ratio,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
+      ),
     );
   }
 
