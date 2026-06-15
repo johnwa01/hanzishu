@@ -1003,6 +1003,151 @@ class ComponentManager {
     return value;
   }
 
+  String? getKeyboardLetter(AnswerPosition position) {
+    if (position == AnswerPosition.none) {
+      return "";
+    }
+
+    var value;
+
+    switch (position) {
+      case AnswerPosition.individual11:
+        {
+          value = "T";
+        }
+        break;
+      case AnswerPosition.individual12:
+        {
+          value = "R";
+        }
+        break;
+      case AnswerPosition.individual13:
+        {
+          value = "E";
+        }
+        break;
+      case AnswerPosition.individual14:
+        {
+          value = "W";
+        }
+        break;
+      case AnswerPosition.individual15:
+        {
+          value = "Q";
+        }
+        break;
+      case AnswerPosition.individual21:
+        {
+          value = "Y";
+        }
+        break;
+      case AnswerPosition.individual22:
+        {
+          value = "U";
+        }
+        break;
+      case AnswerPosition.individual23:
+        {
+          value = "I";
+        }
+        break;
+      case AnswerPosition.individual24:
+        {
+          value = "O";
+        }
+        break;
+      case AnswerPosition.individual25:
+        {
+          value = "P";
+        }
+        break;
+      case AnswerPosition.individual31:
+        {
+          value = "G";
+        }
+        break;
+      case AnswerPosition.individual32:
+        {
+          value = "F";
+        }
+        break;
+      case AnswerPosition.individual33:
+        {
+          value = "D";
+        }
+        break;
+      case AnswerPosition.individual34:
+        {
+          value = "S";
+        }
+        break;
+      case AnswerPosition.individual35:
+        {
+          value = "A";
+        }
+        break;
+      case AnswerPosition.individual41:
+        {
+          value = "H";
+        }
+        break;
+      case AnswerPosition.individual42:
+        {
+          value = "J";
+        }
+        break;
+      case AnswerPosition.individual43:
+        {
+          value = "K";
+        }
+        break;
+      case AnswerPosition.individual44:
+        {
+          value = "L";
+        }
+        break;
+      case AnswerPosition.individual51:
+        {
+          value = "B";
+        }
+        break;
+      case AnswerPosition.individual52:
+        {
+          value = "V";
+        }
+        break;
+      case AnswerPosition.individual53:
+        {
+          value = "C";
+        }
+        break;
+      case AnswerPosition.individual54:
+        {
+          value = "X";
+        }
+        break;
+      case AnswerPosition.individual55:
+        {
+          value = "Z";
+        }
+        break;
+      case AnswerPosition.individual61:
+        {
+          value = "N";
+        }
+        break;
+      case AnswerPosition.individual62:
+        {
+          value = "M";
+        }
+        break;
+      default:
+        value = '';
+    }
+
+    return value;
+  }
+
   static String getLetterByGroupAndIndex(int keyGroup, int keyIndex) {
     String letter = '';
     if (keyGroup == 1) {

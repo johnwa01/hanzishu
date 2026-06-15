@@ -468,30 +468,16 @@ class _ComponentPageState extends State<ComponentPage> {
                     ),
                   ),
                   SizedBox(height: 12.0 * ratio),
+
                   Container(
-                    width: cardSize,
-                    height: cardSize,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24.0 * ratio),
-                      boxShadow: <BoxShadow>[
-                        BoxShadow(
-                          color: Color(0x1F24344D),
-                          blurRadius: 22.0 * ratio,
-                          offset: Offset(0, 10.0 * ratio),
-                        ),
-                      ],
-                    ),
-                    padding: EdgeInsets.all(18.0 * ratio),
-                    child: Padding(
-                      padding: EdgeInsets.all(8.0 * ratio),
-                      child: OverflowBox(
-                        maxWidth: double.infinity,
-                        maxHeight: double.infinity,
-                        child: getQuestionImage(),
-                      ),
+                    width: 160.0 * ratio,
+                    height: 160.0 * ratio,
+                    child: FittedBox(
+                      fit: BoxFit.contain,
+                      child: getQuestionImage(),
                     ),
                   ),
+
                   SizedBox(height: 24.0 * ratio),
                   Text(
                     'Choose the matching key',
@@ -1728,8 +1714,8 @@ class _ComponentPageState extends State<ComponentPage> {
         var componentInGroup = theRandomComponentList[currentIndex];
         var component = theComponentManager.getComponentByGroupAndIndex(componentInGroup.groupNumber, componentInGroup.indexInGroup);
         imageName = component.image;
-        imageWidth = 160.0 * getSizeRatioWithLimit();
-        imageHeight = 160.0 * getSizeRatioWithLimit();
+        imageWidth = 160.0 * getSizeRatioWithLimit(); // 160
+        imageHeight = 160.0 * getSizeRatioWithLimit(); //160
       }
       imagePath = 'assets/typing/' + imageName;
     }
@@ -2628,7 +2614,7 @@ class _ComponentPageState extends State<ComponentPage> {
         }
       },
       child: Text(
-        answerDisplayValue,
+        theComponentManager.getKeyboardLetter(position) ?? '', //answerDisplayValue,
         style: TextStyle(
           fontSize: 26.0 * ratio,
           fontWeight: FontWeight.w800,
