@@ -32,6 +32,7 @@ import 'package:hanzishu/utility.dart';
 import 'dart:core';
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:hanzishu/ui/tutorialcompletedialog.dart';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
@@ -4214,13 +4215,25 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     if (typingType == TypingType.ExpandedReview) {
-      showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (BuildContext dialogContext) {
-          return _buildTutorialCompletedDialog(closeDialogAndReturn);
-        },
-      );
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (_) => TutorialCompleteDialog(
+              title: 'You Did It!',
+              badgeText: 'Tutorial Complete',
+              message: 'Ready to Type Chinese!',
+              buttonText: 'Done',
+              mascotAsset: 'assets/core/mascot.jpg',
+              onDone: () {
+                Navigator.of(context).pop(); // dialog
+
+                theIsBackArrowExit = false;
+                Navigator.of(context).pop(); // InputZiPage
+              },
+            ),
+          //), //_buildTutorialCompletedDialog(closeDialogAndReturn);
+        );
+      //);
       return;
     }
 
@@ -4579,7 +4592,7 @@ class _InputZiPageState extends State<InputZiPage> {
                 child: Column(
                   children: [
                     Text(
-                      "You Did It!",
+                      "Great Start!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: primary,

@@ -7,6 +7,7 @@ import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/ui/tutorialstepindicator.dart';
+import 'package:hanzishu/ui/tutorialcompletedialog.dart';
 
 class ComponentPage extends StatefulWidget {
   final QuestionType questionType;
@@ -2514,7 +2515,6 @@ class _ComponentPageState extends State<ComponentPage> {
     //content = "You have achieved a score of " + corStr + ". You can come back later to reach 70.";
     //}
 
-
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text(title),
@@ -2524,13 +2524,53 @@ class _ComponentPageState extends State<ComponentPage> {
       ],
     );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
+    if (questionType == QuestionType.Component) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => TutorialCompleteDialog(
+          title: 'You Did It!',
+          badgeText: 'Step 2 Complete',
+          message: 'You have a solid foundation now!',
+          buttonText: 'Start 25 keys for all Chinese components ->',
+          mascotAsset: 'assets/core/mascot.jpg',
+          onDone: () {
+            Navigator.of(context).pop(); // dialog
+
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop(); // InputZiPage
+          },
+        ),
+      );
+    }
+    else if (questionType == QuestionType.ExpandedComponent) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => TutorialCompleteDialog(
+          title: 'Great Job!',
+          badgeText: 'Step 3 Complete',
+          message: 'You have gone through all 25 keys!',
+          buttonText: 'Start Character Decomposition ->',
+          mascotAsset: 'assets/core/mascot.jpg',
+          onDone: () {
+            Navigator.of(context).pop(); // dialog
+
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop(); // InputZiPage
+          },
+        ),
+      );
+    }
+    else {
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
   }
 
   Widget getModernKeyboardAnswer(AnswerPosition position) {

@@ -3,6 +3,7 @@ import 'package:hanzishu/data/characterdecompositionlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'dart:ui';
 import 'package:hanzishu/ui/tutorialstepindicator.dart';
+import 'package:hanzishu/ui/tutorialcompletedialog.dart';
 
 /// Step 4: Character Decomposition.
 ///
@@ -92,7 +93,24 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       return;
     }
 
-    _showCompletedDialog();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => TutorialCompleteDialog(
+        title: 'Amazing!',
+        badgeText: 'Step 4 complete',
+        message: 'You have learned ways to break Hanzi!',
+        buttonText: 'Start to practice typing Hanzi ->',
+        mascotAsset: 'assets/core/mascot.jpg',
+        onDone: () {
+          Navigator.of(context).pop(); // dialog
+
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop(); // InputZiPage
+        },
+      ),
+    );
+    //_showCompletedDialog();
   }
 
   void _finishStep() {
