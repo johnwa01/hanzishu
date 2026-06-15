@@ -305,7 +305,7 @@ class _ToolsPageState extends State<ToolsPage> {
             ),
           ),
           SizedBox(height: 14 * ratio),
-          _buildInfoRow(Icons.access_time_rounded, "20-minute guided tutorial", Colors.deepPurple),
+          _buildInfoRow(Icons.access_time_rounded, "30-minute guided tutorial", Colors.deepPurple),
           SizedBox(height: 6 * ratio),
           _buildInfoRow(Icons.group_rounded, "Recommended for all new users", Colors.deepPurple),
         ],

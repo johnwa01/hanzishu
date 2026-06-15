@@ -30,7 +30,7 @@ class _ComponentPageState extends State<ComponentPage> {
   int totalQuestions = -1;
   int totalCorrectAnswers = 0;
   double screenWidth = 0.0;
-  int preIndexAtCurrentIndex0 = -1;
+  int preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
   bool wasLastAnswerCorrect = false;
   bool wasLastQuestionEverIncorrect = false;
   bool isFromPreviousButton = false;
@@ -51,7 +51,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     theComponentManager.setCurrentType(questionType);
     theComponentManager.initCurrentIndex();
-    preIndexAtCurrentIndex0 = 1;
+    preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
     currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();
@@ -159,24 +159,25 @@ class _ComponentPageState extends State<ComponentPage> {
     }
 
     if (questionType == QuestionType.Component &&
-        currentIndex == 0 &&
-        preIndexAtCurrentIndex0 == 1) {
+        currentIndex == 0 /*&&
+        preIndexAtCurrentIndex0 == 1*/) {
       return getStepTwoLandingPage(context);
     }
 
-    if (questionType == QuestionType.Component &&
-        currentIndex == 0 &&
-        preIndexAtCurrentIndex0 >= 2 &&
-        preIndexAtCurrentIndex0 < 6) {
-      return getStepTwoGroupPage(context);
-    }
+//    if (questionType == QuestionType.Component &&
+//        currentIndex == 0 /*&&
+//        preIndexAtCurrentIndex0 >= 2 &&
+//        preIndexAtCurrentIndex0 < 6*/) {
+//      return getStepTwoGroupPage(context);
+//    }
 
+    /*
     if (questionType == QuestionType.Component &&
         currentIndex == 0 &&
         preIndexAtCurrentIndex0 == 6) {
       return getStepTwoSummaryPage(context);
     }
-
+    */
 
     if (questionType == QuestionType.Component &&
         currentIndex > 0) {
@@ -590,16 +591,17 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+/*
   Widget getStepTwoGroupPage(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
     String imageName;
-    if (theDefaultLocale == "zh_CN") {
-      imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
-    }
-    else {
-      imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
-    }
-    String imagePath = 'assets/typing/' + imageName;
+   // if (theDefaultLocale == "zh_CN") {
+   //   imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+   // }
+   // else {
+   //   imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
+   // }
+   // String imagePath = 'assets/typing/' + imageName;
 
     return Container(
       width: double.infinity,
@@ -685,7 +687,7 @@ class _ComponentPageState extends State<ComponentPage> {
       ),
     );
   }
-
+*/
 
   Widget getStepTwoSummaryPage(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
@@ -1727,7 +1729,13 @@ class _ComponentPageState extends State<ComponentPage> {
         imageHeight = 760.0;
       }
       else if (theComponentManager.isHeaderOfRandomComponents()) {
-        imageName = 'GG6.png';
+        imageName = theComponentManager.getHeaderImageNameOfRandomComponents(); //'GG6.png';
+        if (theDefaultLocale == "zh_CN" || imageName == "GG6") {
+          imageName += '.png';
+        }
+        else { // English
+          imageName += '_E.png';
+        }
         //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
       }
       else {
@@ -2538,7 +2546,7 @@ class _ComponentPageState extends State<ComponentPage> {
           title: 'You Did It!',
           badgeText: 'Step 2 Complete',
           message: 'You have a solid foundation now!',
-          buttonText: 'Start 25 keys for all Chinese components ->',
+          buttonText: 'Start 25 keys for common components ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
             Navigator.of(context).pop(); // dialog

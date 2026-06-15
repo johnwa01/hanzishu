@@ -73,15 +73,18 @@ class ComponentInGroup {
   int id = -1;
   int groupNumber = -1;
   int indexInGroup = -1;
+  String specialImageName = "";
 
   ComponentInGroup(
     int id,
     int groupNumber,
-    int indexInGroup)
+    int indexInGroup,
+      String specialImageName)
   {
     this.id = id;
     this.groupNumber = groupNumber;
     this.indexInGroup = indexInGroup;
+    this.specialImageName = specialImageName;
   }
 }
 
