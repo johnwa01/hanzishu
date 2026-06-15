@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/data/characterdecompositionlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'dart:ui';
+import 'package:hanzishu/ui/tutorialstepindicator.dart';
 
 /// Step 4: Character Decomposition.
 ///
@@ -229,7 +230,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        const _StepIndicator(currentStep: 4, totalSteps: 5),
+        TutorialStepIndicator(currentStep: 4, ratio: ratio),
         SizedBox(height: 24.0 * ratio),
         _SubtitleRow(
           title: 'Top-left to Bottom-right',

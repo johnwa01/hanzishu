@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'package:hanzishu/ui/tutorialstepindicator.dart';
+
 import 'dart:async';
 import 'package:flutter/rendering.dart';
 //importpackage:flutter/services.dart';
@@ -1376,7 +1378,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          _buildTutorialStepIndicator(context, 1, 5, ratio, primary),
+                          TutorialStepIndicator(currentStep: 1, ratio: ratio),
                           SizedBox(height: 38 * ratio),
                           Text(
                             "Your First\nChinese Characters",
@@ -1406,60 +1408,6 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildTutorialStepIndicator(BuildContext context, int activeStep, int totalSteps, double ratio, Color primary) {
-    final isNarrow = MediaQuery.of(context).size.width < 700;
-    final connectorWidth = isNarrow ? 28 * ratio : 62 * ratio;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List.generate(totalSteps * 2 - 1, (index) {
-        if (index.isOdd) {
-          return Container(
-            width: connectorWidth,
-            height: 2 * ratio,
-            decoration: BoxDecoration(
-              color: Color(0xFFD7D7E2),
-              borderRadius: BorderRadius.circular(99),
-            ),
-          );
-        }
-
-        final step = index ~/ 2 + 1;
-        final isActive = step == activeStep;
-        final circleSize = isNarrow ? 42 * ratio : 48 * ratio;
-        return Container(
-          width: circleSize,
-          height: circleSize,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: isActive ? primary : Colors.white,
-            border: Border.all(
-              color: isActive ? primary : Color(0xFFC7C8D3),
-              width: 2.2 * ratio,
-            ),
-            boxShadow: isActive
-                ? [
-              BoxShadow(
-                color: primary.withOpacity(0.24),
-                blurRadius: 14 * ratio,
-                offset: Offset(0, 6 * ratio),
-              ),
-            ]
-                : [],
-          ),
-          child: Text(
-            step.toString(),
-            style: TextStyle(
-              color: isActive ? Colors.white : Color(0xFF8C8E9B),
-              fontSize: 21 * ratio,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-        );
-      }),
     );
   }
 
@@ -1721,7 +1669,7 @@ class _InputZiPageState extends State<InputZiPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          _buildFinalStepIndicator(ratio),
+                          TutorialStepIndicator(currentStep: 5, ratio: ratio),
                           SizedBox(height: 24 * ratio),
                           _buildPracticeSubtitleRow(ratio),
                           SizedBox(height: 20 * ratio),
@@ -1738,70 +1686,6 @@ class _InputZiPageState extends State<InputZiPage> {
             },
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _buildFinalStepIndicator(double ratio) {
-    final connectorWidth = MediaQuery.of(context).size.width < 700
-        ? 34 * ratio
-        : 72 * ratio;
-
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: List.generate(9, (index) {
-          if (index.isOdd) {
-            return Container(
-              width: connectorWidth,
-              height: 3 * ratio,
-              decoration: BoxDecoration(
-                color: Color(0xFF2F80ED),
-                borderRadius: BorderRadius.circular(99),
-              ),
-            );
-          }
-
-          final step = index ~/ 2 + 1;
-          final isCurrent = step == 5;
-          return Container(
-            width: isCurrent ? 56 * ratio : 42 * ratio,
-            height: isCurrent ? 56 * ratio : 42 * ratio,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Color(0xFF2F80ED),
-              border: Border.all(
-                color: isCurrent ? Color(0xFFDCEBFF) : Color(0xFF2F80ED),
-                width: isCurrent ? 7 * ratio : 1.5 * ratio,
-              ),
-              boxShadow: isCurrent
-                  ? [
-                BoxShadow(
-                  color: Color(0x332F80ED),
-                  blurRadius: 18 * ratio,
-                  offset: Offset(0, 7 * ratio),
-                ),
-              ]
-                  : [],
-            ),
-            child: isCurrent
-                ? Text(
-              "5",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 24 * ratio,
-                fontWeight: FontWeight.w900,
-              ),
-            )
-                : Icon(
-              Icons.check_rounded,
-              color: Colors.white,
-              size: 26 * ratio,
-            ),
-          );
-        }),
       ),
     );
   }

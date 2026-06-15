@@ -6,6 +6,7 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
+import 'package:hanzishu/ui/tutorialstepindicator.dart';
 
 class ComponentPage extends StatefulWidget {
   final QuestionType questionType;
@@ -845,7 +846,7 @@ class _ComponentPageState extends State<ComponentPage> {
                   ),
                 ),
                 SizedBox(height: 18.0 * ratio),
-                getStepTwoIndicators(ratio),
+                TutorialStepIndicator(currentStep: 2, ratio: ratio),
                 SizedBox(height: 18.0 * ratio),
                 Container(
                   width: heroSize,
@@ -981,7 +982,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
                           Expanded(
                             child: Center(
-                              child: getStepThreeIndicators(ratio),
+                              child: TutorialStepIndicator(currentStep: 3, ratio: ratio),
                             ),
                           ),
 
@@ -1197,26 +1198,7 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
-  Widget getStepThreeIndicators(double ratio) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          getCompletedStepIndicator(ratio),
-          getStepIndicatorLine(ratio, true),
-          getCompletedStepIndicator(ratio),
-          getStepIndicatorLine(ratio, true),
-          getOneStepIndicator('3', true, ratio),
-          getStepIndicatorLine(ratio),
-          getOneStepIndicator('4', false, ratio),
-          getStepIndicatorLine(ratio),
-          getOneStepIndicator('5', false, ratio),
-        ],
-      ),
-    );
-  }
-
+/*
   Widget getCompletedStepIndicator(double ratio) {
     return Container(
       width: 30.0 * ratio,
@@ -1237,58 +1219,7 @@ class _ComponentPageState extends State<ComponentPage> {
       ),
     );
   }
-
-  Widget getStepTwoIndicators(double ratio) {
-    return FittedBox(
-      fit: BoxFit.scaleDown,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          getOneStepIndicator('1', true, ratio),
-          getStepIndicatorLine(ratio, true),
-          getOneStepIndicator('2', true, ratio),
-          getStepIndicatorLine(ratio),
-          getOneStepIndicator('3', false, ratio),
-          getStepIndicatorLine(ratio),
-          getOneStepIndicator('4', false, ratio),
-          getStepIndicatorLine(ratio),
-          getOneStepIndicator('5', false, ratio),
-        ],
-      ),
-    );
-  }
-
-  Widget getOneStepIndicator(String text, bool isCurrent, double ratio) {
-    return Container(
-      width: 30.0 * ratio,
-      height: 30.0 * ratio,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: isCurrent ? Color(0xFF2F80ED) : Colors.white,
-        border: Border.all(
-          color: isCurrent ? Color(0xFF2F80ED) : Color(0xFFD7E0EE),
-          width: 1.5,
-        ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 13.0 * ratio,
-          fontWeight: FontWeight.bold,
-          color: isCurrent ? Colors.white : Color(0xFF8B98AA),
-        ),
-      ),
-    );
-  }
-
-  Widget getStepIndicatorLine(double ratio, [bool isActive = false]) {
-    return Container(
-      width: 20.0 * ratio,
-      height: 2.0,
-      color: isActive ? Color(0xFF2F80ED) : Color(0xFFD7E0EE),
-    );
-  }
+*/
 
   Widget getAnswers(BuildContext context) {
     /*
