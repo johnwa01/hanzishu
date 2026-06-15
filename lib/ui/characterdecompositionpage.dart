@@ -475,7 +475,7 @@ class _SubtitleRow extends StatelessWidget {
                 minimumSize: Size.zero,
               ),
               child: Text(
-                'Skip Step',
+                'Skip Section',
                 style: TextStyle(
                   fontSize: isNarrow ? 13.0 : 15.0,
                   fontWeight: FontWeight.w700,

@@ -1214,6 +1214,10 @@ class _InputZiPageState extends State<InputZiPage> {
       return _buildFirstTypingIntroPage();
     }
 
+    if (typingType == TypingType.ExpandedReview && currentIndex == 0) {
+      return _buildPracticeTypingIntroPage();
+    }
+
     var fontSize1 = TheConst.fontSizes[1] * getSizeRatio();
 
     //if (typingType == TypingType.LeadComponents || typingType == TypingType.GiveItATry) {
@@ -1661,6 +1665,341 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
             SizedBox(width: 18 * ratio),
             Icon(Icons.arrow_forward_ios_rounded, size: 26 * ratio),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPracticeTypingIntroPage() {
+    final ratio = getSizeRatio();
+    final primary = Color(0xFF2F80ED);
+    final darkText = Color(0xFF071B55);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          "Practice Typing Chinese Characters",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: darkText,
+            fontSize: 24 * ratio,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: darkText,
+      ),
+      body: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.white,
+              Color(0xFFF8FAFF),
+              Color(0xFFFFF7ED),
+            ],
+          ),
+        ),
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final maxWidth = constraints.maxWidth;
+              final isNarrow = maxWidth < 620;
+              final contentWidth = isNarrow ? maxWidth * 0.94 : 860.0 * ratio;
+
+              return SingleChildScrollView(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: contentWidth),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 18 * ratio),
+                          _buildFinalStepIndicator(ratio),
+                          SizedBox(height: 24 * ratio),
+                          _buildPracticeSubtitleRow(ratio),
+                          SizedBox(height: 20 * ratio),
+                          _buildPracticeTypingHero(ratio, isNarrow),
+                          SizedBox(height: 24 * ratio),
+                          _buildStartPracticeButton(ratio, primary),
+                          SizedBox(height: 20 * ratio),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFinalStepIndicator(double ratio) {
+    final connectorWidth = MediaQuery.of(context).size.width < 700
+        ? 34 * ratio
+        : 72 * ratio;
+
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: List.generate(9, (index) {
+          if (index.isOdd) {
+            return Container(
+              width: connectorWidth,
+              height: 3 * ratio,
+              decoration: BoxDecoration(
+                color: Color(0xFF2F80ED),
+                borderRadius: BorderRadius.circular(99),
+              ),
+            );
+          }
+
+          final step = index ~/ 2 + 1;
+          final isCurrent = step == 5;
+          return Container(
+            width: isCurrent ? 56 * ratio : 42 * ratio,
+            height: isCurrent ? 56 * ratio : 42 * ratio,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xFF2F80ED),
+              border: Border.all(
+                color: isCurrent ? Color(0xFFDCEBFF) : Color(0xFF2F80ED),
+                width: isCurrent ? 7 * ratio : 1.5 * ratio,
+              ),
+              boxShadow: isCurrent
+                  ? [
+                BoxShadow(
+                  color: Color(0x332F80ED),
+                  blurRadius: 18 * ratio,
+                  offset: Offset(0, 7 * ratio),
+                ),
+              ]
+                  : [],
+            ),
+            child: isCurrent
+                ? Text(
+              "5",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24 * ratio,
+                fontWeight: FontWeight.w900,
+              ),
+            )
+                : Icon(
+              Icons.check_rounded,
+              color: Colors.white,
+              size: 26 * ratio,
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
+  Widget _buildPracticeSubtitleRow(double ratio) {
+    return Row(
+      children: [
+        SizedBox(width: 116 * ratio),
+        Expanded(
+          child: Text(
+            "Let's Type!",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 35 * ratio,
+              fontWeight: FontWeight.w900,
+              color: Color(0xFF2F80ED),
+              height: 1.0,
+              letterSpacing: -0.3,
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 116 * ratio,
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: getSkipThisSection(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPracticeTypingHero(double ratio, bool isNarrow) {
+    final cardSize = isNarrow ? 104 * ratio : 126 * ratio;
+    final heroWidth = isNarrow ? 440 * ratio : 650 * ratio;
+    final heroHeight = isNarrow ? 360 * ratio : 430 * ratio;
+
+    return SizedBox(
+      width: heroWidth,
+      height: heroHeight,
+      child: Stack(
+        alignment: Alignment.center,
+        clipBehavior: Clip.none,
+        children: [
+          Positioned.fill(
+            child: Center(
+              child: Container(
+                width: heroWidth * 0.86,
+                height: heroHeight * 0.80,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFFFFD76A).withOpacity(0.34),
+                      blurRadius: 100 * ratio,
+                      spreadRadius: 26 * ratio,
+                    ),
+                    BoxShadow(
+                      color: Color(0xFF2F80ED).withOpacity(0.10),
+                      blurRadius: 90 * ratio,
+                      spreadRadius: 12 * ratio,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(top: 12 * ratio, left: 24 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 28)),
+          Positioned(top: 32 * ratio, right: 46 * ratio, child: _buildSparkle(ratio, Color(0xFFFFC928), 24)),
+          Positioned(left: 0, top: 145 * ratio, child: _buildSparkle(ratio, Color(0xFF17BDF4), 18)),
+          Positioned(right: 6 * ratio, top: 150 * ratio, child: _buildDot(ratio, Color(0xFFFF7AB6), 14)),
+          Positioned(left: 42 * ratio, bottom: 48 * ratio, child: _buildDot(ratio, Color(0xFF67D742), 13)),
+          Positioned(right: 58 * ratio, bottom: 52 * ratio, child: _buildSparkle(ratio, Color(0xFFFFB000), 20)),
+
+          Positioned(
+            left: isNarrow ? 18 * ratio : 52 * ratio,
+            top: 52 * ratio,
+            child: Transform.rotate(
+              angle: -0.10,
+              child: _buildHanziPracticeCard("明", cardSize, Color(0xFFE9D5FF), Color(0xFF5B21B6), ratio),
+            ),
+          ),
+          Positioned(
+            top: 38 * ratio,
+            child: Transform.rotate(
+              angle: 0.04,
+              child: _buildHanziPracticeCard("好", cardSize, Color(0xFFFFE7A8), Color(0xFFC76B00), ratio),
+            ),
+          ),
+          Positioned(
+            right: isNarrow ? 18 * ratio : 52 * ratio,
+            top: 54 * ratio,
+            child: Transform.rotate(
+              angle: 0.10,
+              child: _buildHanziPracticeCard("学", cardSize, Color(0xFFD9F99D), Color(0xFF166534), ratio),
+            ),
+          ),
+          Positioned(
+            left: isNarrow ? 34 * ratio : 92 * ratio,
+            bottom: 36 * ratio,
+            child: Transform.rotate(
+              angle: -0.09,
+              child: _buildHanziPracticeCard("问", cardSize, Color(0xFFBFDBFE), Color(0xFF1D4ED8), ratio),
+            ),
+          ),
+          Positioned(
+            bottom: 18 * ratio,
+            child: Transform.rotate(
+              angle: 0.03,
+              child: _buildHanziPracticeCard("林", cardSize, Color(0xFFFBCFE8), Color(0xFFBE185D), ratio),
+            ),
+          ),
+          Positioned(
+            right: isNarrow ? 34 * ratio : 92 * ratio,
+            bottom: 36 * ratio,
+            child: Transform.rotate(
+              angle: 0.09,
+              child: _buildHanziPracticeCard("森", cardSize, Color(0xFFA5F3FC), Color(0xFF0F766E), ratio),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildHanziPracticeCard(String character, double size, Color backgroundColor, Color textColor, double ratio) {
+    return Container(
+      width: size,
+      height: size,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(size * 0.16),
+        border: Border.all(color: Colors.white, width: 4 * ratio),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.14),
+            blurRadius: 18 * ratio,
+            offset: Offset(0, 9 * ratio),
+          ),
+          BoxShadow(
+            color: backgroundColor.withOpacity(0.55),
+            blurRadius: 22 * ratio,
+            offset: Offset(0, 2 * ratio),
+          ),
+        ],
+      ),
+      child: Text(
+        character,
+        style: TextStyle(
+          fontSize: size * 0.46,
+          fontWeight: FontWeight.w900,
+          color: textColor,
+          shadows: [
+            Shadow(
+              color: Colors.white.withOpacity(0.45),
+              blurRadius: 6 * ratio,
+              offset: Offset(-1 * ratio, -1 * ratio),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStartPracticeButton(double ratio, Color primary) {
+    return Container(
+      width: 420 * ratio,
+      height: 74 * ratio,
+      constraints: BoxConstraints(maxWidth: 420 * ratio),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 9,
+          shadowColor: primary.withOpacity(0.38),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24 * ratio),
+          ),
+        ),
+        onPressed: () {
+          speakFirstZiAfterExplanationPage();
+          setState(() {
+            currentIndex = theInputZiManager.getNextIndex(typingType, currentIndex, lessonId, 1);
+          });
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Start Practice",
+              style: TextStyle(
+                fontSize: 25 * ratio,
+                fontWeight: FontWeight.w900,
+              ),
+            ),
+            SizedBox(width: 16 * ratio),
+            Icon(Icons.arrow_forward_ios_rounded, size: 24 * ratio),
           ],
         ),
       ),
@@ -2992,7 +3331,7 @@ class _InputZiPageState extends State<InputZiPage> {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
         child: Text(
-          (typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Step" : getString(401) /*"Skip this section"*/,
+          (typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
           style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
         //color: Colors.white,
         //textColor: Colors.blueAccent,

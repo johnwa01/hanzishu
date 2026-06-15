@@ -98,17 +98,17 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+      //case 2:
+      //  Navigator.push(
+      //    context,
+      //    MaterialPageRoute(
+      //      builder: (context) =>
+      //          InputZiPage(typingType: TypingType.LeadComponents,
+      //              lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
+      //    ),
+      //  ).then((val) => {_getRequests()});
+      //  break;
       case 2:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                InputZiPage(typingType: TypingType.LeadComponents,
-                    lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
-          ),
-        ).then((val) => {_getRequests()});
-        break;
-      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -117,7 +117,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 4:
+      case 3:
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -126,7 +126,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
-      case 5:
+      case 4:
         Navigator.push(
           context,
           MaterialPageRoute(
