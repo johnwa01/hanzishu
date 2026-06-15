@@ -814,15 +814,37 @@ class _ComponentPageState extends State<ComponentPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 24.0 * ratio,
-              vertical: 20.0 * ratio,
+              vertical: 10.0 * ratio, //20.0
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Align(
-                  alignment: Alignment.topRight,
-                  child: getSkipThisSection(),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: 110.0 * ratio,
+                    ),
+
+                    Expanded(
+                      child: Center(
+                        child: TutorialStepIndicator(
+                          currentStep: 2,
+                          ratio: ratio,
+                        ),
+                      ),
+                    ),
+
+                    SizedBox(
+                      width: 110.0 * ratio,
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: getSkipThisSection(),
+                      ),
+                    ),
+                  ],
                 ),
+
+                SizedBox(height: 18.0 * ratio),
                 Text(
                   'English keys to represent Chinese components',
                   textAlign: TextAlign.center,
@@ -832,8 +854,6 @@ class _ComponentPageState extends State<ComponentPage> {
                     color: Color(0xFF6A768A),
                   ),
                 ),
-                SizedBox(height: 18.0 * ratio),
-                TutorialStepIndicator(currentStep: 2, ratio: ratio),
                 SizedBox(height: 18.0 * ratio),
                 Container(
                   width: heroSize,

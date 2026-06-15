@@ -1380,25 +1380,43 @@ class _InputZiPageState extends State<InputZiPage> {
                         children: [
                           SizedBox(height: 18 * ratio),
                           TutorialStepIndicator(currentStep: 1, ratio: ratio),
-                          SizedBox(height: 38 * ratio),
-                          Text(
-                            "Your First\nChinese Characters",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: darkText,
-                              fontSize: (isNarrow ? 25 : 30) * ratio,
-                              fontWeight: FontWeight.w800,
-                              height: 1.12,
-                              letterSpacing: -0.4,
-                            ),
+
+                          SizedBox(height: 18 * ratio),
+
+                          Row(
+                            children: [
+                              SizedBox(width: 120 * ratio),
+
+                              Expanded(
+                                child: Text(
+                                  "Your First\nChinese Characters",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: darkText,
+                                    fontSize: (isNarrow ? 25 : 30) * ratio,
+                                    fontWeight: FontWeight.w800,
+                                    height: 1.12,
+                                    letterSpacing: -0.4,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 120 * ratio,
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: getSkipThisSection(),
+                                ),
+                              ),
+                            ],
                           ),
+
+                          SizedBox(height: 20 * ratio),
+
                           //SizedBox(height: 10 * ratio),
                           _buildIntroBlocks(ratio),
                           SizedBox(height: 19 * ratio),
                           _buildStartStepButton(ratio, primary),
-                          SizedBox(height: 12 * ratio),
-                          getSkipThisSection(),
-                          SizedBox(height: 20 * ratio),
                         ],
                       ),
                     ),
@@ -1606,14 +1624,14 @@ class _InputZiPageState extends State<InputZiPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Start",
+              "Start ->",
               style: TextStyle(
                 fontSize: 28 * ratio,
                 fontWeight: FontWeight.w800,
               ),
             ),
-            SizedBox(width: 18 * ratio),
-            Icon(Icons.arrow_forward_ios_rounded, size: 26 * ratio),
+            //SizedBox(width: 18 * ratio),
+            //Icon(Icons.arrow_forward_ios_rounded, size: 26 * ratio),
           ],
         ),
       ),
