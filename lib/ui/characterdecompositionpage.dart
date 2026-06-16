@@ -301,17 +301,45 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        _ExampleProgress(
-          current: currentIndex,
-          total: totalExamples,
-          ratio: ratio,
+
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: _ExampleProgress(
+                current: currentIndex,
+                total: totalExamples,
+                ratio: ratio,
+              ),
+            ),
+
+            SizedBox(width: 12.0 * ratio),
+            TextButton(
+              onPressed: _skipStep,
+              child: Text(
+                'Skip Section',
+                style: TextStyle(
+                  fontSize: isNarrow ? 13.0 : 15.0,
+                  fontWeight: FontWeight.w700,
+                  color: Color(0xFF6C7686),
+                ),
+              ),
+            ),
+          ],
         ),
+
         SizedBox(height: 24.0 * ratio),
-        _SubtitleRow(
-          title: item.name,
-          onSkipStep: _skipStep,
-          isNarrow: isNarrow,
+
+        Text(
+          item.name,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: isNarrow ? 21.0 : 27.0,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF1677FF),
+            height: 1.1,
+          ),
         ),
+
         SizedBox(height: 22.0 * ratio),
         _CharacterExampleCard(
           character: item.character,
@@ -473,64 +501,6 @@ class _ExampleProgress extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _SubtitleRow extends StatelessWidget {
-  const _SubtitleRow({
-    required this.title,
-    required this.onSkipStep,
-    required this.isNarrow,
-  });
-
-  final String title;
-  final VoidCallback onSkipStep;
-  final bool isNarrow;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: isNarrow ? 70.0 : 100.0),
-            child: Text(
-              title,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontSize: isNarrow ? 21.0 : 27.0,
-                fontWeight: FontWeight.w900,
-                color: const Color(0xFF1677FF),
-                height: 1.1,
-              ),
-            ),
-          ),
-          Positioned(
-            right: 0,
-            child: TextButton(
-              onPressed: onSkipStep,
-              style: TextButton.styleFrom(
-                foregroundColor: const Color(0xFF6C7686),
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6.0),
-                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                minimumSize: Size.zero,
-              ),
-              child: Text(
-                'Skip Section',
-                style: TextStyle(
-                  fontSize: isNarrow ? 13.0 : 15.0,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
