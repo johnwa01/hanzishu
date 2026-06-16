@@ -121,11 +121,7 @@ class _ComponentPageState extends State<ComponentPage> {
         (
         title: Text(title),
       ),
-      body: Center
-        (
-        //child: Text("This is Lesson Page."),
-        child: getComponentWizard(context /*, widget.lessonId*/),
-      ),
+      body: getComponentWizard(context /*, widget.lessonId*/),
     );
   }
 
