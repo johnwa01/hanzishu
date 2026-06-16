@@ -246,6 +246,11 @@ class _MyHomePageState extends State<MyHomePage> {
             activeIcon: Image.asset('assets/core/lessonsicon0.png'),
           ),
           BottomNavigationBarItem(
+            label: getString(566), // Hanzishu Input Method
+            icon: Image.asset('assets/core/typingicon1.png'),
+            activeIcon: Image.asset('assets/core/typingicon0.png'),
+          ),
+          BottomNavigationBarItem(
             label: getString(92), // Dictionary
             icon: Image.asset('assets/core/dictionaryicon1.png'),
             activeIcon: Image.asset('assets/core/dictionaryicon0.png'),
@@ -254,11 +259,6 @@ class _MyHomePageState extends State<MyHomePage> {
             label: getString(1), // Puzzle Game
             icon: Image.asset('assets/core/meicon1.png'),
             activeIcon: Image.asset('assets/core/meicon0.png'),
-          ),
-          BottomNavigationBarItem(
-            label: getString(93), // Hanzishu Input Method
-            icon: Image.asset('assets/core/typingicon1.png'),
-            activeIcon: Image.asset('assets/core/typingicon0.png'),
           ),
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:hanzishu/engine/localization.dart';
 // NOTE: never change or remove an existing entry here. Just create a new one.
 var theString_zh_CN = [
   Local(0, "未知"),
-  Local(1, "拼字游戏"),
+  Local(1, "乐字搭"),  //拼字游戏
   Local(2, "字卡"),
   Local(3, "汉字分解"),
   Local(4, "对话"),
@@ -570,4 +570,5 @@ var theString_zh_CN = [
   Local(563, "总冠军赛信息"),
   Local(564, "正式比赛结果"),
   Local(565, "首页"),
+  Local(566, "输入法"),
 ];

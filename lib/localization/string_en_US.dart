@@ -4,7 +4,7 @@ import 'package:hanzishu/engine/localization.dart';
 // ignore: non_constant_identifier_names
 var theString_en_US = [
   Local(0, "Unknown"),
-  Local(1, "Puzzle Game"), //Literacy tree
+  Local(1, "Block Hanzi"), //Puzzle Game, Literacy tree
   Local(2, "Flashcards"),
   Local(3, "Word breakdown"),
   Local(4, "Conversation"),
@@ -573,4 +573,5 @@ var theString_en_US = [
   Local(563, "Final Championship Game Info"),
   Local(564, "Formal Game Results"),
   Local(565, "Home"),
+  Local(566, "Input Method"),
 ];

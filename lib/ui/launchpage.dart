@@ -431,7 +431,7 @@ class _LaunchPageState extends State<LaunchPage> {
             },
           ),
           getHomeFeatureCard(
-            title: getString(93),
+            title: getString(566),
             subtitle: "Learn, practice, and use the Hanzishu Input Method.",
             icon: Icons.keyboard_rounded,
             color: Colors.blue,

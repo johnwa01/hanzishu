@@ -290,13 +290,21 @@ class _ComponentPageState extends State<ComponentPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      getStepThreeKeyProgress(ratio),
-                      SizedBox(height: 12.0 * ratio),
-                      Align(
-                        alignment: Alignment.topRight,
-                        child: getSkipThisSection(),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: getStepThreeKeyProgress(ratio),
+                          ),
+
+                          SizedBox(width: 16.0 * ratio),
+
+                          getSkipThisSection(),
+                        ],
                       ),
-                      SizedBox(height: 2.0 * ratio),
+
+                      SizedBox(height: 12.0 * ratio),
+
                       Text(
                         hintText,
                         textAlign: TextAlign.center,
@@ -434,6 +442,7 @@ class _ComponentPageState extends State<ComponentPage> {
     bool isAHeadOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
     if (isAHeadOfRandomComponents) {
       hintText = "Learn mapping in this group";
+      cardSize = 360.0;
     }
 
     return Container(
@@ -476,8 +485,8 @@ class _ComponentPageState extends State<ComponentPage> {
                   SizedBox(height: 12.0 * ratio),
 
                   Container(
-                    width: 160.0 * ratio,
-                    height: 160.0 * ratio,
+                    width: cardSize * ratio,
+                    height: cardSize * ratio,
                     child: FittedBox(
                       fit: BoxFit.contain,
                       child: getQuestionImage(),
@@ -668,7 +677,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(height: 18.0 * ratio),
                 Container(
                   width: heroSize,
-                  height: heroSize * 0.88,
+                  height: heroSize,  // *0.88
                   child: CustomPaint(
                     painter: StepTwoKeyCubePainter(),
                   ),
@@ -1549,7 +1558,7 @@ class _ComponentPageState extends State<ComponentPage> {
         else { // English
           imageName += '_E.png';
         }
-        //imageHeight = 160.0 * getSizeRatioWithLimit(); //250.0
+        imageHeight = 360.0 * getSizeRatioWithLimit(); //250.0
       }
       else {
         var componentInGroup = theRandomComponentList[currentIndex];
@@ -2629,124 +2638,96 @@ class StepThreeBurstPainter extends CustomPainter {
 class StepTwoKeyCubePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
-    final double w = size.width;
-    final double h = size.height;
+    final double s = size.width * 0.50;
+    final double d = size.width * 0.22;
 
-    final Offset topA = Offset(w * 0.28, h * 0.16);
-    final Offset topB = Offset(w * 0.66, h * 0.05);
-    final Offset topC = Offset(w * 0.88, h * 0.29);
-    final Offset topD = Offset(w * 0.49, h * 0.42);
+    final double x = size.width * 0.18;
+    final double y = size.height * 0.28;
 
-    final Offset leftA = topA;
-    final Offset leftB = topD;
-    final Offset leftC = Offset(w * 0.49, h * 0.78);
-    final Offset leftD = Offset(w * 0.18, h * 0.58);
+    final Offset frontTL = Offset(x, y);
+    final Offset frontTR = Offset(x + s, y);
+    final Offset frontBR = Offset(x + s, y + s);
+    final Offset frontBL = Offset(x, y + s);
 
-    final Offset rightA = topD;
-    final Offset rightB = topC;
-    final Offset rightC = Offset(w * 0.80, h * 0.64);
-    final Offset rightD = leftC;
+    final Offset backTL = Offset(x + d, y - d * 0.62);
+    final Offset backTR = Offset(x + s + d, y - d * 0.62);
+    final Offset backBR = Offset(x + s + d, y + s - d * 0.62);
 
     final Paint shadowPaint = Paint()
-      ..color = Color(0x3324344D)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 16.0);
+      ..color = const Color(0x3324344D)
+      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16.0);
+
     canvas.drawOval(
       Rect.fromCenter(
-        center: Offset(w * 0.52, h * 0.82),
-        width: w * 0.66,
-        height: h * 0.16,
+        center: Offset(size.width * 0.52, y + s + d * 0.38),
+        width: size.width * 0.62,
+        height: size.height * 0.14,
       ),
       shadowPaint,
     );
 
     _drawFace(
       canvas,
-      <Offset>[leftA, leftB, leftC, leftD],
-      <Color>[Color(0xFFFFBE55), Color(0xFFFF8F3D)],
+      <Offset>[frontTR, backTR, backBR, frontBR],
+      <Color>[const Color(0xFF55C7F7), const Color(0xFF2F80ED)],
     );
+
     _drawFace(
       canvas,
-      <Offset>[rightA, rightB, rightC, rightD],
-      <Color>[Color(0xFF55C7F7), Color(0xFF2F80ED)],
+      <Offset>[frontTL, frontTR, backTR, backTL],
+      <Color>[const Color(0xFFFFF2A8), const Color(0xFFFFCF5C)],
     );
+
     _drawFace(
       canvas,
-      <Offset>[topA, topB, topC, topD],
-      <Color>[Color(0xFFFFF2A8), Color(0xFFFFCF5C)],
+      <Offset>[frontTL, frontTR, frontBR, frontBL],
+      <Color>[const Color(0xFFFFBE55), const Color(0xFFFF8F3D)],
     );
 
     final Paint edgePaint = Paint()
-      ..color = Colors.white.withOpacity(0.65)
+      ..color = Colors.white.withOpacity(0.70)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.2;
-    canvas.drawPath(_pathFromPoints(<Offset>[topA, topB, topC, rightC, leftC, leftD, topA]), edgePaint);
-    canvas.drawLine(topD, leftC, edgePaint);
-    canvas.drawLine(topD, topC, edgePaint);
-    canvas.drawLine(topD, topA, edgePaint);
 
-    final TextPainter hanziPainter = TextPainter(
-      text: TextSpan(
-        text: '木',
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: w * 0.25,
-          fontWeight: FontWeight.w800,
-          shadows: <Shadow>[
-            Shadow(
-              color: Color(0x5524344D),
-              offset: Offset(0, 2),
-              blurRadius: 3,
-            ),
-          ],
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-    hanziPainter.paint(
+    canvas.drawPath(_pathFromPoints(<Offset>[frontTL, frontTR, frontBR, frontBL]), edgePaint);
+    canvas.drawPath(_pathFromPoints(<Offset>[frontTR, backTR, backBR, frontBR]), edgePaint);
+    canvas.drawPath(_pathFromPoints(<Offset>[frontTL, frontTR, backTR, backTL]), edgePaint);
+
+    _drawCenteredText(canvas, '木', Rect.fromPoints(frontTL, frontBR), s * 0.52);
+    _drawCenteredText(
       canvas,
-      Offset(w * 0.27, h * 0.36),
+      'M',
+      Rect.fromLTRB(frontTR.dx, frontTR.dy, backBR.dx, backBR.dy),
+      s * 0.44,
     );
+  }
 
-    final TextPainter keyPainter = TextPainter(
+  void _drawCenteredText(Canvas canvas, String text, Rect rect, double fontSize) {
+    final TextPainter painter = TextPainter(
       text: TextSpan(
-        text: 'M',
+        text: text,
         style: TextStyle(
           color: Colors.white,
-          fontSize: w * 0.22,
+          fontSize: fontSize,
           fontWeight: FontWeight.w900,
-          shadows: <Shadow>[
+          shadows: const <Shadow>[
             Shadow(
               color: Color(0x5524344D),
-              offset: Offset(0, 2),
-              blurRadius: 3,
+              offset: Offset(0, 3),
+              blurRadius: 4,
             ),
           ],
         ),
       ),
       textDirection: TextDirection.ltr,
     )..layout();
-    keyPainter.paint(
-      canvas,
-      Offset(w * 0.58, h * 0.37),
-    );
 
-    final Paint shinePaint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: <Color>[
-          Colors.white.withOpacity(0.42),
-          Colors.white.withOpacity(0.02),
-        ],
-      ).createShader(Rect.fromLTWH(0, 0, w, h));
-    canvas.drawPath(
-      _pathFromPoints(<Offset>[
-        Offset(w * 0.34, h * 0.18),
-        Offset(w * 0.55, h * 0.12),
-        Offset(w * 0.65, h * 0.22),
-        Offset(w * 0.43, h * 0.30),
-      ]),
-      shinePaint,
+    painter.paint(
+      canvas,
+      Offset(
+        rect.center.dx - painter.width / 2,
+        rect.center.dy - painter.height / 2,
+      ),
     );
   }
 
@@ -2758,6 +2739,7 @@ class StepTwoKeyCubePainter extends CustomPainter {
         end: Alignment.bottomRight,
         colors: colors,
       ).createShader(bounds);
+
     canvas.drawPath(_pathFromPoints(points), paint);
   }
 
@@ -2775,12 +2757,14 @@ class StepTwoKeyCubePainter extends CustomPainter {
     double right = points.first.dx;
     double top = points.first.dy;
     double bottom = points.first.dy;
+
     for (final Offset p in points) {
       if (p.dx < left) left = p.dx;
       if (p.dx > right) right = p.dx;
       if (p.dy < top) top = p.dy;
       if (p.dy > bottom) bottom = p.dy;
     }
+
     return Rect.fromLTRB(left, top, right, bottom);
   }
 

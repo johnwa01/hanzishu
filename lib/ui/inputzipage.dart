@@ -1609,8 +1609,8 @@ class _InputZiPageState extends State<InputZiPage> {
 
   Widget _buildStartStepButton(double ratio, Color primary) {
     return Container(
-      width: 420 * ratio,
-      height: 74 * ratio,
+      width: 350 * ratio, //420
+      height: 50 * ratio, //74
       constraints: BoxConstraints(maxWidth: 420 * ratio),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -3302,6 +3302,7 @@ class _InputZiPageState extends State<InputZiPage> {
             ),
           ),
           SizedBox(width: 12.0 * getSizeRatio()),
+
           Text(
             getTypingScoreString(),
             style: TextStyle(
@@ -3310,6 +3311,11 @@ class _InputZiPageState extends State<InputZiPage> {
               color: Color(0xFF2B2140),
             ),
           ),
+
+          if (typingType == TypingType.FirstTyping) ...[
+            SizedBox(width: 16.0 * getSizeRatio()),
+            getSkipThisSection(),
+          ],
         ],
       ),
     );
