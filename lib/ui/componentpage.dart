@@ -30,7 +30,7 @@ class _ComponentPageState extends State<ComponentPage> {
   int totalQuestions = -1;
   int totalCorrectAnswers = 0;
   double screenWidth = 0.0;
-  int preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
+  //int preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
   bool wasLastAnswerCorrect = false;
   bool wasLastQuestionEverIncorrect = false;
   bool isFromPreviousButton = false;
@@ -51,7 +51,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
     theComponentManager.setCurrentType(questionType);
     theComponentManager.initCurrentIndex();
-    preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
+    //preIndexAtCurrentIndex0 = 10; // we don't need this mechanism any more.
     currentIndex = theComponentManager.getCurrentIndex(widget.questionType);
 
     //theStatisticsManager.initLessonQuizResults();
@@ -431,6 +431,11 @@ class _ComponentPageState extends State<ComponentPage> {
       cardSize = 150.0;
     }
 
+    bool isAHeadOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
+    if (isAHeadOfRandomComponents) {
+      hintText = "Learn mapping in this group";
+    }
+
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -480,17 +485,19 @@ class _ComponentPageState extends State<ComponentPage> {
                   ),
 
                   SizedBox(height: 24.0 * ratio),
-                  Text(
-                    'Choose the matching key',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 20.0 * ratio,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF24344D),
+                  if (!isAHeadOfRandomComponents)
+                    Text(
+                      'Choose the matching key',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 20.0 * ratio,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF24344D),
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 14.0 * ratio),
-                  getCenteredKeyboardAnswers(context),
+                  if (!isAHeadOfRandomComponents) SizedBox(height: 14.0 * ratio),
+                  if (!isAHeadOfRandomComponents) getCenteredKeyboardAnswers(context),
+
                   SizedBox(height: 20.0 * ratio),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -590,204 +597,6 @@ class _ComponentPageState extends State<ComponentPage> {
       ),
     );
   }
-
-/*
-  Widget getStepTwoGroupPage(BuildContext context) {
-    double ratio = getSizeRatioWithLimit();
-    String imageName;
-   // if (theDefaultLocale == "zh_CN") {
-   //   imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
-   // }
-   // else {
-   //   imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
-   // }
-   // String imagePath = 'assets/typing/' + imageName;
-
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            Color(0xFFFFFBF2),
-            Color(0xFFF4FAFF),
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints pageConstraints) {
-            double maxImageHeight = pageConstraints.maxHeight - 78.0 * ratio;
-            if (maxImageHeight < 260.0) {
-              maxImageHeight = 260.0;
-            }
-
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.0 * ratio,
-                vertical: 4.0 * ratio,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: getSkipThisSection(),
-                  ),
-                  SizedBox(height: 2.0 * ratio),
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
-                        double imageWidth = constraints.maxWidth * 0.96;
-                        if (imageWidth > 1120.0) {
-                          imageWidth = 1120.0;
-                        }
-
-                        double imageHeight = constraints.maxHeight;
-                        if (imageHeight > maxImageHeight) {
-                          imageHeight = maxImageHeight;
-                        }
-
-                        return Center(
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: imageWidth,
-                              maxHeight: imageHeight,
-                            ),
-                            child: InteractiveViewer(
-                              minScale: 1.0,
-                              maxScale: 3.0,
-                              panEnabled: true,
-                              scaleEnabled: true,
-                              child: Image.asset(
-                                imagePath,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 6.0 * ratio),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
-                      SizedBox(width: 54.0 * ratio),
-                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-*/
-
-  Widget getStepTwoSummaryPage(BuildContext context) {
-    double ratio = getSizeRatioWithLimit();
-    String imagePath = 'assets/typing/GG6.png';
-
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: <Color>[
-            Color(0xFFFFFBF2),
-            Color(0xFFF4FAFF),
-          ],
-        ),
-      ),
-      child: SafeArea(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints pageConstraints) {
-            double maxImageHeight = pageConstraints.maxHeight - 128.0 * ratio;
-            if (maxImageHeight < 240.0) {
-              maxImageHeight = 240.0;
-            }
-
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.0 * ratio,
-                vertical: 4.0 * ratio,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: getSkipThisSection(),
-                  ),
-                  SizedBox(height: 2.0 * ratio),
-                  Text(
-                    'The 25 Keys at a Glance',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 24.0 * ratio,
-                      fontWeight: FontWeight.w800,
-                      color: Color(0xFF24344D),
-                    ),
-                  ),
-                  SizedBox(height: 8.0 * ratio),
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (BuildContext context, BoxConstraints constraints) {
-                        double imageWidth = constraints.maxWidth * 0.96;
-                        if (imageWidth > 1120.0) {
-                          imageWidth = 1120.0;
-                        }
-
-                        double imageHeight = constraints.maxHeight;
-                        if (imageHeight > maxImageHeight) {
-                          imageHeight = maxImageHeight;
-                        }
-
-                        return Center(
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxWidth: imageWidth,
-                              maxHeight: imageHeight,
-                            ),
-                            child: InteractiveViewer(
-                              minScale: 1.0,
-                              maxScale: 3.0,
-                              panEnabled: true,
-                              scaleEnabled: true,
-                              child: Image.asset(
-                                imagePath,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: 6.0 * ratio),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
-                      SizedBox(width: 54.0 * ratio),
-                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
-  }
-
 
   Widget getStepTwoLandingPage(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
@@ -1423,6 +1232,7 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  /*
   Widget getHeaderOfComponentInGroup() {
     String componentKeyPairingHeaderString = getString(126)/*'Memorize the above Component-key pairings.'*/;
     if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 == 1) {
@@ -1477,26 +1287,29 @@ class _ComponentPageState extends State<ComponentPage> {
         ]
     );
   }
+*/
+
 
   Widget getHeaderOfComponent() {
     var str;
-    if (currentIndex == 0) {
-      if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 1) {
-        str = getString(514); /* 25 categories of Chinese alphabets*/
-      }
-      else if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
-        str = ''; //getString(416); /* learn content & mapping then continue*/
-      }
-      else {
+
+    //if (currentIndex == 0) {
+    //  if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 == 1) {
+    //    str = getString(514); /* 25 categories of Chinese alphabets*/
+    //  }
+    //  else if (questionType == QuestionType.Component && preIndexAtCurrentIndex0 < 6) {
+    //    str = ''; //getString(416); /* learn content & mapping then continue*/
+    //  }
+    //  else {
         str = getString(126) /*'Memorize the above Component-key pairings - 1.'*/;
-      }
-    }
-    else if (currentIndex == 7) {
-      str = getString(358)/*'Review - 2.'*/;
-    }
-    else {
-      str = getString(359)/*'Review again - 3.'*/;
-    }
+    //  }
+    //}
+    //else if (currentIndex == 7) {
+    //  str = getString(358)/*'Review - 2.'*/;
+    //}
+    //else {
+    //  str = getString(359)/*'Review again - 3.'*/;
+    //}
 
     return Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1713,22 +1526,22 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     else if (questionType == QuestionType.Component) { // for the header only
-      if (preIndexAtCurrentIndex0 == 0 || preIndexAtCurrentIndex0 == 1) {
-        return SizedBox(width: 0.0, height: 0.0);
-      }
+      //if (preIndexAtCurrentIndex0 == 0 || preIndexAtCurrentIndex0 == 1) {
+      //  return SizedBox(width: 0.0, height: 0.0);
+      //}
 
       var imageName;
-      if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
-        if (theDefaultLocale == "zh_CN") {
-          imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
-        }
-        else { // English
-          imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
-        }
-        imageWidth = 980.0;
-        imageHeight = 760.0;
-      }
-      else if (theComponentManager.isHeaderOfRandomComponents()) {
+      //if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+      //  if (theDefaultLocale == "zh_CN") {
+      //    imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '.png';
+      //  }
+      //  else { // English
+      //    imageName = 'T' + (preIndexAtCurrentIndex0 + 1).toString() + '_E.png';
+      //  }
+      //  imageWidth = 980.0;
+      //  imageHeight = 760.0;
+      //}
+      if (theComponentManager.isHeaderOfRandomComponents()) {
         imageName = theComponentManager.getHeaderImageNameOfRandomComponents(); //'GG6.png';
         if (theDefaultLocale == "zh_CN" || imageName == "GG6") {
           imageName += '.png';
@@ -2400,7 +2213,7 @@ class _ComponentPageState extends State<ComponentPage> {
     var result = getString(405); // "Previous one"
 
     //skip the first real question
-    if (currentIndex >= 1 || (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2)) {
+    if (currentIndex >= 1 /*|| (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2)*/) {
       return Container(
         child: TextButton(
           child: Text(result,
@@ -2419,9 +2232,9 @@ class _ComponentPageState extends State<ComponentPage> {
               if (currentIndex >= 1) {
                 currentIndex = theComponentManager.getPreviousIndex();
               }
-              else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2) {
-                preIndexAtCurrentIndex0--;
-              }
+              //else if (currentIndex == 0 && preIndexAtCurrentIndex0 >= 2) {
+              //  preIndexAtCurrentIndex0--;
+              //}
             });
           },
         ),
@@ -2437,12 +2250,12 @@ class _ComponentPageState extends State<ComponentPage> {
     // prepare for next one
     // Could be done in Build(), but Build won't allow showCompletedDialog() there.
 
-    if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
-      preIndexAtCurrentIndex0++;
-    }
-    else {
+    //if (questionType == QuestionType.Component && currentIndex == 0 && preIndexAtCurrentIndex0 < 6) {
+    //  preIndexAtCurrentIndex0++;
+    //}
+    //else {
       currentIndex = theComponentManager.getNextIndex();
-    }
+    //}
 
     theComponentManager.resetCorrectAnswerPosition();
     //}
