@@ -3247,7 +3247,8 @@ class _InputZiPageState extends State<InputZiPage> {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
         child: Text(
-          (typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
+          //(typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
+          getString(401), /*"Skip this section"*/
           style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
         //color: Colors.white,
         //textColor: Colors.blueAccent,
@@ -3311,8 +3312,7 @@ class _InputZiPageState extends State<InputZiPage> {
               color: Color(0xFF2B2140),
             ),
           ),
-
-          if (typingType == TypingType.FirstTyping) ...[
+          if (typingType == TypingType.FirstTyping || typingType == TypingType.ExpandedReview) ...[
             SizedBox(width: 16.0 * getSizeRatio()),
             getSkipThisSection(),
           ],
