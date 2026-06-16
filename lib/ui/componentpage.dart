@@ -353,12 +353,45 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  Widget getStepTwoKeyProgress(double ratio) {
+    const int totalKeyCount = 30;
+
+    int currentKeyNumber = currentIndex;
+
+    //if (currentKeyNumber < 1) {
+    //  currentKeyNumber = 1;
+    //}
+    if (currentKeyNumber > totalKeyCount) {
+      currentKeyNumber = totalKeyCount;
+    }
+
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: LinearProgressIndicator(
+            value: currentKeyNumber / totalKeyCount,
+            minHeight: 3.0,
+            backgroundColor: Color(0xFFD7E0EE),
+            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF2F80ED)),
+          ),
+        ),
+        SizedBox(width: 10.0 * ratio),
+        Text(
+          '$currentKeyNumber / $totalKeyCount',
+          style: TextStyle(
+            fontSize: 13.0 * ratio,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF7A8798),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget getStepThreeKeyProgress(double ratio) {
     int totalKeyCount = 25;
     int currentKeyNumber = currentIndex;
-    if (currentKeyNumber < 1) {
-      currentKeyNumber = 1;
-    }
+
     if (currentKeyNumber > totalKeyCount) {
       currentKeyNumber = totalKeyCount;
     }
@@ -427,18 +460,16 @@ class _ComponentPageState extends State<ComponentPage> {
     double ratio = getSizeRatioWithLimit();
     String hintText = getCurrentComponentHintString();
 
-    double cardSize = 170.0 * ratio;
-    if (cardSize > 280.0) {
-      cardSize = 280.0;
-    }
-    if (cardSize < 150.0) {
-      cardSize = 150.0;
-    }
-
     bool isAHeadOfRandomComponents = theComponentManager.isHeaderOfRandomComponents();
+
+    double imageWidth = isAHeadOfRandomComponents ? 720.0 * ratio : 150.0 * ratio;
+    double imageHeight = isAHeadOfRandomComponents ? 520.0 * ratio : 150.0 * ratio;
+
+    if (imageWidth > 780.0) imageWidth = 780.0;
+    if (imageHeight > 560.0) imageHeight = 560.0;
+
     if (isAHeadOfRandomComponents) {
       hintText = "Learn mapping in this group";
-      cardSize = 360.0;
     }
 
     return Container(
@@ -454,20 +485,31 @@ class _ComponentPageState extends State<ComponentPage> {
         ),
       ),
       child: SafeArea(
-        child: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints pageConstraints) {
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 18.0 * ratio,
-                vertical: 6.0 * ratio,
-              ),
-              child: Column(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: 18.0 * ratio,
+              vertical: 6.0 * ratio,
+            ),
+            child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: getSkipThisSection(),
-                  ),
+                  //if (isAHeadOfRandomComponents)
+                  //  Align(
+                  //    alignment: Alignment.topRight,
+                  //    child: getSkipThisSection(),
+                  //  )
+                  //else
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Expanded(
+                          child: getStepTwoKeyProgress(ratio),
+                        ),
+                        SizedBox(width: 16.0 * ratio),
+                        getSkipThisSection(),
+                      ],
+                    ),
                   SizedBox(height: 6.0 * ratio),
                   Text(
                     hintText,
@@ -481,12 +523,10 @@ class _ComponentPageState extends State<ComponentPage> {
                   SizedBox(height: 12.0 * ratio),
 
                   Container(
-                    width: cardSize * ratio,
-                    height: cardSize * ratio,
-                    child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: getQuestionImage(),
-                    ),
+                    width: imageWidth,
+                    height: imageHeight,
+                    alignment: Alignment.center,
+                    child: getQuestionImage(),
                   ),
 
                   SizedBox(height: 24.0 * ratio),
@@ -503,7 +543,7 @@ class _ComponentPageState extends State<ComponentPage> {
                   if (!isAHeadOfRandomComponents) SizedBox(height: 14.0 * ratio),
                   if (!isAHeadOfRandomComponents) getCenteredKeyboardAnswers(context),
 
-                  SizedBox(height: 20.0 * ratio),
+                  SizedBox(height: 6.0 * ratio),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -514,8 +554,7 @@ class _ComponentPageState extends State<ComponentPage> {
                   ),
                 ],
               ),
-            );
-          },
+            ),
         ),
       ),
     );
@@ -1547,21 +1586,24 @@ class _ComponentPageState extends State<ComponentPage> {
       //  imageHeight = 760.0;
       //}
       if (theComponentManager.isHeaderOfRandomComponents()) {
-        imageName = theComponentManager.getHeaderImageNameOfRandomComponents(); //'GG6.png';
+        imageName = theComponentManager.getHeaderImageNameOfRandomComponents();
+
         if (theDefaultLocale == "zh_CN" || imageName == "GG6") {
           imageName += '.png';
         }
-        else { // English
+        else {
           imageName += '_E.png';
         }
-        imageHeight = 360.0 * getSizeRatioWithLimit(); //250.0
+
+        imageWidth = 720.0 * getSizeRatioWithLimit();
+        imageHeight = 560.0 * getSizeRatioWithLimit();
       }
       else {
         var componentInGroup = theRandomComponentList[currentIndex];
         var component = theComponentManager.getComponentByGroupAndIndex(componentInGroup.groupNumber, componentInGroup.indexInGroup);
         imageName = component.image;
-        imageWidth = 160.0 * getSizeRatioWithLimit(); // 160
-        imageHeight = 160.0 * getSizeRatioWithLimit(); //160
+        imageWidth =150.0 * getSizeRatioWithLimit(); // 160
+        imageHeight = 150.0 * getSizeRatioWithLimit(); //160
       }
       imagePath = 'assets/typing/' + imageName;
     }
@@ -2013,7 +2055,7 @@ class _ComponentPageState extends State<ComponentPage> {
         "assets/letters/L" + answerDisplayValue + ".png",
         width: width,
         height: height,
-        fit: BoxFit.fitWidth,
+        fit: BoxFit.contain,
       ),
     );
   }

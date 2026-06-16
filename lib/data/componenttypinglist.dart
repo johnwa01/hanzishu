@@ -146,37 +146,37 @@ var theComponentInGroupList = [
 ];
 
 var theRandomComponentList = [
-  ComponentInGroup(0, 0, 0, ""),  // the whole components photo only
-  ComponentInGroup(0, 0, 0, "T3"),  // the whole components photo only
-  ComponentInGroup(1, 2, 4, ""),
-  ComponentInGroup(2, 1, 1, ""),
-  ComponentInGroup(3, 2, 5, ""),
-  ComponentInGroup(4, 4, 2, ""),
-  ComponentInGroup(5, 5, 2, ""),
+  ComponentInGroup(0, 0, 0, ""),  // note used. the whole components photo only
+  ComponentInGroup(1, 0, 0, "T3"),  // group
+  ComponentInGroup(2, 2, 4, ""),
+  ComponentInGroup(3, 5, 1, ""),
+  ComponentInGroup(4, 1, 5, ""),
+  ComponentInGroup(5, 2, 2, ""),
   ComponentInGroup(6, 6, 1, ""),
-  ComponentInGroup(7, 0, 0, "T4"),  // the whole components photo only
-  ComponentInGroup(12, 1, 4, ""),
+  ComponentInGroup(7, 3, 4, ""),
+  ComponentInGroup(8, 5, 3, ""),
+  ComponentInGroup(9, 0, 0, "T4"),  // group
+  ComponentInGroup(10, 3, 5, ""),
   ComponentInGroup(11, 5, 4, ""),
-  ComponentInGroup(8, 4, 3, ""),
-  ComponentInGroup(9, 3, 2, ""),
-  ComponentInGroup(13, 4, 4, ""),
-  ComponentInGroup(17, 0, 0, "T6"),  // the whole components photo only
-  ComponentInGroup(10, 2, 1, ""),
-  ComponentInGroup(14, 3, 1, ""),
-  ComponentInGroup(15, 1, 5, ""),
-  ComponentInGroup(16, 6, 2, ""),
-  ComponentInGroup(37, 0, 0, "T5"),  // the whole components photo only
-  ComponentInGroup(20, 1, 3, ""),
-  ComponentInGroup(18, 5, 1, ""),
-  ComponentInGroup(19, 3, 3, ""),
-  ComponentInGroup(21, 2, 2, ""),
-  ComponentInGroup(22, 4, 1, ""),
-  ComponentInGroup(23, 3, 4, ""),
-  ComponentInGroup(24, 2, 3, ""),
-  ComponentInGroup(25, 5, 3, ""),
-  ComponentInGroup(26, 1, 2, ""),
-  ComponentInGroup(27, 3, 5, ""),
-  ComponentInGroup(47, 0, 0, "GG6"),  // the whole components photo only
+  ComponentInGroup(12, 1, 2, ""),
+  ComponentInGroup(13, 5, 2, ""),
+  ComponentInGroup(14, 6, 2, ""),
+  ComponentInGroup(15, 0, 0, "T6"), // group
+  ComponentInGroup(16, 1, 3, ""),
+  ComponentInGroup(17, 2, 3, ""),
+  ComponentInGroup(18, 4, 2, ""),
+  ComponentInGroup(19, 1, 4, ""),
+  ComponentInGroup(20, 4, 4, ""),
+  ComponentInGroup(21, 0, 0, "T5"), // group
+  ComponentInGroup(22, 1, 1, ""),
+  ComponentInGroup(23, 2, 5, ""),
+  ComponentInGroup(24, 3, 3, ""),
+  ComponentInGroup(25, 3, 2, ""),
+  ComponentInGroup(26, 3, 1, ""),
+  ComponentInGroup(27, 4, 1, ""),
+  ComponentInGroup(28, 4, 3, ""),
+  ComponentInGroup(29, 2, 1, ""),
+  ComponentInGroup(30, 0, 0, "GG6"),  // the whole components photo only
 ];
 
 var theExpandedComponentList = [

@@ -99,7 +99,7 @@ class TutorialCompleteDialog extends StatelessWidget {
             const SizedBox(height: 24),
 
             SizedBox(
-              width: 220,
+              width: 220, //220
               height: 56,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
