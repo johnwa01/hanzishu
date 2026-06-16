@@ -1379,16 +1379,35 @@ class _InputZiPageState extends State<InputZiPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          TutorialStepIndicator(currentStep: 1, ratio: ratio),
-
-                          SizedBox(height: 18 * ratio),
+                          //TutorialStepIndicator(currentStep: 1, ratio: ratio),
+                          //SizedBox(height: 18 * ratio),
 
                           Row(
                             children: [
-                              SizedBox(width: 120 * ratio),
+                              SizedBox(width: 116 * ratio),
 
                               Expanded(
-                                child: Text(
+                                child: Center(
+                                  child: TutorialStepIndicator(
+                                    currentStep: 1,
+                                    ratio: ratio,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 116 * ratio,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: getSkipThisSection(),
+                                ),
+                              ),
+                            ],
+                          ),
+
+                          SizedBox(height: 24 * ratio),
+
+                          Text(
                                   "Your First\nChinese Characters",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -1399,17 +1418,6 @@ class _InputZiPageState extends State<InputZiPage> {
                                     letterSpacing: -0.4,
                                   ),
                                 ),
-                              ),
-
-                              SizedBox(
-                                width: 120 * ratio,
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: getSkipThisSection(),
-                                ),
-                              ),
-                            ],
-                          ),
 
                           SizedBox(height: 20 * ratio),
 
@@ -1688,9 +1696,42 @@ class _InputZiPageState extends State<InputZiPage> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          TutorialStepIndicator(currentStep: 5, ratio: ratio),
+                          Row(
+                            children: [
+                              SizedBox(width: 116 * ratio),
+
+                              Expanded(
+                                child: Center(
+                                  child: TutorialStepIndicator(
+                                    currentStep: 5,
+                                    ratio: ratio,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(
+                                width: 116 * ratio,
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: getSkipThisSection(),
+                                ),
+                              ),
+                            ],
+                          ),
+
                           SizedBox(height: 24 * ratio),
-                          _buildPracticeSubtitleRow(ratio),
+
+                          Text(
+                            "Let's Type!",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 35 * ratio,
+                              fontWeight: FontWeight.w900,
+                              color: Color(0xFF2F80ED),
+                              height: 1.0,
+                              letterSpacing: -0.3,
+                            ),
+                          ),
                           SizedBox(height: 20 * ratio),
                           _buildPracticeTypingHero(ratio, isNarrow),
                           SizedBox(height: 24 * ratio),
@@ -1706,34 +1747,6 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildPracticeSubtitleRow(double ratio) {
-    return Row(
-      children: [
-        SizedBox(width: 116 * ratio),
-        Expanded(
-          child: Text(
-            "Let's Type!",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 35 * ratio,
-              fontWeight: FontWeight.w900,
-              color: Color(0xFF2F80ED),
-              height: 1.0,
-              letterSpacing: -0.3,
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 116 * ratio,
-          child: Align(
-            alignment: Alignment.centerRight,
-            child: getSkipThisSection(),
-          ),
-        ),
-      ],
     );
   }
 

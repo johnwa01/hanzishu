@@ -221,7 +221,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
           builder: (BuildContext context, BoxConstraints constraints) {
             final bool isNarrow = constraints.maxWidth < 520;
             final double ratio = _ratioForWidth(constraints.maxWidth);
-            final double maxContentWidth = isNarrow ? constraints.maxWidth : 640.0;
+            //final double maxContentWidth = isNarrow ? constraints.maxWidth : 640.0;
 
             return Center(
               child: SingleChildScrollView(
@@ -229,12 +229,9 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
                   horizontal: isNarrow ? 18.0 : 32.0,
                   vertical: 18.0,
                 ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(maxWidth: maxContentWidth),
-                  child: _isLandingPage
+                child: _isLandingPage
                       ? _buildLandingPage(isNarrow, ratio)
                       : _buildExamplePage(isNarrow, ratio),
-                ),
               ),
             );
           },
@@ -248,13 +245,43 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        TutorialStepIndicator(currentStep: 4, ratio: ratio),
-        SizedBox(height: 24.0 * ratio),
-        _SubtitleRow(
-          title: 'Top-left to Bottom-right',
-          onSkipStep: _skipStep,
-          isNarrow: isNarrow,
+      Stack(
+      alignment: Alignment.center,
+      children: <Widget>[
+        TutorialStepIndicator(
+          currentStep: 4,
+          ratio: ratio,
         ),
+
+        Positioned(
+          right: 0,
+          child: TextButton(
+            onPressed: _skipStep,
+            child: Text(
+              'Skip Section',
+              style: TextStyle(
+                fontSize: isNarrow ? 13.0 : 15.0,
+                fontWeight: FontWeight.w700,
+                color: Color(0xFF6C7686),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+
+    SizedBox(height: 24.0 * ratio),
+
+    Text(
+    'Top-left to Bottom-right',
+    textAlign: TextAlign.center,
+    style: TextStyle(
+    fontSize: isNarrow ? 21.0 : 27.0,
+    fontWeight: FontWeight.w900,
+    color: Color(0xFF1677FF),
+    height: 1.1,
+    ),
+    ),
         SizedBox(height: 18.0 * ratio),
         _DecompositionHero(isNarrow: isNarrow),
         SizedBox(height: 24.0 * ratio),

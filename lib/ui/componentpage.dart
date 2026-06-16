@@ -822,7 +822,7 @@ class _ComponentPageState extends State<ComponentPage> {
                           getSmallOrangeBurst(ratio, false),
                           Flexible(
                             child: Text(
-                              '25 keys for all Chinese components',
+                              '25 keys for common components',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: titleFontSize * 0.8,
