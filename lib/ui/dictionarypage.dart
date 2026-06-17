@@ -32,8 +32,8 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
   double screenWidth = 0.0;
   late DictionaryStage dicStage;
   OverlayEntry? overlayEntry = null;
- // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
- //     0.0, 0.0, "");
+  // PositionAndMeaning previousPositionAndMeaning = PositionAndMeaning(
+  //     0.0, 0.0, "");
   FocusNode _textNode = new FocusNode();
 
   TextEditingController _controller = new TextEditingController(text: "");
@@ -103,74 +103,97 @@ class _DictionaryPageState extends State<DictionaryPage> with SingleTickerProvid
     thePositionManager.setFrameWidth(screenWidth - 10.0);
 
     try {
-      return Scaffold
-        (
-        appBar: AppBar
-          (
-          title: Text(getString(95)/*"First Character Dictionary"*/),  //汉字树一触字典
+      return Scaffold(
+        backgroundColor: const Color(0xFFFDF7FF),
+        appBar: AppBar(
+          backgroundColor: const Color(0xFFFDF7FF),
+          elevation: 0,
+          foregroundColor: const Color(0xFF111827),
+          centerTitle: true,
+          title: Text(
+            getString(95)/*"First Character Dictionary"*/,  //汉字树一触字典
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF111827),
+            ),
           ),
-        body: Container(
-          child: WillPopScope(
-            child: new Stack(
-              children: <Widget>[
-                //SizedBox(width: 100 * getSizeRatioWithLimit()),
-                //SizedBox(width: 80 * getSizeRatioWithLimit()),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+        ),
+        body: SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: SizedBox(
+              width: screenWidth,
+              child: WillPopScope(
+                child: Stack(
                   children: <Widget>[
-                    SizedBox(width: 20 * getSizeRatioWithLimit()),
-                    Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                    SizedBox(width: 30 * getSizeRatioWithLimit()),
-
-                    SizedBox(width: 25 * getSizeRatioWithLimit()),
-
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => DictionaryHelpPage(),
+                    // Keep the title row and help button in the same relative position
+                    // as before, but center the whole table area on wider screens.
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(width: 20 * getSizeRatioWithLimit()),
+                        Text(
+                          getString(96)/*"Basic Table"*/,
+                          style: TextStyle(
+                            fontSize: 18.0 * getSizeRatioWithLimit(),
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF607D8B),
                           ),
-                        );
-                      },
-                      child: Text(getString(114)/*"Help"*/,
-                          style: TextStyle(color: Colors.lightBlue)),
+                        ),
+                        SizedBox(width: 55 * getSizeRatioWithLimit()),
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: TextStyle(
+                              fontSize: 18.0 * getSizeRatioWithLimit(),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DictionaryHelpPage(),
+                              ),
+                            );
+                          },
+                          child: Text(
+                            getString(114)/*"Help"*/,
+                            style: const TextStyle(color: Color(0xFF0EA5E9)),
+                          ),
+                        ),
+                      ],
                     ),
-                    //Text(getString(114)/*"Help"*/, style: TextStyle(fontSize: 20 * getSizeRatioWithLimit(), color: Colors.lightBlue),),
+                    Positioned(
+                      child: CustomPaint(
+                        foregroundPainter: DictionaryPainter(
+                          Colors.amber,
+                          //lessonId: widget.lessonId,
+                          screenWidth,
+                          //screenWidth: screenWidth,
+                          dicStage,
+                          firstZiIndex,
+                          searchingZiIndex,
+                          context,
+                          compoundZiCurrentComponentId,
+                          currentZiListType,
+                          shouldDrawCenter,
+                          false,
+                        ),
+                        child: Center(
+                          child: Stack(
+                            children: displayCharsAndCreateHittestButtons(context),
+                          ),
+                        ),
+                      ),
+                    ),
+                    //        getAnimatedPathPainter(),
                   ],
                 ),
-
-                new Positioned(
-                  child: CustomPaint(
-                    foregroundPainter: DictionaryPainter(
-                      Colors.amber,
-                      //lessonId: widget.lessonId,
-                      screenWidth,
-                      //screenWidth: screenWidth,
-                      dicStage,
-                      firstZiIndex,
-                      searchingZiIndex,
-                      context,
-                      compoundZiCurrentComponentId,
-                      currentZiListType,
-                      shouldDrawCenter,
-                      false
-                    ),
-                    child: Center(
-                      child: Stack(
-                        children: displayCharsAndCreateHittestButtons(context)
-                      ),
-                    ),
-                  ),
-                ),
-        //        getAnimatedPathPainter(),
-              ]
+                onWillPop: _onWillPop,
+              ),
             ),
-            onWillPop: _onWillPop
-          )
+          ),
         ),
       );
     } catch (e, s) {
