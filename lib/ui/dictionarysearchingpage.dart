@@ -201,6 +201,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     }
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
+    // Limit drawing area width on large screens
+    if (screenWidth > 900) {
+      screenWidth = 900;
+    }
     thePositionManager.setFrameWidth(screenWidth - 10.0);
     //screenWidth = Utility.getScreenWidth(context);
 
@@ -222,8 +226,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         (
         title: Text(title),  //汉字树字典/Customized Flashcards
       ),
-      body: Container(
-          child: WillPopScope(
+    body: Center(
+      child: SizedBox(
+        width: screenWidth,
+        child: WillPopScope(
               child: new Stack(
                   children: <Widget>[
                     new Positioned(
@@ -254,6 +260,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
               ),
               onWillPop: _onWillPop
           )
+        ),
       ),
     );
   }

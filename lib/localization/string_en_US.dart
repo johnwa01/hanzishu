@@ -100,7 +100,7 @@ var theString_en_US = [
   Local(94, "More"),
   Local(95, "Hanzishu Dictionary"),
   Local(96, "First-Hanzi Radical Table"),
-  Local(97, "Chinese alphabets"),
+  Local(97, "Components"),
   Local(98, "Hanzi pictographic input method"),
   Local(99, "[For below, please make sure your computer/phone is under English input mode. The program for the pictographic input method is built in here already."),
   Local(100, "Give it a try"),

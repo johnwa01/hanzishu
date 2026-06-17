@@ -48,7 +48,7 @@ class WordLaunchPage extends StatefulWidget {
 }
 
 class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProviderStateMixin {
-  DrillCategory? drillCategory; //startLessonId;
+  late DrillCategory drillCategory; //startLessonId;
   int subItemId = -1; //endLessonId;
   String customString = '';
   int centerZiId = -1;
@@ -107,7 +107,6 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidth(context);
-    //screenWidth = Utility.getScreenWidthForTreeAndDict(context);
     thePositionManager.setFrameTopEdgeSizeWithRatio(getSizeRatio());
 
     var title;
@@ -131,69 +130,415 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       title = getString(500);
     }
 
-    return Scaffold
-      (
-      appBar: AppBar
-        (
-        title: Text(title),
+    return Scaffold(
+      backgroundColor: Color(0xFFFDF7FF),
+      appBar: AppBar(
+        title: Text(
+          title,
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: Color(0xFF111827),
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xFFFDF7FF),
+        elevation: 0,
+        foregroundColor: Color(0xFF111827),
       ),
-      body: Container(
-        child: WillPopScope(   // just for removing overlay on detecting back arrow
-          //height: 200.0,
-          //width: 200.0,
-          child: Center(
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                  Row(
-                      children: <Widget>[
-                        SizedBox(width: 50),
-                        getDrillPageCore(drillCategory),
-                        SizedBox(width: 50),
-                        getFlashcard(drillCategory!),
-                      ]
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final isNarrow = constraints.maxWidth < 640;
+
+              return SingleChildScrollView(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxWidth: 900),
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(20, 18, 20, 28),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          _buildPrimaryActionCard(),
+                          SizedBox(height: 18),
+                          _buildPracticeGrid(isNarrow),
+                        ],
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 30),
-                  Row(
-                      children: <Widget>[
-                        SizedBox(width: 50),
-                        getExamMeaning(drillCategory),
-                      ]
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                      children: <Widget>[
-                        SizedBox(width: 50),
-                        getExamSoundToHanzi(drillCategory!),
-                        SizedBox(width: 50),
-                        getExamHanziToSound(drillCategory!),
-                      ]
-                  ),
-                  SizedBox(height: 30),
-                  Row(
-                      children: <Widget>[
-                        SizedBox(width: 50),
-                        getReadAndTypeHanzi(drillCategory!),
-                        SizedBox(width: 50),
-                        getListenAndTypeHanzi(drillCategory!),
-                      ]
-                  ),
-                  SizedBox(height: 30),
-                Row(
-                    children: <Widget>[
-                      SizedBox(width: 50),
-                      getStudyCustomizedWordsPage(drillCategory!),
-                    ]
                 ),
-              ],
-            ),
+              );
+            },
+          ),
         ),
-            onWillPop: _onWillPop
-        ),
-      )
+      ),
     );
+  }
+
+  bool _isThirdPartyTextbook() {
+    return widget.thirdPartyType == ThirdPartyType.sunlaoshi ||
+        widget.thirdPartyType == ThirdPartyType.yuwenAll ||
+        widget.thirdPartyType == ThirdPartyType.cMadeEasy;
+  }
+
+  Widget _buildPrimaryActionCard() {
+    if (_isThirdPartyTextbook()) {
+      return _buildActionCard(
+        icon: Icons.keyboard_rounded,
+        title: 'Typing Practice',
+        subtitle: 'Read and type Hanzi from this lesson.',
+        isPrimary: true,
+        onTap: () {
+          _prepareThirdPartyLessonIfNeeded();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => InputZiPage(
+                typingType: TypingType.ThirdParty,
+                lessonId: 0,
+                wordsStudy: customString,
+                isSoundPrompt: false,
+                inputMethod: InputMethod.Pinxin,
+                showHint: HintType.Hint1,
+                includeSkipSection: false,
+                showSwitchMethod: false,
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+    bool isFromReviewPage = true;
+    if (drillCategory == DrillCategory.custom) {
+      isFromReviewPage = false;
+    }
+
+    return _buildActionCard(
+      icon: Icons.extension_rounded,
+      title: 'Block Hanzi',
+      subtitle: 'Build and explore characters from components.',
+      isPrimary: true,
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => DrillPageCore(
+              drillCategory: drillCategory,
+              startingCenterZiId: 1,
+              subItemId: subItemId,
+              isFromReviewPage: isFromReviewPage,
+              customString: customString,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPracticeGrid(bool isNarrow) {
+    final cards = <Widget>[];
+
+    if (!_isThirdPartyTextbook()) {
+      if (drillCategory == DrillCategory.custom) {
+        cards.add(_buildActionCard(
+          icon: Icons.style_rounded,
+          title: getString(2),
+          subtitle: 'Review each character with details.',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DictionarySearchingPage(
+                  dicStage: DictionaryStage.detailedzi,
+                  firstOrSearchingZiIndex: -1,
+                  flashcardList: customString,
+                  dicCaller: DicCaller.Flashcard,
+                ),
+              ),
+            );
+          },
+        ));
+      }
+
+      cards.add(_buildActionCard(
+        icon: Icons.translate_rounded,
+        title: getString(448),
+        subtitle: 'Choose the correct meaning.',
+        onTap: () {
+          if (drillCategory == DrillCategory.custom) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => QuizPage(
+                  quizTextbook: QuizTextbook.custom,
+                  quizCategory: QuizCategory.meaning,
+                  lessonId: 0,
+                  wordsStudy: customString,
+                  includeSkipSection: false,
+                ),
+              ),
+            );
+          }
+          else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => StandardExamPage(
+                  drillCategory: drillCategory,
+                  subItemId: subItemId,
+                  quizCategory: QuizCategory.meaning,
+                  customString: '',
+                ),
+              ),
+            );
+          }
+        },
+      ));
+
+      cards.add(_buildActionCard(
+        icon: Icons.volume_up_rounded,
+        title: getString(488),
+        subtitle: 'Listen and choose the Hanzi.',
+        onTap: () {
+          if (drillCategory == DrillCategory.custom) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => QuizPage(
+                  quizTextbook: QuizTextbook.custom,
+                  quizCategory: QuizCategory.soundToZi,
+                  lessonId: 0,
+                  wordsStudy: customString,
+                  includeSkipSection: false,
+                ),
+              ),
+            );
+          }
+          else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => StandardExamPage(
+                  drillCategory: drillCategory,
+                  subItemId: subItemId,
+                  quizCategory: QuizCategory.soundToZi,
+                  customString: customString,
+                ),
+              ),
+            );
+          }
+        },
+      ));
+
+      cards.add(_buildActionCard(
+        icon: Icons.record_voice_over_rounded,
+        title: getString(447),
+        subtitle: 'See Hanzi and choose the sound.',
+        onTap: () {
+          if (drillCategory == DrillCategory.custom) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => QuizPage(
+                  quizTextbook: QuizTextbook.custom,
+                  quizCategory: QuizCategory.ziToSound,
+                  lessonId: 0,
+                  wordsStudy: customString,
+                  includeSkipSection: false,
+                ),
+              ),
+            );
+          }
+          else {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => StandardExamPage(
+                  drillCategory: drillCategory,
+                  subItemId: subItemId,
+                  quizCategory: QuizCategory.ziToSound,
+                  customString: customString,
+                ),
+              ),
+            );
+          }
+        },
+      ));
+
+      if (drillCategory == DrillCategory.custom) {
+        cards.add(_buildActionCard(
+          icon: Icons.keyboard_alt_rounded,
+          title: getString(489),
+          subtitle: 'Practice typing the characters.',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(
+                  typingType: TypingType.Custom,
+                  lessonId: 0,
+                  wordsStudy: customString,
+                  isSoundPrompt: false,
+                  inputMethod: InputMethod.Pinxin,
+                  showHint: HintType.Hint1,
+                  includeSkipSection: false,
+                  showSwitchMethod: false,
+                ),
+              ),
+            );
+          },
+        ));
+
+        cards.add(_buildActionCard(
+          icon: Icons.hearing_rounded,
+          title: getString(491),
+          subtitle: 'Listen first, then type Hanzi.',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => InputZiPage(
+                  typingType: TypingType.Custom,
+                  lessonId: 0,
+                  wordsStudy: customString,
+                  isSoundPrompt: true,
+                  inputMethod: InputMethod.Pinxin,
+                  showHint: HintType.Hint1,
+                  includeSkipSection: false,
+                  showSwitchMethod: false,
+                ),
+              ),
+            );
+          },
+        ));
+
+        cards.add(_buildActionCard(
+          icon: Icons.menu_book_rounded,
+          title: getString(492),
+          subtitle: 'Study customized words together.',
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => StudyCustomizedWordsPage(
+                  titleStringId: 409,
+                  customString: customString,
+                  studyType: StudyType.all,
+                ),
+              ),
+            );
+          },
+        ));
+      }
+    }
+
+    if (cards.isEmpty) {
+      return SizedBox(width: 0, height: 0);
+    }
+
+    return Wrap(
+      spacing: 16,
+      runSpacing: 16,
+      alignment: WrapAlignment.center,
+      children: cards.map((card) {
+        return SizedBox(
+          width: isNarrow ? double.infinity : 280,
+          child: card,
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildActionCard({
+    required IconData icon,
+    required String title,
+    required String subtitle,
+    required VoidCallback onTap,
+    bool isPrimary = false,
+  }) {
+    final iconColor = isPrimary ? Color(0xFF0F766E) : Color(0xFF2563EB);
+    final iconBg = isPrimary ? Color(0xFFE6F7F2) : Color(0xFFEFF6FF);
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(isPrimary ? 26 : 22),
+      elevation: isPrimary ? 5 : 2,
+      shadowColor: Colors.black.withOpacity(isPrimary ? 0.12 : 0.08),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(isPrimary ? 26 : 22),
+        onTap: onTap,
+        child: Container(
+          padding: EdgeInsets.all(isPrimary ? 24 : 18),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(isPrimary ? 26 : 22),
+            border: Border.all(
+              color: isPrimary ? Color(0xFFC7EDE2) : Color(0xFFE5E7EB),
+              width: 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: isPrimary ? 64 : 48,
+                height: isPrimary ? 64 : 48,
+                decoration: BoxDecoration(
+                  color: iconBg,
+                  borderRadius: BorderRadius.circular(isPrimary ? 20 : 16),
+                ),
+                child: Icon(
+                  icon,
+                  color: iconColor,
+                  size: isPrimary ? 34 : 26,
+                ),
+              ),
+              SizedBox(width: isPrimary ? 18 : 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: isPrimary ? 22 : 16,
+                        fontWeight: FontWeight.w800,
+                        color: Color(0xFF111827),
+                      ),
+                    ),
+                    SizedBox(height: 6),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        fontSize: isPrimary ? 14 : 13,
+                        height: 1.3,
+                        color: Color(0xFF64748B),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 10),
+              Icon(
+                Icons.arrow_forward_rounded,
+                color: iconColor,
+                size: isPrimary ? 30 : 24,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _prepareThirdPartyLessonIfNeeded() {
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+      ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+          ThirdPartyType.sunlaoshi, subItemId);
+    }
+    else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+      ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+          ThirdPartyType.yuwenAll, subItemId);
+    }
+    else if (widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
+      ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+          ThirdPartyType.cMadeEasy, subItemId);
+    }
   }
 
   Widget getDrillPageCore(drillCategory) {
@@ -340,8 +685,8 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         fillColor: Colors.blue.shade100,
         onPressed: () {
           Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) =>
-              QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.meaning, lessonId: 0, wordsStudy: customString, includeSkipSection: false),
+            MaterialPageRoute(builder: (context) =>
+                QuizPage(quizTextbook: QuizTextbook.custom, quizCategory: QuizCategory.meaning, lessonId: 0, wordsStudy: customString, includeSkipSection: false),
             ),
           );
         },
@@ -377,21 +722,21 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       return SizedBox(width: 0.0, height: 0.0);
     }
 
-      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
-        if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
-          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
-              ThirdPartyType.sunlaoshi, subItemId);
-        }
-        else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
-          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
-              ThirdPartyType.yuwenAll, subItemId);
-        }
-        else if (widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
-          ThirdPartyLesson.setThirdPartyTypeAndLessonId(
-              ThirdPartyType.cMadeEasy, subItemId);
-        }
+    if (widget.thirdPartyType == ThirdPartyType.sunlaoshi || widget.thirdPartyType == ThirdPartyType.yuwenAll || widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
+      if (widget.thirdPartyType == ThirdPartyType.sunlaoshi) {
+        ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+            ThirdPartyType.sunlaoshi, subItemId);
+      }
+      else if (widget.thirdPartyType == ThirdPartyType.yuwenAll) {
+        ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+            ThirdPartyType.yuwenAll, subItemId);
+      }
+      else if (widget.thirdPartyType == ThirdPartyType.cMadeEasy) {
+        ThirdPartyLesson.setThirdPartyTypeAndLessonId(
+            ThirdPartyType.cMadeEasy, subItemId);
+      }
 
-        return TextButton(
+      return TextButton(
           style: ButtonStyle(
             //backgroundColor: WidgetStateProperty.all(backgroundColor),
             shape: WidgetStateProperty.all(
@@ -421,39 +766,39 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           child: Image.asset("assets/core/typing.png",
             width: 180.0,
             height: 90.0,
-          //    fit: fit,
+            //    fit: fit,
           )
-        );
-      }
-      else {
-        return RawMaterialButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(33.0),
-              ),
-              side: BorderSide(color: Colors.blue, width: 0.5)
-          ),
-          fillColor: Colors.blue.shade100,
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    InputZiPage(typingType: TypingType.Custom,
-                        lessonId: 0,
-                        wordsStudy: customString,
-                        isSoundPrompt: false,
-                        inputMethod: InputMethod.Pinxin,
-                        showHint: HintType.Hint1,
-                        includeSkipSection: false,
-                        showSwitchMethod: false), //InputZiPage(),
-              ),
-            );
-          },
-          child: Text(getString(489), //"Read and type Hanzi"
-              style: TextStyle(color: Colors.brown)),
-        );
-      }
+      );
+    }
+    else {
+      return RawMaterialButton(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(33.0),
+            ),
+            side: BorderSide(color: Colors.blue, width: 0.5)
+        ),
+        fillColor: Colors.blue.shade100,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  InputZiPage(typingType: TypingType.Custom,
+                      lessonId: 0,
+                      wordsStudy: customString,
+                      isSoundPrompt: false,
+                      inputMethod: InputMethod.Pinxin,
+                      showHint: HintType.Hint1,
+                      includeSkipSection: false,
+                      showSwitchMethod: false), //InputZiPage(),
+            ),
+          );
+        },
+        child: Text(getString(489), //"Read and type Hanzi"
+            style: TextStyle(color: Colors.brown)),
+      );
+    }
   }
 
   Widget getListenAndTypeHanzi(DrillCategory drillCategory) {
@@ -477,9 +822,9 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  InputZiPage(typingType: TypingType.Custom,
-                      lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false) //InputZiPage(),
+                builder: (context) =>
+                    InputZiPage(typingType: TypingType.Custom,
+                        lessonId: 0, wordsStudy: customString, isSoundPrompt: true, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: false, showSwitchMethod: false) //InputZiPage(),
             ),
           );
         },
