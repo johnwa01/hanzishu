@@ -492,69 +492,69 @@ class _ComponentPageState extends State<ComponentPage> {
               vertical: 6.0 * ratio,
             ),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  //if (isAHeadOfRandomComponents)
-                  //  Align(
-                  //    alignment: Alignment.topRight,
-                  //    child: getSkipThisSection(),
-                  //  )
-                  //else
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: getStepTwoKeyProgress(ratio),
-                        ),
-                        SizedBox(width: 16.0 * ratio),
-                        getSkipThisSection(),
-                      ],
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                //if (isAHeadOfRandomComponents)
+                //  Align(
+                //    alignment: Alignment.topRight,
+                //    child: getSkipThisSection(),
+                //  )
+                //else
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Expanded(
+                      child: getStepTwoKeyProgress(ratio),
                     ),
-                  SizedBox(height: 6.0 * ratio),
+                    SizedBox(width: 16.0 * ratio),
+                    getSkipThisSection(),
+                  ],
+                ),
+                SizedBox(height: 6.0 * ratio),
+                Text(
+                  hintText,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 22.0 * ratio,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF24344D),
+                  ),
+                ),
+                SizedBox(height: 12.0 * ratio),
+
+                Container(
+                  width: imageWidth,
+                  height: imageHeight,
+                  alignment: Alignment.center,
+                  child: getQuestionImage(),
+                ),
+
+                SizedBox(height: 24.0 * ratio),
+                if (!isAHeadOfRandomComponents)
                   Text(
-                    hintText,
+                    'Choose the matching key',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 22.0 * ratio,
+                      fontSize: 20.0 * ratio,
                       fontWeight: FontWeight.w800,
                       color: Color(0xFF24344D),
                     ),
                   ),
-                  SizedBox(height: 12.0 * ratio),
+                if (!isAHeadOfRandomComponents) SizedBox(height: 14.0 * ratio),
+                if (!isAHeadOfRandomComponents) getCenteredKeyboardAnswers(context),
 
-                  Container(
-                    width: imageWidth,
-                    height: imageHeight,
-                    alignment: Alignment.center,
-                    child: getQuestionImage(),
-                  ),
-
-                  SizedBox(height: 24.0 * ratio),
-                  if (!isAHeadOfRandomComponents)
-                    Text(
-                      'Choose the matching key',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 20.0 * ratio,
-                        fontWeight: FontWeight.w800,
-                        color: Color(0xFF24344D),
-                      ),
-                    ),
-                  if (!isAHeadOfRandomComponents) SizedBox(height: 14.0 * ratio),
-                  if (!isAHeadOfRandomComponents) getCenteredKeyboardAnswers(context),
-
-                  SizedBox(height: 6.0 * ratio),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
-                      SizedBox(width: 54.0 * ratio),
-                      Container(child: getContinue(context), padding: EdgeInsets.all(5)),
-                    ],
-                  ),
-                ],
-              ),
+                SizedBox(height: 6.0 * ratio),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Container(child: getPrevious(context), padding: EdgeInsets.all(5)),
+                    SizedBox(width: 54.0 * ratio),
+                    Container(child: getContinue(context), padding: EdgeInsets.all(5)),
+                  ],
+                ),
+              ],
             ),
+          ),
         ),
       ),
     );
@@ -1345,7 +1345,7 @@ class _ComponentPageState extends State<ComponentPage> {
     //    str = ''; //getString(416); /* learn content & mapping then continue*/
     //  }
     //  else {
-        str = getString(126) /*'Memorize the above Component-key pairings - 1.'*/;
+    str = getString(126) /*'Memorize the above Component-key pairings - 1.'*/;
     //  }
     //}
     //else if (currentIndex == 7) {
@@ -2039,17 +2039,24 @@ class _ComponentPageState extends State<ComponentPage> {
         padding: WidgetStateProperty.all(EdgeInsets.all(2.0)), // 2.0 for showing color for correct or wrong ones
       ),
       onPressed: () {
-        isFromPreviousButton = false;
+        bool cameFromPrevious = isFromPreviousButton;
         setPositionState(position);
         wasLastAnswerCorrect = false;
 
         if (answeredPosition == theComponentManager.getCorrectAnswerPosition()) {
           wasLastAnswerCorrect = true;
+          countModernCorrectAnswerIfNeeded(cameFromPrevious);
+
           // if correct, directly move to next question
           setState(() {
             runContinueLogic();
           });
         }
+        else {
+          wasLastQuestionEverIncorrect = true;
+        }
+
+        isFromPreviousButton = false;
       },
       child: Image.asset(
         "assets/letters/L" + answerDisplayValue + ".png",
@@ -2301,7 +2308,7 @@ class _ComponentPageState extends State<ComponentPage> {
     //  preIndexAtCurrentIndex0++;
     //}
     //else {
-      currentIndex = theComponentManager.getNextIndex();
+    currentIndex = theComponentManager.getNextIndex();
     //}
 
     theComponentManager.resetCorrectAnswerPosition();
@@ -2352,14 +2359,13 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (questionType == QuestionType.Component) {
       title = getString(134)/*"Way to go!"*/;
-      if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
-        totalCorrectAnswers++;
-      }
       if (totalCorrectAnswers < 0) {
         totalCorrectAnswers = 0;
       }
-      correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 3).toString() + "! ";
-      content = correctRatioString + getString(135)/*"You know your Lead Components! Let’s test your knowledge with some guided typing."*/;
+      const int stepTwoTotalQuestions = 25;
+      correctRatioString = totalCorrectAnswers.toString() + '/' + stepTwoTotalQuestions.toString() + "! ";
+      content = totalCorrectAnswers.toString() + ' out of ' + stepTwoTotalQuestions.toString() + ' correct!'
+    ;
       //theNewlyCompletedTypingExercise = 0;
     }
     if (questionType == QuestionType.ExpandedComponent) {
@@ -2405,7 +2411,7 @@ class _ComponentPageState extends State<ComponentPage> {
         builder: (_) => TutorialCompleteDialog(
           title: 'You Did It!',
           badgeText: 'Step 2 Complete',
-          message: 'You have a solid foundation now!',
+          message: content,
           buttonText: 'Start 25 keys for common components ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
@@ -2444,6 +2450,15 @@ class _ComponentPageState extends State<ComponentPage> {
           return alert;
         },
       );
+    }
+  }
+
+  void countModernCorrectAnswerIfNeeded(bool cameFromPrevious) {
+    if (!wasLastQuestionEverIncorrect && !cameFromPrevious) {
+      totalCorrectAnswers++;
+    }
+    else {
+      wasLastQuestionEverIncorrect = false;
     }
   }
 
@@ -2490,16 +2505,24 @@ class _ComponentPageState extends State<ComponentPage> {
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       onPressed: () {
-        isFromPreviousButton = false;
-        setPositionState(position);
-        wasLastAnswerCorrect = false;
+        bool cameFromPrevious = isFromPreviousButton;
+        AnswerPosition correctPosition = theComponentManager.getCorrectAnswerPosition();
+        bool isCorrectAnswer = position == correctPosition;
 
-        if (answeredPosition == theComponentManager.getCorrectAnswerPosition()) {
-          wasLastAnswerCorrect = true;
+        setPositionState(position);
+        wasLastAnswerCorrect = isCorrectAnswer;
+
+        if (isCorrectAnswer) {
+          countModernCorrectAnswerIfNeeded(cameFromPrevious);
           setState(() {
             runContinueLogic();
           });
         }
+        else {
+          wasLastQuestionEverIncorrect = true;
+        }
+
+        isFromPreviousButton = false;
       },
       child: Text(
         theComponentManager.getKeyboardLetter(position) ?? '', //answerDisplayValue,

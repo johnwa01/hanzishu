@@ -169,11 +169,11 @@ var theRandomComponentList = [
   ComponentInGroup(20, 4, 4, ""),
   ComponentInGroup(21, 0, 0, "T5"), // group
   ComponentInGroup(22, 1, 1, ""),
-  ComponentInGroup(23, 2, 5, ""),
-  ComponentInGroup(24, 3, 3, ""),
-  ComponentInGroup(25, 3, 2, ""),
-  ComponentInGroup(26, 3, 1, ""),
-  ComponentInGroup(27, 4, 1, ""),
+  ComponentInGroup(23, 3, 1, ""),
+  ComponentInGroup(24, 2, 5, ""),
+  ComponentInGroup(25, 3, 3, ""),
+  ComponentInGroup(26, 4, 1, ""),
+  ComponentInGroup(27, 3, 2, ""),
   ComponentInGroup(28, 4, 3, ""),
   ComponentInGroup(29, 2, 1, ""),
   ComponentInGroup(30, 0, 0, "GG6"),  // the whole components photo only
