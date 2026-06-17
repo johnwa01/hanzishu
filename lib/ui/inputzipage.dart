@@ -2098,7 +2098,7 @@ class _InputZiPageState extends State<InputZiPage> {
       title = getString(534)/*'Chinese Cup Input Competition'*/;
     }
     else if (typingType == TypingType.DicSearchTyping) {
-      title = "";
+      title = "Hanzishu Dictionary";
     }
     else if (typingType == TypingType.CommonZiTyping) {
       title = getString(112)/*'Customized exercises'*/;
@@ -2189,7 +2189,7 @@ class _InputZiPageState extends State<InputZiPage> {
       children: <Widget>[
         SizedBox(height: 24 * ratio),
 
-        _buildDictionaryHeader(ratio, darkTeal),
+        //_buildDictionaryHeader(ratio, darkTeal),
 
         SizedBox(height: 28 * ratio),
 
@@ -2218,6 +2218,7 @@ class _InputZiPageState extends State<InputZiPage> {
     );
   }
 
+  /*
   Widget _buildDictionaryHeader(double ratio, Color darkTeal) {
     return Column(
       children: [
@@ -2249,6 +2250,7 @@ class _InputZiPageState extends State<InputZiPage> {
       ],
     );
   }
+*/
 
   Widget _buildFirstHanziSearchCard(double ratio, Color teal, Color darkTeal) {
     return Material(

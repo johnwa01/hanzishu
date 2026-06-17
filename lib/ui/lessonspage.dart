@@ -157,6 +157,21 @@ class _LessonsPageState extends State<LessonsPage> {
 
     return Scaffold(
       backgroundColor: Color(0xFFF6F2FF),
+      appBar: AppBar(
+        backgroundColor: Color(0xFFF6F2FF),
+        elevation: 0,
+        iconTheme: IconThemeData(
+          color: Color(0xFF124A35),
+        ),
+        title: Text(
+          'Hanzishu Lessons',
+          style: TextStyle(
+            color: Color(0xFF124A35),
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -170,103 +185,71 @@ class _LessonsPageState extends State<LessonsPage> {
 
   Widget _buildLessonsHero() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 10),
+      padding: const EdgeInsets.fromLTRB(16, 10, 16, 8),
       child: Container(
         width: double.infinity,
-        padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFF4EEFF),
-              Color(0xFFFDFBFF),
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-          borderRadius: BorderRadius.circular(28),
-          border: Border.all(color: Color(0xFFE2D6FA)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(18),
+          border: Border.all(color: Color(0xFFE1E8E2)),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.07),
-              blurRadius: 18,
-              offset: Offset(0, 6),
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 10,
+              offset: Offset(0, 3),
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Row(
           children: [
-            Text(
-              'Hanzishu Lessons',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 30,
-                height: 1.1,
-                fontWeight: FontWeight.w800,
-                color: Color(0xFF124A35),
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xFFE6F4EB),
+              ),
+              child: Icon(
+                Icons.school_rounded,
+                color: Color(0xFF2E6F50),
+                size: 22,
               ),
             ),
-            SizedBox(height: 14),
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: Color(0xFFE1E8E2)),
-              ),
-              child: Row(
+            SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    width: 38,
-                    height: 38,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(0xFFE6F4EB),
-                    ),
-                    child: Icon(
-                      Icons.school_rounded,
-                      color: Color(0xFF2E6F50),
-                      size: 22,
+                  Text(
+                    'Course',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xFF6E746F),
                     ),
                   ),
-                  SizedBox(width: 12),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Course',
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF6E746F),
-                          ),
-                        ),
-                        SizedBox(height: 2),
-                        DropdownButtonHideUnderline(
-                          child: DropdownButton(
-                            isDense: true,
-                            isExpanded: true,
-                            value: _selectedCourseMenu,
-                            items: _dropdownCourseMenuItems,
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: Color(0xFF2E6F50),
-                            ),
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF264236),
-                            ),
-                            onChanged: (selectedCourseMenu) {
-                              setState(() {
-                                _selectedCourseMenu = selectedCourseMenu as CourseMenu;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                  SizedBox(height: 2),
+                  DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      isDense: true,
+                      isExpanded: true,
+                      value: _selectedCourseMenu,
+                      items: _dropdownCourseMenuItems,
+                      icon: Icon(
+                        Icons.keyboard_arrow_down_rounded,
+                        color: Color(0xFF2E6F50),
+                      ),
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF264236),
+                      ),
+                      onChanged: (selectedCourseMenu) {
+                        setState(() {
+                          _selectedCourseMenu = selectedCourseMenu as CourseMenu;
+                        });
+                      },
                     ),
                   ),
                 ],
