@@ -43,7 +43,12 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text(""),
+        title: Text("Hanzishu Input Method",
+          style: TextStyle(
+            //fontSize: 26.0, // Adjust size as needed
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: Center
         (
@@ -166,6 +171,7 @@ class _ToolsPageState extends State<ToolsPage> {
         24 * ratio,
       ),
       children: <Widget>[
+        /*
         Center(
           child: Text(
             "Hanzishu Input Method",
@@ -177,7 +183,8 @@ class _ToolsPageState extends State<ToolsPage> {
             ),
           ),
         ),
-        SizedBox(height: 8 * ratio),
+        */
+        //SizedBox(height: 8 * ratio),
         Center(
           child: Text(
             "Learn, practice, and use the Hanzishu Input Method.",

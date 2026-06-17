@@ -1751,9 +1751,9 @@ class _InputZiPageState extends State<InputZiPage> {
   }
 
   Widget _buildPracticeTypingHero(double ratio, bool isNarrow) {
-    final cardSize = isNarrow ? 104 * ratio : 126 * ratio;
-    final heroWidth = isNarrow ? 440 * ratio : 650 * ratio;
-    final heroHeight = isNarrow ? 360 * ratio : 430 * ratio;
+    final cardSize = isNarrow ? 94 * ratio : 116 * ratio; // 104, 126
+    final heroWidth = isNarrow ? 400 * ratio : 580 * ratio; // 440, 650
+    final heroHeight = isNarrow ? 300 * ratio : 360 * ratio; // 360, 430
 
     return SizedBox(
       width: heroWidth,
