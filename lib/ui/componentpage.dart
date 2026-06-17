@@ -2365,19 +2365,17 @@ class _ComponentPageState extends State<ComponentPage> {
       const int stepTwoTotalQuestions = 25;
       correctRatioString = totalCorrectAnswers.toString() + '/' + stepTwoTotalQuestions.toString() + "! ";
       content = totalCorrectAnswers.toString() + ' out of ' + stepTwoTotalQuestions.toString() + ' correct!'
-    ;
+      ;
       //theNewlyCompletedTypingExercise = 0;
     }
     if (questionType == QuestionType.ExpandedComponent) {
       title = getString(136)/*"Wow!"*/;
-      if (wasLastAnswerCorrect && !wasLastQuestionEverIncorrect) {
-        totalCorrectAnswers++;
-      }
       if (totalCorrectAnswers < 0) {
         totalCorrectAnswers = 0;
       }
-      correctRatioString = totalCorrectAnswers.toString() + '/' + (totalQuestions + previousButtonCount - 1).toString() + "! ";
-      content = correctRatioString + getString(137)/*"You know your Expanded Components! Let’s review it in next exercise."*/;
+      const int stepThreeTotalQuestions = 25;
+      correctRatioString = totalCorrectAnswers.toString() + '/' + stepThreeTotalQuestions.toString() + "! ";
+      content = totalCorrectAnswers.toString() + ' out of ' + stepThreeTotalQuestions.toString() + ' correct!';
       //theNewlyCompletedTypingExercise = 2;
     }
     if (questionType == QuestionType.ShowAttachedComponent) {
@@ -2430,7 +2428,7 @@ class _ComponentPageState extends State<ComponentPage> {
         builder: (_) => TutorialCompleteDialog(
           title: 'Great Job!',
           badgeText: 'Step 3 Complete',
-          message: 'You have gone through all 25 keys!',
+          message: content,
           buttonText: 'Start Character Decomposition ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {

@@ -99,7 +99,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       builder: (_) => TutorialCompleteDialog(
         title: 'Amazing!',
         badgeText: 'Step 4 complete',
-        message: 'You have learned ways to break Hanzi!',
+        message: 'You have learned how to decompose Hanzi!',
         buttonText: 'Start to practice typing Hanzi ->',
         mascotAsset: 'assets/core/mascot.jpg',
         onDone: () {
