@@ -268,7 +268,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         title: getString(448),
         subtitle: 'Choose the correct meaning.',
         onTap: () {
-          if (drillCategory == DrillCategory.custom) {
+          if (drillCategory == DrillCategory.custom) { // old Yumen is here
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: (context) => QuizPage(

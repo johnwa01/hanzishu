@@ -228,7 +228,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
       prompt = "Choose the Hanzi";
     }
     else if (quizCategory == QuizCategory.ziToSound) {
-      prompt = "Choose the sound";
+      prompt = "Tap speakers to listen, then choose A, B, or C.";
     }
 
     if (prompt.length == 0) {

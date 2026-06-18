@@ -5,6 +5,7 @@ import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/ui/shared/progress_indicator.dart';
 
 class QuizPage extends StatefulWidget {
   final QuizTextbook quizTextbook;
@@ -53,7 +54,7 @@ class _QuizPageState extends State<QuizPage> {
     index = theQuizManager.getFirstIndex(quizTextbook, lessonId); //TODO: lessonId
 
     //if (quizTextbook != QuizTextbook.custom) {
-      theStatisticsManager.initLessonQuizResults();
+    theStatisticsManager.initLessonQuizResults();
     //}
 
     totalMeaningAndSoundQuestions = theQuizManager.getTotalQuestions(quizTextbook, lessonId);
@@ -84,9 +85,9 @@ class _QuizPageState extends State<QuizPage> {
     QuizType currentType = theQuizManager.getCurrentType();
     if (answerPosition == AnswerPosition.continueNext ||
         answerPosition == AnswerPosition.none) {
-        // get values ready
-        theQuizManager.getUpdatedValues(index, theQuizManager.getCurrentCategory() == QuizCategory.meaning);
-        theQuizManager.getCurrentValuesNonCharIds();
+      // get values ready
+      theQuizManager.getUpdatedValues(index, theQuizManager.getCurrentCategory() == QuizCategory.meaning);
+      theQuizManager.getCurrentValuesNonCharIds();
       //currentCategory = theQuizManager.getCurrentCategory();
       currentType = theQuizManager.getCurrentType();
 
@@ -101,94 +102,166 @@ class _QuizPageState extends State<QuizPage> {
       // Navigator.of(context).pop(); Note: let showCompletedDialog() to pop back together.
     }
 
-      return Scaffold
+    return Scaffold
+      (
+      appBar: AppBar
         (
-        appBar: AppBar
-          (
-          title: Text(getString(6)/*"Quiz")*/),
+        title: Text(
+          getQuizTitle(),
+          style: const TextStyle(fontSize: 24.0),
         ),
-        body: Center
-          (
-          //child: Text("This is Lesson Page."),
-          child: getQuizWizard(context /*, widget.lessonId*/),
-        ),
-      );
+      ),
+      body: Center
+        (
+        //child: Text("This is Lesson Page."),
+        child: getQuizWizard(context /*, widget.lessonId*/),
+      ),
+    );
+  }
+
+  String getQuizTitle() {
+    if (quizCategory == QuizCategory.meaning) {
+      return getString(448); // Test Hanzi Meaning
+    }
+    else if (quizCategory == QuizCategory.ziToSound) {
+      return getString(447); // Test Hanzi to Sound
+    }
+    else if (quizCategory == QuizCategory.soundToZi) {
+      return getString(488); // Test Sound to Hanzi
+    }
+
+    return getString(6); // Quiz
   }
 
   Widget getQuizWizard(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          //Container(
-          //  padding: EdgeInsets.all(5),
-          //),
-          Container( // x and progress bard
-            child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.only(top: 10.0 * getSizeRatio(), left: 10.0 * getSizeRatio(), right: 10.0 * getSizeRatio()), //25
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0 * getSizeRatio()),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: getProgressBar(context),
+                  padding: EdgeInsets.only(
+                    top: 2.0 * getSizeRatio(),
+                    left: 2.0 * getSizeRatio(),
+                    right: 2.0 * getSizeRatio(),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.topRight,
+                  child: getSkipThisSection(),
+                ),
+                getTaskPrompt(),
+                SizedBox(height: 10.0 * getSizeRatio()),
+                getQuestion(context),
+                SizedBox(height: 12.0 * getSizeRatio()),
+                getAnswers(context),
+                SizedBox(height: 18.0 * getSizeRatio()),
+                getContinue(context),
+                SizedBox(height: 24.0 * getSizeRatio()),
+              ],
+            ),
           ),
-          Container(
-            alignment: Alignment.topRight,
-            child: getSkipThisSection(),
-          ),
-          Container(
-            child: getQuestion(context),
-            //padding: EdgeInsets.all(20),
-          ),
-          Container(
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
-          ),
-          Container(
-            child: getAnswers(context),
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //40
-          ),
-          Container(
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
-          ),
-          Container(
-            child: getContinue(context),
-    //        padding: EdgeInsets.all(10),
-          ),
-        ]
+        ),
+      ),
     );
   }
 
   Widget getProgressBar(BuildContext context) {
-    return Row(
-        children: <Widget>[
-          Container(
-            // text X
-          ),
-          Container(
-            // progress widget
-          )
-        ]
+    var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+
+    return HzProgressIndicator(
+      value: _progressValue,
+      current: lessonQuizResult.answ,
+      total: totalMeaningAndSoundQuestions,
+      thickness: HzProgressThickness.thin,
+    );
+  }
+
+  Widget getTaskPrompt() {
+    String prompt = "";
+
+    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning) {
+      prompt = "Choose the meaning";
+    }
+    else if (theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) {
+      prompt = "Tap speakers to listen, then choose A, B, or C.";
+    }
+    else if (theQuizManager.getCurrentCategory() == QuizCategory.soundToZi) {
+      prompt = "Listen, then choose the Hanzi.";
+    }
+
+    if (prompt.length == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    return Text(
+      prompt,
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 14.0,
+        color: Colors.grey.shade600,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.2,
+      ),
     );
   }
 
   Widget getQuestion(BuildContext context) {
-    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning || theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) { // short button
-      return getZiContainer(AnswerPosition.center, false);
+    Widget child;
+
+    if (theQuizManager.getCurrentCategory() == QuizCategory.meaning ||
+        theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) {
+      child = getZiContainer(AnswerPosition.center, false);
     }
     else {
       var currentValues = theQuizManager.getCurrentValues();
 
-      return Container(
-        height: 150.0 * getSizeRatio(), //180
-          width: 150.0 * getSizeRatio(),
+      child = SizedBox(
+        height: 95.0 * getSizeRatio(),
+        width: 95.0 * getSizeRatio(),
         child: IconButton(
-            icon: Icon(
-                Icons.volume_up,
-                size: 150.0 * getSizeRatio(),   // 150
-            ),
-            color: Colors.cyan, //Colors.green,
-            onPressed: () {
-              TextToSpeech.speak("zh-CN", currentValues[0]);
-              setState(() {
-                setPositionState(AnswerPosition.soundIcon);
-              });
-            },
-        )
+          icon: Icon(
+            Icons.volume_up,
+            size: 90.0 * getSizeRatio(),
+          ),
+          color: Colors.cyan,
+          onPressed: () {
+            TextToSpeech.speak("zh-CN", currentValues[0]);
+            setState(() {
+              setPositionState(AnswerPosition.soundIcon);
+            });
+          },
+        ),
       );
     }
+
+    return Container(
+      width: 240.0 * getSizeRatio(),
+      constraints: const BoxConstraints(
+        minWidth: 220.0,
+        maxWidth: 330.0,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: 8.0 * getSizeRatio(),
+        horizontal: 16.0 * getSizeRatio(),
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Center(child: child),
+    );
   }
 
   Widget getAnswers(BuildContext context) {
@@ -196,35 +269,32 @@ class _QuizPageState extends State<QuizPage> {
     var currentType = theQuizManager.getCurrentType();
     if(currentCategory == QuizCategory.meaning || currentCategory == QuizCategory.ziToSound || (currentCategory == QuizCategory.soundToZi &&
         (answerPosition == AnswerPosition.soundIcon || answerPosition == AnswerPosition.positionA || answerPosition == AnswerPosition.positionB ||
-        answerPosition == AnswerPosition.positionC))) {
+            answerPosition == AnswerPosition.positionC))) {
       if (currentCategory ==
           QuizCategory.meaning ||currentType == QuizType.phrases ||
           currentType == QuizType.conversations) { // phrases and sentences
-        return IntrinsicWidth(
-          child: Column(
-            //textDirection: TextDirection.ltr,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              getText(AnswerPosition.positionA, false),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getText(AnswerPosition.positionB, false),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getText(AnswerPosition.positionC, false),
-            ]
-          ),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            getMeaningAnswerCard(AnswerPosition.positionA),
+            SizedBox(height: 12.0 * getSizeRatio()),
+            getMeaningAnswerCard(AnswerPosition.positionB),
+            SizedBox(height: 12.0 * getSizeRatio()),
+            getMeaningAnswerCard(AnswerPosition.positionC),
+          ],
         );
       }
       else if (currentCategory == QuizCategory.ziToSound) {
-      // Zi only
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            getOneZiToSoundAnswer(AnswerPosition.positionA),
-            SizedBox(height: 5.0 * getSizeRatio()),
-            getOneZiToSoundAnswer(AnswerPosition.positionB),
-            SizedBox(height: 5.0 * getSizeRatio()),
-            getOneZiToSoundAnswer(AnswerPosition.positionC),
-          ]
+        // Zi only
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              getOneZiToSoundAnswer(AnswerPosition.positionA),
+              SizedBox(height: 5.0 * getSizeRatio()),
+              getOneZiToSoundAnswer(AnswerPosition.positionB),
+              SizedBox(height: 5.0 * getSizeRatio()),
+              getOneZiToSoundAnswer(AnswerPosition.positionC),
+            ]
         );
       }
       else {
@@ -291,18 +361,18 @@ class _QuizPageState extends State<QuizPage> {
     return Column(
         children: <Widget>[
           Container(
-            height: 50.0 * getSizeRatio(), //180
-            width: 50.0 * getSizeRatio(),
-            child: IconButton(
-              icon: Icon(
-                Icons.volume_up,
-                size: 50.0 * getSizeRatio(),   // 150
-              ),
-              color: Colors.cyan, //Colors.green,
+              height: 50.0 * getSizeRatio(), //180
+              width: 50.0 * getSizeRatio(),
+              child: IconButton(
+                icon: Icon(
+                  Icons.volume_up,
+                  size: 50.0 * getSizeRatio(),   // 150
+                ),
+                color: Colors.cyan, //Colors.green,
                 onPressed: () {
                   TextToSpeech.speak("zh-CN", hanzi);
-                  },
-            )
+                },
+              )
           ),
           SizedBox(height: 10),
           Container(
@@ -323,7 +393,7 @@ class _QuizPageState extends State<QuizPage> {
         {
           value = currentValues[0];
         }
-      break;
+        break;
       case AnswerPosition.positionA:
         {
           value = currentValues[1];
@@ -344,6 +414,69 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     return value;
+  }
+
+  Widget getMeaningAnswerCard(AnswerPosition position) {
+    var value = getValue(position);
+    var isAnswered = answerPosition == AnswerPosition.positionA ||
+        answerPosition == AnswerPosition.positionB ||
+        answerPosition == AnswerPosition.positionC;
+
+    Color cardColor = Colors.white;
+    Color borderColor = Colors.blueAccent.withOpacity(0.12);
+    Color textColor = Colors.blueAccent;
+
+    if (isAnswered) {
+      if (position == theQuizManager.getCorrectAnswerPosition()) {
+        cardColor = Colors.greenAccent.withOpacity(0.25);
+        borderColor = Colors.greenAccent;
+        textColor = Colors.green.shade800;
+      }
+      else if (position == answerPosition) {
+        cardColor = Colors.redAccent.withOpacity(0.18);
+        borderColor = Colors.redAccent.withOpacity(0.65);
+        textColor = Colors.red.shade700;
+      }
+    }
+
+    return Material(
+      color: cardColor,
+      borderRadius: BorderRadius.circular(20.0),
+      elevation: 1.5,
+      shadowColor: Colors.black.withOpacity(0.12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20.0),
+        onTap: () {
+          setPositionState(position);
+        },
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 54.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 10.0,
+            horizontal: 20.0,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: borderColor,
+              width: 1.0,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20.0,
+                color: textColor,
+                fontWeight: FontWeight.w500,
+                height: 1.25,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget getText(AnswerPosition position, bool wantUpperCaseLetter) {
@@ -417,7 +550,7 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   Widget getZiContainer(AnswerPosition position, bool withNonCharFrame) {
-    var size = 55.0 * getSizeRatio(); //35
+    var size = 65.0 * getSizeRatio(); //35
     if (position == AnswerPosition.center) {
       size = 120.0 * getSizeRatio();
     }
@@ -440,13 +573,13 @@ class _QuizPageState extends State<QuizPage> {
     if (position == AnswerPosition.center) {
       lineColor = Colors.cyan;
     }
-    
+
     if (noncharId != 0) {// nonchar case
       return InkWell(
         onTap: () {
           setPositionState(position);
           //theQuizManager.setAnswered(true);
-          },
+        },
         child: Container(
           height: size /*250.0*/,
           width: size /*180.0*/,
@@ -498,33 +631,34 @@ class _QuizPageState extends State<QuizPage> {
         result = getString(284)/*"Correct! "*/;
       }
 
-      result += getString(285)/*"Continue"*/;
+      result += getString(285)/*"Continue"*/ + " ->";
 
       //_updateProgress();
 
-      return Container(
-          child: TextButton(
-            style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(Colors.blue),
+      return SizedBox(
+        width: 220.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
             ),
-            child: Text(result, style: TextStyle(fontSize: 25.0 * getSizeRatio(), color: Colors.white)),
-            //color: Colors.cyan,    //blueAccent,
-            //textColor: Colors.white,
-            onPressed: () {
-              setState(() {
-                setPositionState(AnswerPosition.continueNext);
-
-                //if (answerPosition == AnswerPosition.continueNext) {
-                  // prepare for next one
-                  // Could be done in Build(), but Build won't allow showCompletedDialog() there.
-                  index = theQuizManager.getNextIndexForCurrentType();
-                //}
-                if (theQuizManager.getCurrentType() == QuizType.none) {
-                  showCompletedDialog(context);
-                }
-              });
-            },
           ),
+          child: Text(
+            result,
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 18.0 * getSizeRatio(), color: Colors.black87),
+          ),
+          onPressed: () {
+            setState(() {
+              setPositionState(AnswerPosition.continueNext);
+              index = theQuizManager.getNextIndexForCurrentType();
+              if (theQuizManager.getCurrentType() == QuizType.none) {
+                showCompletedDialog(context);
+              }
+            });
+          },
+        ),
       );
     }
 
@@ -533,16 +667,6 @@ class _QuizPageState extends State<QuizPage> {
   }
 
   showCompletedDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(getString(286)/*"Ok"*/, style: TextStyle(color: Colors.blue)),
-      onPressed: () {
-        theIsBackArrowExit = false;
-        Navigator.of(context).pop(); // out this dialog
-        Navigator.of(context).pop(); // to the lesson page
-      },
-    );
-
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
     var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
     var corStr = correctPercent.toStringAsFixed(1) + "%";
@@ -551,33 +675,97 @@ class _QuizPageState extends State<QuizPage> {
     String content;
 
     if (correctPercent >= 70.0) {
-      title = getString(118) + "!"; // "Congratulation!";
-      content = getString(467) /*"You have passed this quiz with a score of "*/ + " " + corStr + "!";
-      // save the info to storage
+      title = getString(118) + "!"; // Congratulations!
+      content = getString(467) + " " + corStr + "!";
       if (quizTextbook != QuizTextbook.custom) {
         updateCompleteStatus();
         theHasNewlyCompletedLesson = true;
       }
     }
     else {
-      title = getString(466) + "!"; // Good effort
-      content = getString(468) /*"You have achieved a score of"*/ + " " + corStr + ". " + getString(469) /*You can come back later to reach 70."*/;
+      title = getString(466) + "!"; // Good effort!
+      content = getString(468) + " " + corStr + ". "/* + getString(469)*/;
     }
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            width: 380,
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade50,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.green.shade300,
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.sentiment_very_satisfied,
+                    size: 52,
+                    color: Colors.green,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 18),
+                Text(
+                  corStr,
+                  style: const TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  content,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 28),
+                SizedBox(
+                  width: 140,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      theIsBackArrowExit = false;
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: Text(getString(286)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
     );
   }
@@ -590,7 +778,7 @@ class _QuizPageState extends State<QuizPage> {
     }
   }
 
-  /*
+/*
   //NOTE: setState within the Timer so that this function will be called repeatedly.
   void _updateProgress() {
     const oneSec = const Duration(seconds: 5);
