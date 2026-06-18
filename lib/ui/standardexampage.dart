@@ -8,6 +8,7 @@ import 'package:hanzishu/engine/standardexammanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
+import 'package:hanzishu/ui/shared/progress_indicator.dart';
 
 class StandardExamPage extends StatefulWidget {
   bool isChars = true;
@@ -43,6 +44,7 @@ class _StandardExamPageState extends State<StandardExamPage> {
   int index = -1;
   double _progressValue = 0.0;
   int totalMeaningAndSoundQuestions = -1;
+  String _lastAutoSpokenChar = "";
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16.0;
@@ -70,6 +72,31 @@ class _StandardExamPageState extends State<StandardExamPage> {
     });
   }
 
+  void _scheduleSpeakCurrentSoundQuestion() {
+    if (quizCategory != QuizCategory.soundToZi) {
+      return;
+    }
+
+    var currentValues = theStandardExamManager.getCurrentValues();
+    if (currentValues.length == 0) {
+      return;
+    }
+
+    var char = currentValues[0].char;
+    if (char.length == 0 || char == _lastAutoSpokenChar) {
+      return;
+    }
+
+    _lastAutoSpokenChar = char;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) {
+        return;
+      }
+
+      TextToSpeech.speak("zh-CN", char);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
@@ -77,8 +104,9 @@ class _StandardExamPageState extends State<StandardExamPage> {
     // Only support this type for now.
     QuizType currentType = QuizType.chars; //theQuizManager.getCurrentType();
 
-      // tell manager to get values ready
-      theStandardExamManager.getUpdatedValues();
+    // tell manager to get values ready
+    theStandardExamManager.getUpdatedValues();
+    _scheduleSpeakCurrentSoundQuestion();
 
     var title;
     if (drillCategory == DrillCategory.hsk) {
@@ -132,7 +160,10 @@ class _StandardExamPageState extends State<StandardExamPage> {
       (
       appBar: AppBar
         (
-        title: Text(title),
+        title: Text(
+          title,
+          style: const TextStyle(fontSize: 24.0),
+        ),
       ),
       body: Center
         (
@@ -143,56 +174,126 @@ class _StandardExamPageState extends State<StandardExamPage> {
   }
 
   Widget getQuizWizard(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          //Container(
-          //  padding: EdgeInsets.all(5),
-          //),
-          Container( // x and progress bard
-            child: LinearProgressIndicator(value: _progressValue), //getProgressBar(context),
-            padding: EdgeInsets.only(top: 10.0 * getSizeRatio(), left: 10.0 * getSizeRatio(), right: 10.0 * getSizeRatio()), //25
+    return SingleChildScrollView(
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 760),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0 * getSizeRatio()),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  child: getProgressBar(context),
+                  padding: EdgeInsets.only(
+                    top: 10.0 * getSizeRatio(),
+                    left: 2.0 * getSizeRatio(),
+                    right: 2.0 * getSizeRatio(),
+                  ),
+                ),
+                SizedBox(height: 18.0 * getSizeRatio()),
+                getTaskPrompt(),
+                SizedBox(height: 10.0 * getSizeRatio()),
+                getQuestion(context),
+                SizedBox(height: (quizCategory == QuizCategory.soundToZi ? 28.0 : 18.0) * getSizeRatio()),
+                getAnswers(context),
+                SizedBox(height: 24.0 * getSizeRatio()),
+              ],
+            ),
           ),
-          Container(
-            child: getQuestion(context),
-            //padding: EdgeInsets.all(20),
-          ),
-          Container(
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
-          ),
-          Container(
-            child: getAnswers(context),
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //40
-          ),
-          Container(
-            padding: EdgeInsets.all(18.0 * getSizeRatio()), //
-          ),
-        ]
+        ),
+      ),
     );
   }
 
   Widget getProgressBar(BuildContext context) {
-    return Row(
-        children: <Widget>[
-          Container(
-            // text X
-          ),
-          Container(
-            // progress widget
-          )
-        ]
+    var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+    var current = lessonQuizResult.answ;
+    var total = totalMeaningAndSoundQuestions;
+
+    return HzProgressIndicator(
+      value: _progressValue,
+      current: current,
+      total: total,
+      thickness: HzProgressThickness.thin,
+    );
+  }
+
+  Widget getTaskPrompt() {
+    String prompt = "";
+
+    if (quizCategory == QuizCategory.meaning) {
+      prompt = "Choose the meaning";
+    }
+    else if (quizCategory == QuizCategory.soundToZi) {
+      prompt = "Choose the Hanzi";
+    }
+    else if (quizCategory == QuizCategory.ziToSound) {
+      prompt = "Choose the sound";
+    }
+
+    if (prompt.length == 0) {
+      return SizedBox(width: 0.0, height: 0.0);
+    }
+
+    return Text(
+      prompt,
+      style: TextStyle(
+        fontSize: 14.0,
+        color: Colors.grey.shade600,
+        fontWeight: FontWeight.w500,
+        letterSpacing: 0.2,
+      ),
     );
   }
 
   Widget getQuestion(BuildContext context) {
-    var currentValues = theStandardExamManager.getCurrentValues();
+    var value = getValue(AnswerPosition.center);
 
+    Widget child;
     if (quizCategory == QuizCategory.soundToZi) {
-      return getSoundImage(AnswerPosition.center);
+      child = getSoundImage(AnswerPosition.center);
     }
     else {
-      return getText(AnswerPosition.center);
+      child = TextButton(
+        onPressed: () {
+          TextToSpeech.speak("zh-CN", value.char);
+        },
+        child: Text(
+          value.char,
+          style: TextStyle(
+            fontSize: 72.0 * getSizeRatio(),
+            color: Colors.cyan,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      );
     }
 
+    var isSoundQuestion = quizCategory == QuizCategory.soundToZi;
+
+    return Container(
+      width: (isSoundQuestion ? 210.0 : 240.0) * getSizeRatio(),
+      constraints: BoxConstraints(
+        minWidth: isSoundQuestion ? 190.0 : 220.0,
+        maxWidth: isSoundQuestion ? 260.0 : 330.0,
+      ),
+      padding: EdgeInsets.symmetric(
+        vertical: (isSoundQuestion ? 6.0 : 8.0) * getSizeRatio(),
+        horizontal: 16.0 * getSizeRatio(),
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.06),
+            blurRadius: 18,
+            offset: const Offset(0, 8),
+          ),
+        ],
+      ),
+      child: Center(child: child),
+    );
   }
 
   Widget getAnswers(BuildContext context) {
@@ -205,51 +306,46 @@ class _StandardExamPageState extends State<StandardExamPage> {
     }
     */
 
-    if (quizCategory ==
-        QuizCategory.meaning) { // phrases and sentences
-      return IntrinsicWidth(
-        child: Column(
-          //textDirection: TextDirection.ltr,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              getText(AnswerPosition.positionA),
-              SizedBox(height: 15.0 * getSizeRatio()),
-              getText(AnswerPosition.positionB),
-              SizedBox(height: 15.0 * getSizeRatio()),
-              getText(AnswerPosition.positionC),
-            ]
-        )
+    if (quizCategory == QuizCategory.meaning) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          getAnswerCard(AnswerPosition.positionA),
+          SizedBox(height: 12.0 * getSizeRatio()),
+          getAnswerCard(AnswerPosition.positionB),
+          SizedBox(height: 12.0 * getSizeRatio()),
+          getAnswerCard(AnswerPosition.positionC),
+        ],
       );
     }
     else if (quizCategory == QuizCategory.ziToSound){
       return Column(
-        //textDirection: TextDirection.ltr,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                getSoundImage(AnswerPosition.positionA),
-                SizedBox(height: 15.0 * getSizeRatio()),
-                getSoundImage(AnswerPosition.positionB),
-                SizedBox(height: 15.0 * getSizeRatio()),
-                getSoundImage(AnswerPosition.positionC),
-              ]
-          ),
-          SizedBox(height: 10.0 * getSizeRatio()),
-          getSoundABCText(),
-        ]
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  getSoundImage(AnswerPosition.positionA),
+                  SizedBox(height: 15.0 * getSizeRatio()),
+                  getSoundImage(AnswerPosition.positionB),
+                  SizedBox(height: 15.0 * getSizeRatio()),
+                  getSoundImage(AnswerPosition.positionC),
+                ]
+            ),
+            SizedBox(height: 10.0 * getSizeRatio()),
+            getSoundABCText(),
+          ]
       );
     }
     else if(quizCategory == QuizCategory.soundToZi) {
       return Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
-            getText(AnswerPosition.positionA),
-            SizedBox(height: 15.0 * getSizeRatio()),
-            getText(AnswerPosition.positionB),
-            SizedBox(height: 15.0 * getSizeRatio()),
-            getText(AnswerPosition.positionC),
+            Expanded(child: getAnswerCard(AnswerPosition.positionA)),
+            SizedBox(width: 12.0 * getSizeRatio()),
+            Expanded(child: getAnswerCard(AnswerPosition.positionB)),
+            SizedBox(width: 12.0 * getSizeRatio()),
+            Expanded(child: getAnswerCard(AnswerPosition.positionC)),
           ]
       );
     }
@@ -260,16 +356,16 @@ class _StandardExamPageState extends State<StandardExamPage> {
 
   Widget getSoundABCText() {
     //if (isSoundAnswered) {
-      return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            getText(AnswerPosition.positionA),
-            SizedBox(height: 5.0 * getSizeRatio()),
-            getText(AnswerPosition.positionB),
-            SizedBox(height: 5.0 * getSizeRatio()),
-            getText(AnswerPosition.positionC),
-          ]
-      );
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          getText(AnswerPosition.positionA),
+          SizedBox(height: 5.0 * getSizeRatio()),
+          getText(AnswerPosition.positionB),
+          SizedBox(height: 5.0 * getSizeRatio()),
+          getText(AnswerPosition.positionC),
+        ]
+    );
     //}
     //else {
     //  return SizedBox(width: 0, height: 0);
@@ -306,6 +402,98 @@ class _StandardExamPageState extends State<StandardExamPage> {
     }
 
     return value;
+  }
+
+  String getAnswerText(AnswerPosition position) {
+    var value = getValue(position);
+
+    if (quizCategory == QuizCategory.meaning) {
+      return value.meaning;
+    }
+    else if (quizCategory == QuizCategory.soundToZi) {
+      return value.char;
+    }
+    else {
+      if (position == AnswerPosition.positionA) {
+        return "A";
+      }
+      else if (position == AnswerPosition.positionB) {
+        return "B";
+      }
+      else if (position == AnswerPosition.positionC) {
+        return "C";
+      }
+    }
+
+    return "";
+  }
+
+  void answerQuestion(AnswerPosition position) {
+    answerPosition = position;
+
+    if (answerPosition != theStandardExamManager.getCorrectAnswerPosition()) {
+      theStatisticsManager.incrementLessonQuizResult(false);
+    }
+    else {
+      theStatisticsManager.incrementLessonQuizResult(true);
+    }
+
+    var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
+    _progressValue = lessonQuizResult.answ / totalMeaningAndSoundQuestions;
+
+    setState(() {
+      index = theStandardExamManager.getNext();
+    });
+
+    if (index == -1) {
+      showCompletedDialog(context);
+    }
+  }
+
+  Widget getAnswerCard(AnswerPosition position) {
+    var answerText = getAnswerText(position);
+    var isMeaningTest = quizCategory == QuizCategory.meaning;
+
+    return Material(
+      color: Colors.white,
+      borderRadius: BorderRadius.circular(20.0),
+      elevation: 1.5,
+      shadowColor: Colors.black.withOpacity(0.12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20.0),
+        onTap: () {
+          answerQuestion(position);
+        },
+        child: Container(
+          constraints: BoxConstraints(
+            minHeight: isMeaningTest ? 54.0 : 76.0,
+          ),
+          padding: EdgeInsets.symmetric(
+            vertical: isMeaningTest ? 10.0 : 16.0,
+            horizontal: 20.0,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            border: Border.all(
+              color: Colors.blueAccent.withOpacity(0.12),
+              width: 1.0,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              answerText,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: isMeaningTest ? 20.0 : 30.0,
+                color: Colors.blueAccent,
+                fontWeight: FontWeight.w500,
+                height: 1.25,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget getText(AnswerPosition position) {
@@ -406,26 +594,29 @@ class _StandardExamPageState extends State<StandardExamPage> {
     var size = 50.0;
 
     if (position == AnswerPosition.center) {
-      size = 180.0;
+      size = quizCategory == QuizCategory.soundToZi ? 88.0 : 150.0;
     }
 
-    return Container(
-        height: size * getSizeRatio(), //180
-        width: size * getSizeRatio(),
-        child: IconButton(
-          icon: Icon(
-            Icons.volume_up,
-            size: size * getSizeRatio(),   // 150
-          ),
-          color: Colors.cyan, //Colors.green,
-          onPressed: () {
-            TextToSpeech.speak("zh-CN", value.char);
+    var displaySize = size * getSizeRatio();
+    if (position == AnswerPosition.center && quizCategory == QuizCategory.soundToZi) {
+      displaySize = displaySize.clamp(72.0, 112.0).toDouble();
+    }
 
-            //setState(() {
-              //isSoundAnswered = true;
-            //});
-          },
-        )
+    return SizedBox(
+      height: displaySize,
+      width: displaySize,
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
+        icon: Icon(
+          Icons.volume_up,
+          size: displaySize,
+        ),
+        color: Colors.cyan,
+        onPressed: () {
+          TextToSpeech.speak("zh-CN", value.char);
+        },
+      ),
     );
   }
 
@@ -459,32 +650,101 @@ class _StandardExamPageState extends State<StandardExamPage> {
     double correctEstimate = subCountPerLevel * diff / (lessonQuizResult.answ * 2 / 3);
     var corStr = correctEstimate.toStringAsFixed(0);
 
-    String  title = "Good effort!";
-    //String levelString = subItemId.toString();
-    //if (subItemId == 7) {
-    //  levelString = "7/8/9";
-    //}
-    String  content = getString(457) + corStr + ". " + getString(458) + subCountPerLevel.toString() + ".";
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: Container(
+            width: 380,
+            padding: const EdgeInsets.all(28),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                // Placeholder mascot
+                Container(
+                  width: 90,
+                  height: 90,
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade50,
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.green.shade300,
+                      width: 2,
+                    ),
+                  ),
+                  child: const Icon(
+                    Icons.sentiment_very_satisfied,
+                    size: 52,
+                    color: Colors.green,
+                  ),
+                ),
+
+                const SizedBox(height: 18),
+
+                Text(
+                  getString(457),
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+
+                const SizedBox(height: 18),
+
+                Text(
+                  "$corStr / $subCountPerLevel",
+                  style: const TextStyle(
+                    fontSize: 42,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                Text(
+                  theDefaultLocale == "zh_CN"
+                      ? "继续练习，让它们记得更牢！"
+                      : "Keep practicing to make them even stronger!",
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    height: 1.4,
+                  ),
+                ),
+
+                const SizedBox(height: 28),
+
+                SizedBox(
+                  width: 140,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      theIsBackArrowExit = false;
+                      Navigator.of(context).pop();
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: Text(getString(286)),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
       },
     );
   }
 
-  /*
+/*
   updateCompleteStatus() {
     //var wasCompleted = theStorageHandler.hasLessonCompleted(lessonId);
     //if (!wasCompleted) {
