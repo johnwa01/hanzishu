@@ -32,6 +32,7 @@ class _QuizPageState extends State<QuizPage> {
   int index = -1;
   double _progressValue = 0.0;
   int totalMeaningAndSoundQuestions = -1;
+  String _lastAutoSpokenSoundToZiValue = '';
 
   getSizeRatio() {
     var defaultFontSize = screenWidth / 16.0;
@@ -93,6 +94,8 @@ class _QuizPageState extends State<QuizPage> {
 
       var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
       _progressValue = lessonQuizResult.answ/totalMeaningAndSoundQuestions;
+
+      _prepareSoundToZiQuestion();
     }
 
     if (currentType == QuizType.none && quizTextbook != QuizTextbook.custom) {
@@ -111,12 +114,33 @@ class _QuizPageState extends State<QuizPage> {
           style: const TextStyle(fontSize: 24.0),
         ),
       ),
-      body: Center
+      body: Align
         (
-        //child: Text("This is Lesson Page."),
+        alignment: Alignment.topCenter,
         child: getQuizWizard(context /*, widget.lessonId*/),
       ),
     );
+  }
+
+  void _prepareSoundToZiQuestion() {
+    if (theQuizManager.getCurrentCategory() != QuizCategory.soundToZi) {
+      return;
+    }
+
+    var currentValues = theQuizManager.getCurrentValues();
+    if (currentValues.length == 0) {
+      return;
+    }
+
+    var currentSound = currentValues[0];
+    answerPosition = AnswerPosition.soundIcon;
+
+    if (_lastAutoSpokenSoundToZiValue != currentSound) {
+      _lastAutoSpokenSoundToZiValue = currentSound;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        TextToSpeech.speak("zh-CN", currentSound);
+      });
+    }
   }
 
   String getQuizTitle() {
@@ -139,7 +163,12 @@ class _QuizPageState extends State<QuizPage> {
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 760),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0 * getSizeRatio()),
+            padding: EdgeInsets.fromLTRB(
+              18.0 * getSizeRatio(),
+              28.0 * getSizeRatio(),
+              18.0 * getSizeRatio(),
+              0.0,
+            ),
             child: Column(
               children: <Widget>[
                 Container(
@@ -177,7 +206,7 @@ class _QuizPageState extends State<QuizPage> {
       value: _progressValue,
       current: lessonQuizResult.answ,
       total: totalMeaningAndSoundQuestions,
-      thickness: HzProgressThickness.thin,
+      thickness: HzProgressThickness.thick,
     );
   }
 
@@ -277,9 +306,9 @@ class _QuizPageState extends State<QuizPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             getMeaningAnswerCard(AnswerPosition.positionA),
-            SizedBox(height: 12.0 * getSizeRatio()),
+            SizedBox(height: 18.0 * getSizeRatio()),
             getMeaningAnswerCard(AnswerPosition.positionB),
-            SizedBox(height: 12.0 * getSizeRatio()),
+            SizedBox(height: 18.0 * getSizeRatio()),
             getMeaningAnswerCard(AnswerPosition.positionC),
           ],
         );
@@ -287,27 +316,27 @@ class _QuizPageState extends State<QuizPage> {
       else if (currentCategory == QuizCategory.ziToSound) {
         // Zi only
         return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              getOneZiToSoundAnswer(AnswerPosition.positionA),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getOneZiToSoundAnswer(AnswerPosition.positionB),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getOneZiToSoundAnswer(AnswerPosition.positionC),
-            ]
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            getOneZiToSoundAnswer(AnswerPosition.positionA),
+            SizedBox(width: 48.0 * getSizeRatio()),
+            getOneZiToSoundAnswer(AnswerPosition.positionB),
+            SizedBox(width: 48.0 * getSizeRatio()),
+            getOneZiToSoundAnswer(AnswerPosition.positionC),
+          ],
         );
       }
       else {
         // Zi only
         return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              getZiContainer(AnswerPosition.positionA, true),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getZiContainer(AnswerPosition.positionB, true),
-              SizedBox(height: 5.0 * getSizeRatio()),
-              getZiContainer(AnswerPosition.positionC, true),
-            ]
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            getHanziAnswerCard(AnswerPosition.positionA),
+            SizedBox(width: 48.0 * getSizeRatio()),
+            getHanziAnswerCard(AnswerPosition.positionB),
+            SizedBox(width: 48.0 * getSizeRatio()),
+            getHanziAnswerCard(AnswerPosition.positionC),
+          ],
         );
       }
     }
@@ -414,6 +443,70 @@ class _QuizPageState extends State<QuizPage> {
     }
 
     return value;
+  }
+
+
+  Widget getHanziAnswerCard(AnswerPosition position) {
+    var value = getValue(position);
+    var isAnswered = answerPosition == AnswerPosition.positionA ||
+        answerPosition == AnswerPosition.positionB ||
+        answerPosition == AnswerPosition.positionC;
+
+    Color cardColor = Colors.white;
+    Color borderColor = Colors.blueAccent.withOpacity(0.18);
+    Color textColor = Colors.blueAccent;
+
+    if (isAnswered) {
+      if (position == theQuizManager.getCorrectAnswerPosition()) {
+        cardColor = Colors.greenAccent.withOpacity(0.25);
+        borderColor = Colors.greenAccent;
+        textColor = Colors.green.shade800;
+      }
+      else if (position == answerPosition) {
+        cardColor = Colors.redAccent.withOpacity(0.18);
+        borderColor = Colors.redAccent.withOpacity(0.65);
+        textColor = Colors.red.shade700;
+      }
+    }
+
+    return Material(
+      color: cardColor,
+      borderRadius: BorderRadius.circular(22.0),
+      elevation: 1.5,
+      shadowColor: Colors.black.withOpacity(0.10),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(22.0),
+        onTap: () {
+          setPositionState(position);
+        },
+        child: Container(
+          width: 74.0 * getSizeRatio(),
+          height: 60.0 * getSizeRatio(),
+          constraints: const BoxConstraints(
+            minWidth: 64.0,
+            minHeight: 54.0,
+          ),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(22.0),
+            border: Border.all(
+              color: borderColor,
+              width: 1.0,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              value,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 32.0 * getSizeRatio(),
+                color: textColor,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget getMeaningAnswerCard(AnswerPosition position) {
