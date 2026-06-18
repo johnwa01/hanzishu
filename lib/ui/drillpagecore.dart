@@ -293,7 +293,10 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
             child: new Stack(
               children: <Widget>[
                 new Positioned(
-                  child: CustomPaint(
+                  // Note: In future debug, can remove following two lines and ) to test left aligned first.
+                  child: Transform.translate(
+                    offset: Offset((MediaQuery.of(context).size.width - screenWidth) / 2, 0),
+                    child: CustomPaint(
                     foregroundPainter: DrillPainter(
                         Colors.amber,
                         Colors.blueAccent,
@@ -319,6 +322,7 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                           children: createHittestButtons(context)
                       ),
                     ),
+                  ),
                   ),
                 ),
                 getAnimatedPathPainter(),

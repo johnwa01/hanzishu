@@ -463,7 +463,7 @@ var theString_en_US = [
   Local(453, "Not show Hanzi"),
   Local(454, "Hanzi practice sheet"),
   Local(455, "HSK Hanzi"),
-  Local(456, "Puzzle Game"), // "Literacy tree/Learn or review Hanzi"
+  Local(456, "Block Hanzi"), // "Literacy tree/Learn or review Hanzi"
   Local(457, "In current test, it's estimated that you know about "),
   Local(458, "Total is "),
   Local(459, "All levels combined"),
