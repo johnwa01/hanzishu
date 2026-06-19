@@ -56,20 +56,23 @@ class _PracticeSheetCorePageState extends State<PracticeSheetCorePage> with Sing
         (
         title: Text(title),  //Hanzi practice sheet
       ),
-      body: Container(
-          child: WillPopScope(
-              child: new Stack(
-                  children: <Widget>[
-                    new Positioned(
-                      child: CustomPaint(
-                        foregroundPainter: PracticeSheetPainter(flashcardList, screenWidth, gridShowZi
-                        ),
-                      ),
-                    ),
-                  ]
+      body: WillPopScope(
+        onWillPop: _onWillPop,
+        child: SingleChildScrollView(
+          child: Center(
+            child: SizedBox(
+              width: 900, // adjust if needed
+              height: 1400, // enough for worksheet
+              child: CustomPaint(
+                foregroundPainter: PracticeSheetPainter(
+                  flashcardList,
+                  screenWidth,
+                  gridShowZi,
+                ),
               ),
-              onWillPop: _onWillPop
-          )
+            ),
+          ),
+        ),
       ),
     );
   }

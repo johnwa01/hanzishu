@@ -104,85 +104,152 @@ class _PracticeSheetPageState extends State<PracticeSheetPage> with SingleTicker
           (
           title: Text(getString(449)/*"Hanzi practice sheet"*/),
         ),
-        body: Container(
+        body: Align(
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
             child: WillPopScope(
-                child: new Column( //Stack(
-                    children: <Widget>[
-                      SizedBox(height: 40 * getSizeRatioWithLimit()),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(
+                  18.0 * getSizeRatioWithLimit(),
+                  34.0 * getSizeRatioWithLimit(),
+                  18.0 * getSizeRatioWithLimit(),
+                  28.0 * getSizeRatioWithLimit(),
+                ),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 680.0),
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(28.0, 28.0, 28.0, 30.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.06),
+                          blurRadius: 18.0,
+                          offset: const Offset(0, 8),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        Row(
                           children: <Widget>[
-                            SizedBox(width: 10 * getSizeRatioWithLimit()),
-                            Text(displ/*"Type or copy/paster all your words below"*/, style: TextStyle(fontSize: 16 * getSizeRatioWithLimit(), color: Colors.blueGrey), ),
-                            SizedBox(width: 15 * getSizeRatioWithLimit()),
+                            Container(
+                              width: 52.0,
+                              height: 52.0,
+                              decoration: BoxDecoration(
+                                color: Colors.orange.shade50,
+                                borderRadius: BorderRadius.circular(18.0),
+                              ),
+                              child: Icon(
+                                Icons.edit_note,
+                                color: Colors.orange.shade600,
+                                size: 34.0,
+                              ),
+                            ),
+                            const SizedBox(width: 16.0),
+                            Expanded(
+                              child: Text(
+                                displ,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  color: Colors.blueGrey.shade700,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
                             TextButton(
                               style: TextButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 16.0 * getSizeRatioWithLimit()),
+                                textStyle: const TextStyle(fontSize: 16.0),
                               ),
                               onPressed: () {
                                 setState(() {
                                   gridShowZi = gridShowZi ? false : true;
                                 });
                               },
-                              child: Text(gridShowOrNotShowZiString,
-                                  style: TextStyle(color: Colors.lightBlue)),
-                            ),
-                          ]
-                      ),
-                      SizedBox(height: 10 * getSizeRatioWithLimit()),
-                      Row(
-                        children: <Widget>[
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          SizedBox(
-                            width: 280 * getSizeRatioWithLimit(), //double.infinity,
-                            //height: 120,
-                            child: TextField(
-                              autocorrect: false,
-                              enableSuggestions: false,
-                              controller: _controller,
-                              focusNode: _textNode,
-                              autofocus: false,
-                              style: TextStyle(
-                                fontSize: 18 * getSizeRatioWithLimit(), //editFontSize * editFieldFontRatio, // 35
-                                //height: 1.0 // 1.3
+                              child: Text(
+                                gridShowOrNotShowZiString,
+                                style: const TextStyle(color: Colors.blueAccent),
                               ),
-                              maxLines: 1,
-                              //expands: true,
-                              keyboardType: TextInputType.text, //multiline,  //TextInputType.visiblePassword
-                              decoration: InputDecoration(
-                                //hintText: 'This test',
-                                filled: true,
-                                fillColor: Colors.grey, //lightBlueAccent, //black12,
-                              ),
-                            ),//focusNode: _textNode,
-                          ),
-                          SizedBox(width: 10 * getSizeRatioWithLimit()),
-                          TextButton(
-                            style: TextButton.styleFrom(
-                              textStyle: TextStyle(fontSize: 20.0 * getSizeRatioWithLimit()),
                             ),
-                            onPressed: () {
-                              processInputs();
-                              /*
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => DictionaryHelpPage(),
+                          ],
+                        ),
+                        const SizedBox(height: 24.0),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: TextField(
+                                autocorrect: false,
+                                enableSuggestions: false,
+                                controller: _controller,
+                                focusNode: _textNode,
+                                autofocus: false,
+                                style: const TextStyle(
+                                  fontSize: 22.0,
+                                  height: 1.2,
                                 ),
-                              );
-                              */
-                            },
-                            child: Text(getString(301)/*"Start"*/,
-                                style: TextStyle(color: Colors.lightBlue)),
-                          ),
-                        ],
-                      ),
-                    ]
+                                maxLines: 3,
+                                minLines: 1,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                  hintText: getString(408),
+                                  filled: true,
+                                  fillColor: Colors.grey.shade50,
+                                  contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 16.0,
+                                    horizontal: 18.0,
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    borderSide: BorderSide(
+                                      color: Colors.blueAccent.withOpacity(0.16),
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(18.0),
+                                    borderSide: const BorderSide(
+                                      color: Colors.blueAccent,
+                                      width: 1.4,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 18.0),
+                            SizedBox(
+                              width: 140.0,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28.0),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  processInputs();
+                                },
+                                child: Text(
+                                  getString(301) + " ->",
+                                  style: const TextStyle(
+                                    fontSize: 18.0,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                onWillPop: _onWillPop
-            )
-        ),
-      );
+              ),
+              onWillPop: _onWillPop,
+            ),
+          ),
+        ),      );
     } catch (e, s) {
       print(s);
     }
