@@ -86,23 +86,53 @@ class _ConversationPageState extends State<ConversationPage> {
         (
         title: Text(getString(4) /*"Conversation"*/),
       ),
-      body: Container(
-        //height: 800.00,
-
+      body: Align(
+        alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           controller: _scrollController,
           scrollDirection: Axis.vertical,
           child: WillPopScope(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(18.0, 24.0, 18.0, 28.0),
               child: Column(
-                  children: <Widget>[
-                    getConversationContent(context),
-                    getContinue(context),
-                  ]
+                children: <Widget>[
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: getSkipThisSection(),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.06),
+                              blurRadius: 18,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: getConversationContent(context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 28.0),
+                  getContinue(context),
+                ],
               ),
-              onWillPop: _onWillPop
+            ),
+            onWillPop: _onWillPop,
           ),
         ),
-
       ),
     );
   }
@@ -126,9 +156,9 @@ class _ConversationPageState extends State<ConversationPage> {
     var sents = theLessonList[lessId].sentenceList; //  snowballIds[0];
 
     if (lessId > Lesson.numberOfLessonsInUnit1) // after first unit of 9 lessons
-      {
-        widgets.add(getPinyinTypeRow());
-      }
+        {
+      widgets.add(getPinyinTypeRow());
+    }
 
     for (var i = 0; i < sents.length; i++) {
       widgets.add(getOneRow(sents[i], i));
@@ -136,7 +166,7 @@ class _ConversationPageState extends State<ConversationPage> {
         widgets.add(getPinyinRow(sents[i], pinyinType!));
       }
       widgets.add(getTranslation(sents[i]));
-      widgets.add(SizedBox(height: 5.0 * getSizeRatioWithLimit()));
+      widgets.add(SizedBox(height: 16.0 * getSizeRatioWithLimit()));
     }
 
     return widgets;
@@ -202,9 +232,9 @@ class _ConversationPageState extends State<ConversationPage> {
   }
 
   Widget getPinyinRow(int sentId, PinyinType pinyinType) {
-    var spaceStart = 47.0;
+    var spaceStart = 72.0;
     if (lessonId > 60) {
-      spaceStart = 27.0;
+      spaceStart = 44.0;
     }
 
     return Container(
@@ -245,9 +275,9 @@ class _ConversationPageState extends State<ConversationPage> {
       trans = LessonManager.getTranslationFromSentence(theSentenceList[sentId].conv);
     }
 
-    var spaceStart = 50.0;
+    var spaceStart = 72.0;
     if (lessonId > 60) {
-      spaceStart = 30.0;
+      spaceStart = 44.0;
     }
 
     return Container(
@@ -271,27 +301,41 @@ class _ConversationPageState extends State<ConversationPage> {
 
     List<Widget> buttons = [];
     if (lessonId <= 60) {
-      buttons.add(Text(" " + (rowIndex + 1).toString() + ".",
-          style: TextStyle(color: Colors.blue)));
+      buttons.add(
+        SizedBox(
+          width: 28.0 * getSizeRatioWithLimit(),
+          child: Text(
+            "${rowIndex + 1}.",
+            textAlign: TextAlign.right,
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 14.0 * getSizeRatioWithLimit(),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+      );
     }
 
-    var oneIcon = Container(
-        height: 30.0 * getSizeRatioWithLimit(), //180
-        width: 30.0 * getSizeRatioWithLimit(),
-        child: IconButton(
-          icon: Icon(
-            Icons.volume_up,
-            size: 30.0 * getSizeRatioWithLimit(), // 150
-          ),
-          color: Colors.cyan, //Colors.green,
-          onPressed: () {
-            initOverlay();
-            TextToSpeech.speak("zh-CN", sentText);
-          },
-        )
+    var oneIcon = SizedBox(
+      height: 34.0 * getSizeRatioWithLimit(),
+      width: 34.0 * getSizeRatioWithLimit(),
+      child: IconButton(
+        icon: Icon(
+          Icons.volume_up,
+          size: 26.0 * getSizeRatioWithLimit(),
+        ),
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
+        color: Colors.cyan,
+        onPressed: () {
+          initOverlay();
+          TextToSpeech.speak("zh-CN", sentText);
+        },
+      ),
     );
     buttons.add(oneIcon);
-    buttons.add(SizedBox(width: 8 * getSizeRatioWithLimit()));
+    buttons.add(SizedBox(width: 10.0 * getSizeRatioWithLimit()));
     //Text(sentText,
     //  style: TextStyle(fontSize: 25 * getSizeRatioWithLimit()),),
 
@@ -324,16 +368,48 @@ class _ConversationPageState extends State<ConversationPage> {
     return buttons;
   }
 
+  Widget getSkipThisSection() {
+    if (theIsFromLessonContinuedSection) {
+      return TextButton(
+        child: Text(
+          getString(401), // Skip this section
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Colors.blueAccent,
+          ),
+        ),
+        onPressed: () {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+    else {
+      return const SizedBox(width: 0, height: 0);
+    }
+  }
+
   Widget getContinue(BuildContext context) {
-    var buttonText = getString(285); // Continue
+    var buttonText = getString(285) + " ->"; // Continue
 
     if (theIsFromLessonContinuedSection) {
-      return Container(
-        child: TextButton(
-          child: Text(buttonText,
-            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.blue),),
-          //color: Colors.blueAccent,
-          //textColor: Colors.white,
+      return SizedBox(
+        width: 220.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
+          ),
+          child: Text(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: getSizeRatioWithLimit() * 18.0,
+              color: Colors.black87,
+            ),
+          ),
           onPressed: () {
             //if (lessonId > Lesson.numberOfLessonsInLevel1 && pinyinType != PinyinType.None && !hasPressedContinue) {
             //  hasPressedContinue = true;
@@ -342,8 +418,8 @@ class _ConversationPageState extends State<ConversationPage> {
             //  });
             //}
             //else {
-              theIsBackArrowExit = false;
-              Navigator.of(context).pop();
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop();
             //}
           },
         ),

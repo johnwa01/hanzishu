@@ -639,6 +639,9 @@ class BasePainter extends CustomPainter{
 
   void drawFrameWithColors(ZiListType listType, double width, double leftEdge, double topEdge,
       MaterialColor centerColor, MaterialColor sideColor, double widthOfLine) {
+    final frameColor = Colors.amber;
+    const frameWidth = 2.0;
+    const frameWidthOuter = 1.2;
     var x1 = leftEdge;
     double width1 = width / 3.0;
     var x2 = x1 + width1 * 0.9;
@@ -653,17 +656,17 @@ class BasePainter extends CustomPainter{
     var y4 = y3 + height1 * 0.9;
 
     // outer frame
-    drawOneFrameLineWithColor([x1, y1, x4, y1], Colors.amber, 2.0);
-    drawOneFrameLineWithColor([x4, y1, x4, y4], Colors.amber, 2.0);
-    drawOneFrameLineWithColor([x4, y4, x1, y4], Colors.amber, 2.0);
-    drawOneFrameLineWithColor([x1, y4, x1, y1], Colors.amber, 2.0);
+    drawOneFrameLineWithColor([x1, y1, x4, y1], frameColor, frameWidthOuter);
+    drawOneFrameLineWithColor([x4, y1, x4, y4], frameColor, frameWidthOuter);
+    drawOneFrameLineWithColor([x4, y4, x1, y4], frameColor, frameWidthOuter);
+    drawOneFrameLineWithColor([x1, y4, x1, y1], frameColor, frameWidthOuter);
 
     if (centerId != 1 || (centerId == 1 && listType == ZiListType.searching)) {
       // inside frame
-      drawOneFrameLineWithColor([x2, y2, x3, y2], Colors.amber, 2.0);
-      drawOneFrameLineWithColor([x3, y2, x3, y3], Colors.amber, 2.0);
-      drawOneFrameLineWithColor([x3, y3, x2, y3], Colors.amber, 2.0);
-      drawOneFrameLineWithColor([x2, y3, x2, y2], Colors.amber, 2.0);
+      drawOneFrameLineWithColor([x2, y2, x3, y2], frameColor, frameWidth);
+      drawOneFrameLineWithColor([x3, y2, x3, y3], frameColor, frameWidth);
+      drawOneFrameLineWithColor([x3, y3, x2, y3], frameColor, frameWidth);
+      drawOneFrameLineWithColor([x2, y3, x2, y2], frameColor, frameWidth);
 
       var showLinesInBetween = true;
       if (listType == ZiListType.zi) {
@@ -682,10 +685,10 @@ class BasePainter extends CustomPainter{
 
       if (showLinesInBetween) {
         // lines in between
-        drawOneFrameLineWithColor([x1, y1, x2, y2], Colors.amber, 2.0);
-        drawOneFrameLineWithColor([x4, y1, x3, y2], Colors.amber, 2.0);
-        drawOneFrameLineWithColor([x4, y4, x3, y3], Colors.amber, 2.0);
-        drawOneFrameLineWithColor([x1, y4, x2, y3], Colors.amber, 2.0);
+        drawOneFrameLineWithColor([x1, y1, x2, y2], frameColor, frameWidthOuter);
+        drawOneFrameLineWithColor([x4, y1, x3, y2], frameColor, frameWidthOuter);
+        drawOneFrameLineWithColor([x4, y4, x3, y3], frameColor, frameWidthOuter);
+        drawOneFrameLineWithColor([x1, y4, x2, y3], frameColor, frameWidthOuter);
       }
     }
     /*

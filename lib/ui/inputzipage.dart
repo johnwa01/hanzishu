@@ -33,6 +33,7 @@ import 'dart:core';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/ui/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/progress_indicator.dart';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
@@ -3290,31 +3291,23 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(14.0 * getSizeRatio(), 10.0, 14.0 * getSizeRatio(), 10.0),
+      padding: EdgeInsets.fromLTRB(
+        14.0 * getSizeRatio(),
+        8.0,
+        14.0 * getSizeRatio(),
+        8.0,
+      ),
       child: Row(
-        children: <Widget>[
+        children: [
           Expanded(
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: LinearProgressIndicator(
-                value: _progressValue,
-                minHeight: 8.0 * getSizeRatio(),
-                backgroundColor: Color(0xFFE9E3F4),
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6A35B8)),
-              ),
+            child: HzProgressIndicator(
+              value: _progressValue,
+              current: currentIndex < 0 ? 0 : currentIndex,
+              total: totalQuestions,
+              thickness: HzProgressThickness.thick,
             ),
           ),
-          SizedBox(width: 12.0 * getSizeRatio()),
-
-          Text(
-            getTypingScoreString(),
-            style: TextStyle(
-              fontSize: 16.0 * getSizeRatio(),
-              fontWeight: FontWeight.w700,
-              color: Color(0xFF2B2140),
-            ),
-          ),
-          if (typingType == TypingType.FirstTyping || typingType == TypingType.ExpandedReview) ...[
+          if (includeSkipSection || typingType == TypingType.FirstTyping || typingType == TypingType.ExpandedReview) ...[
             SizedBox(width: 16.0 * getSizeRatio()),
             getSkipThisSection(),
           ],

@@ -400,7 +400,7 @@ var theString_en_US = [
   Local(391, "WOW！"),
   Local(392, "You know all the Components now! Next let's do some exercises."),
   Local(393, "Practice more Components"),
-  Local(394, "Literacy Tree"), //"Hanzishu word puzzle"
+  Local(394, "Block Hanzi"), //"Hanzishu word puzzle", Literacy Tree
   Local(395, "All 3,800 common Hanzi"),
   Local(396, "HSK Hanzi Study"),
   Local(397, "Up to "),
@@ -410,7 +410,7 @@ var theString_en_US = [
   Local(401, "Skip section"),
   Local(402, "Next section"),
   Local(403, "Individual exercises"),
-  Local(404, "Study till all are check-marked"),
+  Local(404, "Study until all are checked"),
   Local(405, "Previous"),
   Local(406, "Customized flashcards"),
   Local(407, "You have completed all the flashcards!"),
