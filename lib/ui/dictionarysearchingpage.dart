@@ -229,6 +229,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     body: Center(
       child: SizedBox(
         width: screenWidth,
+        child: SingleChildScrollView(
         child: WillPopScope(
               child: new Stack(
                   children: <Widget>[
@@ -259,7 +260,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                   ]
               ),
               onWillPop: _onWillPop
-          )
+          ),
+        ),
         ),
       ),
     );
@@ -841,7 +843,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}
 
-    var painterHeight = MediaQuery.of(context).size.height + 150.0 * getSizeRatio();  // add some buffer at the end
+    var painterHeight = MediaQuery.of(context).size.height + 500.0 * getSizeRatio();  // add some buffer at the end
     buttons.add (Container(height: painterHeight, width: screenWidth));  // workaround to avoid infinite space error
 
     breakoutPositions.forEach((uniqueNumber, position) =>
