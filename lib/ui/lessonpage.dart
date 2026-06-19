@@ -96,8 +96,9 @@ class _LessonPageState extends State<LessonPage> {
         (
         title: Text(lessonName),   // "Lesson page"
       ),
-      body: Center
+      body: Align
         (
+        alignment: Alignment.topCenter,
         //child: Text("This is Lesson Page."),
         child: getLessonSections(context, widget.lessonId),
       ),
@@ -261,90 +262,110 @@ class _LessonPageState extends State<LessonPage> {
   Widget getLessonSections(BuildContext context, int lessonId) {
     // put scrollview since I get render overflow issue
     return SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          //Container(
-          //  padding: EdgeInsets.all(5),
-          //),
-          Container(
-            child: Text(getString(8) + lessonId.toString()/*"Please complete exercises in order."*/, style: TextStyle(fontSize: 20.0),),
-            padding: EdgeInsets.all(15),
-          ),
-          //Container(
-          //  alignment: Alignment.topRight, //topLeft,
-          //  onPressed: () {
-          //    launchLessonSection(context, 1, 0);
-          //  },
-          //}
-          InkWell(
-            child: //Column(
-              //children: [
-                Ink.image(
-                  image: AssetImage("assets/core/lessonimage.png"),
-                  width: 170 * getSizeRatioWithLimit(), //130
-                  height: 110 * getSizeRatioWithLimit(), //80
-                ),
-                //Text(
-                //  lessonOrSectionName, //lesson.titleTranslation, //"Hello",
-                //  style: TextStyle(fontSize: 14.0, fontFamily: "Raleway"),
-                //),
-              //]
-            //),
-            onTap: () => { theIsFromLessonContinuedSection = true,
-                        launchLessonSection(context, lessonId, 0), }
-          ),
-          SizedBox(
-            height: 60.0, //40
-          ),
-          /*
-          Container(
-            child: Text(getString(403), style: TextStyle(fontSize: 16.0),),
-            //padding: EdgeInsets.all(15),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                getButton(context, lessonId, 0),
-                getPinyinButton(context, lessonId, 1),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 80),
+          child: Column(
+            children: <Widget>[
+              //Container(
+              //  padding: EdgeInsets.all(5),
+              //),
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Icon( Icons.sentiment_very_satisfied, size: 100, color: Colors.orange, ),
+              ),
 
-              ],
+              Container(
+                child: Text(getString(8) + lessonId.toString()/*"Please complete exercises in order."*/, style: TextStyle(fontSize: 20.0),),
+                padding: EdgeInsets.all(15),
+              ),
+
+              InkWell(
+                onTap: () {
+                  theIsFromLessonContinuedSection = true;
+                  launchLessonSection(context, lessonId, 0);
+                },
+                borderRadius: BorderRadius.circular(24),
+                child: Container(
+                  width: 320,
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(24),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.06),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.play_circle_fill,
+                        size: 72,
+                        color: Colors.blueAccent,
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        "Start Lesson",
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: 60.0, //40
+              ),
+
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    //       getButton(context, lessonId, 6),
+                    //getButton(context, lessonId, 7),
+                    InkWell(
+                      onTap: () {
+                        launchLessonSection(context, lessonId, 7);
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: 280,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                          color: Colors.grey.shade200,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Icon(
+                            Icons.description_outlined,
+                            color: Colors.orange,
+                          ),
+                          SizedBox(width: 12),
+                          Text(
+                            "Hanzi Practice Sheet",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              //padding: EdgeInsets.all(20),
             ),
-            //padding: EdgeInsets.all(20),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                getButton(context, lessonId, 2),
-                getButton(context, lessonId, 3),
-              ],
-            ),
-            //padding: EdgeInsets.all(20),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                getButton(context, lessonId, 4),
-                getButton(context, lessonId, 5),
-              ],
-            ),
-            //padding: EdgeInsets.all(20),
-          ),
-          */
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-         //       getButton(context, lessonId, 6),
-                getButton(context, lessonId, 7),
-              ],
-            ),
-            //padding: EdgeInsets.all(20),
-          ),
-        ]
-      ),
+          ]
+        ),
+        ),
     );
   }
 
