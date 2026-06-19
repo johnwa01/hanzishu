@@ -88,25 +88,76 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
         (
         title: Text(getString(373) /*"Snowball Conversation"*/),
       ),
-      body: Container(
-        //height: 800.00,
-
+      body: Align(
+        alignment: Alignment.topCenter,
         child: SingleChildScrollView(
           controller: _scrollController,
-          scrollDirection: Axis.vertical,
           child: WillPopScope(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(
+                  18.0, 24.0, 18.0, 28.0),
               child: Column(
-                  children: <Widget>[
-                    getSnowballContent(context),
-                    getContinue(context),
-                  ]
+                children: [
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: getSkipThisSection(),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 760),
+                      child: Container(
+                        padding: const EdgeInsets.fromLTRB(
+                            24.0, 24.0, 24.0, 8.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24.0),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.06),
+                              blurRadius: 18,
+                              offset: const Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: getSnowballContent(context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 28.0),
+                  getContinue(context),
+                ],
               ),
-              onWillPop: _onWillPop
+            ),
+            onWillPop: _onWillPop,
           ),
         ),
-
       ),
     );
+  }
+
+  Widget getSkipThisSection() {
+    if (theIsFromLessonContinuedSection) {
+      return TextButton(
+        child: Text(
+          getString(401),
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Colors.blueAccent,
+          ),
+        ),
+        onPressed: () {
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        },
+      );
+    }
+
+    return const SizedBox(width: 0, height: 0);
   }
 
   Future<bool> _onWillPop() {
@@ -343,15 +394,26 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
   }
 
   Widget getContinue(BuildContext context) {
-    var buttonText = getString(285); // Continue
+    var buttonText = getString(285) + " ->";
 
     if (theIsFromLessonContinuedSection) {
-      return Container(
-        child: TextButton(
-          child: Text(buttonText,
-            style: TextStyle(fontSize: getSizeRatioWithLimit() * 18.0, color: Colors.blue),),
-          //color: Colors.blueAccent,
-          //textColor: Colors.white,
+      return SizedBox(
+        width: 220.0,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(vertical: 14.0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0),
+            ),
+          ),
+          child: Text(
+            buttonText,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: getSizeRatioWithLimit() * 18.0,
+              color: Colors.black87,
+            ),
+          ),
           onPressed: () {
             theIsBackArrowExit = false;
             Navigator.of(context).pop();
@@ -359,9 +421,8 @@ class _ConversationSnowballPageState extends State<ConversationSnowballPage> {
         ),
       );
     }
-    else {
-      return SizedBox(width: 0, height: 0);
-    }
+
+    return const SizedBox(width: 0, height: 0);
   }
 
   showOverlay(BuildContext context, double posiX, double posiY, String meaning) {

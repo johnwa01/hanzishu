@@ -171,19 +171,26 @@ class _QuizPageState extends State<QuizPage> {
             ),
             child: Column(
               children: <Widget>[
-                Container(
-                  child: getProgressBar(context),
+                Padding(
                   padding: EdgeInsets.only(
                     top: 2.0 * getSizeRatio(),
                     left: 2.0 * getSizeRatio(),
                     right: 2.0 * getSizeRatio(),
                   ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Expanded(
+                        child: getProgressBar(context),
+                      ),
+                      if (includeSkipSection) ...[
+                        SizedBox(width: 14.0 * getSizeRatio()),
+                        getSkipThisSection(),
+                      ],
+                    ],
+                  ),
                 ),
-                Container(
-                  alignment: Alignment.topRight,
-                  child: getSkipThisSection(),
-                ),
-                SizedBox(height: 15.0 * getSizeRatio()),
+                SizedBox(height: 30.0 * getSizeRatio()),
                 getTaskPrompt(),
                 SizedBox(height: 15.0 * getSizeRatio()),
                 getQuestion(context),
