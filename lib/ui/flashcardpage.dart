@@ -232,16 +232,16 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
                                       fontSize: 14.0 * getSizeRatioWithLimit(),
                                       color: Colors.blueGrey,
                                     ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: "Example: ",
-                                        style: TextStyle(fontWeight: FontWeight.w600),
-                                      ),
-                                      TextSpan(
-                                        text: "你好，我是学生。",
-                                        style: TextStyle(color: Colors.lightBlue[700]),
-                                      ),
-                                    ],
+                                    //children: <TextSpan>[
+                                    //  TextSpan(
+                                    //    text: "Example: ",
+                                    //    style: TextStyle(fontWeight: FontWeight.w600),
+                                    //  ),
+                                    //  TextSpan(
+                                    //    text: "你好，我是学生。",
+                                    //    style: TextStyle(color: Colors.lightBlue[700]),
+                                    //  ),
+                                    //],
                                   ),
                                 ),
                               ),

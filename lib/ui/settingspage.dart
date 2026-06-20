@@ -69,37 +69,67 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
   Widget getSettingsSelection(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(30),
-          ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Text(getString(303)/*'Explanation language:'*/),
-                SizedBox(width: 10),
-                getLanguageSelection(context),
-                SizedBox(width: 10),
-              ],
+    return Center(
+      child: Container(
+        width: 420,
+        padding: const EdgeInsets.all(24),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 12,
+              offset: Offset(0, 4),
             ),
-          ),
-        ]
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.language,
+              size: 56,
+              color: Colors.blue,
+            ),
+            SizedBox(height: 20),
+
+            Text(
+              getString(303), // Language in title
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            SizedBox(
+              width: 220,
+              child: getLanguageSelection(context),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
+
   Widget getLanguageSelection(BuildContext context) {
-    return DropdownButton(
+    return DropdownButtonFormField<Language>(
       value: _selectedLanguage,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(),
+        contentPadding:
+        EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+      ),
       items: _dropdownMenuItems,
       onChanged: (selectedLanguage) {
         setState(() {
-          _selectedLanguage = selectedLanguage as Language;
+          _selectedLanguage = selectedLanguage!;
           theDefaultLocale = selectedLanguage.name;
         });
       },
-      //onChangeDropdownItem,
     );
   }
 }
