@@ -226,16 +226,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         (
         title: Text(title),  //汉字树字典/Customized Flashcards
       ),
-    body: Center(
-      child: SizedBox(
-        width: screenWidth,
-        child: SingleChildScrollView(
-        child: WillPopScope(
-              child: new Stack(
-                  children: <Widget>[
-                    new Positioned(
-                      child: CustomPaint(
-                        foregroundPainter: DictionaryPainter(
+      body: Center(
+        child: SizedBox(
+          width: screenWidth,
+          child: SingleChildScrollView(
+            child: WillPopScope(
+                child: new Stack(
+                    children: <Widget>[
+                      new Positioned(
+                        child: CustomPaint(
+                          foregroundPainter: DictionaryPainter(
                             Colors.amber,
                             //lessonId: widget.lessonId,
                             screenWidth,
@@ -248,20 +248,20 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
                             currentZiListType,
                             shouldDrawCenter,
                             showBreakoutDetails,
-                        ),
-                        //child: Center(
+                          ),
+                          //child: Center(
                           child: Stack(
                               children: displayCharsAndCreateHittestButtons(context)
                           ),
-                        //),
+                          //),
+                        ),
                       ),
-                    ),
-                    getAnimatedPathPainter(),
-                  ]
-              ),
-              onWillPop: _onWillPop
+                      getAnimatedPathPainter(),
+                    ]
+                ),
+                onWillPop: _onWillPop
+            ),
           ),
-        ),
         ),
       ),
     );
@@ -827,18 +827,18 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     //var breakoutPositions = //theLessonManager.getBreakoutPositions(1/*TODO*/);
     //if (breakoutPositions.length == 0) {
     var painter = DictionaryPainter(
-        Colors.amber,
-        //lessonId: widget.lessonId,
-        screenWidth,
-        //screenWidth: screenWidth,
-        dicStage,
-        firstZiIndex,
-        searchingZiIndex,
-        context,
-        0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
-        currentZiListType,
-        shouldDrawCenter,
-        showBreakoutDetails,
+      Colors.amber,
+      //lessonId: widget.lessonId,
+      screenWidth,
+      //screenWidth: screenWidth,
+      dicStage,
+      firstZiIndex,
+      searchingZiIndex,
+      context,
+      0, //compoundZiCurrentComponentId,  //This is just to calculate the positions, therefore doesn't matter. compoundZiCurrentComponentId
+      currentZiListType,
+      shouldDrawCenter,
+      showBreakoutDetails,
     );
     var breakoutPositions = painter.getDicBreakoutPositions(searchingZiIndex);
     //}
@@ -849,13 +849,27 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     breakoutPositions.forEach((uniqueNumber, position) =>
         buttons.add(getBreakoutPositionedButton(uniqueNumber, position)));
 
-    // Next flashcard button, match dictionarypainter's definition
+    // Next flashcard button.
+    // For customized flashcards, place it after the breakdown area instead of
+    // floating near the top. This feels more natural because students move to
+    // the next card after reading the current card.
     if (flashcardList.length != 0) {
       var fontSize4 = applyRatio(20.0);
-      var fontSize8 = applyRatio(15.0); //115
-      var nextButtonPosiAndSize = PositionAndSize(fontSize8 * 10.0,
-          0.0 /*getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 3 */,
-          fontSize4 * 5, fontSize4 * 2.0, 0.0, 0.0);
+      var nextButtonTop = getHighestBreakoutYPosi(breakoutPositions) + fontSize4 * 4.0;
+      var nextButtonLeft = screenWidth - fontSize4 * 7.0;
+
+      if (nextButtonLeft < fontSize4) {
+        nextButtonLeft = fontSize4;
+      }
+
+      var nextButtonPosiAndSize = PositionAndSize(
+          screenWidth / 2 - applyRatio(70.0),
+          getHighestBreakoutYPosi(breakoutPositions) +
+              applyRatio(80.0),
+          fontSize4 * 6.0,
+          fontSize4 * 2.3,
+          0.0,
+          0.0);
       buttons.add(getNextFlashcardButton(nextButtonPosiAndSize));
     }
 
@@ -878,24 +892,37 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   Widget getNextFlashcardButton(PositionAndSize posiAndSize) {
-    var butt = TextButton(
-      //color: Colors.blueAccent,
-      //textColor: Colors.white,
+    var butt = ElevatedButton(
       onPressed: () {
         clearOverlayEntry();
         flashcardIndex++;
-        if (flashcardList != null && flashcardList.length > 0 && flashcardIndex < flashcardList.length) {
+
+        if (flashcardList.length > 0 &&
+            flashcardIndex < flashcardList.length) {
           setState(() {
-            searchingZiIndex =
-                DictionaryManager.getSearchingZiId(
-                    flashcardList[flashcardIndex]);
+            searchingZiIndex = DictionaryManager.getSearchingZiId(
+                flashcardList[flashcardIndex]);
           });
-        }
-        else {
+        } else {
           showCompletedDialog(context);
         }
       },
-      child: Text(getString(515) + "->", style: TextStyle(fontSize: 14.0 * getSizeRatio(), color: Colors.blue),),
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(
+          horizontal: 20,
+          vertical: 10,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      child: Text(
+        getString(515) + " →",
+        style: TextStyle(
+          fontSize: 16.0 * getSizeRatio(),
+          fontWeight: FontWeight.w600,
+        ),
+      ),
     );
 
     var posiCenter = Positioned(
@@ -911,16 +938,16 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
   Widget getSkipThisSection() {
     var butt = TextButton(
-        child: Text(
-          getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
-        //color: Colors.white,
-        //textColor: Colors.blueAccent,
-        onPressed: () {
-          clearOverlayEntry();
-          theIsBackArrowExit = false;
-          Navigator.of(context).pop();
-        },
-      );
+      child: Text(
+        getString(401) /*"Skip this section"*/, style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
+      //color: Colors.white,
+      //textColor: Colors.blueAccent,
+      onPressed: () {
+        clearOverlayEntry();
+        theIsBackArrowExit = false;
+        Navigator.of(context).pop();
+      },
+    );
 
     var posiCenter = Positioned(
         top: 0.0, //y
