@@ -136,17 +136,25 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
     var fontSize2 = TheConst.fontSizes[2]; //* getSizeRatioWithLimit();
 
     screenWidth = Utility.getScreenWidthForTreeAndDict(context);
-    thePositionManager.setFrameWidth(screenWidth - 10.0);
-    var oneWidth = screenWidth / 10.0;
+
+    const double layoutWidth = 700.0;
+
+    thePositionManager.setFrameWidth(layoutWidth);
+    var oneWidth = layoutWidth / 10.0;
 
     var fontSize = 18.0 * getSizeRatioWithLimit();
-    return Column(
+    return Center(
+        child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: SizedBox(
+        width: layoutWidth,
+        child: Column(
       //mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           //SizedBox(height: fontSize2 / 2),
-          SizedBox(height: fontSize2 * 2),
+          SizedBox(height: 24.0),
 
           Row(
               children: <Widget>[
@@ -284,6 +292,9 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
               ]
           ),
         ]
+        ),
+        ),
+        ),
     );
   }
 }

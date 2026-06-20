@@ -35,8 +35,8 @@ class BasicComponentsDetailPainter extends BasePainter {
     var defaultSize = screenWidth / 16.0; // equivalent to the original hardcoded value of 25.0
     var sizeRatio = defaultSize / 25.0;
 
-    if (sizeRatio > 2) {
-      sizeRatio = 2;
+    if (sizeRatio > 1.25) {
+      sizeRatio = 1.25;
     }
 
     return sizeRatio;
@@ -69,9 +69,8 @@ class BasicComponentsDetailPainter extends BasePainter {
     yPositionWrapper.value += applyRatio(20.0);
     if (!isInfoOnly) {
       var groupLetter = ComponentManager.getLetterByGroupAndIndex(keyGroup, keyIndex);
-      displayTextWithValue("'" + groupLetter + "' " + getString(386) + " " + getString(384)/*"Hanzi Basic Components"*/, lessonLeftEdge, yPositionWrapper.value,
-          thePositionManager.getCharFontSize(
-              ZiOrCharSize.defaultSize), Colors.brown, false);
+      displayTextWithValue("'" + groupLetter + "' " + getString(386) + ":", lessonLeftEdge, yPositionWrapper.value,
+          applyRatio(28.0), Colors.brown, false);
     }
     yPositionWrapper.value += (thePositionManager.getCharFontSize(
         ZiOrCharSize.defaultSize) + applyRatio(15.0));
@@ -81,7 +80,7 @@ class BasicComponentsDetailPainter extends BasePainter {
     length = sortedCompIds.length;
     if (length > 0) {
       for (int compId in sortedCompIds) {
-          displayOneZi(yPositionWrapper, compId, CharType.BasicChar, isInfoOnly, listOfSpeechIconInfo);
+        displayOneZi(yPositionWrapper, compId, CharType.BasicChar, isInfoOnly, listOfSpeechIconInfo);
       }
 
       yPositionWrapper.value += applyRatio(20.0);
@@ -98,144 +97,128 @@ class BasicComponentsDetailPainter extends BasePainter {
   }
 
   displayOneZi(PrimitiveWrapper yPositionWrapper, int id, String type, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
-    var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-    yPositionWrapper.value += applyRatio(20.0);
-    displayOneZiHelper(id, type, applyRatio(20.0), yPositionWrapper, isInfoOnly, listOfSpeechIconInfo);
-
-    yPositionWrapper.value += applyRatio(30.0);
-
-    if (!isInfoOnly) {
-      var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-      displayCompStrokes(id, ZiListType.component, posiSize, applyRatio(1.0));
-    }
-
     var comp = ComponentManager.getComponent(id);
-    if (comp!.isChar) {
-      var searchingZiIndex = DictionaryManager.getSearchingZiId(
-          comp!.charOrNameOfNonchar);
-      if (searchingZiIndex > 0) {
-        yPositionWrapper.value += applyRatio(30.0);
-        if (!isInfoOnly) {
-          //var fontSize = thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize);
-          var posiSize = PositionAndSize(applyRatio(20.0), yPositionWrapper.value, fontSize, fontSize, fontSize, applyRatio(1.0));
-          displayTypingCode(searchingZiIndex, posiSize);
-        }
-      }
+    if (comp == null) {
+      return;
     }
 
-    yPositionWrapper.value += applyRatio(30.0);
+    var cardLeft = applyRatio(20.0);
+    var cardTop = yPositionWrapper.value + applyRatio(12.0);
+    var cardWidth = screenWidth - applyRatio(40.0);
+    var cardHeight = applyRatio(190.0);
 
-    yPositionWrapper.value += applyRatio(20.0);
+    var rootSize = thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize);
+    var rootFontSize = thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize);
+    var labelFontSize = applyRatio(17.0);
+    var valueFontSize = applyRatio(18.0);
+    var smallValueFontSize = applyRatio(17.0);
+
+    var rootX = cardLeft + applyRatio(18.0);
+    var rootY = cardTop + applyRatio(18.0);
+    var labelX = cardLeft + applyRatio(112.0);
+    var valueX = cardLeft + applyRatio(205.0);
+    var row1Y = cardTop + applyRatio(24.0);
+    var row2Y = cardTop + applyRatio(54.0);
+    var row3Y = cardTop + applyRatio(84.0);
+    var row4Y = cardTop + applyRatio(114.0);
+    var row5Y = cardTop + applyRatio(144.0);
+
+    var speechX = valueX;
+    var speechY = row2Y;
+
     if (!isInfoOnly) {
-      drawLine(lessonLeftEdge + applyRatio(20.0), yPositionWrapper.value, applyRatio(600.0),
-          yPositionWrapper.value, Colors.grey, applyRatio(1));
-    }
-  }
+      final rect = Rect.fromLTWH(cardLeft, cardTop, cardWidth, cardHeight);
+      final rrect = RRect.fromRectAndRadius(rect, Radius.circular(applyRatio(16.0)));
+      final fillPaint = Paint()..color = Colors.white.withOpacity(0.86);
+      final borderPaint = Paint()
+        ..color = Colors.black.withOpacity(0.08)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = applyRatio(1.0);
+      canvas!.drawRRect(rrect, fillPaint);
+      canvas!.drawRRect(rrect, borderPaint);
 
-  displayOneZiHelper(int id, String type, double transX, PrimitiveWrapper yPositionWrapper, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
-    var name;
-    var pinyin;
-    var meaning;
-
-    var comp = ComponentManager.getComponent(id);
-    if (!isInfoOnly) {
       drawRootZi(
           id,
           ZiListType.component,
-          transX,
-          yPositionWrapper.value,
-          thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
-          thePositionManager.getZiSize(ZiOrCharSize.assembleDissembleSize),
-          thePositionManager.getCharFontSize(
-              ZiOrCharSize.assembleDissembleSize),
-          Colors.brown, /*isSingleColor:*/
+          rootX,
+          rootY,
+          rootSize,
+          rootSize,
+          rootFontSize,
+          Colors.brown,
           false,
-          thePositionManager.getZiLineWidth(
-              ZiOrCharSize.assembleDissembleSize), /*createFrame:*/
+          thePositionManager.getZiLineWidth(ZiOrCharSize.assembleDissembleSize),
           true,
-          /*hasRootZiLearned:*/
           false,
           false,
           Colors.blue,
           true);
-      name = comp!.charOrNameOfNonchar;
-      pinyin = comp!.pinyin;
-      meaning = comp!.meaning;
-    }
-    transX +=
-    (thePositionManager.getCharFontSize(ZiOrCharSize.assembleDissembleSize) +
-        applyRatio(10.0));
 
-    yPositionWrapper.value += applyRatio(50.0); //35.0
+      displayTextWithValue(getString(385) /*"Name"*/ + ":", labelX, row1Y,
+          labelFontSize, Colors.black87, false);
+      displayTextWithValue(comp.charOrNameOfNonchar, valueX, row1Y,
+          valueFontSize, Colors.blue, false);
 
-    // display name
-    if (!isInfoOnly) {
-      displayTextWithValue(
-          getString(385) /*"Name"*/ + ": ", applyRatio(20.0),
-          yPositionWrapper.value,
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black, false);
-      displayTextWithValue(
-          name, applyRatio(20.0 + 160.0), yPositionWrapper.value,  // 20 + 90
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue, false);
-      checkAndUpdateYPosi(yPositionWrapper, "Name: ", meaning, applyRatio(8.0),
-        thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
-    }
 
-    transX = applyRatio(20.0);
-    yPositionWrapper.value += applyRatio(33.0);
-    if (!isInfoOnly) {
-      displayTextWithValue(getString(85)/*"Sound"*/ + ": ", transX, yPositionWrapper.value,
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black, false);
-    }
+      displayTextWithValue(getString(85) /*"Sound"*/ + ":", labelX, row2Y,
+          labelFontSize, Colors.black87, false);
 
-    transX += applyRatio(160.0); //60
-    // display speech icon
-    if (!isInfoOnly) {
       DisplayIcon(
           iconSpeechStrokes,
-          transX,
-          yPositionWrapper.value,
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.amber /*MaterialColor ofColor*/,
-          applyRatio(2.0) /*ziLineWidth*/);
+          speechX,
+          speechY,
+          labelFontSize,
+          labelFontSize,
+          Colors.amber,
+          applyRatio(2.0));
+
+      displayTextWithValue(comp.pinyin, speechX + applyRatio(34.0), row2Y,
+          smallValueFontSize, Colors.blue, false);
+
+      displayTextWithValue(getString(86) /*"Meaning"*/ + ":", labelX, row3Y,
+          labelFontSize, Colors.black87, false);
+      displayTextWithValue(comp.meaning, valueX, row3Y,
+          valueFontSize, Colors.blue, false);
+
+      var strokePosiSize = PositionAndSize(
+          labelX,
+          row4Y,
+          valueFontSize,
+          valueFontSize,
+          valueFontSize,
+          applyRatio(1.0));
+
+      displayCompStrokes(id, ZiListType.component, strokePosiSize, applyRatio(1.0));
+      //var row4Y = cardTop + applyRatio(122.0);
+
+      if (comp.isChar) {
+        var searchingZiIndex =
+        DictionaryManager.getSearchingZiId(comp.charOrNameOfNonchar);
+
+        if (searchingZiIndex > 0) {
+          var codePosiSize = PositionAndSize(
+              labelX,
+              row5Y,
+              valueFontSize,
+              valueFontSize,
+              valueFontSize,
+              applyRatio(1.0));
+
+          displayTypingCode(searchingZiIndex, codePosiSize);
+        }
+      }
     }
     else {
-      // save the icon infor.
-      var speechIconInfo = SpeechIconInfo(
-          ZiListType.component, id, transX, yPositionWrapper.value);
-      listOfSpeechIconInfo.add(speechIconInfo);
-    }
-    transX += applyRatio(30.0);
-
-    // display pinyin
-    if (!isInfoOnly) {
-      displayTextWithValue(pinyin, transX, yPositionWrapper.value,
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue, false);
-      transX += (8.0 * pinyin.length + applyRatio(10.0));
+      listOfSpeechIconInfo.add(
+          SpeechIconInfo(ZiListType.component, id, speechX, speechY));
     }
 
-    yPositionWrapper.value += applyRatio(30.0);
+    yPositionWrapper.value = cardTop + cardHeight;
+  }
 
-    // display meaning
-    if (!isInfoOnly) {
-      displayTextWithValue(
-          getString(86) /*"Meaning"*/ + ": ", applyRatio(20.0),
-          yPositionWrapper.value,
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.black, false);
-      displayTextWithValue(
-          meaning, applyRatio(20.0 + 160.0), yPositionWrapper.value, // 20 + 90
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize),
-          Colors.blue, false);
-      checkAndUpdateYPosi(
-          yPositionWrapper, "Meaning: ", meaning, applyRatio(8.0),
-          thePositionManager.getCharFontSize(ZiOrCharSize.defaultSize));
-      }
+  displayOneZiHelper(int id, String type, double transX, PrimitiveWrapper yPositionWrapper, bool isInfoOnly, List<SpeechIconInfo> listOfSpeechIconInfo) {
+    // Kept for compatibility with older callers. The compact card layout is now
+    // handled directly in displayOneZi().
   }
 
   checkAndUpdateYPosi(PrimitiveWrapper yPositionWrapper, String prefix, String str, double fontWidth, double fontSize) {

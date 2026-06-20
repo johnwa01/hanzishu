@@ -68,7 +68,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.translate_rounded,
                         iconColor: Color(0xFF2B84D6),
                         iconBackground: Color(0xFFE2F1FC),
-                        title: 'Chinese Alphabets',
+                        title: 'Chinese Components',
                         onTap: () {
                           Navigator.push(
                             context,

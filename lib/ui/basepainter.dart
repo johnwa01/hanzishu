@@ -1477,7 +1477,7 @@ class BasePainter extends CustomPainter{
     if (comp != null) {
       drawStrokeZiList(
           comp.strokesString,
-          160.0 * ratio, // 110
+          posi.transX + 120.0 * ratio, //160.0 * ratio, // 110
           posi.transY,
           posi.charFontSize * 1.3,
           posi.charFontSize * 1.3,

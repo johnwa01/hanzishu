@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import 'dart:math' as math;
 import 'package:hanzishu/data/componentlist.dart';
 import 'package:hanzishu/ui/basiccomponentsdetailpainter.dart';
 import 'package:hanzishu/variables.dart';
@@ -49,7 +50,11 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = Utility.getScreenWidth(context);
+    var actualScreenWidth = Utility.getScreenWidth(context);
+    screenWidth = math.min(actualScreenWidth - 24.0, 820.0);
+    if (screenWidth < 320.0) {
+      screenWidth = actualScreenWidth;
+    }
     // init positionmanager frame size
     thePositionManager.setFrameWidth(screenWidth);
 
@@ -79,11 +84,11 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
         child: SingleChildScrollView(
           controller: _scrollController,
           scrollDirection: Axis.vertical,
-          child: CustomPaint(
-            foregroundPainter: basicComponentsDetailPainter,
-            size: new Size(screenWidth, contentLength.value + 30.0), // 30.0 - extra buffer
+          child: Center(
+            child: CustomPaint(
+              foregroundPainter: basicComponentsDetailPainter,
+              size: new Size(screenWidth, contentLength.value + 30.0), // 30.0 - extra buffer
 
-            child: Center(
               child: Stack(
                 children: createHittestButtons(context, listOfSpeechIconInfo),
               ),
@@ -102,7 +107,7 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
       onPressed: () {
         TextToSpeech.speak("zh-CN", str);
       },
-      child: Text(str, style: TextStyle(color: Colors.blueAccent, fontSize: applyRatio(20.0))),
+      child: SizedBox.expand(),
     );
 
     var posiCenter = Positioned(
@@ -119,7 +124,7 @@ class _BasicComponentsDetailPageState extends State<BasicComponentsDetailPage> {
   List<Widget> createHittestButtons(BuildContext context, List<SpeechIconInfo> listOfSpeechIconInfo) {
     List<Widget> buttons = [];
 
-    buttons.add (Container(height: contentLength.value, width: screenWidth));  // workaround to avoid infinite size error
+    buttons.add(Container(height: contentLength.value, width: screenWidth));  // workaround to avoid infinite size error
 
     for (var i = 0; i < listOfSpeechIconInfo.length; i++) {
       buttons.add(getPositionedSpeechButton(listOfSpeechIconInfo[i]));
