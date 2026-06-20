@@ -123,7 +123,8 @@ class _BreakoutPageState extends State<BreakoutPage> {
     initOverlay();
 
     var screenWidth = Utility.getScreenWidth(context);
-    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+    var contentLeftOffset = Utility.getCenteredContentLeftOffset(context, screenWidth);
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX + contentLeftOffset, screenWidth);
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(
         builder: (context) =>Positioned(

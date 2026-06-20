@@ -244,7 +244,8 @@ class _DictionaryScrollablePageState extends State<DictionaryScrollablePage> {
 
     if (previousPositionAndMeaning.x != posiX || previousPositionAndMeaning.y != posiY || previousPositionAndMeaning.meaning != meaning) {
       var screenWidth = Utility.getScreenWidth(context);
-      var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+      var contentLeftOffset = Utility.getCenteredContentLeftOffset(context, screenWidth);
+      var adjustedXValue = Utility.adjustOverlayXPosition(posiX + contentLeftOffset, screenWidth);
 
       OverlayState overlayState = Overlay.of(context);
       overlayEntry = OverlayEntry(

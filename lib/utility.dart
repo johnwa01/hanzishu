@@ -734,6 +734,20 @@ class Utility {
     // Example Output: MD5 Hash: 89c755b7a0b1632366e3f93786524e51
     return hashStr;
   }
+
+  static double getCenteredContentLeftOffset(
+      BuildContext context,
+      double contentWidth,
+      ) {
+    var fullScreenWidth = Utility.getScreenWidth(context);
+    var offset = (fullScreenWidth - contentWidth) / 2.0;
+
+    if (offset < 0) {
+      return 0.0;
+    }
+
+    return offset;
+  }
 }
 
 //TODO: check - this is not used anymore I think.

@@ -453,7 +453,9 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
   showOverlay(BuildContext context, double posiX, double posiY, String pinyinAndMeaning, int searchingZiId) {
     initOverlay();
-    var adjustedXValue = Utility.adjustOverlayXPosition(posiX, screenWidth);
+    var contentLeftOffset = Utility.getCenteredContentLeftOffset(context, screenWidth);
+    Utility.getCenteredContentLeftOffset(context, screenWidth);
+    var adjustedXValue = Utility.adjustOverlayXPosition(posiX + contentLeftOffset, screenWidth);
 
     OverlayState overlayState = Overlay.of(context);
     overlayEntry = OverlayEntry(

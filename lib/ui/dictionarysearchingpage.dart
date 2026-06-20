@@ -17,6 +17,7 @@ import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/zigrouppage.dart';
+import 'package:hanzishu/utility.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
   DictionaryStage dicStage;
@@ -56,6 +57,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   String flashcardList = '';
   int flashcardIndex = -1;
   late DicCaller dicCaller;
+
+  final ScrollController _scrollController = ScrollController();
 
   double getSizeRatio() {
     var defaultFontSize = screenWidth / 16;
@@ -154,7 +157,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
     _controller.dispose();
     resetCompoundZiAnimation();
     //_editController.dispose();
-
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -230,6 +233,7 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         child: SizedBox(
           width: screenWidth,
           child: SingleChildScrollView(
+            controller: _scrollController,
             child: WillPopScope(
                 child: new Stack(
                     children: <Widget>[
@@ -313,12 +317,18 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     if (previousPositionAndMeaning.x != xPosi || previousPositionAndMeaning.y != yPosi || previousPositionAndMeaning.meaning != meaning) {
       if (dicStage != DictionaryStage.firstzis) {
-        var screenWidth = Utility.getScreenWidth(context); // Ok to use full width here
-        var adjustedXValue = Utility.adjustOverlayXPosition(xPosi, screenWidth);
+        var fullScreenWidth = Utility.getScreenWidth(context);
+        var contentLeftOffset =
+        Utility.getCenteredContentLeftOffset(context, screenWidth);
+
+        var adjustedXValue =
+        Utility.adjustOverlayXPosition(xPosi + contentLeftOffset, fullScreenWidth);
+        var adjustedYValue = yPosi - _scrollController.offset;
+
         overlayEntry = OverlayEntry(
             builder: (context) =>
                 Positioned(
-                    top: yPosi,
+                    top: adjustedYValue,
                     left: adjustedXValue,
                     child: TextButton(
                       style: TextButton.styleFrom(
