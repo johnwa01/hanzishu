@@ -18,6 +18,7 @@ import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/zigrouppage.dart';
 import 'package:hanzishu/utility.dart';
+import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 
 class DictionarySearchingPage extends StatefulWidget {
   DictionaryStage dicStage;
@@ -971,33 +972,21 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
   }
 
   showCompletedDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(getString(286)/*"OK"*/, style: TextStyle(color: Colors.blue)),
-      onPressed: () {
-        theIsBackArrowExit = false;
-        Navigator.of(context).pop(); // out of this dialog first
-        Navigator.of(context).pop(); // then to the lesson page
-      },
-    );
-
-    String title = getString(115)/*"Good job!"*/;
-    String content = getString(407)/*"You have go through all the flashcards!"*/;
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return alert;
+        return ExerciseCompleteDialog(
+          title: "Flashcards Complete",//getString(115)/*"Good job!"*/,
+          message: getString(407)/*"You have go through all the flashcards!"*/,
+          buttonText: "Return", //getString(286)/*"OK"*/,
+          mascotIcon: Icons.style,
+          mascotColor: Colors.lightBlue,
+          onPressed: () {
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop(); // out of this dialog first
+            Navigator.of(context).pop(); // then to the lesson page
+          },
+        );
       },
     );
   }

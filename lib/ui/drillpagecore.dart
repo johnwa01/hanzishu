@@ -22,6 +22,7 @@ import 'package:hanzishu/engine/questionmanager.dart';
 import 'package:hanzishu/ui/onerootzipainter.dart';
 //import 'package:flutter_tts/flutter_tts.dart';
 //import 'package:url_launcher/url_launcher.dart';
+import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 
 class DrillPageCore extends StatefulWidget {
   //final int lessonId;
@@ -1021,34 +1022,17 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
 
     return buttons;
   }
-
-  //TODO: not sure to use this or not
   showCompletedDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(getString(286)/*"OK"*/, style: TextStyle(color: Colors.blue)),
-      onPressed: () {
-      },
-    );
-
-    String title = getString(115)/*"Good job!"*/;
-    String content = getString(407)/*"You have go through all the flashcards!"*/;
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
+      builder: (context) => ExerciseCompleteDialog(
+        title: getString(115),     // Good job!
+        message: getString(407),   // You have gone through all the flashcards!
+        buttonText: getString(286), // OK
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+      ),
     );
   }
 
