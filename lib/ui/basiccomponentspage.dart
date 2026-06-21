@@ -124,7 +124,7 @@ class _BasicComponentsPageState extends State<BasicComponentsPage> {
           keyGroup, keyIndex).image;
       return Image.asset(
         "assets/components/L" + image,
-        width: 30.0 * getSizeRatioWithLimit(),
+        width: 40.0 * getSizeRatioWithLimit(), // 30
         height: 55.0 * getSizeRatioWithLimit(),
         fit: BoxFit.fitWidth,
       );
