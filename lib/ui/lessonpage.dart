@@ -214,7 +214,8 @@ class _LessonPageState extends State<LessonPage> {
                       quizCategory: QuizCategory.none,
                       lessonId: lessonId,
                       wordsStudy: '',
-                      includeSkipSection: true),
+                      includeSkipSection: true,
+                      showCompletedDialogOnSkip: true,),
             ),
           ).then((val) => {_getRequests()});
         //}
