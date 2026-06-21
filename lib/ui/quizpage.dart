@@ -13,9 +13,10 @@ class QuizPage extends StatefulWidget {
   final int lessonId;
   final String wordsStudy;
   final includeSkipSection;
+  final bool showCompletedDialogOnSkip;
   bool isChars = true;
 
-  QuizPage({required this.quizTextbook, required this.quizCategory, required this.lessonId, required this.wordsStudy, required this.includeSkipSection});
+  QuizPage({required this.quizTextbook, required this.quizCategory, required this.lessonId, required this.wordsStudy, required this.includeSkipSection, this.showCompletedDialogOnSkip = false,});
 
   @override
   _QuizPageState createState() => _QuizPageState();
@@ -711,7 +712,12 @@ class _QuizPageState extends State<QuizPage> {
         //textColor: Colors.blueAccent,
         onPressed: () {
           theIsBackArrowExit = false;
-          Navigator.of(context).pop();
+
+          if (widget.showCompletedDialogOnSkip) {
+            showCompletedDialog(context);
+          } else {
+            Navigator.of(context).pop();
+          }
         },
       );
     }
@@ -769,7 +775,9 @@ class _QuizPageState extends State<QuizPage> {
 
   showCompletedDialog(BuildContext context) {
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
+    var correctPercent = lessonQuizResult.answ == 0
+        ? 0.0
+        : (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
     var corStr = correctPercent.toStringAsFixed(1) + "%";
 
     String title;
