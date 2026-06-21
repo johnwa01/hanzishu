@@ -6,8 +6,8 @@ import 'package:hanzishu/engine/component.dart';
 import 'package:hanzishu/engine/componentmanager.dart';
 import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
-import 'package:hanzishu/ui/tutorialstepindicator.dart';
-import 'package:hanzishu/ui/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
+import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 
 class ComponentPage extends StatefulWidget {
   final QuestionType questionType;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:ui';
-import 'package:hanzishu/ui/tutorialstepindicator.dart';
+import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
 
 import 'dart:async';
 import 'package:flutter/rendering.dart';
@@ -32,7 +32,7 @@ import 'package:hanzishu/utility.dart';
 import 'dart:core';
 import 'dart:io';
 import 'package:flutter/services.dart';
-import 'package:hanzishu/ui/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
 
 class InputZiPage extends StatefulWidget {

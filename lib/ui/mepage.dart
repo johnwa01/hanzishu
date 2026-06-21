@@ -57,6 +57,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.eco_rounded,
                         title: 'Learn',
                       ),
+                      /*
                       _buildMenuItem(
                         icon: Icons.menu_book_rounded,
                         iconColor: Color(0xFF2E8B57),
@@ -64,6 +65,7 @@ class _MePageState extends State<MePage> {
                         title: 'Hanzishu Introduction',
                         onTap: _openIntroduction,
                       ),
+                      */
                       _buildMenuItem(
                         icon: Icons.translate_rounded,
                         iconColor: Color(0xFF2B84D6),

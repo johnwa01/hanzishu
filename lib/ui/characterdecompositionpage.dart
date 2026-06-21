@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hanzishu/data/characterdecompositionlist.dart';
 import 'package:hanzishu/variables.dart';
 import 'dart:ui';
-import 'package:hanzishu/ui/tutorialstepindicator.dart';
-import 'package:hanzishu/ui/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
+import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 
 /// Step 4: Character Decomposition.
 ///
