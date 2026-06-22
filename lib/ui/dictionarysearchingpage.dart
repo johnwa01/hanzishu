@@ -224,6 +224,8 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       title = getString(406); /*Customized Flashcards*/
     }
 
+    final contentHeight = getDictionaryContentHeight(context);
+
     return Scaffold
       (
       appBar: AppBar
@@ -235,41 +237,62 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
           width: screenWidth,
           child: SingleChildScrollView(
             controller: _scrollController,
-            child: WillPopScope(
-                child: new Stack(
-                    children: <Widget>[
-                      new Positioned(
-                        child: CustomPaint(
-                          foregroundPainter: DictionaryPainter(
-                            Colors.amber,
-                            //lessonId: widget.lessonId,
-                            screenWidth,
-                            //screenWidth: screenWidth,
-                            dicStage,
-                            firstZiIndex,
-                            searchingZiIndex,
-                            context,
-                            compoundZiCurrentComponentId,
-                            currentZiListType,
-                            shouldDrawCenter,
-                            showBreakoutDetails,
+            child: SizedBox(
+              width: screenWidth,
+              height: contentHeight,
+              child: WillPopScope(
+                  child: new Stack(
+                      children: <Widget>[
+                        new Positioned.fill(
+                          child: CustomPaint(
+                            foregroundPainter: DictionaryPainter(
+                              Colors.amber,
+                              //lessonId: widget.lessonId,
+                              screenWidth,
+                              //screenWidth: screenWidth,
+                              dicStage,
+                              firstZiIndex,
+                              searchingZiIndex,
+                              context,
+                              compoundZiCurrentComponentId,
+                              currentZiListType,
+                              shouldDrawCenter,
+                              showBreakoutDetails,
+                            ),
+                            //child: Center(
+                            child: SizedBox(
+                              width: screenWidth,
+                              height: contentHeight,
+                              child: Stack(
+                                  children: displayCharsAndCreateHittestButtons(context)
+                              ),
+                            ),
+                            //),
                           ),
-                          //child: Center(
-                          child: Stack(
-                              children: displayCharsAndCreateHittestButtons(context)
-                          ),
-                          //),
                         ),
-                      ),
-                      getAnimatedPathPainter(),
-                    ]
-                ),
-                onWillPop: _onWillPop
+                        getAnimatedPathPainter(),
+                      ]
+                  ),
+                  onWillPop: _onWillPop
+              ),
             ),
           ),
         ),
       ),
     );
+  }
+
+  double getDictionaryContentHeight(BuildContext context) {
+    var minimumHeight = MediaQuery.of(context).size.height - kToolbarHeight;
+    var dictionaryDrawingHeight = 620.0 * getSizeRatio();
+
+    if (dicStage == DictionaryStage.detailedzi) {
+      dictionaryDrawingHeight = MediaQuery.of(context).size.height + 500.0 * getSizeRatio();
+    }
+
+    return dictionaryDrawingHeight > minimumHeight
+        ? dictionaryDrawingHeight
+        : minimumHeight;
   }
 
   Future<bool>_onWillPop() {
