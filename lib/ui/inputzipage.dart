@@ -34,6 +34,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
+import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 
 class InputZiPage extends StatefulWidget {
   final TypingType typingType;
@@ -1409,16 +1410,16 @@ class _InputZiPageState extends State<InputZiPage> {
                           SizedBox(height: 24 * ratio),
 
                           Text(
-                                  "Your First\nChinese Characters",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: darkText,
-                                    fontSize: (isNarrow ? 25 : 30) * ratio,
-                                    fontWeight: FontWeight.w800,
-                                    height: 1.12,
-                                    letterSpacing: -0.4,
-                                  ),
-                                ),
+                            "Your First\nChinese Characters",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: darkText,
+                              fontSize: (isNarrow ? 25 : 30) * ratio,
+                              fontWeight: FontWeight.w800,
+                              height: 1.12,
+                              letterSpacing: -0.4,
+                            ),
+                          ),
 
                           SizedBox(height: 20 * ratio),
 
@@ -4247,33 +4248,27 @@ class _InputZiPageState extends State<InputZiPage> {
     }
 
     if (typingType == TypingType.ExpandedReview) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => TutorialCompleteDialog(
-              title: 'You Did It!',
-              badgeText: 'Tutorial Complete',
-              message: 'Ready to Type Chinese!',
-              buttonText: 'Done',
-              mascotAsset: 'assets/core/mascot.jpg',
-              onDone: () {
-                Navigator.of(context).pop(); // dialog
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => TutorialCompleteDialog(
+          title: 'You Did It!',
+          badgeText: 'Tutorial Complete',
+          message: 'Ready to Type Chinese!',
+          buttonText: 'Done',
+          mascotAsset: 'assets/core/mascot.jpg',
+          onDone: () {
+            Navigator.of(context).pop(); // dialog
 
-                theIsBackArrowExit = false;
-                Navigator.of(context).pop(); // InputZiPage
-              },
-            ),
-          //), //_buildTutorialCompletedDialog(closeDialogAndReturn);
-        );
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop(); // InputZiPage
+          },
+        ),
+        //), //_buildTutorialCompletedDialog(closeDialogAndReturn);
+      );
       //);
       return;
     }
-
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text("OK", style: TextStyle(color: Colors.blue)),
-      onPressed: closeDialogAndReturn,
-    );
 
     String title = '';
     String content = '';
@@ -4375,21 +4370,18 @@ class _InputZiPageState extends State<InputZiPage> {
       content = getString(502) + getString(524) + ": " + completedCharCount.toString() + "/" + totalLen.toString()/*"You have completed this typing exercises."*/;
     }
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(content),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
+    // show the shared modern complete dialog
     showDialog(
       context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
+      barrierDismissible: false,
+      builder: (_) => ExerciseCompleteDialog(
+        title: title,
+        message: content,
+        buttonText: getString(286),
+        mascotIcon: Icons.emoji_events,
+        mascotColor: Colors.deepPurple,
+        onPressed: closeDialogAndReturn,
+      ),
     );
   }
 
