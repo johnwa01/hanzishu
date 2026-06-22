@@ -21,9 +21,18 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
         (
         title: Text(getString(141)/*"Privacy policy"*/),
       ),
-      body: Center
-        (
-        child: getPrivacyPolicyText(context),
+      body: SingleChildScrollView(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              maxWidth: 700,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(24.0),
+              child: getPrivacyPolicyText(context),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -35,45 +44,76 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
     double fontSize2 = 13.0 * getSizeRatioWithLimit();
     double fontSize3 = 12.0 * getSizeRatioWithLimit(); // base size 12
 
-    return Column(
-      //mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+    return Card(
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
 
-        children: <Widget>[
-          Text(
-           getString(141)/*"Privacy policy"*/,
-            style: TextStyle(color: Colors.blue, fontSize: fontSize1/*, fontWeight: FontWeight.bold*/),
-            textAlign: TextAlign.start
-          ),
-          SizedBox(height: fontSize3),
-          Text(
-              getString(297)/*"Hanzishu App doesn't collect sensitive user specific data."*/,
-              style: TextStyle(color: Colors.blue, fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: fontSize3),
-          Text(
+            Text(
+              "Privacy",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: fontSize1 + 4,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            Text(
+              getString(297),
+              style: TextStyle(
+                fontSize: fontSize2,
+                height: 1.4,
+              ),
+            ),
+
+            const SizedBox(height: 24),
+
+            Divider(),
+
+            const SizedBox(height: 24),
+
+            Text(
+              "Contact Us",
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: fontSize1 + 4,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+            const SizedBox(height: 12),
+
+            Text(
               "john@hanzishu.com",
               style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
+            ),
+
+            Text(
               "P. O. Box 6502",
               style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
+            ),
+
+            Text(
               "Bellevue, WA 98008",
               style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-          Text(
+            ),
+
+            Text(
               "U.S.A.",
               style: TextStyle(fontSize: fontSize2),
-              textAlign: TextAlign.start
-          ),
-        ]
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

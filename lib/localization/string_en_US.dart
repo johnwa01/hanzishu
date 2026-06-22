@@ -300,7 +300,7 @@ var theString_en_US = [
   Local(294, "Ending Lesson"),
   Local(295, "Lesson"),
   Local(296, "Review"),
-  Local(297, "Hanzishu App doesn't collect sensitive user specific data."),
+  Local(297, "Hanzishu does not collect sensitive user-specific data."),
   Local(298, "Tap 人 in the list below."),
   Local(299, "Type 'r', spacebar."),
   Local(300, "spacebar."),

@@ -9,6 +9,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/engine/texttospeech.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
+import 'package:hanzishu/ui/shared/quiz_result_dialog.dart';
 
 class StandardExamPage extends StatefulWidget {
   bool isChars = true;
@@ -621,19 +622,11 @@ class _StandardExamPageState extends State<StandardExamPage> {
   }
 
   showCompletedDialog(BuildContext context) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(getString(286)/*"Ok"*/, style: TextStyle(color: Colors.blue)),
-      onPressed: () {
-        theIsBackArrowExit = false;
-        Navigator.of(context).pop(); // out this dialog
-        Navigator.of(context).pop(); // to the lesson page
-      },
-    );
-
     var lessonQuizResult = theStatisticsManager.getLessonQuizResult();
-    //var correctPercent = (lessonQuizResult.cor * 100) / lessonQuizResult.answ;
-    var subCountPerLevel = theStandardExamManager.getCurrentTestSubListTotal(); //StandardExamManager.hskZiCounts[subItemId-1];
+    //print("COR=${lessonQuizResult.cor}");
+    //print("ANSW=${lessonQuizResult.answ}");
+
+    var subCountPerLevel = theStandardExamManager.getCurrentTestSubListTotal();
     if (drillCategory == DrillCategory.hsk) {
       if (subItemId >= 1 && subItemId <= 6) {
         subCountPerLevel = 300;
@@ -645,100 +638,41 @@ class _StandardExamPageState extends State<StandardExamPage> {
         subCountPerLevel = 3000;
       }
     }
-    var diff = lessonQuizResult.cor - (lessonQuizResult.answ / 3);
-    diff = (diff >= 0) ? diff : 0;
-    double correctEstimate = subCountPerLevel * diff / (lessonQuizResult.answ * 2 / 3);
-    var corStr = correctEstimate.toStringAsFixed(0);
+
+    String scoreText;
+    String titleText;
+
+    if (drillCategory == DrillCategory.hsk) {
+      var diff = lessonQuizResult.cor - (lessonQuizResult.answ / 3);
+      diff = (diff >= 0) ? diff : 0;
+      double correctEstimate = 0;
+      if (lessonQuizResult.answ > 0) {
+        correctEstimate = subCountPerLevel * diff / (lessonQuizResult.answ * 2 / 3);
+      }
+      var corStr = correctEstimate.toStringAsFixed(0);
+      scoreText = "${lessonQuizResult.cor} / ${lessonQuizResult.answ}";
+      titleText = getString(457);
+    }
+    else {
+      scoreText = "${lessonQuizResult.cor} / ${lessonQuizResult.answ}";
+      titleText = theDefaultLocale == "zh_CN" ? "测验结果" : "Quiz Result";
+    }
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Dialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-          ),
-          child: Container(
-            width: 380,
-            padding: const EdgeInsets.all(28),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-
-                // Placeholder mascot
-                Container(
-                  width: 90,
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: Colors.green.shade50,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Colors.green.shade300,
-                      width: 2,
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.sentiment_very_satisfied,
-                    size: 52,
-                    color: Colors.green,
-                  ),
-                ),
-
-                const SizedBox(height: 18),
-
-                Text(
-                  getString(457),
-                  style: const TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-
-                const SizedBox(height: 18),
-
-                Text(
-                  "$corStr / $subCountPerLevel",
-                  style: const TextStyle(
-                    fontSize: 42,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
-                  ),
-                ),
-
-                const SizedBox(height: 20),
-
-                Text(
-                  theDefaultLocale == "zh_CN"
-                      ? "继续练习，让它们记得更牢！"
-                      : "Keep practicing to make them even stronger!",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    height: 1.4,
-                  ),
-                ),
-
-                const SizedBox(height: 28),
-
-                SizedBox(
-                  width: 140,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      theIsBackArrowExit = false;
-                      Navigator.of(context).pop();
-                      Navigator.of(context).pop();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: Text(getString(286)),
-                  ),
-                ),
-              ],
-            ),
-          ),
+        return QuizResultDialog(
+          title: titleText,
+          scoreText: scoreText,
+          content: theDefaultLocale == "zh_CN"
+              ? "继续练习，让它们记得更牢！"
+              : "Keep practicing to make them even stronger!",
+          buttonText: getString(286),
+          onPressed: () {
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop();
+            Navigator.of(context).pop();
+          },
         );
       },
     );
