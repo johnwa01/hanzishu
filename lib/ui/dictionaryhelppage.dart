@@ -142,102 +142,159 @@ class _DictionaryHelpPageState extends State<DictionaryHelpPage> {
 
 
   Widget getHelpContentView(BuildContext context) {
-    return Column(
-        //mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          SizedBox(height: TheConst.fontSizes[2] / 2),
-          Text(
-              getString(142)/*"About the First Character Dictionary"*/,
-              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
-              textAlign: TextAlign.start
+    final ratio = getSizeRatioWithLimit();
+    final maxContentWidth = screenWidth < 960 ? screenWidth * 0.94 : 900.0;
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(maxWidth: maxContentWidth),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0 * ratio,
+            vertical: 20.0 * ratio,
           ),
-          Text(
-              getString(143)/*"The First Character Dictionary is organized according to the first Basic Character contained in a Character. It houses nearly 3,800 Characters, all listed under their corresponding Basic Character. Each number in the Basic Character Table represents the number of strokes for each Basic Character in that group."*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildHelpSection(
+                title: getString(142)/*"About the First Character Dictionary"*/,
+                children: [
+                  _buildBodyText(getString(143)),
+                ],
+              ),
+              SizedBox(height: 18.0 * ratio),
+              _buildHelpSection(
+                title: getString(144),
+                children: [
+                  _buildBodyText(getString(145)),
+                  SizedBox(height: 8.0 * ratio),
+                  _buildBodyText(getString(146)),
+                  _buildIndentedText(getString(149), level: 1, isEmphasis: true),
+                  _buildIndentedText(getString(150), level: 2),
+                  _buildIndentedText(getString(151), level: 1),
+                  _buildIndentedText(getString(152), level: 2),
+                  _buildIndentedText(getString(153), level: 2),
+                  _buildBodyText(getString(154)),
+                  _buildIndentedText(getString(155), level: 1),
+                ],
+              ),
+              SizedBox(height: 18.0 * ratio),
+              _buildHelpSection(
+                title: getString(360)/*"Stroke categories"*/,
+                children: [
+                  _buildBodyText("• " + getString(361)),
+                  SizedBox(height: 14.0 * ratio),
+                  Container(
+                    padding: EdgeInsets.all(12.0 * ratio),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(18.0 * ratio),
+                      border: Border.all(
+                        color: Colors.blueAccent.withOpacity(0.10),
+                        width: 1.0,
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 18.0 * ratio,
+                          offset: Offset(0, 8.0 * ratio),
+                        ),
+                      ],
+                    ),
+                    child: Center(
+                      child: Image.asset(
+                        "assets/typing/Strokes.png",
+                        width: 390.0 * ratio,
+                        height: 150.0 * ratio,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 26.0 * ratio),
+            ],
           ),
-          SizedBox(height: TheConst.fontSizes[2]),
-          Text(
-              getString(144)/*""*/,
-              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "    " + getString(145)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "    " + getString(146)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-       //   Text(
-       //       "        " + getString(147)/*""*/,
-       //       style: TextStyle(fontSize: TheConst.fontSizes[2]),
-       //       textAlign: TextAlign.start
-       //   ),
-       //   Text(
-       //       "            " + getString(148)/*""*/,
-       //       style: TextStyle(fontSize: TheConst.fontSizes[2]),
-       //       textAlign: TextAlign.start
-       //   ),
-          Text(
-              "        " + getString(149)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[1]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "            " + getString(150)/*"Ex:"*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "        " + getString(151)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "            " + getString(152)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "            " + getString(153)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "    " + getString(154)/*""*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "        " + getString(155)/*"Ex: "*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          SizedBox(height: TheConst.fontSizes[2]),
-          Text(
-              getString(360)/*"笔画类别"*/,
-              style: TextStyle(color: Colors.blue, fontSize: TheConst.fontSizes[1]),
-              textAlign: TextAlign.start
-          ),
-          Text(
-              "   •	" + getString(361)/*"按此表来选择笔画的笔画类别*/,
-              style: TextStyle(fontSize: TheConst.fontSizes[2]),
-              textAlign: TextAlign.start
-          ),
-          Container(
-            alignment: Alignment.center,
-            child: Image.asset(
-                "assets/typing/Strokes.png",
-                width: 390.0 * getSizeRatioWithLimit(),
-                height: 150.0 * getSizeRatioWithLimit()),
-          ),
-        ]
+        ),
+      ),
     );
   }
+
+  Widget _buildHelpSection({
+    required String title,
+    required List<Widget> children,
+  }) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Container(
+      padding: EdgeInsets.all(20.0 * ratio),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.78),
+        borderRadius: BorderRadius.circular(22.0 * ratio),
+        border: Border.all(
+          color: Colors.blueAccent.withOpacity(0.08),
+          width: 1.0,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.04),
+            blurRadius: 20.0 * ratio,
+            offset: Offset(0, 8.0 * ratio),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.blueAccent,
+              fontSize: 20.0 * ratio,
+              fontWeight: FontWeight.w700,
+            ),
+            textAlign: TextAlign.start,
+          ),
+          SizedBox(height: 10.0 * ratio),
+          ...children,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBodyText(String text) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Text(
+      text,
+      style: TextStyle(
+        fontSize: 16.0 * ratio,
+        height: 1.45,
+        color: Colors.black87,
+      ),
+      textAlign: TextAlign.start,
+    );
+  }
+
+  Widget _buildIndentedText(String text, {int level = 1, bool isEmphasis = false}) {
+    final ratio = getSizeRatioWithLimit();
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 20.0 * ratio * level,
+        top: 5.0 * ratio,
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: (isEmphasis ? 17.0 : 16.0) * ratio,
+          height: 1.45,
+          fontWeight: isEmphasis ? FontWeight.w600 : FontWeight.normal,
+          color: Colors.black87,
+        ),
+        textAlign: TextAlign.start,
+      ),
+    );
+  }
+
 }
