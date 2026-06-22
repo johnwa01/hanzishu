@@ -227,7 +227,7 @@ class DictionaryPainter extends BreakoutPainter {
         fontSize2);
     */
 
-    displayTextWithValue("[" + getString(418)/*"Phrase"*/ + "]", posiAndSizeBihua.transX + 100, posiAndSizeBihua.transY, fontSize4, Colors.black, false);
+    displayTextWithValue(getString(418)/*"Phrase"*/ + " →", posiAndSizeBihua.transX + 100, posiAndSizeBihua.transY, fontSize4, Colors.black, false);
 
     //Need to match the yPosi in DictionaryPage.
     displayTextWithValue(getString(85)/*"Sound"*/ + ": ", fontSize3, fontSize9, fontSize4, Colors.black, false);

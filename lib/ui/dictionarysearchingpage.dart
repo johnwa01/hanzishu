@@ -232,11 +232,9 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
         (
         title: Text(title),  //汉字树字典/Customized Flashcards
       ),
-      body: Center(
-        child: SizedBox(
-          width: screenWidth,
-          child: SingleChildScrollView(
-            controller: _scrollController,
+      body: SingleChildScrollView(
+        controller: _scrollController,
+          child: Center(
             child: SizedBox(
               width: screenWidth,
               height: contentHeight,
@@ -278,7 +276,6 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
             ),
           ),
         ),
-      ),
     );
   }
 
