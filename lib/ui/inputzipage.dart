@@ -3304,7 +3304,9 @@ class _InputZiPageState extends State<InputZiPage> {
             child: HzProgressIndicator(
               value: _progressValue,
               current: currentIndex < 0 ? 0 : currentIndex,
-              total: totalQuestions,
+              total: typingType == TypingType.FirstTyping
+                  ? totalQuestions - 1
+                  : totalQuestions,
               thickness: HzProgressThickness.thick,
             ),
           ),
