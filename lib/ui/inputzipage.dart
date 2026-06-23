@@ -3634,7 +3634,7 @@ class _InputZiPageState extends State<InputZiPage> {
                   style: TextStyle(
                     fontSize: fontSize * 2.05 * getSizeRatio(),
                     fontWeight: FontWeight.w800,
-                    color: Color(0xFF1F1B2D),
+                    color: Colors.orangeAccent, //Color(0xFF1F1B2D),
                   ),
                 ),
               ),
