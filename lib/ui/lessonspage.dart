@@ -26,6 +26,7 @@ import 'package:video_player/video_player.dart';
 import 'dart:ui';
 import 'dart:io';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
+import 'package:hanzishu/ui/characterdecompositionpage.dart';
 
 class LessonsPage extends StatefulWidget {
   @override
@@ -873,9 +874,8 @@ class _LessonsPageState extends State<LessonsPage> {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  InputZiPage(typingType: TypingType.LeadComponents,
-                      lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false) //InputZiPage(),
+            builder: (context) =>
+                ComponentPage(questionType: QuestionType.ExpandedComponent),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -884,7 +884,7 @@ class _LessonsPageState extends State<LessonsPage> {
           context,
           MaterialPageRoute(
             builder: (context) =>
-                ComponentPage(questionType: QuestionType.ExpandedComponent),
+                CharacterDecompositionPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -894,22 +894,10 @@ class _LessonsPageState extends State<LessonsPage> {
           MaterialPageRoute(
             builder: (context) =>
                 InputZiPage(
-                    typingType: TypingType.ExpandedReview, lessonId: 0,  wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
+                    typingType: TypingType.ExpandedReview, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
         ).then((val) => {_getRequests()});
         break;
-    /*
-      case 4:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                InputZiPage(
-                    typingType: TypingType.SingleComponent, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 3, includeSkipSection: false, showSwitchMethod: false), //InputZiPage(),
-          ),
-        ).then((val) => {_getRequests()});
-        break;
-        */
       default:
         break;
     }

@@ -469,7 +469,12 @@ class _ComponentPageState extends State<ComponentPage> {
     if (imageHeight > 560.0) imageHeight = 560.0;
 
     if (isAHeadOfRandomComponents) {
-      hintText = "Learn mapping in this group";
+      if (theComponentManager.isLastHeaderOfRandomComponents()) {
+        hintText = "Review the 25 mappings";
+      }
+      else {
+        hintText = "Learn mapping in this group";
+      }
     }
 
     return Container(
@@ -2410,7 +2415,7 @@ class _ComponentPageState extends State<ComponentPage> {
           title: 'You Did It!',
           badgeText: 'Step 2 Complete',
           message: content,
-          buttonText: 'Start 25 keys for common components ->',
+          buttonText: '25 keys for common components ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
             Navigator.of(context).pop(); // dialog

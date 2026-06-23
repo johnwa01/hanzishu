@@ -743,6 +743,16 @@ class ComponentManager {
     return false;
   }
 
+  bool isLastHeaderOfRandomComponents() {
+    if (currentQuestionType == QuestionType.Component) {
+      if ((theRandomComponentList.length -1) == currentIndex) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   String getHeaderImageNameOfRandomComponents() {
     if (currentQuestionType == QuestionType.Component) {
         return theRandomComponentList[currentIndex].specialImageName;
