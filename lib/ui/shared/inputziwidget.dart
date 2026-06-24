@@ -36,7 +36,7 @@ import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 
-class InputZiPage extends StatefulWidget {
+class InputZiWidget extends StatefulWidget {
   final TypingType typingType;
   final int lessonId;
   final String wordsStudy;
@@ -45,12 +45,12 @@ class InputZiPage extends StatefulWidget {
   final HintType showHint;
   final bool includeSkipSection;
   final bool showSwitchMethod;
-  InputZiPage({required this.typingType, required this.lessonId, required this.wordsStudy, required this.isSoundPrompt, required this.inputMethod, required this.showHint, required this.includeSkipSection, required this.showSwitchMethod});
+  InputZiWidget({required this.typingType, required this.lessonId, required this.wordsStudy, required this.isSoundPrompt, required this.inputMethod, required this.showHint, required this.includeSkipSection, required this.showSwitchMethod});
   @override
-  _InputZiPageState createState() => new _InputZiPageState();
+  _InputZiWidgetState createState() => new _InputZiWidgetState();
 }
 
-class _InputZiPageState extends State<InputZiPage> {
+class _InputZiWidgetState extends State<InputZiWidget> {
   ScrollController? _scrollController;
   TypingType? typingType;
   int lessonId = -1;
