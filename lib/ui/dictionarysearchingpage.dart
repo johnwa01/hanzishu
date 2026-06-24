@@ -13,12 +13,349 @@ import 'package:hanzishu/ui/animatedpathpainter.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/ui/dictionarypainter.dart';
 import 'package:hanzishu/ui/dictionaryhelppage.dart';
+import 'package:hanzishu/ui/dictionarypage.dart';
 import 'package:hanzishu/data/firstzilist.dart';
 import 'package:hanzishu/engine/zi.dart';
 import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/zigrouppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
+
+
+class DictionarySearchLandingContent extends StatelessWidget {
+  final double ratio;
+  final Color teal;
+  final Color darkTeal;
+  final Widget hanzishuInputChild;
+  final Widget otherInputChild;
+
+  const DictionarySearchLandingContent({
+    required this.ratio,
+    required this.teal,
+    required this.darkTeal,
+    required this.hanzishuInputChild,
+    required this.otherInputChild,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
+          child: _buildFirstHanziSearchCard(context),
+        ),
+        SizedBox(height: 28 * ratio),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24 * ratio),
+          child: _buildDictionarySearchSection(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildFirstHanziSearchCard(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        borderRadius: BorderRadius.circular(20 * ratio),
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => DictionaryPage(),
+            ),
+          );
+        },
+        child: Container(
+          padding: EdgeInsets.all(26 * ratio),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xFFF3FBFA),
+                Colors.white,
+              ],
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+            ),
+            borderRadius: BorderRadius.circular(20 * ratio),
+            border: Border.all(
+              color: darkTeal.withOpacity(0.18),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.05),
+                blurRadius: 18 * ratio,
+                offset: Offset(0, 8 * ratio),
+              ),
+            ],
+          ),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              final iconWidth = 90 * ratio;
+              final horizontalGap = 24 * ratio;
+              final textWidth = constraints.maxWidth - iconWidth - horizontalGap;
+
+              final iconWidget = Container(
+                width: iconWidth,
+                height: iconWidth,
+                decoration: BoxDecoration(
+                  color: teal.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.manage_search_rounded,
+                  color: darkTeal,
+                  size: 52 * ratio,
+                ),
+              );
+
+              final textColumn = SizedBox(
+                width: textWidth > 280 * ratio ? textWidth : constraints.maxWidth,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "First-Hanzi Search",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: darkTeal,
+                        fontSize: 25 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 10 * ratio),
+                    Text(
+                      "Find a character through its first Hanzi.",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontSize: 15.5 * ratio,
+                        height: 1.35,
+                      ),
+                    ),
+                    SizedBox(height: 18 * ratio),
+                    _buildFirstHanziButton(),
+                  ],
+                ),
+              );
+
+              return Wrap(
+                spacing: horizontalGap,
+                runSpacing: 18 * ratio,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  iconWidget,
+                  textColumn,
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildFirstHanziButton() {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 18 * ratio,
+        vertical: 12 * ratio,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(13 * ratio),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.08),
+            blurRadius: 10 * ratio,
+            offset: Offset(0, 4 * ratio),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.grid_view_rounded, color: darkTeal, size: 22 * ratio),
+          SizedBox(width: 10 * ratio),
+          Text(
+            "Open First-Hanzi Table",
+            style: TextStyle(
+              color: darkTeal,
+              fontSize: 15.5 * ratio,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(width: 8 * ratio),
+          Icon(Icons.arrow_forward_rounded, color: darkTeal, size: 22 * ratio),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDictionarySearchSection() {
+    return Container(
+      padding: EdgeInsets.all(20 * ratio),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20 * ratio),
+        border: Border.all(color: Colors.black.withOpacity(0.06)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 18 * ratio,
+            offset: Offset(0, 8 * ratio),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                width: 52 * ratio,
+                height: 52 * ratio,
+                decoration: BoxDecoration(
+                  color: teal.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.search_rounded, color: darkTeal, size: 32 * ratio),
+              ),
+              SizedBox(width: 14 * ratio),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Search Characters",
+                      style: TextStyle(
+                        color: Color(0xFF111827),
+                        fontSize: 22 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 4 * ratio),
+                    Text(
+                      "Choose a search method.",
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontSize: 14.5 * ratio,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+
+          SizedBox(height: 20 * ratio),
+
+          _buildDictionaryInputCard(
+            icon: Icons.keyboard_alt_rounded,
+            title: "Search with Hanzishu Input",
+            description: "Enter a Shape-Sequence code.",
+            child: hanzishuInputChild,
+          ),
+
+          SizedBox(height: 16 * ratio),
+
+          _buildDictionaryInputCard(
+            icon: Icons.translate_rounded,
+            title: "Search with Other Input Methods",
+            description: "Use Pinyin or other input methods.",
+            child: otherInputChild,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDictionaryInputCard({
+    required IconData icon,
+    required String title,
+    required String description,
+    required Widget child,
+  }) {
+    return Container(
+      padding: EdgeInsets.all(18 * ratio),
+      decoration: BoxDecoration(
+        color: Color(0xFFFCFCFD),
+        borderRadius: BorderRadius.circular(16 * ratio),
+        border: Border.all(color: Colors.black.withOpacity(0.06)),
+      ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final leadingWidth = 72 * ratio;
+          final descriptionWidth = constraints.maxWidth < 230 * ratio ? constraints.maxWidth : 230 * ratio;
+          final horizontalGap = 18 * ratio;
+          final minimumInputWidth = 280 * ratio;
+          final availableInputWidth = constraints.maxWidth -
+              leadingWidth -
+              descriptionWidth -
+              horizontalGap * 3;
+
+          final inputWidth = availableInputWidth >= minimumInputWidth
+              ? availableInputWidth
+              : constraints.maxWidth;
+
+          final leading = Container(
+            width: leadingWidth,
+            height: leadingWidth,
+            decoration: BoxDecoration(
+              color: teal.withOpacity(0.10),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: darkTeal, size: 38 * ratio),
+          );
+
+          final descriptionColumn = SizedBox(
+            width: descriptionWidth,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: darkTeal,
+                    fontSize: 17.5 * ratio,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 8 * ratio),
+                Text(
+                  description,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.blueGrey[700],
+                    fontSize: 14 * ratio,
+                    height: 1.35,
+                  ),
+                ),
+              ],
+            ),
+          );
+
+          return Wrap(
+            spacing: horizontalGap,
+            runSpacing: 16 * ratio,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              leading,
+              descriptionColumn,
+              SizedBox(
+                width: inputWidth,
+                child: child,
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
 
 class DictionarySearchingPage extends StatefulWidget {
   DictionaryStage dicStage;
@@ -234,48 +571,48 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
-          child: Center(
-            child: SizedBox(
-              width: screenWidth,
-              height: contentHeight,
-              child: WillPopScope(
-                  child: new Stack(
-                      children: <Widget>[
-                        new Positioned.fill(
-                          child: CustomPaint(
-                            foregroundPainter: DictionaryPainter(
-                              Colors.amber,
-                              //lessonId: widget.lessonId,
-                              screenWidth,
-                              //screenWidth: screenWidth,
-                              dicStage,
-                              firstZiIndex,
-                              searchingZiIndex,
-                              context,
-                              compoundZiCurrentComponentId,
-                              currentZiListType,
-                              shouldDrawCenter,
-                              showBreakoutDetails,
-                            ),
-                            //child: Center(
-                            child: SizedBox(
-                              width: screenWidth,
-                              height: contentHeight,
-                              child: Stack(
-                                  children: displayCharsAndCreateHittestButtons(context)
-                              ),
-                            ),
-                            //),
+        child: Center(
+          child: SizedBox(
+            width: screenWidth,
+            height: contentHeight,
+            child: WillPopScope(
+                child: new Stack(
+                    children: <Widget>[
+                      new Positioned.fill(
+                        child: CustomPaint(
+                          foregroundPainter: DictionaryPainter(
+                            Colors.amber,
+                            //lessonId: widget.lessonId,
+                            screenWidth,
+                            //screenWidth: screenWidth,
+                            dicStage,
+                            firstZiIndex,
+                            searchingZiIndex,
+                            context,
+                            compoundZiCurrentComponentId,
+                            currentZiListType,
+                            shouldDrawCenter,
+                            showBreakoutDetails,
                           ),
+                          //child: Center(
+                          child: SizedBox(
+                            width: screenWidth,
+                            height: contentHeight,
+                            child: Stack(
+                                children: displayCharsAndCreateHittestButtons(context)
+                            ),
+                          ),
+                          //),
                         ),
-                        getAnimatedPathPainter(),
-                      ]
-                  ),
-                  onWillPop: _onWillPop
-              ),
+                      ),
+                      getAnimatedPathPainter(),
+                    ]
+                ),
+                onWillPop: _onWillPop
             ),
           ),
         ),
+      ),
     );
   }
 
