@@ -2292,11 +2292,13 @@ class _InputZiPageState extends State<InputZiPage> {
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              final bool isNarrow = constraints.maxWidth < 620;
+              final iconWidth = 90 * ratio;
+              final horizontalGap = 24 * ratio;
+              final textWidth = constraints.maxWidth - iconWidth - horizontalGap;
 
               final iconWidget = Container(
-                width: 90 * ratio,
-                height: 90 * ratio,
+                width: iconWidth,
+                height: iconWidth,
                 decoration: BoxDecoration(
                   color: teal.withOpacity(0.10),
                   shape: BoxShape.circle,
@@ -2308,92 +2310,87 @@ class _InputZiPageState extends State<InputZiPage> {
                 ),
               );
 
-              final textColumn = Column(
-                crossAxisAlignment:
-                isNarrow ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "First-Hanzi Search",
-                    textAlign:
-                    isNarrow ? TextAlign.center : TextAlign.start,
-                    style: TextStyle(
-                      color: darkTeal,
-                      fontSize: 25 * ratio,
-                      fontWeight: FontWeight.bold,
+              final textColumn = SizedBox(
+                width: textWidth > 280 * ratio ? textWidth : constraints.maxWidth,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "First-Hanzi Search",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: darkTeal,
+                        fontSize: 25 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10 * ratio),
-                  Text(
-                    "Find a character through its first Hanzi.",
-                    textAlign:
-                    isNarrow ? TextAlign.center : TextAlign.start,
-                    style: TextStyle(
-                      color: Colors.blueGrey[700],
-                      fontSize: 15.5 * ratio,
-                      height: 1.35,
+                    SizedBox(height: 10 * ratio),
+                    Text(
+                      "Find a character through its first Hanzi.",
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontSize: 15.5 * ratio,
+                        height: 1.35,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 18 * ratio),
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 28 * ratio,
-                      vertical: 16 * ratio,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16 * ratio),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.06),
-                          blurRadius: 10 * ratio,
-                          offset: Offset(0, 3 * ratio),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(
-                          Icons.grid_view_rounded,
-                          color: darkTeal,
-                          size: 24 * ratio,
-                        ),
-                        SizedBox(width: 12 * ratio),
-                        Text(
-                          "Open First-Hanzi Table",
-                          style: TextStyle(
-                            color: darkTeal,
-                            fontSize: 17 * ratio,
-                            fontWeight: FontWeight.bold,
+                    SizedBox(height: 18 * ratio),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 28 * ratio,
+                        vertical: 16 * ratio,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16 * ratio),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.06),
+                            blurRadius: 10 * ratio,
+                            offset: Offset(0, 3 * ratio),
                           ),
-                        ),
-                        SizedBox(width: 12 * ratio),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          color: darkTeal,
-                          size: 24 * ratio,
-                        ),
-                      ],
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.grid_view_rounded,
+                            color: darkTeal,
+                            size: 24 * ratio,
+                          ),
+                          SizedBox(width: 12 * ratio),
+                          Flexible(
+                            child: Text(
+                              "Open First-Hanzi Table",
+                              style: TextStyle(
+                                color: darkTeal,
+                                fontSize: 17 * ratio,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          SizedBox(width: 12 * ratio),
+                          Icon(
+                            Icons.arrow_forward_rounded,
+                            color: darkTeal,
+                            size: 24 * ratio,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               );
 
-              if (isNarrow) {
-                return Column(
-                  children: [
-                    iconWidget,
-                    SizedBox(height: 18 * ratio),
-                    textColumn,
-                  ],
-                );
-              }
-
-              return Row(
+              return Wrap(
+                spacing: horizontalGap,
+                runSpacing: 18 * ratio,
+                crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
                   iconWidget,
-                  SizedBox(width: 24 * ratio),
-                  Expanded(child: textColumn),
+                  textColumn,
                 ],
               );
             },
@@ -2510,19 +2507,24 @@ class _InputZiPageState extends State<InputZiPage> {
             ratio: ratio,
             teal: teal,
             darkTeal: darkTeal,
-            icon: Icons.keyboard_rounded,
+            icon: Icons.keyboard_alt_rounded,
             title: "Search with Hanzishu Input",
-            description: "Use the built-in Shape-Sequence input method.",
-            child: _buildDictionaryHanzishuSearchBox(
-              ratio,
-              teal,
-              editFieldFontRatio,
-              editFontSize,
-              maxNumberOfLines,
+            description: "Enter a Shape-Sequence code.",
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildDictionaryHanzishuSearchBox(
+                  ratio,
+                  teal,
+                  editFieldFontRatio,
+                  editFontSize,
+                  maxNumberOfLines,
+                ),
+                SizedBox(height: 6 * ratio),
+                getZiCandidates(inputZiPainter),
+              ],
             ),
           ),
-
-          getZiCandidates(inputZiPainter),
 
           SizedBox(height: 16 * ratio),
 
@@ -2558,11 +2560,22 @@ class _InputZiPageState extends State<InputZiPage> {
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final bool isNarrow = constraints.maxWidth < 620;
+          final leadingWidth = 72 * ratio;
+          final descriptionWidth = constraints.maxWidth < 230 * ratio ? constraints.maxWidth : 230 * ratio;
+          final horizontalGap = 18 * ratio;
+          final minimumInputWidth = 280 * ratio;
+          final availableInputWidth = constraints.maxWidth -
+              leadingWidth -
+              descriptionWidth -
+              horizontalGap * 3;
+
+          final inputWidth = availableInputWidth >= minimumInputWidth
+              ? availableInputWidth
+              : constraints.maxWidth;
 
           final leading = Container(
-            width: 72 * ratio,
-            height: 72 * ratio,
+            width: leadingWidth,
+            height: leadingWidth,
             decoration: BoxDecoration(
               color: teal.withOpacity(0.10),
               shape: BoxShape.circle,
@@ -2570,51 +2583,43 @@ class _InputZiPageState extends State<InputZiPage> {
             child: Icon(icon, color: darkTeal, size: 38 * ratio),
           );
 
-          final descriptionColumn = Column(
-            crossAxisAlignment: isNarrow ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                textAlign: isNarrow ? TextAlign.center : TextAlign.start,
-                style: TextStyle(
-                  color: darkTeal,
-                  fontSize: 17.5 * ratio,
-                  fontWeight: FontWeight.bold,
+          final descriptionColumn = SizedBox(
+            width: descriptionWidth,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: darkTeal,
+                    fontSize: 17.5 * ratio,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8 * ratio),
-              Text(
-                description,
-                textAlign: isNarrow ? TextAlign.center : TextAlign.start,
-                style: TextStyle(
-                  color: Colors.blueGrey[700],
-                  fontSize: 14 * ratio,
-                  height: 1.35,
+                SizedBox(height: 8 * ratio),
+                Text(
+                  description,
+                  textAlign: TextAlign.start,
+                  style: TextStyle(
+                    color: Colors.blueGrey[700],
+                    fontSize: 14 * ratio,
+                    height: 1.35,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           );
 
-          if (isNarrow) {
-            return Column(
-              children: [
-                leading,
-                SizedBox(height: 12 * ratio),
-                descriptionColumn,
-                SizedBox(height: 16 * ratio),
-                child,
-              ],
-            );
-          }
-
-          return Row(
+          return Wrap(
+            spacing: horizontalGap,
+            runSpacing: 16 * ratio,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               leading,
-              SizedBox(width: 18 * ratio),
-              Expanded(child: descriptionColumn),
-              SizedBox(width: 18 * ratio),
-              Expanded(
-                flex: 2,
+              descriptionColumn,
+              SizedBox(
+                width: inputWidth,
                 child: child,
               ),
             ],
