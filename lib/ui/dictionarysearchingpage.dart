@@ -20,6 +20,8 @@ import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/ui/zigrouppage.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
+import 'package:hanzishu/ui/shared/inputziwidget.dart';
+import 'package:hanzishu/engine/inputzi.dart';
 
 
 class DictionarySearchLandingContent extends StatelessWidget {
@@ -563,6 +565,10 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
 
     final contentHeight = getDictionaryContentHeight(context);
 
+    if (dicStage == DictionaryStage.firstzis) {
+      return _buildDictionarySearchLandingPage(context);
+    }
+
     return Scaffold
       (
       appBar: AppBar
@@ -615,6 +621,166 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       ),
     );
   }
+
+  Widget _buildDictionarySearchLandingPage(BuildContext context) {
+    final ratio = getSizeRatio();
+    final teal = Color(0xFF00897B);
+    final darkTeal = Color(0xFF005C55);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          getString(95) /*Hanzishu Dictionary*/,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            color: Color(0xFF1F1B2D),
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        elevation: 0,
+        foregroundColor: Color(0xFF1F1B2D),
+      ),
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        child: Center(
+          child: SizedBox(
+            width: screenWidth,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(height: 52 * ratio),
+                DictionarySearchLandingContent(
+                  ratio: ratio,
+                  teal: teal,
+                  darkTeal: darkTeal,
+                  hanzishuInputChild: InputZiWidget(
+                    typingType: TypingType.DicSearchTyping,
+                    lessonId: -1,
+                    wordsStudy: '',
+                    isSoundPrompt: false,
+                    inputMethod: InputMethod.Pinxin,
+                    showHint: HintType.None,
+                    includeSkipSection: false,
+                    showSwitchMethod: false,
+                  ),
+                  otherInputChild: InputZiWidget(
+                    typingType: TypingType.DicSearchTyping,
+                    lessonId: -1,
+                    wordsStudy: '',
+                    isSoundPrompt: false,
+                    inputMethod: InputMethod.Others,
+                    showHint: HintType.None,
+                    includeSkipSection: false,
+                    showSwitchMethod: false,
+                  ),
+                  //otherInputChild: SizedBox(width: 0, height: 0),
+                ),
+                SizedBox(height: 32 * ratio),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  /*
+  Widget _buildDictionaryOtherSearchBox(double ratio, Color teal) {
+    return TextField(
+      autocorrect: false,
+      enableSuggestions: false,
+      controller: _otherInputController,
+      focusNode: _otherInputFocusNode,
+      autofocus: false,
+      cursorColor: teal,
+      decoration: InputDecoration(
+        hintText: "Enter Pinyin or other input...",
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: 14 * ratio,
+          vertical: 12 * ratio,
+        ),
+        suffixIcon: IconButton(
+          icon: Icon(Icons.search_rounded, color: teal),
+          onPressed: () {
+            processZiQuery(_otherInputController);
+          },
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal.withOpacity(0.75), width: 1.2 * ratio),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12 * ratio),
+          borderSide: BorderSide(color: teal, width: 1.6 * ratio),
+        ),
+      ),
+      style: TextStyle(
+        fontSize: 18 * ratio,
+        height: 1.15,
+      ),
+      maxLines: 1,
+      keyboardType: TextInputType.text,
+      onSubmitted: (_) {
+        processZiQuery(_otherInputController);
+      },
+    );
+  }
+
+  processZiQuery(TextEditingController oneController) {
+    var latestValue = '';
+    var ziId = -1;
+    var text = oneController.value.text;
+    if (text != null && text.length != 0) {
+      latestValue = text;
+      ziId = DictionaryManager.getSearchingZiId(text);
+    }
+
+    if (ziId > 0) {
+      oneController.clear();
+      FocusScope.of(context).unfocus();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              DictionarySearchingPage(
+                  dicStage: DictionaryStage.detailedzi,
+                  firstOrSearchingZiIndex: ziId,
+                  flashcardList: '',
+                  dicCaller: DicCaller.Dictionary),
+        ),
+      );
+    }
+    else {
+      oneController.clear();
+      FocusScope.of(context).unfocus();
+      Widget okButton = TextButton(
+        child: Text(getString(286)/*Ok*/, style: TextStyle(color: Colors.blue)),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      );
+
+      AlertDialog alert = AlertDialog(
+        title: Text(getString(375)/*Result*/),
+        content: Text(getString(374)/*cannot find: */ + latestValue + "."),
+        actions: [
+          okButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+  }
+  */
 
   double getDictionaryContentHeight(BuildContext context) {
     var minimumHeight = MediaQuery.of(context).size.height - kToolbarHeight;

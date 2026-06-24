@@ -15,6 +15,9 @@ import 'package:hanzishu/utility.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:hanzishu/ui/inputgamepage.dart';
+import 'package:hanzishu/ui/dictionarysearchingpage.dart';
+import 'package:hanzishu/engine/dictionary.dart';
+
 
 // Note: this file is no longer used
 class LaunchPage extends StatefulWidget {
@@ -453,15 +456,11 @@ class _LaunchPageState extends State<LaunchPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => InputZiPage(
-                    typingType: TypingType.DicSearchTyping,
-                    lessonId: 0,
-                    wordsStudy: '',
-                    isSoundPrompt: false,
-                    inputMethod: InputMethod.Both,
-                    showHint: HintType.Hint1,
-                    includeSkipSection: false,
-                    showSwitchMethod: false,
+                  builder: (context) => DictionarySearchingPage(
+                    dicStage: DictionaryStage.firstzis,
+                    firstOrSearchingZiIndex: -1,
+                    flashcardList: '',
+                    dicCaller: DicCaller.Dictionary,
                   ),
                 ),
               );

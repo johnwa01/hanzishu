@@ -2056,6 +2056,24 @@ class _InputZiWidgetState extends State<InputZiWidget> {
         screenWidth: screenWidth //350 /*TODO: temp*/
     );
 
+    var editFieldFontRatio = getSizeRatio();
+    if (editFieldFontRatio > 1.7) { // otherwise iPad Pro 12.9" would have a huge char size in EditField
+      editFieldFontRatio /= 1.3;
+    }
+
+    var fieldWidth = double.infinity;
+    if (typingType == TypingType.DicSearchTyping) {
+      fieldWidth = 80.0 * getSizeRatio();
+
+      return getDicSearchTyping(
+        fieldWidth,
+        editFieldFontRatio,
+        editFontSize,
+        maxNumberOfLines,
+        inputZiPainter,
+      );
+    }
+
     var title; // = getString(98)/*'Component Input Method'*/;
     //if (typingType == TypingType.GiveItATry) {
     //  title = getString(100)/*'Give it a try'*/;
@@ -2129,16 +2147,6 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       return getExplainationPage();
     }
 
-    var editFieldFontRatio = getSizeRatio();
-    if (editFieldFontRatio > 1.7) { // otherwise iPad Pro 12.9" would have a huge char size in EditField
-      editFieldFontRatio /= 1.3;
-    }
-
-    var fieldWidth = double.infinity;
-    if (typingType == TypingType.DicSearchTyping) {
-      fieldWidth = 80.0 * getSizeRatio();
-    }
-
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -2184,40 +2192,29 @@ class _InputZiWidgetState extends State<InputZiWidget> {
   Column getDicSearchTyping(double fieldWidth, double editFieldFontRatio, double editFontSize, int maxNumberOfLines, InputZiPainter inputZiPainter) {
     final ratio = getSizeRatio();
     final teal = Color(0xFF00897B);
-    final darkTeal = Color(0xFF005C55);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        SizedBox(height: 24 * ratio),
-
-        //_buildDictionaryHeader(ratio, darkTeal),
-
-        SizedBox(height: 28 * ratio),
-
-        DictionarySearchLandingContent(
-          ratio: ratio,
-          teal: teal,
-          darkTeal: darkTeal,
-          hanzishuInputChild: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildDictionaryHanzishuSearchBox(
-                ratio,
-                teal,
-                editFieldFontRatio,
-                editFontSize,
-                maxNumberOfLines,
-              ),
-              SizedBox(height: 6 * ratio),
-              getZiCandidates(inputZiPainter),
-            ],
-          ),
-          otherInputChild: _buildDictionaryOtherSearchBox(ratio, teal),
+    if (inputMethod == InputMethod.Pinxin ||
+        inputMethod == InputMethod.Both) ...[
+        _buildDictionaryHanzishuSearchBox(
+          ratio,
+          teal,
+          editFieldFontRatio,
+          editFontSize,
+          maxNumberOfLines,
         ),
-
-        SizedBox(height: 32 * ratio),
+        SizedBox(height: 6 * ratio),
+        getZiCandidates(inputZiPainter),
       ],
+
+    if (inputMethod == InputMethod.Others ||
+      inputMethod == InputMethod.Both) ...[
+      _buildDictionaryOtherSearchBox(ratio, teal),
+    ],
+    ]
     );
   }
 
