@@ -34,6 +34,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
+import 'package:hanzishu/ui/shared/pinyin_inputziwidget.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 
 class InputZiWidget extends StatefulWidget {
@@ -2194,27 +2195,27 @@ class _InputZiWidgetState extends State<InputZiWidget> {
     final teal = Color(0xFF00897B);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-    if (inputMethod == InputMethod.Pinxin ||
-        inputMethod == InputMethod.Both) ...[
-        _buildDictionaryHanzishuSearchBox(
-          ratio,
-          teal,
-          editFieldFontRatio,
-          editFontSize,
-          maxNumberOfLines,
-        ),
-        SizedBox(height: 6 * ratio),
-        getZiCandidates(inputZiPainter),
-      ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          if (inputMethod == InputMethod.Pinxin ||
+              inputMethod == InputMethod.Both) ...[
+            _buildDictionaryHanzishuSearchBox(
+              ratio,
+              teal,
+              editFieldFontRatio,
+              editFontSize,
+              maxNumberOfLines,
+            ),
+            SizedBox(height: 6 * ratio),
+            getZiCandidates(inputZiPainter),
+          ],
 
-    if (inputMethod == InputMethod.Others ||
-      inputMethod == InputMethod.Both) ...[
-      _buildDictionaryOtherSearchBox(ratio, teal),
-    ],
-    ]
+          if (inputMethod == InputMethod.Others ||
+              inputMethod == InputMethod.Both) ...[
+            _buildDictionaryOtherSearchBox(ratio, teal),
+          ],
+        ]
     );
   }
 
@@ -2299,42 +2300,17 @@ class _InputZiWidgetState extends State<InputZiWidget> {
   }
 
   Widget _buildDictionaryOtherSearchBox(double ratio, Color teal) {
-    return TextField(
-      autocorrect: false,
-      enableSuggestions: false,
+    return PinyinInputZiWidget(
       controller: _controllerStandard,
       focusNode: _focusNodeStandard,
-      autofocus: false,
-      cursorColor: teal,
-      decoration: InputDecoration(
-        hintText: "Enter Pinyin or other input...",
-        filled: true,
-        fillColor: Colors.white,
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 14 * ratio,
-          vertical: 12 * ratio,
-        ),
-        suffixIcon: IconButton(
-          icon: Icon(Icons.search_rounded, color: teal),
-          onPressed: () {
-            processZiQuery(_controllerStandard);
-          },
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12 * ratio),
-          borderSide: BorderSide(color: teal.withOpacity(0.75), width: 1.2 * ratio),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12 * ratio),
-          borderSide: BorderSide(color: teal, width: 1.6 * ratio),
-        ),
-      ),
-      style: TextStyle(
-        fontSize: 18 * ratio,
-        height: 1.15,
-      ),
-      maxLines: 1,
-      keyboardType: TextInputType.text,
+      ratio: ratio,
+      typingType: typingType!,
+      inputMethod: inputMethod!,
+      useDictionarySearchStyle: true,
+      teal: teal,
+      onQueryPressed: () {
+        processZiQuery(_controllerStandard);
+      },
       onSubmitted: (_) {
         processZiQuery(_controllerStandard);
       },
@@ -2721,52 +2697,16 @@ class _InputZiWidgetState extends State<InputZiWidget> {
 
   // non-Hanzishu input methods
   Widget getOtherInputMethodTextField(TextEditingController oneController, bool withQueryButton) {
-    double fieldWidth = 400.0; //double.infinity
-    if (withQueryButton) {
-      fieldWidth = 120.0;
-    }
-
-    int maxLines = 1;
-    if (typingType == TypingType.InputGame && inputMethod == InputMethod.Others) {
-      maxLines = 8;
-    }
-
-    return Row(
-      //mainAxisAlignment: MainAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        //SizedBox(width: 20 * getSizeRatio()),
-        //Text(getString(96)/*"Basic Table"*/, style: TextStyle(fontSize: 20 * getSizeRatio(), color: Colors.blueGrey), ),
-
-        //SizedBox(width: 10 * getSizeRatio()),
-
-        SizedBox(
-          width: fieldWidth * getSizeRatio(),
-          //height: 120,
-          // Note: this is the standard for Dic Search only, not related to the Hanzishu typing field.
-          child: TextField(
-            autocorrect: false,
-            enableSuggestions: false,
-            controller: oneController,
-            focusNode: _focusNodeStandard,
-            autofocus: false,
-            style: TextStyle(
-              fontSize: 20 * getSizeRatio(),
-              //height: 1.0 // 1.3
-            ),
-            maxLines: maxLines,
-            //expands: true,
-            keyboardType: TextInputType.text,
-            //multiline,  //TextInputType.visiblePassword
-            decoration: InputDecoration(
-              //hintText: 'This test',
-              filled: true,
-              fillColor: Colors.black12, //lightBlueAccent,
-            ),
-          ), //focusNode: _focusNodeStandard,
-        ),
-        getQueryButton(oneController, withQueryButton),
-      ],
+    return PinyinInputZiWidget(
+      controller: oneController,
+      focusNode: _focusNodeStandard,
+      ratio: getSizeRatio(),
+      typingType: typingType!,
+      inputMethod: inputMethod!,
+      withQueryButton: withQueryButton,
+      onQueryPressed: () {
+        processZiQuery(oneController);
+      },
     );
   }
 

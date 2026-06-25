@@ -271,7 +271,7 @@ class _LaunchPageState extends State<LaunchPage> {
           //SizedBox(height: fontSize1),
           //getRefreshNotice(), // TODO: can remove this after adding real inputgame link
           //SizedBox(height: fontSize1),
-          //getRealInputGameLink(),
+          getRealInputGameLink(),
           //SizedBox(height: fontSize1),
           //getWarmupInputGameLink(),
           //SizedBox(height: fontSize1),
