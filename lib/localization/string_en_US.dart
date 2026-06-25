@@ -574,4 +574,12 @@ var theString_en_US = [
   Local(564, "Formal Game Results"),
   Local(565, "Home"),
   Local(566, "Input Method"),
+  Local(567, "Learn Chinese through the Shape-Sequence Approach."),
+  Local(568, "Explore characters through Shape-Sequence relationships."),
+  Local(569, "Learn, practice, and use the Hanzishu Input Method."),
+  Local(570, "Learn Chinese through Shape-Sequence play."),
+  Local(571, "Explore useful tools, resources, settings, and more."),
+  Local(572, "Discover Hanzishu"),
+  Local(573, "Articles, videos, classroom stories and research."),
+  Local(574, "View All →"),
 ];

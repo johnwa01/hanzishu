@@ -234,7 +234,7 @@ class _LaunchPageState extends State<LaunchPage> {
                     SizedBox(width: 12 * getSizeRatioWithLimit()),
 
                     Text(
-                      "Hanzishu",
+                      getString(10), //"Hanzishu",
                       style: TextStyle(
                         fontSize: 28 * getSizeRatioWithLimit(),
                         fontWeight: FontWeight.bold,
@@ -251,7 +251,7 @@ class _LaunchPageState extends State<LaunchPage> {
                 SizedBox(height: 6),
 
                 Text(
-                  "Learn Chinese through the Shape-Sequence Approach.",
+                  getString(567), // "Learn Chinese through the Shape-Sequence Approach.",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16 * getSizeRatioWithLimit(),
@@ -271,7 +271,7 @@ class _LaunchPageState extends State<LaunchPage> {
           //SizedBox(height: fontSize1),
           //getRefreshNotice(), // TODO: can remove this after adding real inputgame link
           //SizedBox(height: fontSize1),
-          getRealInputGameLink(),
+          //getRealInputGameLink(),
           //SizedBox(height: fontSize1),
           //getWarmupInputGameLink(),
           //SizedBox(height: fontSize1),
@@ -309,7 +309,7 @@ class _LaunchPageState extends State<LaunchPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Discover Hanzishu",
+                      getString(572), // "Discover Hanzishu",
                       style: TextStyle(
                         color: Colors.brown,
                         fontSize: 20 * getSizeRatioWithLimit(),
@@ -322,7 +322,7 @@ class _LaunchPageState extends State<LaunchPage> {
                             webOnlyWindowName: '_self');
                       },
                       child: Text(
-                        "View All →",
+                        getString(574), // "View All →",
                         style: TextStyle(
                           fontSize: 14 * getSizeRatioWithLimit(),
                           color: Colors.brown,
@@ -333,7 +333,7 @@ class _LaunchPageState extends State<LaunchPage> {
                   ],
                 ),
                 Text(
-                  "Articles, videos, classroom stories and research.",
+                  getString(573), // "Articles, videos, classroom stories and research.",
                   style: TextStyle(
                     color: Colors.grey[700],
                     fontSize: 14 * getSizeRatioWithLimit(),
@@ -422,7 +422,7 @@ class _LaunchPageState extends State<LaunchPage> {
         children: [
           getHomeFeatureCard(
             title: getString(91),
-            subtitle: "Learn Chinese through the Shape-Sequence Approach.",
+            subtitle: getString(567), //"Learn Chinese through the Shape-Sequence Approach.",
             icon: Icons.menu_book_rounded,
             color: Colors.green,
             width: cardWidth,
@@ -435,7 +435,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(566),
-            subtitle: "Learn, practice, and use the Hanzishu Input Method.",
+            subtitle: getString(569), // "Learn, practice, and use the Hanzishu Input Method.",
             icon: Icons.keyboard_rounded,
             color: Colors.blue,
             width: cardWidth,
@@ -448,7 +448,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(92),
-            subtitle: "Explore characters through Shape-Sequence relationships.",
+            subtitle: getString(568), //"Explore characters through Shape-Sequence relationships.",
             icon: Icons.menu_book_outlined,
             color: Colors.deepPurple,
             width: cardWidth,
@@ -468,7 +468,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(1),
-            subtitle: "Learn Chinese through Shape-Sequence play.",
+            subtitle: getString(570), // "Learn Chinese through Shape-Sequence play.",
             icon: Icons.extension_rounded,
             color: Colors.orange,
             width: cardWidth,
@@ -481,7 +481,7 @@ class _LaunchPageState extends State<LaunchPage> {
           ),
           getHomeFeatureCard(
             title: getString(94),
-            subtitle: "Explore useful tools, resources, settings, and more.",
+            subtitle: getString(571), //"Explore useful tools, resources, settings, and more.",
             icon: Icons.apps_rounded,
             color: Colors.teal,
             width: cardWidth,
