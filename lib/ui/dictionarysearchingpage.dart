@@ -93,15 +93,12 @@ class DictionarySearchLandingContent extends StatelessWidget {
               ),
             ],
           ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              final iconWidth = 90 * ratio;
-              final horizontalGap = 24 * ratio;
-              final textWidth = constraints.maxWidth - iconWidth - horizontalGap;
-
-              final iconWidget = Container(
-                width: iconWidth,
-                height: iconWidth,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 90 * ratio,
+                height: 90 * ratio,
                 decoration: BoxDecoration(
                   color: teal.withOpacity(0.10),
                   shape: BoxShape.circle,
@@ -111,10 +108,11 @@ class DictionarySearchLandingContent extends StatelessWidget {
                   color: darkTeal,
                   size: 52 * ratio,
                 ),
-              );
+              ),
 
-              final textColumn = SizedBox(
-                width: textWidth > 280 * ratio ? textWidth : constraints.maxWidth,
+              SizedBox(width: 24 * ratio),
+
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -141,24 +139,13 @@ class DictionarySearchLandingContent extends StatelessWidget {
                     _buildFirstHanziButton(),
                   ],
                 ),
-              );
-
-              return Wrap(
-                spacing: horizontalGap,
-                runSpacing: 18 * ratio,
-                crossAxisAlignment: WrapCrossAlignment.center,
-                children: [
-                  iconWidget,
-                  textColumn,
-                ],
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-
   Widget _buildFirstHanziButton() {
     return Container(
       padding: EdgeInsets.symmetric(
@@ -287,73 +274,57 @@ class DictionarySearchLandingContent extends StatelessWidget {
         borderRadius: BorderRadius.circular(16 * ratio),
         border: Border.all(color: Colors.black.withOpacity(0.06)),
       ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final leadingWidth = 72 * ratio;
-          final descriptionWidth = constraints.maxWidth < 230 * ratio ? constraints.maxWidth : 230 * ratio;
-          final horizontalGap = 18 * ratio;
-          final minimumInputWidth = 280 * ratio;
-          final availableInputWidth = constraints.maxWidth -
-              leadingWidth -
-              descriptionWidth -
-              horizontalGap * 3;
-
-          final inputWidth = availableInputWidth >= minimumInputWidth
-              ? availableInputWidth
-              : constraints.maxWidth;
-
-          final leading = Container(
-            width: leadingWidth,
-            height: leadingWidth,
-            decoration: BoxDecoration(
-              color: teal.withOpacity(0.10),
-              shape: BoxShape.circle,
-            ),
-            child: Icon(icon, color: darkTeal, size: 38 * ratio),
-          );
-
-          final descriptionColumn = SizedBox(
-            width: descriptionWidth,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: darkTeal,
-                    fontSize: 17.5 * ratio,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 8 * ratio),
-                Text(
-                  description,
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    color: Colors.blueGrey[700],
-                    fontSize: 14 * ratio,
-                    height: 1.35,
-                  ),
-                ),
-              ],
-            ),
-          );
-
-          return Wrap(
-            spacing: horizontalGap,
-            runSpacing: 16 * ratio,
-            crossAxisAlignment: WrapCrossAlignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              leading,
-              descriptionColumn,
-              SizedBox(
-                width: inputWidth,
-                child: child,
+              Container(
+                width: 72 * ratio,
+                height: 72 * ratio,
+                decoration: BoxDecoration(
+                  color: teal.withOpacity(0.10),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(icon, color: darkTeal, size: 38 * ratio),
+              ),
+
+              SizedBox(width: 18 * ratio),
+
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: darkTeal,
+                        fontSize: 17.5 * ratio,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 8 * ratio),
+                    Text(
+                      description,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontSize: 14 * ratio,
+                        height: 1.35,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
-          );
-        },
+          ),
+
+          SizedBox(height: 18 * ratio),
+
+          child,
+        ],
       ),
     );
   }
@@ -645,8 +616,11 @@ class _DictionarySearchingPageState extends State<DictionarySearchingPage> with 
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Center(
-          child: SizedBox(
-            width: screenWidth,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: 800,
+              maxWidth: 1100,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
