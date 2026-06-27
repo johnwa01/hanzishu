@@ -223,10 +223,10 @@ class _StandardExamPageState extends State<StandardExamPage> {
     String prompt = "";
 
     if (quizCategory == QuizCategory.meaning) {
-      prompt = "Choose the meaning";
+      prompt = getString(578); // "Choose the correct meaning";
     }
     else if (quizCategory == QuizCategory.soundToZi) {
-      prompt = "Choose the Hanzi";
+      prompt = "Choose the correct Hanzi";
     }
     else if (quizCategory == QuizCategory.ziToSound) {
       prompt = "Tap speakers to listen, then choose A, B, or C.";

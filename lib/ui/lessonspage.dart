@@ -165,7 +165,7 @@ class _LessonsPageState extends State<LessonsPage> {
           color: Color(0xFF124A35),
         ),
         title: Text(
-          'Hanzishu Lessons',
+          getString(576), //'Hanzishu Lessons',
           style: TextStyle(
             color: Color(0xFF124A35),
             fontSize: 20,

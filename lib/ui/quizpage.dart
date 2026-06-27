@@ -231,7 +231,7 @@ class _QuizPageState extends State<QuizPage> {
     String prompt = "";
 
     if (theQuizManager.getCurrentCategory() == QuizCategory.meaning) {
-      prompt = "Choose the meaning";
+      prompt = getString(578); //"Choose the correct meaning";
     }
     else if (theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) {
       prompt = "Tap speakers to listen, then choose A, B, or C.";

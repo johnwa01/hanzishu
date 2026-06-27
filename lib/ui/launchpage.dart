@@ -422,7 +422,7 @@ class _LaunchPageState extends State<LaunchPage> {
         children: [
           getHomeFeatureCard(
             title: getString(91),
-            subtitle: getString(567), //"Learn Chinese through the Shape-Sequence Approach.",
+            subtitle: getString(575), //"Learn Chinese through the Shape-Sequence Approach.",
             icon: Icons.menu_book_rounded,
             color: Colors.green,
             width: cardWidth,

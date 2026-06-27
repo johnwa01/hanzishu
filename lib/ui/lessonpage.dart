@@ -309,7 +309,7 @@ class _LessonPageState extends State<LessonPage> {
                       ),
                       SizedBox(height: 12),
                       Text(
-                        "Start Lesson",
+                        getString(577), //"Start Lesson",
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -353,7 +353,7 @@ class _LessonPageState extends State<LessonPage> {
                           ),
                           SizedBox(width: 12),
                           Text(
-                            "Hanzi Practice Sheet",
+                            getString(454), //"Hanzi Practice Sheet",
                             style: TextStyle(fontSize: 18),
                           ),
                         ],

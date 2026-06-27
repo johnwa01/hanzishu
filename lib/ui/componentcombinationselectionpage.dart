@@ -71,7 +71,7 @@ class _ComponentCombinationSelectionPageState extends State<ComponentCombination
       backgroundColor: _pageBottom,
       appBar: AppBar(
         title: Text(
-          "Basic Exercises",
+          getString(529), //"Basic Exercises",
           style: TextStyle(
             color: _deepText,
             fontSize: 36 * ui,

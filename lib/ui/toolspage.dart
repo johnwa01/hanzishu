@@ -43,7 +43,7 @@ class _ToolsPageState extends State<ToolsPage> {
       (
       appBar: AppBar
         (
-        title: Text("Hanzishu Input Method",
+        title: Text(getString(93), //"Hanzishu Input Method",
           style: TextStyle(
             //fontSize: 26.0, // Adjust size as needed
             fontWeight: FontWeight.bold,
@@ -187,7 +187,7 @@ class _ToolsPageState extends State<ToolsPage> {
         //SizedBox(height: 8 * ratio),
         Center(
           child: Text(
-            "Learn, practice, and use the Hanzishu Input Method.",
+            getString(582), //"Learn, practice, and use the Hanzishu Input Method.",
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 16 * ratio,
@@ -246,15 +246,15 @@ class _ToolsPageState extends State<ToolsPage> {
                   color: Colors.black87,
                 ),
                 children: [
-                  TextSpan(text: "Please switch your computer or phone to "),
+                  TextSpan(text: getString(579)), //"Please switch your computer or phone to "),
                   TextSpan(
-                    text: "English input mode",
+                    text: getString(580), //"English input mode",
                     style: TextStyle(
                       color: Colors.deepOrange,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  TextSpan(text: ".\nHanzishu pictographic input is built into this website."),
+                  TextSpan(text: getString(581)), //".\nHanzishu pictographic input is built into this website."),
                 ],
               ),
             ),
@@ -288,12 +288,12 @@ class _ToolsPageState extends State<ToolsPage> {
         crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
           _buildPill(
-            text: "1. START HERE",
+            text: getString(607), /*"1. START HERE",*/
             color: Colors.deepPurple,
           ),
           SizedBox(height: 16 * ratio),
           Text(
-            "Hanzishu Input Method Tutorial",
+            getString(511), //"Hanzishu Input Method Tutorial",
             textAlign: centered ? TextAlign.center : TextAlign.start,
             style: TextStyle(
               fontSize: 24 * ratio,
@@ -303,7 +303,7 @@ class _ToolsPageState extends State<ToolsPage> {
           ),
           SizedBox(height: 10 * ratio),
           Text(
-            "Learn the 25 pictographic categories and type any Chinese character.",
+            getString(583), //"Learn the 25 pictographic categories and type any Chinese character.",
             textAlign: centered ? TextAlign.center : TextAlign.start,
             style: TextStyle(
               fontSize: 15.5 * ratio,
@@ -312,9 +312,9 @@ class _ToolsPageState extends State<ToolsPage> {
             ),
           ),
           SizedBox(height: 14 * ratio),
-          _buildInfoRow(Icons.access_time_rounded, "30-minute guided tutorial", Colors.deepPurple),
+          _buildInfoRow(Icons.access_time_rounded, getString(584) /*"30-minute guided tutorial"*/, Colors.deepPurple),
           SizedBox(height: 6 * ratio),
-          _buildInfoRow(Icons.group_rounded, "Recommended for all new users", Colors.deepPurple),
+          _buildInfoRow(Icons.group_rounded, getString(585) /*"Recommended for all new users"*/, Colors.deepPurple),
         ],
       );
     }
@@ -345,7 +345,7 @@ class _ToolsPageState extends State<ToolsPage> {
             SizedBox(width: 12 * ratio),
             Flexible(
               child: Text(
-                "Start Tutorial",
+                getString(608), /*"Start Tutorial",*/
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -446,8 +446,8 @@ class _ToolsPageState extends State<ToolsPage> {
         children: [
           _buildSectionHeader(
             icon: Icons.track_changes_rounded,
-            title: "2. PRACTICE TYPING",
-            subtitle: "Build speed and confidence through guided practice.",
+            title: getString(586), /*"2. PRACTICE TYPING",*/
+            subtitle: getString(587), /*"Build speed and confidence through guided practice.",*/
             color: Colors.deepPurple,
           ),
           SizedBox(height: 20 * ratio),
@@ -466,7 +466,7 @@ class _ToolsPageState extends State<ToolsPage> {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _buildPracticeLabel("GENERAL PRACTICE"),
+                  _buildPracticeLabel(getString(594) /*"GENERAL PRACTICE"*/),
                   SizedBox(height: 10 * ratio),
                   Wrap(
                     spacing: spacing,
@@ -474,8 +474,8 @@ class _ToolsPageState extends State<ToolsPage> {
                     children: [
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Basic Exercises",
-                        subtitle: "Start from the basics.\nImprove step by step.",
+                        title: getString(529), //"Basic Exercises",
+                        subtitle: getString(591), /*"Start from the basics.\nImprove step by step.",*/
                         icon: Icons.keyboard_rounded,
                         color: Colors.orange,
                         onTap: () {
@@ -487,8 +487,8 @@ class _ToolsPageState extends State<ToolsPage> {
                       ),
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Single Alphabet Words",
-                        subtitle: "Practice simple\nalphabet words.",
+                        title: getString(413), //"Single Component Hanzi",
+                        subtitle: getString(592), /*"Practice simple\ncomponent Hanzi.",*/
                         icon: Icons.font_download_rounded,
                         color: Colors.amber[700]!,
                         onTap: () {
@@ -500,8 +500,8 @@ class _ToolsPageState extends State<ToolsPage> {
                       ),
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Commonly Used Hanzi",
-                        subtitle: "Practice the most\ncommonly used characters.",
+                        title: getString(107), //"Commonly Used Hanzi",
+                        subtitle: getString(593), /*"Practice the most\ncommonly used Hanzi.",*/
                         icon: Icons.text_fields_rounded,
                         color: Colors.redAccent,
                         onTap: () {
@@ -514,7 +514,7 @@ class _ToolsPageState extends State<ToolsPage> {
                     ],
                   ),
                   SizedBox(height: 20 * ratio),
-                  _buildPracticeLabel("TEXTBOOK PRACTICE"),
+                  _buildPracticeLabel(getString(595)/*"TEXTBOOK PRACTICE"*/),
                   SizedBox(height: 10 * ratio),
                   Wrap(
                     spacing: spacing,
@@ -522,8 +522,8 @@ class _ToolsPageState extends State<ToolsPage> {
                     children: [
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Ty & Od Textbook",
-                        subtitle: "Practice with Ty & Od\ntextbook content.",
+                        title: getString(517), // "Ty & Od Textbook",
+                        subtitle: getString(598), /*"Practice with Ty & Od\ntextbook content.",*/
                         icon: Icons.menu_book_rounded,
                         color: Colors.blue,
                         onTap: () {
@@ -537,8 +537,8 @@ class _ToolsPageState extends State<ToolsPage> {
                       ),
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Chinese Made Easy",
-                        subtitle: "Practice with Chinese\nMade Easy content.",
+                        title: getString(528), //"Chinese Made Easy",
+                        subtitle: getString(596), /*"Practice with Chinese\nMade Easy content.",*/
                         icon: Icons.menu_book_rounded,
                         color: Colors.teal,
                         onTap: () {
@@ -552,8 +552,8 @@ class _ToolsPageState extends State<ToolsPage> {
                       ),
                       _buildSmallPracticeCard(
                         width: cardWidth,
-                        title: "Yuwen",
-                        subtitle: "Practice with Yuwen\ntextbook content.",
+                        title: getString(526), //"Yuwen",
+                        subtitle: getString(597), /*"Practice with Yuwen\ntextbook content.",*/
                         icon: Icons.menu_book_rounded,
                         color: Colors.deepPurple,
                         onTap: () {
@@ -611,19 +611,19 @@ class _ToolsPageState extends State<ToolsPage> {
                       spacing: 10 * ratio,
                       children: [
                         Text(
-                          "Customized Typing Exercises",
+                          getString(588), /*"Customized Typing Exercises",*/
                           style: TextStyle(
                             fontSize: 18 * ratio,
                             fontWeight: FontWeight.bold,
                             color: Color(0xFF111827),
                           ),
                         ),
-                        _buildPill(text: "★ MAIN PRACTICE TOOL", color: Colors.green),
+                        _buildPill(text: getString(589), /*"★ MAIN PRACTICE TOOL",*/ color: Colors.green),
                       ],
                     ),
                     SizedBox(height: 8 * ratio),
                     Text(
-                      "Paste your own text or content and start practicing right away.",
+                      getString(590), /*"Paste your own text or content and start practicing right away.",*/
                       style: TextStyle(
                         fontSize: 14 * ratio,
                         color: Colors.blueGrey[700],
@@ -649,8 +649,8 @@ class _ToolsPageState extends State<ToolsPage> {
         children: [
           _buildSectionHeader(
             icon: Icons.edit_rounded,
-            title: "3. USE THE INPUT METHOD",
-            subtitle: "Apply the Hanzishu Input Method to real-world typing.",
+            title: getString(599), /*"3. USE THE INPUT METHOD",*/
+            subtitle: getString(600), /*"Apply the Hanzishu Input Method to real-world typing.",*/
             color: Colors.blue,
           ),
           SizedBox(height: 18 * ratio),
@@ -666,9 +666,9 @@ class _ToolsPageState extends State<ToolsPage> {
                 children: [
                   _buildUseCard(
                     width: cardWidth,
-                    title: "Web Editor",
-                    subtitle: "Use Hanzishu directly\nin your browser.",
-                    badge: "★ MAIN TOOL",
+                    title: getString(108), //"Web Editor",
+                    subtitle: getString(601), /*"Use Hanzishu directly\nin your browser.",*/
+                    badge: getString(604), /*"★ MAIN TOOL",*/
                     icon: Icons.web_asset_rounded,
                     color: Colors.blue,
                     onTap: () {
@@ -691,8 +691,8 @@ class _ToolsPageState extends State<ToolsPage> {
                   ),
                   _buildUseCard(
                     width: cardWidth,
-                    title: "Download Hanzishu App",
-                    subtitle: "Use Hanzishu in Word, Excel,\nand other applications.",
+                    title: getString(379), // "Download Hanzishu Input Program",
+                    subtitle: getString(602), /*"Use Hanzishu in Word, Excel,\nand other applications.",*/
                     badge: null,
                     icon: Icons.download_for_offline_rounded,
                     color: Colors.orange,
@@ -720,7 +720,7 @@ class _ToolsPageState extends State<ToolsPage> {
             Icon(Icons.menu_book_outlined, color: Colors.deepPurple, size: 20 * ratio),
             SizedBox(width: 8 * ratio),
             Text(
-              "ADDITIONAL RESOURCES",
+              getString(603), /*"ADDITIONAL RESOURCES",*/
               style: TextStyle(
                 color: Colors.deepPurple,
                 fontSize: 13 * ratio,
@@ -756,7 +756,7 @@ class _ToolsPageState extends State<ToolsPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Introduction to Hanzishu Input Method",
+                          getString(439), //"Introduction to Hanzishu Input Method",
                           style: TextStyle(
                             fontSize: 15 * ratio,
                             fontWeight: FontWeight.bold,
@@ -765,7 +765,7 @@ class _ToolsPageState extends State<ToolsPage> {
                         ),
                         SizedBox(height: 4 * ratio),
                         Text(
-                          "Background, features and benefits of the Hanzishu Input Method.",
+                          getString(605), /*"Background, features and benefits of the Hanzishu Input Method.",*/
                           style: TextStyle(
                             fontSize: 13 * ratio,
                             color: Colors.blueGrey[700],
@@ -804,7 +804,7 @@ class _ToolsPageState extends State<ToolsPage> {
           SizedBox(width: 10 * ratio),
           Flexible(
             child: Text(
-              "Need help? Check the Tutorial first. It will answer 90% of your questions.",
+              getString(606), /*"Need help? Check the Tutorial first. It will answer 90% of your questions.",*/
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: Colors.deepPurple,
