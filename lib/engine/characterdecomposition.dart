@@ -1,12 +1,12 @@
 class CharacterDecomposition {
   String character = "";
-  String name = "";
+  int nameStringId = -1;
 
   CharacterDecomposition(
       String character,
-      String name)
+      int nameStringId)
   {
     this.character = character;
-    this.name = name;
+    this.nameStringId = nameStringId;
   }
 }

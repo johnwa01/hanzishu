@@ -1341,7 +1341,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Hanzishu Typing Tutorial",
+          getString(511), /*"Hanzishu Input Method Tutorial",*/
           style: TextStyle(
             fontWeight: FontWeight.w700,
             color: darkText,
@@ -1411,7 +1411,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                           SizedBox(height: 24 * ratio),
 
                           Text(
-                            "Your First\nChinese Characters",
+                            getString(609), //"Your First\nChinese Characters",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: darkText,
@@ -1635,7 +1635,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Start ->",
+              getString(610), /* "Start ->",*/
               style: TextStyle(
                 fontSize: 28 * ratio,
                 fontWeight: FontWeight.w800,
@@ -1658,7 +1658,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
-          "Practice Typing Chinese Characters",
+          getString(644), //"Practice Typing Chinese Characters",
           style: TextStyle(
             fontWeight: FontWeight.w700,
             color: darkText,
@@ -1725,7 +1725,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                           SizedBox(height: 24 * ratio),
 
                           Text(
-                            "Let's Type!",
+                            getString(645), //"Let's Type!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 35 * ratio,
@@ -1911,7 +1911,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Start Practice",
+              getString(646), //"Start Practice",
               style: TextStyle(
                 fontSize: 25 * ratio,
                 fontWeight: FontWeight.w900,
@@ -3822,10 +3822,10 @@ class _InputZiWidgetState extends State<InputZiWidget> {
         context: context,
         barrierDismissible: false,
         builder: (_) => TutorialCompleteDialog(
-          title: 'You Did It!',
-          badgeText: 'Tutorial Complete',
-          message: 'Ready to Type Chinese!',
-          buttonText: 'Done',
+          title: getString(116), //'You Did It!',
+          badgeText: getString(647), //'Tutorial Complete',
+          message: getString(648), //'You are ready to Type Chinese!',
+          buttonText: getString(32), //'Done',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
             Navigator.of(context).pop(); // dialog
@@ -4011,7 +4011,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                 child: Column(
                   children: [
                     Text(
-                      "You Did It!",
+                      getString(116), //"You Did It!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: primary,
@@ -4086,7 +4086,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           Icon(Icons.check_circle_rounded, color: primary, size: 20 * ratio),
           SizedBox(width: 8 * ratio),
           Text(
-            "Tutorial Complete",
+            getString(647), //"Tutorial Complete",
             style: TextStyle(
               color: primary,
               fontSize: 16 * ratio,
@@ -4186,7 +4186,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                 child: Column(
                   children: [
                     Text(
-                      "Great Start!",
+                      getString(614), //"Great Start!",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: primary,
@@ -4200,7 +4200,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                     _buildStepCompletePill(ratio, primary),
                     SizedBox(height: 28 * ratio),
                     Text(
-                      "You typed your first\nthree Chinese characters.",
+                      getString(613), //"You typed your first\nthree Chinese characters.",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: darkText,
@@ -4266,7 +4266,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           Icon(Icons.check_circle_rounded, color: primary, size: 20 * ratio),
           SizedBox(width: 8 * ratio),
           Text(
-            "Step 1 Complete",
+            getString(615), //"Step 1 Complete",
             style: TextStyle(
               color: primary,
               fontSize: 16 * ratio,
@@ -4349,7 +4349,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              "Learn the 25 Keys",
+              getString(103), /*"Learn the 25 Keys",*/
               style: TextStyle(
                 fontSize: 23 * ratio,
                 fontWeight: FontWeight.w900,

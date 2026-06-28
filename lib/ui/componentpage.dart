@@ -106,10 +106,10 @@ class _ComponentPageState extends State<ComponentPage> {
     }
     */
     if (questionType == QuestionType.Component) {
-      title = 'Learn the 25 Keys';
+      title = getString(103); //'Learn the 25 Keys';
     }
     else if (questionType == QuestionType.ExpandedComponent) {
-      title = 'Similar Shapes, Same Key';
+      title = getString(623); //'Similar Shapes, Same Key';
     }
     else if (questionType == QuestionType.ShowAttachedComponent) {
       title = getString(328) /*'Show Attached Components'*/;
@@ -330,7 +330,7 @@ class _ComponentPageState extends State<ComponentPage> {
                       ),
                       SizedBox(height: 20.0 * ratio),
                       Text(
-                        'Tap the matching key below.',
+                        getString(624), //'Tap the matching key below.',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 19.0 * ratio,
@@ -470,10 +470,10 @@ class _ComponentPageState extends State<ComponentPage> {
 
     if (isAHeadOfRandomComponents) {
       if (theComponentManager.isLastHeaderOfRandomComponents()) {
-        hintText = "Review the 25 mappings";
+        hintText = getString(619); //"Review the 25 mappings";
       }
       else {
-        hintText = "Learn mapping in this group";
+        hintText = getString(618); //"Learn mapping in this group";
       }
     }
 
@@ -537,7 +537,7 @@ class _ComponentPageState extends State<ComponentPage> {
                 SizedBox(height: 24.0 * ratio),
                 if (!isAHeadOfRandomComponents)
                   Text(
-                    'Choose the matching key',
+                    getString(617), //'Choose the matching key',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.0 * ratio,
@@ -706,7 +706,7 @@ class _ComponentPageState extends State<ComponentPage> {
 
                 SizedBox(height: 18.0 * ratio),
                 Text(
-                  'English keys to represent Chinese components',
+                  getString(616), //'English keys to represent Chinese components',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 17.0 * ratio,
@@ -753,7 +753,7 @@ class _ComponentPageState extends State<ComponentPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          'Start Learning',
+                          getString(611), /*'Start Learning',*/
                           style: TextStyle(
                             fontSize: 17.0 * ratio,
                             fontWeight: FontWeight.bold,
@@ -871,7 +871,7 @@ class _ComponentPageState extends State<ComponentPage> {
                           getSmallOrangeBurst(ratio, false),
                           Flexible(
                             child: Text(
-                              '25 keys for common components',
+                              getString(622), //'25 keys for common components',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: titleFontSize * 0.8,
@@ -1041,7 +1041,7 @@ class _ComponentPageState extends State<ComponentPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'Start Learning',
+              getString(611), //'Start Learning',
               style: TextStyle(
                 fontSize: 18.0 * ratio,
                 fontWeight: FontWeight.bold,
@@ -2369,8 +2369,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       const int stepTwoTotalQuestions = 25;
       correctRatioString = totalCorrectAnswers.toString() + '/' + stepTwoTotalQuestions.toString() + "! ";
-      content = totalCorrectAnswers.toString() + ' out of ' + stepTwoTotalQuestions.toString() + ' correct!'
-      ;
+      content = totalCorrectAnswers.toString() + getString(628)/*' out of '*/ + stepTwoTotalQuestions.toString() + getString(629)/*' correct!'*/;
       //theNewlyCompletedTypingExercise = 0;
     }
     if (questionType == QuestionType.ExpandedComponent) {
@@ -2380,7 +2379,7 @@ class _ComponentPageState extends State<ComponentPage> {
       }
       const int stepThreeTotalQuestions = 25;
       correctRatioString = totalCorrectAnswers.toString() + '/' + stepThreeTotalQuestions.toString() + "! ";
-      content = totalCorrectAnswers.toString() + ' out of ' + stepThreeTotalQuestions.toString() + ' correct!';
+      content = totalCorrectAnswers.toString() + getString(628)/*' out of '*/ + stepThreeTotalQuestions.toString() + getString(629)/*' correct!'*/;
       //theNewlyCompletedTypingExercise = 2;
     }
     if (questionType == QuestionType.ShowAttachedComponent) {
@@ -2412,10 +2411,10 @@ class _ComponentPageState extends State<ComponentPage> {
         context: context,
         barrierDismissible: false,
         builder: (_) => TutorialCompleteDialog(
-          title: 'You Did It!',
-          badgeText: 'Step 2 Complete',
+          title: getString(116), //'You Did It!',
+          badgeText: getString(620), //'Step 2 Complete',
           message: content,
-          buttonText: '25 keys for common components ->',
+          buttonText: getString(621), //'More common components ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
             Navigator.of(context).pop(); // dialog
@@ -2431,10 +2430,10 @@ class _ComponentPageState extends State<ComponentPage> {
         context: context,
         barrierDismissible: false,
         builder: (_) => TutorialCompleteDialog(
-          title: 'Great Job!',
-          badgeText: 'Step 3 Complete',
+          title: getString(625), //'Great Job!',
+          badgeText: getString(626), //'Step 3 Complete',
           message: content,
-          buttonText: 'Start Character Decomposition ->',
+          buttonText: getString(627), //'Start Hanzi Decomposition ->',
           mascotAsset: 'assets/core/mascot.jpg',
           onDone: () {
             Navigator.of(context).pop(); // dialog

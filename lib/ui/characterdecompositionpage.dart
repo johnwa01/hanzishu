@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/data/characterdecompositionlist.dart';
 import 'package:hanzishu/variables.dart';
+import 'package:hanzishu/utility.dart';
 import 'dart:ui';
 import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
 import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 
-/// Step 4: Character Decomposition.
+/// Step 4: Hanzi Decomposition.
 ///
 /// Page flow:
 ///   0. Landing page
@@ -97,10 +98,10 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       context: context,
       barrierDismissible: false,
       builder: (_) => TutorialCompleteDialog(
-        title: 'Amazing!',
-        badgeText: 'Step 4 complete',
-        message: 'You have learned how to decompose Hanzi!',
-        buttonText: 'Start to practice typing Hanzi ->',
+        title: getString(640), //'Amazing!',
+        badgeText: getString(641), //'Step 4 complete',
+        message: getString(642), //'You have learned how to decompose Hanzi!',
+        buttonText: getString(643), //'Start to practice typing Hanzi ->',
         mascotAsset: 'assets/core/mascot.jpg',
         onDone: () {
           Navigator.of(context).pop(); // dialog
@@ -207,8 +208,8 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
           onPressed: _goBack,
         ),
         centerTitle: true,
-        title: const Text(
-          'Character Decomposition',
+        title: Text(
+          getString(627), //'Hanzi Decomposition',
           style: TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.w800,
@@ -258,7 +259,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
           child: TextButton(
             onPressed: _skipStep,
             child: Text(
-              'Skip Section',
+              getString(401), //'Skip Section',
               style: TextStyle(
                 fontSize: isNarrow ? 13.0 : 15.0,
                 fontWeight: FontWeight.w700,
@@ -273,7 +274,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
     SizedBox(height: 24.0 * ratio),
 
     Text(
-    'Top-left to Bottom-right',
+    getString(630), //'Top-left to Bottom-right',
     textAlign: TextAlign.center,
     style: TextStyle(
     fontSize: isNarrow ? 21.0 : 27.0,
@@ -286,7 +287,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
         _DecompositionHero(isNarrow: isNarrow),
         SizedBox(height: 24.0 * ratio),
         _PrimaryButton(
-          text: 'Start Study',
+          text: getString(631), //'Start Study',
           onPressed: _startStudy,
         ),
       ],
@@ -316,7 +317,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
             TextButton(
               onPressed: _skipStep,
               child: Text(
-                'Skip Section',
+                getString(401), //'Skip Section',
                 style: TextStyle(
                   fontSize: isNarrow ? 13.0 : 15.0,
                   fontWeight: FontWeight.w700,
@@ -330,7 +331,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
         SizedBox(height: 24.0 * ratio),
 
         Text(
-          item.name,
+          getString(item.nameStringId),
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: isNarrow ? 21.0 : 27.0,
@@ -344,7 +345,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
         _CharacterExampleCard(
           character: item.character,
           components: components,
-          ruleName: item.name,
+          ruleName: getString(item.nameStringId),
           isNarrow: isNarrow,
           ratio: ratio,
         ),
@@ -1119,8 +1120,8 @@ class _BottomNavigation extends StatelessWidget {
             foregroundColor: const Color(0xFF6C7686),
             padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 12.0),
           ),
-          child: const Text(
-            'Previous',
+          child: Text(
+            getString(405), //'Previous',
             style: TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.w800,
@@ -1144,7 +1145,7 @@ class _BottomNavigation extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                isLast ? 'Finish' : 'Continue',
+                isLast ? getString(639)/*'Finish'*/ : getString(285)/*'Continue'*/,
                 style: const TextStyle(
                   fontSize: 16.0,
                   fontWeight: FontWeight.w900,
