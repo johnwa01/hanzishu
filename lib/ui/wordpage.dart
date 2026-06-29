@@ -101,7 +101,7 @@ class _MeWordState extends State<WordPage> {
             ),
           ),
           Text(
-            'Block Hanzi',
+            getString(670), //'Block Hanzi',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 30,
@@ -125,8 +125,8 @@ class _MeWordState extends State<WordPage> {
         _buildMenuCard(
           icon: Icons.view_in_ar,
           iconText: '木\n口 人',
-          title: 'All 3,800\nCommon Hanzi',
-          subtitle: 'Explore the complete set\nof common Hanzi',
+          title: getString(659), //'All 3,800\nCommon Hanzi',
+          subtitle: getString(660), //'Explore the complete set\nof common Hanzi',
           titleColor: Color(0xFF18543B),
           circleColor: Color(0xFFE4F3E9),
           blockColors: [Color(0xFF4F8F4E), Color(0xFFFFC840), Color(0xFFF36E45)],
@@ -147,8 +147,8 @@ class _MeWordState extends State<WordPage> {
         _buildMenuCard(
           icon: Icons.menu_book_rounded,
           iconText: 'HSK',
-          title: 'HSK Hanzi',
-          subtitle: 'Practice by\nHSK level',
+          title: getString(661), //'HSK Hanzi',
+          subtitle: getString(662), //'Practice by\nHSK level',
           titleColor: Color(0xFF244F84),
           circleColor: Color(0xFFE3F1FA),
           blockColors: [Color(0xFF3E74B8)],
@@ -168,8 +168,8 @@ class _MeWordState extends State<WordPage> {
         _buildMenuCard(
           icon: Icons.edit_note_rounded,
           iconText: '',
-          title: 'Customized Hanzi',
-          subtitle: 'Learn from\nyour own text',
+          title: getString(663), //'Customized Hanzi',
+          subtitle: getString(664), //'Learn from\nyour own text',
           titleColor: Color(0xFF6B3D86),
           circleColor: Color(0xFFF0E5F8),
           blockColors: [Color(0xFF6B3D86)],
@@ -189,8 +189,8 @@ class _MeWordState extends State<WordPage> {
         _buildMenuCard(
           icon: Icons.auto_stories_rounded,
           iconText: '语文',
-          title: 'Yuwen Textbook',
-          subtitle: 'Study Hanzi from\nYuwen textbooks',
+          title: getString(665), //'Yuwen Textbook',
+          subtitle: getString(666), //'Study Hanzi from\nYuwen textbooks',
           titleColor: Color(0xFFA54E1B),
           circleColor: Color(0xFFFFEFCB),
           blockColors: [Color(0xFFA54E1B)],

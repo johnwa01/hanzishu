@@ -55,7 +55,7 @@ class _MePageState extends State<MePage> {
                     children: [
                       _buildSectionHeader(
                         icon: Icons.eco_rounded,
-                        title: 'Learn',
+                        title: getString(699), //'Learn',
                       ),
                       /*
                       _buildMenuItem(
@@ -70,7 +70,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.translate_rounded,
                         iconColor: Color(0xFF2B84D6),
                         iconBackground: Color(0xFFE2F1FC),
-                        title: 'Chinese Components',
+                        title: getString(470), //'Chinese Components',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -85,7 +85,7 @@ class _MePageState extends State<MePage> {
                           icon: Icons.school_rounded,
                           iconColor: Color(0xFF6B4BB5),
                           iconBackground: Color(0xFFF0E8FB),
-                          title: 'Chinese Enlightening Classes',
+                          title: getString(420), //'Chinese Enlightening Classes',
                           onTap: () {
                             launchUrl(
                               Uri.parse("https://hanzishu.com/lesson"),
@@ -97,13 +97,13 @@ class _MePageState extends State<MePage> {
                       SizedBox(height: 22),
                       _buildSectionHeader(
                         icon: Icons.handyman_rounded,
-                        title: 'Tools',
+                        title: getString(700), //'Tools',
                       ),
                       _buildMenuItem(
                         icon: Icons.style_rounded,
                         iconColor: Color(0xFFE08A1E),
                         iconBackground: Color(0xFFFFF0CE),
-                        title: 'Customized Flashcards',
+                        title: getString(406), //'Customized Flashcards',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -117,7 +117,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.edit_note_rounded,
                         iconColor: Color(0xFFE95367),
                         iconBackground: Color(0xFFFFE3E7),
-                        title: 'Hanzi Practice Sheet Generator',
+                        title: getString(449), //'Hanzi Practice Sheet Generator',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -133,7 +133,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.auto_stories_rounded,
                         iconColor: Color(0xFF7B5AC8),
                         iconBackground: Color(0xFFF0E8FB),
-                        title: 'Glossary',
+                        title: getString(440), //'Glossary',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -148,13 +148,13 @@ class _MePageState extends State<MePage> {
                       SizedBox(height: 22),
                       _buildSectionHeader(
                         icon: Icons.settings_rounded,
-                        title: 'Settings & Support',
+                        title: getString(698), //'Settings & Support',
                       ),
                       _buildMenuItem(
                         icon: Icons.language_rounded,
                         iconColor: Color(0xFF2E8B57),
                         iconBackground: Color(0xFFE3F5EA),
-                        title: 'Language Setting',
+                        title: getString(302), //'Language Setting',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -168,7 +168,7 @@ class _MePageState extends State<MePage> {
                         icon: Icons.privacy_tip_rounded,
                         iconColor: Color(0xFF2B84D6),
                         iconBackground: Color(0xFFE2F1FC),
-                        title: 'Privacy Policy & Contact Us',
+                        title: getString(141), //'Privacy Policy & Contact Us',
                         onTap: () {
                           Navigator.push(
                             context,
@@ -183,7 +183,7 @@ class _MePageState extends State<MePage> {
                           icon: Icons.link_rounded,
                           iconColor: Color(0xFFF19A22),
                           iconBackground: Color(0xFFFFEED8),
-                          title: 'Resources',
+                          title: getString(603), //'Resources',
                           onTap: () {
                             launchUrl(
                               Uri.parse("https://hanzishu.com/links"),
@@ -233,7 +233,7 @@ class _MePageState extends State<MePage> {
             ),
           ),
           Text(
-            'More',
+            getString(94), //'More',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 38,

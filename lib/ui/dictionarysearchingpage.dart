@@ -117,7 +117,7 @@ class DictionarySearchLandingContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "First-Hanzi Search",
+                      getString(648), //"First-Hanzi Search",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: darkTeal,
@@ -127,7 +127,7 @@ class DictionarySearchLandingContent extends StatelessWidget {
                     ),
                     SizedBox(height: 10 * ratio),
                     Text(
-                      "Find a character through its first Hanzi.",
+                      getString(649), //"Find a character through its first Hanzi.",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.blueGrey[700],
@@ -169,7 +169,7 @@ class DictionarySearchLandingContent extends StatelessWidget {
           Icon(Icons.grid_view_rounded, color: darkTeal, size: 22 * ratio),
           SizedBox(width: 10 * ratio),
           Text(
-            "Open First-Hanzi Table",
+            getString(650), //"Open First-Hanzi Table",
             style: TextStyle(
               color: darkTeal,
               fontSize: 15.5 * ratio,
@@ -218,7 +218,7 @@ class DictionarySearchLandingContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Search Characters",
+                      getString(651), //"Search Hanzi",
                       style: TextStyle(
                         color: Color(0xFF111827),
                         fontSize: 22 * ratio,
@@ -227,7 +227,7 @@ class DictionarySearchLandingContent extends StatelessWidget {
                     ),
                     SizedBox(height: 4 * ratio),
                     Text(
-                      "Choose a search method.",
+                      getString(652), //"Choose a search method.",
                       style: TextStyle(
                         color: Colors.blueGrey[700],
                         fontSize: 14.5 * ratio,
@@ -243,8 +243,8 @@ class DictionarySearchLandingContent extends StatelessWidget {
 
           _buildDictionaryInputCard(
             icon: Icons.keyboard_alt_rounded,
-            title: "Search with Hanzishu Input",
-            description: "Enter a Shape-Sequence code.",
+            title: getString(653), //"Search with Hanzishu Input",
+            description: getString(654), //"Enter a Shape-Sequence code.",
             child: hanzishuInputChild,
           ),
 
@@ -252,8 +252,8 @@ class DictionarySearchLandingContent extends StatelessWidget {
 
           _buildDictionaryInputCard(
             icon: Icons.translate_rounded,
-            title: "Search with Other Input Methods",
-            description: "Use Pinyin or other input methods.",
+            title: getString(655), //"Search with Other Input Methods",
+            description: getString(656), //"Use Pinyin or other input methods.",
             child: otherInputChild,
           ),
         ],

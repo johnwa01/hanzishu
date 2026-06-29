@@ -81,7 +81,7 @@ class _ZiGroupPageState extends State<ZiGroupPage> {
                   const SizedBox(height: 16.0),
 
                   Text(
-                    "${phrases.length} Phrases",
+                    "${phrases.length} " + getString(418), //Phrases,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 22.0,

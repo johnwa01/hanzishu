@@ -57,7 +57,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
           children: [
 
             Text(
-              "Privacy",
+              getString(703), //"Privacy",
               style: TextStyle(
                 color: Colors.blue,
                 fontSize: fontSize1 + 4,
@@ -82,7 +82,7 @@ class _PrivacyPolicyPageState extends State<PrivacyPolicyPage> {
             const SizedBox(height: 24),
 
             Text(
-              "Contact Us",
+              getString(704), //"Contact Us",
               style: TextStyle(
                 color: Colors.blue,
                 fontSize: fontSize1 + 4,

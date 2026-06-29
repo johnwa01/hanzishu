@@ -125,6 +125,13 @@ flutter:
      - assets/core/logo.jpg
      - assets/core/logoandroid.png
      - assets/core/mascot.jpg
+     - assets/core/mascot_green.png
+     - assets/core/mascot_red.png
+     - assets/core/mascot_fly.png
+     - assets/core/mascot_legs.png
+     - assets/core/mascot_purple.png
+     - assets/core/mascot_pink.png
+     - assets/core/mascot_flowers.png
      - assets/core/meicon0.png
      - assets/core/meicon1.png
      - assets/core/moreicon0.png

@@ -8,6 +8,7 @@ import 'package:hanzishu/variables.dart';
 import 'package:hanzishu/data/componenttypinglist.dart';
 import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
 import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/hz_text_styles.dart';
 
 class ComponentPage extends StatefulWidget {
   final QuestionType questionType;
@@ -119,7 +120,7 @@ class _ComponentPageState extends State<ComponentPage> {
       (
       appBar: AppBar
         (
-        title: Text(title),
+        title: Text(title, style: HzTextStyles.appBarTitle),
       ),
       body: getComponentWizard(context /*, widget.lessonId*/),
     );
@@ -753,7 +754,7 @@ class _ComponentPageState extends State<ComponentPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Text(
-                          getString(611), /*'Start Learning',*/
+                          getString(301), /*'Start',*/
                           style: TextStyle(
                             fontSize: 17.0 * ratio,
                             fontWeight: FontWeight.bold,
@@ -1041,7 +1042,7 @@ class _ComponentPageState extends State<ComponentPage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              getString(611), //'Start Learning',
+              getString(301), //'Start',
               style: TextStyle(
                 fontSize: 18.0 * ratio,
                 fontWeight: FontWeight.bold,
@@ -2415,7 +2416,7 @@ class _ComponentPageState extends State<ComponentPage> {
           badgeText: getString(620), //'Step 2 Complete',
           message: content,
           buttonText: getString(621), //'More common components ->',
-          mascotAsset: 'assets/core/mascot.jpg',
+          mascotAsset: 'assets/core/mascot_green.png',
           onDone: () {
             Navigator.of(context).pop(); // dialog
 
@@ -2434,7 +2435,7 @@ class _ComponentPageState extends State<ComponentPage> {
           badgeText: getString(626), //'Step 3 Complete',
           message: content,
           buttonText: getString(627), //'Start Hanzi Decomposition ->',
-          mascotAsset: 'assets/core/mascot.jpg',
+          mascotAsset: 'assets/core/mascot_green.png',
           onDone: () {
             Navigator.of(context).pop(); // dialog
 

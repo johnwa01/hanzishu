@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hanzishu/engine/inputzi.dart';
+import 'package:hanzishu/utility.dart';
 
 class PinyinInputZiWidget extends StatelessWidget {
   final TextEditingController controller;
@@ -46,7 +47,7 @@ class PinyinInputZiWidget extends StatelessWidget {
       autofocus: false,
       cursorColor: activeTeal,
       decoration: InputDecoration(
-        hintText: "Enter Pinyin or other input...",
+        hintText: getString(658), //"Enter Pinyin or other input...",
         filled: true,
         fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(

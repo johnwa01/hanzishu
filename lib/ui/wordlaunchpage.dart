@@ -219,8 +219,8 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
 
     return _buildActionCard(
       icon: Icons.extension_rounded,
-      title: 'Block Hanzi',
-      subtitle: 'Build and explore characters from components.',
+      title: getString(670), //'Block Hanzi',
+      subtitle: getString(671), //'Build and explore characters from components',
       isPrimary: true,
       onTap: () {
         Navigator.of(context).push(
@@ -246,7 +246,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         cards.add(_buildActionCard(
           icon: Icons.style_rounded,
           title: getString(2),
-          subtitle: 'Review each character with details.',
+          subtitle: getString(694), //'Review each Hanzi with details',
           onTap: () {
             Navigator.push(
               context,
@@ -266,7 +266,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       cards.add(_buildActionCard(
         icon: Icons.translate_rounded,
         title: getString(448),
-        subtitle: 'Choose the correct meaning.',
+        subtitle: getString(667), //'Choose the correct meaning',
         onTap: () {
           if (drillCategory == DrillCategory.custom) { // old Yumen is here
             Navigator.of(context).push(
@@ -299,7 +299,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       cards.add(_buildActionCard(
         icon: Icons.volume_up_rounded,
         title: getString(488),
-        subtitle: 'Listen and choose the Hanzi.',
+        subtitle: getString(668), //'Listen and choose the Hanzi',
         onTap: () {
           if (drillCategory == DrillCategory.custom) {
             Navigator.of(context).push(
@@ -332,7 +332,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
       cards.add(_buildActionCard(
         icon: Icons.record_voice_over_rounded,
         title: getString(447),
-        subtitle: 'See Hanzi and choose the sound.',
+        subtitle: getString(669), //'See Hanzi and choose its sound',
         onTap: () {
           if (drillCategory == DrillCategory.custom) {
             Navigator.of(context).push(
@@ -366,7 +366,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         cards.add(_buildActionCard(
           icon: Icons.keyboard_alt_rounded,
           title: getString(489),
-          subtitle: 'Practice typing the characters.',
+          subtitle: getString(695), //'Practice typing the Hanzi',
           onTap: () {
             Navigator.push(
               context,
@@ -389,7 +389,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         cards.add(_buildActionCard(
           icon: Icons.hearing_rounded,
           title: getString(491),
-          subtitle: 'Listen first, then type Hanzi.',
+          subtitle: getString(696), //'Listen first, then type Hanzi',
           onTap: () {
             Navigator.push(
               context,
@@ -412,7 +412,7 @@ class _WordLaunchPageState extends State<WordLaunchPage> with SingleTickerProvid
         cards.add(_buildActionCard(
           icon: Icons.menu_book_rounded,
           title: getString(492),
-          subtitle: 'Study customized words together.',
+          subtitle: getString(697), //'Study customized Hanzi together',
           onTap: () {
             Navigator.push(
               context,

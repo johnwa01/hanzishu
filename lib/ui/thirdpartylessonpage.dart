@@ -158,30 +158,29 @@ class _ThirdPartyLessonPageState extends State<ThirdPartyLessonPage> with Single
     final category = _getThirdPartyCategoryKey();
 
     if (category == "yuwen") {
-      return "Yuwen Typing";
+      return getString(688); //"Yuwen";
     }
 
     if (category == "chineseMadeEasy") {
-      return "Chinese Made Easy Typing";
+      return getString(689); //"Chinese Made Easy Typing";
     }
 
-    return "Ty & Od Textbook Typing";
+    return getString(690); //"Ty & Od Textbook Typing";
   }
 
   List<String> _getIntroLines() {
     final category = _getThirdPartyCategoryKey();
 
     if (category == "yuwen") {
-      return ["Practice typing with Yuwen textbook content."];
+      return [getString(691)/*"Practice with Yuwen textbook content"*/];
     }
 
     if (category == "chineseMadeEasy") {
-      return ["Practice typing with Chinese Made Easy content."];
+      return [getString(692)/*"Practice with the Chinese Made Easy content"*/];
     }
 
     return [
-      "Practice typing with lessons from the",
-      "Ty & Od Chinese textbooks.",
+      getString(693)/*"Practice with lessons from the Ty & Od Chinese textbooks."*/
     ];
   }
 

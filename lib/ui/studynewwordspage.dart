@@ -239,7 +239,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Practice any text with Hanzishu',
+                  getString(687), //'Practice any text with Hanzishu',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -248,7 +248,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                 ),
                 SizedBox(height: 16),
                 Text(
-                  'Paste Chinese text, stories, articles, or lesson content to create your own typing exercise.',
+                  getString(683), //'Paste Chinese text, stories, articles, or lesson content to create your own typing exercise.',
                   style: TextStyle(
                     fontSize: 15,
                     height: 1.45,
@@ -316,7 +316,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Content',
+                    getString(684), //'Content',
                     style: TextStyle(
                       fontSize: 21,
                       fontWeight: FontWeight.w800,
@@ -339,7 +339,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
           getTextField(),
           SizedBox(height: 10),
           Text(
-            _controller.text.length.toString() + ' / 10,000 characters',
+            _controller.text.length.toString() + ' / 10,000 ' + getString(685), //'characters',
             style: TextStyle(
               fontSize: 13,
               color: Color(0xFF8A819A),
@@ -371,7 +371,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
               Icon(Icons.lightbulb_outline_rounded, color: Color(0xFF6A35B8), size: 22),
               SizedBox(width: 8),
               Text(
-                'Try these ideas',
+                getString(678), //'Try these ideas',
                 style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w800,
@@ -380,10 +380,10 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
               ),
             ],
           ),
-          Text('•  Lesson content', style: TextStyle(color: Color(0xFF4E2B91))),
-          Text('•  Short stories', style: TextStyle(color: Color(0xFF4E2B91))),
-          Text('•  Competition passages', style: TextStyle(color: Color(0xFF4E2B91))),
-          Text('•  Chinese articles', style: TextStyle(color: Color(0xFF4E2B91))),
+          Text(getString(679)/*'•  Lesson content'*/, style: TextStyle(color: Color(0xFF4E2B91))),
+          Text(getString(680)/*'•  Short stories'*/, style: TextStyle(color: Color(0xFF4E2B91))),
+          Text(getString(681)/*'•  Competition passages'*/, style: TextStyle(color: Color(0xFF4E2B91))),
+          Text(getString(682)/*'•  Chinese articles'*/, style: TextStyle(color: Color(0xFF4E2B91))),
         ],
       ),
     );
@@ -428,7 +428,7 @@ class _StudyCustomizedWordsPageState extends State<StudyCustomizedWordsPage> wit
             Icon(Icons.shield_outlined, size: 18, color: Color(0xFF6A35B8)),
             SizedBox(width: 6),
             Text(
-              'Your text is used only for practice and not stored.',
+              getString(686), //'Your text is used only for practice and not stored.',
               style: TextStyle(
                 fontSize: 13,
                 color: Color(0xFF7B6D95),

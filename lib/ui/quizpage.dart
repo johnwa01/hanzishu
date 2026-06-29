@@ -234,10 +234,10 @@ class _QuizPageState extends State<QuizPage> {
       prompt = getString(578); //"Choose the correct meaning";
     }
     else if (theQuizManager.getCurrentCategory() == QuizCategory.ziToSound) {
-      prompt = "Tap speakers to listen, then choose A, B, or C.";
+      prompt = getString(673); //"Tap speakers to listen, then choose A, B, or C.";
     }
     else if (theQuizManager.getCurrentCategory() == QuizCategory.soundToZi) {
-      prompt = "Listen, then choose the Hanzi.";
+      prompt = getString(668); //"Listen, then choose the Hanzi.";
     }
 
     if (prompt.length == 0) {

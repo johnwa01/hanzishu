@@ -183,8 +183,8 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                       drillCategory: drillCategory!,
                       subItemId: 7,
                       title: 'HSK 7-9',
-                      countText: '1200 Hanzi',
-                      description: 'Advanced proficiency',
+                      countText: '1200 ' + getString(210), //Hanzi',
+                      description: getString(676), //'Advanced proficiency',
                       iconText: '⑦',
                       accentColor: const Color(0xFFE57373),
                     ),
@@ -225,7 +225,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'Practice characters by official HSK levels',
+            getString(674), //'Practice Hanzi by official HSK levels',
             style: TextStyle(
               fontSize: 20.0 * getSizeRatioWithLimit(),
               fontWeight: FontWeight.w700,
@@ -236,10 +236,10 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
           Wrap(
             spacing: 10.0,
             runSpacing: 10.0,
-            children: const <Widget>[
-              _HeroPill(icon: Icons.menu_book_rounded, text: '3000 Hanzi'),
+            children: <Widget>[
+              _HeroPill(icon: Icons.menu_book_rounded, text: "3000 " + getString(210)), //'3000 Hanzi'),
               _HeroPill(icon: Icons.flag_rounded, text: 'HSK 1-9'),
-              _HeroPill(icon: Icons.trending_up_rounded, text: 'Progressive difficulty'),
+              _HeroPill(icon: Icons.trending_up_rounded, text: getString(675) /*'Progressive difficulty'*/),
             ],
           ),
         ],
@@ -267,7 +267,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                   drillCategory: drillCategory,
                   subItemId: i,
                   title: 'HSK $i',
-                  countText: '300 Hanzi',
+                  countText: '300 ' + getString(210), //'Hanzi'
                   iconText: _getCircledNumber(i),
                   accentColor: _getLevelColor(i),
                 ),
@@ -491,7 +491,7 @@ class _WordLevelPageState extends State<WordLevelPage> with SingleTickerProvider
                   ),
                   const SizedBox(height: 6.0),
                   Text(
-                    '3000 Hanzi · Randomized challenge mode',
+                    '3000 ' + getString(210) + /*Hanzi*/ '·' + getString(677), //Randomized challenge mode',
                     style: TextStyle(
                       fontSize: 14.0 * getSizeRatioWithLimit(),
                       fontWeight: FontWeight.w600,

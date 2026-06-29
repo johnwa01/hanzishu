@@ -36,6 +36,7 @@ import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
 import 'package:hanzishu/ui/shared/progress_indicator.dart';
 import 'package:hanzishu/ui/shared/pinyin_inputziwidget.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
+import 'package:hanzishu/ui/shared/hz_text_styles.dart';
 
 class InputZiWidget extends StatefulWidget {
   final TypingType typingType;
@@ -1413,13 +1414,14 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                           Text(
                             getString(609), //"Your First\nChinese Characters",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
+                            style: HzTextStyles.pageSubtitle,
+                              /*TextStyle(
                               color: darkText,
                               fontSize: (isNarrow ? 25 : 30) * ratio,
                               fontWeight: FontWeight.w800,
                               height: 1.12,
                               letterSpacing: -0.4,
-                            ),
+                            ),*/
                           ),
 
                           SizedBox(height: 20 * ratio),
@@ -1728,7 +1730,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                             getString(645), //"Let's Type!",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 35 * ratio,
+                              fontSize: HzTextStyles.pageSubtitle.fontSize, //35 * ratio,
                               fontWeight: FontWeight.w900,
                               color: Color(0xFF2F80ED),
                               height: 1.0,
@@ -1913,7 +1915,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
             Text(
               getString(646), //"Start Practice",
               style: TextStyle(
-                fontSize: 25 * ratio,
+                fontSize: HzTextStyles.button.fontSize, // * ratio,
                 fontWeight: FontWeight.w900,
               ),
             ),
@@ -2268,7 +2270,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       autofocus: false,
       cursorColor: teal,
       decoration: InputDecoration(
-        hintText: "Enter Shape-Sequence code...",
+        hintText: getString(657), //"Enter Shape-Sequence code...",
         filled: true,
         fillColor: Colors.white,
         contentPadding: EdgeInsets.symmetric(

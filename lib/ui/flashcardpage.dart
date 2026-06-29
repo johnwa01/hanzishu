@@ -161,7 +161,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
                             ),
                             SizedBox(height: 8.0 * getSizeRatioWithLimit()),
                             Text(
-                              "Paste Chinese text to instantly create flashcards.",
+                              getString(701), //"Paste Chinese text to instantly create flashcards",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 15.0 * getSizeRatioWithLimit(),
@@ -265,7 +265,7 @@ class _FlashcardPageState extends State<FlashcardPage> with SingleTickerProvider
                                 onPressed: () {
                                   processInputs();
                                 },
-                                child: Text("Generate Cards ->"),
+                                child: Text(getString(702)/*"Generate Cards ->"*/),
                               ),
                             ),
                           ],
