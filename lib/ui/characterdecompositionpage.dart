@@ -5,6 +5,7 @@ import 'package:hanzishu/utility.dart';
 import 'dart:ui';
 import 'package:hanzishu/ui/shared/tutorialstepindicator.dart';
 import 'package:hanzishu/ui/shared/tutorialcompletedialog.dart';
+import 'package:hanzishu/ui/shared/hz_text_styles.dart';
 
 /// Step 4: Hanzi Decomposition.
 ///
@@ -277,7 +278,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
     getString(630), //'Top-left to Bottom-right',
     textAlign: TextAlign.center,
     style: TextStyle(
-    fontSize: isNarrow ? 21.0 : 27.0,
+    fontSize: HzTextStyles.pageSubtitle.fontSize, //isNarrow ? 21.0 : 27.0,
     fontWeight: FontWeight.w900,
     color: Color(0xFF1677FF),
     height: 1.1,

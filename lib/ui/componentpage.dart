@@ -875,7 +875,7 @@ class _ComponentPageState extends State<ComponentPage> {
                               getString(622), //'25 keys for common components',
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                fontSize: titleFontSize * 0.8,
+                                fontSize: HzTextStyles.pageSubtitle.fontSize, //titleFontSize * 0.8,
                                 fontWeight: FontWeight.w900,
                                 color: Color(0xFF4A2BC6),
                                 height: 1.12,

@@ -57,11 +57,19 @@ class InputZiHintPainter extends BasePainter {
 
   displayHintMessage(double fontSize, String char) {
     List<String> typingComponentsAndSubComp = [];
+    String phraseHint = "";
+
     if (char == "松林") { // two special phrase examples
       typingComponentsAndSubComp = ["Fd", "Fa", "Fd", "Fd"];
+      phraseHint = "[2+2]";
     }
-    else if (char == "中国人") {
-      typingComponentsAndSubComp = ["Jd", "Ja", "Ha"];
+    else if (char == "李连杰") {
+      typingComponentsAndSubComp = ["Fd", "Cf", "Fd", "Mp"];
+      phraseHint = "[1+1+2]";
+    }
+    else if (char == "科学技术") {
+      typingComponentsAndSubComp = ["Fm", "Mj", "Kh", "Fd"];
+      phraseHint = "[1+1+1+1]";
     }
     else if (char == "淇") {
       typingComponentsAndSubComp = ["Mi", "Wh", "Fa"];
@@ -167,6 +175,11 @@ class InputZiHintPainter extends BasePainter {
     }
     if (showHint == HintType.Hint2) {
       displayTextWithValue(' )', xPosi, 0.0, size, Colors.blue, false);
+    }
+
+    if (phraseHint.length != 0) {
+      xPosi += size;
+      displayTextWithValue(phraseHint, xPosi, 0.0, size, Colors.blue, false);
     }
   }
 

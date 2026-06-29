@@ -287,9 +287,12 @@ class _ToolsPageState extends State<ToolsPage> {
       return Column(
         crossAxisAlignment: centered ? CrossAxisAlignment.center : CrossAxisAlignment.start,
         children: [
-          _buildPill(
-            text: getString(607), /*"1. START HERE",*/
-            color: Colors.deepPurple,
+          Text(
+            getString(607), /*"1. START HERE",*/
+            style: TextStyle(
+              fontSize: 20 * ratio,
+              fontWeight: FontWeight.bold,
+              color: Colors.deepPurple,),
           ),
           SizedBox(height: 16 * ratio),
           Text(
@@ -651,7 +654,7 @@ class _ToolsPageState extends State<ToolsPage> {
             icon: Icons.edit_rounded,
             title: getString(599), /*"3. USE THE INPUT METHOD",*/
             subtitle: getString(600), /*"Apply the Hanzishu Input Method to real-world typing.",*/
-            color: Colors.blue,
+            color: Colors.deepPurple,
           ),
           SizedBox(height: 18 * ratio),
           LayoutBuilder(

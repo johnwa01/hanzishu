@@ -580,7 +580,7 @@ var theString_en_US = [
   Local(570, "Learn Hanzi through Shape-Sequence play"),
   Local(571, "Explore useful tools, resources, settings, and more"),
   Local(572, "Discover Hanzishu"),
-  Local(573, "Articles, videos, classroom stories and research"),
+  Local(573, "Articles, videos, researc，and classroom stories"),
   Local(574, "View All →"),
   Local(575, "Learn Chinese through lessons"),
   Local(576, "Hanzishu Lessons"),
