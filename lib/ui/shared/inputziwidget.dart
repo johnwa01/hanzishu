@@ -37,6 +37,7 @@ import 'package:hanzishu/ui/shared/progress_indicator.dart';
 import 'package:hanzishu/ui/shared/pinyin_inputziwidget.dart';
 import 'package:hanzishu/ui/shared/exercise_complete_dialog.dart';
 import 'package:hanzishu/ui/shared/hz_text_styles.dart';
+import 'package:hanzishu/ui/shared/sequential_page_request.dart';
 
 class InputZiWidget extends StatefulWidget {
   final TypingType typingType;
@@ -1415,7 +1416,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                             getString(609), //"Your First\nChinese Characters",
                             textAlign: TextAlign.center,
                             style: HzTextStyles.pageSubtitle,
-                              /*TextStyle(
+                            /*TextStyle(
                               color: darkText,
                               fontSize: (isNarrow ? 25 : 30) * ratio,
                               fontWeight: FontWeight.w800,
@@ -2817,6 +2818,18 @@ class _InputZiWidgetState extends State<InputZiWidget> {
 
 
 
+  int _getTutorialSectionIndexForSkipRequest() {
+    if (typingType == TypingType.FirstTyping) {
+      return 0;
+    }
+
+    if (typingType == TypingType.ExpandedReview) {
+      return 4;
+    }
+
+    return -1;
+  }
+
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
@@ -2827,8 +2840,18 @@ class _InputZiWidgetState extends State<InputZiWidget> {
         //color: Colors.white,
         //textColor: Colors.blueAccent,
         onPressed: () {
-          theIsBackArrowExit = false;
-          Navigator.of(context).pop();
+          final sectionIndex = _getTutorialSectionIndexForSkipRequest();
+
+          if (sectionIndex >= 0) {
+            Navigator.of(context).pop(
+              SequentialPageRequest.skip(sectionIndex),
+            );
+          }
+          else {
+            // Legacy fallback for non-tutorial callers that still rely on this flag.
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop();
+          }
         },
       );
     }
@@ -3828,7 +3851,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           badgeText: getString(647), //'Tutorial Complete',
           message: getString(648), //'You are ready to Type Chinese!',
           buttonText: getString(32), //'Done',
-          mascotAsset: 'assets/core/mascot.jpg',
+          mascotAsset: 'assets/core/mascot.png',
           onDone: () {
             Navigator.of(context).pop(); // dialog
 

@@ -18,6 +18,7 @@ import 'package:hanzishu/engine/studywords.dart';
 import 'package:hanzishu/engine/thirdpartylesson.dart';
 import 'package:hanzishu/ui/thirdpartylessonpage.dart';
 import 'package:hanzishu/ui/characterdecompositionpage.dart';
+import 'package:hanzishu/ui/shared/sequential_page_request.dart';
 
 class ToolsPage extends StatefulWidget {
   @override
@@ -57,29 +58,40 @@ class _ToolsPageState extends State<ToolsPage> {
     );
   }
 
-  _getRequests() async {
-    //if (theNewlyCompletedTypingExercise != -1) {
-    //exerciseCompleted[theNewlyCompletedTypingExercise] = true;
-    //theNewlyCompletedTypingExercise = -1;
+  static const int _lastTutorialSectionIndex = 4;
 
-    //setState(() {
-    // force refresh every time to make sure to pick up completed icon
+  _resetTutorialNavigationState() {
+    theIsBackArrowExit = true;
+    theIsFromTypingContinuedSection = false;
+    this.numberOfExercises = 0;
+  }
+
+  _getRequests(dynamic request) async {
+    // New path: the child page explicitly returns why it popped.
+    if (request is SequentialPageRequest && request.action == SequentialPageAction.skip) {
+      final nextSectionIndex = request.index! + 1;
+
+      if (nextSectionIndex <= _lastTutorialSectionIndex) {
+        this.numberOfExercises = nextSectionIndex;
+        LaunchExercise(nextSectionIndex);
+      }
+      else {
+        _resetTutorialNavigationState();
+      }
+      return;
+    }
+
+    // Legacy fallback for tutorial section pages that still use the old
+    // theIsBackArrowExit flag instead of returning a request value.
     this.numberOfExercises += 1;
-    //});
 
-    if (!theIsBackArrowExit && this.numberOfExercises <= 5) {
-      // reinit
+    if (!theIsBackArrowExit && this.numberOfExercises <= _lastTutorialSectionIndex) {
       theIsBackArrowExit = true;
       LaunchExercise(this.numberOfExercises);
     }
     else {
-      // init all variables
-      // either true back arrow or all done
-      theIsBackArrowExit = true;
-      theIsFromTypingContinuedSection = false;
-      this.numberOfExercises = 0;
+      _resetTutorialNavigationState();
     }
-    //}
   }
 
   LaunchExercise(int exerciseNumber) {
@@ -92,7 +104,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 InputZiPage(
                     typingType: TypingType.FirstTyping, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
       case 1:
         Navigator.push(
@@ -101,18 +113,18 @@ class _ToolsPageState extends State<ToolsPage> {
             builder: (context) =>
                 ComponentPage(questionType: QuestionType.Component),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
-      //case 2:
-      //  Navigator.push(
-      //    context,
-      //    MaterialPageRoute(
-      //      builder: (context) =>
-      //          InputZiPage(typingType: TypingType.LeadComponents,
-      //              lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
-      //    ),
-      //  ).then((val) => {_getRequests()});
-      //  break;
+    //case 2:
+    //  Navigator.push(
+    //    context,
+    //    MaterialPageRoute(
+    //      builder: (context) =>
+    //          InputZiPage(typingType: TypingType.LeadComponents,
+    //              lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
+    //    ),
+    //  ).then((val) => _getRequests(val));
+    //  break;
       case 2:
         Navigator.push(
           context,
@@ -120,7 +132,7 @@ class _ToolsPageState extends State<ToolsPage> {
             builder: (context) =>
                 ComponentPage(questionType: QuestionType.ExpandedComponent),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
       case 3:
         Navigator.push(
@@ -129,7 +141,7 @@ class _ToolsPageState extends State<ToolsPage> {
             builder: (context) =>
                 CharacterDecompositionPage(),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
       case 4:
         Navigator.push(
@@ -139,7 +151,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 InputZiPage(
                     typingType: TypingType.ExpandedReview, lessonId: 0, wordsStudy: '', isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: HintType.Hint1, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
     /*
       case 5:
@@ -150,7 +162,7 @@ class _ToolsPageState extends State<ToolsPage> {
                 InputZiPage(
                     typingType: TypingType.SingleComponent, lessonId: 0, isSoundPrompt: false, inputMethod: InputMethod.Pinxin, showHint: 3, includeSkipSection: true, showSwitchMethod: false), //InputZiPage(),
           ),
-        ).then((val) => {_getRequests()});
+        ).then((val) => _getRequests(val));
         break;
         */
       default:

@@ -103,7 +103,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
         badgeText: getString(641), //'Step 4 complete',
         message: getString(642), //'You have learned how to decompose Hanzi!',
         buttonText: getString(643), //'Start to practice typing Hanzi ->',
-        mascotAsset: 'assets/core/mascot_green.png',
+        mascotAsset: 'assets/core/mascot.png',
         onDone: () {
           Navigator.of(context).pop(); // dialog
 

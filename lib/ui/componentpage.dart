@@ -2416,7 +2416,7 @@ class _ComponentPageState extends State<ComponentPage> {
           badgeText: getString(620), //'Step 2 Complete',
           message: content,
           buttonText: getString(621), //'More common components ->',
-          mascotAsset: 'assets/core/mascot_green.png',
+          mascotAsset: 'assets/core/mascot.png',
           onDone: () {
             Navigator.of(context).pop(); // dialog
 
@@ -2435,7 +2435,7 @@ class _ComponentPageState extends State<ComponentPage> {
           badgeText: getString(626), //'Step 3 Complete',
           message: content,
           buttonText: getString(627), //'Start Hanzi Decomposition ->',
-          mascotAsset: 'assets/core/mascot_green.png',
+          mascotAsset: 'assets/core/mascot.png',
           onDone: () {
             Navigator.of(context).pop(); // dialog
 
