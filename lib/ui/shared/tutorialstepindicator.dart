@@ -11,15 +11,15 @@ class TutorialStepIndicator extends StatelessWidget {
     required this.currentStep,
     required this.ratio,
     this.totalSteps = 5,
-    this.primaryColor = const Color(0xFF2F80ED),
+    this.primaryColor = const Color(0xFF6F35E8),
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final connectorWidth =
     MediaQuery.of(context).size.width < 700
-        ? 28 * ratio
-        : 60 * ratio;
+        ? 24 * ratio
+        : 50 * ratio;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +58,7 @@ class TutorialStepIndicator extends StatelessWidget {
       bool isCompleted,
       bool isCurrent,
       ) {
-    final size = 46 * ratio;
+    final size = 40 * ratio;
 
     if (isCompleted) {
       return Container(
@@ -70,15 +70,15 @@ class TutorialStepIndicator extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: primaryColor.withOpacity(0.25),
-              blurRadius: 10 * ratio,
-              offset: Offset(0, 4 * ratio),
+              blurRadius: 8 * ratio,
+              offset: Offset(0, 3 * ratio),
             ),
           ],
         ),
         child: Icon(
           Icons.check,
           color: Colors.white,
-          size: 24 * ratio,
+          size: 20 * ratio,
         ),
       );
     }
@@ -93,8 +93,8 @@ class TutorialStepIndicator extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: primaryColor.withOpacity(0.25),
-              blurRadius: 10 * ratio,
-              offset: Offset(0, 4 * ratio),
+              blurRadius: 8 * ratio,
+              offset: Offset(0, 3 * ratio),
             ),
           ],
         ),
@@ -103,7 +103,7 @@ class TutorialStepIndicator extends StatelessWidget {
             '$step',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 20 * ratio,
+              fontSize: 18 * ratio,
               fontWeight: FontWeight.w800,
             ),
           ),

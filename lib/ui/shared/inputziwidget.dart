@@ -1387,27 +1387,9 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                           //TutorialStepIndicator(currentStep: 1, ratio: ratio),
                           //SizedBox(height: 18 * ratio),
 
-                          Row(
-                            children: [
-                              SizedBox(width: 116 * ratio),
-
-                              Expanded(
-                                child: Center(
-                                  child: TutorialStepIndicator(
-                                    currentStep: 1,
-                                    ratio: ratio,
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(
-                                width: 116 * ratio,
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: getSkipThisSection(),
-                                ),
-                              ),
-                            ],
+                          _buildTutorialHeaderRow(
+                            currentStep: 1,
+                            ratio: ratio,
                           ),
 
                           SizedBox(height: 24 * ratio),
@@ -1439,6 +1421,31 @@ class _InputZiWidgetState extends State<InputZiWidget> {
               );
             },
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTutorialHeaderRow({
+    required int currentStep,
+    required double ratio,
+  }) {
+    return Center(
+      child: FittedBox(
+        fit: BoxFit.scaleDown,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Use a slightly smaller ratio so the step indicator feels lighter
+            // and leaves more room for Skip section on medium-width screens.
+            TutorialStepIndicator(
+              currentStep: currentStep,
+              ratio: ratio * 0.86,
+            ),
+            SizedBox(width: 22 * ratio),
+            getSkipThisSection(),
+          ],
         ),
       ),
     );
@@ -1702,27 +1709,9 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                       child: Column(
                         children: [
                           SizedBox(height: 18 * ratio),
-                          Row(
-                            children: [
-                              SizedBox(width: 116 * ratio),
-
-                              Expanded(
-                                child: Center(
-                                  child: TutorialStepIndicator(
-                                    currentStep: 5,
-                                    ratio: ratio,
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(
-                                width: 116 * ratio,
-                                child: Align(
-                                  alignment: Alignment.centerRight,
-                                  child: getSkipThisSection(),
-                                ),
-                              ),
-                            ],
+                          _buildTutorialHeaderRow(
+                            currentStep: 5,
+                            ratio: ratio,
                           ),
 
                           SizedBox(height: 24 * ratio),
@@ -2833,30 +2822,35 @@ class _InputZiWidgetState extends State<InputZiWidget> {
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
-        child: Text(
-          //(typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
-          getString(401), /*"Skip this section"*/
-          style: TextStyle(fontSize: 14.0, color: Colors.blueAccent),),
-        //color: Colors.white,
-        //textColor: Colors.blueAccent,
-        onPressed: () {
-          final sectionIndex = _getTutorialSectionIndexForSkipRequest();
+          child: Text(
+            //(typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
+            getString(401), /*"Skip this section"*/
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          //color: Colors.white,
+          //textColor: Colors.blueAccent,
+          onPressed: () {
+        final sectionIndex = _getTutorialSectionIndexForSkipRequest();
 
-          if (sectionIndex >= 0) {
-            Navigator.of(context).pop(
-              SequentialPageRequest.skip(sectionIndex),
-            );
-          }
-          else {
-            // Legacy fallback for non-tutorial callers that still rely on this flag.
-            theIsBackArrowExit = false;
-            Navigator.of(context).pop();
-          }
-        },
-      );
+        if (sectionIndex >= 0) {
+          Navigator.of(context).pop(
+            SequentialPageRequest.skip(sectionIndex),
+          );
+        }
+        else {
+          // Legacy fallback for non-tutorial callers that still rely on this flag.
+          theIsBackArrowExit = false;
+          Navigator.of(context).pop();
+        }
+      },
+    );
     }
     else {
-      return SizedBox(width: 0, height: 0);
+    return SizedBox(width: 0, height: 0);
     }
   }
   /*
