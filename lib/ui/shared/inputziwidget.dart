@@ -1661,7 +1661,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
 
   Widget _buildPracticeTypingIntroPage() {
     final ratio = getSizeRatio();
-    final primary = Color(0xFF2F80ED);
+    final primary = Color(0xFF6F35E8);
     final darkText = Color(0xFF071B55);
 
     return Scaffold(
@@ -1722,7 +1722,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                             style: TextStyle(
                               fontSize: HzTextStyles.pageSubtitle.fontSize, //35 * ratio,
                               fontWeight: FontWeight.w900,
-                              color: Color(0xFF2F80ED),
+                              color: primary,
                               height: 1.0,
                               letterSpacing: -0.3,
                             ),
@@ -1746,9 +1746,12 @@ class _InputZiWidgetState extends State<InputZiWidget> {
   }
 
   Widget _buildPracticeTypingHero(double ratio, bool isNarrow) {
-    final cardSize = isNarrow ? 94 * ratio : 116 * ratio; // 104, 126
-    final heroWidth = isNarrow ? 400 * ratio : 580 * ratio; // 440, 650
-    final heroHeight = isNarrow ? 300 * ratio : 360 * ratio; // 360, 430
+    // Keep Step 5 light and friendly: fewer Hanzi, more breathing room.
+    // This avoids overwhelming new learners before they start practice.
+    final mainCardSize = isNarrow ? 112 * ratio : 132 * ratio;
+    final sideCardSize = isNarrow ? 82 * ratio : 96 * ratio;
+    final heroWidth = isNarrow ? 360 * ratio : 500 * ratio;
+    final heroHeight = isNarrow ? 230 * ratio : 270 * ratio;
 
     return SizedBox(
       width: heroWidth,
@@ -1760,77 +1763,53 @@ class _InputZiWidgetState extends State<InputZiWidget> {
           Positioned.fill(
             child: Center(
               child: Container(
-                width: heroWidth * 0.86,
-                height: heroHeight * 0.80,
+                width: heroWidth * 0.74,
+                height: heroHeight * 0.78,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Color(0xFFFFD76A).withOpacity(0.34),
-                      blurRadius: 100 * ratio,
-                      spreadRadius: 26 * ratio,
+                      color: Color(0xFFFFD76A).withOpacity(0.28),
+                      blurRadius: 90 * ratio,
+                      spreadRadius: 20 * ratio,
                     ),
                     BoxShadow(
-                      color: Color(0xFF2F80ED).withOpacity(0.10),
-                      blurRadius: 90 * ratio,
-                      spreadRadius: 12 * ratio,
+                      color: Color(0xFF6F35E8).withOpacity(0.10),
+                      blurRadius: 80 * ratio,
+                      spreadRadius: 10 * ratio,
                     ),
                   ],
                 ),
               ),
             ),
           ),
-          Positioned(top: 12 * ratio, left: 24 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 28)),
-          Positioned(top: 32 * ratio, right: 46 * ratio, child: _buildSparkle(ratio, Color(0xFFFFC928), 24)),
-          Positioned(left: 0, top: 145 * ratio, child: _buildSparkle(ratio, Color(0xFF17BDF4), 18)),
-          Positioned(right: 6 * ratio, top: 150 * ratio, child: _buildDot(ratio, Color(0xFFFF7AB6), 14)),
-          Positioned(left: 42 * ratio, bottom: 48 * ratio, child: _buildDot(ratio, Color(0xFF67D742), 13)),
-          Positioned(right: 58 * ratio, bottom: 52 * ratio, child: _buildSparkle(ratio, Color(0xFFFFB000), 20)),
+
+          Positioned(top: 18 * ratio, left: 36 * ratio, child: _buildSparkle(ratio, Color(0xFFFFD21C), 24)),
+          Positioned(top: 30 * ratio, right: 50 * ratio, child: _buildSparkle(ratio, Color(0xFFA855F7), 22)),
+          Positioned(left: 26 * ratio, bottom: 28 * ratio, child: _buildDot(ratio, Color(0xFF17BDF4), 12)),
+          Positioned(right: 28 * ratio, bottom: 38 * ratio, child: _buildDot(ratio, Color(0xFFFF7AB6), 13)),
 
           Positioned(
-            left: isNarrow ? 18 * ratio : 52 * ratio,
-            top: 52 * ratio,
+            left: isNarrow ? 42 * ratio : 80 * ratio,
+            top: isNarrow ? 78 * ratio : 92 * ratio,
             child: Transform.rotate(
               angle: -0.10,
-              child: _buildHanziPracticeCard("明", cardSize, Color(0xFFE9D5FF), Color(0xFF5B21B6), ratio),
+              child: _buildHanziPracticeCard("明", sideCardSize, Color(0xFFE9D5FF), Color(0xFF5B21B6), ratio),
             ),
           ),
           Positioned(
-            top: 38 * ratio,
+            top: isNarrow ? 42 * ratio : 48 * ratio,
             child: Transform.rotate(
-              angle: 0.04,
-              child: _buildHanziPracticeCard("好", cardSize, Color(0xFFFFE7A8), Color(0xFFC76B00), ratio),
+              angle: 0.035,
+              child: _buildHanziPracticeCard("好", mainCardSize, Color(0xFFFFE7A8), Color(0xFFC76B00), ratio),
             ),
           ),
           Positioned(
-            right: isNarrow ? 18 * ratio : 52 * ratio,
-            top: 54 * ratio,
+            right: isNarrow ? 42 * ratio : 80 * ratio,
+            top: isNarrow ? 78 * ratio : 92 * ratio,
             child: Transform.rotate(
               angle: 0.10,
-              child: _buildHanziPracticeCard("学", cardSize, Color(0xFFD9F99D), Color(0xFF166534), ratio),
-            ),
-          ),
-          Positioned(
-            left: isNarrow ? 34 * ratio : 92 * ratio,
-            bottom: 36 * ratio,
-            child: Transform.rotate(
-              angle: -0.09,
-              child: _buildHanziPracticeCard("问", cardSize, Color(0xFFBFDBFE), Color(0xFF1D4ED8), ratio),
-            ),
-          ),
-          Positioned(
-            bottom: 18 * ratio,
-            child: Transform.rotate(
-              angle: 0.03,
-              child: _buildHanziPracticeCard("林", cardSize, Color(0xFFFBCFE8), Color(0xFFBE185D), ratio),
-            ),
-          ),
-          Positioned(
-            right: isNarrow ? 34 * ratio : 92 * ratio,
-            bottom: 36 * ratio,
-            child: Transform.rotate(
-              angle: 0.09,
-              child: _buildHanziPracticeCard("森", cardSize, Color(0xFFA5F3FC), Color(0xFF0F766E), ratio),
+              child: _buildHanziPracticeCard("学", sideCardSize, Color(0xFFD9F99D), Color(0xFF166534), ratio),
             ),
           ),
         ],
@@ -1880,8 +1859,8 @@ class _InputZiWidgetState extends State<InputZiWidget> {
 
   Widget _buildStartPracticeButton(double ratio, Color primary) {
     return Container(
-      width: 420 * ratio,
-      height: 74 * ratio,
+      width: 350 * ratio,
+      height: 50 * ratio,
       constraints: BoxConstraints(maxWidth: 420 * ratio),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -1905,12 +1884,12 @@ class _InputZiWidgetState extends State<InputZiWidget> {
             Text(
               getString(646), //"Start Practice",
               style: TextStyle(
-                fontSize: HzTextStyles.button.fontSize, // * ratio,
+                fontSize: 20 * ratio,
                 fontWeight: FontWeight.w900,
               ),
             ),
             SizedBox(width: 16 * ratio),
-            Icon(Icons.arrow_forward_ios_rounded, size: 24 * ratio),
+            Icon(Icons.arrow_forward_ios_rounded, size: 22 * ratio),
           ],
         ),
       ),
@@ -2822,35 +2801,35 @@ class _InputZiWidgetState extends State<InputZiWidget> {
   Widget getSkipThisSection() {
     if (includeSkipSection/*theIsFromLessonContinuedSection || theIsFromTypingContinuedSection || typingType == TypingType.Custom*/) {
       return TextButton(
-          child: Text(
-            //(typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
-            getString(401), /*"Skip this section"*/
-            style: TextStyle(
-              fontSize: 14.0,
-              fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
-            ),
+        child: Text(
+          //(typingType == TypingType.FirstTyping && currentIndex == 0) ? "Skip Section" : getString(401) /*"Skip this section"*/,
+          getString(401), /*"Skip this section"*/
+          style: TextStyle(
+            fontSize: 14.0,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey.shade700,
           ),
-          //color: Colors.white,
-          //textColor: Colors.blueAccent,
-          onPressed: () {
-        final sectionIndex = _getTutorialSectionIndexForSkipRequest();
+        ),
+        //color: Colors.white,
+        //textColor: Colors.blueAccent,
+        onPressed: () {
+          final sectionIndex = _getTutorialSectionIndexForSkipRequest();
 
-        if (sectionIndex >= 0) {
-          Navigator.of(context).pop(
-            SequentialPageRequest.skip(sectionIndex),
-          );
-        }
-        else {
-          // Legacy fallback for non-tutorial callers that still rely on this flag.
-          theIsBackArrowExit = false;
-          Navigator.of(context).pop();
-        }
-      },
-    );
+          if (sectionIndex >= 0) {
+            Navigator.of(context).pop(
+              SequentialPageRequest.skip(sectionIndex),
+            );
+          }
+          else {
+            // Legacy fallback for non-tutorial callers that still rely on this flag.
+            theIsBackArrowExit = false;
+            Navigator.of(context).pop();
+          }
+        },
+      );
     }
     else {
-    return SizedBox(width: 0, height: 0);
+      return SizedBox(width: 0, height: 0);
     }
   }
   /*

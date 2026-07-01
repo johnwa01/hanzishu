@@ -232,8 +232,8 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
                   vertical: 18.0,
                 ),
                 child: _isLandingPage
-                      ? _buildLandingPage(isNarrow, ratio)
-                      : _buildExamplePage(isNarrow, ratio),
+                    ? _buildLandingPage(isNarrow, ratio)
+                    : _buildExamplePage(isNarrow, ratio),
               ),
             );
           },
@@ -247,46 +247,46 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-      Stack(
-      alignment: Alignment.center,
-      children: <Widget>[
-        TutorialStepIndicator(
-          currentStep: 4,
-          ratio: ratio,
-        ),
+        Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            TutorialStepIndicator(
+              currentStep: 4,
+              ratio: ratio,
+            ),
 
-        Positioned(
-          right: 0,
-          child: TextButton(
-            onPressed: _skipStep,
-            child: Text(
-              getString(401), //'Skip Section',
-              style: TextStyle(
-                fontSize: isNarrow ? 13.0 : 15.0,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF6C7686),
+            Positioned(
+              right: 0,
+              child: TextButton(
+                onPressed: _skipStep,
+                child: Text(
+                  getString(401), //'Skip Section',
+                  style: TextStyle(
+                    fontSize: isNarrow ? 13.0 : 15.0,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xFF6C7686),
+                  ),
+                ),
               ),
             ),
+          ],
+        ),
+
+        SizedBox(height: 16.0 * ratio),
+
+        Text(
+          getString(630), //'Top-left to Bottom-right',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: HzTextStyles.pageSubtitle.fontSize, //isNarrow ? 21.0 : 27.0,
+            fontWeight: FontWeight.w900,
+            color: Color(0xFF1677FF),
+            height: 1.1,
           ),
         ),
-      ],
-    ),
-
-    SizedBox(height: 24.0 * ratio),
-
-    Text(
-    getString(630), //'Top-left to Bottom-right',
-    textAlign: TextAlign.center,
-    style: TextStyle(
-    fontSize: HzTextStyles.pageSubtitle.fontSize, //isNarrow ? 21.0 : 27.0,
-    fontWeight: FontWeight.w900,
-    color: Color(0xFF1677FF),
-    height: 1.1,
-    ),
-    ),
-        SizedBox(height: 18.0 * ratio),
+        SizedBox(height: 12.0 * ratio),
         _DecompositionHero(isNarrow: isNarrow),
-        SizedBox(height: 24.0 * ratio),
+        SizedBox(height: 16.0 * ratio),
         _PrimaryButton(
           text: getString(631), //'Start Study',
           onPressed: _startStudy,
@@ -514,8 +514,8 @@ class _DecompositionHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final double width = isNarrow ? 350.0 : 470.0;
-    final double height = isNarrow ? 470.0 : 540.0;
+    final double width = isNarrow ? 350.0 : 450.0;
+    final double height = isNarrow ? 410.0 : 460.0;
 
     return Container(
       width: width,
@@ -536,14 +536,14 @@ class _DecompositionHero extends StatelessWidget {
         children: <Widget>[
           const Positioned.fill(child: _SoftGlow()),
           Positioned(
-            top: isNarrow ? 24.0 : 22.0,
+            top: isNarrow ? 14.0 : 12.0,
             left: 0,
             right: 0,
             child: Text(
               '程',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: isNarrow ? 118.0 : 148.0,
+                fontSize: isNarrow ? 104.0 : 126.0,
                 fontWeight: FontWeight.w900,
                 color: const Color(0xFF102B4C),
                 shadows: const <Shadow>[
@@ -566,8 +566,8 @@ class _DecompositionHero extends StatelessWidget {
             painter: _DottedPathPainter(),
           ),
           Positioned(
-            left: isNarrow ? 26.0 : 44.0,
-            top: isNarrow ? 210.0 : 250.0,
+            left: isNarrow ? 30.0 : 46.0,
+            top: isNarrow ? 180.0 : 205.0,
             child: const _ComponentBlock(
               label: '禾',
               number: '1',
@@ -576,8 +576,8 @@ class _DecompositionHero extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: isNarrow ? 145.0 : 190.0,
-            top: isNarrow ? 300.0 : 342.0,
+            left: isNarrow ? 145.0 : 180.0,
+            top: isNarrow ? 265.0 : 295.0,
             child: const _ComponentBlock(
               label: '口',
               number: '2',
@@ -586,8 +586,8 @@ class _DecompositionHero extends StatelessWidget {
             ),
           ),
           Positioned(
-            right: isNarrow ? 28.0 : 44.0,
-            bottom: isNarrow ? 34.0 : 42.0,
+            right: isNarrow ? 30.0 : 46.0,
+            bottom: isNarrow ? 26.0 : 32.0,
             child: const _ComponentBlock(
               label: '王',
               number: '3',
@@ -893,8 +893,8 @@ class _ComponentBlock extends StatelessWidget {
         clipBehavior: Clip.none,
         children: <Widget>[
           Container(
-            width: 112.0,
-            height: 104.0,
+            width: 100.0,
+            height: 92.0,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: color,
@@ -920,7 +920,7 @@ class _ComponentBlock extends StatelessWidget {
             child: Text(
               label,
               style: const TextStyle(
-                fontSize: 54.0,
+                fontSize: 48.0,
                 fontWeight: FontWeight.w900,
                 color: Color(0xFF102B4C),
                 shadows: <Shadow>[
@@ -937,8 +937,8 @@ class _ComponentBlock extends StatelessWidget {
             left: -10.0,
             top: -14.0,
             child: Container(
-              width: 42.0,
-              height: 42.0,
+              width: 38.0,
+              height: 38.0,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -956,7 +956,7 @@ class _ComponentBlock extends StatelessWidget {
                 number,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 21.0,
+                  fontSize: 19.0,
                   fontWeight: FontWeight.w900,
                 ),
               ),
@@ -1066,14 +1066,14 @@ class _PrimaryButton extends StatelessWidget {
       constraints: const BoxConstraints(maxWidth: 420.0),
       child: SizedBox(
         width: double.infinity,
-        height: 60.0,
+        height: 54.0,
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF1677FF),
+            backgroundColor: const Color(0xFF6F35E8),
             foregroundColor: Colors.white,
             elevation: 8.0,
-            shadowColor: const Color(0x551677FF),
+            shadowColor: const Color(0x556F35E8),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(22.0),
             ),
