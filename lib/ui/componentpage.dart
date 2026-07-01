@@ -817,12 +817,12 @@ class _ComponentPageState extends State<ComponentPage> {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             double contentWidth = constraints.maxWidth;
-            double heroSize = contentWidth * 0.28;
-            if (heroSize > 180.0) {
-              heroSize = 180.0;
+            double heroSize = contentWidth * 0.24;
+            if (heroSize > 155.0) {
+              heroSize = 155.0;
             }
-            if (heroSize < 150.0) {
-              heroSize = 150.0;
+            if (heroSize < 130.0) {
+              heroSize = 130.0;
             }
 
             double cardSize = contentWidth * 0.10;
@@ -883,12 +883,19 @@ class _ComponentPageState extends State<ComponentPage> {
                           getSmallOrangeBurst(ratio, true),
                         ],
                       ),
-                      SizedBox(height: 26.0 * ratio), //36
+                      SizedBox(height: 18.0 * ratio), //36
                       getStepThreeHeroKey(heroSize, ratio),
                       SizedBox(height: 20.0 * ratio), // 26
                       getStepThreeComponentCards(cardSize, ratio),
-                      SizedBox(height: 24.0 * ratio), // 34
-                      getStepThreeStartButton(ratio),
+                      SizedBox(height: 20.0 * ratio), // 34
+                      getPurpleStartButton(
+                        ratio: ratio,
+                        onPressed: () {
+                          setState(() {
+                            runContinueLogic();
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ),
