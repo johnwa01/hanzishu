@@ -648,6 +648,81 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
+  Widget getTutorialHeaderRow({
+    required int currentStep,
+    required double ratio,
+  }) {
+    return FittedBox(
+      fit: BoxFit.scaleDown,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          TutorialStepIndicator(
+            currentStep: currentStep,
+            ratio: ratio,
+          ),
+          SizedBox(width: 26.0 * ratio),
+          getSkipThisSection(),
+        ],
+      ),
+    );
+  }
+
+  Widget getPurpleStartButton({
+    required double ratio,
+    required VoidCallback onPressed,
+  }) {
+    const Color primary = Color(0xFF6F35E8);
+
+    return Container(
+      width: 350.0 * ratio,
+      height: 50.0 * ratio,
+      constraints: BoxConstraints(maxWidth: 420.0 * ratio),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28.0 * ratio),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: primary.withOpacity(0.34),
+            blurRadius: 18.0 * ratio,
+            offset: Offset(0, 8.0 * ratio),
+          ),
+        ],
+      ),
+      child: TextButton(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.all(primary),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(28.0 * ratio),
+            ),
+          ),
+          padding: WidgetStateProperty.all(EdgeInsets.zero),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              getString(301), /*'Start',*/
+              style: TextStyle(
+                fontSize: 20.0 * ratio,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(width: 10.0 * ratio),
+            Icon(
+              Icons.arrow_forward_rounded,
+              color: Colors.white,
+              size: 24.0 * ratio,
+            ),
+          ],
+        ),
+        onPressed: onPressed,
+      ),
+    );
+  }
+
   Widget getStepTwoLandingPage(BuildContext context) {
     double ratio = getSizeRatioWithLimit();
     double heroSize = 260.0 * ratio;
@@ -680,29 +755,11 @@ class _ComponentPageState extends State<ComponentPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
-                  children: [
-                    SizedBox(
-                      width: 110.0 * ratio,
-                    ),
-
-                    Expanded(
-                      child: Center(
-                        child: TutorialStepIndicator(
-                          currentStep: 2,
-                          ratio: ratio,
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(
-                      width: 110.0 * ratio,
-                      child: Align(
-                        alignment: Alignment.centerRight,
-                        child: getSkipThisSection(),
-                      ),
-                    ),
-                  ],
+                Center(
+                  child: getTutorialHeaderRow(
+                    currentStep: 2,
+                    ratio: ratio,
+                  ),
                 ),
 
                 SizedBox(height: 18.0 * ratio),
@@ -724,57 +781,13 @@ class _ComponentPageState extends State<ComponentPage> {
                   ),
                 ),
                 SizedBox(height: 22.0 * ratio),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(28.0 * ratio),
-                    boxShadow: <BoxShadow>[
-                      BoxShadow(
-                        color: Color(0x332F80ED),
-                        blurRadius: 18.0 * ratio,
-                        offset: Offset(0, 8.0 * ratio),
-                      ),
-                    ],
-                  ),
-                  child: TextButton(
-                    style: ButtonStyle(
-                      backgroundColor: WidgetStateProperty.all(Color(0xFF2F80ED)),
-                      shape: WidgetStateProperty.all(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(28.0 * ratio),
-                        ),
-                      ),
-                      padding: WidgetStateProperty.all(
-                        EdgeInsets.symmetric(
-                          horizontal: 34.0 * ratio,
-                          vertical: 14.0 * ratio,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: <Widget>[
-                        Text(
-                          getString(301), /*'Start',*/
-                          style: TextStyle(
-                            fontSize: 17.0 * ratio,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
-                        SizedBox(width: 6.0 * ratio),
-                        Icon(
-                          Icons.arrow_forward_rounded,
-                          color: Colors.white,
-                          size: 20.0 * ratio,
-                        ),
-                      ],
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        runContinueLogic();
-                      });
-                    },
-                  ),
+                getPurpleStartButton(
+                  ratio: ratio,
+                  onPressed: () {
+                    setState(() {
+                      runContinueLogic();
+                    });
+                  },
                 ),
               ],
             ),
@@ -842,26 +855,11 @@ class _ComponentPageState extends State<ComponentPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      Row(
-                        children: [
-                          SizedBox(
-                            width: 110.0 * ratio,
-                          ),
-
-                          Expanded(
-                            child: Center(
-                              child: TutorialStepIndicator(currentStep: 3, ratio: ratio),
-                            ),
-                          ),
-
-                          SizedBox(
-                            width: 110.0 * ratio,
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: getSkipThisSection(),
-                            ),
-                          ),
-                        ],
+                      Center(
+                        child: getTutorialHeaderRow(
+                          currentStep: 3,
+                          ratio: ratio,
+                        ),
                       ),
 
                       //SizedBox(height: 14.0 * ratio),
