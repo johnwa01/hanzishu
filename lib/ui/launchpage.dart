@@ -408,7 +408,8 @@ class _LaunchPageState extends State<LaunchPage> {
     double horizontalPadding = 20 * ratio;
     double gap = 14 * ratio;
     double availableWidth = screenWidth - horizontalPadding * 2;
-    bool useTwoColumns = availableWidth >= 720;
+    bool useCompactCards = availableWidth < 560;
+    bool useTwoColumns = availableWidth >= 300;
     double cardWidth = useTwoColumns
         ? (availableWidth - gap) / 2
         : availableWidth;
@@ -426,6 +427,7 @@ class _LaunchPageState extends State<LaunchPage> {
             icon: Icons.menu_book_rounded,
             color: Colors.green,
             width: cardWidth,
+            compact: useCompactCards,
             onTap: () {
               Navigator.push(
                 context,
@@ -439,6 +441,7 @@ class _LaunchPageState extends State<LaunchPage> {
             icon: Icons.keyboard_rounded,
             color: Colors.blue,
             width: cardWidth,
+            compact: useCompactCards,
             onTap: () {
               Navigator.push(
                 context,
@@ -452,6 +455,7 @@ class _LaunchPageState extends State<LaunchPage> {
             icon: Icons.menu_book_outlined,
             color: Colors.deepPurple,
             width: cardWidth,
+            compact: useCompactCards,
             onTap: () {
               Navigator.push(
                 context,
@@ -472,6 +476,7 @@ class _LaunchPageState extends State<LaunchPage> {
             icon: Icons.extension_rounded,
             color: Colors.orange,
             width: cardWidth,
+            compact: useCompactCards,
             onTap: () {
               Navigator.push(
                 context,
@@ -485,6 +490,7 @@ class _LaunchPageState extends State<LaunchPage> {
             icon: Icons.apps_rounded,
             color: Colors.teal,
             width: cardWidth,
+            compact: useCompactCards,
             onTap: () {
               Navigator.push(
                 context,
@@ -503,6 +509,7 @@ class _LaunchPageState extends State<LaunchPage> {
     required IconData icon,
     required Color color,
     required double width,
+    required bool compact,
     required VoidCallback onTap,
   }) {
     double ratio = getSizeRatioWithLimit();
@@ -514,8 +521,8 @@ class _LaunchPageState extends State<LaunchPage> {
         borderRadius: BorderRadius.circular(18 * ratio),
         child: Container(
           width: width,
-          height: 118 * ratio,
-          padding: EdgeInsets.all(18 * ratio),
+          height: compact ? 170 * ratio : 118 * ratio,
+          padding: EdgeInsets.all(compact ? 12 * ratio : 18 * ratio),
           decoration: BoxDecoration(
             color: color.withOpacity(0.06),
             borderRadius: BorderRadius.circular(18 * ratio),
@@ -528,7 +535,60 @@ class _LaunchPageState extends State<LaunchPage> {
               ),
             ],
           ),
-          child: Row(
+          child: compact
+              ? Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 58 * ratio,
+                height: 58 * ratio,
+                decoration: BoxDecoration(
+                  color: color,
+                  borderRadius: BorderRadius.circular(14 * ratio),
+                  boxShadow: [
+                    BoxShadow(
+                      color: color.withOpacity(0.30),
+                      blurRadius: 12 * ratio,
+                      offset: Offset(0, 6 * ratio),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 32 * ratio,
+                ),
+              ),
+              SizedBox(height: 12 * ratio),
+              Text(
+                title,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: color,
+                  fontSize: 17 * ratio,
+                  fontWeight: FontWeight.bold,
+                  height: 1.12,
+                ),
+              ),
+              SizedBox(height: 8 * ratio),
+              Container(
+                width: 28 * ratio,
+                height: 28 * ratio,
+                decoration: BoxDecoration(
+                  color: color,
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Colors.white,
+                  size: 17 * ratio,
+                ),
+              ),
+            ],
+          )
+              : Row(
             children: [
               Container(
                 width: 66 * ratio,
