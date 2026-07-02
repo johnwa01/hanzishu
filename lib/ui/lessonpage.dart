@@ -264,15 +264,21 @@ class _LessonPageState extends State<LessonPage> {
     // put scrollview since I get render overflow issue
     return SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.only(top: 80),
+          padding: const EdgeInsets.only(top: 20), //80
           child: Column(
             children: <Widget>[
               //Container(
               //  padding: EdgeInsets.all(5),
               //),
               Container(
-                margin: const EdgeInsets.only(bottom: 20),
-                child: Icon( Icons.sentiment_very_satisfied, size: 100, color: Colors.orange, ),
+                //margin: const EdgeInsets.only(bottom: 20),
+                //: Icon( Icons.sentiment_very_satisfied, size: 100, color: Colors.orange, ), //assets/core/mascot_fly.png
+                child: Image.asset(
+                  "assets/core/mascot_fly.png",
+                  width: 200.0,
+                  height: 200.0,
+                  fit: BoxFit.fitWidth,
+                ),
               ),
 
               Container(

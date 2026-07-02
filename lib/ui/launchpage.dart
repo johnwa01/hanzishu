@@ -357,8 +357,8 @@ class _LaunchPageState extends State<LaunchPage> {
                     ),
 
                     getDiscoverTextLink(
-                      "📖 在教室里种汉字树",
-                      "https://hanzishu.com/publish/westside.html",
+                      "📖 电打交流会录像",
+                      "https://hanzishu.com/video/hanzishutalks2.mp4",
                     ),
                   ],
                 ),
