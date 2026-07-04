@@ -263,6 +263,9 @@ class _LessonsPageState extends State<LessonsPage> {
   }
 
   Widget getCoursePage() {
+    //TODO: testing line to trigger PaintSoundPage with 'Expanded' button for drawZiGroup
+    //return getPaintIndex(context, SoundCategory.erGe);
+
     if (_selectedCourseMenu.id == 1) {
       return getHanzishuLessons();
     }

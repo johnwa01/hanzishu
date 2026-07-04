@@ -243,6 +243,16 @@ class _LessonPageState extends State<LessonPage> {
           ),
         ).then((val) => {_getRequests()});
         break;
+      case 8:
+        //var initZis = getConvCharsForLesson(lessonId);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: 1088, subItemId: 0, isFromReviewPage: false, customString: ""),
+          ),
+        ).then((val) => {_getRequests()});
+        break;
       default:
         break;
     }
@@ -327,7 +337,7 @@ class _LessonPageState extends State<LessonPage> {
               ),
 
               SizedBox(
-                height: 60.0, //40
+                height: 30.0, //40
               ),
 
               Container(
@@ -370,6 +380,49 @@ class _LessonPageState extends State<LessonPage> {
               ),
               //padding: EdgeInsets.all(20),
             ),
+              SizedBox(
+                height: 30.0, //40
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    //       getButton(context, lessonId, 6),
+                    //getButton(context, lessonId, 7),
+                    InkWell(
+                      onTap: () {
+                        launchLessonSection(context, lessonId, 8);
+                      },
+                      borderRadius: BorderRadius.circular(20),
+                      child: Container(
+                        width: 280,
+                        padding: const EdgeInsets.all(18),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                          border: Border.all(
+                            color: Colors.grey.shade200,
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.description_outlined,
+                              color: Colors.orange,
+                            ),
+                            SizedBox(width: 12),
+                            Text(
+                              getString(705), //"Expaned zi group",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                //padding: EdgeInsets.all(20),
+              ),
           ]
         ),
         ),
@@ -417,6 +470,9 @@ class _LessonPageState extends State<LessonPage> {
         break;
       case 7:
         buttonTitle = getString(454);
+        break;
+      case 8:
+        buttonTitle = getString(705);
         break;
       default:
         break;

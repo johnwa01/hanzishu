@@ -712,7 +712,7 @@ var theString_en_US = [
   Local(702, "Generate Cards ->"),
   Local(703, "Privacy"),
   Local(704, "Contact Us"),
-  Local(705, ""),
+  Local(705, "Expanded Zi Group"),
   Local(706, ""),
   Local(707, ""),
   Local(708, ""),
