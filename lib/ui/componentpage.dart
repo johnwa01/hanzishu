@@ -773,11 +773,12 @@ class _ComponentPageState extends State<ComponentPage> {
                   ),
                 ),
                 SizedBox(height: 18.0 * ratio),
-                Container(
+                SizedBox(
                   width: heroSize,
-                  height: heroSize,  // *0.88
-                  child: CustomPaint(
-                    painter: StepTwoKeyCubePainter(),
+                  height: heroSize,
+                  child: Image.asset(
+                    'assets/typing/blockwood.png',
+                    fit: BoxFit.contain,
                   ),
                 ),
                 SizedBox(height: 22.0 * ratio),
@@ -2704,6 +2705,7 @@ class StepThreeBurstPainter extends CustomPainter {
   }
 }
 
+/*
 class StepTwoKeyCubePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -2840,4 +2842,4 @@ class StepTwoKeyCubePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
-
+*/

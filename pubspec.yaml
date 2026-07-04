@@ -254,6 +254,8 @@ flutter:
      - assets/letters/LG4.png
      - assets/letters/LG5.png
      - assets/letters/LG6.png
+     - assets/typing/blockthree.png
+     - assets/typing/blockwood.png
      - assets/typing/C00.png
      - assets/typing/C11.png
      - assets/typing/C12.png
