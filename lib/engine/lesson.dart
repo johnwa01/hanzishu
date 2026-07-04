@@ -34,6 +34,7 @@ class Lesson {
   List<int> newItemList = [];
   List<int> newItemTypeStartPosition = [0, 0, 0, 0];
   String allTypingChars = '';
+  String expandedZi = '';
 
   //Map<int, bool> componentLearnedDictLesson = Map();
   //Map<int, bool> fullCharLearnedDictLesson = Map();
@@ -67,7 +68,8 @@ class Lesson {
       String topicTitle,
       List<int> topicParagraphList,
       List<int> phraseIds,
-      List<int> snowballIds) {
+      List<int> snowballIds,
+      String expandedZi) {
     this.id = id;
     this.title = title;
     this.titleId = titleId;
@@ -81,6 +83,7 @@ class Lesson {
     this.topicParagraphList = topicParagraphList;
     this.phraseIds = phraseIds;
     this.snowballIds = snowballIds;
+    this.expandedZi = expandedZi;
   }
 
   static int numberOfLessonsInLevel1 = 60;

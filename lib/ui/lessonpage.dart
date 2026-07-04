@@ -3,6 +3,7 @@ import 'package:hanzishu/engine/quizmanager.dart';
 import 'package:hanzishu/ui/imagebutton.dart';
 import 'package:hanzishu/engine/lesson.dart';
 import 'package:hanzishu/engine/lessonmanager.dart';
+import 'package:hanzishu/engine/zimanager.dart';
 import 'package:hanzishu/engine/dictionary.dart';
 import 'package:hanzishu/utility.dart';
 import 'package:hanzishu/variables.dart';
@@ -244,12 +245,14 @@ class _LessonPageState extends State<LessonPage> {
         ).then((val) => {_getRequests()});
         break;
       case 8:
-        //var initZis = getConvCharsForLesson(lessonId);
+        String expandedZi = theLessonList[lessonId].expandedZi;
+        int searchingId = ZiManager.findIdFromChar(ZiListType.searching, expandedZi);
+
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: 1088, subItemId: 0, isFromReviewPage: false, customString: ""),
+                DrillPageCore(drillCategory: DrillCategory.all, startingCenterZiId: searchingId, subItemId: 0, isFromReviewPage: false, customString: ""),
           ),
         ).then((val) => {_getRequests()});
         break;
@@ -383,6 +386,7 @@ class _LessonPageState extends State<LessonPage> {
               SizedBox(
                 height: 30.0, //40
               ),
+              if (theLessonList[lessonId].expandedZi.length != 0) // condition for next Container
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
