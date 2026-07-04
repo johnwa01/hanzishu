@@ -1455,7 +1455,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
     return Center(
       child: Image.asset(
         'assets/typing/blockthree.png',
-        width: 380 * ratio,
+        width: 350 * ratio,
         fit: BoxFit.contain,
       ),
     );
