@@ -818,7 +818,7 @@ class _ComponentPageState extends State<ComponentPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: <Color>[
-            Color(0xFFFFFBF2),
+            Color(0xFFF8F3FF),
             Color(0xFFF4FAFF),
           ],
         ),

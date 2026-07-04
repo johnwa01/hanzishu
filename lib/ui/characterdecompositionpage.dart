@@ -199,7 +199,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF7FAFF),
+      backgroundColor: const Color(0xFFF8F3FF),
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -218,7 +218,18 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
           ),
         ),
       ),
-      body: SafeArea(
+      body: Container(
+    decoration: const BoxDecoration(
+    gradient: LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFFF8F3FF), // lavender
+        Color(0xFFF4FAFF), // soft blue
+      ],
+    ),
+    ),
+    child: SafeArea(
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             final bool isNarrow = constraints.maxWidth < 520;
@@ -239,6 +250,7 @@ class _CharacterDecompositionPageState extends State<CharacterDecompositionPage>
           },
         ),
       ),
+    ),
     );
   }
 

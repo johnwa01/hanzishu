@@ -1549,14 +1549,13 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       ),
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.white,
-              Color(0xFFF8FAFF),
-              Color(0xFFFFF7ED),
+              Color(0xFFF8F3FF),
+              Color(0xFFF4FAFF),
             ],
           ),
         ),
@@ -1568,9 +1567,13 @@ class _InputZiWidgetState extends State<InputZiWidget> {
               final contentWidth = isNarrow ? maxWidth * 0.94 : 860.0 * ratio;
 
               return SingleChildScrollView(
-                child: Center(
                   child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: contentWidth),
+                  constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+              ),
+              child: Center(
+              child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: contentWidth),
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
                       child: Column(
@@ -1604,6 +1607,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
                     ),
                   ),
                 ),
+                  ),
               );
             },
           ),
