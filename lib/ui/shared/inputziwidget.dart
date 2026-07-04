@@ -1340,7 +1340,7 @@ class _InputZiWidgetState extends State<InputZiWidget> {
     final darkText = Color(0xFF071B55);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFFF8F3FF),
       appBar: AppBar(
         title: Text(
           getString(511), /*"Hanzishu Input Method Tutorial",*/
@@ -1357,14 +1357,13 @@ class _InputZiWidgetState extends State<InputZiWidget> {
       ),
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Colors.white,
-              Color(0xFFF8FAFF),
-              Color(0xFFF2EDFF),
+              Color(0xFFF8F3FF),
+              Color(0xFFF4FAFF),
             ],
           ),
         ),
@@ -1376,44 +1375,49 @@ class _InputZiWidgetState extends State<InputZiWidget> {
               final contentWidth = isNarrow ? maxWidth * 0.92 : 760.0 * ratio;
 
               return SingleChildScrollView(
-                child: Center(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(maxWidth: contentWidth),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 18 * ratio),
-                          //TutorialStepIndicator(currentStep: 1, ratio: ratio),
-                          //SizedBox(height: 18 * ratio),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: contentWidth),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 18 * ratio),
+                            //TutorialStepIndicator(currentStep: 1, ratio: ratio),
+                            //SizedBox(height: 18 * ratio),
 
-                          _buildTutorialHeaderRow(
-                            currentStep: 1,
-                            ratio: ratio,
-                          ),
+                            _buildTutorialHeaderRow(
+                              currentStep: 1,
+                              ratio: ratio,
+                            ),
 
-                          SizedBox(height: 24 * ratio),
+                            SizedBox(height: 24 * ratio),
 
-                          Text(
-                            getString(609), //"Your First\nChinese Characters",
-                            textAlign: TextAlign.center,
-                            style: HzTextStyles.pageSubtitle,
-                            /*TextStyle(
-                              color: darkText,
-                              fontSize: (isNarrow ? 25 : 30) * ratio,
-                              fontWeight: FontWeight.w800,
-                              height: 1.12,
-                              letterSpacing: -0.4,
-                            ),*/
-                          ),
+                            Text(
+                              getString(609), //"Your First\nChinese Characters",
+                              textAlign: TextAlign.center,
+                              style: HzTextStyles.pageSubtitle,
+                              /*TextStyle(
+                                color: darkText,
+                                fontSize: (isNarrow ? 25 : 30) * ratio,
+                                fontWeight: FontWeight.w800,
+                                height: 1.12,
+                                letterSpacing: -0.4,
+                              ),*/
+                            ),
 
-                          SizedBox(height: 20 * ratio),
+                            SizedBox(height: 20 * ratio),
 
-                          //SizedBox(height: 10 * ratio),
-                          _buildIntroBlocks(ratio),
-                          SizedBox(height: 19 * ratio),
-                          _buildStartStepButton(ratio, primary),
-                        ],
+                            //SizedBox(height: 10 * ratio),
+                            _buildIntroBlocks(ratio),
+                            SizedBox(height: 19 * ratio),
+                            _buildStartStepButton(ratio, primary),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -1567,47 +1571,47 @@ class _InputZiWidgetState extends State<InputZiWidget> {
               final contentWidth = isNarrow ? maxWidth * 0.94 : 860.0 * ratio;
 
               return SingleChildScrollView(
-                  child: ConstrainedBox(
+                child: ConstrainedBox(
                   constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-              ),
-              child: Center(
-              child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: contentWidth),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
-                      child: Column(
-                        children: [
-                          SizedBox(height: 18 * ratio),
-                          _buildTutorialHeaderRow(
-                            currentStep: 5,
-                            ratio: ratio,
-                          ),
-
-                          SizedBox(height: 24 * ratio),
-
-                          Text(
-                            getString(645), //"Let's Type!",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: HzTextStyles.pageSubtitle.fontSize, //35 * ratio,
-                              fontWeight: FontWeight.w900,
-                              color: primary,
-                              height: 1.0,
-                              letterSpacing: -0.3,
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: contentWidth),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 18 * ratio),
+                        child: Column(
+                          children: [
+                            SizedBox(height: 18 * ratio),
+                            _buildTutorialHeaderRow(
+                              currentStep: 5,
+                              ratio: ratio,
                             ),
-                          ),
-                          SizedBox(height: 20 * ratio),
-                          _buildPracticeTypingHero(ratio, isNarrow),
-                          SizedBox(height: 24 * ratio),
-                          _buildStartPracticeButton(ratio, primary),
-                          SizedBox(height: 20 * ratio),
-                        ],
+
+                            SizedBox(height: 24 * ratio),
+
+                            Text(
+                              getString(645), //"Let's Type!",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: HzTextStyles.pageSubtitle.fontSize, //35 * ratio,
+                                fontWeight: FontWeight.w900,
+                                color: primary,
+                                height: 1.0,
+                                letterSpacing: -0.3,
+                              ),
+                            ),
+                            SizedBox(height: 20 * ratio),
+                            _buildPracticeTypingHero(ratio, isNarrow),
+                            SizedBox(height: 24 * ratio),
+                            _buildStartPracticeButton(ratio, primary),
+                            SizedBox(height: 20 * ratio),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-                  ),
               );
             },
           ),
