@@ -745,65 +745,65 @@ class _ComponentPageState extends State<ComponentPage> {
           ],
         ),
       ),
-        child: SafeArea(
-            child: LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: constraints.maxHeight,
+      child: SafeArea(
+        child: LayoutBuilder(
+          builder: (BuildContext context, BoxConstraints constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 24.0 * ratio,
+                    vertical: 10.0 * ratio, //20.0
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                        child: getTutorialHeaderRow(
+                          currentStep: 2,
+                          ratio: ratio,
+                        ),
                       ),
-                      child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 24.0 * ratio,
-              vertical: 10.0 * ratio, //20.0
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Center(
-                  child: getTutorialHeaderRow(
-                    currentStep: 2,
-                    ratio: ratio,
-                  ),
-                ),
 
-                SizedBox(height: 18.0 * ratio),
-                Text(
-                  getString(616), //'English keys to represent Chinese components',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 17.0 * ratio,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF6A768A),
+                      SizedBox(height: 18.0 * ratio),
+                      Text(
+                        getString(616), //'English keys to represent Chinese components',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 17.0 * ratio,
+                          fontWeight: FontWeight.w500,
+                          color: Color(0xFF6A768A),
+                        ),
+                      ),
+                      SizedBox(height: 18.0 * ratio),
+                      SizedBox(
+                        width: heroSize,
+                        height: heroSize,
+                        child: Image.asset(
+                          'assets/typing/blockwood.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      SizedBox(height: 22.0 * ratio),
+                      getPurpleStartButton(
+                        ratio: ratio,
+                        onPressed: () {
+                          setState(() {
+                            runContinueLogic();
+                          });
+                        },
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 18.0 * ratio),
-                SizedBox(
-                  width: heroSize,
-                  height: heroSize,
-                  child: Image.asset(
-                    'assets/typing/blockwood.png',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                SizedBox(height: 22.0 * ratio),
-                getPurpleStartButton(
-                  ratio: ratio,
-                  onPressed: () {
-                    setState(() {
-                      runContinueLogic();
-                    });
-                  },
-                ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
-                  );
-                },
-            ),
-        ),
+      ),
     );
   }
 
@@ -827,28 +827,12 @@ class _ComponentPageState extends State<ComponentPage> {
         child: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             double contentWidth = constraints.maxWidth;
-            double heroSize = contentWidth * 0.24;
-            if (heroSize > 155.0) {
-              heroSize = 155.0;
+            double heroImageSize = contentWidth * 0.38;
+            if (heroImageSize > 360.0) {
+              heroImageSize = 360.0;
             }
-            if (heroSize < 130.0) {
-              heroSize = 130.0;
-            }
-
-            double cardSize = contentWidth * 0.10;
-            if (cardSize > 92.0) {
-              cardSize = 92.0;
-            }
-            if (cardSize < 54.0) {
-              cardSize = 54.0;
-            }
-
-            double titleFontSize = 34.0 * ratio;
-            if (titleFontSize > 38.0) {
-              titleFontSize = 38.0;
-            }
-            if (titleFontSize < 24.0) {
-              titleFontSize = 24.0;
+            if (heroImageSize < 250.0) {
+              heroImageSize = 250.0;
             }
 
             return SingleChildScrollView(
@@ -893,11 +877,9 @@ class _ComponentPageState extends State<ComponentPage> {
                           getSmallOrangeBurst(ratio, true),
                         ],
                       ),
-                      SizedBox(height: 18.0 * ratio), //36
-                      getStepThreeHeroKey(heroSize, ratio),
-                      SizedBox(height: 20.0 * ratio), // 26
-                      getStepThreeComponentCards(cardSize, ratio),
-                      SizedBox(height: 20.0 * ratio), // 34
+                      SizedBox(height: 18.0 * ratio),
+                      getStepThreeBlockLetterAImage(heroImageSize),
+                      SizedBox(height: 20.0 * ratio),
                       getPurpleStartButton(
                         ratio: ratio,
                         onPressed: () {
@@ -936,92 +918,13 @@ class _ComponentPageState extends State<ComponentPage> {
     );
   }
 
-  Widget getStepThreeHeroKey(double heroSize, double ratio) {
-    return Container(
-      width: heroSize,
-      height: heroSize,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(32.0 * ratio),
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: <Color>[
-            Color(0xFFFFC247),
-            Color(0xFFFF8A00),
-          ],
-        ),
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-            color: Color(0x552F1A00),
-            blurRadius: 22.0 * ratio,
-            offset: Offset(0, 12.0 * ratio),
-          ),
-          BoxShadow(
-            color: Color(0x55FFFFFF),
-            blurRadius: 12.0 * ratio,
-            offset: Offset(-6.0 * ratio, -6.0 * ratio),
-          ),
-        ],
-      ),
-      child: Center(
-        child: Text(
-          'A',
-          style: TextStyle(
-            fontSize: heroSize * 0.56,
-            fontWeight: FontWeight.w900,
-            color: Colors.white,
-            shadows: <Shadow>[
-              Shadow(
-                color: Color(0x66000000),
-                blurRadius: 6.0 * ratio,
-                offset: Offset(0, 3.0 * ratio),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget getStepThreeComponentCards(double cardSize, double ratio) {
-    List<String> components = <String>['人', '火', '大', '央', '个', '金', '久'];
-
-    return Container(
-      constraints: BoxConstraints(maxWidth: cardSize * 4.8),
-      child: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 16.0 * ratio,
-        runSpacing: 16.0 * ratio,
-        children: components.map((String component) {
-          return Container(
-            width: cardSize,
-            height: cardSize,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(15.0 * ratio),
-              border: Border.all(
-                color: Color(0xFFE1D9FF),
-                width: 1.4,
-              ),
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                  color: Color(0x1F4A2BC6),
-                  blurRadius: 12.0 * ratio,
-                  offset: Offset(0, 7.0 * ratio),
-                ),
-              ],
-            ),
-            child: Text(
-              component,
-              style: TextStyle(
-                fontSize: cardSize * 0.56,
-                fontWeight: FontWeight.w700,
-                color: Color(0xFF303340),
-              ),
-            ),
-          );
-        }).toList(),
+  Widget getStepThreeBlockLetterAImage(double imageSize) {
+    return SizedBox(
+      width: imageSize,
+      height: imageSize,
+      child: Image.asset(
+        'assets/typing/blocklettera.png',
+        fit: BoxFit.contain,
       ),
     );
   }
