@@ -745,9 +745,15 @@ class _ComponentPageState extends State<ComponentPage> {
           ],
         ),
       ),
-      child: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
+        child: SafeArea(
+            child: LayoutBuilder(
+                builder: (BuildContext context, BoxConstraints constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 24.0 * ratio,
               vertical: 10.0 * ratio, //20.0
@@ -794,7 +800,10 @@ class _ComponentPageState extends State<ComponentPage> {
             ),
           ),
         ),
-      ),
+                  );
+                },
+            ),
+        ),
     );
   }
 
@@ -2543,128 +2552,7 @@ class _ComponentPageState extends State<ComponentPage> {
       ),
     );
   }
-
-/*
-  Widget getPreLeadComponentCategory0(BuildContext context) {
-    return Column(
-        children: <Widget>[
-          Row(
-              children: <Widget>[
-                Flexible(child: Text(
-                    "'Mouth' component categories:",
-                    style: TextStyle(fontSize: 15.0 * getSizeRatioWithLimit()), // 18
-                    textAlign: TextAlign.start),),
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                SizedBox(height: 4.0 * getSizeRatioWithLimit()),
-              ]
-          ),
-          Row(
-              textDirection: TextDirection.ltr,
-              //mainAxisSize: MainAxisSize.max,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 12"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 1234567"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 445 44"),
-                  ),
-                ),
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                SizedBox(height: 4.0 * getSizeRatioWithLimit()),
-              ]
-          ),
-          Row(
-              textDirection: TextDirection.ltr,
-              //mainAxisSize: MainAxisSize.max,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 12"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 1234567"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 445 44"),
-                  ),
-                ),
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                SizedBox(height: 4),
-              ]
-          ),
-          Row(
-              textDirection: TextDirection.ltr,
-              //mainAxisSize: MainAxisSize.max,
-              //crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 12"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 1234567"),
-                  ),
-                ),
-                SizedBox(width: 2),
-                Container(width: 30, height: 30,
-                  child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Text("Test Text 445 44"),
-                  ),
-                ),
-              ]
-          ),
-          Row(
-              children: <Widget>[
-                SizedBox(height: 4),
-              ]
-          ),
-        ]
-    );
-  }
-  */
-
-
 }
-
 
 class StepThreeBurstPainter extends CustomPainter {
   final bool flip;
@@ -2704,142 +2592,3 @@ class StepThreeBurstPainter extends CustomPainter {
     return oldDelegate.flip != flip;
   }
 }
-
-/*
-class StepTwoKeyCubePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final double s = size.width * 0.50;
-    final double d = size.width * 0.22;
-
-    final double x = size.width * 0.18;
-    final double y = size.height * 0.28;
-
-    final Offset frontTL = Offset(x, y);
-    final Offset frontTR = Offset(x + s, y);
-    final Offset frontBR = Offset(x + s, y + s);
-    final Offset frontBL = Offset(x, y + s);
-
-    final Offset backTL = Offset(x + d, y - d * 0.62);
-    final Offset backTR = Offset(x + s + d, y - d * 0.62);
-    final Offset backBR = Offset(x + s + d, y + s - d * 0.62);
-
-    final Paint shadowPaint = Paint()
-      ..color = const Color(0x3324344D)
-      ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 16.0);
-
-    canvas.drawOval(
-      Rect.fromCenter(
-        center: Offset(size.width * 0.52, y + s + d * 0.38),
-        width: size.width * 0.62,
-        height: size.height * 0.14,
-      ),
-      shadowPaint,
-    );
-
-    _drawFace(
-      canvas,
-      <Offset>[frontTR, backTR, backBR, frontBR],
-      <Color>[const Color(0xFF55C7F7), const Color(0xFF2F80ED)],
-    );
-
-    _drawFace(
-      canvas,
-      <Offset>[frontTL, frontTR, backTR, backTL],
-      <Color>[const Color(0xFFFFF2A8), const Color(0xFFFFCF5C)],
-    );
-
-    _drawFace(
-      canvas,
-      <Offset>[frontTL, frontTR, frontBR, frontBL],
-      <Color>[const Color(0xFFFFBE55), const Color(0xFFFF8F3D)],
-    );
-
-    final Paint edgePaint = Paint()
-      ..color = Colors.white.withOpacity(0.70)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.2;
-
-    canvas.drawPath(_pathFromPoints(<Offset>[frontTL, frontTR, frontBR, frontBL]), edgePaint);
-    canvas.drawPath(_pathFromPoints(<Offset>[frontTR, backTR, backBR, frontBR]), edgePaint);
-    canvas.drawPath(_pathFromPoints(<Offset>[frontTL, frontTR, backTR, backTL]), edgePaint);
-
-    _drawCenteredText(canvas, '木', Rect.fromPoints(frontTL, frontBR), s * 0.52);
-    _drawCenteredText(
-      canvas,
-      'M',
-      Rect.fromLTRB(frontTR.dx, frontTR.dy, backBR.dx, backBR.dy),
-      s * 0.44,
-    );
-  }
-
-  void _drawCenteredText(Canvas canvas, String text, Rect rect, double fontSize) {
-    final TextPainter painter = TextPainter(
-      text: TextSpan(
-        text: text,
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: fontSize,
-          fontWeight: FontWeight.w900,
-          shadows: const <Shadow>[
-            Shadow(
-              color: Color(0x5524344D),
-              offset: Offset(0, 3),
-              blurRadius: 4,
-            ),
-          ],
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    )..layout();
-
-    painter.paint(
-      canvas,
-      Offset(
-        rect.center.dx - painter.width / 2,
-        rect.center.dy - painter.height / 2,
-      ),
-    );
-  }
-
-  void _drawFace(Canvas canvas, List<Offset> points, List<Color> colors) {
-    final Rect bounds = _boundsFromPoints(points);
-    final Paint paint = Paint()
-      ..shader = LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: colors,
-      ).createShader(bounds);
-
-    canvas.drawPath(_pathFromPoints(points), paint);
-  }
-
-  Path _pathFromPoints(List<Offset> points) {
-    final Path path = Path()..moveTo(points.first.dx, points.first.dy);
-    for (int i = 1; i < points.length; i++) {
-      path.lineTo(points[i].dx, points[i].dy);
-    }
-    path.close();
-    return path;
-  }
-
-  Rect _boundsFromPoints(List<Offset> points) {
-    double left = points.first.dx;
-    double right = points.first.dx;
-    double top = points.first.dy;
-    double bottom = points.first.dy;
-
-    for (final Offset p in points) {
-      if (p.dx < left) left = p.dx;
-      if (p.dx > right) right = p.dx;
-      if (p.dy < top) top = p.dy;
-      if (p.dy > bottom) bottom = p.dy;
-    }
-
-    return Rect.fromLTRB(left, top, right, bottom);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-*/
