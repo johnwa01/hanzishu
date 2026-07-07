@@ -325,7 +325,16 @@ class _DrillPageCoreState extends State<DrillPageCore> with SingleTickerProvider
                   ),
                   ),
                 ),
-                getAnimatedPathPainter(),
+                Positioned.fill(
+                  child: Transform.translate(
+                    offset: Offset((MediaQuery.of(context).size.width - screenWidth) / 2, 0),
+                    child: Stack(
+                      children: <Widget>[
+                        getAnimatedPathPainter(),
+                      ],
+                    ),
+                  ),
+                ),
               ],
             ),
             onWillPop: _onWillPop
