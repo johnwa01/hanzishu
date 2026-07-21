@@ -632,16 +632,16 @@ var theComponentCategoryStringIdAndTypingCharsList=[
  ];
 
 var theComponentCombinationCharsList=[
-  ComponentCombinationChars("M", 322, "U", 345, "", 0, "木标本林未山森末耒杯米求栋禾爪橡凹永棘承示乐楝东不束出缶柬水禁豕象"),
-  ComponentCombinationChars("L", 343, "Y", 352, "", 0, "七比匕之己忌毛已巴也记巳丫屯它乙礼飞心瓦氏民祀立气世弋"),
-  ComponentCombinationChars("N", 348, "C", 317, "", 0, "门需贝见骨巨巾冉朋内臣肉舰而雨亡肺两甫脯月丹匝舟丘肓册禹"),
-  ComponentCombinationChars("T", 319, "P", 320, "", 0, "丁打于牙尸轩乎了子抒孑户予矛护下手卫十邪干千尹牛阵才聿寸车阡年事丰羊"),
-  ComponentCombinationChars("X", 350, "G", 321, "", 0, "乂双文丈戏幺女奴戈戋娥又皮袭爻父紊乡我级戊戢线必龙纹衣及缀史吏"),
-  ComponentCombinationChars("A", 353, "E", 316, "H", 344, "人从入王炎井火灸个玉金众工食亚全廿臾垂灶大一甘圭犬二夫耸三央开土耳夷弄士久"),
+  ComponentCombinationChars("M", 322, "U", 345, "", 0, "木标本林未森末耒杯米求栋禾爪橡凹永棘承示乐楝东不束柬水禁小豕象"), // 出
+  ComponentCombinationChars("L", 343, "Y", 352, "", 0, "七比匕之己忌毛已巴也巳丫屯它乙礼飞心瓦氏民祀立气世弋羊"), // 记， 丫丫后没查
+  ComponentCombinationChars("N", 348, "C", 317, "", 0, "门需贝见骨巾冉朋内肉舰而雨亡肺两甫脯月丹匝舟肓册禹"),
+  ComponentCombinationChars("T", 319, "P", 320, "", 0, "丁打于牙尸轩乎了子抒孑户予矛护下手十干千尹牛才聿寸车年事丰"), // 卫邪阵阡
+  ComponentCombinationChars("X", 350, "G", 321, "", 0, "乂双文丈戏幺女奴戈戋娥又皮袭爻父紊乡我级戊戢线必龙纹衣及缀史吏"), // 双及以后没法打
+  ComponentCombinationChars("A", 353, "E", 316, "H", 344, "人从入王炎井巨火灸个玉金众工臣食亚全廿臾垂灶大一甘圭犬二夫耸三央开土耳夷弄士久"),
   ComponentCombinationChars("B", 327, "S", 323, "V", 347, "日昌刁曰八白眼习儿臼冒夕兆母晶川目歹多自州专羽且非躬弓身竹旸丐艮"),
-  ComponentCombinationChars("D", 326, "I", 342, "F", 349, "刀劢力卜步厂为所书爿卡韦历广弗上厉万止斤羞方业乃虏斥小丑"),
-  ComponentCombinationChars("O", 315, "R", 325, "W", 324,"口回凸虽尺吕石唁言嘿几盅中品串磊虫蛔九叽皿矾四尽西尤丸凡酉酒黑冲兀洒熏酋革浊"),
-  ComponentCombinationChars("Q", 351, "K", 346, "J", 318, "田便由长伸甲申偶电里钾果龟毋片笛鬼狸曳更佃禺重傀曲"),
+  ComponentCombinationChars("D", 326, "I", 342, "F", 349, "刀劢力卜步厂为所书爿卡韦历广弗上厉万止斤羞方业乃虏斥丑"), // 斤和斥到R？
+  ComponentCombinationChars("O", 315, "R", 325, "W", 324,"口回凸虽尺吕石唁山言嘿几盅中品串磊虫蛔九丘叽皿缶矾四尽西尤丸凡酉酒黑冲兀洒熏酋革浊"),
+  ComponentCombinationChars("Q", 351, "K", 346, "J", 318, "田便由长伸甲申偶电里钾果毋片笛鬼曳更佃禺重傀曲"), // 龟狸
 ];
 
 /* list including non-basic chars
