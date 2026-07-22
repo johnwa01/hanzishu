@@ -610,6 +610,9 @@ class _InputZiWidgetState extends State<InputZiWidget> {
             showCompletedDialog(currentBuildContext!);
           }
           else {
+            if (showHint == HintType.Hint2 || showHint == HintType.Hint3) {
+              showHint = HintType.Hint1;
+            }
             currentIndex =
                 theInputZiManager.getNextIndex(
                     typingType, currentIndex, lessonId, numberOfCharsTyped);
@@ -3015,6 +3018,10 @@ class _InputZiWidgetState extends State<InputZiWidget> {
               showCompletedDialog(currentBuildContext!);
             }
             else {
+              // when lower than Hint1, set it back to Hint1. use hint as needed only, not always.
+              if (showHint == HintType.Hint2 || showHint == HintType.Hint3) {
+                showHint = HintType.Hint1;
+              }
               int oneSentenceAccurateCount = InputZiManager.calculateAccurateTypedCount(listenModeTypedOneSentence, sentence);
               totalAccurateCount += oneSentenceAccurateCount;
               listenModeTypedOneSentence = "";
